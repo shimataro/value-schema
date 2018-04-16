@@ -97,6 +97,12 @@ function testPattern()
 
 			value = "user@example2.com";
 			assert.strictEqual(objEmailAdjuster.adjust(value), value);
+
+			value = "user@[1.1.1.1]";
+			assert.strictEqual(objEmailAdjuster.adjust(value), value);
+
+			value = "user@[111.111.111.111]";
+			assert.strictEqual(objEmailAdjuster.adjust(value), value);
 		});
 	});
 	it("should cause error(s)", () =>
@@ -160,6 +166,22 @@ function testPattern()
 		assert.throws(() =>
 		{
 			objEmailAdjuster.adjust("user@example.com2");
+		}, (err) =>
+		{
+			return (err.cause === CAUSE.EMAIL);
+		});
+
+		assert.throws(() =>
+		{
+			objEmailAdjuster.adjust("user@[1...1]");
+		}, (err) =>
+		{
+			return (err.cause === CAUSE.EMAIL);
+		});
+
+		assert.throws(() =>
+		{
+			objEmailAdjuster.adjust("user@[1111.1111.1111.1111]");
 		}, (err) =>
 		{
 			return (err.cause === CAUSE.EMAIL);
