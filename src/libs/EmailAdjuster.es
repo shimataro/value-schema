@@ -1,5 +1,5 @@
 import {CAUSE} from "./constants";
-import AdjusterInterface from "./AdjusterInterface.es";
+import AdjusterInterface from "./AdjusterInterface";
 import StringAdjuster from "./StringAdjuster";
 
 const MAX_LENGTH = 254;
