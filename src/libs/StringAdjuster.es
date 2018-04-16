@@ -27,8 +27,6 @@ export default class StringAdjuster extends AdjusterInterface
 		this._adjustMaxLength = false;
 		/** @type {?RegExp} */
 		this._pattern = null;
-		/** @type {_Custom} */
-		this._custom = null;
 	}
 
 	/**
@@ -99,15 +97,6 @@ export default class StringAdjuster extends AdjusterInterface
 	}
 
 	/**
-	 * customize
-	 * @param {_Custom} custom
-	 */
-	custom(custom)
-	{
-		this._custom = custom;
-	}
-
-	/**
 	 * do adjust
 	 * @param {*} value value to be checked
 	 * @param {?_OnError} onError callback function on error
@@ -170,27 +159,6 @@ export default class StringAdjuster extends AdjusterInterface
 			return AdjusterInterface._handleError(onError, cause, value);
 		}
 
-		if(this._custom !== null)
-		{
-			return this._custom(value, (cause) =>
-			{
-				return AdjusterInterface._handleError(onError, cause, value);
-			});
-		}
-
 		return adjustedValue;
 	}
 }
-
-/**
- * type of custom function
- * @callback _Custom
- * @param {string} value original value
- * @param {_OnCustomError} error callback function on custom error
- * @return {string}
- */
-/**
- * type of callback function on custom error
- * @callback _OnCustomError
- * @param {string} cause
- */
