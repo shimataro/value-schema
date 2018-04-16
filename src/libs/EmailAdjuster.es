@@ -3,7 +3,7 @@ import AdjusterInterface from "./AdjusterInterface.es";
 import StringAdjuster from "./StringAdjuster";
 
 const MAX_LENGTH = 254;
-const PATTERN = /^(([\w!#$%&'*+\-\/=?^`{|}~]+(\.[\w!#$%&'*+\-\/=?^`{|}~]+)*)|("([\w!#$%&'*+\-\/=?^`{|}~. ()<>\[\]:;@,]|\\\\|\\")+"))@([\da-zA-Z\-]+\.)+[a-zA-Z]+$/;
+const PATTERN = /^(([\w!#$%&'*+\-\/=?^`{|}~]+(\.[\w!#$%&'*+\-\/=?^`{|}~]+)*)|("([\w!#$%&'*+\-\/=?^`{|}~. ()<>\[\]:;@,]|\\\\|\\")+"))@((([\da-zA-Z\-]+\.)+[a-zA-Z]+)|\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}])$/;
 
 /**
  * adjuster for e-mail
