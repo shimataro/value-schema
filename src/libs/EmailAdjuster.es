@@ -61,7 +61,7 @@ export default class EmailAdjuster extends AdjusterInterface
 			{
 				err.cause = CAUSE.EMAIL;
 			}
-			AdjusterInterface._handleError(onError, err.cause, value);
+			return AdjusterInterface._handleError(onError, err.cause, value);
 		}
 	}
 }
