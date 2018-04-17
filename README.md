@@ -78,10 +78,9 @@ adjuster.email().adjust("user@example_domain.com");
 adjuster.email().adjust("user@example.com2");
 ```
 
-### multipe data
+### multiple data
 
 ```javascript
-import assert from "assert";
 import adjuster from "adjuster";
 
 const inputData = {
