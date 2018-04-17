@@ -5,6 +5,11 @@ validate and adjust input values
 
 ## How to use
 
+install by npm.
+```bash
+npm install -S adjuster
+```
+
 ### number
 
 ```javascript
@@ -110,3 +115,8 @@ const expected = {
 // should be adjusted to `expected`
 adjuster.adjustData(inputData, adjusters);
 ```
+
+## Release notes
+
+* 2018/04/18 *version 0.1.0*
+    * First release.
