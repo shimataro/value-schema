@@ -1,6 +1,6 @@
 {
   "name": "adjuster",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "dependencies": {
     "ansi-colors": {
       "version": "1.1.0",
