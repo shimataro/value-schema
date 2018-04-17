@@ -7,6 +7,7 @@ import EmailAdjuster from "libs/EmailAdjuster";
 	describe("empty", testEmpty);
 	describe("allowEmpty", testAllowEmpty);
 	describe("pattern", testPattern);
+	describe("email", testEmail);
 }
 
 function testRequired()
@@ -52,6 +53,24 @@ function testAllowEmpty()
 }
 
 function testPattern()
+{
+	const objEmailAdjuster = new EmailAdjuster().pattern(/^\w+@([\w-]+\.)+\w+$/);
+	it("should be OK", () =>
+	{
+		expect(objEmailAdjuster.adjust("user@example.com")).toEqual("user@example.com");
+		expect(objEmailAdjuster.adjust("user@example-domain.com")).toEqual("user@example-domain.com");
+		expect(objEmailAdjuster.adjust("user@example.domain.com")).toEqual("user@example.domain.com");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			objEmailAdjuster.adjust("john.doe@example.com");
+		}).toThrow(CAUSE.EMAIL);
+	});
+}
+
+function testEmail()
 {
 	const objEmailAdjuster = new EmailAdjuster();
 	it("should be OK", () =>
