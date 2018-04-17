@@ -44,6 +44,17 @@ export default class EmailAdjuster extends AdjusterInterface
 	}
 
 	/**
+	 * specify custom pattern by regular expression
+	 * @param {RegExp} pattern acceptable pattern
+	 * @return {EmailAdjuster}
+	 */
+	pattern(pattern)
+	{
+		this._objAdjuster.pattern(pattern);
+		return this;
+	}
+
+	/**
 	 * do adjust
 	 * @param {*} value value to be checked
 	 * @param {?_OnError} onError callback function on error
