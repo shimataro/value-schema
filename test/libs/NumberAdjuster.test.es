@@ -1,8 +1,6 @@
-import assert from "assert";
 import {CAUSE} from "libs/constants";
 import NumberAdjuster from "libs/NumberAdjuster";
 
-describe("libs/NumberAdjuster", () =>
 {
 	describe("type", testType);
 	describe("required", testRequired);
@@ -14,36 +12,27 @@ describe("libs/NumberAdjuster", () =>
 	describe("minValue (adjusted)", testMinValueAdjusted);
 	describe("maxValue", testMaxValue);
 	describe("maxValue (adjusted)", testMaxValueAdjusted);
-});
+}
 
 function testType()
 {
 	const objNumberAdjuster = new NumberAdjuster();
 	it("should be OK", () =>
 	{
-		assert.doesNotThrow(() =>
-		{
-			assert.strictEqual(objNumberAdjuster.adjust(1), 1);
-		});
+		expect(objNumberAdjuster.adjust(1)).toEqual(1);
 	});
 	it("should be adjusted", () =>
 	{
-		assert.doesNotThrow(() =>
-		{
-			assert.strictEqual(objNumberAdjuster.adjust("123"), 123);
-			assert.strictEqual(objNumberAdjuster.adjust("+456"), 456);
-			assert.strictEqual(objNumberAdjuster.adjust("-789"), -789);
-		});
+		expect(objNumberAdjuster.adjust("123")).toEqual(123);
+		expect(objNumberAdjuster.adjust("+456")).toEqual(456);
+		expect(objNumberAdjuster.adjust("-789")).toEqual(-789);
 	});
 	it("should cause error(s)", () =>
 	{
-		assert.throws(() =>
+		expect(() =>
 		{
 			objNumberAdjuster.adjust("abc")
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.TYPE);
-		});
+		}).toThrow(CAUSE.TYPE);
 	});
 }
 
@@ -52,20 +41,14 @@ function testRequired()
 	const objNumberAdjuster = new NumberAdjuster();
 	it("should be OK", () =>
 	{
-		assert.doesNotThrow(() =>
-		{
-			assert.strictEqual(objNumberAdjuster.adjust(0), 0);
-		});
+		expect(objNumberAdjuster.adjust(0)).toEqual(0);
 	});
 	it("should cause error(s)", () =>
 	{
-		assert.throws(() =>
+		expect(() =>
 		{
 			objNumberAdjuster.adjust(undefined)
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.REQUIRED);
-		});
+		}).toThrow(CAUSE.REQUIRED);
 	});
 }
 
@@ -74,17 +57,11 @@ function testDefault()
 	const objNumberAdjuster = new NumberAdjuster().default(10);
 	it("should be OK", () =>
 	{
-		assert.doesNotThrow(() =>
-		{
-			assert.strictEqual(objNumberAdjuster.adjust(1), 1);
-		});
+		expect(objNumberAdjuster.adjust(1)).toEqual(1);
 	});
 	it("should be adjusted", () =>
 	{
-		assert.doesNotThrow(() =>
-		{
-			assert.strictEqual(objNumberAdjuster.adjust(undefined), 10);
-		});
+		expect(objNumberAdjuster.adjust(undefined)).toEqual(10);
 	});
 }
 
@@ -93,13 +70,10 @@ function testEmpty()
 	const objNumberAdjuster = new NumberAdjuster();
 	it("should cause error(s)", () =>
 	{
-		assert.throws(() =>
+		expect(() =>
 		{
 			objNumberAdjuster.adjust("");
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.EMPTY);
-		});
+		}).toThrow(CAUSE.EMPTY);
 	});
 }
 
@@ -108,10 +82,7 @@ function testAllowEmpty()
 	const objNumberAdjuster = new NumberAdjuster().allowEmpty();
 	it("should be adjusted", () =>
 	{
-		assert.doesNotThrow(() =>
-		{
-			assert.strictEqual(objNumberAdjuster.adjust(""), 0);
-		});
+		expect(objNumberAdjuster.adjust("")).toEqual(0);
 	});
 }
 
@@ -120,22 +91,16 @@ function testIn()
 	const objNumberAdjuster = new NumberAdjuster().in(1, 3, 5);
 	it("should be OK", () =>
 	{
-		assert.doesNotThrow(() =>
-		{
-			assert.strictEqual(objNumberAdjuster.adjust(1), 1);
-			assert.strictEqual(objNumberAdjuster.adjust(3), 3);
-			assert.strictEqual(objNumberAdjuster.adjust(5), 5);
-		});
+		expect(objNumberAdjuster.adjust(1)).toEqual(1);
+		expect(objNumberAdjuster.adjust(3)).toEqual(3);
+		expect(objNumberAdjuster.adjust(5)).toEqual(5);
 	});
 	it("should cause error(s)", () =>
 	{
-		assert.throws(() =>
+		expect(() =>
 		{
 			objNumberAdjuster.adjust(2);
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.IN);
-		});
+		}).toThrow(CAUSE.IN);
 	});
 }
 
@@ -144,20 +109,14 @@ function testMinValue()
 	const objNumberAdjuster = new NumberAdjuster().minValue(10);
 	it("should be OK", () =>
 	{
-		assert.doesNotThrow(() =>
-		{
-			assert.strictEqual(objNumberAdjuster.adjust(10), 10);
-		});
+		expect(objNumberAdjuster.adjust(10)).toEqual(10);
 	});
 	it("should cause error(s)", () =>
 	{
-		assert.throws(() =>
+		expect(() =>
 		{
 			objNumberAdjuster.adjust(9);
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.MIN_VALUE);
-		});
+		}).toThrow(CAUSE.MIN_VALUE);
 	});
 }
 
@@ -166,10 +125,7 @@ function testMinValueAdjusted()
 	const objNumberAdjuster = new NumberAdjuster().minValue(10, true);
 	it("should be adjusted", () =>
 	{
-		assert.doesNotThrow(() =>
-		{
-			assert.strictEqual(objNumberAdjuster.adjust(9), 10);
-		});
+		expect(objNumberAdjuster.adjust(9)).toEqual(10);
 	});
 }
 
@@ -178,20 +134,14 @@ function testMaxValue()
 	const objNumberAdjuster = new NumberAdjuster().maxValue(100);
 	it("should be OK", () =>
 	{
-		assert.doesNotThrow(() =>
-		{
-			assert.strictEqual(objNumberAdjuster.adjust(100), 100);
-		});
+		expect(objNumberAdjuster.adjust(100)).toEqual(100);
 	});
 	it("should cause error(s)", () =>
 	{
-		assert.throws(() =>
+		expect(() =>
 		{
 			objNumberAdjuster.adjust(101);
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.MAX_VALUE);
-		});
+		}).toThrow(CAUSE.MAX_VALUE);
 	});
 }
 
@@ -200,9 +150,6 @@ function testMaxValueAdjusted()
 	const objNunmberAdjuster = new NumberAdjuster().maxValue(100, true);
 	it("should be adjusted", () =>
 	{
-		assert.doesNotThrow(() =>
-		{
-			assert.strictEqual(objNunmberAdjuster.adjust(101), 100);
-		});
+		expect(objNunmberAdjuster.adjust(101)).toEqual(100);
 	});
 }
