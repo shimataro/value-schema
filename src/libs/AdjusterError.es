@@ -10,7 +10,7 @@ export default class AdjusterError extends Error
 	 */
 	constructor(cause, value)
 	{
-		super();
+		super(`Adjuster Error: ${cause}`);
 
 		this.name = "AdjusterError";
 		this.cause = cause;

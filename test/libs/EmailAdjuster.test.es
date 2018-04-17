@@ -1,28 +1,23 @@
-import assert from "assert";
 import {CAUSE} from "libs/constants";
 import EmailAdjuster from "libs/EmailAdjuster";
 
-describe("libs/EmailAdjuster", () =>
 {
 	describe("required", testRequired);
 	describe("default", testDefault);
 	describe("empty", testEmpty);
 	describe("allowEmpty", testAllowEmpty);
 	describe("pattern", testPattern);
-});
+}
 
 function testRequired()
 {
 	const objEmailAdjuster = new EmailAdjuster();
 	it("should cause error(s)", () =>
 	{
-		assert.throws(() =>
+		expect(() =>
 		{
 			objEmailAdjuster.adjust(undefined);
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.REQUIRED);
-		});
+		}).toThrow(CAUSE.REQUIRED);
 	});
 }
 
@@ -31,10 +26,7 @@ function testDefault()
 	const objEmailAdjuster = new EmailAdjuster().default("user@example.com");
 	it("should be adjusted", () =>
 	{
-		assert.doesNotThrow(() =>
-		{
-			assert.strictEqual(objEmailAdjuster.adjust(undefined), "user@example.com");
-		});
+		expect(objEmailAdjuster.adjust(undefined)).toEqual("user@example.com");
 	});
 }
 
@@ -43,13 +35,10 @@ function testEmpty()
 	const objEmailAdjuster = new EmailAdjuster();
 	it("should cause error(s)", () =>
 	{
-		assert.throws(() =>
+		expect(() =>
 		{
 			objEmailAdjuster.adjust("");
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.EMPTY);
-		});
+		}).toThrow(CAUSE.EMPTY);
 	});
 }
 
@@ -58,10 +47,7 @@ function testAllowEmpty()
 	const objEmailAdjuster = new EmailAdjuster().allowEmpty();
 	it("should be OK", () =>
 	{
-		assert.doesNotThrow(() =>
-		{
-			assert.strictEqual(objEmailAdjuster.adjust(""), "");
-		});
+		expect(objEmailAdjuster.adjust("")).toEqual("");
 	});
 }
 
@@ -70,121 +56,42 @@ function testPattern()
 	const objEmailAdjuster = new EmailAdjuster();
 	it("should be OK", () =>
 	{
-		assert.doesNotThrow(() =>
-		{
-			let value;
-
+		const values = [
 			// dot-string
-			value = "Abc@example.com";
-			assert.strictEqual(objEmailAdjuster.adjust(value), value);
-
-			value = "user+mailbox/department=shipping@example.com";
-			assert.strictEqual(objEmailAdjuster.adjust(value), value);
-
-			value = "!#$%&'*+-/=?^_`.{|}~@example.com";
-			assert.strictEqual(objEmailAdjuster.adjust(value), value);
+			"Abc@example.com",
+			"user+mailbox/department=shipping@example.com",
+			"!#$%&'*+-/=?^_`.{|}~@example.com",
 
 			// quoted-pair
-			value = "\"Fred\\\"Bloggs\"@example.com";
-			assert.strictEqual(objEmailAdjuster.adjust(value), value);
-
-			value = "\"Joe.\\\\Blow\"@example.com";
-			assert.strictEqual(objEmailAdjuster.adjust(value), value);
+			"\"Fred\\\"Bloggs\"@example.com",
+			"\"Joe.\\\\Blow\"@example.com",
 
 			// domain
-			value = "user@example-domain.com";
-			assert.strictEqual(objEmailAdjuster.adjust(value), value);
-
-			value = "user@example2.com";
-			assert.strictEqual(objEmailAdjuster.adjust(value), value);
-
-			value = "user@[1.1.1.1]";
-			assert.strictEqual(objEmailAdjuster.adjust(value), value);
-
-			value = "user@[111.111.111.111]";
-			assert.strictEqual(objEmailAdjuster.adjust(value), value);
-		});
+			"user@example-domain.com",
+			"user@example2.com",
+			"user@[1.1.1.1]",
+			"user@[111.111.111.111]",
+		];
+		for(const value of values)
+		{
+			expect(objEmailAdjuster.adjust(value)).toEqual(value);
+		}
 	});
 	it("should cause error(s)", () =>
 	{
-		assert.throws(() =>
+		const values = [
+			"@", "user@", "@example.com",
+			".a@example.com", "a.@example.com", "a..a@example.com",
+			"user@example@com", "user-example-com",
+			"user@example_domain.com", "user@example.com2",
+			"user@[1...1]", "user@[1111.1111.1111.1111]",
+		];
+		for(const value of values)
 		{
-			objEmailAdjuster.adjust("@example.com");
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.EMAIL);
-		});
-
-		assert.throws(() =>
-		{
-			objEmailAdjuster.adjust(".a@example.com");
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.EMAIL);
-		});
-
-		assert.throws(() =>
-		{
-			objEmailAdjuster.adjust("a.@example.com");
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.EMAIL);
-		});
-
-		assert.throws(() =>
-		{
-			objEmailAdjuster.adjust("a..a@example.com");
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.EMAIL);
-		});
-
-		assert.throws(() =>
-		{
-			objEmailAdjuster.adjust("user@example@com");
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.EMAIL);
-		});
-
-		assert.throws(() =>
-		{
-			objEmailAdjuster.adjust("user-example-com");
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.EMAIL);
-		});
-
-		assert.throws(() =>
-		{
-			objEmailAdjuster.adjust("user@example_domain.com");
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.EMAIL);
-		});
-
-		assert.throws(() =>
-		{
-			objEmailAdjuster.adjust("user@example.com2");
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.EMAIL);
-		});
-
-		assert.throws(() =>
-		{
-			objEmailAdjuster.adjust("user@[1...1]");
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.EMAIL);
-		});
-
-		assert.throws(() =>
-		{
-			objEmailAdjuster.adjust("user@[1111.1111.1111.1111]");
-		}, (err) =>
-		{
-			return (err.cause === CAUSE.EMAIL);
-		});
+			expect(() =>
+			{
+				objEmailAdjuster.adjust(value);
+			}).toThrow(CAUSE.EMAIL);
+		}
 	});
 }

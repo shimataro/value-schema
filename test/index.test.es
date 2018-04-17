@@ -1,10 +1,8 @@
-import assert from "assert";
 import adjuster from "index";
 
-describe("adjuster", () =>
 {
 	describe("data", testData);
-});
+}
 
 /**
  * test for adjust multiple variables
@@ -37,10 +35,7 @@ function testData()
 			offset: 0,
 		};
 
-		assert.doesNotThrow(() =>
-		{
-			const adjusted = adjuster.adjustData(inputData, adjusters);
-			assert.deepStrictEqual(adjusted, expected);
-		});
+		const adjusted = adjuster.adjustData(inputData, adjusters);
+		expect(adjusted).toEqual(expected);
 	});
 }
