@@ -112,8 +112,8 @@ const expected = {
     offset: 0,
 };
 
-// should be adjusted to `expected`
-adjuster.adjustData(inputData, adjusters);
+const adjusted = adjuster.adjustData(inputData, adjusters);
+// expect(adjusted).toEqual(expected);
 ```
 
 ## Release notes
