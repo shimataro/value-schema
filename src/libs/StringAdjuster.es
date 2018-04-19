@@ -17,6 +17,8 @@ export default class StringAdjuster extends AdjusterInterface
 		this._default = null;
 		/** @type {boolean} */
 		this._allowEmpty = false;
+		/** @type {?string} */
+		this._valueOnEmpty = null;
 		/** @type {string[]} */
 		this._in = null;
 		/** @type {?int} */
@@ -42,11 +44,13 @@ export default class StringAdjuster extends AdjusterInterface
 
 	/**
 	 * allow empty string (NOT undefined)
+	 * @param {?string} [value=null] value on empty
 	 * @return {StringAdjuster}
 	 */
-	allowEmpty()
+	allowEmpty(value = null)
 	{
 		this._allowEmpty = true;
+		this._valueOnEmpty = value;
 		return this;
 	}
 
@@ -135,7 +139,7 @@ export default class StringAdjuster extends AdjusterInterface
 				const cause = CAUSE.EMPTY;
 				return AdjusterInterface._handleError(onError, cause, value);
 			}
-			return "";
+			return this._valueOnEmpty;
 		}
 
 		if(this._minLength !== null && adjustedValue.length < this._minLength)
