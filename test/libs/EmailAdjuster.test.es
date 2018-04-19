@@ -24,10 +24,10 @@ function testRequired()
 
 function testDefault()
 {
-	const objEmailAdjuster = new EmailAdjuster().default("user@example.com");
+	const objEmailAdjuster = new EmailAdjuster().default("default@example.com");
 	it("should be adjusted", () =>
 	{
-		expect(objEmailAdjuster.adjust(undefined)).toEqual("user@example.com");
+		expect(objEmailAdjuster.adjust(undefined)).toEqual("default@example.com");
 	});
 }
 
@@ -45,10 +45,10 @@ function testEmpty()
 
 function testAllowEmpty()
 {
-	const objEmailAdjuster = new EmailAdjuster().allowEmpty();
+	const objEmailAdjuster = new EmailAdjuster().allowEmpty("empty@example.com");
 	it("should be OK", () =>
 	{
-		expect(objEmailAdjuster.adjust("")).toEqual("");
+		expect(objEmailAdjuster.adjust("")).toEqual("empty@example.com");
 	});
 }
 

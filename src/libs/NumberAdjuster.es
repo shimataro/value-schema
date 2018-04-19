@@ -17,6 +17,8 @@ export default class NumberAdjuster extends AdjusterInterface
 		this._default = null;
 		/** @type {boolean} */
 		this._allowEmpty = false;
+		/** @type {?number} */
+		this._valueOnEmpty = null;
 		/** @type {number[]} */
 		this._in = null;
 		/** @type {?number} */
@@ -42,11 +44,13 @@ export default class NumberAdjuster extends AdjusterInterface
 
 	/**
 	 * allow empty string; will be adjusted to 0
+	 * @param {?number} [value=null] value on empty
 	 * @return {NumberAdjuster}
 	 */
-	allowEmpty()
+	allowEmpty(value = null)
 	{
 		this._allowEmpty = true;
+		this._valueOnEmpty = value;
 		return this;
 	}
 
@@ -114,6 +118,7 @@ export default class NumberAdjuster extends AdjusterInterface
 				const cause = CAUSE.EMPTY;
 				return AdjusterInterface._handleError(onError, cause, value);
 			}
+			return this._valueOnEmpty;
 		}
 
 		let adjustedValue = Number(value);

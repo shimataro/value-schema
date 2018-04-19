@@ -35,11 +35,12 @@ export default class EmailAdjuster extends AdjusterInterface
 
 	/**
 	 * allow empty string (NOT undefined)
+	 * @param {?string} [value=null] value on empty
 	 * @return {EmailAdjuster}
 	 */
-	allowEmpty()
+	allowEmpty(value = null)
 	{
-		this._objAdjuster.allowEmpty();
+		this._objAdjuster.allowEmpty(value);
 		return this;
 	}
 
