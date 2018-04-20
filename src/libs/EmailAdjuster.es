@@ -3,7 +3,37 @@ import AdjusterInterface from "./AdjusterInterface";
 import StringAdjuster from "./StringAdjuster";
 
 const MAX_LENGTH = 254;
-const PATTERN = /^(([\w!#$%&'*+\-\/=?^`{|}~]+(\.[\w!#$%&'*+\-\/=?^`{|}~]+)*)|("([\w!#$%&'*+\-\/=?^`{|}~. ()<>\[\]:;@,]|\\\\|\\")+"))@((([\da-zA-Z\-]+\.)+[a-zA-Z]+)|\[((IPv6:[\da-fA-F]{0,4}(:[\da-fA-F]{0,4}){1,5}((:\d{1,3}(\.\d{1,3}){3})|(:[\da-fA-F]{0,4}){0,2}))|(\d{1,3}(\.\d{1,3}){3}))])$/;
+
+// https://tools.ietf.org/html/rfc5321
+// https://tools.ietf.org/html/rfc5322
+const REGEXP_CHARSET_DOT = "[\\w!#$%&'*+\\-\\/=?^`{|}~]";
+const REGEXP_CHARSET_QUOTED = "[\\w!#$%&'*+\\-\\/=?^`{|}~. ()<>\\[\\]:;@,]";
+const REGEXP_CHARSET_TLD = "[a-zA-Z]";
+const REGEXP_CHARSET_SLD = "[a-zA-Z\\d\\-]";
+const REGEXP_CHARSET_IPV4 = "\\d";
+const REGEXP_CHARSET_IPV6 = "[\\da-fA-F]";
+
+const REGEXP_COMPONENT_DOT = `${REGEXP_CHARSET_DOT}+`;
+const REGEXP_COMPONENT_QUOTED = `(${REGEXP_CHARSET_QUOTED}|\\\\|\\")+`;
+const REGEXP_COMPONENT_TLD = `${REGEXP_CHARSET_TLD}+`;
+const REGEXP_COMPONENT_SLD = `${REGEXP_CHARSET_SLD}+`;
+const REGEXP_COMPONENT_IPV4 = `${REGEXP_CHARSET_IPV4}{1,3}`;
+const REGEXP_COMPONENT_IPV6 = `${REGEXP_CHARSET_IPV6}{0,4}`;
+
+const REGEXP_LOCAL_DOT = `${REGEXP_COMPONENT_DOT}(\\.${REGEXP_COMPONENT_DOT})*`;
+const REGEXP_LOCAL_QUOTED = `"${REGEXP_COMPONENT_QUOTED}"`;
+const REGEXP_LOCAL = `(${REGEXP_LOCAL_DOT}|${REGEXP_LOCAL_QUOTED})`;
+
+const REGEXP_DOMAIN_GENERAL = `(${REGEXP_COMPONENT_SLD}\\.)+${REGEXP_COMPONENT_TLD}`;
+const REGEXP_DOMAIN_IPV4 = `${REGEXP_COMPONENT_IPV4}(\\.${REGEXP_COMPONENT_IPV4}){3}`;
+const REGEXP_DOMAIN_IPV6_COMMON = `${REGEXP_COMPONENT_IPV6}(:${REGEXP_COMPONENT_IPV6}){1,5}`;
+const REGEXP_DOMAIN_IPV6_REST = `(:${REGEXP_DOMAIN_IPV4}|(:${REGEXP_COMPONENT_IPV6}){0,2})`;
+const REGEXP_DOMAIN_IPV6 = `IPv6:${REGEXP_DOMAIN_IPV6_COMMON}${REGEXP_DOMAIN_IPV6_REST}`;
+const REGEXP_DOMAIN_IP = `\\[(${REGEXP_DOMAIN_IPV4}|${REGEXP_DOMAIN_IPV6})\\]`;
+const REGEXP_DOMAIN = `(${REGEXP_DOMAIN_GENERAL}|${REGEXP_DOMAIN_IP})`;
+
+const REGEXP_EMAIL = `^${REGEXP_LOCAL}@${REGEXP_DOMAIN}$`;
+const PATTERN = new RegExp(REGEXP_EMAIL);
 
 /**
  * adjuster for e-mail
