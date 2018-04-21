@@ -81,9 +81,11 @@ function testEmail()
 			"user+mailbox/department=shipping@example.com",
 			"!#$%&'*+-/=?^_`.{|}~@example.com",
 
-			// quoted-pair
+			// quoted-string
 			"\"Fred\\\"Bloggs\"@example.com",
 			"\"Joe.\\\\Blow\"@example.com",
+			"\"...\"@example.com",
+			"\"(@_@) >_< ...(o;_;)o\"@example.com",
 
 			// domain
 			"user@example-domain.com",
