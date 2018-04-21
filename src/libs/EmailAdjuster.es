@@ -1,8 +1,11 @@
 import {CAUSE} from "./constants";
 import AdjusterInterface from "./AdjusterInterface";
+import AdjusterError from "./AdjusterError.es";
 import StringAdjuster from "./StringAdjuster";
 
-const MAX_LENGTH = 254;
+const MAX_LENGTH_LOCAL = 64;
+const MAX_LENGTH_DOMAIN = 255;
+const MAX_LENGTH = MAX_LENGTH_LOCAL + 1 + MAX_LENGTH_DOMAIN; // local-part + "@" + domain-part
 
 // https://tools.ietf.org/html/rfc5321
 // https://tools.ietf.org/html/rfc5322
@@ -95,7 +98,21 @@ export default class EmailAdjuster extends AdjusterInterface
 	{
 		try
 		{
-			return this._objAdjuster.adjust(value);
+			const adjusted = this._objAdjuster.adjust(value);
+
+			const atPosition = adjusted.lastIndexOf("@");
+			if(atPosition > MAX_LENGTH_LOCAL)
+			{
+				// local-part length error
+				throw new AdjusterError(CAUSE.MAX_LENGTH, value);
+			}
+			if(adjusted.length - atPosition - 1 > MAX_LENGTH_DOMAIN)
+			{
+				// domain-part length error
+				throw new AdjusterError(CAUSE.MAX_LENGTH, value);
+			}
+
+			return adjusted;
 		}
 		catch(err)
 		{
