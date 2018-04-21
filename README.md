@@ -21,7 +21,7 @@ adjuster.number().in(1, 3, 5).adjust(1); // === 1
 
 // should be adjusted
 adjuster.number().default(10).adjust(undefined);   // === 10
-adjuster.number().allowEmpty().adjust("");         // === 0
+adjuster.number().allowEmpty(123).adjust("");      // === 123
 adjuster.number().minValue(1, true).adjust(0);     // === 1
 adjuster.number().maxValue(100, true).adjust(101); // === 100
 
@@ -44,7 +44,7 @@ import adjuster from "adjuster";
 
 // should be OK
 adjuster.string().adjust(123);                                // === "123"
-adjuster.string().allowEmpty().adjust("");                    // === ""
+adjuster.string().allowEmpty("xyz").adjust("");               // === "xyz"
 adjuster.string().in("eat", "sleep", "play").adjust("sleep"); // === "sleep"
 
 // should be adjusted
@@ -112,8 +112,8 @@ const expected = {
     offset: 0,
 };
 
-// should be adjusted to `expected`
-adjuster.adjustData(inputData, adjusters);
+const adjusted = adjuster.adjustData(inputData, adjusters);
+// expect(adjusted).toEqual(expected);
 ```
 
 ## Release notes

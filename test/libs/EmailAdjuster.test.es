@@ -24,10 +24,10 @@ function testRequired()
 
 function testDefault()
 {
-	const objEmailAdjuster = new EmailAdjuster().default("user@example.com");
+	const objEmailAdjuster = new EmailAdjuster().default("default@example.com");
 	it("should be adjusted", () =>
 	{
-		expect(objEmailAdjuster.adjust(undefined)).toEqual("user@example.com");
+		expect(objEmailAdjuster.adjust(undefined)).toEqual("default@example.com");
 	});
 }
 
@@ -45,10 +45,10 @@ function testEmpty()
 
 function testAllowEmpty()
 {
-	const objEmailAdjuster = new EmailAdjuster().allowEmpty();
+	const objEmailAdjuster = new EmailAdjuster().allowEmpty("empty@example.com");
 	it("should be OK", () =>
 	{
-		expect(objEmailAdjuster.adjust("")).toEqual("");
+		expect(objEmailAdjuster.adjust("")).toEqual("empty@example.com");
 	});
 }
 
@@ -90,6 +90,12 @@ function testEmail()
 			"user@example2.com",
 			"user@[1.1.1.1]",
 			"user@[111.111.111.111]",
+			"user@[IPv6:::]",
+			"user@[IPv6:::0]",
+			"user@[IPv6:0::0]",
+			"user@[IPv6:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff]",
+			"user@[IPv6:1::1:192.168.0.1]",
+			"user@[IPv6:ffff:ffff:ffff:ffff:ffff:ffff:192.168.0.1]",
 		];
 		for(const value of values)
 		{
@@ -104,6 +110,10 @@ function testEmail()
 			"user@example@com", "user-example-com",
 			"user@example_domain.com", "user@example.com2",
 			"user@[1...1]", "user@[1111.1111.1111.1111]",
+			"user@[IPv6:ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffff]",
+			"user@[IPv6:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff]",
+			"user@[IPv6:ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffff:192.168.0.1]",
+			"user@[IPv6:ffff:ffff:ffff:ffff:ffff:ffff:ffff:192.168.0.1]",
 		];
 		for(const value of values)
 		{

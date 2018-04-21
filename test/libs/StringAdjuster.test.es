@@ -59,10 +59,10 @@ function testEmpty()
 
 function testAllowEmpty()
 {
-	const objStringAdjuster = new StringAdjuster().allowEmpty();
+	const objStringAdjuster = new StringAdjuster().allowEmpty("qwerty");
 	it("should be OK", () =>
 	{
-		expect(objStringAdjuster.adjust("")).toEqual("");
+		expect(objStringAdjuster.adjust("")).toEqual("qwerty");
 	});
 }
 

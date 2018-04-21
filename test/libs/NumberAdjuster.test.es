@@ -79,10 +79,10 @@ function testEmpty()
 
 function testAllowEmpty()
 {
-	const objNumberAdjuster = new NumberAdjuster().allowEmpty();
+	const objNumberAdjuster = new NumberAdjuster().allowEmpty(123);
 	it("should be adjusted", () =>
 	{
-		expect(objNumberAdjuster.adjust("")).toEqual(0);
+		expect(objNumberAdjuster.adjust("")).toEqual(123);
 	});
 }
 
