@@ -147,6 +147,7 @@ function testEmail()
 			"user@example_domain.com", "user@example.com2",
 			"user@[256.256.256.256]",
 			"user@[1...1]", "user@[1111.1111.1111.1111]",
+			"user@[IPv6:0::0::0]",
 			"user@[IPv6:ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffff]",
 			"user@[IPv6:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff]",
 			"user@[IPv6:ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffff:192.168.0.1]",
