@@ -1,8 +1,11 @@
 import {CAUSE} from "./constants";
 import AdjusterInterface from "./AdjusterInterface";
+import AdjusterError from "./AdjusterError";
 import StringAdjuster from "./StringAdjuster";
 
-const MAX_LENGTH = 254;
+const MAX_LENGTH_LOCAL = 64;
+const MAX_LENGTH_DOMAIN = 255;
+const MAX_LENGTH = MAX_LENGTH_LOCAL + 1 + MAX_LENGTH_DOMAIN; // local-part + "@" + domain-part
 
 // https://tools.ietf.org/html/rfc5321
 // https://tools.ietf.org/html/rfc5322
@@ -14,7 +17,7 @@ const REGEXP_CHARSET_IPV4 = "\\d";
 const REGEXP_CHARSET_IPV6 = "[\\da-fA-F]";
 
 const REGEXP_COMPONENT_DOT = `${REGEXP_CHARSET_DOT}+`;
-const REGEXP_COMPONENT_QUOTED = `(${REGEXP_CHARSET_QUOTED}|\\\\|\\")+`;
+const REGEXP_COMPONENT_QUOTED = `(${REGEXP_CHARSET_QUOTED}|\\\\[\\\\"])+`;
 const REGEXP_COMPONENT_TLD = `${REGEXP_CHARSET_TLD}+`;
 const REGEXP_COMPONENT_SLD = `${REGEXP_CHARSET_SLD}+`;
 const REGEXP_COMPONENT_IPV4 = `${REGEXP_CHARSET_IPV4}{1,3}`;
@@ -95,7 +98,21 @@ export default class EmailAdjuster extends AdjusterInterface
 	{
 		try
 		{
-			return this._objAdjuster.adjust(value);
+			const adjusted = this._objAdjuster.adjust(value);
+
+			const atPosition = adjusted.lastIndexOf("@");
+			if(atPosition > MAX_LENGTH_LOCAL)
+			{
+				// local-part length error
+				throw new AdjusterError(CAUSE.MAX_LENGTH, value);
+			}
+			if(adjusted.length - atPosition - 1 > MAX_LENGTH_DOMAIN)
+			{
+				// domain-part length error
+				throw new AdjusterError(CAUSE.MAX_LENGTH, value);
+			}
+
+			return adjusted;
 		}
 		catch(err)
 		{

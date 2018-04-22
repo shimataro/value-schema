@@ -1,6 +1,6 @@
 {
   "name": "adjuster",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "dependencies": {
     "@babel/code-frame": {
       "version": "7.0.0-beta.44",

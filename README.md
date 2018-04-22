@@ -118,5 +118,19 @@ const adjusted = adjuster.adjustData(inputData, adjusters);
 
 ## Release notes
 
+* 2018/04/22 *version 0.3.0*
+    * Bugfixes
+        * quoted-pair of email
+        * import error in `EmailAdjuster.es`
+    * Change Specifications
+        * limit the length of local/domain part of email
+
+* 2018/04/21 *version 0.2.0*
+    * Bugfixes
+        * test error on npm@5
+    * Change Specifications
+        * enable to specify value to `allowEmpty()`
+        * support IPv6 domain for `EmailAdjuster`
+
 * 2018/04/18 *version 0.1.0*
     * First release.
