@@ -13,14 +13,13 @@ const REGEXP_CHARSET_DOT = "[\\w!#$%&'*+\\-\\/=?^`{|}~]";
 const REGEXP_CHARSET_QUOTED = "[\\w!#$%&'*+\\-\\/=?^`{|}~. ()<>\\[\\]:;@,]";
 const REGEXP_CHARSET_TLD = "[a-zA-Z]";
 const REGEXP_CHARSET_SLD = "[a-zA-Z\\d\\-]";
-const REGEXP_CHARSET_IPV4 = "\\d";
 const REGEXP_CHARSET_IPV6 = "[\\da-fA-F]";
 
 const REGEXP_COMPONENT_DOT = `${REGEXP_CHARSET_DOT}+`;
 const REGEXP_COMPONENT_QUOTED = `(${REGEXP_CHARSET_QUOTED}|\\\\[\\\\"])+`;
 const REGEXP_COMPONENT_TLD = `${REGEXP_CHARSET_TLD}+`;
 const REGEXP_COMPONENT_SLD = `${REGEXP_CHARSET_SLD}+`;
-const REGEXP_COMPONENT_IPV4 = `${REGEXP_CHARSET_IPV4}{1,3}`;
+const REGEXP_COMPONENT_IPV4 = `(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})`;
 const REGEXP_COMPONENT_IPV6 = `${REGEXP_CHARSET_IPV6}{1,4}`;
 
 const REGEXP_LOCAL_DOT = `${REGEXP_COMPONENT_DOT}(\\.${REGEXP_COMPONENT_DOT})*`;
