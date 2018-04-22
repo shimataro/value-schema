@@ -1,6 +1,6 @@
 import {CAUSE} from "./constants";
 import AdjusterInterface from "./AdjusterInterface";
-import AdjusterError from "./AdjusterError.es";
+import AdjusterError from "./AdjusterError";
 import StringAdjuster from "./StringAdjuster";
 
 const MAX_LENGTH_LOCAL = 64;
