@@ -3,12 +3,12 @@ import {CAUSE} from "./constants";
 import AdjusterInterface from "./AdjusterInterface";
 import StringAdjuster from "./StringAdjuster";
 
-const REGEXP_COMPONENT = `(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})`;
-const REGEXP = `${REGEXP_COMPONENT}(\\.${REGEXP_COMPONENT}){3}`;
+const PATTERN_COMPONENT = `(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})`;
+const PATTERN = `${PATTERN_COMPONENT}(\\.${PATTERN_COMPONENT}){3}`;
 
-const PATTERN = new RegExp(`^${REGEXP}$`);
+const REGEXP = new RegExp(`^${PATTERN}$`);
 
-export {REGEXP};
+export {PATTERN};
 
 /**
  * adjuster for IPv4
@@ -23,7 +23,7 @@ export default class IPv4Adjuster extends AdjusterInterface
 		super();
 
 		this._objAdjuster = new StringAdjuster()
-			.pattern(PATTERN);
+			.pattern(REGEXP);
 	}
 
 	/**
