@@ -69,6 +69,8 @@ function testIPv4()
 	it("should cause error(s)", () =>
 	{
 		const values = [
+			"0.0.0.",
+			"0.0.0.0.",
 			"255.255.255.256",
 			"999.255.255.255",
 		];
