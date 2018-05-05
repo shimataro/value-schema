@@ -59,25 +59,59 @@ adjuster.string().minLength(5).adjust("a"); // throws AdjusterError; err.cause =
 adjuster.string().maxLength(5).adjust("abcdefg"); // throws AdjusterError; err.cause === adjuster.CAUSE.MAX_LENGTH
 ```
 
+### IPv4
+
+```javascript
+import adjuster from "adjuster";
+
+// should be OK
+adjuster.ipv4().adjust("0.0.0.0");          // === "0.0.0.0"
+adjuster.ipv4().adjust("192.168.0.1");      // === "192.168.0.1"
+adjuster.ipv4().adjust("255.255.255.255");  // === "255.255.255.255"
+
+// should cause errors; err.cause === adjuster.CAUSE.IPV4
+adjuster.ipv4().adjust("0.0.0.");
+adjuster.ipv4().adjust("0.0.0.0.");
+adjuster.ipv4().adjust("255.255.255.256");
+```
+
+### IPv6
+
+```javascript
+import adjuster from "adjuster";
+
+// should be OK
+adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000");  // === "0000:0000:0000:0000:0000:0000:0000:0000"
+adjuster.ipv6().adjust("::1");                                      // === "::1"
+adjuster.ipv6().adjust("::");                                       // === "::"
+adjuster.ipv6().adjust("1::1");                                     // === "1::1"
+adjuster.ipv6().adjust("::ffff:192.0.2.1");                         // === "::ffff:192.0.2.1"; IPv4-mapped address
+
+// should cause errors; err.cause === adjuster.CAUSE.IPV6
+adjuster.ipv6().adjust("0000");
+adjuster.ipv6().adjust("ffff:");
+adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000:");
+```
+
 ### e-mail
 
 ```javascript
 import adjuster from "adjuster";
 
 // should be OK
-adjuster.email().adjust("user+mailbox/department=shipping@example.com"); // dot-string
-adjuster.email().adjust("!#$%&'*+-/=?^_`.{|}~@example.com");             // dot-string
-adjuster.email().adjust("\"Fred\\\"Bloggs\"@example.com");               // quoted-string
-adjuster.email().adjust("\"Joe.\\\\Blow\"@example.com");                 // quoted-string
-adjuster.email().adjust("user@example-domain.com");
-adjuster.email().adjust("user@example2.com");
+adjuster.email().adjust("user+mailbox/department=shipping@example.com"); // === "user+mailbox/department=shipping@example.com"; dot-string
+adjuster.email().adjust("!#$%&'*+-/=?^_`.{|}~@example.com");             // === "!#$%&'*+-/=?^_`.{|}~@example.com"; dot-string
+adjuster.email().adjust("\"Fred\\\"Bloggs\"@example.com");               // === "\"Fred\\\"Bloggs\"@example.com"; quoted-string
+adjuster.email().adjust("\"Joe.\\\\Blow\"@example.com");                 // === "\"Joe.\\\\Blow\"@example.com"; quoted-string
+adjuster.email().adjust("user@example-domain.com");                      // === "user@example-domain.com"
+adjuster.email().adjust("user@example2.com");                            // === "user@example2.com"
 
 // should cause errors; err.cause === adjuster.CAUSE.EMAIL
 adjuster.email().adjust("@example.com");
 adjuster.email().adjust(".a@example.com");
 adjuster.email().adjust("a.@example.com");
 adjuster.email().adjust("a..a@example.com");
-adjuster.email().adjust("user@example@com");
+adjuster.emal().adjust("user@example@com");
 adjuster.email().adjust("user-example-com");
 adjuster.email().adjust("user@example_domain.com");
 adjuster.email().adjust("user@example.com2");
