@@ -158,6 +158,13 @@ const adjusted = adjuster.adjustData(inputData, adjusters);
 
 ## Release notes
 
+* YYYY/MM/DD *version x.y.z*
+    * New Functions
+        * `adjuster.ipv4()`
+        * `adjuster.ipv6()`
+    * Change Specifications
+        * strict IPv4 and IPv6 validation for `adjuster.email()`
+
 * 2018/04/22 *version 0.3.0*
     * Bugfixes
         * quoted-pair of email
