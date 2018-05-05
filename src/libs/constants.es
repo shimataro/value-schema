@@ -16,6 +16,7 @@ export const CAUSE = {
 	PATTERN: "pattern",
 
 	IPV4: "ipv4",
+	IPV6: "ipv6",
 	EMAIL: "email",
 };
 
@@ -31,5 +32,6 @@ export const CAUSE = {
  * @property {string} MAX_LENGTH
  * @property {string} PATTERN
  * @property {string} IPV4
+ * @property {string} IPV6
  * @property {string} EMAIL
  */
