@@ -6,7 +6,7 @@ import IPv6Adjuster from "libs/IPv6Adjuster";
 	describe("default", testDefault);
 	describe("empty", testEmpty);
 	describe("allowEmpty", testAllowEmpty);
-	describe("IPv4", testIPv4);
+	describe("IPv6", testIPv6);
 }
 
 function testRequired()
@@ -51,7 +51,7 @@ function testAllowEmpty()
 	});
 }
 
-function testIPv4()
+function testIPv6()
 {
 	const objIPv6Adjuster = new IPv6Adjuster();
 	it("should be OK", () =>
