@@ -1,26 +1,26 @@
 import {CAUSE} from "./constants";
-import {REGEXP as REGEXP_IPV4} from "./IPv4Adjuster";
+import {PATTERN as PATTERN_IPV4} from "./IPv4Adjuster";
 
 import AdjusterInterface from "./AdjusterInterface";
 import StringAdjuster from "./StringAdjuster";
 
-const REGEXP_CHARSET = "[\\da-fA-F]";
-const REGEXP_COMPONENT = `${REGEXP_CHARSET}{1,4}`;
+const PATTERN_CHARSET = "[\\da-fA-F]";
+const PATTERN_COMPONENT = `${PATTERN_CHARSET}{1,4}`;
 
-const REGEXP_0 = `:(((:${REGEXP_COMPONENT}){1,7})|((:${REGEXP_COMPONENT}){0,5}:${REGEXP_IPV4})|:)`;
-const REGEXP_1 = `(${REGEXP_COMPONENT}:){1}(((:${REGEXP_COMPONENT}){1,6})|((:${REGEXP_COMPONENT}){0,4}:${REGEXP_IPV4})|:)`;
-const REGEXP_2 = `(${REGEXP_COMPONENT}:){2}(((:${REGEXP_COMPONENT}){1,5})|((:${REGEXP_COMPONENT}){0,3}:${REGEXP_IPV4})|:)`;
-const REGEXP_3 = `(${REGEXP_COMPONENT}:){3}(((:${REGEXP_COMPONENT}){1,4})|((:${REGEXP_COMPONENT}){0,2}:${REGEXP_IPV4})|:)`;
-const REGEXP_4 = `(${REGEXP_COMPONENT}:){4}(((:${REGEXP_COMPONENT}){1,3})|((:${REGEXP_COMPONENT}){0,1}:${REGEXP_IPV4})|:)`;
-const REGEXP_5 = `(${REGEXP_COMPONENT}:){5}(((:${REGEXP_COMPONENT}){1,2})|:${REGEXP_IPV4}|:)`;
-const REGEXP_6 = `(${REGEXP_COMPONENT}:){6}(:${REGEXP_COMPONENT}|${REGEXP_IPV4}|:)`;
-const REGEXP_7 = `(${REGEXP_COMPONENT}:){7}(${REGEXP_COMPONENT}|:)`;
+const PATTERN_0 = `:(((:${PATTERN_COMPONENT}){1,7})|((:${PATTERN_COMPONENT}){0,5}:${PATTERN_IPV4})|:)`;
+const PATTERN_1 = `(${PATTERN_COMPONENT}:){1}(((:${PATTERN_COMPONENT}){1,6})|((:${PATTERN_COMPONENT}){0,4}:${PATTERN_IPV4})|:)`;
+const PATTERN_2 = `(${PATTERN_COMPONENT}:){2}(((:${PATTERN_COMPONENT}){1,5})|((:${PATTERN_COMPONENT}){0,3}:${PATTERN_IPV4})|:)`;
+const PATTERN_3 = `(${PATTERN_COMPONENT}:){3}(((:${PATTERN_COMPONENT}){1,4})|((:${PATTERN_COMPONENT}){0,2}:${PATTERN_IPV4})|:)`;
+const PATTERN_4 = `(${PATTERN_COMPONENT}:){4}(((:${PATTERN_COMPONENT}){1,3})|((:${PATTERN_COMPONENT}){0,1}:${PATTERN_IPV4})|:)`;
+const PATTERN_5 = `(${PATTERN_COMPONENT}:){5}(((:${PATTERN_COMPONENT}){1,2})|:${PATTERN_IPV4}|:)`;
+const PATTERN_6 = `(${PATTERN_COMPONENT}:){6}(:${PATTERN_COMPONENT}|${PATTERN_IPV4}|:)`;
+const PATTERN_7 = `(${PATTERN_COMPONENT}:){7}(${PATTERN_COMPONENT}|:)`;
 
-const REGEXP = `(${REGEXP_0}|${REGEXP_1}|${REGEXP_2}|${REGEXP_3}|${REGEXP_4}|${REGEXP_5}|${REGEXP_6}|${REGEXP_7})`;
+const PATTERN = `(${PATTERN_0}|${PATTERN_1}|${PATTERN_2}|${PATTERN_3}|${PATTERN_4}|${PATTERN_5}|${PATTERN_6}|${PATTERN_7})`;
 
-const PATTERN = new RegExp(`^${REGEXP}$`);
+const REGEXP = new RegExp(`^${PATTERN}$`);
 
-export {REGEXP};
+export {PATTERN};
 
 /**
  * adjuster for IPv6
@@ -35,7 +35,7 @@ export default class IPv6Adjuster extends AdjusterInterface
 		super();
 
 		this._objAdjuster = new StringAdjuster()
-			.pattern(PATTERN);
+			.pattern(REGEXP);
 	}
 
 	/**

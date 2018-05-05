@@ -1,6 +1,6 @@
 import {CAUSE} from "./constants";
-import {REGEXP as REGEXP_IPV4} from "./IPv4Adjuster";
-import {REGEXP as REGEXP_IPV6} from "./IPv6Adjuster";
+import {PATTERN as PATTERN_IPV4} from "./IPv4Adjuster";
+import {PATTERN as PATTERN_IPV6} from "./IPv6Adjuster";
 
 import AdjusterInterface from "./AdjusterInterface";
 import AdjusterError from "./AdjusterError";
@@ -12,27 +12,27 @@ const MAX_LENGTH = MAX_LENGTH_LOCAL + 1 + MAX_LENGTH_DOMAIN; // local-part + "@"
 
 // https://tools.ietf.org/html/rfc5321
 // https://tools.ietf.org/html/rfc5322
-const REGEXP_CHARSET_DOT = "[\\w!#$%&'*+\\-\\/=?^`{|}~]";
-const REGEXP_CHARSET_QUOTED = "[\\w!#$%&'*+\\-\\/=?^`{|}~. ()<>\\[\\]:;@,]";
-const REGEXP_CHARSET_TLD = "[a-zA-Z]";
-const REGEXP_CHARSET_SLD = "[a-zA-Z\\d\\-]";
+const PATTERN_CHARSET_DOT = "[\\w!#$%&'*+\\-\\/=?^`{|}~]";
+const PATTERN_CHARSET_QUOTED = "[\\w!#$%&'*+\\-\\/=?^`{|}~. ()<>\\[\\]:;@,]";
+const PATTERN_CHARSET_TLD = "[a-zA-Z]";
+const PATTERN_CHARSET_SLD = "[a-zA-Z\\d\\-]";
 
-const REGEXP_COMPONENT_DOT = `${REGEXP_CHARSET_DOT}+`;
-const REGEXP_COMPONENT_QUOTED = `(${REGEXP_CHARSET_QUOTED}|\\\\[\\\\"])+`;
-const REGEXP_COMPONENT_TLD = `${REGEXP_CHARSET_TLD}+`;
-const REGEXP_COMPONENT_SLD = `${REGEXP_CHARSET_SLD}+`;
+const PATTERN_COMPONENT_DOT = `${PATTERN_CHARSET_DOT}+`;
+const PATTERN_COMPONENT_QUOTED = `(${PATTERN_CHARSET_QUOTED}|\\\\[\\\\"])+`;
+const PATTERN_COMPONENT_TLD = `${PATTERN_CHARSET_TLD}+`;
+const PATTERN_COMPONENT_SLD = `${PATTERN_CHARSET_SLD}+`;
 
-const REGEXP_LOCAL_DOT = `${REGEXP_COMPONENT_DOT}(\\.${REGEXP_COMPONENT_DOT})*`;
-const REGEXP_LOCAL_QUOTED = `"${REGEXP_COMPONENT_QUOTED}"`;
-const REGEXP_LOCAL = `(${REGEXP_LOCAL_DOT}|${REGEXP_LOCAL_QUOTED})`;
+const PATTERN_LOCAL_DOT = `${PATTERN_COMPONENT_DOT}(\\.${PATTERN_COMPONENT_DOT})*`;
+const PATTERN_LOCAL_QUOTED = `"${PATTERN_COMPONENT_QUOTED}"`;
+const PATTERN_LOCAL = `(${PATTERN_LOCAL_DOT}|${PATTERN_LOCAL_QUOTED})`;
 
-const REGEXP_DOMAIN_GENERAL = `(${REGEXP_COMPONENT_SLD}\\.)+${REGEXP_COMPONENT_TLD}`;
-const REGEXP_DOMAIN_IP = `\\[(${REGEXP_IPV4}|IPv6:${REGEXP_IPV6})\\]`;
-const REGEXP_DOMAIN = `(${REGEXP_DOMAIN_GENERAL}|${REGEXP_DOMAIN_IP})`;
+const PATTERN_DOMAIN_GENERAL = `(${PATTERN_COMPONENT_SLD}\\.)+${PATTERN_COMPONENT_TLD}`;
+const PATTERN_DOMAIN_IP = `\\[(${PATTERN_IPV4}|IPv6:${PATTERN_IPV6})\\]`;
+const PATTERN_DOMAIN = `(${PATTERN_DOMAIN_GENERAL}|${PATTERN_DOMAIN_IP})`;
 
-const REGEXP = `${REGEXP_LOCAL}@${REGEXP_DOMAIN}`;
+const PATTERN = `${PATTERN_LOCAL}@${PATTERN_DOMAIN}`;
 
-const PATTERN = new RegExp(`^${REGEXP}$`);
+const REGEXP = new RegExp(`^${PATTERN}$`);
 
 /**
  * adjuster for e-mail
@@ -48,7 +48,7 @@ export default class EmailAdjuster extends AdjusterInterface
 
 		this._objAdjuster = new StringAdjuster()
 			.maxLength(MAX_LENGTH)
-			.pattern(PATTERN);
+			.pattern(REGEXP);
 	}
 
 	/**
