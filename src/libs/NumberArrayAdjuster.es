@@ -1,8 +1,8 @@
 import {CAUSE} from "./constants";
+import {isString} from "./utilities";
 import AdjusterInterface from "./AdjusterInterface";
-import NumberAdjuster from "./NumberAdjuster.es";
-import AdjusterError from "./AdjusterError.es";
-import {isString} from "./utilities.es";
+import NumberAdjuster from "./NumberAdjuster";
+import AdjusterError from "./AdjusterError";
 
 /**
  * adjuster for array of number
@@ -51,7 +51,7 @@ export default class NumberArrayAdjuster extends AdjusterInterface
 	/**
 	 * adjust
 	 * @param {_TypeValues} values
-	 * @return {boolean} finished or not
+	 * @return {boolean} finished adjustment or not
 	 * @private
 	 */
 	__adjustDefault(values)
@@ -86,7 +86,7 @@ export default class NumberArrayAdjuster extends AdjusterInterface
 	/**
 	 * adjust
 	 * @param {_TypeValues} values
-	 * @return {boolean}
+	 * @return {boolean} finished adjustment or not
 	 * @private
 	 */
 	__adjustEmpty(values)
@@ -130,7 +130,7 @@ export default class NumberArrayAdjuster extends AdjusterInterface
 	/**
 	 * adjust
 	 * @param {_TypeValues} values
-	 * @return {boolean}
+	 * @return {boolean} finished adjustment or not
 	 * @private
 	 */
 	__adjustToArray(values)
@@ -156,7 +156,7 @@ export default class NumberArrayAdjuster extends AdjusterInterface
 
 	/**
 	 * set min-length of array elements
-	 * @param {int} length
+	 * @param {int} length min-length; error if shorter
 	 * @return {NumberArrayAdjuster}
 	 */
 	minLength(length)
@@ -168,7 +168,7 @@ export default class NumberArrayAdjuster extends AdjusterInterface
 	/**
 	 * adjust
 	 * @param {_TypeValues} values
-	 * @return {boolean}
+	 * @return {boolean} finished adjustment or not
 	 * @private
 	 */
 	__adjustMinLength(values)
@@ -202,7 +202,7 @@ export default class NumberArrayAdjuster extends AdjusterInterface
 	/**
 	 * adjust
 	 * @param {_TypeValues} values
-	 * @return {boolean}
+	 * @return {boolean} finished adjustment or not
 	 * @private
 	 */
 	__adjustMaxLength(values)
@@ -295,7 +295,7 @@ export default class NumberArrayAdjuster extends AdjusterInterface
 	/**
 	 * adjust
 	 * @param {_TypeValues} values
-	 * @return {boolean}
+	 * @return {boolean} finished adjustment or not
 	 * @private
 	 */
 	__adjustEach(values)
