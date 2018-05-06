@@ -91,11 +91,15 @@ export default class StringAdjuster extends AdjusterInterface
 
 	/**
 	 * specify acceptable pattern by regular expression
-	 * @param {RegExp} pattern acceptable pattern
+	 * @param {string|String|RegExp} pattern acceptable pattern(regular expression); string or RegExp
 	 * @return {StringAdjuster}
 	 */
 	pattern(pattern)
 	{
+		if(typeof pattern === "string" || pattern instanceof String)
+		{
+			pattern = new RegExp(pattern);
+		}
 		this._pattern = pattern;
 		return this;
 	}
