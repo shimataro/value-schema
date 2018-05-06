@@ -16,10 +16,11 @@ npm install -S adjuster
 import adjuster from "adjuster";
 
 // should be OK
-adjuster.number().adjust("-123");        // === -123;
+adjuster.number().adjust(-123);          // === -123;
 adjuster.number().in(1, 3, 5).adjust(1); // === 1
 
 // should be adjusted
+adjuster.number().adjust("-123");                  // === -123;
 adjuster.number().default(10).adjust(undefined);   // === 10
 adjuster.number().allowEmpty(123).adjust("");      // === 123
 adjuster.number().minValue(1, true).adjust(0);     // === 1
@@ -43,11 +44,12 @@ adjuster.number().maxValue(100).adjust(101); // throws AdjusterError; err.cause 
 import adjuster from "adjuster";
 
 // should be OK
-adjuster.string().adjust(123);                                // === "123"
+adjuster.string().adjust("123");                              // === "123"
 adjuster.string().allowEmpty("xyz").adjust("");               // === "xyz"
 adjuster.string().in("eat", "sleep", "play").adjust("sleep"); // === "sleep"
 
 // should be adjusted
+adjuster.string().adjust(123);                          // === "123"
 adjuster.string().default("xyz").adjust(undefined);     // === "xyz"
 adjuster.string().maxLength(5, true).adjust("abcdefg"); // === "abcde"
 
