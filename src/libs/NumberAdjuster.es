@@ -33,17 +33,6 @@ export default class NumberAdjuster extends AdjusterInterface
 	}
 
 	/**
-	 * set default value; enable to omit
-	 * @param {number} value default value
-	 * @return {NumberAdjuster}
-	 */
-	default(value)
-	{
-		this._default = value;
-		return this;
-	}
-
-	/**
 	 * adjust type
 	 * @param {_TypeValues} values
 	 * @return {boolean} finished adjustment or not
@@ -62,6 +51,17 @@ export default class NumberAdjuster extends AdjusterInterface
 		// failed to cast
 		const cause = CAUSE.TYPE;
 		throw new AdjusterError(cause, values.originalValue);
+	}
+
+	/**
+	 * set default value; enable to omit
+	 * @param {number} value default value
+	 * @return {NumberAdjuster}
+	 */
+	default(value)
+	{
+		this._default = value;
+		return this;
 	}
 
 	/**
@@ -271,6 +271,7 @@ export default class NumberAdjuster extends AdjusterInterface
 			{
 				return values.adjustedValue;
 			}
+
 			return values.adjustedValue;
 		}
 		catch(err)
