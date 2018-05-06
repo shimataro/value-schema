@@ -31,7 +31,7 @@ function testType()
 	{
 		expect(() =>
 		{
-			objNumberAdjuster.adjust("abc")
+			objNumberAdjuster.adjust("abc");
 		}).toThrow(CAUSE.TYPE);
 	});
 }
@@ -47,7 +47,7 @@ function testRequired()
 	{
 		expect(() =>
 		{
-			objNumberAdjuster.adjust(undefined)
+			objNumberAdjuster.adjust(undefined);
 		}).toThrow(CAUSE.REQUIRED);
 	});
 }
