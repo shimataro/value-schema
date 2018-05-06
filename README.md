@@ -154,7 +154,7 @@ adjuster.email().adjust("@example.com");
 adjuster.email().adjust(".a@example.com");
 adjuster.email().adjust("a.@example.com");
 adjuster.email().adjust("a..a@example.com");
-adjuster.emal().adjust("user@example@com");
+adjuster.email().adjust("user@example@com");
 adjuster.email().adjust("user-example-com");
 adjuster.email().adjust("user@example_domain.com");
 adjuster.email().adjust("user@example.com2");
