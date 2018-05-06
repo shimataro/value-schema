@@ -1,4 +1,5 @@
 import {CAUSE} from "./constants";
+import {isString} from "./utilities";
 import AdjusterInterface from "./AdjusterInterface";
 
 /**
@@ -96,7 +97,7 @@ export default class StringAdjuster extends AdjusterInterface
 	 */
 	pattern(pattern)
 	{
-		if(typeof pattern === "string" || pattern instanceof String)
+		if(isString(pattern))
 		{
 			pattern = new RegExp(pattern);
 		}
