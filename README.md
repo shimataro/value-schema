@@ -38,6 +38,47 @@ adjuster.number().minValue(1).adjust(0);     // throws AdjusterError; err.cause 
 adjuster.number().maxValue(100).adjust(101); // throws AdjusterError; err.cause === adjuster.CAUSE.MAX_VALUE
 ```
 
+### numberArray
+
+```javascript
+import adjuster from "adjuster";
+
+// should be OK
+adjuster.numberArray().adjust([1, 2, 3]);                       // === [1, 2, 3]
+adjuster.numberArray().minLength(2).adjust([1, 2]);             // === [1, 2]
+adjuster.numberArray().maxLength(2).adjust([1, 2]);             // === [1, 2]
+adjuster.numberArray().eachIn(1, 2, 3).adjust([1, 2]);          // === [1, 2]
+adjuster.numberArray().eachMinValue(10).adjust([10, 11, 12]);   // === [10, 11, 12]
+adjuster.numberArray().eachMaxValue(10).adjust([8, 9, 10]);     // === [8, 9, 10]
+
+// should be adjusted
+adjuster.numberArray().adjust([1, "-2", "+3"]);                             // === [1, -2, 3]
+adjuster.numberArray().default([1, 2]).adjust(undefined);                   // === [1, 2]
+adjuster.numberArray().allowEmpty([1, 2]).adjust("");                       // === [1, 2]
+adjuster.numberArray().separatedBy(",").adjust("1,2,3");                    // === [1, 2, 3]
+adjuster.numberArray().toArray().adjust(0);                                 // === [0]
+adjuster.numberArray().maxLength(2, true).adjust([1, 2, 3]);                // === [1, 2]
+adjuster.numberArray().ignoreEachErrors().adjust([undefined, 1, "abc", 2]); // === [1, 2]
+adjuster.numberArray().eachDefault(999).adjust([1, undefined, 3]);          // === [1, 999, 3]
+adjuster.numberArray().eachAllowEmpty(999).adjust([1, "", 3]);              // === [1, 999, 3]
+adjuster.numberArray().eachMinValue(10, true).adjust([9, 10, 11]);          // === [10, 10, 11]
+adjuster.numberArray().eachMaxValue(10, true).adjust([9, 10, 11]);          // === [9, 10, 10]
+
+// should cause errors
+adjuster.numberArray().adjust("abc");                           // throws AdjusterError; err.cause === adjuster.CAUSE.TYPE
+adjuster.numberArray().adjust(0);                               // throws AdjusterError; err.cause === adjuster.CAUSE.TYPE
+adjuster.numberArray().adjust(undefined);                       // throws AdjusterError; err.cause === adjuster.CAUSE.REQUIRED
+adjuster.numberArray().adjust("");                              // throws AdjusterError; err.cause === adjuster.CAUSE.EMPTY
+adjuster.numberArray().minLength(2).adjust([1]);                // throws AdjusterError; err.cause === adjuster.CAUSE.MIN_LENGTH
+adjuster.numberArray().maxLength(2).adjust([1, 2, 3]);          // throws AdjusterError; err.cause === adjuster.CAUSE.MAX_LENGTH
+adjuster.numberArray().adjust(["abc"]);                         // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_TYPE
+adjuster.numberArray().adjust([1, undefined, 3]);               // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_REQUIRED
+adjuster.numberArray().adjust([""]);                            // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_EMPTY
+adjuster.numberArray().eachIn(1, 2, 3).adjust([0, 1]);          // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_IN
+adjuster.numberArray().eachMinValue(10).adjust([9, 10, 11]);    // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_MIN_VALUE
+adjuster.numberArray().eachMaxValue(10).adjust([9, 10, 11]);    // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_MAX_VALUE
+```
+
 ### string
 
 ```javascript
@@ -129,6 +170,7 @@ const inputData = {
     name: "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Ciprin Cipriano de la Santísima Trinidad Ruiz y Picasso",
     email: "picasso@example.com",
     state: "active",
+    classes: "1,3,abc,4",
     remote_addr: "127.0.0.1",
     remote_addr_ipv6: "::1",
     limit: "0",
@@ -138,6 +180,7 @@ const adjusters = {
     name: adjuster.string().maxLength(16, true),
     email: adjuster.email(),
     state: adjuster.string().in("active", "inactive"),
+    classes: adjuster.numberArray().separatedBy(",").ignoreEachErrors(),
     remote_addr: adjuster.ipv4(),
     remote_addr_ipv6: adjuster.ipv6(),
     limit: adjuster.number().default(10).minValue(1, true).maxValue(100, true),
@@ -148,6 +191,7 @@ const expected = {
     name: "Pablo Diego José",
     email: "picasso@example.com",
     state: "active",
+    classes: [1, 3, 4],
     remote_addr: "127.0.0.1",
     remote_addr_ipv6: "::1",
     limit: 1,
@@ -160,6 +204,9 @@ const adjusted = adjuster.adjustData(inputData, adjusters);
 
 ## Release notes
 
+* YYYY/MM/DD *version x.y.z*
+    * New Functions
+        * `adjuster.numberArray()`
 * 2018/05/06 *version 0.4.0*
     * New Functions
         * `adjuster.ipv4()`

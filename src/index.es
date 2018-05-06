@@ -1,6 +1,7 @@
 import {CAUSE} from "./libs/constants";
 import adjustData from "./libs/adjustData";
 import NumberAdjuster from "./libs/NumberAdjuster";
+import NumberArrayAdjuster from "./libs/NumberArrayAdjuster";
 import StringAdjuster from "./libs/StringAdjuster";
 import IPv4Adjuster from "./libs/IPv4Adjuster";
 import IPv6Adjuster from "./libs/IPv6Adjuster";
@@ -16,6 +17,11 @@ export default {
 	number: () =>
 	{
 		return new NumberAdjuster();
+	},
+	/** @return {NumberArrayAdjuster} */
+	numberArray: () =>
+	{
+		return new NumberArrayAdjuster();
 	},
 	/** @return {StringAdjuster} */
 	string: () =>

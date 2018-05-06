@@ -41,3 +41,9 @@ export default class AdjusterInterface
  * @param {AdjusterError} err
  * @return {*}
  */
+/**
+ * type
+ * @typedef {Object} _TypeValues
+ * @property {*} originalValue
+ * @property {*} adjustedValue
+ */
