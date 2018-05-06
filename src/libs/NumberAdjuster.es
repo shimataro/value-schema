@@ -147,7 +147,7 @@ export default class NumberAdjuster extends AdjusterInterface
 		}
 		if(this._in.includes(values.adjustedValue))
 		{
-			return false;
+			return true;
 		}
 
 		const cause = CAUSE.IN;
