@@ -248,6 +248,8 @@ const adjusted = adjuster.adjustData(inputData, adjusters);
     * New Functions
         * `adjuster.numberArray()`
         * `adjuster.stringArray()`
+    * Change Specifications
+        * throw first error when both `onError` and `onErrorAll` are null in `adjustData()`
 * 2018/05/06 *version 0.4.0*
     * New Functions
         * `adjuster.ipv4()`
