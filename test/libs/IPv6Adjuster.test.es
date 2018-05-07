@@ -9,6 +9,9 @@ import IPv6Adjuster from "libs/IPv6Adjuster";
 	describe("IPv6", testIPv6);
 }
 
+/**
+ * required value
+ */
 function testRequired()
 {
 	const objIPv6Adjuster = new IPv6Adjuster();
@@ -21,6 +24,9 @@ function testRequired()
 	});
 }
 
+/**
+ * default value
+ */
 function testDefault()
 {
 	const objIPv6Adjuster = new IPv6Adjuster().default("::1");
@@ -30,6 +36,9 @@ function testDefault()
 	});
 }
 
+/**
+ * empty value
+ */
 function testEmpty()
 {
 	const objIPv6Adjuster = new IPv6Adjuster();
@@ -42,6 +51,9 @@ function testEmpty()
 	});
 }
 
+/**
+ * empty value (allowd)
+ */
 function testAllowEmpty()
 {
 	const objIPv6Adjuster = new IPv6Adjuster().allowEmpty("::1");
@@ -51,6 +63,9 @@ function testAllowEmpty()
 	});
 }
 
+/**
+ * IPv6 string
+ */
 function testIPv6()
 {
 	const objIPv6Adjuster = new IPv6Adjuster();

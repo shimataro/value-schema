@@ -9,6 +9,9 @@ import IPv4Adjuster from "libs/IPv4Adjuster";
 	describe("IPv4", testIPv4);
 }
 
+/**
+ * required value
+ */
 function testRequired()
 {
 	const objIPv4Adjuster = new IPv4Adjuster();
@@ -21,6 +24,9 @@ function testRequired()
 	});
 }
 
+/**
+ * default value
+ */
 function testDefault()
 {
 	const objIPv4Adjuster = new IPv4Adjuster().default("1.1.1.1");
@@ -30,6 +36,9 @@ function testDefault()
 	});
 }
 
+/**
+ * empty value
+ */
 function testEmpty()
 {
 	const objIPv4Adjuster = new IPv4Adjuster();
@@ -42,6 +51,9 @@ function testEmpty()
 	});
 }
 
+/**
+ * empty value (allowd)
+ */
 function testAllowEmpty()
 {
 	const objIPv4Adjuster = new IPv4Adjuster().allowEmpty("1.1.1.1");
@@ -51,6 +63,9 @@ function testAllowEmpty()
 	});
 }
 
+/**
+ * IPv4 string
+ */
 function testIPv4()
 {
 	const objIPv4Adjuster = new IPv4Adjuster();
