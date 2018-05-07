@@ -133,7 +133,7 @@ adjuster.stringArray().adjust("abc");                               // throws Ad
 adjuster.stringArray().adjust(undefined);                           // throws AdjusterError; err.cause === adjuster.CAUSE.REQUIRED
 adjuster.stringArray().adjust("");                                  // throws AdjusterError; err.cause === adjuster.CAUSE.EMPTY
 adjuster.stringArray().minLength(1).adjust([]);                     // throws AdjusterError; err.cause === adjuster.CAUSE.MIN_LENGTH
-adjuster.stringArray().maxLength(1).adjust([1, 2]);                 // throws AdjusterError; err.cause === adjuster.CAUSE.MAX_LENGTH
+adjuster.stringArray().maxLength(1).adjust(["a", "b"]);             // throws AdjusterError; err.cause === adjuster.CAUSE.MAX_LENGTH
 adjuster.stringArray().adjust(["a", undefined, "b"]);               // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_REQUIRED
 adjuster.stringArray().adjust([""]);                                // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_EMPTY
 adjuster.stringArray().eachIn("a", "b").adjust(["x"]);              // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_IN
