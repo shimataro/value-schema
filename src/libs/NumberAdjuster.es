@@ -40,6 +40,11 @@ export default class NumberAdjuster extends AdjusterInterface
 	 */
 	__adjustType(values)
 	{
+		if(typeof values.adjustedValue === "number")
+		{
+			return false;
+		}
+
 		const adjustedValue = Number(values.adjustedValue);
 
 		if(!isNaN(adjustedValue))

@@ -41,7 +41,7 @@ export default class StringAdjuster extends AdjusterInterface
 	 */
 	__adjustType(values)
 	{
-		if(isString(values.adjustedValue))
+		if(typeof values.adjustedValue === "string")
 		{
 			return false;
 		}
