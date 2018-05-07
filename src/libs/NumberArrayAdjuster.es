@@ -1,8 +1,8 @@
 import {CAUSE} from "./constants";
 import {isString} from "./utilities";
 import AdjusterInterface from "./AdjusterInterface";
-import NumberAdjuster from "./NumberAdjuster";
 import AdjusterError from "./AdjusterError";
+import NumberAdjuster from "./NumberAdjuster";
 
 /**
  * adjuster for array of number
