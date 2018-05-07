@@ -102,6 +102,46 @@ adjuster.string().minLength(5).adjust("a"); // throws AdjusterError; err.cause =
 adjuster.string().maxLength(5).adjust("abcdefg"); // throws AdjusterError; err.cause === adjuster.CAUSE.MAX_LENGTH
 ```
 
+### stringArray
+
+```javascript
+import adjuster from "adjuster";
+
+// should be OK
+adjuster.stringArray().adjust(["a", "b"]);                          // === ["a", "b"]
+adjuster.stringArray().minLength(1).adjust(["a"]);                  // === ["a"]
+adjuster.stringArray().maxLength(2).adjust(["a"]);                  // === ["a"]
+adjuster.stringArray().eachIn("a", "b").adjust(["a"]);              // === ["a"]
+adjuster.stringArray().eachMinLength(3).adjust(["abc", "xyz"]);     // === ["abc", "xyz"]
+adjuster.stringArray().eachMaxLength(3).adjust(["abc", "xyz"]);     // === ["abc", "xyz"]
+adjuster.stringArray().eachPattern(/^Go+gle$/).adjust(["Google"]);  // === ["Google"]
+
+// should be adjusted
+adjuster.stringArray().adjust(["a", 1, -2]);                                // === ["a", "1", "-2"]
+adjuster.stringArray().default(["a", "b"]).adjust(undefined);               // === ["a", "b"]
+adjuster.stringArray().allowEmpty(["a", "b"]).adjust("");                   // === ["a", "b"]
+adjuster.stringArray().separatedBy(",").adjust("a,b,c");                    // === ["a", "b", "c"]
+adjuster.stringArray().toArray().adjust("a");                               // === ["a"]
+adjuster.stringArray().maxLength(1, true).adjust(["a", "b"]);               // === ["a"]
+adjuster.stringArray().ignoreEachErrors().adjust([undefined, "a", "", 1]);  // === ["a", "1"]
+adjuster.stringArray().eachDefault("z").adjust(["a", undefined, "b"]);      // === ["a", "z", "b"]
+adjuster.stringArray().eachAllowEmpty("z").adjust(["a", "", "b"]);          // === ["a", "z", "b"]
+adjuster.stringArray().eachMaxLength(3, true).adjust(["abcd", "xyz0"]);     // === ["abc", "xyz"]
+
+// should cause errors
+adjuster.stringArray().adjust("abc");                               // throws AdjusterError; err.cause === adjuster.CAUSE.TYPE
+adjuster.stringArray().adjust(undefined);                           // throws AdjusterError; err.cause === adjuster.CAUSE.REQUIRED
+adjuster.stringArray().adjust("");                                  // throws AdjusterError; err.cause === adjuster.CAUSE.EMPTY
+adjuster.stringArray().minLength(1).adjust([]);                     // throws AdjusterError; err.cause === adjuster.CAUSE.MIN_LENGTH
+adjuster.stringArray().maxLength(1).adjust([1, 2]);                 // throws AdjusterError; err.cause === adjuster.CAUSE.MAX_LENGTH
+adjuster.stringArray().adjust(["a", undefined, "b"]);               // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_REQUIRED
+adjuster.stringArray().adjust([""]);                                // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_EMPTY
+adjuster.stringArray().eachIn("a", "b").adjust(["x"]);              // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_IN
+adjuster.stringArray().eachMinLength(3).adjust(["ab"]);             // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_MIN_LENGTH
+adjuster.stringArray().eachMaxLength(3).adjust(["abcd"]);           // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_MAX_LENGTH
+adjuster.stringArray().eachPattern(/^Go+gle$/).adjust(["Ggle"]);    // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_PATTERN
+```
+
 ### IPv4
 
 ```javascript
@@ -207,6 +247,7 @@ const adjusted = adjuster.adjustData(inputData, adjusters);
 * YYYY/MM/DD *version x.y.z*
     * New Functions
         * `adjuster.numberArray()`
+        * `adjuster.stringArray()`
 * 2018/05/06 *version 0.4.0*
     * New Functions
         * `adjuster.ipv4()`
