@@ -14,6 +14,9 @@ import StringAdjuster from "libs/StringAdjuster";
 	describe("pattern", testPattern);
 }
 
+/**
+ * type
+ */
 function testType()
 {
 	const objStringAdjuster = new StringAdjuster();
@@ -24,6 +27,9 @@ function testType()
 	});
 }
 
+/**
+ * required value
+ */
 function testRequired()
 {
 	const objStringAdjuster = new StringAdjuster();
@@ -36,6 +42,9 @@ function testRequired()
 	});
 }
 
+/**
+ * default value
+ */
 function testDefault()
 {
 	const objStringAdjuster = new StringAdjuster().default("xyz");
@@ -45,6 +54,9 @@ function testDefault()
 	});
 }
 
+/**
+ * empty value
+ */
 function testEmpty()
 {
 	const objStringAdjuster = new StringAdjuster();
@@ -57,6 +69,9 @@ function testEmpty()
 	});
 }
 
+/**
+ * empty value (allowed)
+ */
 function testAllowEmpty()
 {
 	const objStringAdjuster = new StringAdjuster().allowEmpty("qwerty");
@@ -66,6 +81,9 @@ function testAllowEmpty()
 	});
 }
 
+/**
+ * set
+ */
 function testIn()
 {
 	const objStringAdjuster = new StringAdjuster().in("", "eat", "sleep", "play");
@@ -85,6 +103,9 @@ function testIn()
 	});
 }
 
+/**
+ * minimum length of string
+ */
 function testMinLength()
 {
 	const objStringAdjuster = new StringAdjuster().minLength(4);
@@ -101,6 +122,9 @@ function testMinLength()
 	});
 }
 
+/**
+ * maximum length of string
+ */
 function testMaxLength()
 {
 	const objStringAdjuster = new StringAdjuster().maxLength(8);
@@ -117,6 +141,9 @@ function testMaxLength()
 	});
 }
 
+/**
+ * maximum length of string (adjusted)
+ */
 function testMaxLengthAdjusted()
 {
 	const objStringAdjuster = new StringAdjuster().maxLength(8, true);
@@ -126,6 +153,9 @@ function testMaxLengthAdjusted()
 	});
 }
 
+/**
+ * pattern
+ */
 function testPattern()
 {
 	const objStringAdjuster = new StringAdjuster().pattern(/^Go+gle$/);

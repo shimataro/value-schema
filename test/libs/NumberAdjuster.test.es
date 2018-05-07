@@ -14,6 +14,9 @@ import NumberAdjuster from "libs/NumberAdjuster";
 	describe("maxValue (adjusted)", testMaxValueAdjusted);
 }
 
+/**
+ * type
+ */
 function testType()
 {
 	const objNumberAdjuster = new NumberAdjuster();
@@ -36,6 +39,9 @@ function testType()
 	});
 }
 
+/**
+ * required value
+ */
 function testRequired()
 {
 	const objNumberAdjuster = new NumberAdjuster();
@@ -52,6 +58,9 @@ function testRequired()
 	});
 }
 
+/**
+ * default value
+ */
 function testDefault()
 {
 	const objNumberAdjuster = new NumberAdjuster().default(10);
@@ -65,6 +74,9 @@ function testDefault()
 	});
 }
 
+/**
+ * empty value
+ */
 function testEmpty()
 {
 	const objNumberAdjuster = new NumberAdjuster();
@@ -77,6 +89,9 @@ function testEmpty()
 	});
 }
 
+/**
+ * empty value (allowd)
+ */
 function testAllowEmpty()
 {
 	const objNumberAdjuster = new NumberAdjuster().allowEmpty(123);
@@ -86,6 +101,9 @@ function testAllowEmpty()
 	});
 }
 
+/**
+ * set
+ */
 function testIn()
 {
 	const objNumberAdjuster = new NumberAdjuster().in(1, 3, 5);
@@ -104,6 +122,9 @@ function testIn()
 	});
 }
 
+/**
+ * minimum value
+ */
 function testMinValue()
 {
 	const objNumberAdjuster = new NumberAdjuster().minValue(10);
@@ -120,6 +141,9 @@ function testMinValue()
 	});
 }
 
+/**
+ * minimum value (adjusted)
+ */
 function testMinValueAdjusted()
 {
 	const objNumberAdjuster = new NumberAdjuster().minValue(10, true);
@@ -129,6 +153,9 @@ function testMinValueAdjusted()
 	});
 }
 
+/**
+ * maximum value
+ */
 function testMaxValue()
 {
 	const objNumberAdjuster = new NumberAdjuster().maxValue(100);
@@ -145,6 +172,9 @@ function testMaxValue()
 	});
 }
 
+/**
+ * maximum value (adjusted)
+ */
 function testMaxValueAdjusted()
 {
 	const objNunmberAdjuster = new NumberAdjuster().maxValue(100, true);

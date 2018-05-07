@@ -23,6 +23,9 @@ import NumberArrayAdjuster from "libs/NumberArrayAdjuster";
 	describe("eachMaxValue (adjusted)", testEachMaxValueAdjusted);
 }
 
+/**
+ * type
+ */
 function testType()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster();
@@ -48,6 +51,9 @@ function testType()
 	});
 }
 
+/**
+ * required value
+ */
 function testRequired()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster();
@@ -60,6 +66,9 @@ function testRequired()
 	});
 }
 
+/**
+ * default value
+ */
 function testDefault()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster().default([1, 2]);
@@ -69,6 +78,9 @@ function testDefault()
 	});
 }
 
+/**
+ * empty value
+ */
 function testEmpty()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster();
@@ -81,6 +93,9 @@ function testEmpty()
 	});
 }
 
+/**
+ * empty value (allowed)
+ */
 function testAllowEmpty()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster().allowEmpty([1, 2]);
@@ -90,6 +105,9 @@ function testAllowEmpty()
 	});
 }
 
+/**
+ * separator
+ */
 function testSeparatedBy()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster().separatedBy(",");
@@ -99,6 +117,9 @@ function testSeparatedBy()
 	});
 }
 
+/**
+ * convert to array
+ */
 function testToArray()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster().toArray();
@@ -108,6 +129,9 @@ function testToArray()
 	});
 }
 
+/**
+ * minimum length of elements
+ */
 function testMinLength()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster().minLength(1);
@@ -124,6 +148,9 @@ function testMinLength()
 	});
 }
 
+/**
+ * maximum length of elements
+ */
 function testMaxLength()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster().maxLength(1);
@@ -140,6 +167,9 @@ function testMaxLength()
 	});
 }
 
+/**
+ * maximum length of elements (adjusted)
+ */
 function testMaxLengthAdjusted()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster().maxLength(1, true);
@@ -153,6 +183,9 @@ function testMaxLengthAdjusted()
 	});
 }
 
+/**
+ * ignore elements' error
+ */
 function testIgnoreEachErrors()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster().ignoreEachErrors().separatedBy(",");
@@ -163,6 +196,9 @@ function testIgnoreEachErrors()
 	});
 }
 
+/**
+ * each elements
+ */
 function testEach()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster();
@@ -183,6 +219,9 @@ function testEach()
 	});
 }
 
+/**
+ * each elements; default value
+ */
 function testEachDefault()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster().eachDefault(999);
@@ -199,6 +238,9 @@ function testEachDefault()
 	});
 }
 
+/**
+ * each elements; empty value
+ */
 function testEachAllowEmpty()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster().eachAllowEmpty(999);
@@ -215,6 +257,9 @@ function testEachAllowEmpty()
 	});
 }
 
+/**
+ * each elements; set
+ */
 function testEachIn()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster().eachIn(1, 2, 3);
@@ -231,6 +276,9 @@ function testEachIn()
 	});
 }
 
+/**
+ * each elements; minimum value
+ */
 function testEachMinValue()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster().eachMinValue(10);
@@ -247,6 +295,9 @@ function testEachMinValue()
 	});
 }
 
+/**
+ * each elements; minimum value (adjusted)
+ */
 function testEachMinValueAdjusted()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster().eachMinValue(10, true);
@@ -256,6 +307,9 @@ function testEachMinValueAdjusted()
 	});
 }
 
+/**
+ * each elements; maximum value
+ */
 function testEachMaxValue()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster().eachMaxValue(10);
@@ -272,6 +326,9 @@ function testEachMaxValue()
 	});
 }
 
+/**
+ * each elements; maximum value (adjusted)
+ */
 function testEachMaxValueAdjusted()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster().eachMaxValue(10, true);
