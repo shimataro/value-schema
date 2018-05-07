@@ -15,6 +15,11 @@ function adjustData(data, adjusters, onError = null, onErrorAll = null)
 	{
 		const adjustedValue = adjusters[key].adjust(data[key], (err) =>
 		{
+			if(onError === null && onErrorAll === null)
+			{
+				throw err;
+			}
+
 			errs[key] = err;
 			if(onError !== null)
 			{
