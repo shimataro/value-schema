@@ -22,4 +22,5 @@ Thumbs.db
 /*.iml
 /nbproject/
 /.project
+/.vscode/
 /*.code-workspace
