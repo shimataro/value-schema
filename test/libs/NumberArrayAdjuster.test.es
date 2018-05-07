@@ -20,7 +20,7 @@ import NumberArrayAdjuster from "libs/NumberArrayAdjuster";
 	describe("eachMinValue", testEachMinValue);
 	describe("eachMinValue (adjusted)", testEachMinValueAdjusted);
 	describe("eachMaxValue", testEachMaxValue);
-	describe("eachMaxValue (adjusted", testEachMaxValueAdjusted);
+	describe("eachMaxValue (adjusted)", testEachMaxValueAdjusted);
 }
 
 function testType()
