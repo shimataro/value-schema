@@ -2,6 +2,10 @@ language: "node_js"
 node_js: # jest no longer supports v4
   - "6"
   - "8"
+branches:
+  only:
+  - "master"
+  - "develop"
 cache:
   directories:
     - "node_modules"
