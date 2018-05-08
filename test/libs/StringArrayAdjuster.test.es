@@ -330,7 +330,7 @@ function testEachPattern()
 	const objStringArrayAdjuster = new StringArrayAdjuster().eachPattern(/^Go+gle$/);
 	it("should be OK", () =>
 	{
-		expect(objStringArrayAdjuster.adjust(["Gogle", "google", "Gooogle"])).toEqual(["Gogle", "Google", "Gooogle"]);
+		expect(objStringArrayAdjuster.adjust(["Gogle", "Google", "Gooogle"])).toEqual(["Gogle", "Google", "Gooogle"]);
 	});
 	it("should cause error(s)", () =>
 	{
