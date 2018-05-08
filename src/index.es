@@ -15,8 +15,7 @@ export default {
 	adjustData: adjustData,
 
 	/** @return {NumberAdjuster} */
-	number: () =>
-	{
+	number: () => {
 		return new NumberAdjuster();
 	},
 	/** @return {NumberArrayAdjuster} */
