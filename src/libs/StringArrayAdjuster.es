@@ -333,8 +333,8 @@ export default class StringArrayAdjuster extends AdjusterInterface
 				{
 					err.cause = causeMap[err.cause];
 				}
-				throw new AdjusterError(err.cause, values.originalValue);
 
+				throw new AdjusterError(err.cause, values.originalValue);
 			});
 
 			if(adjustedElement === undefined)
