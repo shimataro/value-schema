@@ -27,13 +27,10 @@
     "node": ">= 4.0.0"
   },
   "scripts": {
-    "build": "gulp build",
-    "build-js": "gulp build-js",
-    "watch": "gulp watch",
-    "watch-gulpfile": "gulp watch-gulpfile",
-    "watch-js": "gulp watch-js",
+    "build": "babel src --out-dir dist --source-maps",
+    "watch": "babel src --out-dir dist --source-maps --watch",
     "postinstall": "npm run build",
-    "test": "NODE_PATH=./src jest",
+    "test": "NODE_PATH=./dist jest",
     "lint": "eslint src test --ext .es",
     "check-updates": "ncu"
   },
@@ -44,10 +41,9 @@
     "npm-check-updates": "^2.13.0"
   },
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^7.0.0"
+    "babel-preset-env": "^1.6.1"
   },
   "jest": {
     "verbose": false,
