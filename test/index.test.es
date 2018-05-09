@@ -11,7 +11,7 @@ function testData()
 {
 	it("should be adjusted", () =>
 	{
-		const inputData = {
+		const input = {
 			id: "1",
 			name: "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Ciprin Cipriano de la Santísima Trinidad Ruiz y Picasso",
 			email: "picasso@example.com",
@@ -47,7 +47,7 @@ function testData()
 			offset: 0,
 		};
 
-		const adjusted = adjuster.adjustData(inputData, adjusters);
+		const adjusted = adjuster.adjust(input, adjusters);
 		expect(adjusted).toEqual(expected);
 	});
 }

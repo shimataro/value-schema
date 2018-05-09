@@ -1,4 +1,4 @@
-export default adjustData;
+export default adjust;
 
 /**
  * adjust multiple variables (as object)
@@ -7,7 +7,7 @@ export default adjustData;
  * @param {?_OnDataError} onError
  * @param {?_OnDataErrorAll} onErrorAll
  */
-function adjustData(data, adjusters, onError = null, onErrorAll = null)
+function adjust(data, adjusters, onError = null, onErrorAll = null)
 {
 	const result = {};
 	const errs = {};

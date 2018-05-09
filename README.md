@@ -17,17 +17,6 @@ npm install -S adjuster
 ```javascript
 import adjuster from "adjuster";
 
-const inputData = {
-    id: "1",
-    name: "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Ciprin Cipriano de la Santísima Trinidad Ruiz y Picasso",
-    email: "picasso@example.com",
-    state: "active",
-    classes: "1,3,abc,4",
-    skills: "c,c++,javascript,python,,swift,kotlin",
-    remote_addr: "127.0.0.1",
-    remote_addr_ipv6: "::1",
-    limit: "0",
-};
 const adjusters = {
     id: adjuster.number().minValue(1),
     name: adjuster.string().maxLength(16, true),
@@ -39,6 +28,17 @@ const adjusters = {
     remote_addr_ipv6: adjuster.ipv6(),
     limit: adjuster.number().default(10).minValue(1, true).maxValue(100, true),
     offset: adjuster.number().default(0).minValue(0, true),
+};
+const input = {
+    id: "1",
+    name: "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Ciprin Cipriano de la Santísima Trinidad Ruiz y Picasso",
+    email: "picasso@example.com",
+    state: "active",
+    classes: "1,3,abc,4",
+    skills: "c,c++,javascript,python,,swift,kotlin",
+    remote_addr: "127.0.0.1",
+    remote_addr_ipv6: "::1",
+    limit: "0",
 };
 const expected = {
     id: 1,
@@ -53,7 +53,7 @@ const expected = {
     offset: 0,
 };
 
-const adjusted = adjuster.adjustData(inputData, adjusters);
+const adjusted = adjuster.adjust(input, adjusters);
 // expect(adjusted).toEqual(expected);
 ```
 
@@ -249,12 +249,13 @@ adjuster.email().adjust("user@example.com2");
 
 ## Release notes
 
-* YYYY/MM/DD *version x.y.z*
+* **NEXT VERSION**
     * New Functions
         * `adjuster.numberArray()`
         * `adjuster.stringArray()`
     * Change Specifications
-        * throw first error when both `onError` and `onErrorAll` are null in `adjustData()`
+        * rename `adjuster.adjustData()` to `adjuster.adjust()`
+        * throw first error when both `onError` and `onErrorAll` are null in `adjuster.adjust()`
 * 2018/05/06 *version 0.4.0*
     * New Functions
         * `adjuster.ipv4()`

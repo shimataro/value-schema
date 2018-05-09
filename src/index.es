@@ -1,5 +1,5 @@
 import {CAUSE} from "./libs/constants";
-import adjustData from "./libs/adjustData";
+import adjust from "./libs/adjust";
 import NumberAdjuster from "./libs/NumberAdjuster";
 import NumberArrayAdjuster from "./libs/NumberArrayAdjuster";
 import StringAdjuster from "./libs/StringAdjuster";
@@ -12,7 +12,7 @@ export default {
 	/** @type {AdjusterErrorCause} */
 	CAUSE: CAUSE,
 
-	adjustData: adjustData,
+	adjust: adjust,
 
 	/** @return {NumberAdjuster} */
 	number: () =>
