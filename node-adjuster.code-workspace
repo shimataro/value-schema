@@ -16,5 +16,11 @@
     "javascript.format.insertSpaceAfterSemicolonInForStatements": true,
     "javascript.format.placeOpenBraceOnNewLineForFunctions": true,
     "javascript.format.placeOpenBraceOnNewLineForControlBlocks": true
+  },
+  "extensions": {
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "EditorConfig.EditorConfig"
+    ]
   }
 }
