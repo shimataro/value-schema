@@ -256,6 +256,8 @@ adjuster.email().adjust("user@example.com2");
     * Change Specifications
         * rename `adjuster.adjustData()` to `adjuster.adjust()`
         * throw first error when both `onError` and `onErrorAll` are null in `adjuster.adjust()`
+    * Others
+        * support [Visual Studio Code](https://code.visualstudio.com/) officially
 * 2018/05/06 *version 0.4.0*
     * New Functions
         * `adjuster.ipv4()`
