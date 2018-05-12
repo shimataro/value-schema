@@ -1,7 +1,10 @@
 node-adjuster
 ===
 
-[![Build Status](https://travis-ci.org/shimataro/node-adjuster.svg?branch=develop)](https://travis-ci.org/shimataro/node-adjuster)
+[![Build Status](https://img.shields.io/travis/shimataro/node-adjuster/develop.svg)](https://travis-ci.org/shimataro/node-adjuster)
+[![Release](https://img.shields.io/github/release/shimataro/node-adjuster.svg)](https://github.com/shimataro/node-adjuster/releases)
+![Node.js version](https://img.shields.io/node/v/adjuster.svg)
+![License](https://img.shields.io/github/license/shimataro/node-adjuster.svg)
 
 validate and adjust input values
 
