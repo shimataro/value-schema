@@ -16,6 +16,7 @@ npm install -S adjuster
 
 ```javascript
 import adjuster from "adjuster";
+import assert from "assert";
 
 const adjusters = {
     id: adjuster.number().minValue(1),
@@ -54,197 +55,202 @@ const expected = {
 };
 
 const adjusted = adjuster.adjust(input, adjusters);
-// expect(adjusted).toEqual(expected);
+assert.deepStrictEqual(adjusted, expected);
 ```
 
 ### number
 
 ```javascript
 import adjuster from "adjuster";
+import assert from "assert";
 
 // should be OK
-adjuster.number().adjust(-123);          // === -123;
-adjuster.number().in(1, 3, 5).adjust(1); // === 1
+assert.strictEqual(adjuster.number().adjust(-123)         , -123);
+assert.strictEqual(adjuster.number().in(1, 3, 5).adjust(1), 1);
 
 // should be adjusted
-adjuster.number().adjust("-123");                  // === -123;
-adjuster.number().default(10).adjust(undefined);   // === 10
-adjuster.number().allowEmpty(123).adjust("");      // === 123
-adjuster.number().minValue(1, true).adjust(0);     // === 1
-adjuster.number().maxValue(100, true).adjust(101); // === 100
+assert.strictEqual(adjuster.number().adjust("-123")                 , -123);
+assert.strictEqual(adjuster.number().default(10).adjust(undefined)  , 10);
+assert.strictEqual(adjuster.number().allowEmpty(123).adjust("")     , 123);
+assert.strictEqual(adjuster.number().minValue(1, true).adjust(0)    , 1);
+assert.strictEqual(adjuster.number().maxValue(100, true).adjust(101), 100);
 
 // should cause errors
-adjuster.number().adjust(undefined);         // throws AdjusterError; err.cause === adjuster.CAUSE.REQUIRED
-adjuster.number().adjust(undefined, (err) => { // ...or catch by callback function
-    return 10; // returns a value from adjust() method
-}); // === 10
-adjuster.number().adjust("abc");             // throws AdjusterError; err.cause === adjuster.CAUSE.TYPE
-adjuster.number().adjust("");                // throws AdjusterError; err.cause === adjuster.CAUSE.EMPTY
-adjuster.number().in(1, 3, 5).adjust(2);     // throws AdjusterError; err.cause === adjuster.CAUSE.IN
-adjuster.number().minValue(1).adjust(0);     // throws AdjusterError; err.cause === adjuster.CAUSE.MIN_VALUE
-adjuster.number().maxValue(100).adjust(101); // throws AdjusterError; err.cause === adjuster.CAUSE.MAX_VALUE
+assert.strictEqual(adjuster.number().adjust(undefined, (err) => 10), 10); // catch error by callback function (that returns a value from adjust() method)
+assert.throws(() => adjuster.number().adjust(undefined)        , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED)); // ... or try-catch syntax
+assert.throws(() => adjuster.number().adjust("abc")            , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(() => adjuster.number().adjust("")               , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+assert.throws(() => adjuster.number().in(1, 3, 5).adjust(2)    , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IN));
+assert.throws(() => adjuster.number().minValue(1).adjust(0)    , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_VALUE));
+assert.throws(() => adjuster.number().maxValue(100).adjust(101), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_VALUE));
 ```
 
 ### numberArray
 
 ```javascript
 import adjuster from "adjuster";
+import assert from "assert";
 
 // should be OK
-adjuster.numberArray().adjust([1, 2, 3]);                       // === [1, 2, 3]
-adjuster.numberArray().minLength(2).adjust([1, 2]);             // === [1, 2]
-adjuster.numberArray().maxLength(2).adjust([1, 2]);             // === [1, 2]
-adjuster.numberArray().eachIn(1, 2, 3).adjust([1, 2]);          // === [1, 2]
-adjuster.numberArray().eachMinValue(10).adjust([10, 11, 12]);   // === [10, 11, 12]
-adjuster.numberArray().eachMaxValue(10).adjust([8, 9, 10]);     // === [8, 9, 10]
+assert.deepStrictEqual(adjuster.numberArray().adjust([1, 2, 3])                    , [1, 2, 3]);
+assert.deepStrictEqual(adjuster.numberArray().minLength(2).adjust([1, 2])          , [1, 2]);
+assert.deepStrictEqual(adjuster.numberArray().maxLength(2).adjust([1, 2])          , [1, 2]);
+assert.deepStrictEqual(adjuster.numberArray().eachIn(1, 2, 3).adjust([1, 2])       , [1, 2]);
+assert.deepStrictEqual(adjuster.numberArray().eachMinValue(10).adjust([10, 11, 12]), [10, 11, 12]);
+assert.deepStrictEqual(adjuster.numberArray().eachMaxValue(10).adjust([8, 9, 10])  , [8, 9, 10]);
 
 // should be adjusted
-adjuster.numberArray().adjust([1, "-2", "+3"]);                             // === [1, -2, 3]
-adjuster.numberArray().default([1, 2]).adjust(undefined);                   // === [1, 2]
-adjuster.numberArray().allowEmpty([1, 2]).adjust("");                       // === [1, 2]
-adjuster.numberArray().separatedBy(",").adjust("1,2,3");                    // === [1, 2, 3]
-adjuster.numberArray().toArray().adjust(0);                                 // === [0]
-adjuster.numberArray().maxLength(2, true).adjust([1, 2, 3]);                // === [1, 2]
-adjuster.numberArray().ignoreEachErrors().adjust([undefined, 1, "abc", 2]); // === [1, 2]
-adjuster.numberArray().eachDefault(999).adjust([1, undefined, 3]);          // === [1, 999, 3]
-adjuster.numberArray().eachAllowEmpty(999).adjust([1, "", 3]);              // === [1, 999, 3]
-adjuster.numberArray().eachMinValue(10, true).adjust([9, 10, 11]);          // === [10, 10, 11]
-adjuster.numberArray().eachMaxValue(10, true).adjust([9, 10, 11]);          // === [9, 10, 10]
+assert.deepStrictEqual(adjuster.numberArray().adjust([1, "-2", "+3"])                            , [1, -2, 3]);
+assert.deepStrictEqual(adjuster.numberArray().default([1, 2]).adjust(undefined)                  , [1, 2]);
+assert.deepStrictEqual(adjuster.numberArray().allowEmpty([1, 2]).adjust("")                      , [1, 2]);
+assert.deepStrictEqual(adjuster.numberArray().separatedBy(",").adjust("1,2,3")                   , [1, 2, 3]);
+assert.deepStrictEqual(adjuster.numberArray().toArray().adjust(0)                                , [0]);
+assert.deepStrictEqual(adjuster.numberArray().maxLength(2, true).adjust([1, 2, 3])               , [1, 2]);
+assert.deepStrictEqual(adjuster.numberArray().ignoreEachErrors().adjust([undefined, 1, "abc", 2]), [1, 2]);
+assert.deepStrictEqual(adjuster.numberArray().eachDefault(999).adjust([1, undefined, 3])         , [1, 999, 3]);
+assert.deepStrictEqual(adjuster.numberArray().eachAllowEmpty(999).adjust([1, "", 3])             , [1, 999, 3]);
+assert.deepStrictEqual(adjuster.numberArray().eachMinValue(10, true).adjust([9, 10, 11])         , [10, 10, 11]);
+assert.deepStrictEqual(adjuster.numberArray().eachMaxValue(10, true).adjust([9, 10, 11])         , [9, 10, 10]);
 
 // should cause errors
-adjuster.numberArray().adjust("abc");                           // throws AdjusterError; err.cause === adjuster.CAUSE.TYPE
-adjuster.numberArray().adjust(0);                               // throws AdjusterError; err.cause === adjuster.CAUSE.TYPE
-adjuster.numberArray().adjust(undefined);                       // throws AdjusterError; err.cause === adjuster.CAUSE.REQUIRED
-adjuster.numberArray().adjust("");                              // throws AdjusterError; err.cause === adjuster.CAUSE.EMPTY
-adjuster.numberArray().minLength(2).adjust([1]);                // throws AdjusterError; err.cause === adjuster.CAUSE.MIN_LENGTH
-adjuster.numberArray().maxLength(2).adjust([1, 2, 3]);          // throws AdjusterError; err.cause === adjuster.CAUSE.MAX_LENGTH
-adjuster.numberArray().adjust(["abc"]);                         // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_TYPE
-adjuster.numberArray().adjust([1, undefined, 3]);               // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_REQUIRED
-adjuster.numberArray().adjust([""]);                            // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_EMPTY
-adjuster.numberArray().eachIn(1, 2, 3).adjust([0, 1]);          // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_IN
-adjuster.numberArray().eachMinValue(10).adjust([9, 10, 11]);    // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_MIN_VALUE
-adjuster.numberArray().eachMaxValue(10).adjust([9, 10, 11]);    // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_MAX_VALUE
+assert.throws(() => adjuster.numberArray().adjust("abc")                       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(() => adjuster.numberArray().adjust(0)                           , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(() => adjuster.numberArray().adjust(undefined)                   , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+assert.throws(() => adjuster.numberArray().adjust("")                          , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+assert.throws(() => adjuster.numberArray().minLength(2).adjust([1])            , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
+assert.throws(() => adjuster.numberArray().maxLength(2).adjust([1, 2, 3])      , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
+assert.throws(() => adjuster.numberArray().adjust(["abc"])                     , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_TYPE));
+assert.throws(() => adjuster.numberArray().adjust([1, undefined, 3])           , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_REQUIRED));
+assert.throws(() => adjuster.numberArray().adjust([""])                        , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_EMPTY));
+assert.throws(() => adjuster.numberArray().eachIn(1, 2, 3).adjust([0, 1])      , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_IN));
+assert.throws(() => adjuster.numberArray().eachMinValue(10).adjust([9, 10, 11]), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_MIN_VALUE));
+assert.throws(() => adjuster.numberArray().eachMaxValue(10).adjust([9, 10, 11]), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_MAX_VALUE));
 ```
 
 ### string
 
 ```javascript
 import adjuster from "adjuster";
+import assert from "assert";
 
 // should be OK
-adjuster.string().adjust("123");                              // === "123"
-adjuster.string().allowEmpty("xyz").adjust("");               // === "xyz"
-adjuster.string().in("eat", "sleep", "play").adjust("sleep"); // === "sleep"
+assert.strictEqual(adjuster.string().adjust("123")                             , "123");
+assert.strictEqual(adjuster.string().allowEmpty("xyz").adjust("")              , "xyz");
+assert.strictEqual(adjuster.string().in("eat", "sleep", "play").adjust("sleep"), "sleep");
 
 // should be adjusted
-adjuster.string().adjust(123);                          // === "123"
-adjuster.string().default("xyz").adjust(undefined);     // === "xyz"
-adjuster.string().maxLength(5, true).adjust("abcdefg"); // === "abcde"
+assert.strictEqual(adjuster.string().adjust(123)                         , "123");
+assert.strictEqual(adjuster.string().default("xyz").adjust(undefined)    , "xyz");
+assert.strictEqual(adjuster.string().maxLength(5, true).adjust("abcdefg"), "abcde");
 
 // should cause errors
-adjuster.string().adjust(undefined); // throws AdjusterError; err.cause === adjuster.CAUSE.REQUIRED
-adjuster.string().adjust(""); // throws AdjusterError; err.cause === adjuster.CAUSE.EMPTY
-adjuster.string().in("eat", "sleep", "play").adjust("study"); // throws AdjusterError; err.cause === adjuster.CAUSE.IN
-adjuster.string().minLength(5).adjust("a"); // throws AdjusterError; err.cause === adjuster.CAUSE.MIN_LENGTH
-adjuster.string().maxLength(5).adjust("abcdefg"); // throws AdjusterError; err.cause === adjuster.CAUSE.MAX_LENGTH
+assert.throws(() => adjuster.string().adjust(undefined)                         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+assert.throws(() => adjuster.string().adjust("")                                , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+assert.throws(() => adjuster.string().in("eat", "sleep", "play").adjust("study"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IN));
+assert.throws(() => adjuster.string().minLength(5).adjust("a")                  , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
+assert.throws(() => adjuster.string().maxLength(5).adjust("abcdefg")            , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
 ```
 
 ### stringArray
 
 ```javascript
 import adjuster from "adjuster";
+import assert from "assert";
 
 // should be OK
-adjuster.stringArray().adjust(["a", "b"]);                          // === ["a", "b"]
-adjuster.stringArray().minLength(1).adjust(["a"]);                  // === ["a"]
-adjuster.stringArray().maxLength(2).adjust(["a"]);                  // === ["a"]
-adjuster.stringArray().eachIn("a", "b").adjust(["a"]);              // === ["a"]
-adjuster.stringArray().eachMinLength(3).adjust(["abc", "xyz"]);     // === ["abc", "xyz"]
-adjuster.stringArray().eachMaxLength(3).adjust(["abc", "xyz"]);     // === ["abc", "xyz"]
-adjuster.stringArray().eachPattern(/^Go+gle$/).adjust(["Google"]);  // === ["Google"]
+assert.deepStrictEqual(adjuster.stringArray().adjust(["a", "b"])                        , ["a", "b"]);
+assert.deepStrictEqual(adjuster.stringArray().minLength(1).adjust(["a"])                , ["a"]);
+assert.deepStrictEqual(adjuster.stringArray().maxLength(2).adjust(["a"])                , ["a"]);
+assert.deepStrictEqual(adjuster.stringArray().eachIn("a", "b").adjust(["a"])            , ["a"]);
+assert.deepStrictEqual(adjuster.stringArray().eachMinLength(3).adjust(["abc", "xyz"])   , ["abc", "xyz"]);
+assert.deepStrictEqual(adjuster.stringArray().eachMaxLength(3).adjust(["abc", "xyz"])   , ["abc", "xyz"]);
+assert.deepStrictEqual(adjuster.stringArray().eachPattern(/^Go+gle$/).adjust(["Google"]), ["Google"]);
 
 // should be adjusted
-adjuster.stringArray().adjust(["a", 1, -2]);                                // === ["a", "1", "-2"]
-adjuster.stringArray().default(["a", "b"]).adjust(undefined);               // === ["a", "b"]
-adjuster.stringArray().allowEmpty(["a", "b"]).adjust("");                   // === ["a", "b"]
-adjuster.stringArray().separatedBy(",").adjust("a,b,c");                    // === ["a", "b", "c"]
-adjuster.stringArray().toArray().adjust("a");                               // === ["a"]
-adjuster.stringArray().maxLength(1, true).adjust(["a", "b"]);               // === ["a"]
-adjuster.stringArray().ignoreEachErrors().adjust([undefined, "a", "", 1]);  // === ["a", "1"]
-adjuster.stringArray().eachDefault("z").adjust(["a", undefined, "b"]);      // === ["a", "z", "b"]
-adjuster.stringArray().eachAllowEmpty("z").adjust(["a", "", "b"]);          // === ["a", "z", "b"]
-adjuster.stringArray().eachMaxLength(3, true).adjust(["abcd", "xyz0"]);     // === ["abc", "xyz"]
+assert.deepStrictEqual(adjuster.stringArray().adjust(["a", 1, -2])                              , ["a", "1", "-2"]);
+assert.deepStrictEqual(adjuster.stringArray().default(["a", "b"]).adjust(undefined)             , ["a", "b"]);
+assert.deepStrictEqual(adjuster.stringArray().allowEmpty(["a", "b"]).adjust("")                 , ["a", "b"]);
+assert.deepStrictEqual(adjuster.stringArray().separatedBy(",").adjust("a,b,c")                  , ["a", "b", "c"]);
+assert.deepStrictEqual(adjuster.stringArray().toArray().adjust("a")                             , ["a"]);
+assert.deepStrictEqual(adjuster.stringArray().maxLength(1, true).adjust(["a", "b"])             , ["a"]);
+assert.deepStrictEqual(adjuster.stringArray().ignoreEachErrors().adjust([undefined, "a", "", 1]), ["a", "1"]);
+assert.deepStrictEqual(adjuster.stringArray().eachDefault("z").adjust(["a", undefined, "b"])    , ["a", "z", "b"]);
+assert.deepStrictEqual(adjuster.stringArray().eachAllowEmpty("z").adjust(["a", "", "b"])        , ["a", "z", "b"]);
+assert.deepStrictEqual(adjuster.stringArray().eachMaxLength(3, true).adjust(["abcd", "xyz0"])   , ["abc", "xyz"]);
 
 // should cause errors
-adjuster.stringArray().adjust("abc");                               // throws AdjusterError; err.cause === adjuster.CAUSE.TYPE
-adjuster.stringArray().adjust(undefined);                           // throws AdjusterError; err.cause === adjuster.CAUSE.REQUIRED
-adjuster.stringArray().adjust("");                                  // throws AdjusterError; err.cause === adjuster.CAUSE.EMPTY
-adjuster.stringArray().minLength(1).adjust([]);                     // throws AdjusterError; err.cause === adjuster.CAUSE.MIN_LENGTH
-adjuster.stringArray().maxLength(1).adjust(["a", "b"]);             // throws AdjusterError; err.cause === adjuster.CAUSE.MAX_LENGTH
-adjuster.stringArray().adjust(["a", undefined, "b"]);               // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_REQUIRED
-adjuster.stringArray().adjust([""]);                                // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_EMPTY
-adjuster.stringArray().eachIn("a", "b").adjust(["x"]);              // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_IN
-adjuster.stringArray().eachMinLength(3).adjust(["ab"]);             // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_MIN_LENGTH
-adjuster.stringArray().eachMaxLength(3).adjust(["abcd"]);           // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_MAX_LENGTH
-adjuster.stringArray().eachPattern(/^Go+gle$/).adjust(["Ggle"]);    // throws AdjusterError; err.cause === adjuster.CAUSE.EACH_PATTERN
+assert.throws(() => adjuster.stringArray().adjust("abc")                           , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(() => adjuster.stringArray().adjust(undefined)                       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+assert.throws(() => adjuster.stringArray().adjust("")                              , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+assert.throws(() => adjuster.stringArray().minLength(1).adjust([])                 , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
+assert.throws(() => adjuster.stringArray().maxLength(1).adjust(["a", "b"])         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
+assert.throws(() => adjuster.stringArray().adjust(["a", undefined, "b"])           , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_REQUIRED));
+assert.throws(() => adjuster.stringArray().adjust([""])                            , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_EMPTY));
+assert.throws(() => adjuster.stringArray().eachIn("a", "b").adjust(["x"])          , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_IN));
+assert.throws(() => adjuster.stringArray().eachMinLength(3).adjust(["ab"])         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_MIN_LENGTH));
+assert.throws(() => adjuster.stringArray().eachMaxLength(3).adjust(["abcd"])       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_MAX_LENGTH));
+assert.throws(() => adjuster.stringArray().eachPattern(/^Go+gle$/).adjust(["Ggle"]), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_PATTERN));
 ```
 
 ### IPv4
 
 ```javascript
 import adjuster from "adjuster";
+import assert from "assert";
 
 // should be OK
-adjuster.ipv4().adjust("0.0.0.0");          // === "0.0.0.0"
-adjuster.ipv4().adjust("192.168.0.1");      // === "192.168.0.1"
-adjuster.ipv4().adjust("255.255.255.255");  // === "255.255.255.255"
+assert.strictEqual(adjuster.ipv4().adjust("0.0.0.0")        , "0.0.0.0");
+assert.strictEqual(adjuster.ipv4().adjust("192.168.0.1")    , "192.168.0.1");
+assert.strictEqual(adjuster.ipv4().adjust("255.255.255.255"), "255.255.255.255");
 
 // should cause errors; err.cause === adjuster.CAUSE.IPV4
-adjuster.ipv4().adjust("0.0.0.");
-adjuster.ipv4().adjust("0.0.0.0.");
-adjuster.ipv4().adjust("255.255.255.256");
+assert.throws(() => adjuster.ipv4().adjust("0.0.0.")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV4));
+assert.throws(() => adjuster.ipv4().adjust("0.0.0.0.")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV4));
+assert.throws(() => adjuster.ipv4().adjust("255.255.255.256"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV4));
 ```
 
 ### IPv6
 
 ```javascript
 import adjuster from "adjuster";
+import assert from "assert";
 
 // should be OK
-adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000");  // === "0000:0000:0000:0000:0000:0000:0000:0000"
-adjuster.ipv6().adjust("::1");                                      // === "::1"
-adjuster.ipv6().adjust("::");                                       // === "::"
-adjuster.ipv6().adjust("1::1");                                     // === "1::1"
-adjuster.ipv6().adjust("::ffff:192.0.2.1");                         // === "::ffff:192.0.2.1"; IPv4-mapped address
+assert.strictEqual(adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000"), "0000:0000:0000:0000:0000:0000:0000:0000");
+assert.strictEqual(adjuster.ipv6().adjust("::1")                                    , "::1");
+assert.strictEqual(adjuster.ipv6().adjust("::")                                     , "::");
+assert.strictEqual(adjuster.ipv6().adjust("1::1")                                   , "1::1");
+assert.strictEqual(adjuster.ipv6().adjust("::ffff:192.0.2.1")                       , "::ffff:192.0.2.1"); // IPv4-mapped address
 
 // should cause errors; err.cause === adjuster.CAUSE.IPV6
-adjuster.ipv6().adjust("0000");
-adjuster.ipv6().adjust("ffff:");
-adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000:");
+assert.throws(() => adjuster.ipv6().adjust("0000")                                    , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV6));
+assert.throws(() => adjuster.ipv6().adjust("ffff:")                                   , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV6));
+assert.throws(() => adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000:"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV6));
 ```
 
 ### e-mail
 
 ```javascript
 import adjuster from "adjuster";
+import assert from "assert";
 
 // should be OK
-adjuster.email().adjust("user+mailbox/department=shipping@example.com"); // === "user+mailbox/department=shipping@example.com"; dot-string
-adjuster.email().adjust("!#$%&'*+-/=?^_`.{|}~@example.com");             // === "!#$%&'*+-/=?^_`.{|}~@example.com"; dot-string
-adjuster.email().adjust("\"Fred\\\"Bloggs\"@example.com");               // === "\"Fred\\\"Bloggs\"@example.com"; quoted-string
-adjuster.email().adjust("\"Joe.\\\\Blow\"@example.com");                 // === "\"Joe.\\\\Blow\"@example.com"; quoted-string
-adjuster.email().adjust("user@example-domain.com");                      // === "user@example-domain.com"
-adjuster.email().adjust("user@example2.com");                            // === "user@example2.com"
+assert.strictEqual(adjuster.email().adjust("user+mailbox/department=shipping@example.com"), "user+mailbox/department=shipping@example.com"); // dot-string
+assert.strictEqual(adjuster.email().adjust("!#$%&'*+-/=?^_`.{|}~@example.com")            , "!#$%&'*+-/=?^_`.{|}~@example.com"); // dot-string
+assert.strictEqual(adjuster.email().adjust("\"Fred\\\"Bloggs\"@example.com")              , "\"Fred\\\"Bloggs\"@example.com"); // quoted-string
+assert.strictEqual(adjuster.email().adjust("\"Joe.\\\\Blow\"@example.com")                , "\"Joe.\\\\Blow\"@example.com"); // quoted-string
+assert.strictEqual(adjuster.email().adjust("user@example-domain.com")                     , "user@example-domain.com");
+assert.strictEqual(adjuster.email().adjust("user@example2.com")                           , "user@example2.com");
 
-// should cause errors; err.cause === adjuster.CAUSE.EMAIL
-adjuster.email().adjust("@example.com");
-adjuster.email().adjust(".a@example.com");
-adjuster.email().adjust("a.@example.com");
-adjuster.email().adjust("a..a@example.com");
-adjuster.email().adjust("user@example@com");
-adjuster.email().adjust("user-example-com");
-adjuster.email().adjust("user@example_domain.com");
-adjuster.email().adjust("user@example.com2");
+// should cause errors
+assert.throws(() => adjuster.email().adjust("@example.com")           , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
+assert.throws(() => adjuster.email().adjust(".a@example.com")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
+assert.throws(() => adjuster.email().adjust("a.@example.com")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
+assert.throws(() => adjuster.email().adjust("a..a@example.com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
+assert.throws(() => adjuster.email().adjust("user@example@com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
+assert.throws(() => adjuster.email().adjust("user-example-com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
+assert.throws(() => adjuster.email().adjust("user@example_domain.com"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
+assert.throws(() => adjuster.email().adjust("user@example.com2")      , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
 ```
 
 ## Release notes
