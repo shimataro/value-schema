@@ -255,7 +255,7 @@ assert.throws(() => adjuster.email().adjust("user@example.com2")      , err => (
 
 ## Release notes
 
-* **NEXT VERSION**
+* 2018/05/12 *version 0.5.0*
     * New Functions
         * `adjuster.numberArray()`
         * `adjuster.stringArray()`
