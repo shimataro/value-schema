@@ -1,5 +1,6 @@
 import {CAUSE} from "./constants";
 import AdjusterInterface from "./AdjusterInterface";
+import AdjusterError from "./AdjusterError";
 
 /**
  * adjuster for number
@@ -32,6 +33,32 @@ export default class NumberAdjuster extends AdjusterInterface
 	}
 
 	/**
+	 * adjust type
+	 * @param {_TypeValues} values
+	 * @return {boolean} finished adjustment or not
+	 * @private
+	 */
+	__adjustType(values)
+	{
+		if(typeof values.adjustedValue === "number")
+		{
+			return false;
+		}
+
+		const adjustedValue = Number(values.adjustedValue);
+
+		if(!isNaN(adjustedValue))
+		{
+			values.adjustedValue = adjustedValue;
+			return false;
+		}
+
+		// failed to cast
+		const cause = CAUSE.TYPE;
+		throw new AdjusterError(cause, values.originalValue);
+	}
+
+	/**
 	 * set default value; enable to omit
 	 * @param {number} value default value
 	 * @return {NumberAdjuster}
@@ -40,6 +67,29 @@ export default class NumberAdjuster extends AdjusterInterface
 	{
 		this._default = value;
 		return this;
+	}
+
+	/**
+	 * adjust
+	 * @param {_TypeValues} values
+	 * @return {boolean} finished adjustment or not
+	 * @private
+	 */
+	__adjustDefault(values)
+	{
+		if(values.adjustedValue !== undefined)
+		{
+			return false;
+		}
+
+		if(this._default !== null)
+		{
+			values.adjustedValue = this._default;
+			return true;
+		}
+
+		const cause = CAUSE.REQUIRED;
+		throw new AdjusterError(cause, values.originalValue);
 	}
 
 	/**
@@ -55,6 +105,29 @@ export default class NumberAdjuster extends AdjusterInterface
 	}
 
 	/**
+	 * adjust
+	 * @param {_TypeValues} values
+	 * @return {boolean} finished adjustment or not
+	 * @private
+	 */
+	__adjustEmpty(values)
+	{
+		if(values.adjustedValue !== "")
+		{
+			return false;
+		}
+
+		if(this._allowEmpty)
+		{
+			values.adjustedValue = this._valueOnEmpty;
+			return true;
+		}
+
+		const cause = CAUSE.EMPTY;
+		throw new AdjusterError(cause, values.originalValue);
+	}
+
+	/**
 	 * accept only specified values
 	 * @param {...number} values values to be accepted
 	 * @return {NumberAdjuster}
@@ -63,6 +136,27 @@ export default class NumberAdjuster extends AdjusterInterface
 	{
 		this._in = values;
 		return this;
+	}
+
+	/**
+	 * adjust
+	 * @param {_TypeValues} values
+	 * @return {boolean} finished adjustment or not
+	 * @private
+	 */
+	__adjustIn(values)
+	{
+		if(this._in === null)
+		{
+			return false;
+		}
+		if(this._in.includes(values.adjustedValue))
+		{
+			return true;
+		}
+
+		const cause = CAUSE.IN;
+		throw new AdjusterError(cause, values.originalValue);
 	}
 
 	/**
@@ -79,6 +173,32 @@ export default class NumberAdjuster extends AdjusterInterface
 	}
 
 	/**
+	 * adjust
+	 * @param {_TypeValues} values
+	 * @return {boolean} finished adjustment or not
+	 * @private
+	 */
+	__adjustMinValue(values)
+	{
+		if(this._minValue === null)
+		{
+			return false;
+		}
+		if(values.adjustedValue >= this._minValue)
+		{
+			return false;
+		}
+		if(this._adjustMinValue)
+		{
+			values.adjustedValue = this._minValue;
+			return false;
+		}
+
+		const cause = CAUSE.MIN_VALUE;
+		throw new AdjusterError(cause, values.originalValue);
+	}
+
+	/**
 	 * set max-value
 	 * @param {number} value max-value
 	 * @param {boolean} [adjust=false] adjust to max-value if value > max-value; default is ERROR
@@ -92,6 +212,32 @@ export default class NumberAdjuster extends AdjusterInterface
 	}
 
 	/**
+	 * adjust
+	 * @param {_TypeValues} values
+	 * @return {boolean} finished adjustment or not
+	 * @private
+	 */
+	__adjustMaxValue(values)
+	{
+		if(this._maxValue === null)
+		{
+			return false;
+		}
+		if(values.adjustedValue <= this._maxValue)
+		{
+			return false;
+		}
+		if(this._adjustMaxValue)
+		{
+			values.adjustedValue = this._maxValue;
+			return false;
+		}
+
+		const cause = CAUSE.MAX_VALUE;
+		throw new AdjusterError(cause, values.originalValue);
+	}
+
+	/**
 	 * do adjust
 	 * @param {*} value value to be checked
 	 * @param {?_OnError} onError callback function on error
@@ -99,66 +245,43 @@ export default class NumberAdjuster extends AdjusterInterface
 	 */
 	adjust(value, onError = null)
 	{
-		// omitted
-		if(value === undefined)
+		const values = {
+			originalValue: value,
+			adjustedValue: value,
+		};
+
+		try
 		{
-			if(this._default === null)
+			if(this.__adjustDefault(values))
 			{
-				const cause = CAUSE.REQUIRED;
-				return AdjusterInterface._handleError(onError, cause, value);
+				return values.adjustedValue;
 			}
-			return this._default;
-		}
-
-		// empty string
-		if(value === "")
-		{
-			if(!this._allowEmpty)
+			if(this.__adjustEmpty(values))
 			{
-				const cause = CAUSE.EMPTY;
-				return AdjusterInterface._handleError(onError, cause, value);
+				return values.adjustedValue;
 			}
-			return this._valueOnEmpty;
-		}
-
-		let adjustedValue = Number(value);
-
-		// failed to cast
-		if(isNaN(adjustedValue))
-		{
-			const cause = CAUSE.TYPE;
-			return AdjusterInterface._handleError(onError, cause, value);
-		}
-
-		if(this._in !== null)
-		{
-			if(!this._in.includes(adjustedValue))
+			if(this.__adjustType(values))
 			{
-				const cause = CAUSE.IN;
-				return AdjusterInterface._handleError(onError, cause, value);
+				return values.adjustedValue;
 			}
-			return adjustedValue;
-		}
-
-		if(this._minValue !== null && adjustedValue < this._minValue)
-		{
-			if(!this._adjustMinValue)
+			if(this.__adjustIn(values))
 			{
-				const cause = CAUSE.MIN_VALUE;
-				return AdjusterInterface._handleError(onError, cause, value);
+				return values.adjustedValue;
 			}
-			return this._minValue;
-		}
-		if(this._maxValue !== null && adjustedValue > this._maxValue)
-		{
-			if(!this._adjustMaxValue)
+			if(this.__adjustMinValue(values))
 			{
-				const cause = CAUSE.MAX_VALUE;
-				return AdjusterInterface._handleError(onError, cause, value);
+				return values.adjustedValue;
 			}
-			return this._maxValue;
-		}
+			if(this.__adjustMaxValue(values))
+			{
+				return values.adjustedValue;
+			}
 
-		return adjustedValue;
+			return values.adjustedValue;
+		}
+		catch(err)
+		{
+			return AdjusterInterface._handleError(onError, err.cause, err.value);
+		}
 	}
 }

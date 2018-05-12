@@ -1,0 +1,17 @@
+language: "node_js"
+node_js: # jest no longer supports v4
+  - "6"
+  - "8"
+os:
+  - "linux"
+  - "osx"
+branches:
+  only:
+  - "master"
+  - "develop"
+cache:
+  directories:
+    - "node_modules"
+script:
+  - "npm test"
+  - "npm run lint"

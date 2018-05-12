@@ -11,6 +11,9 @@ import EmailAdjuster from "libs/EmailAdjuster";
 	describe("email", testEmail);
 }
 
+/**
+ * required value
+ */
 function testRequired()
 {
 	const objEmailAdjuster = new EmailAdjuster();
@@ -23,6 +26,9 @@ function testRequired()
 	});
 }
 
+/**
+ * default value
+ */
 function testDefault()
 {
 	const objEmailAdjuster = new EmailAdjuster().default("default@example.com");
@@ -32,6 +38,9 @@ function testDefault()
 	});
 }
 
+/**
+ * empty balue
+ */
 function testEmpty()
 {
 	const objEmailAdjuster = new EmailAdjuster();
@@ -44,6 +53,9 @@ function testEmpty()
 	});
 }
 
+/**
+ * empty value (allowd)
+ */
 function testAllowEmpty()
 {
 	const objEmailAdjuster = new EmailAdjuster().allowEmpty("empty@example.com");
@@ -53,6 +65,9 @@ function testAllowEmpty()
 	});
 }
 
+/**
+ * maximum length of e-mail
+ */
 function testMaxLength()
 {
 	const objEmailAdjuster = new EmailAdjuster();
@@ -86,6 +101,9 @@ function testMaxLength()
 	});
 }
 
+/**
+ * custom pattern
+ */
 function testPattern()
 {
 	const objEmailAdjuster = new EmailAdjuster().pattern(/^\w+@([\w-]+\.)+\w+$/);
@@ -104,6 +122,9 @@ function testPattern()
 	});
 }
 
+/**
+ * e-mail format
+ */
 function testEmail()
 {
 	const objEmailAdjuster = new EmailAdjuster();

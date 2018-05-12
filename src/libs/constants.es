@@ -15,6 +15,17 @@ export const CAUSE = {
 	MAX_LENGTH: "max-length",
 	PATTERN: "pattern",
 
+	ARRAY: "array",
+	EACH_TYPE: "each-type",
+	EACH_REQUIRED: "each-required",
+	EACH_EMPTY: "each-empty",
+	EACH_IN: "each-in",
+	EACH_MIN_VALUE: "each-min-value",
+	EACH_MAX_VALUE: "each-max-value",
+	EACH_MIN_LENGTH: "each-min-length",
+	EACH_MAX_LENGTH: "each-max-length",
+	EACH_PATTERN: "each-pattern",
+
 	IPV4: "ipv4",
 	IPV6: "ipv6",
 	EMAIL: "email",
@@ -31,6 +42,16 @@ export const CAUSE = {
  * @property {string} MIN_LENGTH
  * @property {string} MAX_LENGTH
  * @property {string} PATTERN
+ * @property {string} ARRAY
+ * @property {string} EACH_TYPE
+ * @property {string} EACH_REQUIRED
+ * @property {string} EACH_EMPTY
+ * @property {string} EACH_IN
+ * @property {string} EACH_MIN_VALUE
+ * @property {string} EACH_MAX_VALUE
+ * @property {string} EACH_MIN_LENGTH
+ * @property {string} EACH_MAX_LENGTH
+ * @property {string} EACH_PATTERN
  * @property {string} IPV4
  * @property {string} IPV6
  * @property {string} EMAIL

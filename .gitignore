@@ -22,4 +22,4 @@ Thumbs.db
 /*.iml
 /nbproject/
 /.project
-/*.code-workspace
+/.vscode/
