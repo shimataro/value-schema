@@ -1,6 +1,6 @@
 import {CAUSE} from "../../constants";
-import AdjusterError from "../../AdjusterError";
 import AdjusterInterface from "../../AdjusterInterface";
+import AdjusterError from "../../AdjusterError";
 
 export default AdjusterInterface.createDecorator("minValue", _adjust, {
 	init: _init,
@@ -32,8 +32,7 @@ function _minValue(params, value, adjust = false)
 /**
  * adjust
  * @param {_TypeValues} values
- * @return {boolean} finished adjustment or not
- * @private
+ * @return {boolean} end adjustment
  */
 function _adjust(params, values)
 {

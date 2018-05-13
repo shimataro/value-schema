@@ -1,6 +1,6 @@
 import {CAUSE} from "../constants";
-import AdjusterError from "../AdjusterError";
 import AdjusterInterface from "../AdjusterInterface";
+import AdjusterError from "../AdjusterError";
 
 export default AdjusterInterface.createDecorator("allowEmpty", _adjust, {
 	init: _init,
@@ -31,6 +31,7 @@ function _allowEmpty(params, value = null)
  * adjust
  * @param {*} params params
  * @param {Object} values values
+ * @return {boolean} end adjustment
  */
 function _adjust(params, values)
 {

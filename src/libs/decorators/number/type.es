@@ -1,6 +1,6 @@
 import {CAUSE} from "../../constants";
-import AdjusterError from "../../AdjusterError";
 import AdjusterInterface from "../../AdjusterInterface";
+import AdjusterError from "../../AdjusterError";
 
 export default AdjusterInterface.createDecorator("type", _adjust);
 
@@ -8,6 +8,7 @@ export default AdjusterInterface.createDecorator("type", _adjust);
  * adjust
  * @param {Object} params parameters
  * @param {Object} values original / adjusted values
+ * @return {boolean} end adjustment
  */
 function _adjust(params, values)
 {

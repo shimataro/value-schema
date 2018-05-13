@@ -1,23 +1,23 @@
 import AdjusterInterface from "./AdjusterInterface";
 
-import decInit from "./decorators/init";
-import decDefault from "./decorators/default";
-import decAllowEmpty from "./decorators/allowEmpty";
-import decType from "./decorators/number/type";
-import decIn from "./decorators/in";
-import decMinValue from "./decorators/number/minValue";
-import decMaxValue from "./decorators/number/maxValue";
+import Init from "./decorators/init";
+import Default from "./decorators/default";
+import AllowEmpty from "./decorators/allowEmpty";
+import Type from "./decorators/number/type";
+import In from "./decorators/in";
+import MinValue from "./decorators/number/minValue";
+import MaxValue from "./decorators/number/maxValue";
 
 /**
  * adjuster for number
  */
-@decMaxValue
-@decMinValue
-@decIn
-@decType
-@decAllowEmpty
-@decDefault
-@decInit
+@MaxValue
+@MinValue
+@In
+@Type
+@AllowEmpty
+@Default
+@Init
 export default class NumberAdjuster2 extends AdjusterInterface
 {
 }

@@ -31,6 +31,7 @@ function _default(params, value)
  * adjuster
  * @param {Object} params parameters
  * @param {Object} values original / adjusted values
+ * @return {boolean} end adjustment
  */
 function _adjust(params, values)
 {
