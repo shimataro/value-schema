@@ -1,6 +1,5 @@
 import AdjusterInterface from "./AdjusterInterface";
 
-import Init from "./decorators/init";
 import Default from "./decorators/default";
 import AllowEmpty from "./decorators/allowEmpty";
 import Type from "./decorators/number/type";
@@ -17,7 +16,6 @@ import MaxValue from "./decorators/number/maxValue";
 @Type
 @AllowEmpty
 @Default
-@Init
 export default class NumberAdjuster2 extends AdjusterInterface
 {
 }

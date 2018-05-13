@@ -7,34 +7,39 @@ export default class AdjusterInterface
 {
 	/**
 	 * create decorator
-	 * @param {string} name
 	 * @param {function} adjust
-	 * @param {{init: function, function: function}} [options={}] options
+	 * @param {{name: string, init: function, function: function}} [options={}] options
 	 */
-	static createDecorator(name, adjust, options = {})
+	static createDecorator(adjust, options = {})
 	{
 		return (TargetClass) =>
 		{
+			// register init function
 			if(options.init !== undefined)
 			{
-				TargetClass.prototype._initializers.push({
-					name: name,
-					init: options.init,
-				});
+				if(TargetClass.prototype._initList === undefined)
+				{
+					TargetClass.prototype._initList = [];
+				}
+				TargetClass.prototype._initList.push(options.init);
 			}
+
+			// register chain function
 			if(options.function !== undefined)
 			{
-				TargetClass.prototype[name] = function(...args)
+				TargetClass.prototype[options.name] = function(...args)
 				{
-					options.function(this._params[name], ...args);
+					options.function(this._params, ...args);
 					return this;
 				};
 			}
 
-			TargetClass.prototype._adjusters.push({
-				name: name,
-				adjust: adjust,
-			});
+			// register adjust function
+			if(TargetClass.prototype._adjustList === undefined)
+			{
+				TargetClass.prototype._adjustList = [];
+			}
+			TargetClass.prototype._adjustList.push(adjust);
 			return TargetClass;
 		};
 	}
@@ -42,12 +47,11 @@ export default class AdjusterInterface
 	constructor()
 	{
 		this._params = {};
-		if(this._initializers !== undefined)
+		if(this._initList !== undefined)
 		{
-			for(const initializer of this._initializers)
+			for(const init of this._initList)
 			{
-				this._params[initializer.name] = {};
-				initializer.init(this._params[initializer.name]);
+				init(this._params);
 			}
 		}
 	}
@@ -67,9 +71,9 @@ export default class AdjusterInterface
 
 		try
 		{
-			for(const adjuster of this._adjusters)
+			for(const adjust of this._adjustList)
 			{
-				if(adjuster.adjust(this._params[adjuster.name], values))
+				if(adjust(this._params, values))
 				{
 					return values.adjustedValue;
 				}

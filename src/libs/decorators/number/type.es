@@ -2,7 +2,7 @@ import {CAUSE} from "../../constants";
 import AdjusterInterface from "../../AdjusterInterface";
 import AdjusterError from "../../AdjusterError";
 
-export default AdjusterInterface.createDecorator("type", _adjust);
+export default AdjusterInterface.createDecorator(_adjust);
 
 /**
  * adjust

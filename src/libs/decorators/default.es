@@ -2,7 +2,11 @@ import {CAUSE} from "../constants";
 import AdjusterInterface from "../AdjusterInterface";
 import AdjusterError from "../AdjusterError";
 
-export default AdjusterInterface.createDecorator("default", _adjust, {
+const NAME = "default";
+const KEY = Symbol(NAME);
+
+export default AdjusterInterface.createDecorator(_adjust, {
+	name: NAME,
 	init: _init,
 	function: _default,
 });
@@ -13,7 +17,9 @@ export default AdjusterInterface.createDecorator("default", _adjust, {
  */
 function _init(params)
 {
-	params.flag = false;
+	params[KEY] = {
+		flag: false,
+	};
 }
 
 /**
@@ -23,8 +29,10 @@ function _init(params)
  */
 function _default(params, value)
 {
-	params.flag = true;
-	params.value = value;
+	params[KEY] = {
+		flag: true,
+		value: value,
+	};
 }
 
 /**
@@ -40,9 +48,9 @@ function _adjust(params, values)
 		return false;
 	}
 
-	if(params.flag)
+	if(params[KEY].flag)
 	{
-		values.adjustedValue = params.value;
+		values.adjustedValue = params[KEY].value;
 		return true;
 	}
 

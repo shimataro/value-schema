@@ -2,7 +2,11 @@ import {CAUSE} from "../constants";
 import AdjusterInterface from "../AdjusterInterface";
 import AdjusterError from "../AdjusterError";
 
-export default AdjusterInterface.createDecorator("allowEmpty", _adjust, {
+const NAME = "allowEmpty";
+const KEY = Symbol(NAME);
+
+export default AdjusterInterface.createDecorator(_adjust, {
+	name: NAME,
 	init: _init,
 	function: _allowEmpty,
 });
@@ -13,7 +17,9 @@ export default AdjusterInterface.createDecorator("allowEmpty", _adjust, {
  */
 function _init(params)
 {
-	params.flag = false;
+	params[KEY] = {
+		flag: false,
+	};
 }
 
 /**
@@ -23,8 +29,10 @@ function _init(params)
  */
 function _allowEmpty(params, value = null)
 {
-	params.flag = true;
-	params.valueOnEmpty = value;
+	params[KEY] = {
+		flag: true,
+		valueOnEmpty: value,
+	};
 }
 
 /**
@@ -40,9 +48,9 @@ function _adjust(params, values)
 		return false;
 	}
 
-	if(params.flag)
+	if(params[KEY].flag)
 	{
-		values.adjustedValue = params.valueOnEmpty;
+		values.adjustedValue = params[KEY].valueOnEmpty;
 		return true;
 	}
 

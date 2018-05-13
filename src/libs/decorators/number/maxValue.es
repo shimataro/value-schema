@@ -2,7 +2,11 @@ import {CAUSE} from "../../constants";
 import AdjusterInterface from "../../AdjusterInterface";
 import AdjusterError from "../../AdjusterError";
 
-export default AdjusterInterface.createDecorator("maxValue", _adjust, {
+const NAME = "maxValue";
+const KEY = Symbol(NAME);
+
+export default AdjusterInterface.createDecorator(_adjust, {
+	name: NAME,
 	init: _init,
 	function: _maxValue,
 });
@@ -13,7 +17,9 @@ export default AdjusterInterface.createDecorator("maxValue", _adjust, {
  */
 function _init(params)
 {
-	params.flag = false;
+	params[KEY] = {
+		flag: false,
+	};
 }
 
 /**
@@ -24,9 +30,11 @@ function _init(params)
  */
 function _maxValue(params, value, adjust = false)
 {
-	params.flag = true;
-	params.value = value;
-	params.adjust = adjust;
+	params[KEY] = {
+		flag: true,
+		value: value,
+		adjust: adjust,
+	};
 }
 
 /**
@@ -36,17 +44,17 @@ function _maxValue(params, value, adjust = false)
  */
 function _adjust(params, values)
 {
-	if(!params.flag)
+	if(!params[KEY].flag)
 	{
 		return false;
 	}
-	if(values.adjustedValue <= params.value)
+	if(values.adjustedValue <= params[KEY].value)
 	{
 		return false;
 	}
-	if(params.adjust)
+	if(params[KEY].adjust)
 	{
-		values.adjustedValue = params.value;
+		values.adjustedValue = params[KEY].value;
 		return false;
 	}
 
