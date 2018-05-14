@@ -1,19 +1,18 @@
 import {CAUSE} from "../../constants";
-import AdjusterInterface from "../../AdjusterInterface";
+import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
 
 const NAME = "maxValue";
 const KEY = Symbol(NAME);
 
-export default AdjusterInterface.createDecorator(_adjust, {
-	name: NAME,
-	init: _init,
-	function: _maxValue,
-});
+export default AdjusterBase.decoratorBuilder(NAME, _adjust)
+	.init(_init)
+	.chain(_chain)
+	.build();
 
 /**
  * init
- * @param {Object} params parameters
+ * @param {AdjusterBase.PARAMS} params parameters
  */
 function _init(params)
 {
@@ -24,11 +23,12 @@ function _init(params)
 
 /**
  * set min-value
+ * @param {AdjusterBase.PARAMS} params parameters
  * @param {number} value max-value
  * @param {boolean} [adjust=false] adjust to max-value if value > max-value; default is ERROR
  * @return {NumberAdjuster}
  */
-function _maxValue(params, value, adjust = false)
+function _chain(params, value, adjust = false)
 {
 	params[KEY] = {
 		flag: true,
@@ -39,8 +39,10 @@ function _maxValue(params, value, adjust = false)
 
 /**
  * adjust
- * @param {_TypeValues} values
+ * @param {AdjusterBase.PARAMS} params parameters
+ * @param {AdjusterBase.VALUES} values
  * @return {boolean} end adjustment
+ * @throws {AdjusterError}
  */
 function _adjust(params, values)
 {
@@ -48,16 +50,16 @@ function _adjust(params, values)
 	{
 		return false;
 	}
-	if(values.adjustedValue <= params[KEY].value)
+	if(values.adjusted <= params[KEY].value)
 	{
 		return false;
 	}
 	if(params[KEY].adjust)
 	{
-		values.adjustedValue = params[KEY].value;
+		values.adjusted = params[KEY].value;
 		return false;
 	}
 
 	const cause = CAUSE.MAX_VALUE;
-	throw new AdjusterError(cause, values.originalValue);
+	throw new AdjusterError(cause, values.original);
 }

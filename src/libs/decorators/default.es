@@ -1,19 +1,18 @@
 import {CAUSE} from "../constants";
-import AdjusterInterface from "../AdjusterInterface";
+import AdjusterBase from "../AdjusterBase";
 import AdjusterError from "../AdjusterError";
 
 const NAME = "default";
 const KEY = Symbol(NAME);
 
-export default AdjusterInterface.createDecorator(_adjust, {
-	name: NAME,
-	init: _init,
-	function: _default,
-});
+export default AdjusterBase.decoratorBuilder(NAME, _adjust)
+	.init(_init)
+	.chain(_chain)
+	.build();
 
 /**
  * init
- * @param {Object} params parameters
+ * @param {AdjusterBase.PARAMS} params parameters
  */
 function _init(params)
 {
@@ -24,10 +23,10 @@ function _init(params)
 
 /**
  * set default value
- * @param {Object} params parameters
+ * @param {AdjusterBase.PARAMS} params parameters
  * @param {*} value default value
  */
-function _default(params, value)
+function _chain(params, value)
 {
 	params[KEY] = {
 		flag: true,
@@ -37,23 +36,24 @@ function _default(params, value)
 
 /**
  * adjuster
- * @param {Object} params parameters
- * @param {Object} values original / adjusted values
+ * @param {AdjusterBase.PARAMS} params parameters
+ * @param {AdjusterBase.VALUES} values original / adjusted values
  * @return {boolean} end adjustment
+ * @throws {AdjusterError}
  */
 function _adjust(params, values)
 {
-	if(values.adjustedValue !== undefined)
+	if(values.adjusted !== undefined)
 	{
 		return false;
 	}
 
 	if(params[KEY].flag)
 	{
-		values.adjustedValue = params[KEY].value;
+		values.adjusted = params[KEY].value;
 		return true;
 	}
 
 	const cause = CAUSE.REQUIRED;
-	throw new AdjusterError(cause, values.originalValue);
+	throw new AdjusterError(cause, values.original);
 }
