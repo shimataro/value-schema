@@ -3,7 +3,6 @@ import AdjusterBase from "../AdjusterBase";
 import AdjusterError from "../AdjusterError";
 
 const NAME = "in";
-const KEY = Symbol(NAME);
 
 export default AdjusterBase.decoratorBuilder(NAME, _adjust)
 	.init(_init)
@@ -16,10 +15,7 @@ export default AdjusterBase.decoratorBuilder(NAME, _adjust)
  */
 function _init(params)
 {
-	params[KEY] = {
-		name: NAME,
-		flag: false,
-	};
+	params.flag = false;
 }
 
 /**
@@ -29,10 +25,8 @@ function _init(params)
  */
 function _chain(params, ...values)
 {
-	params[KEY] = {
-		flag: true,
-		values: values,
-	};
+	params.flag = true;
+	params.values = values;
 }
 
 /**
@@ -44,11 +38,11 @@ function _chain(params, ...values)
  */
 function _adjust(params, values)
 {
-	if(!params[KEY].flag)
+	if(!params.flag)
 	{
 		return false;
 	}
-	if(params[KEY].values.includes(values.adjusted))
+	if(params.values.includes(values.adjusted))
 	{
 		return true;
 	}

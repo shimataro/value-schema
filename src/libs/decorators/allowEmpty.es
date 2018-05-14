@@ -3,7 +3,6 @@ import AdjusterBase from "../AdjusterBase";
 import AdjusterError from "../AdjusterError";
 
 const NAME = "allowEmpty";
-const KEY = Symbol(NAME);
 
 export default AdjusterBase.decoratorBuilder(NAME, _adjust)
 	.init(_init)
@@ -16,9 +15,7 @@ export default AdjusterBase.decoratorBuilder(NAME, _adjust)
  */
 function _init(params)
 {
-	params[KEY] = {
-		flag: false,
-	};
+	params.flag = false;
 }
 
 /**
@@ -28,10 +25,8 @@ function _init(params)
  */
 function _chain(params, value = null)
 {
-	params[KEY] = {
-		flag: true,
-		valueOnEmpty: value,
-	};
+	params.flag = true;
+	params.valueOnEmpty = value;
 }
 
 /**
@@ -48,9 +43,9 @@ function _adjust(params, values)
 		return false;
 	}
 
-	if(params[KEY].flag)
+	if(params.flag)
 	{
-		values.adjusted = params[KEY].valueOnEmpty;
+		values.adjusted = params.valueOnEmpty;
 		return true;
 	}
 

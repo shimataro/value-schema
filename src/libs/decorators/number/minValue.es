@@ -3,7 +3,6 @@ import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
 
 const NAME = "minValue";
-const KEY = Symbol(NAME);
 
 export default AdjusterBase.decoratorBuilder(NAME, _adjust)
 	.init(_init)
@@ -16,9 +15,7 @@ export default AdjusterBase.decoratorBuilder(NAME, _adjust)
  */
 function _init(params)
 {
-	params[KEY] = {
-		flag: false,
-	};
+	params.flag = false;
 }
 
 /**
@@ -30,11 +27,9 @@ function _init(params)
  */
 function _chain(params, value, adjust = false)
 {
-	params[KEY] = {
-		flag: true,
-		value: value,
-		adjust: adjust,
-	};
+	params.flag = true;
+	params.value = value;
+	params.adjust = adjust;
 }
 
 /**
@@ -46,17 +41,17 @@ function _chain(params, value, adjust = false)
  */
 function _adjust(params, values)
 {
-	if(!params[KEY].flag)
+	if(!params.flag)
 	{
 		return false;
 	}
-	if(values.adjusted >= params[KEY].value)
+	if(values.adjusted >= params.value)
 	{
 		return false;
 	}
-	if(params[KEY].adjust)
+	if(params.adjust)
 	{
-		values.adjusted = params[KEY].value;
+		values.adjusted = params.value;
 		return false;
 	}
 

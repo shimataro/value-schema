@@ -53,32 +53,26 @@ class DecoratorBuilder
 			const chain = this._chain;
 			const adjust = this._adjust;
 
-			// register init function
-			if(init !== null)
+			if(TargetClass.prototype._decorators === undefined)
 			{
-				if(TargetClass.prototype._initList === undefined)
-				{
-					TargetClass.prototype._initList = [];
-				}
-				TargetClass.prototype._initList.push(init);
+				TargetClass.prototype._decorators = [];
 			}
+			TargetClass.prototype._decorators.push({
+				name: name,
+				adjust: adjust,
+				init: init,
+			});
 
 			// register chain function
 			if(chain !== null)
 			{
 				TargetClass.prototype[name] = function(...args)
 				{
-					chain(this._params, ...args);
+					chain(this._params[name], ...args);
 					return this;
 				};
 			}
 
-			// register adjust function
-			if(TargetClass.prototype._adjustList === undefined)
-			{
-				TargetClass.prototype._adjustList = [];
-			}
-			TargetClass.prototype._adjustList.push(adjust);
 			return TargetClass;
 		};
 	}
@@ -106,10 +100,14 @@ export default class AdjusterBase
 	constructor()
 	{
 		this._params = {};
-        for(const init of this._initList)
-        {
-            init(this._params);
-        }
+		for(const decorator of this._decorators)
+		{
+			this._params[decorator.name] = {};
+			if(decorator.init !== null)
+			{
+				decorator.init(this._params[decorator.name]);
+			}
+		}
 	}
 
 	/**
@@ -127,13 +125,14 @@ export default class AdjusterBase
 
 		try
 		{
-			for(const adjust of this._adjustList)
+			for(const decorator of this._decorators)
 			{
-				if(adjust(this._params, values))
+				if(decorator.adjust(this._params[decorator.name], values))
 				{
 					return values.adjusted;
 				}
 			}
+
 			return values.adjusted;
 		}
 		catch(err)
