@@ -13,7 +13,7 @@ export default AdjusterBase.decoratorBuilder(NAME, _adjust)
 
 /**
  * adjust
- * @param {AdjusterBase.PARAMS} params parameters
+ * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values
  * @return {boolean} end adjustment
  * @throws {AdjusterError}

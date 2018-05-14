@@ -11,7 +11,7 @@ export default AdjusterBase.decoratorBuilder(NAME, _adjust)
 
 /**
  * init
- * @param {AdjusterBase.PARAMS} params parameters
+ * @param {Object} params parameters
  */
 function _init(params)
 {
@@ -20,7 +20,7 @@ function _init(params)
 
 /**
  * set default value
- * @param {AdjusterBase.PARAMS} params parameters
+ * @param {Object} params parameters
  * @param {*} value default value
  */
 function _chain(params, value)
@@ -31,7 +31,7 @@ function _chain(params, value)
 
 /**
  * adjuster
- * @param {AdjusterBase.PARAMS} params parameters
+ * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
  * @return {boolean} end adjustment
  * @throws {AdjusterError}

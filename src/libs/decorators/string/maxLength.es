@@ -11,7 +11,7 @@ export default AdjusterBase.decoratorBuilder(NAME, _adjust)
 
 /**
  * init
- * @param {AdjusterBase.PARAMS} params parameters
+ * @param {Object} params parameters
  */
 function _init(params)
 {
@@ -20,7 +20,7 @@ function _init(params)
 
 /**
  * set max-length
- * @param {AdjusterBase.PARAMS} params parameters
+ * @param {Object} params parameters
  * @param {int} length max-length; error if longer
  * @param {boolean} [adjust=false] truncate if longer; default is ERROR
  */
@@ -33,7 +33,7 @@ function _chain(params, length, adjust = false)
 
 /**
  * adjust
- * @param {AdjusterBase.PARAMS} params parameters
+ * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values
  * @return {boolean} end adjustment
  * @throws {AdjusterError}

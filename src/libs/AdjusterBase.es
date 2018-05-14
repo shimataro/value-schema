@@ -162,9 +162,6 @@ export default class AdjusterBase
 }
 
 /**
- * @typedef {Object} AdjusterBase.PARAMS
- */
-/**
  * @typedef {Object} AdjusterBase.VALUES
  * @property {*} original
  * @property {*} adjusted
@@ -179,17 +176,17 @@ export default class AdjusterBase
 /**
  * init function
  * @callback AdjusterBase.Init
- * @param {AdjusterBase.PARAMS} params parameters
+ * @param {Object} params parameters
  */
 /**
  * chain function
  * @callback AdjusterBase.Chain
- * @param {AdjusterBase.PARAMS} params parameters
+ * @param {Object} params parameters
  */
 /**
  * adjuster
  * @callback AdjusterBase.Adjust
- * @param {AdjusterBase.PARAMS} params parameters
+ * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
  * @return {boolean} end adjustment
  * @throws {AdjusterError}

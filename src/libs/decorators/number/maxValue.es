@@ -11,7 +11,7 @@ export default AdjusterBase.decoratorBuilder(NAME, _adjust)
 
 /**
  * init
- * @param {AdjusterBase.PARAMS} params parameters
+ * @param {Object} params parameters
  */
 function _init(params)
 {
@@ -20,7 +20,7 @@ function _init(params)
 
 /**
  * set min-value
- * @param {AdjusterBase.PARAMS} params parameters
+ * @param {Object} params parameters
  * @param {number} value max-value
  * @param {boolean} [adjust=false] adjust to max-value if value > max-value; default is ERROR
  * @return {NumberAdjuster}
@@ -34,7 +34,7 @@ function _chain(params, value, adjust = false)
 
 /**
  * adjust
- * @param {AdjusterBase.PARAMS} params parameters
+ * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values
  * @return {boolean} end adjustment
  * @throws {AdjusterError}
