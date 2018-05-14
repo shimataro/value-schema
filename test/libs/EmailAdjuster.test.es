@@ -118,7 +118,7 @@ function testPattern()
 		expect(() =>
 		{
 			objEmailAdjuster.adjust("john.doe@example.com");
-		}).toThrow(CAUSE.EMAIL);
+		}).toThrow(CAUSE.PATTERN);
 	});
 }
 
@@ -179,7 +179,7 @@ function testEmail()
 			expect(() =>
 			{
 				objEmailAdjuster.adjust(value);
-			}).toThrow(CAUSE.EMAIL);
+			}).toThrow(CAUSE.PATTERN);
 		}
 	});
 }

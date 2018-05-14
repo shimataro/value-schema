@@ -28,7 +28,6 @@ export const CAUSE = {
 
 	IPV4: "ipv4",
 	IPV6: "ipv6",
-	EMAIL: "email",
 };
 
 /**
@@ -54,5 +53,4 @@ export const CAUSE = {
  * @property {string} EACH_PATTERN
  * @property {string} IPV4
  * @property {string} IPV6
- * @property {string} EMAIL
  */

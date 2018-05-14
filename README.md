@@ -246,14 +246,14 @@ assert.strictEqual(adjuster.email().adjust("user@example-domain.com")           
 assert.strictEqual(adjuster.email().adjust("user@example2.com")                           , "user@example2.com");
 
 // should cause errors
-assert.throws(() => adjuster.email().adjust("@example.com")           , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
-assert.throws(() => adjuster.email().adjust(".a@example.com")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
-assert.throws(() => adjuster.email().adjust("a.@example.com")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
-assert.throws(() => adjuster.email().adjust("a..a@example.com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
-assert.throws(() => adjuster.email().adjust("user@example@com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
-assert.throws(() => adjuster.email().adjust("user-example-com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
-assert.throws(() => adjuster.email().adjust("user@example_domain.com"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
-assert.throws(() => adjuster.email().adjust("user@example.com2")      , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
+assert.throws(() => adjuster.email().adjust("@example.com")           , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.email().adjust(".a@example.com")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.email().adjust("a.@example.com")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.email().adjust("a..a@example.com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.email().adjust("user@example@com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.email().adjust("user-example-com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.email().adjust("user@example_domain.com"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.email().adjust("user@example.com2")      , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
 ## Release notes

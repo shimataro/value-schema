@@ -1,14 +1,13 @@
-import {CAUSE} from "./constants";
+import AdjusterBase from "./AdjusterBase";
+
+import Default from "./decorators/default";
+import AllowEmpty from "./decorators/allowEmpty";
+import Type from "./decorators/string/type";
+import Pattern from "./decorators/string/pattern";
+import MaxLength from "./decorators/email/maxLength";
+
 import {PATTERN as PATTERN_IPV4} from "./IPv4Adjuster";
 import {PATTERN as PATTERN_IPV6} from "./IPv6Adjuster";
-
-import AdjusterInterface from "./AdjusterInterface";
-import AdjusterError from "./AdjusterError";
-import StringAdjuster from "./StringAdjuster";
-
-const MAX_LENGTH_LOCAL = 64;
-const MAX_LENGTH_DOMAIN = 255;
-const MAX_LENGTH = MAX_LENGTH_LOCAL + 1 + MAX_LENGTH_DOMAIN; // local-part + "@" + domain-part
 
 // https://tools.ietf.org/html/rfc5321
 // https://tools.ietf.org/html/rfc5322
@@ -37,7 +36,12 @@ const REGEXP = new RegExp(`^${PATTERN}$`);
 /**
  * adjuster for e-mail
  */
-export default class EmailAdjuster extends AdjusterInterface
+@Pattern
+@MaxLength
+@Type
+@AllowEmpty
+@Default
+export default class EmailAdjuster extends AdjusterBase
 {
 	/**
 	 * constructor
@@ -46,77 +50,38 @@ export default class EmailAdjuster extends AdjusterInterface
 	{
 		super();
 
-		this._objAdjuster = new StringAdjuster()
-			.maxLength(MAX_LENGTH)
-			.pattern(REGEXP);
+		this.pattern(REGEXP);
 	}
 
 	/**
-	 * set default value; enable to omit
+	 * set default value
+	 * @method
+	 * @name EmailAdjuster#default
 	 * @param {string} value default value
 	 * @return {EmailAdjuster}
 	 */
-	default(value)
-	{
-		this._objAdjuster.default(value);
-		return this;
-	}
 
 	/**
-	 * allow empty string (NOT undefined)
+	 * allow empty string
+	 * @method
+	 * @name EmailAdjuster#allowEmpty
 	 * @param {?string} [value=null] value on empty
 	 * @return {EmailAdjuster}
 	 */
-	allowEmpty(value = null)
-	{
-		this._objAdjuster.allowEmpty(value);
-		return this;
-	}
 
 	/**
-	 * specify custom pattern by regular expression
-	 * @param {RegExp} pattern acceptable pattern
+	 * specify acceptable pattern by regular expression
+	 * @param {string|String|RegExp} pattern acceptable pattern(regular expression); string or RegExp
 	 * @return {EmailAdjuster}
 	 */
-	pattern(pattern)
-	{
-		this._objAdjuster.pattern(pattern);
-		return this;
-	}
 
 	/**
 	 * do adjust
+	 * @method
+	 * @name EmailAdjuster#adjust
 	 * @param {*} value value to be checked
-	 * @param {?_OnError} onError callback function on error
+	 * @param {?AdjusterBase.OnError} [onError=null] callback function on error
 	 * @return {string} adjusted value
+	 * @throws {AdjusterError}
 	 */
-	adjust(value, onError = null)
-	{
-		try
-		{
-			const adjusted = this._objAdjuster.adjust(value);
-
-			const atPosition = adjusted.lastIndexOf("@");
-			if(atPosition > MAX_LENGTH_LOCAL)
-			{
-				// local-part length error
-				throw new AdjusterError(CAUSE.MAX_LENGTH, value);
-			}
-			if(adjusted.length - atPosition - 1 > MAX_LENGTH_DOMAIN)
-			{
-				// domain-part length error
-				throw new AdjusterError(CAUSE.MAX_LENGTH, value);
-			}
-
-			return adjusted;
-		}
-		catch(err)
-		{
-			if(err.cause === CAUSE.PATTERN)
-			{
-				err.cause = CAUSE.EMAIL;
-			}
-			return AdjusterInterface._handleError(onError, err.cause, value);
-		}
-	}
 }
