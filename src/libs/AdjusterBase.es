@@ -1,8 +1,8 @@
 import AdjusterError from "./AdjusterError";
 
- /**
-  * Decorator Builder
-  */
+/**
+ * Decorator Builder
+ */
 class DecoratorBuilder
 {
 	/**
