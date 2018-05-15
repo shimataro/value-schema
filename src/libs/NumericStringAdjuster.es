@@ -2,77 +2,79 @@ import AdjusterBase from "./AdjusterBase";
 
 import Default from "./decorators/default";
 import AllowEmptyString from "./decorators/allowEmptyString";
-import In from "./decorators/in";
 import Type from "./decorators/string/type";
 import MinLength from "./decorators/string/minLength";
 import MaxLength from "./decorators/string/maxLength";
-import Pattern from "./decorators/string/pattern";
+import SeparatedBy from "./decorators/numericString/separatedBy";
+import Pattern from "./decorators/numericString/pattern";
+import Checksum from "./decorators/numericString/checksum";
 
 /**
- * adjuster for string
+ * adjuster for numeric string
  */
-@Pattern
+@Checksum
 @MaxLength
 @MinLength
-@AllowEmptyString
-@In
+@Pattern
+@SeparatedBy
 @Type
+@AllowEmptyString
 @Default
-export default class StringAdjuster extends AdjusterBase
+export default class NumericStringAdjuster extends AdjusterBase
 {
 	/**
 	 * set default value
 	 * @method
-	 * @name StringAdjuster#default
+	 * @name NumericStringAdjuster#default
 	 * @param {string} value default value
-	 * @return {StringAdjuster}
+	 * @return {NumericStringAdjuster}
 	 */
 
 	/**
 	 * allow empty string
 	 * @method
-	 * @name StringAdjuster#allowEmptyString
+	 * @name NumericStringAdjuster#allowEmptyString
 	 * @param {?string} [value=null] value on empty
-	 * @return {StringAdjuster}
+	 * @return {NumericStringAdjuster}
 	 */
 
 	/**
-	 * accept only specified values
+	 * ignore separator
 	 * @method
-	 * @name StringAdjuster#in
-	 * @param {...string} values values to be accepted
-	 * @return {StringAdjuster}
+	 * @name NumericStringAdjuster#separatedBy
+	 * @param {string|String|RegExp} separator separator
+	 * @return {NumericStringAdjuster}
 	 */
 
 	/**
 	 * set min-length
 	 * @method
-	 * @name StringAdjuster#minLength
+	 * @name NumericStringAdjuster#minLength
 	 * @param {int} value min-length; error if shorter
-	 * @return {StringAdjuster}
+	 * @return {NumericStringAdjuster}
 	 */
 
 	/**
 	 * set max-length
 	 * @method
-	 * @name StringAdjuster#maxLength
+	 * @name NumericStringAdjuster#maxLength
 	 * @param {int} length max-length; error if longer
 	 * @param {boolean} [adjust=false] truncate if longer; default is ERROR
-	 * @return {StringAdjuster}
+	 * @return {NumericStringAdjuster}
 	 */
 
 	/**
-	 * specify acceptable pattern by regular expression
+	 * validate by checksum
 	 * @method
-	 * @name StringAdjuster#pattern
-	 * @param {string|String|RegExp} pattern acceptable pattern(regular expression); string or RegExp
-	 * @return {StringAdjuster}
+	 * @name NumericStringAdjuster#checksum
+	 * @param {string} algorithm checksum algorithm
+	 * @return {NumericStringAdjuster}
 	 */
 
 	/**
 	 * do adjust
 	 * @method
-	 * @name StringAdjuster#adjust
+	 * @name NumericStringAdjuster#adjust
 	 * @param {*} value value to be checked
 	 * @param {?AdjusterBase.OnError} [onError=null] callback function on error
 	 * @return {string} adjusted value
