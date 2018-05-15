@@ -4,8 +4,8 @@ import IPv6Adjuster from "libs/IPv6Adjuster";
 {
 	describe("required", testRequired);
 	describe("default", testDefault);
-	describe("empty", testEmpty);
-	describe("allowEmpty", testAllowEmpty);
+	describe("emptyString", testEmptyString);
+	describe("allowEmptyString", testAllowEmptyString);
 	describe("pattern", testPattern);
 }
 
@@ -37,9 +37,9 @@ function testDefault()
 }
 
 /**
- * empty value
+ * empty string
  */
-function testEmpty()
+function testEmptyString()
 {
 	const objIPv6Adjuster = new IPv6Adjuster();
 	it("should cause error(s)", () =>
@@ -52,11 +52,11 @@ function testEmpty()
 }
 
 /**
- * empty value (allowd)
+ * empty string (allowd)
  */
-function testAllowEmpty()
+function testAllowEmptyString()
 {
-	const objIPv6Adjuster = new IPv6Adjuster().allowEmpty("::1");
+	const objIPv6Adjuster = new IPv6Adjuster().allowEmptyString("::1");
 	it("should be OK", () =>
 	{
 		expect(objIPv6Adjuster.adjust("")).toEqual("::1");

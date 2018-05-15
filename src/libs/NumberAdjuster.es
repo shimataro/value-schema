@@ -1,7 +1,7 @@
 import AdjusterBase from "./AdjusterBase";
 
 import Default from "./decorators/default";
-import AllowEmpty from "./decorators/allowEmpty";
+import AllowEmptyString from "./decorators/allowEmptyString";
 import In from "./decorators/in";
 import Type from "./decorators/number/type";
 import MinValue from "./decorators/number/minValue";
@@ -14,7 +14,7 @@ import MaxValue from "./decorators/number/maxValue";
 @MinValue
 @In
 @Type
-@AllowEmpty
+@AllowEmptyString
 @Default
 export default class NumberAdjuster extends AdjusterBase
 {
@@ -29,7 +29,7 @@ export default class NumberAdjuster extends AdjusterBase
 	/**
 	 * allow empty string
 	 * @method
-	 * @name NumberAdjuster#allowEmpty
+	 * @name NumberAdjuster#allowEmptyString
 	 * @param {?number} [value=null] value on empty
 	 * @return {NumberAdjuster}
 	 */

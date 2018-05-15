@@ -1,7 +1,7 @@
 import AdjusterBase from "./AdjusterBase";
 
 import Default from "./decorators/default";
-import AllowEmpty from "./decorators/allowEmpty";
+import AllowEmptyString from "./decorators/allowEmptyString";
 import In from "./decorators/in";
 import Type from "./decorators/string/type";
 import MinLength from "./decorators/string/minLength";
@@ -14,7 +14,7 @@ import Pattern from "./decorators/string/pattern";
 @Pattern
 @MaxLength
 @MinLength
-@AllowEmpty
+@AllowEmptyString
 @In
 @Type
 @Default
@@ -31,7 +31,7 @@ export default class StringAdjuster extends AdjusterBase
 	/**
 	 * allow empty string
 	 * @method
-	 * @name StringAdjuster#allowEmpty
+	 * @name StringAdjuster#allowEmptyString
 	 * @param {?string} [value=null] value on empty
 	 * @return {StringAdjuster}
 	 */

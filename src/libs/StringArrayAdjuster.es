@@ -1,7 +1,7 @@
 import AdjusterBase from "./AdjusterBase";
 
 import Default from "./decorators/default";
-import AllowEmpty from "./decorators/allowEmpty";
+import AllowEmptyString from "./decorators/allowEmptyString";
 import Type from "./decorators/array/type";
 import MinLength from "./decorators/array/minLength";
 import MaxLength from "./decorators/array/maxLength";
@@ -14,7 +14,7 @@ import Each from "./decorators/stringArray/each";
 @MinLength
 @Each
 @Type
-@AllowEmpty
+@AllowEmptyString
 @Default
 export default class StringArrayAdjuster extends AdjusterBase
 {
@@ -29,7 +29,7 @@ export default class StringArrayAdjuster extends AdjusterBase
 	/**
 	 * allow empty string
 	 * @method
-	 * @name StringArrayAdjuster#allowEmpty
+	 * @name StringArrayAdjuster#allowEmptyString
 	 * @param {?string[]} [value=null] value on empty
 	 * @return {StringArrayAdjuster}
 	 */
@@ -84,7 +84,7 @@ export default class StringArrayAdjuster extends AdjusterBase
 	/**
 	 * allow empty string for each elements
 	 * @method
-	 * @name StringArrayAdjuster#eachAllowEmpty
+	 * @name StringArrayAdjuster#eachAllowEmptyString
 	 * @param {?string} [value=null] value on empty
 	 * @return {StringArrayAdjuster}
 	 */

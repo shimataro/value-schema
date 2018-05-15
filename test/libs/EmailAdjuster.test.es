@@ -5,7 +5,7 @@ import EmailAdjuster from "libs/EmailAdjuster";
 	describe("required", testRequired);
 	describe("default", testDefault);
 	describe("empty", testEmpty);
-	describe("allowEmpty", testAllowEmpty);
+	describe("allowEmptyString", testAllowEmptyString);
 	describe("maxLength", testMaxLength);
 	describe("pattern", testPattern);
 	describe("email", testEmail);
@@ -54,11 +54,11 @@ function testEmpty()
 }
 
 /**
- * empty value (allowd)
+ * empty string (allowd)
  */
-function testAllowEmpty()
+function testAllowEmptyString()
 {
-	const objEmailAdjuster = new EmailAdjuster().allowEmpty("empty@example.com");
+	const objEmailAdjuster = new EmailAdjuster().allowEmptyString("empty@example.com");
 	it("should be OK", () =>
 	{
 		expect(objEmailAdjuster.adjust("")).toEqual("empty@example.com");

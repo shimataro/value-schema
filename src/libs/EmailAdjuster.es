@@ -1,7 +1,7 @@
 import AdjusterBase from "./AdjusterBase";
 
 import Default from "./decorators/default";
-import AllowEmpty from "./decorators/allowEmpty";
+import AllowEmptyString from "./decorators/allowEmptyString";
 import Type from "./decorators/string/type";
 import Pattern from "./decorators/string/pattern";
 import MaxLength from "./decorators/email/maxLength";
@@ -39,7 +39,7 @@ const REGEXP = new RegExp(`^${PATTERN}$`);
 @Pattern
 @MaxLength
 @Type
-@AllowEmpty
+@AllowEmptyString
 @Default
 export default class EmailAdjuster extends AdjusterBase
 {
@@ -64,7 +64,7 @@ export default class EmailAdjuster extends AdjusterBase
 	/**
 	 * allow empty string
 	 * @method
-	 * @name EmailAdjuster#allowEmpty
+	 * @name EmailAdjuster#allowEmptyString
 	 * @param {?string} [value=null] value on empty
 	 * @return {EmailAdjuster}
 	 */

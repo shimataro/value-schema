@@ -8,7 +8,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.features({
 		ignoreEachErrors: _featureIgnoreEachErrors,
 		eachDefault: _featureEachDefault,
-		eachAllowEmpty: _featureEachAllowEmpty,
+		eachAllowEmptyString: _featureEachAllowEmptyString,
 		eachIn: _featureEachIn,
 		eachMinLength: _featureEachMinLength,
 		eachMaxLength: _featureEachMaxLength,
@@ -49,9 +49,9 @@ function _featureEachDefault(params, value)
  * @param {Object} params parameters
  * @param {?string} [value=null] value on empty
  */
-function _featureEachAllowEmpty(params, value = null)
+function _featureEachAllowEmptyString(params, value = null)
 {
-	params.objAdjuster.allowEmpty(value);
+	params.objAdjuster.allowEmptyString(value);
 }
 
 /**

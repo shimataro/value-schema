@@ -1,7 +1,7 @@
 import AdjusterBase from "./AdjusterBase";
 
 import Default from "./decorators/default";
-import AllowEmpty from "./decorators/allowEmpty";
+import AllowEmptyString from "./decorators/allowEmptyString";
 import Type from "./decorators/string/type";
 import Pattern from "./decorators/string/pattern";
 
@@ -30,7 +30,7 @@ export {PATTERN};
  */
 @Pattern
 @Type
-@AllowEmpty
+@AllowEmptyString
 @Default
 export default class IPv6Adjuster extends AdjusterBase
 {
@@ -55,7 +55,7 @@ export default class IPv6Adjuster extends AdjusterBase
 	/**
 	 * allow empty string
 	 * @method
-	 * @name IPv6Adjuster#allowEmpty
+	 * @name IPv6Adjuster#allowEmptyString
 	 * @param {?string} [value=null] value on empty
 	 * @return {IPv6Adjuster}
 	 */
