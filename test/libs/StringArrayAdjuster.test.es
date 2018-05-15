@@ -5,8 +5,8 @@ import StringArrayAdjuster from "libs/StringArrayAdjuster";
 	describe("type", testType);
 	describe("required", testRequired);
 	describe("default", testDefault);
-	describe("empty", testEmpty);
-	describe("allowEmpty", testAllowEmpty);
+	describe("empty", testEmptyString);
+	describe("allowEmptyString", testAllowEmptyString);
 	describe("separatedBy", testSeparatedBy);
 	describe("toArray", testToArray);
 	describe("minLength", testMinLength);
@@ -15,7 +15,7 @@ import StringArrayAdjuster from "libs/StringArrayAdjuster";
 	describe("ignoreEachErrors", testIgnoreEachErrors);
 	describe("each", testEach);
 	describe("eachDefault", testEachDefault);
-	describe("eachAllowEmpty", testEachAllowEmpty);
+	describe("eachAllowEmptyString", testEachAllowEmptyString);
 	describe("eachIn", testEachIn);
 	describe("eachMinLength", testEachMinLength);
 	describe("eachMaxLength", testEachMaxLength);
@@ -75,9 +75,9 @@ function testDefault()
 }
 
 /**
- * empty value
+ * empty string
  */
-function testEmpty()
+function testEmptyString()
 {
 	const objStringArrayAdjuster = new StringArrayAdjuster();
 	it("should cause error(s)", () =>
@@ -90,11 +90,11 @@ function testEmpty()
 }
 
 /**
- * empty value (allowed)
+ * empty string (allowed)
  */
-function testAllowEmpty()
+function testAllowEmptyString()
 {
-	const objStringArrayAdjuster = new StringArrayAdjuster().allowEmpty(["a", "b"]);
+	const objStringArrayAdjuster = new StringArrayAdjuster().allowEmptyString(["a", "b"]);
 	it("should be adjusted", () =>
 	{
 		expect(objStringArrayAdjuster.adjust("")).toEqual(["a", "b"]);
@@ -231,11 +231,11 @@ function testEachDefault()
 }
 
 /**
- * each elements; allow empty element
+ * each elements; allow empty string
  */
-function testEachAllowEmpty()
+function testEachAllowEmptyString()
 {
-	const objStringArrayAdjuster = new StringArrayAdjuster().eachAllowEmpty("z");
+	const objStringArrayAdjuster = new StringArrayAdjuster().eachAllowEmptyString("z");
 	it("should be adjusted", () =>
 	{
 		expect(objStringArrayAdjuster.adjust(["a", "", "b"])).toEqual(["a", "z", "b"]);

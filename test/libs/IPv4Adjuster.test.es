@@ -4,9 +4,9 @@ import IPv4Adjuster from "libs/IPv4Adjuster";
 {
 	describe("required", testRequired);
 	describe("default", testDefault);
-	describe("empty", testEmpty);
-	describe("allowEmpty", testAllowEmpty);
-	describe("IPv4", testIPv4);
+	describe("emptyString", testEmptyString);
+	describe("allowEmptyString", testAllowEmptyString);
+	describe("pattern", testPattern);
 }
 
 /**
@@ -37,9 +37,9 @@ function testDefault()
 }
 
 /**
- * empty value
+ * empty string
  */
-function testEmpty()
+function testEmptyString()
 {
 	const objIPv4Adjuster = new IPv4Adjuster();
 	it("should cause error(s)", () =>
@@ -52,11 +52,11 @@ function testEmpty()
 }
 
 /**
- * empty value (allowd)
+ * empty string (allowd)
  */
-function testAllowEmpty()
+function testAllowEmptyString()
 {
-	const objIPv4Adjuster = new IPv4Adjuster().allowEmpty("1.1.1.1");
+	const objIPv4Adjuster = new IPv4Adjuster().allowEmptyString("1.1.1.1");
 	it("should be OK", () =>
 	{
 		expect(objIPv4Adjuster.adjust("")).toEqual("1.1.1.1");
@@ -64,9 +64,9 @@ function testAllowEmpty()
 }
 
 /**
- * IPv4 string
+ * IPv4 pattern
  */
-function testIPv4()
+function testPattern()
 {
 	const objIPv4Adjuster = new IPv4Adjuster();
 	it("should be OK", () =>
@@ -94,7 +94,7 @@ function testIPv4()
 			expect(() =>
 			{
 				objIPv4Adjuster.adjust(value);
-			}).toThrow(CAUSE.IPV4);
+			}).toThrow(CAUSE.PATTERN);
 		}
 	});
 }

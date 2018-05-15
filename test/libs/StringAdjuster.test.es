@@ -5,8 +5,8 @@ import StringAdjuster from "libs/StringAdjuster";
 	describe("type", testType);
 	describe("required", testRequired);
 	describe("default", testDefault);
-	describe("empty", testEmpty);
-	describe("allowEmpty", testAllowEmpty);
+	describe("emptyString", testEmptyString);
+	describe("allowEmptyString", testAllowEmptyString);
 	describe("in", testIn);
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
@@ -55,9 +55,9 @@ function testDefault()
 }
 
 /**
- * empty value
+ * empty string
  */
-function testEmpty()
+function testEmptyString()
 {
 	const objStringAdjuster = new StringAdjuster();
 	it("should cause error(s)", () =>
@@ -70,11 +70,11 @@ function testEmpty()
 }
 
 /**
- * empty value (allowed)
+ * empty string (allowed)
  */
-function testAllowEmpty()
+function testAllowEmptyString()
 {
-	const objStringAdjuster = new StringAdjuster().allowEmpty("qwerty");
+	const objStringAdjuster = new StringAdjuster().allowEmptyString("qwerty");
 	it("should be OK", () =>
 	{
 		expect(objStringAdjuster.adjust("")).toEqual("qwerty");

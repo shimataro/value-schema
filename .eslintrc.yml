@@ -4,6 +4,7 @@ env: # https://eslint.org/docs/user-guide/configuring#specifying-environments
   node: true
   jest: true
 extends: 'eslint:recommended'
+parser: "babel-eslint"
 parserOptions:
   sourceType: module
 rules: # https://eslint.org/docs/rules/
@@ -56,7 +57,7 @@ rules: # https://eslint.org/docs/rules/
   for-direction: error
   func-call-spacing: error
   func-name-matching: error
-  func-names: error
+  func-names: "off"
   func-style:
     - error
     - declaration
@@ -196,7 +197,7 @@ rules: # https://eslint.org/docs/rules/
   no-whitespace-before-property: error
   no-with: error
   nonblock-statement-body-position: error
-  object-curly-newline: error
+  object-curly-newline: "off"
   object-curly-spacing:
     - error
     - never

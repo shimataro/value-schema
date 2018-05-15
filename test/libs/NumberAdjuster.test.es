@@ -5,8 +5,8 @@ import NumberAdjuster from "libs/NumberAdjuster";
 	describe("type", testType);
 	describe("required", testRequired);
 	describe("default", testDefault);
-	describe("empty", testEmpty);
-	describe("allowEmpty", testAllowEmpty);
+	describe("emptyString", testEmptyString);
+	describe("allowEmptyString", testAllowEmptyString);
 	describe("in", testIn);
 	describe("minValue", testMinValue);
 	describe("minValue (adjusted)", testMinValueAdjusted);
@@ -75,9 +75,9 @@ function testDefault()
 }
 
 /**
- * empty value
+ * empty string
  */
-function testEmpty()
+function testEmptyString()
 {
 	const objNumberAdjuster = new NumberAdjuster();
 	it("should cause error(s)", () =>
@@ -90,11 +90,11 @@ function testEmpty()
 }
 
 /**
- * empty value (allowd)
+ * empty string (allowd)
  */
-function testAllowEmpty()
+function testAllowEmptyString()
 {
-	const objNumberAdjuster = new NumberAdjuster().allowEmpty(123);
+	const objNumberAdjuster = new NumberAdjuster().allowEmptyString(123);
 	it("should be adjusted", () =>
 	{
 		expect(objNumberAdjuster.adjust("")).toEqual(123);

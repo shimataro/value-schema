@@ -5,8 +5,8 @@ import NumberArrayAdjuster from "libs/NumberArrayAdjuster";
 	describe("type", testType);
 	describe("required", testRequired);
 	describe("default", testDefault);
-	describe("empty", testEmpty);
-	describe("allowEmpty", testAllowEmpty);
+	describe("empty", testEmptyString);
+	describe("allowEmptyString", testAllowEmptyString);
 	describe("separatedBy", testSeparatedBy);
 	describe("toArray", testToArray);
 	describe("minLength", testMinLength);
@@ -15,7 +15,7 @@ import NumberArrayAdjuster from "libs/NumberArrayAdjuster";
 	describe("ignoreEachErrors", testIgnoreEachErrors);
 	describe("each", testEach);
 	describe("eachDefault", testEachDefault);
-	describe("eachAllowEmpty", testEachAllowEmpty);
+	describe("eachAllowEmptyString", testEachAllowEmptyString);
 	describe("eachIn", testEachIn);
 	describe("eachMinValue", testEachMinValue);
 	describe("eachMinValue (adjusted)", testEachMinValueAdjusted);
@@ -79,9 +79,9 @@ function testDefault()
 }
 
 /**
- * empty value
+ * empty string
  */
-function testEmpty()
+function testEmptyString()
 {
 	const objNumberArrayAdjuster = new NumberArrayAdjuster();
 	it("should cause error(s)", () =>
@@ -94,11 +94,11 @@ function testEmpty()
 }
 
 /**
- * empty value (allowed)
+ * empty string (allowed)
  */
-function testAllowEmpty()
+function testAllowEmptyString()
 {
-	const objNumberArrayAdjuster = new NumberArrayAdjuster().allowEmpty([1, 2]);
+	const objNumberArrayAdjuster = new NumberArrayAdjuster().allowEmptyString([1, 2]);
 	it("should be adjusted", () =>
 	{
 		expect(objNumberArrayAdjuster.adjust("")).toEqual([1, 2]);
@@ -239,11 +239,11 @@ function testEachDefault()
 }
 
 /**
- * each elements; empty value
+ * each elements; empty string
  */
-function testEachAllowEmpty()
+function testEachAllowEmptyString()
 {
-	const objNumberArrayAdjuster = new NumberArrayAdjuster().eachAllowEmpty(999);
+	const objNumberArrayAdjuster = new NumberArrayAdjuster().eachAllowEmptyString(999);
 	it("should be adjusted", () =>
 	{
 		expect(objNumberArrayAdjuster.adjust([1, "", 3])).toEqual([1, 999, 3]);

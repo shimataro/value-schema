@@ -72,11 +72,11 @@ assert.strictEqual(adjuster.number().adjust(-123)         , -123);
 assert.strictEqual(adjuster.number().in(1, 3, 5).adjust(1), 1);
 
 // should be adjusted
-assert.strictEqual(adjuster.number().adjust("-123")                 , -123);
-assert.strictEqual(adjuster.number().default(10).adjust(undefined)  , 10);
-assert.strictEqual(adjuster.number().allowEmpty(123).adjust("")     , 123);
-assert.strictEqual(adjuster.number().minValue(1, true).adjust(0)    , 1);
-assert.strictEqual(adjuster.number().maxValue(100, true).adjust(101), 100);
+assert.strictEqual(adjuster.number().adjust("-123")                  , -123);
+assert.strictEqual(adjuster.number().default(10).adjust(undefined)   , 10);
+assert.strictEqual(adjuster.number().allowEmptyString(123).adjust(""), 123);
+assert.strictEqual(adjuster.number().minValue(1, true).adjust(0)     , 1);
+assert.strictEqual(adjuster.number().maxValue(100, true).adjust(101) , 100);
 
 // should cause errors
 assert.strictEqual(adjuster.number().adjust(undefined, (err) => 10), 10); // catch error by callback function (that returns a value from adjust() method)
@@ -105,13 +105,13 @@ assert.deepStrictEqual(adjuster.numberArray().eachMaxValue(10).adjust([8, 9, 10]
 // should be adjusted
 assert.deepStrictEqual(adjuster.numberArray().adjust([1, "-2", "+3"])                            , [1, -2, 3]);
 assert.deepStrictEqual(adjuster.numberArray().default([1, 2]).adjust(undefined)                  , [1, 2]);
-assert.deepStrictEqual(adjuster.numberArray().allowEmpty([1, 2]).adjust("")                      , [1, 2]);
+assert.deepStrictEqual(adjuster.numberArray().allowEmptyString([1, 2]).adjust("")                , [1, 2]);
 assert.deepStrictEqual(adjuster.numberArray().separatedBy(",").adjust("1,2,3")                   , [1, 2, 3]);
 assert.deepStrictEqual(adjuster.numberArray().toArray().adjust(0)                                , [0]);
 assert.deepStrictEqual(adjuster.numberArray().maxLength(2, true).adjust([1, 2, 3])               , [1, 2]);
 assert.deepStrictEqual(adjuster.numberArray().ignoreEachErrors().adjust([undefined, 1, "abc", 2]), [1, 2]);
 assert.deepStrictEqual(adjuster.numberArray().eachDefault(999).adjust([1, undefined, 3])         , [1, 999, 3]);
-assert.deepStrictEqual(adjuster.numberArray().eachAllowEmpty(999).adjust([1, "", 3])             , [1, 999, 3]);
+assert.deepStrictEqual(adjuster.numberArray().eachAllowEmptyString(999).adjust([1, "", 3])       , [1, 999, 3]);
 assert.deepStrictEqual(adjuster.numberArray().eachMinValue(10, true).adjust([9, 10, 11])         , [10, 10, 11]);
 assert.deepStrictEqual(adjuster.numberArray().eachMaxValue(10, true).adjust([9, 10, 11])         , [9, 10, 10]);
 
@@ -138,7 +138,7 @@ import assert from "assert";
 
 // should be OK
 assert.strictEqual(adjuster.string().adjust("123")                             , "123");
-assert.strictEqual(adjuster.string().allowEmpty("xyz").adjust("")              , "xyz");
+assert.strictEqual(adjuster.string().allowEmptyString("xyz").adjust("")        , "xyz");
 assert.strictEqual(adjuster.string().in("eat", "sleep", "play").adjust("sleep"), "sleep");
 
 // should be adjusted
@@ -172,13 +172,13 @@ assert.deepStrictEqual(adjuster.stringArray().eachPattern(/^Go+gle$/).adjust(["G
 // should be adjusted
 assert.deepStrictEqual(adjuster.stringArray().adjust(["a", 1, -2])                              , ["a", "1", "-2"]);
 assert.deepStrictEqual(adjuster.stringArray().default(["a", "b"]).adjust(undefined)             , ["a", "b"]);
-assert.deepStrictEqual(adjuster.stringArray().allowEmpty(["a", "b"]).adjust("")                 , ["a", "b"]);
+assert.deepStrictEqual(adjuster.stringArray().allowEmptyString(["a", "b"]).adjust("")           , ["a", "b"]);
 assert.deepStrictEqual(adjuster.stringArray().separatedBy(",").adjust("a,b,c")                  , ["a", "b", "c"]);
 assert.deepStrictEqual(adjuster.stringArray().toArray().adjust("a")                             , ["a"]);
 assert.deepStrictEqual(adjuster.stringArray().maxLength(1, true).adjust(["a", "b"])             , ["a"]);
 assert.deepStrictEqual(adjuster.stringArray().ignoreEachErrors().adjust([undefined, "a", "", 1]), ["a", "1"]);
 assert.deepStrictEqual(adjuster.stringArray().eachDefault("z").adjust(["a", undefined, "b"])    , ["a", "z", "b"]);
-assert.deepStrictEqual(adjuster.stringArray().eachAllowEmpty("z").adjust(["a", "", "b"])        , ["a", "z", "b"]);
+assert.deepStrictEqual(adjuster.stringArray().eachAllowEmptyString("z").adjust(["a", "", "b"])  , ["a", "z", "b"]);
 assert.deepStrictEqual(adjuster.stringArray().eachMaxLength(3, true).adjust(["abcd", "xyz0"])   , ["abc", "xyz"]);
 
 // should cause errors
@@ -206,10 +206,10 @@ assert.strictEqual(adjuster.ipv4().adjust("0.0.0.0")        , "0.0.0.0");
 assert.strictEqual(adjuster.ipv4().adjust("192.168.0.1")    , "192.168.0.1");
 assert.strictEqual(adjuster.ipv4().adjust("255.255.255.255"), "255.255.255.255");
 
-// should cause errors; err.cause === adjuster.CAUSE.IPV4
-assert.throws(() => adjuster.ipv4().adjust("0.0.0.")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV4));
-assert.throws(() => adjuster.ipv4().adjust("0.0.0.0.")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV4));
-assert.throws(() => adjuster.ipv4().adjust("255.255.255.256"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV4));
+// should cause errors; err.cause === adjuster.CAUSE.PATTERN
+assert.throws(() => adjuster.ipv4().adjust("0.0.0.")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.ipv4().adjust("0.0.0.0.")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.ipv4().adjust("255.255.255.256"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
 ### IPv6
@@ -225,10 +225,10 @@ assert.strictEqual(adjuster.ipv6().adjust("::")                                 
 assert.strictEqual(adjuster.ipv6().adjust("1::1")                                   , "1::1");
 assert.strictEqual(adjuster.ipv6().adjust("::ffff:192.0.2.1")                       , "::ffff:192.0.2.1"); // IPv4-mapped address
 
-// should cause errors; err.cause === adjuster.CAUSE.IPV6
-assert.throws(() => adjuster.ipv6().adjust("0000")                                    , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV6));
-assert.throws(() => adjuster.ipv6().adjust("ffff:")                                   , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV6));
-assert.throws(() => adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000:"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV6));
+// should cause errors; err.cause === adjuster.CAUSE.PATTERN
+assert.throws(() => adjuster.ipv6().adjust("0000")                                    , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.ipv6().adjust("ffff:")                                   , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000:"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
 ### e-mail
@@ -246,18 +246,24 @@ assert.strictEqual(adjuster.email().adjust("user@example-domain.com")           
 assert.strictEqual(adjuster.email().adjust("user@example2.com")                           , "user@example2.com");
 
 // should cause errors
-assert.throws(() => adjuster.email().adjust("@example.com")           , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
-assert.throws(() => adjuster.email().adjust(".a@example.com")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
-assert.throws(() => adjuster.email().adjust("a.@example.com")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
-assert.throws(() => adjuster.email().adjust("a..a@example.com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
-assert.throws(() => adjuster.email().adjust("user@example@com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
-assert.throws(() => adjuster.email().adjust("user-example-com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
-assert.throws(() => adjuster.email().adjust("user@example_domain.com"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
-assert.throws(() => adjuster.email().adjust("user@example.com2")      , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMAIL));
+assert.throws(() => adjuster.email().adjust("@example.com")           , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.email().adjust(".a@example.com")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.email().adjust("a.@example.com")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.email().adjust("a..a@example.com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.email().adjust("user@example@com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.email().adjust("user-example-com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.email().adjust("user@example_domain.com"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.email().adjust("user@example.com2")      , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
 ## Release notes
 
+* **NEXT VERSION**
+    * Change Specifications
+        * `allowEmpty()` => `allowEmptyString()`
+        * `adjuster.CAUSE.EMAIL` => `adjuster.CAUSE.PATTERN`
+        * `adjuster.CAUSE.IPV4` => `adjuster.CAUSE.PATTERN`
+        * `adjuster.CAUSE.IPV6` => `adjuster.CAUSE.PATTERN`
 * 2018/05/12 *version 0.5.0*
     * New Functions
         * `adjuster.numberArray()`
