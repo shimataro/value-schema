@@ -5,13 +5,13 @@ import NumberAdjuster from "../../NumberAdjuster";
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
-	.chain({
-		ignoreEachErrors: _chainIgnoreEachErrors,
-		eachDefault: _chainEachDefault,
-		eachAllowEmpty: _chainEachAllowEmpty,
-		eachIn: _chainEachIn,
-		eachMinValue: _chainEachMinValue,
-		eachMaxValue: _chainEachMaxValue,
+	.features({
+		ignoreEachErrors: _featureIgnoreEachErrors,
+		eachDefault: _featureEachDefault,
+		eachAllowEmpty: _featureEachAllowEmpty,
+		eachIn: _featureEachIn,
+		eachMinValue: _featureEachMinValue,
+		eachMaxValue: _featureEachMaxValue,
 	})
 	.build();
 
@@ -28,7 +28,7 @@ function _init(params)
  * ignore each elements error
  * @param {Object} params parameters
  */
-function _chainIgnoreEachErrors(params)
+function _featureIgnoreEachErrors(params)
 {
 	params.ignoreEachErrors = true;
 }
@@ -38,7 +38,7 @@ function _chainIgnoreEachErrors(params)
  * @param {Object} params parameters
  * @param {?number} value default value
  */
-function _chainEachDefault(params, value)
+function _featureEachDefault(params, value)
 {
 	params.objAdjuster.default(value);
 }
@@ -48,7 +48,7 @@ function _chainEachDefault(params, value)
  * @param {Object} params parameters
  * @param {?number} [value=null] value on empty
  */
-function _chainEachAllowEmpty(params, value = null)
+function _featureEachAllowEmpty(params, value = null)
 {
 	params.objAdjuster.allowEmpty(value);
 }
@@ -58,7 +58,7 @@ function _chainEachAllowEmpty(params, value = null)
  * @param {Object} params parameters
  * @param {...number} values values to be accepted
  */
-function _chainEachIn(params, ...values)
+function _featureEachIn(params, ...values)
 {
 	params.objAdjuster.in(...values);
 }
@@ -69,7 +69,7 @@ function _chainEachIn(params, ...values)
  * @param {number} value min-value
  * @param {boolean} [adjust=false] adjust to min-value if value < min-value; default is ERROR
  */
-function _chainEachMinValue(params, value, adjust = false)
+function _featureEachMinValue(params, value, adjust = false)
 {
 	params.objAdjuster.minValue(value, adjust);
 }
@@ -80,7 +80,7 @@ function _chainEachMinValue(params, value, adjust = false)
  * @param {number} value min-value
  * @param {boolean} [adjust=false] adjust to min-value if value < min-value; default is ERROR
  */
-function _chainEachMaxValue(params, value, adjust = false)
+function _featureEachMaxValue(params, value, adjust = false)
 {
 	params.objAdjuster.maxValue(value, adjust);
 }

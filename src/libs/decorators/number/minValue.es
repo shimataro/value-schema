@@ -4,8 +4,8 @@ import AdjusterError from "../../AdjusterError";
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
-	.chain({
-		minValue: _chainMinValue,
+	.features({
+		minValue: _featureMinValue,
 	})
 	.build();
 
@@ -25,7 +25,7 @@ function _init(params)
  * @param {boolean} [adjust=false] adjust to min-value if value < min-value; default is ERROR
  * @return {NumberAdjuster}
  */
-function _chainMinValue(params, value, adjust = false)
+function _featureMinValue(params, value, adjust = false)
 {
 	params.flag = true;
 	params.value = value;

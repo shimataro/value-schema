@@ -5,8 +5,8 @@ import AdjusterError from "../../AdjusterError";
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
-	.chain({
-		pattern: _chainPattern,
+	.features({
+		pattern: _featurePattern,
 	})
 	.build();
 
@@ -24,7 +24,7 @@ function _init(params)
  * @param {Object} params parameters
  * @param {string|String|RegExp} pattern acceptable pattern(regular expression); string or RegExp
  */
-function _chainPattern(params, pattern)
+function _featurePattern(params, pattern)
 {
 	if(isString(pattern))
 	{

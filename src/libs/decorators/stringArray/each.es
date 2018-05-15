@@ -5,14 +5,14 @@ import StringAdjuster from "../../StringAdjuster";
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
-	.chain({
-		ignoreEachErrors: _chainIgnoreEachErrors,
-		eachDefault: _chainEachDefault,
-		eachAllowEmpty: _chainEachAllowEmpty,
-		eachIn: _chainEachIn,
-		eachMinLength: _chainEachMinLength,
-		eachMaxLength: _chainEachMaxLength,
-		eachPattern: _chainEachPattern,
+	.features({
+		ignoreEachErrors: _featureIgnoreEachErrors,
+		eachDefault: _featureEachDefault,
+		eachAllowEmpty: _featureEachAllowEmpty,
+		eachIn: _featureEachIn,
+		eachMinLength: _featureEachMinLength,
+		eachMaxLength: _featureEachMaxLength,
+		eachPattern: _featureEachPattern,
 	})
 	.build();
 
@@ -29,7 +29,7 @@ function _init(params)
  * ignore each elements error
  * @param {Object} params parameters
  */
-function _chainIgnoreEachErrors(params)
+function _featureIgnoreEachErrors(params)
 {
 	params.ignoreEachErrors = true;
 }
@@ -39,7 +39,7 @@ function _chainIgnoreEachErrors(params)
  * @param {Object} params parameters
  * @param {?string} value default value
  */
-function _chainEachDefault(params, value)
+function _featureEachDefault(params, value)
 {
 	params.objAdjuster.default(value);
 }
@@ -49,7 +49,7 @@ function _chainEachDefault(params, value)
  * @param {Object} params parameters
  * @param {?string} [value=null] value on empty
  */
-function _chainEachAllowEmpty(params, value = null)
+function _featureEachAllowEmpty(params, value = null)
 {
 	params.objAdjuster.allowEmpty(value);
 }
@@ -59,7 +59,7 @@ function _chainEachAllowEmpty(params, value = null)
  * @param {Object} params parameters
  * @param {...string} values values to be accepted
  */
-function _chainEachIn(params, ...values)
+function _featureEachIn(params, ...values)
 {
 	params.objAdjuster.in(...values);
 }
@@ -69,7 +69,7 @@ function _chainEachIn(params, ...values)
  * @param {Object} params parameters
  * @param {int} length min-length; error if shorter
  */
-function _chainEachMinLength(params, value)
+function _featureEachMinLength(params, value)
 {
 	params.objAdjuster.minLength(value);
 }
@@ -80,7 +80,7 @@ function _chainEachMinLength(params, value)
  * @param {int} length max-length
  * @param {boolean} [adjust=false] truncate if longer; default is ERROR
  */
-function _chainEachMaxLength(params, value, adjust = false)
+function _featureEachMaxLength(params, value, adjust = false)
 {
 	params.objAdjuster.maxLength(value, adjust);
 }
@@ -90,7 +90,7 @@ function _chainEachMaxLength(params, value, adjust = false)
  * @param {Object} params parameters
  * @param {string|String|RegExp} pattern acceptable pattern(regular expression); string or RegExp
  */
-function _chainEachPattern(params, pattern)
+function _featureEachPattern(params, pattern)
 {
 	params.objAdjuster.pattern(pattern);
 }

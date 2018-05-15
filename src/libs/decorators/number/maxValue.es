@@ -4,8 +4,8 @@ import AdjusterError from "../../AdjusterError";
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
-	.chain({
-		maxValue: _chainMaxValue,
+	.features({
+		maxValue: _featureMaxValue,
 	})
 	.build();
 
@@ -25,7 +25,7 @@ function _init(params)
  * @param {boolean} [adjust=false] adjust to max-value if value > max-value; default is ERROR
  * @return {NumberAdjuster}
  */
-function _chainMaxValue(params, value, adjust = false)
+function _featureMaxValue(params, value, adjust = false)
 {
 	params.flag = true;
 	params.value = value;

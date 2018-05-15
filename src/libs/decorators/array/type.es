@@ -6,9 +6,9 @@ import {isString} from "../../utilities";
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
-	.chain({
-		separatedBy: _chainSeparatedBy,
-		toArray: _chainToArray,
+	.features({
+		separatedBy: _featureSeparatedBy,
+		toArray: _featureToArray,
 	})
 	.build();
 
@@ -27,7 +27,7 @@ function _init(params)
  * @param {Object} params parameters
  * @param {string|String|RegExp} separator separator
  */
-function _chainSeparatedBy(params, separator)
+function _featureSeparatedBy(params, separator)
 {
 	params.separatedBy = true;
 	params.separator = separator;
@@ -37,7 +37,7 @@ function _chainSeparatedBy(params, separator)
  * convert to array, if not
  * @param {Object} params parameters
  */
-function _chainToArray(params)
+function _featureToArray(params)
 {
 	params.toArray = true;
 }

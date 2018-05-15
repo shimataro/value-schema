@@ -4,8 +4,8 @@ import AdjusterError from "../../AdjusterError";
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
-	.chain({
-		minLength: _chainMinLength,
+	.features({
+		minLength: _featureMinLength,
 	})
 	.build();
 
@@ -22,7 +22,7 @@ function _init(params)
  * set min-length of array
  * @param {int} length max-length
  */
-function _chainMinLength(params, length)
+function _featureMinLength(params, length)
 {
 	params.flag = true;
 	params.length = length;

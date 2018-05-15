@@ -4,8 +4,8 @@ import AdjusterError from "../AdjusterError";
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
-	.chain({
-		in: _chainIn,
+	.features({
+		in: _featureIn,
 	})
 	.build();
 
@@ -23,7 +23,7 @@ function _init(params)
  * @param {Object} params parameters
  * @param {...*} values values to be accepted
  */
-function _chainIn(params, ...values)
+function _featureIn(params, ...values)
 {
 	params.flag = true;
 	params.values = values;

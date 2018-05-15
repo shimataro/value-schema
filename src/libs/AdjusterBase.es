@@ -13,7 +13,7 @@ class DecoratorBuilder
 	{
 		this._adjust = adjust;
 		this._init = null;
-		this._chain = null;
+		this._features = null;
 	}
 
 	/**
@@ -28,13 +28,13 @@ class DecoratorBuilder
 	}
 
 	/**
-	 * add chain function
-	 * @param {Object<string, AdjusterBase.Chain>} chain
+	 * add feature functions
+	 * @param {Object<string, AdjusterBase.Feature>} features feature functions
 	 * @return {DecoratorBuilder}
 	 */
-	chain(chain)
+	features(features)
 	{
-		this._chain = chain;
+		this._features = features;
 		return this;
 	}
 
@@ -48,7 +48,7 @@ class DecoratorBuilder
 		{
 			const key = Symbol("");
 			const init = this._init;
-			const chain = this._chain;
+			const features = this._features;
 			const adjust = this._adjust;
 
 			if(TargetClass.prototype._decorators === undefined)
@@ -61,14 +61,14 @@ class DecoratorBuilder
 				init: init,
 			});
 
-			// register chain function
-			if(chain !== null)
+			// register feature functions
+			if(features !== null)
 			{
-				for(const name of Object.keys(chain))
+				for(const name of Object.keys(features))
 				{
 					TargetClass.prototype[name] = function(...args)
 					{
-						chain[name](this._params[key], ...args);
+						features[name](this._params[key], ...args);
 						return this;
 					};
 				}
@@ -179,9 +179,10 @@ export default class AdjusterBase
  * @param {Object} params parameters
  */
 /**
- * chain function
- * @callback AdjusterBase.Chain
+ * feature function
+ * @callback AdjusterBase.Feature
  * @param {Object} params parameters
+ * @param {...*} args arguments
  */
 /**
  * adjuster

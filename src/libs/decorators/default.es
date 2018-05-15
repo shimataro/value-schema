@@ -4,8 +4,8 @@ import AdjusterError from "../AdjusterError";
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
-	.chain({
-		default: _chainDefault,
+	.features({
+		default: _featureDefault,
 	})
 	.build();
 
@@ -23,7 +23,7 @@ function _init(params)
  * @param {Object} params parameters
  * @param {*} value default value
  */
-function _chainDefault(params, value)
+function _featureDefault(params, value)
 {
 	params.flag = true;
 	params.value = value;
