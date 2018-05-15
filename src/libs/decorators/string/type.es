@@ -1,8 +1,6 @@
 import AdjusterBase from "../../AdjusterBase";
 
-const NAME = "type";
-
-export default AdjusterBase.decoratorBuilder(NAME, _adjust)
+export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
 /**

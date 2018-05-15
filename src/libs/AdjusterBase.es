@@ -7,12 +7,10 @@ class DecoratorBuilder
 {
 	/**
 	 * constructor
-	 * @param {string} name
 	 * @param {AdjusterBase.Adjust} adjust
 	 */
-	constructor(name, adjust)
+	constructor(adjust)
 	{
-		this._name = name;
 		this._adjust = adjust;
 		this._init = null;
 		this._chain = null;
@@ -48,7 +46,7 @@ class DecoratorBuilder
 	{
 		return (TargetClass) =>
 		{
-			const name = this._name;
+			const key = Symbol("");
 			const init = this._init;
 			const chain = this._chain;
 			const adjust = this._adjust;
@@ -58,7 +56,7 @@ class DecoratorBuilder
 				TargetClass.prototype._decorators = [];
 			}
 			TargetClass.prototype._decorators.push({
-				name: name,
+				key: key,
 				adjust: adjust,
 				init: init,
 			});
@@ -66,11 +64,11 @@ class DecoratorBuilder
 			// register chain function
 			if(chain !== null)
 			{
-				for(const chainName of Object.keys(chain))
+				for(const name of Object.keys(chain))
 				{
-					TargetClass.prototype[chainName] = function(...args)
+					TargetClass.prototype[name] = function(...args)
 					{
-						chain[chainName](this._params[name], ...args);
+						chain[name](this._params[key], ...args);
 						return this;
 					};
 				}
@@ -88,13 +86,12 @@ export default class AdjusterBase
 {
 	/**
 	 * returns DecoratorBuilder
-	 * @param {string} name
 	 * @param {function} adjust
 	 * @return {DecoratorBuilder}
 	 */
-	static decoratorBuilder(name, adjust)
+	static decoratorBuilder(adjust)
 	{
-		return new DecoratorBuilder(name, adjust);
+		return new DecoratorBuilder(adjust);
 	}
 
 	/**
@@ -105,10 +102,10 @@ export default class AdjusterBase
 		this._params = {};
 		for(const decorator of this._decorators)
 		{
-			this._params[decorator.name] = {};
+			this._params[decorator.key] = {};
 			if(decorator.init !== null)
 			{
-				decorator.init(this._params[decorator.name]);
+				decorator.init(this._params[decorator.key]);
 			}
 		}
 	}
@@ -130,7 +127,7 @@ export default class AdjusterBase
 		{
 			for(const decorator of this._decorators)
 			{
-				if(decorator.adjust(this._params[decorator.name], values))
+				if(decorator.adjust(this._params[decorator.key], values))
 				{
 					return values.adjusted;
 				}

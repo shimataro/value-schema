@@ -4,9 +4,7 @@ import AdjusterError from "../../AdjusterError";
 
 import {isString} from "../../utilities";
 
-const NAME = "type";
-
-export default AdjusterBase.decoratorBuilder(NAME, _adjust)
+export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.chain({
 		separatedBy: _chainSeparatedBy,

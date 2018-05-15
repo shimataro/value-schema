@@ -3,9 +3,7 @@ import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
 import NumberAdjuster from "../../NumberAdjuster";
 
-const NAME = "each";
-
-export default AdjusterBase.decoratorBuilder(NAME, _adjust)
+export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.chain({
 		ignoreEachErrors: _chainIgnoreEachErrors,

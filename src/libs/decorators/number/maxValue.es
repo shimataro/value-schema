@@ -2,9 +2,7 @@ import {CAUSE} from "../../constants";
 import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
 
-const NAME = "maxValue";
-
-export default AdjusterBase.decoratorBuilder(NAME, _adjust)
+export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.chain({
 		maxValue: _chainMaxValue,

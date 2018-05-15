@@ -2,9 +2,7 @@ import {CAUSE} from "../constants";
 import AdjusterBase from "../AdjusterBase";
 import AdjusterError from "../AdjusterError";
 
-const NAME = "default";
-
-export default AdjusterBase.decoratorBuilder(NAME, _adjust)
+export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.chain({
 		default: _chainDefault,

@@ -2,9 +2,7 @@ import {CAUSE} from "../constants";
 import AdjusterBase from "../AdjusterBase";
 import AdjusterError from "../AdjusterError";
 
-const NAME = "allowEmpty";
-
-export default AdjusterBase.decoratorBuilder(NAME, _adjust)
+export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.chain({
 		allowEmpty: _chainAllowEmpty,

@@ -6,9 +6,7 @@ const MAX_LENGTH_LOCAL = 64;
 const MAX_LENGTH_DOMAIN = 255;
 const MAX_LENGTH = MAX_LENGTH_LOCAL + 1 + MAX_LENGTH_DOMAIN; // local-part + "@" + domain-part
 
-const NAME = "maxLength";
-
-export default AdjusterBase.decoratorBuilder(NAME, _adjust)
+export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
 /**
