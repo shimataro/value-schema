@@ -206,10 +206,10 @@ assert.strictEqual(adjuster.ipv4().adjust("0.0.0.0")        , "0.0.0.0");
 assert.strictEqual(adjuster.ipv4().adjust("192.168.0.1")    , "192.168.0.1");
 assert.strictEqual(adjuster.ipv4().adjust("255.255.255.255"), "255.255.255.255");
 
-// should cause errors; err.cause === adjuster.CAUSE.IPV4
-assert.throws(() => adjuster.ipv4().adjust("0.0.0.")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV4));
-assert.throws(() => adjuster.ipv4().adjust("0.0.0.0.")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV4));
-assert.throws(() => adjuster.ipv4().adjust("255.255.255.256"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV4));
+// should cause errors; err.cause === adjuster.CAUSE.PATTERN
+assert.throws(() => adjuster.ipv4().adjust("0.0.0.")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.ipv4().adjust("0.0.0.0.")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.ipv4().adjust("255.255.255.256"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
 ### IPv6
@@ -225,10 +225,10 @@ assert.strictEqual(adjuster.ipv6().adjust("::")                                 
 assert.strictEqual(adjuster.ipv6().adjust("1::1")                                   , "1::1");
 assert.strictEqual(adjuster.ipv6().adjust("::ffff:192.0.2.1")                       , "::ffff:192.0.2.1"); // IPv4-mapped address
 
-// should cause errors; err.cause === adjuster.CAUSE.IPV6
-assert.throws(() => adjuster.ipv6().adjust("0000")                                    , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV6));
-assert.throws(() => adjuster.ipv6().adjust("ffff:")                                   , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV6));
-assert.throws(() => adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000:"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IPV6));
+// should cause errors; err.cause === adjuster.CAUSE.PATTERN
+assert.throws(() => adjuster.ipv6().adjust("0000")                                    , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.ipv6().adjust("ffff:")                                   , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(() => adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000:"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
 ### e-mail
@@ -258,6 +258,11 @@ assert.throws(() => adjuster.email().adjust("user@example.com2")      , err => (
 
 ## Release notes
 
+* **NEXT VERSION**
+    * Change Specifications
+        * `adjuster.CAUSE.EMAIL` => `adjuster.CAUSE.PATTERN`
+        * `adjuster.CAUSE.IPV4` => `adjuster.CAUSE.PATTERN`
+        * `adjuster.CAUSE.IPV6` => `adjuster.CAUSE.PATTERN`
 * 2018/05/12 *version 0.5.0*
     * New Functions
         * `adjuster.numberArray()`

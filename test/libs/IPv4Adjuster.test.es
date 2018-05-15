@@ -6,7 +6,7 @@ import IPv4Adjuster from "libs/IPv4Adjuster";
 	describe("default", testDefault);
 	describe("empty", testEmpty);
 	describe("allowEmpty", testAllowEmpty);
-	describe("IPv4", testIPv4);
+	describe("pattern", testPattern);
 }
 
 /**
@@ -64,9 +64,9 @@ function testAllowEmpty()
 }
 
 /**
- * IPv4 string
+ * IPv4 pattern
  */
-function testIPv4()
+function testPattern()
 {
 	const objIPv4Adjuster = new IPv4Adjuster();
 	it("should be OK", () =>
@@ -94,7 +94,7 @@ function testIPv4()
 			expect(() =>
 			{
 				objIPv4Adjuster.adjust(value);
-			}).toThrow(CAUSE.IPV4);
+			}).toThrow(CAUSE.PATTERN);
 		}
 	});
 }
