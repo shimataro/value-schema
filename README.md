@@ -289,6 +289,8 @@ assert.throws(() => adjuster.email().adjust("user@example.com2")      , err => (
 ## Release notes
 
 * **NEXT VERSION**
+    * New Functions
+        * `adjuster.numericString()`
     * Change Specifications
         * `allowEmpty()` => `allowEmptyString()`
         * `adjuster.CAUSE.EMAIL` => `adjuster.CAUSE.PATTERN`
