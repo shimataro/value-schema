@@ -9,8 +9,8 @@ import IPv4Adjuster from "./libs/IPv4Adjuster";
 import IPv6Adjuster from "./libs/IPv6Adjuster";
 import EmailAdjuster from "./libs/EmailAdjuster";
 
+/** @namespace adjuster */
 export default {
-	/** @type {AdjusterErrorCause} */
 	CAUSE: CAUSE,
 	NUMERIC_STRING_CHECKSUM: NUMERIC_STRING_CHECKSUM,
 
