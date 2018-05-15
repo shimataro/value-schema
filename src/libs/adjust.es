@@ -3,9 +3,9 @@ export default adjust;
 /**
  * adjust multiple variables (as object)
  * @param {Object<string, *>} data
- * @param {Object<string, AdjusterInterface>} adjusters
- * @param {?_OnDataError} onError
- * @param {?_OnDataErrorAll} onErrorAll
+ * @param {Object<string, AdjusterBase>} adjusters
+ * @param {?adjust~OnError} onError
+ * @param {?adjust~OnErrorAll} onErrorAll
  */
 function adjust(data, adjusters, onError = null, onErrorAll = null)
 {
@@ -41,11 +41,11 @@ function adjust(data, adjusters, onError = null, onErrorAll = null)
 }
 
 /**
- * @callback _OnDataError
+ * @callback adjust~OnError
  * @param {string} key
  * @param {AdjusterError} err
  */
 /**
- * @callback _OnDataErrorAll
+ * @callback adjust~OnErrorAll
  * @param {Object<string, AdjusterError>} errs
  */
