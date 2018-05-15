@@ -28,6 +28,7 @@ const adjusters = {
     state: adjuster.string().in("active", "inactive"),
     classes: adjuster.numberArray().separatedBy(",").ignoreEachErrors(),
     skills: adjuster.stringArray().separatedBy(",").ignoreEachErrors(),
+    credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM.CREDIT_CARD),
     remote_addr: adjuster.ipv4(),
     remote_addr_ipv6: adjuster.ipv6(),
     limit: adjuster.number().default(10).minValue(1, true).maxValue(100, true),
@@ -40,6 +41,7 @@ const input = {
     state: "active",
     classes: "1,3,abc,4",
     skills: "c,c++,javascript,python,,swift,kotlin",
+    credit_card: "4111-1111-1111-1111",
     remote_addr: "127.0.0.1",
     remote_addr_ipv6: "::1",
     limit: "0",
@@ -51,6 +53,7 @@ const expected = {
     state: "active",
     classes: [1, 3, 4],
     skills: ["c", "c++", "javascript", "python", "swift", "kotlin"],
+    credit_card: "4111111111111111",
     remote_addr: "127.0.0.1",
     remote_addr_ipv6: "::1",
     limit: 1,
@@ -193,6 +196,33 @@ assert.throws(() => adjuster.stringArray().eachIn("a", "b").adjust(["x"])       
 assert.throws(() => adjuster.stringArray().eachMinLength(3).adjust(["ab"])         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_MIN_LENGTH));
 assert.throws(() => adjuster.stringArray().eachMaxLength(3).adjust(["abcd"])       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_MAX_LENGTH));
 assert.throws(() => adjuster.stringArray().eachPattern(/^Go+gle$/).adjust(["Ggle"]), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_PATTERN));
+```
+
+### numeric string
+
+```javascript
+import adjuster from "adjuster";
+import assert from "assert";
+
+// should be OK
+assert.strictEqual(adjuster.numericString().adjust("123")                                                                    , "123");
+assert.strictEqual(adjuster.numericString().minLength(4).adjust("1234")                                                      , "1234");
+assert.strictEqual(adjuster.numericString().maxLength(4).adjust("1234")                                                      , "1234");
+assert.strictEqual(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM.LUHN).adjust("4111111111111111")       , "4111111111111111");
+assert.strictEqual(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM.CREDIT_CARD).adjust("4111111111111111"), "4111111111111111"); // alias of LUHN
+
+// should be adjusted
+assert.strictEqual(adjuster.numericString().default("123").adjust(undefined)                       , "123");
+assert.strictEqual(adjuster.numericString().allowEmptyString("456").adjust("")                     , "456");
+assert.strictEqual(adjuster.numericString().separatedBy("-").adjust("1234-5678")                   , "12345678");
+assert.strictEqual(adjuster.numericString().separatedBy("-").maxLength(5, true).adjust("1234-5678"), "12345");
+
+// should cause errors
+assert.throws(() => adjuster.numericString().adjust(undefined)                                                         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+assert.throws(() => adjuster.numericString().adjust("")                                                                , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+assert.throws(() => adjuster.numericString().minLength(5).adjust("1234")                                               , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
+assert.throws(() => adjuster.numericString().maxLength(5).adjust("123456")                                             , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
+assert.throws(() => adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM.LUHN).adjust("4111111111111112"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NUMERIC_STRING_CHECKSUM));
 ```
 
 ### IPv4

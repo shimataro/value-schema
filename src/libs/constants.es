@@ -25,6 +25,13 @@ export const CAUSE = {
 	EACH_MIN_LENGTH: "each-min-length",
 	EACH_MAX_LENGTH: "each-max-length",
 	EACH_PATTERN: "each-pattern",
+
+	NUMERIC_STRING_CHECKSUM: "numeric-string-checksum",
+};
+
+export const NUMERIC_STRING_CHECKSUM = {
+	LUHN: "luhn",
+	CREDIT_CARD: "luhn",
 };
 
 /**
