@@ -11,7 +11,9 @@ import EmailAdjuster from "./libs/EmailAdjuster";
 
 /** @namespace adjuster */
 export default {
+	/** @type {adjuster.CAUSE} */
 	CAUSE: CAUSE,
+	/** @type {adjuster.NUMERIC_STRING_CHECKSUM} */
 	NUMERIC_STRING_CHECKSUM: NUMERIC_STRING_CHECKSUM,
 
 	adjust: adjust,
