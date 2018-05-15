@@ -1,4 +1,5 @@
 import AdjusterError from "./AdjusterError";
+import {isObject} from "./utilities";
 
 /**
  * Decorator Builder
@@ -64,13 +65,24 @@ class DecoratorBuilder
 			});
 
 			// register chain function
-			if(chain !== null)
+			if(typeof chain === "function")
 			{
 				TargetClass.prototype[name] = function(...args)
 				{
 					chain(this._params[name], ...args);
 					return this;
 				};
+			}
+			if(isObject(chain))
+			{
+				for(const chainName of Object.keys(chain))
+				{
+					TargetClass.prototype[chainName] = function(...args)
+					{
+						chain[chainName](this._params[name], ...args);
+						return this;
+					};
+				}
 			}
 
 			return TargetClass;

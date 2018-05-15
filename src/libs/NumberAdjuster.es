@@ -2,8 +2,8 @@ import AdjusterBase from "./AdjusterBase";
 
 import Default from "./decorators/default";
 import AllowEmpty from "./decorators/allowEmpty";
-import Type from "./decorators/number/type";
 import In from "./decorators/in";
+import Type from "./decorators/number/type";
 import MinValue from "./decorators/number/minValue";
 import MaxValue from "./decorators/number/maxValue";
 
