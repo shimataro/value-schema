@@ -6,7 +6,9 @@ const NAME = "allowEmpty";
 
 export default AdjusterBase.decoratorBuilder(NAME, _adjust)
 	.init(_init)
-	.chain(_chain)
+	.chain({
+		allowEmpty: _chainAllowEmpty,
+	})
 	.build();
 
 /**
@@ -23,7 +25,7 @@ function _init(params)
  * @param {Object} params parameters
  * @param {*} [value=null] value on empty
  */
-function _chain(params, value = null)
+function _chainAllowEmpty(params, value = null)
 {
 	params.flag = true;
 	params.valueOnEmpty = value;

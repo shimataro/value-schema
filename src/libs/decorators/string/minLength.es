@@ -6,7 +6,9 @@ const NAME = "minLength";
 
 export default AdjusterBase.decoratorBuilder(NAME, _adjust)
 	.init(_init)
-	.chain(_chain)
+	.chain({
+		minLength: _chainMinLength,
+	})
 	.build();
 
 /**
@@ -23,7 +25,7 @@ function _init(params)
  * @param {Object} params parameters
  * @param {int} length min-length; error if shorter
  */
-function _chain(params, length)
+function _chainMinLength(params, length)
 {
 	params.flag = true;
 	params.length = length;

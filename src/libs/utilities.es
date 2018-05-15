@@ -1,4 +1,4 @@
-export {isString, isObject};
+export {isString};
 
 /**
  * check whether given value is string or not
@@ -18,29 +18,4 @@ function isString(value)
 
 	// false otherwise
 	return false;
-}
-
-/**
- * check whether given value is object or not
- * @param {*} value value to check
- * @return {boolean} Yes/No
- */
-function isObject(value)
-{
-	if(typeof value !== "object")
-	{
-		return false;
-	}
-	if(value === null)
-	{
-		return false;
-	}
-	if(Array.isArray(value))
-	{
-		return false;
-
-	}
-
-	// otherwise
-	return true;
 }

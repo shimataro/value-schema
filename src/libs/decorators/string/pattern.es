@@ -7,7 +7,9 @@ const NAME = "pattern";
 
 export default AdjusterBase.decoratorBuilder(NAME, _adjust)
 	.init(_init)
-	.chain(_chain)
+	.chain({
+		pattern: _chainPattern,
+	})
 	.build();
 
 /**
@@ -24,7 +26,7 @@ function _init(params)
  * @param {Object} params parameters
  * @param {string|String|RegExp} pattern acceptable pattern(regular expression); string or RegExp
  */
-function _chain(params, pattern)
+function _chainPattern(params, pattern)
 {
 	if(isString(pattern))
 	{

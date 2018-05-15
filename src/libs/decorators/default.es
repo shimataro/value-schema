@@ -6,7 +6,9 @@ const NAME = "default";
 
 export default AdjusterBase.decoratorBuilder(NAME, _adjust)
 	.init(_init)
-	.chain(_chain)
+	.chain({
+		default: _chainDefault,
+	})
 	.build();
 
 /**
@@ -23,7 +25,7 @@ function _init(params)
  * @param {Object} params parameters
  * @param {*} value default value
  */
-function _chain(params, value)
+function _chainDefault(params, value)
 {
 	params.flag = true;
 	params.value = value;

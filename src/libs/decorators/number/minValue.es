@@ -6,7 +6,9 @@ const NAME = "minValue";
 
 export default AdjusterBase.decoratorBuilder(NAME, _adjust)
 	.init(_init)
-	.chain(_chain)
+	.chain({
+		minValue: _chainMinValue,
+	})
 	.build();
 
 /**
@@ -25,7 +27,7 @@ function _init(params)
  * @param {boolean} [adjust=false] adjust to min-value if value < min-value; default is ERROR
  * @return {NumberAdjuster}
  */
-function _chain(params, value, adjust = false)
+function _chainMinValue(params, value, adjust = false)
 {
 	params.flag = true;
 	params.value = value;

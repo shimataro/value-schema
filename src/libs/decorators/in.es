@@ -6,7 +6,9 @@ const NAME = "in";
 
 export default AdjusterBase.decoratorBuilder(NAME, _adjust)
 	.init(_init)
-	.chain(_chain)
+	.chain({
+		in: _chainIn,
+	})
 	.build();
 
 /**
@@ -23,7 +25,7 @@ function _init(params)
  * @param {Object} params parameters
  * @param {...*} values values to be accepted
  */
-function _chain(params, ...values)
+function _chainIn(params, ...values)
 {
 	params.flag = true;
 	params.values = values;

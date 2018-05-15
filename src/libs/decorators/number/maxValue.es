@@ -6,7 +6,9 @@ const NAME = "maxValue";
 
 export default AdjusterBase.decoratorBuilder(NAME, _adjust)
 	.init(_init)
-	.chain(_chain)
+	.chain({
+		maxValue: _chainMaxValue,
+	})
 	.build();
 
 /**
@@ -25,7 +27,7 @@ function _init(params)
  * @param {boolean} [adjust=false] adjust to max-value if value > max-value; default is ERROR
  * @return {NumberAdjuster}
  */
-function _chain(params, value, adjust = false)
+function _chainMaxValue(params, value, adjust = false)
 {
 	params.flag = true;
 	params.value = value;
