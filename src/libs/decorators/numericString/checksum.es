@@ -63,6 +63,9 @@ function check(value, algorithm)
 	case NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN:
 		return checkLuhn(value);
 
+	case NUMERIC_STRING_CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1:
+		return checkModulus10Weight31(value);
+
 	default:
 		return false;
 	}
@@ -91,4 +94,26 @@ function checkLuhn(value)
 	}
 
 	return sum % 10 === 0;
+}
+
+/**
+ * check by Modulus 10 / Weight 3:1 algorithm (used by ISBN/EAN/JAN)
+ * @param {string} value value to check
+ * @return {boolean} OK/NG
+ */
+function checkModulus10Weight31(value)
+{
+	const {length} = value;
+	let sum = 0;
+	for(let index = 0; index < length - 1; index += 2)
+	{
+		sum += Number(value[index]);
+	}
+	for(let index = 1; index < length - 1; index += 2)
+	{
+		sum += Number(value[index]) * 3;
+	}
+
+	const mod = sum % 10;
+	return (10 - mod) % 10 === Number(value[length - 1]);
 }

@@ -54,8 +54,17 @@ export const CAUSE = {
  * @typedef {Object} adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM
  * @property {string} LUHN
  * @property {string} CREDIT_CARD
+ * @property {string} MODULUS10_WEIGHT3_1
+ * @property {string} ISBN13
+ * @property {string} EAN
+ * @property {string} JAN
  */
 export const NUMERIC_STRING_CHECKSUM_ALGORITHM = {
 	LUHN: "luhn",
 	CREDIT_CARD: "luhn",
+
+	MODULUS10_WEIGHT3_1: "modulus10/weight3:1",
+	ISBN13: "modulus10/weight3:1",
+	EAN: "modulus10/weight3:1",
+	JAN: "modulus10/weight3:1",
 };
