@@ -69,7 +69,7 @@ function testMaxLength()
  */
 function testChecksum()
 {
-	const objAdjuster = factoryNumericString().checksum(NUMERIC_STRING_CHECKSUM.CREDIT_CARD);
+	const objAdjuster = factoryNumericString().checksum(NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD);
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust("49927398716")).toBe("49927398716");
