@@ -1,5 +1,5 @@
 import {CAUSE} from "libs/constants";
-import IPv6Adjuster from "libs/IPv6Adjuster";
+import factoryIPv6 from "adjusters/ipv6";
 
 {
 	describe("required", testRequired);
@@ -14,12 +14,12 @@ import IPv6Adjuster from "libs/IPv6Adjuster";
  */
 function testRequired()
 {
-	const objIPv6Adjuster = new IPv6Adjuster();
+	const objAdjuster = factoryIPv6();
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objIPv6Adjuster.adjust(undefined);
+			objAdjuster.adjust(undefined);
 		}).toThrow(CAUSE.REQUIRED);
 	});
 }
@@ -29,10 +29,10 @@ function testRequired()
  */
 function testDefault()
 {
-	const objIPv6Adjuster = new IPv6Adjuster().default("::1");
+	const objAdjuster = factoryIPv6().default("::1");
 	it("should be adjusted", () =>
 	{
-		expect(objIPv6Adjuster.adjust(undefined)).toEqual("::1");
+		expect(objAdjuster.adjust(undefined)).toEqual("::1");
 	});
 }
 
@@ -41,12 +41,12 @@ function testDefault()
  */
 function testEmptyString()
 {
-	const objIPv6Adjuster = new IPv6Adjuster();
+	const objAdjuster = factoryIPv6();
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objIPv6Adjuster.adjust("");
+			objAdjuster.adjust("");
 		}).toThrow(CAUSE.EMPTY);
 	});
 }
@@ -56,10 +56,10 @@ function testEmptyString()
  */
 function testAllowEmptyString()
 {
-	const objIPv6Adjuster = new IPv6Adjuster().allowEmptyString("::1");
+	const objAdjuster = factoryIPv6().allowEmptyString("::1");
 	it("should be OK", () =>
 	{
-		expect(objIPv6Adjuster.adjust("")).toEqual("::1");
+		expect(objAdjuster.adjust("")).toEqual("::1");
 	});
 }
 
@@ -68,7 +68,7 @@ function testAllowEmptyString()
  */
 function testPattern()
 {
-	const objIPv6Adjuster = new IPv6Adjuster();
+	const objAdjuster = factoryIPv6();
 	it("should be OK", () =>
 	{
 		const values = [
@@ -83,7 +83,7 @@ function testPattern()
 		];
 		for(const value of values)
 		{
-			expect(objIPv6Adjuster.adjust(value)).toEqual(value);
+			expect(objAdjuster.adjust(value)).toEqual(value);
 		}
 	});
 	it("should cause error(s)", () =>
@@ -97,7 +97,7 @@ function testPattern()
 		{
 			expect(() =>
 			{
-				objIPv6Adjuster.adjust(value);
+				objAdjuster.adjust(value);
 			}).toThrow(CAUSE.PATTERN);
 		}
 	});

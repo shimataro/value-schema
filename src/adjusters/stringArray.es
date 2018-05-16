@@ -1,11 +1,20 @@
-import AdjusterBase from "./AdjusterBase";
+import AdjusterBase from "../libs/AdjusterBase";
 
-import Default from "./decorators/default";
-import AllowEmptyString from "./decorators/allowEmptyString";
-import Type from "./decorators/array/type";
-import MinLength from "./decorators/array/minLength";
-import MaxLength from "./decorators/array/maxLength";
-import Each from "./decorators/stringArray/each";
+import Default from "../libs/decorators/default";
+import AllowEmptyString from "../libs/decorators/allowEmptyString";
+import Type from "../libs/decorators/array/type";
+import MinLength from "../libs/decorators/array/minLength";
+import MaxLength from "../libs/decorators/array/maxLength";
+import Each from "../libs/decorators/stringArray/each";
+
+/**
+ * factory
+ * @return {StringArrayAdjuster}
+ */
+export default () =>
+{
+	return new StringArrayAdjuster();
+};
 
 /**
  * adjuster for array of string
@@ -16,7 +25,7 @@ import Each from "./decorators/stringArray/each";
 @Type
 @AllowEmptyString
 @Default
-export default class StringArrayAdjuster extends AdjusterBase
+class StringArrayAdjuster extends AdjusterBase
 {
 	/**
 	 * set default value; enable to omit

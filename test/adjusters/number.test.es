@@ -1,5 +1,5 @@
 import {CAUSE} from "libs/constants";
-import NumberAdjuster from "libs/NumberAdjuster";
+import factoryNumber from "adjusters/number";
 
 {
 	describe("type", testType);
@@ -19,22 +19,22 @@ import NumberAdjuster from "libs/NumberAdjuster";
  */
 function testType()
 {
-	const objNumberAdjuster = new NumberAdjuster();
+	const objAdjuster = factoryNumber();
 	it("should be OK", () =>
 	{
-		expect(objNumberAdjuster.adjust(1)).toEqual(1);
+		expect(objAdjuster.adjust(1)).toEqual(1);
 	});
 	it("should be adjusted", () =>
 	{
-		expect(objNumberAdjuster.adjust("123")).toEqual(123);
-		expect(objNumberAdjuster.adjust("+456")).toEqual(456);
-		expect(objNumberAdjuster.adjust("-789")).toEqual(-789);
+		expect(objAdjuster.adjust("123")).toEqual(123);
+		expect(objAdjuster.adjust("+456")).toEqual(456);
+		expect(objAdjuster.adjust("-789")).toEqual(-789);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objNumberAdjuster.adjust("abc");
+			objAdjuster.adjust("abc");
 		}).toThrow(CAUSE.TYPE);
 	});
 }
@@ -44,16 +44,16 @@ function testType()
  */
 function testRequired()
 {
-	const objNumberAdjuster = new NumberAdjuster();
+	const objAdjuster = factoryNumber();
 	it("should be OK", () =>
 	{
-		expect(objNumberAdjuster.adjust(0)).toEqual(0);
+		expect(objAdjuster.adjust(0)).toEqual(0);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objNumberAdjuster.adjust(undefined);
+			objAdjuster.adjust(undefined);
 		}).toThrow(CAUSE.REQUIRED);
 	});
 }
@@ -63,14 +63,14 @@ function testRequired()
  */
 function testDefault()
 {
-	const objNumberAdjuster = new NumberAdjuster().default(10);
+	const objAdjuster = factoryNumber().default(10);
 	it("should be OK", () =>
 	{
-		expect(objNumberAdjuster.adjust(1)).toEqual(1);
+		expect(objAdjuster.adjust(1)).toEqual(1);
 	});
 	it("should be adjusted", () =>
 	{
-		expect(objNumberAdjuster.adjust(undefined)).toEqual(10);
+		expect(objAdjuster.adjust(undefined)).toEqual(10);
 	});
 }
 
@@ -79,12 +79,12 @@ function testDefault()
  */
 function testEmptyString()
 {
-	const objNumberAdjuster = new NumberAdjuster();
+	const objAdjuster = factoryNumber();
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objNumberAdjuster.adjust("");
+			objAdjuster.adjust("");
 		}).toThrow(CAUSE.EMPTY);
 	});
 }
@@ -94,10 +94,10 @@ function testEmptyString()
  */
 function testAllowEmptyString()
 {
-	const objNumberAdjuster = new NumberAdjuster().allowEmptyString(123);
+	const objAdjuster = factoryNumber().allowEmptyString(123);
 	it("should be adjusted", () =>
 	{
-		expect(objNumberAdjuster.adjust("")).toEqual(123);
+		expect(objAdjuster.adjust("")).toEqual(123);
 	});
 }
 
@@ -106,18 +106,18 @@ function testAllowEmptyString()
  */
 function testIn()
 {
-	const objNumberAdjuster = new NumberAdjuster().in(1, 3, 5);
+	const objAdjuster = factoryNumber().in(1, 3, 5);
 	it("should be OK", () =>
 	{
-		expect(objNumberAdjuster.adjust(1)).toEqual(1);
-		expect(objNumberAdjuster.adjust(3)).toEqual(3);
-		expect(objNumberAdjuster.adjust(5)).toEqual(5);
+		expect(objAdjuster.adjust(1)).toEqual(1);
+		expect(objAdjuster.adjust(3)).toEqual(3);
+		expect(objAdjuster.adjust(5)).toEqual(5);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objNumberAdjuster.adjust(2);
+			objAdjuster.adjust(2);
 		}).toThrow(CAUSE.IN);
 	});
 }
@@ -127,16 +127,16 @@ function testIn()
  */
 function testMinValue()
 {
-	const objNumberAdjuster = new NumberAdjuster().minValue(10);
+	const objAdjuster = factoryNumber().minValue(10);
 	it("should be OK", () =>
 	{
-		expect(objNumberAdjuster.adjust(10)).toEqual(10);
+		expect(objAdjuster.adjust(10)).toEqual(10);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objNumberAdjuster.adjust(9);
+			objAdjuster.adjust(9);
 		}).toThrow(CAUSE.MIN_VALUE);
 	});
 }
@@ -146,10 +146,10 @@ function testMinValue()
  */
 function testMinValueAdjusted()
 {
-	const objNumberAdjuster = new NumberAdjuster().minValue(10, true);
+	const objAdjuster = factoryNumber().minValue(10, true);
 	it("should be adjusted", () =>
 	{
-		expect(objNumberAdjuster.adjust(9)).toEqual(10);
+		expect(objAdjuster.adjust(9)).toEqual(10);
 	});
 }
 
@@ -158,16 +158,16 @@ function testMinValueAdjusted()
  */
 function testMaxValue()
 {
-	const objNumberAdjuster = new NumberAdjuster().maxValue(100);
+	const objAdjuster = factoryNumber().maxValue(100);
 	it("should be OK", () =>
 	{
-		expect(objNumberAdjuster.adjust(100)).toEqual(100);
+		expect(objAdjuster.adjust(100)).toEqual(100);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objNumberAdjuster.adjust(101);
+			objAdjuster.adjust(101);
 		}).toThrow(CAUSE.MAX_VALUE);
 	});
 }
@@ -177,9 +177,9 @@ function testMaxValue()
  */
 function testMaxValueAdjusted()
 {
-	const objNunmberAdjuster = new NumberAdjuster().maxValue(100, true);
+	const objAdjuster = factoryNumber().maxValue(100, true);
 	it("should be adjusted", () =>
 	{
-		expect(objNunmberAdjuster.adjust(101)).toEqual(100);
+		expect(objAdjuster.adjust(101)).toEqual(100);
 	});
 }

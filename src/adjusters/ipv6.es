@@ -1,11 +1,11 @@
-import AdjusterBase from "./AdjusterBase";
+import AdjusterBase from "../libs/AdjusterBase";
 
-import Default from "./decorators/default";
-import AllowEmptyString from "./decorators/allowEmptyString";
-import Type from "./decorators/string/type";
-import Pattern from "./decorators/string/pattern";
+import Default from "../libs/decorators/default";
+import AllowEmptyString from "../libs/decorators/allowEmptyString";
+import Type from "../libs/decorators/string/type";
+import Pattern from "../libs/decorators/string/pattern";
 
-import {PATTERN as PATTERN_IPV4} from "./IPv4Adjuster";
+import {PATTERN as PATTERN_IPV4} from "./ipv4";
 
 const PATTERN_CHARSET = "[\\da-fA-F]";
 const PATTERN_COMPONENT = `${PATTERN_CHARSET}{1,4}`;
@@ -26,13 +26,22 @@ const REGEXP = new RegExp(`^${PATTERN}$`);
 export {PATTERN};
 
 /**
+ * factory
+ * @return {IPv6Adjuster}
+ */
+export default () =>
+{
+	return new IPv6Adjuster();
+};
+
+/**
  * adjuster for IPv6
  */
 @Pattern
 @Type
 @AllowEmptyString
 @Default
-export default class IPv6Adjuster extends AdjusterBase
+class IPv6Adjuster extends AdjusterBase
 {
 	/**
 	 * constructor

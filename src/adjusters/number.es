@@ -1,11 +1,20 @@
-import AdjusterBase from "./AdjusterBase";
+import AdjusterBase from "../libs/AdjusterBase";
 
-import Default from "./decorators/default";
-import AllowEmptyString from "./decorators/allowEmptyString";
-import In from "./decorators/in";
-import Type from "./decorators/number/type";
-import MinValue from "./decorators/number/minValue";
-import MaxValue from "./decorators/number/maxValue";
+import Default from "../libs/decorators/default";
+import AllowEmptyString from "../libs/decorators/allowEmptyString";
+import In from "../libs/decorators/in";
+import Type from "../libs/decorators/number/type";
+import MinValue from "../libs/decorators/number/minValue";
+import MaxValue from "../libs/decorators/number/maxValue";
+
+/**
+ * factory
+ * @return {NumberAdjuster}
+ */
+export default () =>
+{
+	return new NumberAdjuster();
+};
 
 /**
  * adjuster for number
@@ -16,7 +25,7 @@ import MaxValue from "./decorators/number/maxValue";
 @Type
 @AllowEmptyString
 @Default
-export default class NumberAdjuster extends AdjusterBase
+class NumberAdjuster extends AdjusterBase
 {
 	/**
 	 * set default value
