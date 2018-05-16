@@ -5,7 +5,8 @@ import factoryNumericString from "adjusters/numericString";
 	describe("separatedBy", testSeparatedBy);
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
-	describe("checksum", testChecksum);
+	describe("checksum (Luhn)", testChecksumLuhn);
+	describe("checksum (Modulus 10 / Weight 3:1)", testChecksumModulus10Weight31);
 }
 
 /**
@@ -65,21 +66,41 @@ function testMaxLength()
 }
 
 /**
- * checksum
+ * checksum - Luhn algorithm
  */
-function testChecksum()
+function testChecksumLuhn()
 {
 	const objAdjuster = factoryNumericString().checksum(NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD);
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust("49927398716")).toBe("49927398716");
-		expect(objAdjuster.adjust("049927398716")).toBe("049927398716");
+		expect(objAdjuster.adjust("49927398716")).toEqual("49927398716");
+		expect(objAdjuster.adjust("049927398716")).toEqual("049927398716");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
 			objAdjuster.adjust("12345");
+		}).toThrow(CAUSE.NUMERIC_STRING_CHECKSUM);
+	});
+}
+
+/**
+ * checksum - Modulus 10 / Weight 3:1
+ */
+function testChecksumModulus10Weight31()
+{
+	const objAdjuster = factoryNumericString().separatedBy("-").checksum(NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13);
+	it("should be OK", () =>
+	{
+		expect(objAdjuster.adjust("978-4-10-109205-8")).toEqual("9784101092058"); // https://ja.wikipedia.org/wiki/ISBN
+		expect(objAdjuster.adjust("978-0-306-40615-7")).toEqual("9780306406157"); // https://en.wikipedia.org/wiki/International_Standard_Book_Number
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			objAdjuster.adjust("978-4-10-109205-1");
 		}).toThrow(CAUSE.NUMERIC_STRING_CHECKSUM);
 	});
 }

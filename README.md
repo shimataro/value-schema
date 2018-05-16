@@ -210,6 +210,10 @@ assert.strictEqual(adjuster.numericString().minLength(4).adjust("1234")         
 assert.strictEqual(adjuster.numericString().maxLength(4).adjust("1234")                                                                     , "1234");
 assert.strictEqual(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111111")            , "4111111111111111");
 assert.strictEqual(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD).adjust("4111111111111111")     , "4111111111111111"); // alias of LUHN
+assert.strictEqual(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1).adjust("9784101092058"), "9784101092058");
+assert.strictEqual(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13).adjust("9784101092058")             , "9784101092058"); // alias of MODULUS10_WEIGHT3_1
+assert.strictEqual(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.EAN).adjust("9784101092058")                , "9784101092058"); // alias of MODULUS10_WEIGHT3_1
+assert.strictEqual(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.JAN).adjust("9784101092058")                , "9784101092058"); // alias of MODULUS10_WEIGHT3_1
 
 // should be adjusted
 assert.strictEqual(adjuster.numericString().default("123").adjust(undefined)                       , "123");
