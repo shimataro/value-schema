@@ -14,11 +14,10 @@ import factoryNumericString from "adjusters/numericString";
  */
 function testSeparatedBy()
 {
-	const objAdjuster = factoryNumericString();
+	const objAdjuster = factoryNumericString().separatedBy("-");
 	it("should be adjusted", () =>
 	{
-		expect(objAdjuster.separatedBy("-").adjust("1111-2222-3333-4444")).toEqual("1111222233334444");
-		expect(objAdjuster.separatedBy(/-/).adjust("5555-6666-7777-8888")).toEqual("5555666677778888");
+		expect(objAdjuster.adjust("1111-2222-3333-4444")).toEqual("1111222233334444");
 	});
 }
 
