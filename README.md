@@ -292,7 +292,7 @@ assert.throws(() => adjuster.email().adjust("user@example.com2")      , err => (
 
 ## Release notes
 
-* **NEXT VERSION**
+* 2018/05/17 *version 0.6.0*
     * New Functions
         * `adjuster.numericString()`
     * Change Specifications

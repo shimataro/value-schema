@@ -1,7 +1,7 @@
 {
   "name": "adjuster",
   "description": "validate and adjust input values",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "author": "shimataro",
   "license": "MIT",
   "repository": {
