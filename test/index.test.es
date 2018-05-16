@@ -18,7 +18,7 @@ function testData()
 			state: adjuster.string().in("active", "inactive"),
 			classes: adjuster.numberArray().separatedBy(",").ignoreEachErrors(),
 			skills: adjuster.stringArray().separatedBy(",").ignoreEachErrors(),
-			credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM.CREDIT_CARD),
+			credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD),
 			remote_addr: adjuster.ipv4(),
 			remote_addr_ipv6: adjuster.ipv6(),
 			limit: adjuster.number().default(10).minValue(1, true).maxValue(100, true),
