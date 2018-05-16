@@ -1,12 +1,21 @@
-import AdjusterBase from "./AdjusterBase";
+import AdjusterBase from "../libs/AdjusterBase";
 
-import Default from "./decorators/default";
-import AllowEmptyString from "./decorators/allowEmptyString";
-import In from "./decorators/in";
-import Type from "./decorators/string/type";
-import MinLength from "./decorators/string/minLength";
-import MaxLength from "./decorators/string/maxLength";
-import Pattern from "./decorators/string/pattern";
+import Default from "../libs/decorators/default";
+import AllowEmptyString from "../libs/decorators/allowEmptyString";
+import In from "../libs/decorators/in";
+import Type from "../libs/decorators/string/type";
+import MinLength from "../libs/decorators/string/minLength";
+import MaxLength from "../libs/decorators/string/maxLength";
+import Pattern from "../libs/decorators/string/pattern";
+
+/**
+ * factory
+ * @return {StringAdjuster}
+ */
+export default () =>
+{
+	return new StringAdjuster();
+};
 
 /**
  * adjuster for string
@@ -18,7 +27,7 @@ import Pattern from "./decorators/string/pattern";
 @In
 @Type
 @Default
-export default class StringAdjuster extends AdjusterBase
+class StringAdjuster extends AdjusterBase
 {
 	/**
 	 * set default value

@@ -1,7 +1,7 @@
 import {CAUSE} from "../../constants";
 import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
-import StringAdjuster from "../../StringAdjuster";
+import factoryString from "../../../adjusters/string";
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
@@ -22,7 +22,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
  */
 function _init(params)
 {
-	params.objAdjuster = new StringAdjuster();
+	params.objAdjuster = factoryString();
 }
 
 /**

@@ -1,11 +1,20 @@
-import AdjusterBase from "./AdjusterBase";
+import AdjusterBase from "../libs/AdjusterBase";
 
-import Default from "./decorators/default";
-import AllowEmptyString from "./decorators/allowEmptyString";
-import Type from "./decorators/array/type";
-import MinLength from "./decorators/array/minLength";
-import MaxLength from "./decorators/array/maxLength";
-import Each from "./decorators/numberArray/each";
+import Default from "../libs/decorators/default";
+import AllowEmptyString from "../libs/decorators/allowEmptyString";
+import Type from "../libs/decorators/array/type";
+import MinLength from "../libs/decorators/array/minLength";
+import MaxLength from "../libs/decorators/array/maxLength";
+import Each from "../libs/decorators/numberArray/each";
+
+/**
+ * factory
+ * @return {NumberArrayAdjuster}
+ */
+export default () =>
+{
+	return new NumberArrayAdjuster();
+};
 
 /**
  * adjuster for array of number
@@ -16,7 +25,7 @@ import Each from "./decorators/numberArray/each";
 @Type
 @AllowEmptyString
 @Default
-export default class NumberArrayAdjuster extends AdjusterBase
+class NumberArrayAdjuster extends AdjusterBase
 {
 	/**
 	 * set default value

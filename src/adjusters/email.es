@@ -1,13 +1,13 @@
-import AdjusterBase from "./AdjusterBase";
+import AdjusterBase from "../libs/AdjusterBase";
 
-import Default from "./decorators/default";
-import AllowEmptyString from "./decorators/allowEmptyString";
-import Type from "./decorators/string/type";
-import Pattern from "./decorators/string/pattern";
-import MaxLength from "./decorators/email/maxLength";
+import Default from "../libs/decorators/default";
+import AllowEmptyString from "../libs/decorators/allowEmptyString";
+import Type from "../libs/decorators/string/type";
+import Pattern from "../libs/decorators/string/pattern";
+import MaxLength from "../libs/decorators/email/maxLength";
 
-import {PATTERN as PATTERN_IPV4} from "./IPv4Adjuster";
-import {PATTERN as PATTERN_IPV6} from "./IPv6Adjuster";
+import {PATTERN as PATTERN_IPV4} from "./ipv4";
+import {PATTERN as PATTERN_IPV6} from "./ipv6";
 
 // https://tools.ietf.org/html/rfc5321
 // https://tools.ietf.org/html/rfc5322
@@ -34,6 +34,15 @@ const PATTERN = `${PATTERN_LOCAL}@${PATTERN_DOMAIN}`;
 const REGEXP = new RegExp(`^${PATTERN}$`);
 
 /**
+ * factory
+ * @return {EmailAdjuster}
+ */
+export default () =>
+{
+	return new EmailAdjuster();
+};
+
+/**
  * adjuster for e-mail
  */
 @Pattern
@@ -41,7 +50,7 @@ const REGEXP = new RegExp(`^${PATTERN}$`);
 @Type
 @AllowEmptyString
 @Default
-export default class EmailAdjuster extends AdjusterBase
+class EmailAdjuster extends AdjusterBase
 {
 	/**
 	 * constructor
@@ -71,6 +80,8 @@ export default class EmailAdjuster extends AdjusterBase
 
 	/**
 	 * specify acceptable pattern by regular expression
+	 * @method
+	 * @name EmailAdjuster#pattern
 	 * @param {string|String|RegExp} pattern acceptable pattern(regular expression); string or RegExp
 	 * @return {EmailAdjuster}
 	 */

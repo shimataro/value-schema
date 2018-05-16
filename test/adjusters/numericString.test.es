@@ -1,5 +1,5 @@
 import {CAUSE, NUMERIC_STRING_CHECKSUM} from "libs/constants";
-import NumericStringAdjuster from "libs/NumericStringAdjuster";
+import factoryNumericString from "adjusters/numericString";
 
 {
 	describe("separatedBy", testSeparatedBy);
@@ -13,7 +13,7 @@ import NumericStringAdjuster from "libs/NumericStringAdjuster";
  */
 function testSeparatedBy()
 {
-	const objAdjuster = new NumericStringAdjuster();
+	const objAdjuster = factoryNumericString();
 	it("should be adjusted", () =>
 	{
 		expect(objAdjuster.separatedBy("-").adjust("1111-2222-3333-4444")).toEqual("1111222233334444");
@@ -26,7 +26,7 @@ function testSeparatedBy()
  */
 function testMinLength()
 {
-	const objAdjuster = new NumericStringAdjuster().minLength(4).separatedBy("-");
+	const objAdjuster = factoryNumericString().minLength(4).separatedBy("-");
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust("1111")).toEqual("1111");
@@ -49,7 +49,7 @@ function testMinLength()
  */
 function testMaxLength()
 {
-	const objAdjuster = new NumericStringAdjuster().maxLength(4).separatedBy("-");
+	const objAdjuster = factoryNumericString().maxLength(4).separatedBy("-");
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust("1111")).toEqual("1111");
@@ -69,7 +69,7 @@ function testMaxLength()
  */
 function testChecksum()
 {
-	const objAdjuster = new NumericStringAdjuster().checksum(NUMERIC_STRING_CHECKSUM.CREDIT_CARD);
+	const objAdjuster = factoryNumericString().checksum(NUMERIC_STRING_CHECKSUM.CREDIT_CARD);
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust("49927398716")).toBe("49927398716");

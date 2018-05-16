@@ -1,7 +1,7 @@
 import {CAUSE} from "../../constants";
 import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
-import NumberAdjuster from "../../NumberAdjuster";
+import factoryNumber from "../../../adjusters/number";
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
@@ -21,7 +21,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
  */
 function _init(params)
 {
-	params.objAdjuster = new NumberAdjuster();
+	params.objAdjuster = factoryNumber();
 }
 
 /**

@@ -1,5 +1,5 @@
 import {CAUSE} from "libs/constants";
-import IPv4Adjuster from "libs/IPv4Adjuster";
+import factoryIPv4 from "adjusters/ipv4";
 
 {
 	describe("required", testRequired);
@@ -14,12 +14,12 @@ import IPv4Adjuster from "libs/IPv4Adjuster";
  */
 function testRequired()
 {
-	const objIPv4Adjuster = new IPv4Adjuster();
+	const objAdjuster = factoryIPv4();
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objIPv4Adjuster.adjust(undefined);
+			objAdjuster.adjust(undefined);
 		}).toThrow(CAUSE.REQUIRED);
 	});
 }
@@ -29,10 +29,10 @@ function testRequired()
  */
 function testDefault()
 {
-	const objIPv4Adjuster = new IPv4Adjuster().default("1.1.1.1");
+	const objAdjuster = factoryIPv4().default("1.1.1.1");
 	it("should be adjusted", () =>
 	{
-		expect(objIPv4Adjuster.adjust(undefined)).toEqual("1.1.1.1");
+		expect(objAdjuster.adjust(undefined)).toEqual("1.1.1.1");
 	});
 }
 
@@ -41,12 +41,12 @@ function testDefault()
  */
 function testEmptyString()
 {
-	const objIPv4Adjuster = new IPv4Adjuster();
+	const objAdjuster = factoryIPv4();
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objIPv4Adjuster.adjust("");
+			objAdjuster.adjust("");
 		}).toThrow(CAUSE.EMPTY);
 	});
 }
@@ -56,10 +56,10 @@ function testEmptyString()
  */
 function testAllowEmptyString()
 {
-	const objIPv4Adjuster = new IPv4Adjuster().allowEmptyString("1.1.1.1");
+	const objAdjuster = factoryIPv4().allowEmptyString("1.1.1.1");
 	it("should be OK", () =>
 	{
-		expect(objIPv4Adjuster.adjust("")).toEqual("1.1.1.1");
+		expect(objAdjuster.adjust("")).toEqual("1.1.1.1");
 	});
 }
 
@@ -68,7 +68,7 @@ function testAllowEmptyString()
  */
 function testPattern()
 {
-	const objIPv4Adjuster = new IPv4Adjuster();
+	const objAdjuster = factoryIPv4();
 	it("should be OK", () =>
 	{
 		const values = [
@@ -78,7 +78,7 @@ function testPattern()
 		];
 		for(const value of values)
 		{
-			expect(objIPv4Adjuster.adjust(value)).toEqual(value);
+			expect(objAdjuster.adjust(value)).toEqual(value);
 		}
 	});
 	it("should cause error(s)", () =>
@@ -93,7 +93,7 @@ function testPattern()
 		{
 			expect(() =>
 			{
-				objIPv4Adjuster.adjust(value);
+				objAdjuster.adjust(value);
 			}).toThrow(CAUSE.PATTERN);
 		}
 	});
