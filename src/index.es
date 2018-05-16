@@ -1,4 +1,4 @@
-import {CAUSE, NUMERIC_STRING_CHECKSUM} from "./libs/constants";
+import {CAUSE, NUMERIC_STRING_CHECKSUM_ALGORITHM} from "./libs/constants";
 import adjust from "./libs/adjust";
 import factoryNumber from "./adjusters/number";
 import factoryNumberArray from "./adjusters/numberArray";
@@ -13,8 +13,8 @@ import factoryEmail from "./adjusters/email";
 export default {
 	/** @type {adjuster.CAUSE} */
 	CAUSE: CAUSE,
-	/** @type {adjuster.NUMERIC_STRING_CHECKSUM} */
-	NUMERIC_STRING_CHECKSUM: NUMERIC_STRING_CHECKSUM,
+	/** @type {adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM} */
+	NUMERIC_STRING_CHECKSUM_ALGORITHM: NUMERIC_STRING_CHECKSUM_ALGORITHM,
 
 	adjust: adjust,
 

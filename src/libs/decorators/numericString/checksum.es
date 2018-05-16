@@ -1,4 +1,4 @@
-import {CAUSE, NUMERIC_STRING_CHECKSUM} from "../../constants";
+import {CAUSE, NUMERIC_STRING_CHECKSUM_ALGORITHM} from "../../constants";
 import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
 
@@ -60,7 +60,7 @@ function check(value, algorithm)
 {
 	switch(algorithm)
 	{
-	case NUMERIC_STRING_CHECKSUM.LUHN:
+	case NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN:
 		return checkLuhn(value);
 
 	default:
@@ -69,7 +69,7 @@ function check(value, algorithm)
 }
 
 /**
- * check by Luhn algorithm
+ * check by Luhn algorithm (used by credit card)
  * @param {string} value value to check
  * @return {boolean} OK/NG
  */

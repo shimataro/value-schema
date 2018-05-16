@@ -1,4 +1,4 @@
-import {CAUSE, NUMERIC_STRING_CHECKSUM} from "libs/constants";
+import {CAUSE, NUMERIC_STRING_CHECKSUM_ALGORITHM} from "libs/constants";
 import factoryNumericString from "adjusters/numericString";
 
 {

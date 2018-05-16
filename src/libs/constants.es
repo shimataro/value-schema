@@ -20,7 +20,7 @@
  * @property {string} EACH_MIN_LENGTH
  * @property {string} EACH_MAX_LENGTH
  * @property {string} EACH_PATTERN
- * @property {string} NUMERIC_STRING_ALGORITHM
+ * @property {string} NUMERIC_STRING_CHECKSUM
  */
 export const CAUSE = {
 	TYPE: "type",
@@ -51,11 +51,11 @@ export const CAUSE = {
 
 /**
  * checksum algorithm for numericString()
- * @typedef {Object} adjuster.NUMERIC_STRING_CHECKSUM
+ * @typedef {Object} adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM
  * @property {string} LUHN
  * @property {string} CREDIT_CARD
  */
-export const NUMERIC_STRING_CHECKSUM = {
+export const NUMERIC_STRING_CHECKSUM_ALGORITHM = {
 	LUHN: "luhn",
 	CREDIT_CARD: "luhn",
 };
