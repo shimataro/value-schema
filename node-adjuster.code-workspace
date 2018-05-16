@@ -23,6 +23,7 @@
     "javascript.format.insertSpaceBeforeFunctionParenthesis": false,
     "javascript.format.placeOpenBraceOnNewLineForFunctions": true,
     "javascript.format.placeOpenBraceOnNewLineForControlBlocks": true,
+    "javascript.implicitProjectConfig.experimentalDecorators": true,
     "javascript.validate.enable": true
   },
   "extensions": {

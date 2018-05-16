@@ -1,52 +1,29 @@
-import {CAUSE} from "./libs/constants";
+import {CAUSE, NUMERIC_STRING_CHECKSUM_ALGORITHM} from "./libs/constants";
 import adjust from "./libs/adjust";
-import NumberAdjuster from "./libs/NumberAdjuster";
-import NumberArrayAdjuster from "./libs/NumberArrayAdjuster";
-import StringAdjuster from "./libs/StringAdjuster";
-import StringArrayAdjuster from "./libs/StringArrayAdjuster";
-import IPv4Adjuster from "./libs/IPv4Adjuster";
-import IPv6Adjuster from "./libs/IPv6Adjuster";
-import EmailAdjuster from "./libs/EmailAdjuster";
+import factoryNumber from "./adjusters/number";
+import factoryNumberArray from "./adjusters/numberArray";
+import factoryString from "./adjusters/string";
+import factoryStringArray from "./adjusters/stringArray";
+import factoryNumericString from "./adjusters/numericString";
+import factoryIPv4 from "./adjusters/ipv4";
+import factoryIPv6 from "./adjusters/ipv6";
+import factoryEmail from "./adjusters/email";
 
+/** @namespace adjuster */
 export default {
-	/** @type {AdjusterErrorCause} */
+	/** @type {adjuster.CAUSE} */
 	CAUSE: CAUSE,
+	/** @type {adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM} */
+	NUMERIC_STRING_CHECKSUM_ALGORITHM: NUMERIC_STRING_CHECKSUM_ALGORITHM,
 
 	adjust: adjust,
 
-	/** @return {NumberAdjuster} */
-	number: () =>
-	{
-		return new NumberAdjuster();
-	},
-	/** @return {NumberArrayAdjuster} */
-	numberArray: () =>
-	{
-		return new NumberArrayAdjuster();
-	},
-	/** @return {StringAdjuster} */
-	string: () =>
-	{
-		return new StringAdjuster();
-	},
-	/** @return {StringArrayAdjuster} */
-	stringArray: () =>
-	{
-		return new StringArrayAdjuster();
-	},
-	/** @return {IPv4Adjuster} */
-	ipv4: () =>
-	{
-		return new IPv4Adjuster();
-	},
-	/** @return {IPv6Adjuster} */
-	ipv6: () =>
-	{
-		return new IPv6Adjuster();
-	},
-	/** @return {EmailAdjuster} */
-	email: () =>
-	{
-		return new EmailAdjuster();
-	},
+	number: factoryNumber,
+	numberArray: factoryNumberArray,
+	string: factoryString,
+	stringArray: factoryStringArray,
+	numericString: factoryNumericString,
+	ipv4: factoryIPv4,
+	ipv6: factoryIPv6,
+	email: factoryEmail,
 };

@@ -1,6 +1,26 @@
 /**
  * cause of error
- * @type {AdjusterErrorCause}
+ * @typedef {Object} adjuster.CAUSE
+ * @property {string} TYPE
+ * @property {string} REQUIRED
+ * @property {string} EMPTY
+ * @property {string} IN
+ * @property {string} MIN_VALUE
+ * @property {string} MAX_VALUE
+ * @property {string} MIN_LENGTH
+ * @property {string} MAX_LENGTH
+ * @property {string} PATTERN
+ * @property {string} ARRAY
+ * @property {string} EACH_TYPE
+ * @property {string} EACH_REQUIRED
+ * @property {string} EACH_EMPTY
+ * @property {string} EACH_IN
+ * @property {string} EACH_MIN_VALUE
+ * @property {string} EACH_MAX_VALUE
+ * @property {string} EACH_MIN_LENGTH
+ * @property {string} EACH_MAX_LENGTH
+ * @property {string} EACH_PATTERN
+ * @property {string} NUMERIC_STRING_CHECKSUM
  */
 export const CAUSE = {
 	TYPE: "type",
@@ -26,33 +46,25 @@ export const CAUSE = {
 	EACH_MAX_LENGTH: "each-max-length",
 	EACH_PATTERN: "each-pattern",
 
-	IPV4: "ipv4",
-	IPV6: "ipv6",
-	EMAIL: "email",
+	NUMERIC_STRING_CHECKSUM: "numeric-string-checksum",
 };
 
 /**
- * @typedef {Object} AdjusterErrorCause
- * @property {string} TYPE
- * @property {string} REQUIRED
- * @property {string} EMPTY
- * @property {string} IN
- * @property {string} MIN_VALUE
- * @property {string} MAX_VALUE
- * @property {string} MIN_LENGTH
- * @property {string} MAX_LENGTH
- * @property {string} PATTERN
- * @property {string} ARRAY
- * @property {string} EACH_TYPE
- * @property {string} EACH_REQUIRED
- * @property {string} EACH_EMPTY
- * @property {string} EACH_IN
- * @property {string} EACH_MIN_VALUE
- * @property {string} EACH_MAX_VALUE
- * @property {string} EACH_MIN_LENGTH
- * @property {string} EACH_MAX_LENGTH
- * @property {string} EACH_PATTERN
- * @property {string} IPV4
- * @property {string} IPV6
- * @property {string} EMAIL
+ * checksum algorithm for numericString()
+ * @typedef {Object} adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM
+ * @property {string} LUHN
+ * @property {string} CREDIT_CARD
+ * @property {string} MODULUS10_WEIGHT3_1
+ * @property {string} ISBN13
+ * @property {string} EAN
+ * @property {string} JAN
  */
+export const NUMERIC_STRING_CHECKSUM_ALGORITHM = {
+	LUHN: "luhn",
+	CREDIT_CARD: "luhn",
+
+	MODULUS10_WEIGHT3_1: "modulus10/weight3:1",
+	ISBN13: "modulus10/weight3:1",
+	EAN: "modulus10/weight3:1",
+	JAN: "modulus10/weight3:1",
+};

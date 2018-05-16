@@ -1,12 +1,12 @@
 import {CAUSE} from "libs/constants";
-import IPv4Adjuster from "libs/IPv4Adjuster";
+import factoryIPv4 from "adjusters/ipv4";
 
 {
 	describe("required", testRequired);
 	describe("default", testDefault);
-	describe("empty", testEmpty);
-	describe("allowEmpty", testAllowEmpty);
-	describe("IPv4", testIPv4);
+	describe("emptyString", testEmptyString);
+	describe("allowEmptyString", testAllowEmptyString);
+	describe("pattern", testPattern);
 }
 
 /**
@@ -14,12 +14,12 @@ import IPv4Adjuster from "libs/IPv4Adjuster";
  */
 function testRequired()
 {
-	const objIPv4Adjuster = new IPv4Adjuster();
+	const objAdjuster = factoryIPv4();
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objIPv4Adjuster.adjust(undefined);
+			objAdjuster.adjust(undefined);
 		}).toThrow(CAUSE.REQUIRED);
 	});
 }
@@ -29,46 +29,46 @@ function testRequired()
  */
 function testDefault()
 {
-	const objIPv4Adjuster = new IPv4Adjuster().default("1.1.1.1");
+	const objAdjuster = factoryIPv4().default("1.1.1.1");
 	it("should be adjusted", () =>
 	{
-		expect(objIPv4Adjuster.adjust(undefined)).toEqual("1.1.1.1");
+		expect(objAdjuster.adjust(undefined)).toEqual("1.1.1.1");
 	});
 }
 
 /**
- * empty value
+ * empty string
  */
-function testEmpty()
+function testEmptyString()
 {
-	const objIPv4Adjuster = new IPv4Adjuster();
+	const objAdjuster = factoryIPv4();
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objIPv4Adjuster.adjust("");
+			objAdjuster.adjust("");
 		}).toThrow(CAUSE.EMPTY);
 	});
 }
 
 /**
- * empty value (allowd)
+ * empty string (allowd)
  */
-function testAllowEmpty()
+function testAllowEmptyString()
 {
-	const objIPv4Adjuster = new IPv4Adjuster().allowEmpty("1.1.1.1");
+	const objAdjuster = factoryIPv4().allowEmptyString("1.1.1.1");
 	it("should be OK", () =>
 	{
-		expect(objIPv4Adjuster.adjust("")).toEqual("1.1.1.1");
+		expect(objAdjuster.adjust("")).toEqual("1.1.1.1");
 	});
 }
 
 /**
- * IPv4 string
+ * IPv4 pattern
  */
-function testIPv4()
+function testPattern()
 {
-	const objIPv4Adjuster = new IPv4Adjuster();
+	const objAdjuster = factoryIPv4();
 	it("should be OK", () =>
 	{
 		const values = [
@@ -78,7 +78,7 @@ function testIPv4()
 		];
 		for(const value of values)
 		{
-			expect(objIPv4Adjuster.adjust(value)).toEqual(value);
+			expect(objAdjuster.adjust(value)).toEqual(value);
 		}
 	});
 	it("should cause error(s)", () =>
@@ -93,8 +93,8 @@ function testIPv4()
 		{
 			expect(() =>
 			{
-				objIPv4Adjuster.adjust(value);
-			}).toThrow(CAUSE.IPV4);
+				objAdjuster.adjust(value);
+			}).toThrow(CAUSE.PATTERN);
 		}
 	});
 }
