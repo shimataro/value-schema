@@ -1,5 +1,4 @@
-import {CAUSE} from "libs/constants";
-import factoryNumberArray from "adjusters/numberArray";
+import adjuster from "index";
 
 {
 	describe("type", testType);
@@ -28,7 +27,7 @@ import factoryNumberArray from "adjusters/numberArray";
  */
 function testType()
 {
-	const objAdjuster = factoryNumberArray();
+	const objAdjuster = adjuster.numberArray();
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust([])).toEqual([]);
@@ -43,11 +42,11 @@ function testType()
 		expect(() =>
 		{
 			objAdjuster.adjust("abc");
-		}).toThrow(CAUSE.TYPE);
+		}).toThrow(adjuster.CAUSE.TYPE);
 		expect(() =>
 		{
 			objAdjuster.adjust(0);
-		}).toThrow(CAUSE.TYPE);
+		}).toThrow(adjuster.CAUSE.TYPE);
 	});
 }
 
@@ -56,13 +55,13 @@ function testType()
  */
 function testRequired()
 {
-	const objAdjuster = factoryNumberArray();
+	const objAdjuster = adjuster.numberArray();
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
 			objAdjuster.adjust(undefined);
-		}).toThrow(CAUSE.REQUIRED);
+		}).toThrow(adjuster.CAUSE.REQUIRED);
 	});
 }
 
@@ -71,7 +70,7 @@ function testRequired()
  */
 function testDefault()
 {
-	const objAdjuster = factoryNumberArray().default([1, 2]);
+	const objAdjuster = adjuster.numberArray().default([1, 2]);
 	it("should be adjusted", () =>
 	{
 		expect(objAdjuster.adjust(undefined)).toEqual([1, 2]);
@@ -83,13 +82,13 @@ function testDefault()
  */
 function testEmptyString()
 {
-	const objAdjuster = factoryNumberArray();
+	const objAdjuster = adjuster.numberArray();
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
 			objAdjuster.adjust("");
-		}).toThrow(CAUSE.EMPTY);
+		}).toThrow(adjuster.CAUSE.EMPTY);
 	});
 }
 
@@ -98,7 +97,7 @@ function testEmptyString()
  */
 function testAllowEmptyString()
 {
-	const objAdjuster = factoryNumberArray().allowEmptyString([1, 2]);
+	const objAdjuster = adjuster.numberArray().allowEmptyString([1, 2]);
 	it("should be adjusted", () =>
 	{
 		expect(objAdjuster.adjust("")).toEqual([1, 2]);
@@ -110,7 +109,7 @@ function testAllowEmptyString()
  */
 function testSeparatedBy()
 {
-	const objAdjuster = factoryNumberArray().separatedBy(",");
+	const objAdjuster = adjuster.numberArray().separatedBy(",");
 	it("should be adjusted", () =>
 	{
 		expect(objAdjuster.adjust("1,2,3")).toEqual([1, 2, 3]);
@@ -122,7 +121,7 @@ function testSeparatedBy()
  */
 function testToArray()
 {
-	const objAdjuster = factoryNumberArray().toArray();
+	const objAdjuster = adjuster.numberArray().toArray();
 	it("should be adjusted", () =>
 	{
 		expect(objAdjuster.adjust(0)).toEqual([0]);
@@ -134,7 +133,7 @@ function testToArray()
  */
 function testMinLength()
 {
-	const objAdjuster = factoryNumberArray().minLength(1);
+	const objAdjuster = adjuster.numberArray().minLength(1);
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust([0])).toEqual([0]);
@@ -144,7 +143,7 @@ function testMinLength()
 		expect(() =>
 		{
 			objAdjuster.adjust([]);
-		}).toThrow(CAUSE.MIN_LENGTH);
+		}).toThrow(adjuster.CAUSE.MIN_LENGTH);
 	});
 }
 
@@ -153,7 +152,7 @@ function testMinLength()
  */
 function testMaxLength()
 {
-	const objAdjuster = factoryNumberArray().maxLength(1);
+	const objAdjuster = adjuster.numberArray().maxLength(1);
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust([0])).toEqual([0]);
@@ -163,7 +162,7 @@ function testMaxLength()
 		expect(() =>
 		{
 			objAdjuster.adjust([1, 2]);
-		}).toThrow(CAUSE.MAX_LENGTH);
+		}).toThrow(adjuster.CAUSE.MAX_LENGTH);
 	});
 }
 
@@ -172,7 +171,7 @@ function testMaxLength()
  */
 function testMaxLengthAdjusted()
 {
-	const objAdjuster = factoryNumberArray().maxLength(1, true);
+	const objAdjuster = adjuster.numberArray().maxLength(1, true);
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust([0])).toEqual([0]);
@@ -188,7 +187,7 @@ function testMaxLengthAdjusted()
  */
 function testIgnoreEachErrors()
 {
-	const objAdjuster = factoryNumberArray().ignoreEachErrors().separatedBy(",");
+	const objAdjuster = adjuster.numberArray().ignoreEachErrors().separatedBy(",");
 	it("should be adjusted", () =>
 	{
 		expect(objAdjuster.adjust([undefined, 1, "abc", 2])).toEqual([1, 2]);
@@ -201,21 +200,21 @@ function testIgnoreEachErrors()
  */
 function testEach()
 {
-	const objAdjuster = factoryNumberArray();
+	const objAdjuster = adjuster.numberArray();
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
 			objAdjuster.adjust(["abc"]);
-		}).toThrow(CAUSE.EACH_TYPE);
+		}).toThrow(adjuster.CAUSE.EACH_TYPE);
 		expect(() =>
 		{
 			objAdjuster.adjust([1, undefined, 3]);
-		}).toThrow(CAUSE.EACH_REQUIRED);
+		}).toThrow(adjuster.CAUSE.EACH_REQUIRED);
 		expect(() =>
 		{
 			objAdjuster.adjust([""]);
-		}).toThrow(CAUSE.EACH_EMPTY);
+		}).toThrow(adjuster.CAUSE.EACH_EMPTY);
 	});
 }
 
@@ -224,7 +223,7 @@ function testEach()
  */
 function testEachDefault()
 {
-	const objAdjuster = factoryNumberArray().eachDefault(999);
+	const objAdjuster = adjuster.numberArray().eachDefault(999);
 	it("should be adjusted", () =>
 	{
 		expect(objAdjuster.adjust([1, undefined, 3])).toEqual([1, 999, 3]);
@@ -234,7 +233,7 @@ function testEachDefault()
 		expect(() =>
 		{
 			objAdjuster.adjust([1, "", 3]);
-		}).toThrow(CAUSE.EACH_EMPTY);
+		}).toThrow(adjuster.CAUSE.EACH_EMPTY);
 	});
 }
 
@@ -243,7 +242,7 @@ function testEachDefault()
  */
 function testEachAllowEmptyString()
 {
-	const objAdjuster = factoryNumberArray().eachAllowEmptyString(999);
+	const objAdjuster = adjuster.numberArray().eachAllowEmptyString(999);
 	it("should be adjusted", () =>
 	{
 		expect(objAdjuster.adjust([1, "", 3])).toEqual([1, 999, 3]);
@@ -253,7 +252,7 @@ function testEachAllowEmptyString()
 		expect(() =>
 		{
 			objAdjuster.adjust([1, undefined, 3]);
-		}).toThrow(CAUSE.EACH_REQUIRED);
+		}).toThrow(adjuster.CAUSE.EACH_REQUIRED);
 	});
 }
 
@@ -262,7 +261,7 @@ function testEachAllowEmptyString()
  */
 function testEachIn()
 {
-	const objAdjuster = factoryNumberArray().eachIn(1, 2, 3);
+	const objAdjuster = adjuster.numberArray().eachIn(1, 2, 3);
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust([1, 2, 3])).toEqual([1, 2, 3]);
@@ -272,7 +271,7 @@ function testEachIn()
 		expect(() =>
 		{
 			objAdjuster.adjust([0, 1, 2]);
-		}).toThrow(CAUSE.EACH_IN);
+		}).toThrow(adjuster.CAUSE.EACH_IN);
 	});
 }
 
@@ -281,7 +280,7 @@ function testEachIn()
  */
 function testEachMinValue()
 {
-	const objAdjuster = factoryNumberArray().eachMinValue(10);
+	const objAdjuster = adjuster.numberArray().eachMinValue(10);
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust([10, 11, 12])).toEqual([10, 11, 12]);
@@ -291,7 +290,7 @@ function testEachMinValue()
 		expect(() =>
 		{
 			objAdjuster.adjust([9, 10, 11]);
-		}).toThrow(CAUSE.EACH_MIN_VALUE);
+		}).toThrow(adjuster.CAUSE.EACH_MIN_VALUE);
 	});
 }
 
@@ -300,7 +299,7 @@ function testEachMinValue()
  */
 function testEachMinValueAdjusted()
 {
-	const objAdjuster = factoryNumberArray().eachMinValue(10, true);
+	const objAdjuster = adjuster.numberArray().eachMinValue(10, true);
 	it("should be adjusted", () =>
 	{
 		expect(objAdjuster.adjust([9, 10, 11])).toEqual([10, 10, 11]);
@@ -312,7 +311,7 @@ function testEachMinValueAdjusted()
  */
 function testEachMaxValue()
 {
-	const objAdjuster = factoryNumberArray().eachMaxValue(10);
+	const objAdjuster = adjuster.numberArray().eachMaxValue(10);
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust([8, 9, 10])).toEqual([8, 9, 10]);
@@ -322,7 +321,7 @@ function testEachMaxValue()
 		expect(() =>
 		{
 			objAdjuster.adjust([9, 10, 11]);
-		}).toThrow(CAUSE.EACH_MAX_VALUE);
+		}).toThrow(adjuster.CAUSE.EACH_MAX_VALUE);
 	});
 }
 
@@ -331,7 +330,7 @@ function testEachMaxValue()
  */
 function testEachMaxValueAdjusted()
 {
-	const objAdjuster = factoryNumberArray().eachMaxValue(10, true);
+	const objAdjuster = adjuster.numberArray().eachMaxValue(10, true);
 	it("should be adjusted", () =>
 	{
 		expect(objAdjuster.adjust([9, 10, 11])).toEqual([9, 10, 10]);
