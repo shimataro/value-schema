@@ -292,6 +292,9 @@ assert.throws(() => adjuster.email().adjust("user@example.com2")      , err => (
 
 ## Release notes
 
+* **NEXT VERSION**
+    * Others
+        * support complement of [IntelliJ IDEA](https://www.jetbrains.com/idea/)
 * 2018/05/17 *version 0.6.0*
     * New Functions
         * `adjuster.numericString()`
