@@ -216,8 +216,10 @@ assert.strictEqual(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHE
 assert.strictEqual(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.JAN).adjust("9784101092058")                , "9784101092058"); // alias of MODULUS10_WEIGHT3_1
 
 // should be adjusted
+assert.strictEqual(adjuster.numericString().adjust(123)                                            , "123");
 assert.strictEqual(adjuster.numericString().default("123").adjust(undefined)                       , "123");
 assert.strictEqual(adjuster.numericString().allowEmptyString("456").adjust("")                     , "456");
+assert.strictEqual(adjuster.numericString().joinArray().adjust(["1234", "5678"])                   , "12345678");
 assert.strictEqual(adjuster.numericString().separatedBy("-").adjust("1234-5678")                   , "12345678");
 assert.strictEqual(adjuster.numericString().separatedBy("-").maxLength(5, true).adjust("1234-5678"), "12345");
 
@@ -293,6 +295,8 @@ assert.throws(() => adjuster.email().adjust("user@example.com2")      , err => (
 ## Release notes
 
 * **NEXT VERSION**
+    * New Functions
+        * `adjuster.numericString().joinArray()`
     * Others
         * support complement of [IntelliJ IDEA](https://www.jetbrains.com/idea/)
 * 2018/05/17 *version 0.6.0*

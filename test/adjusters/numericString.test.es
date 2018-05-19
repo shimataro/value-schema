@@ -1,11 +1,41 @@
 import adjuster from "index";
 
 {
+	describe("type", testType);
+	describe("joinArray", testJoinArray);
 	describe("separatedBy", testSeparatedBy);
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
 	describe("checksum (Luhn)", testChecksumLuhn);
 	describe("checksum (Modulus 10 / Weight 3:1)", testChecksumModulus10Weight31);
+}
+
+/**
+ * type
+ */
+function testType()
+{
+	const objAdjuster = adjuster.numericString();
+	it("should be OK", () =>
+	{
+		expect(objAdjuster.adjust("1111222233334444")).toEqual("1111222233334444");
+	});
+	it("should be adjusted", () =>
+	{
+		expect(objAdjuster.adjust(1111222233334444)).toEqual("1111222233334444");
+	});
+}
+
+/**
+ * join array into string
+ */
+function testJoinArray()
+{
+	const objAdjuster = adjuster.numericString().joinArray();
+	it("should be adjusted", () =>
+	{
+		expect(objAdjuster.adjust(["1111", "2222", "3333", "4444"])).toEqual("1111222233334444");
+	});
 }
 
 /**
