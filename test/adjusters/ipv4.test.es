@@ -1,5 +1,4 @@
-import {CAUSE} from "libs/constants";
-import factoryIPv4 from "adjusters/ipv4";
+import adjuster from "index";
 
 {
 	describe("required", testRequired);
@@ -14,13 +13,13 @@ import factoryIPv4 from "adjusters/ipv4";
  */
 function testRequired()
 {
-	const objAdjuster = factoryIPv4();
+	const objAdjuster = adjuster.ipv4();
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
 			objAdjuster.adjust(undefined);
-		}).toThrow(CAUSE.REQUIRED);
+		}).toThrow(adjuster.CAUSE.REQUIRED);
 	});
 }
 
@@ -29,7 +28,7 @@ function testRequired()
  */
 function testDefault()
 {
-	const objAdjuster = factoryIPv4().default("1.1.1.1");
+	const objAdjuster = adjuster.ipv4().default("1.1.1.1");
 	it("should be adjusted", () =>
 	{
 		expect(objAdjuster.adjust(undefined)).toEqual("1.1.1.1");
@@ -41,13 +40,13 @@ function testDefault()
  */
 function testEmptyString()
 {
-	const objAdjuster = factoryIPv4();
+	const objAdjuster = adjuster.ipv4();
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
 			objAdjuster.adjust("");
-		}).toThrow(CAUSE.EMPTY);
+		}).toThrow(adjuster.CAUSE.EMPTY);
 	});
 }
 
@@ -56,7 +55,7 @@ function testEmptyString()
  */
 function testAllowEmptyString()
 {
-	const objAdjuster = factoryIPv4().allowEmptyString("1.1.1.1");
+	const objAdjuster = adjuster.ipv4().allowEmptyString("1.1.1.1");
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust("")).toEqual("1.1.1.1");
@@ -68,7 +67,7 @@ function testAllowEmptyString()
  */
 function testPattern()
 {
-	const objAdjuster = factoryIPv4();
+	const objAdjuster = adjuster.ipv4();
 	it("should be OK", () =>
 	{
 		const values = [
@@ -94,7 +93,7 @@ function testPattern()
 			expect(() =>
 			{
 				objAdjuster.adjust(value);
-			}).toThrow(CAUSE.PATTERN);
+			}).toThrow(adjuster.CAUSE.PATTERN);
 		}
 	});
 }

@@ -1,5 +1,4 @@
-import {CAUSE} from "libs/constants";
-import factoryNumber from "adjusters/number";
+import adjuster from "index";
 
 {
 	describe("type", testType);
@@ -19,7 +18,7 @@ import factoryNumber from "adjusters/number";
  */
 function testType()
 {
-	const objAdjuster = factoryNumber();
+	const objAdjuster = adjuster.number();
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust(1)).toEqual(1);
@@ -35,7 +34,7 @@ function testType()
 		expect(() =>
 		{
 			objAdjuster.adjust("abc");
-		}).toThrow(CAUSE.TYPE);
+		}).toThrow(adjuster.CAUSE.TYPE);
 	});
 }
 
@@ -44,7 +43,7 @@ function testType()
  */
 function testRequired()
 {
-	const objAdjuster = factoryNumber();
+	const objAdjuster = adjuster.number();
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust(0)).toEqual(0);
@@ -54,7 +53,7 @@ function testRequired()
 		expect(() =>
 		{
 			objAdjuster.adjust(undefined);
-		}).toThrow(CAUSE.REQUIRED);
+		}).toThrow(adjuster.CAUSE.REQUIRED);
 	});
 }
 
@@ -63,7 +62,7 @@ function testRequired()
  */
 function testDefault()
 {
-	const objAdjuster = factoryNumber().default(10);
+	const objAdjuster = adjuster.number().default(10);
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust(1)).toEqual(1);
@@ -79,13 +78,13 @@ function testDefault()
  */
 function testEmptyString()
 {
-	const objAdjuster = factoryNumber();
+	const objAdjuster = adjuster.number();
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
 			objAdjuster.adjust("");
-		}).toThrow(CAUSE.EMPTY);
+		}).toThrow(adjuster.CAUSE.EMPTY);
 	});
 }
 
@@ -94,7 +93,7 @@ function testEmptyString()
  */
 function testAllowEmptyString()
 {
-	const objAdjuster = factoryNumber().allowEmptyString(123);
+	const objAdjuster = adjuster.number().allowEmptyString(123);
 	it("should be adjusted", () =>
 	{
 		expect(objAdjuster.adjust("")).toEqual(123);
@@ -106,7 +105,7 @@ function testAllowEmptyString()
  */
 function testIn()
 {
-	const objAdjuster = factoryNumber().in(1, 3, 5);
+	const objAdjuster = adjuster.number().in(1, 3, 5);
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust(1)).toEqual(1);
@@ -118,7 +117,7 @@ function testIn()
 		expect(() =>
 		{
 			objAdjuster.adjust(2);
-		}).toThrow(CAUSE.IN);
+		}).toThrow(adjuster.CAUSE.IN);
 	});
 }
 
@@ -127,7 +126,7 @@ function testIn()
  */
 function testMinValue()
 {
-	const objAdjuster = factoryNumber().minValue(10);
+	const objAdjuster = adjuster.number().minValue(10);
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust(10)).toEqual(10);
@@ -137,7 +136,7 @@ function testMinValue()
 		expect(() =>
 		{
 			objAdjuster.adjust(9);
-		}).toThrow(CAUSE.MIN_VALUE);
+		}).toThrow(adjuster.CAUSE.MIN_VALUE);
 	});
 }
 
@@ -146,7 +145,7 @@ function testMinValue()
  */
 function testMinValueAdjusted()
 {
-	const objAdjuster = factoryNumber().minValue(10, true);
+	const objAdjuster = adjuster.number().minValue(10, true);
 	it("should be adjusted", () =>
 	{
 		expect(objAdjuster.adjust(9)).toEqual(10);
@@ -158,7 +157,7 @@ function testMinValueAdjusted()
  */
 function testMaxValue()
 {
-	const objAdjuster = factoryNumber().maxValue(100);
+	const objAdjuster = adjuster.number().maxValue(100);
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust(100)).toEqual(100);
@@ -168,7 +167,7 @@ function testMaxValue()
 		expect(() =>
 		{
 			objAdjuster.adjust(101);
-		}).toThrow(CAUSE.MAX_VALUE);
+		}).toThrow(adjuster.CAUSE.MAX_VALUE);
 	});
 }
 
@@ -177,7 +176,7 @@ function testMaxValue()
  */
 function testMaxValueAdjusted()
 {
-	const objAdjuster = factoryNumber().maxValue(100, true);
+	const objAdjuster = adjuster.number().maxValue(100, true);
 	it("should be adjusted", () =>
 	{
 		expect(objAdjuster.adjust(101)).toEqual(100);

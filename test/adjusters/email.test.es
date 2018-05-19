@@ -1,5 +1,4 @@
-import {CAUSE} from "libs/constants";
-import factoryEmail from "adjusters/email";
+import adjuster from "index";
 
 {
 	describe("required", testRequired);
@@ -16,13 +15,13 @@ import factoryEmail from "adjusters/email";
  */
 function testRequired()
 {
-	const objAdjuster = factoryEmail();
+	const objAdjuster = adjuster.email();
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
 			objAdjuster.adjust(undefined);
-		}).toThrow(CAUSE.REQUIRED);
+		}).toThrow(adjuster.CAUSE.REQUIRED);
 	});
 }
 
@@ -31,7 +30,7 @@ function testRequired()
  */
 function testDefault()
 {
-	const objAdjuster = factoryEmail().default("default@example.com");
+	const objAdjuster = adjuster.email().default("default@example.com");
 	it("should be adjusted", () =>
 	{
 		expect(objAdjuster.adjust(undefined)).toEqual("default@example.com");
@@ -43,13 +42,13 @@ function testDefault()
  */
 function testEmpty()
 {
-	const objAdjuster = factoryEmail();
+	const objAdjuster = adjuster.email();
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
 			objAdjuster.adjust("");
-		}).toThrow(CAUSE.EMPTY);
+		}).toThrow(adjuster.CAUSE.EMPTY);
 	});
 }
 
@@ -58,7 +57,7 @@ function testEmpty()
  */
 function testAllowEmptyString()
 {
-	const objAdjuster = factoryEmail().allowEmptyString("empty@example.com");
+	const objAdjuster = adjuster.email().allowEmptyString("empty@example.com");
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust("")).toEqual("empty@example.com");
@@ -70,7 +69,7 @@ function testAllowEmptyString()
  */
 function testMaxLength()
 {
-	const objAdjuster = factoryEmail();
+	const objAdjuster = adjuster.email();
 	it("should be OK", () =>
 	{
 		const values = [
@@ -96,7 +95,7 @@ function testMaxLength()
 			expect(() =>
 			{
 				objAdjuster.adjust(value);
-			}).toThrow(CAUSE.MAX_LENGTH);
+			}).toThrow(adjuster.CAUSE.MAX_LENGTH);
 		}
 	});
 }
@@ -106,7 +105,7 @@ function testMaxLength()
  */
 function testPattern()
 {
-	const objAdjuster = factoryEmail().pattern(/^\w+@([\w-]+\.)+\w+$/);
+	const objAdjuster = adjuster.email().pattern(/^\w+@([\w-]+\.)+\w+$/);
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust("user@example.com")).toEqual("user@example.com");
@@ -118,7 +117,7 @@ function testPattern()
 		expect(() =>
 		{
 			objAdjuster.adjust("john.doe@example.com");
-		}).toThrow(CAUSE.PATTERN);
+		}).toThrow(adjuster.CAUSE.PATTERN);
 	});
 }
 
@@ -127,7 +126,7 @@ function testPattern()
  */
 function testEmail()
 {
-	const objAdjuster = factoryEmail();
+	const objAdjuster = adjuster.email();
 	it("should be OK", () =>
 	{
 		const values = [
@@ -179,7 +178,7 @@ function testEmail()
 			expect(() =>
 			{
 				objAdjuster.adjust(value);
-			}).toThrow(CAUSE.PATTERN);
+			}).toThrow(adjuster.CAUSE.PATTERN);
 		}
 	});
 }
