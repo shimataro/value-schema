@@ -51,11 +51,11 @@ class DecoratorBuilder
 			const features = this._features;
 			const adjust = this._adjust;
 
-			if(TargetClass.prototype._decorators === undefined)
+			if(TargetClass._decorators === undefined)
 			{
-				TargetClass.prototype._decorators = [];
+				TargetClass._decorators = [];
 			}
-			TargetClass.prototype._decorators.push({
+			TargetClass._decorators.push({
 				key: key,
 				adjust: adjust,
 				init: init,
@@ -99,7 +99,9 @@ export default class AdjusterBase
 	 */
 	constructor()
 	{
+		this._decorators = this.constructor._decorators;
 		this._params = {};
+
 		for(const decorator of this._decorators)
 		{
 			this._params[decorator.key] = {};

@@ -5,6 +5,7 @@ import AllowEmptyString from "../libs/decorators/allowEmptyString";
 import Type from "../libs/decorators/string/type";
 import MinLength from "../libs/decorators/string/minLength";
 import MaxLength from "../libs/decorators/string/maxLength";
+import JoinArray from "../libs/decorators/numericString/joinArray";
 import SeparatedBy from "../libs/decorators/numericString/separatedBy";
 import Pattern from "../libs/decorators/numericString/pattern";
 import Checksum from "../libs/decorators/numericString/checksum";
@@ -27,6 +28,7 @@ export default () =>
 @Pattern
 @SeparatedBy
 @Type
+@JoinArray
 @AllowEmptyString
 @Default
 class NumericStringAdjuster extends AdjusterBase
@@ -44,6 +46,13 @@ class NumericStringAdjuster extends AdjusterBase
 	 * @method
 	 * @name NumericStringAdjuster#allowEmptyString
 	 * @param {?string} [value=null] value on empty
+	 * @return {NumericStringAdjuster}
+	 */
+
+	/**
+	 * join array into string
+	 * @method
+	 * @name NumericStringAdjuster#joinArray
 	 * @return {NumericStringAdjuster}
 	 */
 
