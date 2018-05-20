@@ -292,47 +292,6 @@ assert.throws(() => adjuster.email().adjust("user@example_domain.com"), err => (
 assert.throws(() => adjuster.email().adjust("user@example.com2")      , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
-## Release notes
+## Changelog
 
-* 2018/05/20 *version 0.7.0*
-    * New Functions
-        * `adjuster.numericString().joinArray()`
-    * Others
-        * support complement of [IntelliJ IDEA](https://www.jetbrains.com/idea/)
-* 2018/05/17 *version 0.6.0*
-    * New Functions
-        * `adjuster.numericString()`
-    * Change Specifications
-        * `allowEmpty()` => `allowEmptyString()`
-        * `adjuster.CAUSE.EMAIL` => `adjuster.CAUSE.PATTERN`
-        * `adjuster.CAUSE.IPV4` => `adjuster.CAUSE.PATTERN`
-        * `adjuster.CAUSE.IPV6` => `adjuster.CAUSE.PATTERN`
-* 2018/05/12 *version 0.5.0*
-    * New Functions
-        * `adjuster.numberArray()`
-        * `adjuster.stringArray()`
-    * Change Specifications
-        * rename `adjuster.adjustData()` to `adjuster.adjust()`
-        * throw first error when both `onError` and `onErrorAll` are null in `adjuster.adjust()`
-    * Others
-        * support [Visual Studio Code](https://code.visualstudio.com/) officially
-* 2018/05/06 *version 0.4.0*
-    * New Functions
-        * `adjuster.ipv4()`
-        * `adjuster.ipv6()`
-    * Change Specifications
-        * strict IPv4 and IPv6 validation for `adjuster.email()`
-* 2018/04/22 *version 0.3.0*
-    * Bugfixes
-        * quoted-pair of email
-        * import error in `EmailAdjuster.es`
-    * Change Specifications
-        * limit the length of local/domain part of email
-* 2018/04/21 *version 0.2.0*
-    * Bugfixes
-        * test error on npm@5
-    * Change Specifications
-        * enable to specify value to `allowEmpty()`
-        * support IPv6 domain for `EmailAdjuster`
-* 2018/04/18 *version 0.1.0*
-    * First release.
+See [CHANGELOG.md](CHANGELOG.md).
