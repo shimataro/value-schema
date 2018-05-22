@@ -86,7 +86,8 @@ class DecoratorBuilder
 				{
 					TargetClass.prototype[name] = function(...args)
 					{
-						features[name](this._params[key], ...args);
+						const params = this._params.get(key);
+						features[name](params, ...args);
 						return this;
 					};
 				}
@@ -117,15 +118,17 @@ export default class AdjusterBase
 	 */
 	constructor()
 	{
-		this._params = {};
+		/** @type {Map<Symbol, Object>} */
+		this._params = new Map();
 
 		const decorators = getDecorators(this.constructor);
 		for(const decorator of decorators)
 		{
-			this._params[decorator.key] = {};
+			this._params.set(decorator.key, {});
 			if(decorator.init !== null)
 			{
-				decorator.init(this._params[decorator.key]);
+				const params = this._params.get(decorator.key);
+				decorator.init(params);
 			}
 		}
 	}
@@ -148,7 +151,8 @@ export default class AdjusterBase
 			const decorators = getDecorators(this.constructor);
 			for(const decorator of decorators)
 			{
-				if(decorator.adjust(this._params[decorator.key], values))
+				const params = this._params.get(decorator.key);
+				if(decorator.adjust(params, values))
 				{
 					return values.adjusted;
 				}
