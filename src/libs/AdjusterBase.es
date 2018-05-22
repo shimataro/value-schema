@@ -1,6 +1,27 @@
 import AdjusterError from "./AdjusterError";
 
 /**
+ * get class decorators
+ * @function
+ * @param {function} TargetCass a target class
+ * @return {AdjusterBase.DECORATOR[]}
+ */
+const getDecorators = (() =>
+{
+	/** @type {Map<function, AdjusterBase.DECORATOR[]>} */
+	const decoratorsMap = new Map();
+
+	return (TargetClass) =>
+	{
+		if(!decoratorsMap.has(TargetClass))
+		{
+			decoratorsMap.set(TargetClass, []);
+		}
+		return decoratorsMap.get(TargetClass);
+	};
+})();
+
+/**
  * Decorator Builder
  */
 class DecoratorBuilder
@@ -51,11 +72,8 @@ class DecoratorBuilder
 			const features = this._features;
 			const adjust = this._adjust;
 
-			if(TargetClass._decorators === undefined)
-			{
-				TargetClass._decorators = [];
-			}
-			TargetClass._decorators.push({
+			const decorators = getDecorators(TargetClass);
+			decorators.push({
 				key: key,
 				adjust: adjust,
 				init: init,
@@ -99,10 +117,10 @@ export default class AdjusterBase
 	 */
 	constructor()
 	{
-		this._decorators = this.constructor._decorators;
 		this._params = {};
 
-		for(const decorator of this._decorators)
+		const decorators = getDecorators(this.constructor);
+		for(const decorator of decorators)
 		{
 			this._params[decorator.key] = {};
 			if(decorator.init !== null)
@@ -127,7 +145,8 @@ export default class AdjusterBase
 
 		try
 		{
-			for(const decorator of this._decorators)
+			const decorators = getDecorators(this.constructor);
+			for(const decorator of decorators)
 			{
 				if(decorator.adjust(this._params[decorator.key], values))
 				{
@@ -162,6 +181,13 @@ export default class AdjusterBase
 		return onError(err);
 	}
 }
+
+/**
+ * @typedef {Object} AdjusterBase.DECORATOR
+ * @property {Symbol} key
+ * @property {AdjusterBase.Adjust} adjust
+ * @property {?AdjusterBase.Init} init
+ */
 
 /**
  * @typedef {Object} AdjusterBase.VALUES
