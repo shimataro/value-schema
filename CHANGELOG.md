@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Others
 * use changelog
+* use [Babel 7](https://github.com/babel/babel/wiki/Babel-7)
 
 ## [0.7.0] - 2018-05-20
 ### Added

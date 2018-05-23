@@ -1,7 +1,7 @@
 {
   "presets": [
     [
-      "env",
+      "@babel/preset-env",
       {
         "targets": {
           "node": "current"
@@ -9,12 +9,15 @@
         "exclude": [
           "transform-regenerator"
         ],
-        "useBuiltIns": true
+        "useBuiltins": "usage"
+      }
+    ],
+    [
+      "@babel/preset-stage-0",
+      {
+        "decoratorsLegacy": true
       }
     ]
-  ],
-  "plugins": [
-    "transform-decorators-legacy"
   ],
   "comments": false
 }
