@@ -91,6 +91,13 @@ class StringArrayAdjuster extends AdjusterBase
 	 */
 
 	/**
+	 * remove whitespace from both ends for each elements
+	 * @method
+	 * @name StringArrayAdjuster#eachTrim
+	 * @return {StringArrayAdjuster}
+	 */
+
+	/**
 	 * allow empty string for each elements
 	 * @method
 	 * @name StringArrayAdjuster#eachAllowEmptyString

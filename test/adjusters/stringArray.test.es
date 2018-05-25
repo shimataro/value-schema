@@ -15,6 +15,7 @@ import adjuster from "index";
 	describe("each", testEach);
 	describe("eachDefault", testEachDefault);
 	describe("eachAllowEmptyString", testEachAllowEmptyString);
+	describe("eachTrim", testEachTrim);
 	describe("eachIn", testEachIn);
 	describe("eachMinLength", testEachMinLength);
 	describe("eachMaxLength", testEachMaxLength);
@@ -245,6 +246,18 @@ function testEachAllowEmptyString()
 		{
 			objAdjuster.adjust(["a", undefined, "b"]);
 		}).toThrow(adjuster.CAUSE.EACH_REQUIRED);
+	});
+}
+
+/**
+ * each elements; trim
+ */
+function testEachTrim()
+{
+	const objAdjuster = adjuster.stringArray().eachTrim();
+	it("should be OK", () =>
+	{
+		expect(objAdjuster.adjust([" a", "b\t", "\rc\n"])).toEqual(["a", "b", "c"]);
 	});
 }
 

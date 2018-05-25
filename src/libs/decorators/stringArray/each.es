@@ -9,6 +9,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 		ignoreEachErrors: _featureIgnoreEachErrors,
 		eachDefault: _featureEachDefault,
 		eachAllowEmptyString: _featureEachAllowEmptyString,
+		eachTrim: _featureEachTrim,
 		eachIn: _featureEachIn,
 		eachMinLength: _featureEachMinLength,
 		eachMaxLength: _featureEachMaxLength,
@@ -52,6 +53,15 @@ function _featureEachDefault(params, value)
 function _featureEachAllowEmptyString(params, value = null)
 {
 	params.objAdjuster.allowEmptyString(value);
+}
+
+/**
+ * remove whitespace from both ends for each elements
+ * @param {Object} params parameters
+ */
+function _featureEachTrim(params)
+{
+	params.objAdjuster.trim();
 }
 
 /**

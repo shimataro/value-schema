@@ -184,6 +184,7 @@ assert.deepStrictEqual(adjuster.stringArray().maxLength(1, true).adjust(["a", "b
 assert.deepStrictEqual(adjuster.stringArray().ignoreEachErrors().adjust([undefined, "a", "", 1]), ["a", "1"]);
 assert.deepStrictEqual(adjuster.stringArray().eachDefault("z").adjust(["a", undefined, "b"])    , ["a", "z", "b"]);
 assert.deepStrictEqual(adjuster.stringArray().eachAllowEmptyString("z").adjust(["a", "", "b"])  , ["a", "z", "b"]);
+assert.deepStrictEqual(adjuster.stringArray().eachTrim().adjust([" a", "b\t", "\rc\n"])         , ["a", "b", "c"]);
 assert.deepStrictEqual(adjuster.stringArray().eachMaxLength(3, true).adjust(["abcd", "xyz0"])   , ["abc", "xyz"]);
 
 // should cause errors
