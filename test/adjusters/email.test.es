@@ -5,6 +5,7 @@ import adjuster from "index";
 	describe("default", testDefault);
 	describe("empty", testEmpty);
 	describe("allowEmptyString", testAllowEmptyString);
+	describe("trim", testTrim);
 	describe("maxLength", testMaxLength);
 	describe("pattern", testPattern);
 	describe("email", testEmail);
@@ -61,6 +62,25 @@ function testAllowEmptyString()
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust("")).toEqual("empty@example.com");
+	});
+}
+
+/**
+ * remove whitespace from both ends
+ */
+function testTrim()
+{
+	const objAdjuster = adjuster.email().trim();
+	it("should be adjusted", () =>
+	{
+		expect(objAdjuster.adjust("\r\n trim@example.com \t ")).toEqual("trim@example.com");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			objAdjuster.adjust(" \t\r\n ");
+		}).toThrow(adjuster.CAUSE.EMPTY);
 	});
 }
 

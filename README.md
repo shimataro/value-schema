@@ -283,6 +283,9 @@ assert.strictEqual(adjuster.email().adjust("\"Joe.\\\\Blow\"@example.com")      
 assert.strictEqual(adjuster.email().adjust("user@example-domain.com")                     , "user@example-domain.com");
 assert.strictEqual(adjuster.email().adjust("user@example2.com")                           , "user@example2.com");
 
+// should be adjusted
+assert.strictEqual(adjuster.email().trim().adjust("\r\n trim@example.com \t "), "trim@example.com");
+
 // should cause errors
 assert.throws(() => adjuster.email().adjust("@example.com")           , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 assert.throws(() => adjuster.email().adjust(".a@example.com")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
