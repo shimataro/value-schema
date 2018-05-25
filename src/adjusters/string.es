@@ -4,6 +4,7 @@ import Default from "../libs/decorators/default";
 import AllowEmptyString from "../libs/decorators/allowEmptyString";
 import In from "../libs/decorators/in";
 import Type from "../libs/decorators/string/type";
+import Trim from "../libs/decorators/string/trim";
 import MinLength from "../libs/decorators/string/minLength";
 import MaxLength from "../libs/decorators/string/maxLength";
 import Pattern from "../libs/decorators/string/pattern";
@@ -25,6 +26,7 @@ export default () =>
 @MinLength
 @AllowEmptyString
 @In
+@Trim
 @Type
 @Default
 class StringAdjuster extends AdjusterBase
@@ -34,6 +36,13 @@ class StringAdjuster extends AdjusterBase
 	 * @method
 	 * @name StringAdjuster#default
 	 * @param {string} value default value
+	 * @return {StringAdjuster}
+	 */
+
+	/**
+	 * remove whitespace from both ends
+	 * @method
+	 * @name StringAdjuster#trim
 	 * @return {StringAdjuster}
 	 */
 

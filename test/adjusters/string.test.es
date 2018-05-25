@@ -6,6 +6,7 @@ import adjuster from "index";
 	describe("default", testDefault);
 	describe("emptyString", testEmptyString);
 	describe("allowEmptyString", testAllowEmptyString);
+	describe("trim", testTrim);
 	describe("in", testIn);
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
@@ -77,6 +78,25 @@ function testAllowEmptyString()
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust("")).toEqual("qwerty");
+	});
+}
+
+/**
+ * remove whitespace from both ends
+ */
+function testTrim()
+{
+	const objAdjuster = adjuster.string().trim();
+	it("should be adjusted", () =>
+	{
+		expect(objAdjuster.adjust("\r\n hell, word \t ")).toEqual("hell, word");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			objAdjuster.adjust(" \t\r\n ");
+		}).toThrow(adjuster.CAUSE.EMPTY);
 	});
 }
 
