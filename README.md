@@ -147,11 +147,13 @@ assert.strictEqual(adjuster.string().in("eat", "sleep", "play").adjust("sleep"),
 // should be adjusted
 assert.strictEqual(adjuster.string().adjust(123)                         , "123");
 assert.strictEqual(adjuster.string().default("xyz").adjust(undefined)    , "xyz");
+assert.strictEqual(adjuster.string().trim().adjust("\r\n hell, word \t "),"hell, word");
 assert.strictEqual(adjuster.string().maxLength(5, true).adjust("abcdefg"), "abcde");
 
 // should cause errors
 assert.throws(() => adjuster.string().adjust(undefined)                         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
 assert.throws(() => adjuster.string().adjust("")                                , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+assert.throws(() => adjuster.string().trim().adjust(" \t\r\n ")                 , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
 assert.throws(() => adjuster.string().in("eat", "sleep", "play").adjust("study"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IN));
 assert.throws(() => adjuster.string().minLength(5).adjust("a")                  , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
 assert.throws(() => adjuster.string().maxLength(5).adjust("abcdefg")            , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
