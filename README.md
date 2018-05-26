@@ -8,13 +8,31 @@ node-adjuster
 
 validate and adjust input values
 
-## How to use
+## Table of Contents
 
-install by npm.
+* [Install](#install)
+* [How to use](#how-to-use)
+    * [basic usage](#basic-usage)
+    * [number](#number)
+    * [number array](#number-array)
+    * [string](#string)
+    * [string array](#string-array)
+    * [numeric string](#numeric-string)
+    * [IPv4](#ipv4)
+    * [IPv6](#ipv6)
+    * [e-mail](#e-mail)
+* [Changelog](#changelog)
+
+---
+
+## Install
+
+install from [npm registry](https://www.npmjs.com/package/adjuster).
 ```bash
 npm install -S adjuster
 ```
 
+## How to use
 ### basic usage
 
 ```javascript
@@ -91,7 +109,7 @@ assert.throws(() => adjuster.number().minValue(1).adjust(0)    , err => (err.nam
 assert.throws(() => adjuster.number().maxValue(100).adjust(101), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_VALUE));
 ```
 
-### numberArray
+### number array
 
 ```javascript
 import adjuster from "adjuster";
@@ -159,7 +177,7 @@ assert.throws(() => adjuster.string().minLength(5).adjust("a")                  
 assert.throws(() => adjuster.string().maxLength(5).adjust("abcdefg")            , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
 ```
 
-### stringArray
+### string array
 
 ```javascript
 import adjuster from "adjuster";
