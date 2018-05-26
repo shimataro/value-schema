@@ -5,6 +5,7 @@ import adjuster from "index";
 	describe("default", testDefault);
 	describe("emptyString", testEmptyString);
 	describe("allowEmptyString", testAllowEmptyString);
+	describe("trim", testTrim);
 	describe("pattern", testPattern);
 }
 
@@ -59,6 +60,25 @@ function testAllowEmptyString()
 	it("should be OK", () =>
 	{
 		expect(objAdjuster.adjust("")).toEqual("1.1.1.1");
+	});
+}
+
+/**
+ * remove whitespace from both ends
+ */
+function testTrim()
+{
+	const objAdjuster = adjuster.ipv4().trim();
+	it("should be adjusted", () =>
+	{
+		expect(objAdjuster.adjust("\r\n 1.1.1.1 \t ")).toEqual("1.1.1.1");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			objAdjuster.adjust(" \t\r\n ");
+		}).toThrow(adjuster.CAUSE.EMPTY);
 	});
 }
 

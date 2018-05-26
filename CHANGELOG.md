@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 * `adjuster.email().trim()`
+* `adjuster.ipv4().trim()`
 * `adjuster.string().trim()`
 * `adjuster.stringArray().eachTrim()`
 
