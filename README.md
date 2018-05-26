@@ -20,7 +20,7 @@ validate and adjust input values
     * [numeric string](#numeric-string)
     * [IPv4](#ipv4)
     * [IPv6](#ipv6)
-    * [e-mail](#e-mail)
+    * [email](#email)
 * [Changelog](#changelog)
 
 ---
@@ -296,7 +296,7 @@ assert.throws(() => adjuster.ipv6().adjust("ffff:")                             
 assert.throws(() => adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000:"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
-### e-mail
+### email
 
 ```javascript
 import adjuster from "adjuster";
