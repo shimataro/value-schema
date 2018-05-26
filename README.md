@@ -268,7 +268,11 @@ assert.strictEqual(adjuster.ipv6().adjust("::")                                 
 assert.strictEqual(adjuster.ipv6().adjust("1::1")                                   , "1::1");
 assert.strictEqual(adjuster.ipv6().adjust("::ffff:192.0.2.1")                       , "::ffff:192.0.2.1"); // IPv4-mapped address
 
+// should be adjusted
+assert.strictEqual(adjuster.ipv6().trim().adjust("\r\n ::1 \t "), "::1");
+
 // should cause errors; err.cause === adjuster.CAUSE.PATTERN
+assert.throws(() => adjuster.ipv6().trim().adjust(" \t\r\n "), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
 assert.throws(() => adjuster.ipv6().adjust("0000")                                    , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 assert.throws(() => adjuster.ipv6().adjust("ffff:")                                   , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 assert.throws(() => adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000:"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
