@@ -245,7 +245,11 @@ assert.strictEqual(adjuster.ipv4().adjust("0.0.0.0")        , "0.0.0.0");
 assert.strictEqual(adjuster.ipv4().adjust("192.168.0.1")    , "192.168.0.1");
 assert.strictEqual(adjuster.ipv4().adjust("255.255.255.255"), "255.255.255.255");
 
+// should be adjusted
+assert.strictEqual(adjuster.ipv4().trim().adjust("\r\n 1.1.1.1 \t "), "1.1.1.1");
+
 // should cause errors; err.cause === adjuster.CAUSE.PATTERN
+assert.throws(() => adjuster.ipv4().trim().adjust(" \t\r\n "), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
 assert.throws(() => adjuster.ipv4().adjust("0.0.0.")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 assert.throws(() => adjuster.ipv4().adjust("0.0.0.0.")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 assert.throws(() => adjuster.ipv4().adjust("255.255.255.256"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
