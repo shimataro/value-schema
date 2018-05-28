@@ -11,7 +11,7 @@ function testData()
 {
 	it("should be adjusted", () =>
 	{
-		const adjusters = {
+		const constraints = {
 			id: adjuster.number().minValue(1),
 			name: adjuster.string().maxLength(16, true),
 			email: adjuster.email(),
@@ -50,7 +50,7 @@ function testData()
 			offset: 0,
 		};
 
-		const adjusted = adjuster.adjust(input, adjusters);
+		const adjusted = adjuster.adjust(input, constraints);
 		expect(adjusted).toEqual(expected);
 	});
 }

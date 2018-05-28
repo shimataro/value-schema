@@ -21,7 +21,7 @@ npm install -S adjuster
 import adjuster from "adjuster";
 import assert from "assert";
 
-const adjusters = {
+const constraints = {
     id: adjuster.number().minValue(1),
     name: adjuster.string().maxLength(16, true),
     email: adjuster.email(),
@@ -60,7 +60,7 @@ const expected = {
     offset: 0,
 };
 
-const adjusted = adjuster.adjust(input, adjusters);
+const adjusted = adjuster.adjust(input, constraints);
 assert.deepStrictEqual(adjusted, expected);
 ```
 
