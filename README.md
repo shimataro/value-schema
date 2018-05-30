@@ -103,7 +103,7 @@ interface NumberAdjuster {
 }
 ```
 
-#### `adjust(value, [onError])`
+#### `adjust(value[, onError])`
 Validate and adjust a input value.
 
 If an error occurs, call `onError` (if specified) or throw `AdjusterError` (otherwise)
@@ -189,7 +189,7 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IN));
 ```
 
-#### `minValue(value, [adjust])`
+#### `minValue(value[, adjust])`
 Limit minimum value to `value`.
 
 If input value is less than `value`, `adjust()` method returns `value` (if `adjust` is truthy) or causes `AdjusterError` (falsy; default).
@@ -213,7 +213,7 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_VALUE));
 ```
 
-#### `maxValue(value, [adjust])`
+#### `maxValue(value[, adjust])`
 Limit maximum value to `value`.
 
 If input value is greater than `value`, `adjust()` method returns `value` (if `adjust` is truthy) or causes `AdjusterError` (falsy; default).
@@ -265,7 +265,7 @@ interface NumberArrayAdjuster {
 }
 ```
 
-#### `adjust(value, [onError])`
+#### `adjust(value[, onError])`
 ##### examples
 
 ```javascript
@@ -389,7 +389,7 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
 ```
 
-#### `maxLength(length, [adjust])`
+#### `maxLength(length[, adjust])`
 Limit maximum length of an input array to `length`.
 
 If array length is greater than `length`, `adjust()` method truncates the length to `length` (if `adjust` is truthy) or causes `AdjusterError` (falsy; default).
@@ -481,7 +481,7 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_IN));
 ```
 
-#### `eachMinValue(value, [adjust])`
+#### `eachMinValue(value[, adjust])`
 Limit minimum value to `value` for each elements of input.
 
 If the element is less than `value`, it will be adjusted to `value` (if `adjust` is truthy) or cause `AdjusterError` (falsy; default).
@@ -508,7 +508,7 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_MIN_VALUE));
 ```
 
-#### `eachMaxValue(value, [adjust])`
+#### `eachMaxValue(value[, adjust])`
 Limit maximum value to `value` for each elements of input.
 
 If the element is greater than `value`, it will be adjusted to `value` (if `adjust` is truthy) or cause `AdjusterError` (falsy; default).
