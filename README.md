@@ -83,6 +83,7 @@ assert.deepStrictEqual(adjusted, expected);
 ```
 
 ### number
+#### ambient declarations
 
 ```typescript
 namespace adjuster {
@@ -237,16 +238,13 @@ assert.throws(
 ```
 
 ### number array
+#### ambient declarations
 
 ```typescript
 namespace adjuster {
     export declare function numberArray(): NumberArrayAdjuster;
 }
-```
 
-#### NumberArrayAdjuster
-
-```typescript
 interface NumberArrayAdjuster {
     // adjustment method
     adjust(value: any, onError?: (cause: string, value: any) => number[]|void): number[];
