@@ -132,7 +132,7 @@ assert.throws( // ... or try-catch syntax
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
 ```
 
-#### `default([value])`
+#### `default(value)`
 Allow `undefined` for input, and adjust to `value`.
 
 If this method is not called, `adjust(undefined)` causes `AdjusterError`.
