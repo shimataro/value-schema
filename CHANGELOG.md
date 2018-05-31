@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
+* `adjuster.number().allowNull()`
 * `adjuster.email().trim()`
 * `adjuster.ipv4().trim()`
 * `adjuster.ipv6().trim()`

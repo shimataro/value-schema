@@ -4,6 +4,8 @@ import adjuster from "index";
 	describe("type", testType);
 	describe("required", testRequired);
 	describe("default", testDefault);
+	describe("null", testNull);
+	describe("allowNull", testAllowNull);
 	describe("emptyString", testEmptyString);
 	describe("allowEmptyString", testAllowEmptyString);
 	describe("in", testIn);
@@ -70,6 +72,33 @@ function testDefault()
 	it("should be adjusted", () =>
 	{
 		expect(objAdjuster.adjust(undefined)).toEqual(10);
+	});
+}
+
+/**
+ * null
+ */
+function testNull()
+{
+	const objAdjuster = adjuster.number();
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			objAdjuster.adjust(null);
+		}).toThrow(adjuster.CAUSE.NULL);
+	});
+}
+
+/**
+ * null (allowd)
+ */
+function testAllowNull()
+{
+	const objAdjuster = adjuster.number().allowNull(123);
+	it("should be adjusted", () =>
+	{
+		expect(objAdjuster.adjust(null)).toEqual(123);
 	});
 }
 

@@ -25,6 +25,7 @@
 export const CAUSE = {
 	TYPE: "type",
 	REQUIRED: "required",
+	NULL: "null",
 	EMPTY: "empty",
 	IN: "in",
 
