@@ -66,12 +66,6 @@ class IPv4Adjuster extends AdjusterBase
 	 */
 
 	/**
-	 * specify acceptable pattern by regular expression
-	 * @param {string|String|RegExp} pattern acceptable pattern(regular expression); string or RegExp
-	 * @return {IPv4Adjuster}
-	 */
-
-	/**
 	 * do adjust
 	 * @method
 	 * @name IPv4Adjuster#adjust
