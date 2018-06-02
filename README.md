@@ -538,71 +538,483 @@ assert.throws(
 ```
 
 ### string
+#### ambient declarations
 
-```javascript
-import adjuster from "adjuster";
-import assert from "assert";
+```typescript
+namespace adjuster {
+    export declare function string(): StringAdjuster;
+}
 
-// should be OK
-assert.strictEqual(adjuster.string().adjust("123")                             , "123");
-assert.strictEqual(adjuster.string().allowEmptyString("xyz").adjust("")        , "xyz");
-assert.strictEqual(adjuster.string().in("eat", "sleep", "play").adjust("sleep"), "sleep");
+interface StringAdjuster {
+    // adjustment method
+    adjust(value: any, onError?: (cause: string, value: any) => string|void): string;
 
-// should be adjusted
-assert.strictEqual(adjuster.string().adjust(123)                         , "123");
-assert.strictEqual(adjuster.string().default("xyz").adjust(undefined)    , "xyz");
-assert.strictEqual(adjuster.string().trim().adjust("\r\n hell, word \t "),"hell, word");
-assert.strictEqual(adjuster.string().maxLength(5, true).adjust("abcdefg"), "abcde");
-
-// should cause errors
-assert.throws(() => adjuster.string().adjust(undefined)                         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
-assert.throws(() => adjuster.string().adjust("")                                , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
-assert.throws(() => adjuster.string().trim().adjust(" \t\r\n ")                 , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
-assert.throws(() => adjuster.string().in("eat", "sleep", "play").adjust("study"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IN));
-assert.throws(() => adjuster.string().minLength(5).adjust("a")                  , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
-assert.throws(() => adjuster.string().maxLength(5).adjust("abcdefg")            , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
+    // feature methods (chainable)
+    default(value: string): StringAdjuster;
+    allowEmptyString(value?: string|null /* = null */): StringAdjuster;
+    trim(): StringAdjuster;
+    in(...values: string[]): StringAdjuster;
+    minLength(length: number): StringAdjuster;
+    maxLength(length: number, adjust?: boolean /* = false */): StringAdjuster;
+    pattern(pattern: string|RegExp): StringAdjuster;
+}
 ```
 
-### string array
+#### `adjust(value[, onError])`
+Validate and adjust a input value.
+
+##### examples
 
 ```javascript
-import adjuster from "adjuster";
-import assert from "assert";
-
 // should be OK
-assert.deepStrictEqual(adjuster.stringArray().adjust(["a", "b"])                        , ["a", "b"]);
-assert.deepStrictEqual(adjuster.stringArray().minLength(1).adjust(["a"])                , ["a"]);
-assert.deepStrictEqual(adjuster.stringArray().maxLength(2).adjust(["a"])                , ["a"]);
-assert.deepStrictEqual(adjuster.stringArray().eachIn("a", "b").adjust(["a"])            , ["a"]);
-assert.deepStrictEqual(adjuster.stringArray().eachMinLength(3).adjust(["abc", "xyz"])   , ["abc", "xyz"]);
-assert.deepStrictEqual(adjuster.stringArray().eachMaxLength(3).adjust(["abc", "xyz"])   , ["abc", "xyz"]);
-assert.deepStrictEqual(adjuster.stringArray().eachPattern(/^Go+gle$/).adjust(["Google"]), ["Google"]);
+assert.strictEqual(
+    adjuster.string().adjust("123"),
+    "123");
 
 // should be adjusted
-assert.deepStrictEqual(adjuster.stringArray().adjust(["a", 1, -2])                              , ["a", "1", "-2"]);
-assert.deepStrictEqual(adjuster.stringArray().default(["a", "b"]).adjust(undefined)             , ["a", "b"]);
-assert.deepStrictEqual(adjuster.stringArray().allowEmptyString(["a", "b"]).adjust("")           , ["a", "b"]);
-assert.deepStrictEqual(adjuster.stringArray().separatedBy(",").adjust("a,b,c")                  , ["a", "b", "c"]);
-assert.deepStrictEqual(adjuster.stringArray().toArray().adjust("a")                             , ["a"]);
-assert.deepStrictEqual(adjuster.stringArray().maxLength(1, true).adjust(["a", "b"])             , ["a"]);
-assert.deepStrictEqual(adjuster.stringArray().ignoreEachErrors().adjust([undefined, "a", "", 1]), ["a", "1"]);
-assert.deepStrictEqual(adjuster.stringArray().eachDefault("z").adjust(["a", undefined, "b"])    , ["a", "z", "b"]);
-assert.deepStrictEqual(adjuster.stringArray().eachAllowEmptyString("z").adjust(["a", "", "b"])  , ["a", "z", "b"]);
-assert.deepStrictEqual(adjuster.stringArray().eachTrim().adjust([" a", "b\t", "\rc\n"])         , ["a", "b", "c"]);
-assert.deepStrictEqual(adjuster.stringArray().eachMaxLength(3, true).adjust(["abcd", "xyz0"])   , ["abc", "xyz"]);
+assert.strictEqual(
+    adjuster.string().adjust(123),
+    "123");
+```
+
+#### `default(value)`
+Allow `undefined` for input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.string().default("xyz").adjust(undefined),
+    "xyz");
+
+// should cause error
+assert.throws(
+    () => adjuster.string().adjust(undefined),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `allowEmptyString([value])`
+Allow an empty string(`""`) for input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.string().allowEmptyString("xyz").adjust(""),
+    "xyz");
+
+// should cause error
+assert.throws(
+    () => adjuster.string().adjust(""),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+```
+
+
+#### `trim()`
+Remove whitespace from both ends of input.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.string().trim().adjust("\r\n hell, word \t "),
+    "hell, word");
+
+// should cause error
+assert.throws(
+    () => adjuster.string().trim().adjust(" \t\r\n "),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+```
+
+#### `in(...values)`
+Accept only `values`.
+
+##### examples
+
+```javascript
+// should be OK
+assert.strictEqual(
+    adjuster.string().in("eat", "sleep", "play").adjust("sleep"),
+    "sleep");
+assert.strictEqual(
+    adjuster.string().in("").adjust(""),
+    "");
+
+// should cause error
+assert.throws(
+    () => adjuster.string().in("eat", "sleep", "play").adjust("study"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IN));
+```
+
+#### `minLength(length)`
+Limit minimum length of input string to `length`.
+
+##### examples
+
+```javascript
+// should be OK
+assert.strictEqual(
+    adjuster.string().minLength(5).adjust("abcde"),
+    "abcde");
+
+// should cause error
+assert.throws(
+    () => adjuster.string().minLength(5).adjust("a"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
+```
+
+#### `maxLength(length[, adjust])`
+Limit maximum length of an input string to `length`.
+
+If string length is greater than `length`, `adjust()` method truncates the length to `length` (if `adjust` is truthy) or causes `AdjusterError` (falsy; default).
+
+##### examples
+
+```javascript
+// should be OK
+assert.strictEqual(
+    adjuster.string().maxLength(5).adjust("abcde"),
+    "abcde");
+
+// should be adjusted
+assert.strictEqual(
+    adjuster.string().maxLength(5, true).adjust("abcdefg"),
+    "abcde");
+
+// should cause error
+assert.throws(
+    () => adjuster.string().maxLength(5).adjust("abcdefg"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
+```
+
+#### `pattern(pattern)`
+Specify acceptable pattern by regular expression.
+
+##### examples
+
+```javascript
+// should be OK
+assert.deepStrictEqual(
+    adjuster.string().pattern(/^Go+gle$/).adjust("Gogle"),
+    "Gogle");
+assert.deepStrictEqual(
+    adjuster.string().pattern("^Go+gle$").adjust("Google"),
+    "Google");
+
+// should cause error
+assert.throws(
+    () => adjuster.string().pattern(/^Go+gle$/).adjust("Ggle"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+```
+
+
+### string array
+#### ambient declarations
+
+```typescript
+namespace adjuster {
+    export declare function stringArray(): StringArrayAdjuster;
+}
+
+interface StringArrayAdjuster {
+    // adjustment method
+    adjust(value: any, onError?: (cause: string, value: any) => string[]|void): string[];
+
+    // feature methods (chainable)
+    default(value: string[]): StringArrayAdjuster;
+    allowEmptyString(value: string[]|null /* = null */): StringArrayAdjuster;
+    separatedBy(separator: string|RegExp): StringArrayAdjuster;
+    toArray(): StringArrayAdjuster;
+    minLength(length: number): StringArrayAdjuster;
+    maxLength(length: number, adjust?: boolean /* = false */): StringArrayAdjuster;
+    ignoreEachErrors(): StringArrayAdjuster;
+    eachDefault(value: string): StringArrayAdjuster;
+    eachAllowEmptyString(value?: string|null /* = null */): StringArrayAdjuster;
+    eachTrim(): StringArrayAdjuster;
+    eachIn(...values: string[]): StringArrayAdjuster;
+    eachMinLength(length: number): StringArrayAdjuster;
+    eachMaxLength(length: number, adjust?: boolean /* = false */): StringArrayAdjuster;
+    eachPattern(pattern: string|RegExp): StringArrayAdjuster;
+}
+```
+
+#### `adjust(value[, onError])`
+Validate and adjust input values.
+
+```javascript
+// should be OK
+assert.deepStrictEqual(
+    adjuster.stringArray().adjust(["a", "b"]),
+    ["a", "b"]);
+
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.stringArray().adjust(["a", 1, -2]),
+    ["a", "1", "-2"]);
 
 // should cause errors
-assert.throws(() => adjuster.stringArray().adjust("abc")                           , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
-assert.throws(() => adjuster.stringArray().adjust(undefined)                       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
-assert.throws(() => adjuster.stringArray().adjust("")                              , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
-assert.throws(() => adjuster.stringArray().minLength(1).adjust([])                 , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
-assert.throws(() => adjuster.stringArray().maxLength(1).adjust(["a", "b"])         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
-assert.throws(() => adjuster.stringArray().adjust(["a", undefined, "b"])           , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_REQUIRED));
-assert.throws(() => adjuster.stringArray().adjust([""])                            , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_EMPTY));
-assert.throws(() => adjuster.stringArray().eachIn("a", "b").adjust(["x"])          , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_IN));
-assert.throws(() => adjuster.stringArray().eachMinLength(3).adjust(["ab"])         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_MIN_LENGTH));
-assert.throws(() => adjuster.stringArray().eachMaxLength(3).adjust(["abcd"])       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_MAX_LENGTH));
-assert.throws(() => adjuster.stringArray().eachPattern(/^Go+gle$/).adjust(["Ggle"]), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_PATTERN));
+assert.throws(
+    () => adjuster.stringArray().adjust("abc"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+```
+
+#### `default(value)`
+Allow `undefined` for input, and adjust to `value`.
+
+If this method is not called, `adjust(undefined)` causes `AdjusterError`.
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.stringArray().default(["a", "b"]).adjust(undefined),
+    ["a", "b"]);
+
+// should cause errors
+assert.throws(
+    () => adjuster.stringArray().adjust(undefined),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `allowEmptyString([value])`
+Allow an empty string(`""`) for input, and adjust to `value`.
+
+If this method is not called, `adjust("")` causes `AdjusterError`.
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.stringArray().allowEmptyString(["a", "b"]).adjust(""),
+    ["a", "b"]);
+
+// should cause errors
+assert.throws(
+    () => adjuster.stringArray().adjust(""),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+```
+
+#### `separatedBy(separator)`
+Assume an input value is string and separated by `separator`.
+
+If an input type is array, this method does nothing.
+
+```javascript
+// should be OK
+assert.deepStrictEqual(
+    adjuster.stringArray().separatedBy(",").adjust(["a", "b", "c"]),
+    ["a", "b", "c"]);
+
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.stringArray().separatedBy(",").adjust("a,b,c"),
+    ["a", "b", "c"]);
+
+// should cause errors
+assert.throws(
+    () => adjuster.stringArray().adjust("a,b,c"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+```
+
+#### `toArray()`
+Convert an input value to array if not.
+
+##### examples
+
+```javascript
+// should be OK
+assert.deepStrictEqual(
+    adjuster.stringArray().toArray().adjust(["a"]),
+    ["a"]);
+
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.stringArray().toArray().adjust("a"),
+    ["a"]);
+
+// should cause errors
+assert.throws(
+    () => adjuster.stringArray().adjust("a"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+```
+
+#### `minLength(length)`
+Limit minimum length of input array to `length`.
+
+##### examples
+
+```javascript
+// should be OK
+assert.deepStrictEqual(
+    adjuster.stringArray().minLength(1).adjust(["a"]),
+    ["a"]);
+
+// should cause errors
+assert.throws(
+    () => adjuster.stringArray().minLength(1).adjust([]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
+```
+
+#### `maxLength(length[, adjust])`
+Limit maximum length of an input array to `length`.
+
+If array length is greater than `length`, `adjust()` method truncates the length to `length` (if `adjust` is truthy) or causes `AdjusterError` (falsy; default).
+
+##### examples
+
+```javascript
+// should be OK
+assert.deepStrictEqual(
+    adjuster.stringArray().maxLength(2).adjust(["a"]),
+    ["a"]);
+
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.stringArray().maxLength(1, true).adjust(["a", "b"]),
+    ["a"]);
+
+// should cause errors
+assert.throws(
+    () => adjuster.stringArray().maxLength(1).adjust(["a", "b"]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
+```
+
+#### `ignoreEachErrors()`
+Ignore the errors of each element.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.stringArray().ignoreEachErrors().adjust(["a", "", 1]),
+    ["a", "1"]);
+
+// should cause errors
+assert.throws(
+    () => adjuster.stringArray().adjust(["a", "", 1]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_EMPTY));
+```
+
+#### `eachDefault(value)`
+Allow `undefined` for each elements of input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.stringArray().eachDefault("z").adjust(["a", undefined, "b"]),
+    ["a", "z", "b"]);
+
+// should cause errors
+assert.throws(
+    () => adjuster.stringArray().adjust(["a", undefined, "b"]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_REQUIRED));
+```
+
+#### `eachAllowEmptyString([value])`
+Allow an empty string(`""`) for each elements of input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.stringArray().eachAllowEmptyString("z").adjust(["a", "", "b"]),
+    ["a", "z", "b"]);
+
+// should cause errors
+assert.throws(
+    () => adjuster.stringArray().adjust([""]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_EMPTY));
+```
+
+#### `eachTrim()`
+Remove whitespace from both ends of each elements of input.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.stringArray().eachTrim().adjust([" a", "b\t", "\rc\n"]),
+    ["a", "b", "c"]);
+```
+
+#### `eachIn(...values)`
+Accept only `values` for each elements of input.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.stringArray().eachIn("a", "b").adjust(["a"]),
+    ["a"]);
+
+// should cause errors
+assert.throws(
+    () => adjuster.stringArray().eachIn("a", "b").adjust(["x"]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_IN));
+```
+
+#### `eachMinLength(length[, adjust])`
+Limit minimum string length to `length` for each elements of input.
+
+##### examples
+
+```javascript
+// should be OK
+assert.deepStrictEqual(
+    adjuster.stringArray().eachMinLength(3).adjust(["abc", "xyz"]),
+    ["abc", "xyz"]);
+
+// should cause errors
+assert.throws(
+    () => adjuster.stringArray().eachMinLength(3).adjust(["ab"]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_MIN_LENGTH));
+```
+
+#### `eachMaxLength(length[, adjust])`
+Limit maximum string length to `length` for each elements of input.
+
+If the length is greater than `length`, it will be adjusted to `value` (if `adjust` is truthy) or cause `AdjusterError` (falsy; default).
+
+##### examples
+
+```javascript
+// should be OK
+assert.deepStrictEqual(
+    adjuster.stringArray().eachMaxLength(3).adjust(["abc", "xyz"]),
+    ["abc", "xyz"]);
+
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.stringArray().eachMaxLength(3, true).adjust(["abcd", "xyz0"]),
+    ["abc", "xyz"]);
+
+// should cause errors
+assert.throws(
+    () => adjuster.stringArray().eachMaxLength(3).adjust(["abcd"]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_MAX_LENGTH));
+```
+
+#### `eachPattern(pattern)`
+Specify acceptable pattern for each elements of input by regular expression.
+
+##### examples
+
+```javascript
+// should be OK
+assert.deepStrictEqual(
+    adjuster.stringArray().eachPattern(/^Go+gle$/).adjust(["Google"]),
+    ["Google"]);
+
+// should cause errors
+assert.throws(
+    () => adjuster.stringArray().eachPattern(/^Go+gle$/).adjust(["Ggle"]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_PATTERN));
 ```
 
 ### numeric string
