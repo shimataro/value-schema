@@ -11,7 +11,8 @@ validate and adjust input values
 ## Table of Contents
 
 * [Install](#install)
-* [How to use](#how-to-use)
+* [Reference](#reference)
+    * [types and constants](#types-and-constants)
     * [basic usage](#basic-usage)
     * [number](#number)
     * [number array](#number-array)
@@ -32,7 +33,30 @@ install from [npm registry](https://www.npmjs.com/package/adjuster).
 npm install -S adjuster
 ```
 
-## How to use
+## Reference
+### types and constants
+#### `AdjusterError`
+The `AdjusterError` object represents an error when trying to adjust invalid value.
+
+##### properties
+
+|name|description|
+|----|-----------|
+|`name`|`"AdjusterError"`|
+|`message`|human-readable description of the error, including a string `cause`|
+|`cause`|the cause of adjustment error; see `adjuster.CAUSE`|
+|`value`|the value to adjust|
+
+#### `adjuster.CAUSE`
+The cause of adjustment error.
+
+For more information, see below examples.
+
+#### `adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM`
+Checksum algorithms for `adjuster.numericString()`.
+
+For more information, see [numeric string](#numeric-string).
+
 ### basic usage
 
 ```javascript
