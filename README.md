@@ -1018,36 +1018,207 @@ assert.throws(
 ```
 
 ### numeric string
+#### ambient declarations
+
+```typescript
+namespace adjuster {
+    export declare function numericString(): NumericStringAdjuster;
+}
+
+interface NumericStringAdjuster {
+    // adjustment method
+    adjust(value: any, onError?: (cause: string, value: any) => string|void): string;
+
+    // feature methods (chainable)
+    default(value: string): NumericStringAdjuster;
+    allowEmptyString(value?: string|null /* = null */): NumericStringAdjuster;
+    joinArray(): NumericStringAdjuster;
+	separatedBy(separator: string|RegExp): NumericStringAdjuster;
+    minLength(length: number): NumericStringAdjuster;
+    maxLength(length: number, adjust?: boolean /* = false */): NumericStringAdjuster;
+	checksum(algorithm: string): NumericStringAdjuster;
+}
+```
+
+#### `adjust(value[, onError])`
+Validate and adjust input values.
+
+##### examples
 
 ```javascript
-import adjuster from "adjuster";
-import assert from "assert";
-
 // should be OK
-assert.strictEqual(adjuster.numericString().adjust("123")                                                                                   , "123");
-assert.strictEqual(adjuster.numericString().minLength(4).adjust("1234")                                                                     , "1234");
-assert.strictEqual(adjuster.numericString().maxLength(4).adjust("1234")                                                                     , "1234");
-assert.strictEqual(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111111")            , "4111111111111111");
-assert.strictEqual(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD).adjust("4111111111111111")     , "4111111111111111"); // alias of LUHN
-assert.strictEqual(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1).adjust("9784101092058"), "9784101092058");
-assert.strictEqual(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13).adjust("9784101092058")             , "9784101092058"); // alias of MODULUS10_WEIGHT3_1
-assert.strictEqual(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.EAN).adjust("9784101092058")                , "9784101092058"); // alias of MODULUS10_WEIGHT3_1
-assert.strictEqual(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.JAN).adjust("9784101092058")                , "9784101092058"); // alias of MODULUS10_WEIGHT3_1
+assert.strictEqual(
+	adjuster.numericString().adjust("123"),
+	"123");
 
 // should be adjusted
-assert.strictEqual(adjuster.numericString().adjust(123)                                            , "123");
-assert.strictEqual(adjuster.numericString().default("123").adjust(undefined)                       , "123");
-assert.strictEqual(adjuster.numericString().allowEmptyString("456").adjust("")                     , "456");
-assert.strictEqual(adjuster.numericString().joinArray().adjust(["1234", "5678"])                   , "12345678");
-assert.strictEqual(adjuster.numericString().separatedBy("-").adjust("1234-5678")                   , "12345678");
-assert.strictEqual(adjuster.numericString().separatedBy("-").maxLength(5, true).adjust("1234-5678"), "12345");
+assert.strictEqual(
+	adjuster.numericString().adjust(123),
+	"123");
+```
 
-// should cause errors
-assert.throws(() => adjuster.numericString().adjust(undefined)                                                                   , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
-assert.throws(() => adjuster.numericString().adjust("")                                                                          , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
-assert.throws(() => adjuster.numericString().minLength(5).adjust("1234")                                                         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
-assert.throws(() => adjuster.numericString().maxLength(5).adjust("123456")                                                       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
-assert.throws(() => adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111112"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NUMERIC_STRING_CHECKSUM));
+#### `default(value)`
+Allow `undefined` for input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+	adjuster.numericString().default("123").adjust(undefined),
+	"123");
+
+// should cause error
+assert.throws(
+	() => adjuster.numericString().adjust(undefined),
+	(err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `allowEmptyString([value])`
+Allow an empty string(`""`) for input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+	adjuster.numericString().allowEmptyString("456").adjust(""),
+	"456");
+
+// should cause error
+assert.throws(
+	() => adjuster.numericString().adjust(""),
+	(err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+```
+
+#### `separatedBy(separator)`
+Assume an input value is separated by `separator`, and ignore them.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+	adjuster.numericString().separatedBy("-").adjust("4111-1111-1111-1111"),
+	"4111111111111111");
+
+// should cause error
+assert.throws(
+	() => adjuster.numericString().adjust("4111-1111-1111-1111"),
+	(err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+```
+
+#### `joinArray()`
+Assume an input value is array, and join them.
+
+This method is useful for following form.
+```html
+<!-- "cc_number" will be passed in array -->
+<form>
+	Input credit card number:
+	<input name="cc_number" required />
+	-
+	<input name="cc_number" required />
+	-
+	<input name="cc_number" required />
+	-
+	<input name="cc_number" required />
+</form>
+```
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+	adjuster.numericString().joinArray().adjust(["1234", "5678"]),
+	"12345678");
+
+// should cause error
+assert.throws(
+	() => adjuster.numericString().adjust(["1234", "5678"]),
+	(err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+```
+
+#### `minLength(length)`
+Limit minimum length of input string to `length`.
+
+##### examples
+
+```javascript
+// should be OK
+assert.strictEqual(
+	adjuster.numericString().minLength(4).adjust("1234"),
+	"1234");
+
+// should cause error
+assert.throws(
+	() => adjuster.numericString().minLength(5).adjust("1234"),
+	(err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
+```
+
+#### `maxLength(length[, adjust])`
+Limit maximum length of an input string to `length`.
+
+##### examples
+
+```javascript
+// should be OK
+assert.strictEqual(
+	adjuster.numericString().maxLength(4).adjust("1234"),
+	"1234");
+
+// should be adjusted
+assert.strictEqual(
+	adjuster.numericString().separatedBy("-").maxLength(5, true).adjust("1234-5678"),
+	"12345");
+
+// should cause error
+assert.throws(
+	() => adjuster.numericString().maxLength(5).adjust("123456"),
+	(err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
+```
+
+#### `checksum(algorithm)`
+Check an input value by specified algorithm.
+
+|algorithm name|explanation|used by|constant|aliases|
+|--------------|-----------|-------|--------|-------|
+|`"luhn"`|[Luhn algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm)|credit card|`adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN`|`adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD`|
+|`"modulus10/weight3:1"`|[Modulus 10 / Weight 3:1](https://en.wikipedia.org/wiki/International_Standard_Book_Number#ISBN-13_check_digit_calculation)|ISBN-13, EAN, JAN|`adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1`|`adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13` / `adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.EAN` / `adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.JAN`|
+
+##### examples
+
+```javascript
+// should be OK
+assert.strictEqual(
+	adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111111"),
+	"4111111111111111");
+
+assert.strictEqual(
+	adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD).adjust("4111111111111111"), // alias of LUHN
+	"4111111111111111");
+
+assert.strictEqual(
+	adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1).adjust("9784101092058"),
+	"9784101092058");
+
+assert.strictEqual(
+	adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
+	"9784101092058");
+
+assert.strictEqual(
+	adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.EAN).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
+	"9784101092058");
+
+assert.strictEqual(
+	adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.JAN).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
+	"9784101092058");
+
+// should cause error
+assert.throws(
+	() => adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111112"),
+	(err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NUMERIC_STRING_CHECKSUM));
 ```
 
 ### IPv4
