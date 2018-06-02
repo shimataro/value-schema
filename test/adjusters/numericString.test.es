@@ -15,14 +15,15 @@ import adjuster from "index";
  */
 function testType()
 {
-	const objAdjuster = adjuster.numericString();
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust("1111222233334444")).toEqual("1111222233334444");
+		expect(adjuster.numericString()
+			.adjust("1111222233334444")).toEqual("1111222233334444");
 	});
 	it("should be adjusted", () =>
 	{
-		expect(objAdjuster.adjust(1111222233334444)).toEqual("1111222233334444");
+		expect(adjuster.numericString()
+			.adjust(1111222233334444)).toEqual("1111222233334444");
 	});
 }
 
@@ -31,10 +32,18 @@ function testType()
  */
 function testJoinArray()
 {
-	const objAdjuster = adjuster.numericString().joinArray();
 	it("should be adjusted", () =>
 	{
-		expect(objAdjuster.adjust(["1111", "2222", "3333", "4444"])).toEqual("1111222233334444");
+		expect(adjuster.numericString().joinArray()
+			.adjust(["1111", "2222", "3333", "4444"])).toEqual("1111222233334444");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.numericString()
+				.adjust(["1111", "2222", "3333", "4444"]);
+		}).toThrow(adjuster.CAUSE.PATTERN);
 	});
 }
 
@@ -43,10 +52,18 @@ function testJoinArray()
  */
 function testSeparatedBy()
 {
-	const objAdjuster = adjuster.numericString().separatedBy("-");
 	it("should be adjusted", () =>
 	{
-		expect(objAdjuster.adjust("1111-2222-3333-4444")).toEqual("1111222233334444");
+		expect(adjuster.numericString().separatedBy("-")
+			.adjust("1111-2222-3333-4444")).toEqual("1111222233334444");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.numericString()
+				.adjust("1111-2222-3333-4444");
+		}).toThrow(adjuster.CAUSE.PATTERN);
 	});
 }
 
@@ -55,20 +72,22 @@ function testSeparatedBy()
  */
 function testMinLength()
 {
-	const objAdjuster = adjuster.numericString().minLength(4).separatedBy("-");
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust("1111")).toEqual("1111");
+		expect(adjuster.numericString().minLength(4).separatedBy("-")
+			.adjust("1111")).toEqual("1111");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust("111");
+			adjuster.numericString().minLength(4).separatedBy("-")
+				.adjust("111");
 		}).toThrow(adjuster.CAUSE.MIN_LENGTH);
 		expect(() =>
 		{
-			objAdjuster.adjust("11-1");
+			adjuster.numericString().minLength(4).separatedBy("-")
+				.adjust("11-1");
 		}).toThrow(adjuster.CAUSE.MIN_LENGTH);
 	});
 }
@@ -78,17 +97,26 @@ function testMinLength()
  */
 function testMaxLength()
 {
-	const objAdjuster = adjuster.numericString().maxLength(4).separatedBy("-");
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust("1111")).toEqual("1111");
-		expect(objAdjuster.adjust("11-11")).toEqual("1111");
+		expect(adjuster.numericString().maxLength(4)
+			.adjust("1111")).toEqual("1111");
+		expect(adjuster.numericString().maxLength(4).separatedBy("-")
+			.adjust("11-22")).toEqual("1122");
+	});
+	it("should be adjusted", () =>
+	{
+		expect(adjuster.numericString().maxLength(4, true)
+			.adjust("11111")).toEqual("1111");
+		expect(adjuster.numericString().maxLength(4, 1).separatedBy("-")
+			.adjust("111-222")).toEqual("1112");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust("11111");
+			adjuster.numericString().maxLength(4)
+				.adjust("11111");
 		}).toThrow(adjuster.CAUSE.MAX_LENGTH);
 	});
 }
@@ -98,17 +126,19 @@ function testMaxLength()
  */
 function testChecksumLuhn()
 {
-	const objAdjuster = adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD);
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust("49927398716")).toEqual("49927398716");
-		expect(objAdjuster.adjust("049927398716")).toEqual("049927398716");
+		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD)
+			.adjust("49927398716")).toEqual("49927398716");
+		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD)
+			.adjust("049927398716")).toEqual("049927398716");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust("12345");
+			adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD)
+				.adjust("12345");
 		}).toThrow(adjuster.CAUSE.NUMERIC_STRING_CHECKSUM);
 	});
 }
@@ -118,17 +148,19 @@ function testChecksumLuhn()
  */
 function testChecksumModulus10Weight31()
 {
-	const objAdjuster = adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13);
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust("978-4-10-109205-8")).toEqual("9784101092058"); // https://ja.wikipedia.org/wiki/ISBN
-		expect(objAdjuster.adjust("978-0-306-40615-7")).toEqual("9780306406157"); // https://en.wikipedia.org/wiki/International_Standard_Book_Number
+		expect(adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13)
+			.adjust("978-4-10-109205-8")).toEqual("9784101092058"); // https://ja.wikipedia.org/wiki/ISBN
+		expect(adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13)
+			.adjust("978-0-306-40615-7")).toEqual("9780306406157"); // https://en.wikipedia.org/wiki/International_Standard_Book_Number
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust("978-4-10-109205-1");
+			adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13)
+				.adjust("978-4-10-109205-1");
 		}).toThrow(adjuster.CAUSE.NUMERIC_STRING_CHECKSUM);
 	});
 }

@@ -2,24 +2,19 @@ import adjuster from "index";
 
 {
 	describe("type", testType);
-	describe("required", testRequired);
 	describe("default", testDefault);
-	describe("empty", testEmptyString);
 	describe("allowEmptyString", testAllowEmptyString);
 	describe("separatedBy", testSeparatedBy);
 	describe("toArray", testToArray);
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
-	describe("maxLength (adjusted)", testMaxLengthAdjusted);
 	describe("ignoreEachErrors", testIgnoreEachErrors);
-	describe("each", testEach);
 	describe("eachDefault", testEachDefault);
 	describe("eachAllowEmptyString", testEachAllowEmptyString);
 	describe("eachTrim", testEachTrim);
 	describe("eachIn", testEachIn);
 	describe("eachMinLength", testEachMinLength);
 	describe("eachMaxLength", testEachMaxLength);
-	describe("eachMaxLength (adjusted)", testEachMaxLengthAdjusted);
 	describe("eachPattern", testEachPattern);
 }
 
@@ -28,37 +23,26 @@ import adjuster from "index";
  */
 function testType()
 {
-	const objAdjuster = adjuster.stringArray();
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust([])).toEqual([]);
-		expect(objAdjuster.adjust(["a", "b"])).toEqual(["a", "b"]);
+		expect(adjuster.stringArray()
+			.adjust([])).toEqual([]);
+
+		expect(adjuster.stringArray()
+			.adjust(["a", "b"])).toEqual(["a", "b"]);
 	});
 	it("should be adjusted", () =>
 	{
-		expect(objAdjuster.adjust(["a", 1, -2])).toEqual(["a", "1", "-2"]);
+		expect(adjuster.stringArray()
+			.adjust(["a", 1, -2])).toEqual(["a", "1", "-2"]);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust("abc");
+			adjuster.stringArray()
+				.adjust("abc");
 		}).toThrow(adjuster.CAUSE.TYPE);
-	});
-}
-
-/**
- * required value
- */
-function testRequired()
-{
-	const objAdjuster = adjuster.stringArray();
-	it("should cause error(s)", () =>
-	{
-		expect(() =>
-		{
-			objAdjuster.adjust(undefined);
-		}).toThrow(adjuster.CAUSE.REQUIRED);
 	});
 }
 
@@ -67,37 +51,38 @@ function testRequired()
  */
 function testDefault()
 {
-	const objAdjuster = adjuster.stringArray().default(["a", "b"]);
 	it("should be adjusted", () =>
 	{
-		expect(objAdjuster.adjust(undefined)).toEqual(["a", "b"]);
+		expect(adjuster.stringArray().default(["a", "b"])
+			.adjust(undefined)).toEqual(["a", "b"]);
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.stringArray()
+				.adjust(undefined);
+		}).toThrow(adjuster.CAUSE.REQUIRED);
 	});
 }
 
 /**
  * empty string
  */
-function testEmptyString()
+function testAllowEmptyString()
 {
-	const objAdjuster = adjuster.stringArray();
+	it("should be adjusted", () =>
+	{
+		expect(adjuster.stringArray().allowEmptyString(["a", "b"])
+			.adjust("")).toEqual(["a", "b"]);
+	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust("");
+			adjuster.stringArray()
+				.adjust("");
 		}).toThrow(adjuster.CAUSE.EMPTY);
-	});
-}
-
-/**
- * empty string (allowed)
- */
-function testAllowEmptyString()
-{
-	const objAdjuster = adjuster.stringArray().allowEmptyString(["a", "b"]);
-	it("should be adjusted", () =>
-	{
-		expect(objAdjuster.adjust("")).toEqual(["a", "b"]);
 	});
 }
 
@@ -106,10 +91,18 @@ function testAllowEmptyString()
  */
 function testSeparatedBy()
 {
-	const objAdjuster = adjuster.stringArray().separatedBy(",");
 	it("should be adjusted", () =>
 	{
-		expect(objAdjuster.adjust("a,b,c")).toEqual(["a", "b", "c"]);
+		expect(adjuster.stringArray().separatedBy(",")
+			.adjust("a,b,c")).toEqual(["a", "b", "c"]);
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.stringArray()
+				.adjust("a,b,c");
+		}).toThrow(adjuster.CAUSE.TYPE);
 	});
 }
 
@@ -118,10 +111,18 @@ function testSeparatedBy()
  */
 function testToArray()
 {
-	const objAdjuster = adjuster.stringArray().toArray();
 	it("should be adjusted", () =>
 	{
-		expect(objAdjuster.adjust("a")).toEqual(["a"]);
+		expect(adjuster.stringArray().toArray()
+			.adjust("a")).toEqual(["a"]);
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.stringArray()
+				.adjust("a");
+		}).toThrow(adjuster.CAUSE.TYPE);
 	});
 }
 
@@ -130,16 +131,17 @@ function testToArray()
  */
 function testMinLength()
 {
-	const objAdjuster = adjuster.stringArray().minLength(1);
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust(["a"])).toEqual(["a"]);
+		expect(adjuster.stringArray().minLength(1)
+			.adjust(["a"])).toEqual(["a"]);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust([]);
+			adjuster.stringArray().minLength(1)
+				.adjust([]);
 		}).toThrow(adjuster.CAUSE.MIN_LENGTH);
 	});
 }
@@ -149,33 +151,26 @@ function testMinLength()
  */
 function testMaxLength()
 {
-	const objAdjuster = adjuster.stringArray().maxLength(1);
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust(["a"])).toEqual(["a"]);
+		expect(adjuster.stringArray().maxLength(1)
+			.adjust(["a"])).toEqual(["a"]);
+
+		expect(adjuster.stringArray().maxLength(1, true)
+			.adjust(["a"])).toEqual(["a"]);
+	});
+	it("should be adjusted", () =>
+	{
+		expect(adjuster.stringArray().maxLength(1, true)
+			.adjust(["a", "b"])).toEqual(["a"]);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust(["a", "b"]);
+			adjuster.stringArray().maxLength(1)
+				.adjust(["a", "b"]);
 		}).toThrow(adjuster.CAUSE.MAX_LENGTH);
-	});
-}
-
-/**
- * maximum length of elements (adjusted)
- */
-function testMaxLengthAdjusted()
-{
-	const objAdjuster = adjuster.stringArray().maxLength(1, true);
-	it("should be OK", () =>
-	{
-		expect(objAdjuster.adjust(["a"])).toEqual(["a"]);
-	});
-	it("should be adjusted", () =>
-	{
-		expect(objAdjuster.adjust(["a", "b"])).toEqual(["a"]);
 	});
 }
 
@@ -184,30 +179,13 @@ function testMaxLengthAdjusted()
  */
 function testIgnoreEachErrors()
 {
-	const objAdjuster = adjuster.stringArray().ignoreEachErrors().separatedBy(",");
 	it("should be adjusted", () =>
 	{
-		expect(objAdjuster.adjust([undefined, "a", "", 1])).toEqual(["a", "1"]);
-		expect(objAdjuster.adjust("a,,b,c,")).toEqual(["a", "b", "c"]);
-	});
-}
+		expect(adjuster.stringArray().ignoreEachErrors().separatedBy(",")
+			.adjust([undefined, "a", "", 1])).toEqual(["a", "1"]);
 
-/**
- * each elements
- */
-function testEach()
-{
-	const objAdjuster = adjuster.stringArray();
-	it("should cause error(s)", () =>
-	{
-		expect(() =>
-		{
-			objAdjuster.adjust(["a", undefined, "b"]);
-		}).toThrow(adjuster.CAUSE.EACH_REQUIRED);
-		expect(() =>
-		{
-			objAdjuster.adjust([""]);
-		}).toThrow(adjuster.CAUSE.EACH_EMPTY);
+		expect(adjuster.stringArray().ignoreEachErrors().separatedBy(",")
+			.adjust("a,,b,c,")).toEqual(["a", "b", "c"]);
 	});
 }
 
@@ -216,16 +194,23 @@ function testEach()
  */
 function testEachDefault()
 {
-	const objAdjuster = adjuster.stringArray().eachDefault("z");
 	it("should be adjusted", () =>
 	{
-		expect(objAdjuster.adjust(["a", undefined, "b"])).toEqual(["a", "z", "b"]);
+		expect(adjuster.stringArray().eachDefault("z")
+			.adjust(["a", undefined, "b"])).toEqual(["a", "z", "b"]);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust(["a", "", "b"]);
+			adjuster.stringArray()
+				.adjust(["a", undefined, "b"]);
+		}).toThrow(adjuster.CAUSE.EACH_REQUIRED);
+
+		expect(() =>
+		{
+			adjuster.stringArray().eachDefault("z")
+				.adjust(["a", "", "b"]);
 		}).toThrow(adjuster.CAUSE.EACH_EMPTY);
 	});
 }
@@ -235,16 +220,22 @@ function testEachDefault()
  */
 function testEachAllowEmptyString()
 {
-	const objAdjuster = adjuster.stringArray().eachAllowEmptyString("z");
 	it("should be adjusted", () =>
 	{
-		expect(objAdjuster.adjust(["a", "", "b"])).toEqual(["a", "z", "b"]);
+		expect(adjuster.stringArray().eachAllowEmptyString("z")
+			.adjust(["a", "", "b"])).toEqual(["a", "z", "b"]);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust(["a", undefined, "b"]);
+			adjuster.stringArray()
+				.adjust(["a", "", "b"]);
+		}).toThrow(adjuster.CAUSE.EACH_EMPTY);
+		expect(() =>
+		{
+			adjuster.stringArray().eachAllowEmptyString("z")
+				.adjust(["a", undefined, "b"]);
 		}).toThrow(adjuster.CAUSE.EACH_REQUIRED);
 	});
 }
@@ -254,10 +245,10 @@ function testEachAllowEmptyString()
  */
 function testEachTrim()
 {
-	const objAdjuster = adjuster.stringArray().eachTrim();
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust([" a", "b\t", "\rc\n"])).toEqual(["a", "b", "c"]);
+		expect(adjuster.stringArray().eachTrim()
+			.adjust([" a", "b\t", "\rc\n"])).toEqual(["a", "b", "c"]);
 	});
 }
 
@@ -266,16 +257,17 @@ function testEachTrim()
  */
 function testEachIn()
 {
-	const objAdjuster = adjuster.stringArray().eachIn("a", "b", "c");
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust(["a", "b", "c"])).toEqual(["a", "b", "c"]);
+		expect(adjuster.stringArray().eachIn("a", "b", "c")
+			.adjust(["a", "b", "c"])).toEqual(["a", "b", "c"]);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust(["a", "b", "x"]);
+			adjuster.stringArray().eachIn("a", "b", "c")
+				.adjust(["a", "b", "x"]);
 		}).toThrow(adjuster.CAUSE.EACH_IN);
 	});
 }
@@ -285,16 +277,17 @@ function testEachIn()
  */
 function testEachMinLength()
 {
-	const objAdjuster = adjuster.stringArray().eachMinLength(3);
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust(["abc", "xyz"])).toEqual(["abc", "xyz"]);
+		expect(adjuster.stringArray().eachMinLength(3)
+			.adjust(["abc", "xyz"])).toEqual(["abc", "xyz"]);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust(["abc", "xy"]);
+			adjuster.stringArray().eachMinLength(3)
+				.adjust(["abc", "xy"]);
 		}).toThrow(adjuster.CAUSE.EACH_MIN_LENGTH);
 	});
 }
@@ -304,33 +297,26 @@ function testEachMinLength()
  */
 function testEachMaxLength()
 {
-	const objAdjuster = adjuster.stringArray().eachMaxLength(3);
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust(["abc", "xyz"])).toEqual(["abc", "xyz"]);
+		expect(adjuster.stringArray().eachMaxLength(3)
+			.adjust(["abc", "xyz"])).toEqual(["abc", "xyz"]);
+
+		expect(adjuster.stringArray().eachMaxLength(3, true)
+			.adjust(["abc", "xyz"])).toEqual(["abc", "xyz"]);
+	});
+	it("should be adjusted", () =>
+	{
+		expect(adjuster.stringArray().eachMaxLength(3, true)
+			.adjust(["abcd", "xyz0"])).toEqual(["abc", "xyz"]);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust(["abcd", "xyz0"]);
+			adjuster.stringArray().eachMaxLength(3)
+				.adjust(["abcd", "xyz0"]);
 		}).toThrow(adjuster.CAUSE.EACH_MAX_LENGTH);
-	});
-}
-
-/**
- * each elements; maximum length of string (adjusted)
- */
-function testEachMaxLengthAdjusted()
-{
-	const objAdjuster = adjuster.stringArray().eachMaxLength(3, true);
-	it("should be OK", () =>
-	{
-		expect(objAdjuster.adjust(["abc", "xyz"])).toEqual(["abc", "xyz"]);
-	});
-	it("should be adjusted", () =>
-	{
-		expect(objAdjuster.adjust(["abcd", "xyz0"])).toEqual(["abc", "xyz"]);
 	});
 }
 
@@ -339,16 +325,17 @@ function testEachMaxLengthAdjusted()
  */
 function testEachPattern()
 {
-	const objAdjuster = adjuster.stringArray().eachPattern(/^Go+gle$/);
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust(["Gogle", "Google", "Gooogle"])).toEqual(["Gogle", "Google", "Gooogle"]);
+		expect(adjuster.stringArray().eachPattern(/^Go+gle$/)
+			.adjust(["Gogle", "Google", "Gooogle"])).toEqual(["Gogle", "Google", "Gooogle"]);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust(["google", "Ggle"]);
+			adjuster.stringArray().eachPattern(/^Go+gle$/)
+				.adjust(["google", "Ggle"]);
 		}).toThrow(adjuster.CAUSE.EACH_PATTERN);
 	});
 }
