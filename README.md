@@ -1033,10 +1033,10 @@ interface NumericStringAdjuster {
     default(value: string): NumericStringAdjuster;
     allowEmptyString(value?: string|null /* = null */): NumericStringAdjuster;
     joinArray(): NumericStringAdjuster;
-	separatedBy(separator: string|RegExp): NumericStringAdjuster;
+    separatedBy(separator: string|RegExp): NumericStringAdjuster;
     minLength(length: number): NumericStringAdjuster;
     maxLength(length: number, adjust?: boolean /* = false */): NumericStringAdjuster;
-	checksum(algorithm: string): NumericStringAdjuster;
+    checksum(algorithm: string): NumericStringAdjuster;
 }
 ```
 
@@ -1048,13 +1048,13 @@ Validate and adjust input values.
 ```javascript
 // should be OK
 assert.strictEqual(
-	adjuster.numericString().adjust("123"),
-	"123");
+    adjuster.numericString().adjust("123"),
+    "123");
 
 // should be adjusted
 assert.strictEqual(
-	adjuster.numericString().adjust(123),
-	"123");
+    adjuster.numericString().adjust(123),
+    "123");
 ```
 
 #### `default(value)`
@@ -1065,13 +1065,13 @@ Allow `undefined` for input, and adjust to `value`.
 ```javascript
 // should be adjusted
 assert.strictEqual(
-	adjuster.numericString().default("123").adjust(undefined),
-	"123");
+    adjuster.numericString().default("123").adjust(undefined),
+    "123");
 
 // should cause error
 assert.throws(
-	() => adjuster.numericString().adjust(undefined),
-	(err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+    () => adjuster.numericString().adjust(undefined),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
 ```
 
 #### `allowEmptyString([value])`
@@ -1082,13 +1082,13 @@ Allow an empty string(`""`) for input, and adjust to `value`.
 ```javascript
 // should be adjusted
 assert.strictEqual(
-	adjuster.numericString().allowEmptyString("456").adjust(""),
-	"456");
+    adjuster.numericString().allowEmptyString("456").adjust(""),
+    "456");
 
 // should cause error
 assert.throws(
-	() => adjuster.numericString().adjust(""),
-	(err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+    () => adjuster.numericString().adjust(""),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
 ```
 
 #### `separatedBy(separator)`
@@ -1099,13 +1099,13 @@ Assume an input value is separated by `separator`, and ignore them.
 ```javascript
 // should be adjusted
 assert.strictEqual(
-	adjuster.numericString().separatedBy("-").adjust("4111-1111-1111-1111"),
-	"4111111111111111");
+    adjuster.numericString().separatedBy("-").adjust("4111-1111-1111-1111"),
+    "4111111111111111");
 
 // should cause error
 assert.throws(
-	() => adjuster.numericString().adjust("4111-1111-1111-1111"),
-	(err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    () => adjuster.numericString().adjust("4111-1111-1111-1111"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
 #### `joinArray()`
@@ -1115,14 +1115,14 @@ This method is useful for following form.
 ```html
 <!-- "cc_number" will be passed in array -->
 <form>
-	Input credit card number:
-	<input name="cc_number" required />
-	-
-	<input name="cc_number" required />
-	-
-	<input name="cc_number" required />
-	-
-	<input name="cc_number" required />
+    Input credit card number:
+    <input name="cc_number" required />
+    -
+    <input name="cc_number" required />
+    -
+    <input name="cc_number" required />
+    -
+    <input name="cc_number" required />
 </form>
 ```
 
@@ -1131,13 +1131,13 @@ This method is useful for following form.
 ```javascript
 // should be adjusted
 assert.strictEqual(
-	adjuster.numericString().joinArray().adjust(["1234", "5678"]),
-	"12345678");
+    adjuster.numericString().joinArray().adjust(["1234", "5678"]),
+    "12345678");
 
 // should cause error
 assert.throws(
-	() => adjuster.numericString().adjust(["1234", "5678"]),
-	(err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    () => adjuster.numericString().adjust(["1234", "5678"]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
 #### `minLength(length)`
@@ -1148,13 +1148,13 @@ Limit minimum length of input string to `length`.
 ```javascript
 // should be OK
 assert.strictEqual(
-	adjuster.numericString().minLength(4).adjust("1234"),
-	"1234");
+    adjuster.numericString().minLength(4).adjust("1234"),
+    "1234");
 
 // should cause error
 assert.throws(
-	() => adjuster.numericString().minLength(5).adjust("1234"),
-	(err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
+    () => adjuster.numericString().minLength(5).adjust("1234"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
 ```
 
 #### `maxLength(length[, adjust])`
@@ -1165,18 +1165,18 @@ Limit maximum length of an input string to `length`.
 ```javascript
 // should be OK
 assert.strictEqual(
-	adjuster.numericString().maxLength(4).adjust("1234"),
-	"1234");
+    adjuster.numericString().maxLength(4).adjust("1234"),
+    "1234");
 
 // should be adjusted
 assert.strictEqual(
-	adjuster.numericString().separatedBy("-").maxLength(5, true).adjust("1234-5678"),
-	"12345");
+    adjuster.numericString().separatedBy("-").maxLength(5, true).adjust("1234-5678"),
+    "12345");
 
 // should cause error
 assert.throws(
-	() => adjuster.numericString().maxLength(5).adjust("123456"),
-	(err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
+    () => adjuster.numericString().maxLength(5).adjust("123456"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
 ```
 
 #### `checksum(algorithm)`
@@ -1192,105 +1192,384 @@ Check an input value by specified algorithm.
 ```javascript
 // should be OK
 assert.strictEqual(
-	adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111111"),
-	"4111111111111111");
+    adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111111"),
+    "4111111111111111");
 
 assert.strictEqual(
-	adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD).adjust("4111111111111111"), // alias of LUHN
-	"4111111111111111");
+    adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD).adjust("4111111111111111"), // alias of LUHN
+    "4111111111111111");
 
 assert.strictEqual(
-	adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1).adjust("9784101092058"),
-	"9784101092058");
+    adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1).adjust("9784101092058"),
+    "9784101092058");
 
 assert.strictEqual(
-	adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
-	"9784101092058");
+    adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
+    "9784101092058");
 
 assert.strictEqual(
-	adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.EAN).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
-	"9784101092058");
+    adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.EAN).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
+    "9784101092058");
 
 assert.strictEqual(
-	adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.JAN).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
-	"9784101092058");
+    adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.JAN).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
+    "9784101092058");
 
 // should cause error
 assert.throws(
-	() => adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111112"),
-	(err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NUMERIC_STRING_CHECKSUM));
+    () => adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111112"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NUMERIC_STRING_CHECKSUM));
 ```
 
 ### IPv4
+#### ambient declarations
+
+```typescript
+namespace adjuster {
+    export declare function ipv4(): IPv4Adjuster;
+}
+
+interface IPv4Adjuster {
+    // adjustment method
+    adjust(value: any, onError?: (cause: string, value: any) => string|void): string;
+
+    // feature methods (chainable)
+    default(value: string): IPv4Adjuster;
+    allowEmptyString(value?: string|null /* = null */): IPv4Adjuster;
+    trim(): IPv4Adjuster;
+}
+```
+
+#### `adjust(value[, onError])`
+Validate and adjust a input value.
+
+##### examples
 
 ```javascript
-import adjuster from "adjuster";
-import assert from "assert";
-
 // should be OK
-assert.strictEqual(adjuster.ipv4().adjust("0.0.0.0")        , "0.0.0.0");
-assert.strictEqual(adjuster.ipv4().adjust("192.168.0.1")    , "192.168.0.1");
-assert.strictEqual(adjuster.ipv4().adjust("255.255.255.255"), "255.255.255.255");
+assert.strictEqual(
+    adjuster.ipv4().adjust("0.0.0.0"),
+    "0.0.0.0");
+assert.strictEqual(
+    adjuster.ipv4().adjust("192.168.0.1"),
+    "192.168.0.1");
+assert.strictEqual(
+    adjuster.ipv4().adjust("255.255.255.255"),
+    "255.255.255.255");
 
+// should cause error
+assert.throws(
+    () => adjuster.ipv4().adjust("0.0.0."),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(
+    () => adjuster.ipv4().adjust("0.0.0.0."),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(
+    () => adjuster.ipv4().adjust("255.255.255.256"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+```
+
+#### `default(value)`
+Allow `undefined` for input, and adjust to `value`.
+
+##### examples
+
+```javascript
 // should be adjusted
-assert.strictEqual(adjuster.ipv4().trim().adjust("\r\n 1.1.1.1 \t "), "1.1.1.1");
+assert.strictEqual(
+    adjuster.ipv4().default("0.0.0.0").adjust(undefined),
+    "0.0.0.0");
 
-// should cause errors; err.cause === adjuster.CAUSE.PATTERN
-assert.throws(() => adjuster.ipv4().trim().adjust(" \t\r\n "), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
-assert.throws(() => adjuster.ipv4().adjust("0.0.0.")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-assert.throws(() => adjuster.ipv4().adjust("0.0.0.0.")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-assert.throws(() => adjuster.ipv4().adjust("255.255.255.256"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+// should cause error
+assert.throws(
+    () => adjuster.ipv4().adjust(undefined),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `allowEmptyString([value])`
+Allow an empty string(`""`) for input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.ipv4().allowEmptyString("0.0.0.0").adjust(""),
+    "0.0.0.0");
+
+// should cause error
+assert.throws(
+    () => adjuster.ipv4().adjust(""),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+```
+
+#### `trim()`
+Remove whitespace from both ends of input.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.ipv4().trim().adjust("\r\n 1.1.1.1 \t "),
+    "1.1.1.1");
+
+// should cause error
+assert.throws(
+    () => adjuster.ipv4().trim().adjust(" \t\r\n "),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
 ```
 
 ### IPv6
+#### ambient declarations
+
+```typescript
+namespace adjuster {
+    export declare function ipv6(): IPv6Adjuster;
+}
+
+interface IPv6Adjuster {
+    // adjustment method
+    adjust(value: any, onError?: (cause: string, value: any) => string|void): string;
+
+    // feature methods (chainable)
+    default(value: string): IPv6Adjuster;
+    allowEmptyString(value?: string|null /* = null */): IPv6Adjuster;
+    trim(): IPv6Adjuster;
+}
+```
+
+#### `adjust(value[, onError])`
+Validate and adjust a input value.
+
+##### examples
 
 ```javascript
-import adjuster from "adjuster";
-import assert from "assert";
-
 // should be OK
-assert.strictEqual(adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000"), "0000:0000:0000:0000:0000:0000:0000:0000");
-assert.strictEqual(adjuster.ipv6().adjust("::1")                                    , "::1");
-assert.strictEqual(adjuster.ipv6().adjust("::")                                     , "::");
-assert.strictEqual(adjuster.ipv6().adjust("1::1")                                   , "1::1");
-assert.strictEqual(adjuster.ipv6().adjust("::ffff:192.0.2.1")                       , "::ffff:192.0.2.1"); // IPv4-mapped address
+assert.strictEqual(
+    adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000"),
+    "0000:0000:0000:0000:0000:0000:0000:0000");
+assert.strictEqual(
+    adjuster.ipv6().adjust("::1"),
+    "::1");
+assert.strictEqual(
+    adjuster.ipv6().adjust("::"),
+    "::");
+assert.strictEqual(
+    adjuster.ipv6().adjust("1::1"),
+    "1::1");
+assert.strictEqual(
+    adjuster.ipv6().adjust("::ffff:192.0.2.1"), // IPv4-mapped address
+    "::ffff:192.0.2.1");
 
+// should cause error
+assert.throws(
+    () => adjuster.ipv6().adjust("0000"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(
+    () => adjuster.ipv6().adjust("ffff:"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(
+    () => adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000:"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+```
+
+#### `default(value)`
+Allow `undefined` for input, and adjust to `value`.
+
+##### examples
+
+```javascript
 // should be adjusted
-assert.strictEqual(adjuster.ipv6().trim().adjust("\r\n ::1 \t "), "::1");
+assert.strictEqual(
+    adjuster.ipv6().default("::").adjust(undefined),
+    "::");
 
-// should cause errors; err.cause === adjuster.CAUSE.PATTERN
-assert.throws(() => adjuster.ipv6().trim().adjust(" \t\r\n "), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
-assert.throws(() => adjuster.ipv6().adjust("0000")                                    , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-assert.throws(() => adjuster.ipv6().adjust("ffff:")                                   , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-assert.throws(() => adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000:"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+// should cause error
+assert.throws(
+    () => adjuster.ipv6().adjust(undefined),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `allowEmptyString([value])`
+Allow an empty string(`""`) for input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.ipv6().allowEmptyString("::").adjust(""),
+    "::");
+
+// should cause error
+assert.throws(
+    () => adjuster.ipv6().adjust(""),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+```
+
+#### `trim()`
+Remove whitespace from both ends of input.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.ipv6().trim().adjust("\r\n ::1 \t "),
+    "::1");
+
+// should cause error
+assert.throws(
+    () => adjuster.ipv6().adjust("\r\n ::1 \t "),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(
+    () => adjuster.ipv6().trim().adjust(" \t\r\n "),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
 ```
 
 ### email
+#### ambient declarations
+
+```typescript
+namespace adjuster {
+    export declare function email(): EmailAdjuster;
+}
+
+interface EmailAdjuster {
+    // adjustment method
+    adjust(value: any, onError?: (cause: string, value: any) => string|void): string;
+
+    // feature methods (chainable)
+    default(value: string): EmailAdjuster;
+    allowEmptyString(value?: string|null /* = null */): EmailAdjuster;
+    trim(): EmailAdjuster;
+    pattern(pattern: string|RegExp): EmailAdjuster;
+}
+```
+
+#### `adjust(value[, onError])`
+Validate and adjust a input value.
+
+##### examples
 
 ```javascript
-import adjuster from "adjuster";
-import assert from "assert";
-
 // should be OK
-assert.strictEqual(adjuster.email().adjust("user+mailbox/department=shipping@example.com"), "user+mailbox/department=shipping@example.com"); // dot-string
-assert.strictEqual(adjuster.email().adjust("!#$%&'*+-/=?^_`.{|}~@example.com")            , "!#$%&'*+-/=?^_`.{|}~@example.com"); // dot-string
-assert.strictEqual(adjuster.email().adjust("\"Fred\\\"Bloggs\"@example.com")              , "\"Fred\\\"Bloggs\"@example.com"); // quoted-string
-assert.strictEqual(adjuster.email().adjust("\"Joe.\\\\Blow\"@example.com")                , "\"Joe.\\\\Blow\"@example.com"); // quoted-string
-assert.strictEqual(adjuster.email().adjust("user@example-domain.com")                     , "user@example-domain.com");
-assert.strictEqual(adjuster.email().adjust("user@example2.com")                           , "user@example2.com");
+assert.strictEqual(
+    adjuster.email().adjust("user+mailbox/department=shipping@example.com"),
+    "user+mailbox/department=shipping@example.com"); // dot-string
+assert.strictEqual(
+    adjuster.email().adjust("!#$%&'*+-/=?^_`.{|}~@example.com"),
+    "!#$%&'*+-/=?^_`.{|}~@example.com"); // dot-string
+assert.strictEqual(
+    adjuster.email().adjust("\"Fred\\\"Bloggs\"@example.com"),
+    "\"Fred\\\"Bloggs\"@example.com"); // quoted-string
+assert.strictEqual(
+    adjuster.email().adjust("\"Joe.\\\\Blow\"@example.com"),
+    "\"Joe.\\\\Blow\"@example.com"); // quoted-string
+assert.strictEqual(
+    adjuster.email().adjust("user@example-domain.com"),
+    "user@example-domain.com");
+assert.strictEqual(
+    adjuster.email().adjust("user@example2.com"),
+    "user@example2.com");
 
+// should cause error
+assert.throws(
+    () => adjuster.email().adjust("@example.com"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(
+    () => adjuster.email().adjust(".a@example.com"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(
+    () => adjuster.email().adjust("a.@example.com"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(
+    () => adjuster.email().adjust("a..a@example.com"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(
+    () => adjuster.email().adjust("user@example@com"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(
+    () => adjuster.email().adjust("user-example-com"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(
+    () => adjuster.email().adjust("user@example_domain.com"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(
+    () => adjuster.email().adjust("user@example.com2"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+```
+
+#### `default(value)`
+Allow `undefined` for input, and adjust to `value`.
+
+##### examples
+
+```javascript
 // should be adjusted
-assert.strictEqual(adjuster.email().trim().adjust("\r\n trim@example.com \t "), "trim@example.com");
+assert.strictEqual(
+    adjuster.email().default("user@example.com").adjust(undefined),
+    "user@example.com");
+
+// should cause error
+assert.throws(
+    () => adjuster.email().adjust(undefined),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `allowEmptyString([value])`
+Allow an empty string(`""`) for input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.email().allowEmptyString("user@example.com").adjust(""),
+    "user@example.com");
+
+// should cause error
+assert.throws(
+    () => adjuster.email().adjust(""),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+```
+
+#### `trim()`
+Remove whitespace from both ends of input.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.email().trim().adjust("\r\n user@example.com \t "),
+    "user@example.com");
+
+// should cause error
+assert.throws(
+    () => adjuster.email().adjust("\r\n user@example.com1 \t "),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(
+    () => adjuster.email().trim().adjust(" \t\r\n "),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+```
+
+#### `pattern(pattern)`
+Specify acceptable pattern by regular expression.
+
+##### examples
+
+```javascript
+// should be OK
+assert.strictEqual(
+    adjuster.email().pattern(/^[\w\.]+@([\w\-]+\.)+\w+$/).adjust("......@example.com"), // allow leading/trailing/consecutively dots
+    "user@example.com");
 
 // should cause errors
-assert.throws(() => adjuster.email().adjust("@example.com")           , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-assert.throws(() => adjuster.email().adjust(".a@example.com")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-assert.throws(() => adjuster.email().adjust("a.@example.com")         , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-assert.throws(() => adjuster.email().adjust("a..a@example.com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-assert.throws(() => adjuster.email().adjust("user@example@com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-assert.throws(() => adjuster.email().adjust("user-example-com")       , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-assert.throws(() => adjuster.email().adjust("user@example_domain.com"), err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-assert.throws(() => adjuster.email().adjust("user@example.com2")      , err => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(
+    () => adjuster.email().trim().adjust("......@example.com"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
 ## Changelog
