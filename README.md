@@ -266,6 +266,8 @@ interface NumberArrayAdjuster {
 ```
 
 #### `adjust(value[, onError])`
+Validate and adjust input values.
+
 ##### examples
 
 ```javascript
@@ -373,7 +375,7 @@ assert.throws(
 ```
 
 #### `minLength(length)`
-Limit minimum length of array to `length`.
+Limit minimum length of input array to `length`.
 
 ##### examples
 
