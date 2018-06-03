@@ -13,8 +13,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * `adjuster.string().trim()`
 * `adjuster.stringArray().eachTrim()`
 
+### Changed
+* `AdjusterError.prototype.key` indicates a key name that caused error; only filled in `adjuster.adjust()`, otherwise `null`
+* error handler for `adjuster.adjust()` needs only 1 parameters `err`; `key` is in `err.key`
+* rename `.in()` to `.only()`
+
 ### Others
 * use changelog
+* reference in README
 
 ## [0.7.0] - 2018-05-20
 ### Added

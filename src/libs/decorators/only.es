@@ -5,7 +5,7 @@ import AdjusterError from "../AdjusterError";
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.features({
-		in: _featureIn,
+		only: _featureOnly,
 	})
 	.build();
 
@@ -23,10 +23,10 @@ function _init(params)
  * @param {Object} params parameters
  * @param {...*} values values to be accepted
  */
-function _featureIn(params, ...values)
+function _featureOnly(params, ...values)
 {
 	params.flag = true;
-	params.values = values;
+	params.values = new Set(values);
 }
 
 /**
@@ -42,11 +42,11 @@ function _adjust(params, values)
 	{
 		return false;
 	}
-	if(params.values.includes(values.adjusted))
+	if(params.values.has(values.adjusted))
 	{
 		return true;
 	}
 
-	const cause = CAUSE.IN;
+	const cause = CAUSE.ONLY;
 	throw new AdjusterError(cause, values.original);
 }

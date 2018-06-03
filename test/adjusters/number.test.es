@@ -5,7 +5,7 @@ import adjuster from "index";
 	describe("default", testDefault);
 	describe("allowNull", testAllowNull);
 	describe("allowEmptyString", testAllowEmptyString);
-	describe("in", testIn);
+	describe("only", testOnly);
 	describe("minValue", testMinValue);
 	describe("maxValue", testMaxValue);
 }
@@ -112,26 +112,26 @@ function testAllowEmptyString()
 /**
  * set
  */
-function testIn()
+function testOnly()
 {
 	it("should be OK", () =>
 	{
-		expect(adjuster.number().in(1, 3, 5)
+		expect(adjuster.number().only(1, 3, 5)
 			.adjust(1)).toEqual(1);
 
-		expect(adjuster.number().in(1, 3, 5)
+		expect(adjuster.number().only(1, 3, 5)
 			.adjust(3)).toEqual(3);
 
-		expect(adjuster.number().in(1, 3, 5)
+		expect(adjuster.number().only(1, 3, 5)
 			.adjust(5)).toEqual(5);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			adjuster.number().in(1, 3, 5)
+			adjuster.number().only(1, 3, 5)
 				.adjust(2);
-		}).toThrow(adjuster.CAUSE.IN);
+		}).toThrow(adjuster.CAUSE.ONLY);
 	});
 }
 
