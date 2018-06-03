@@ -317,6 +317,7 @@ interface NumberAdjuster {
 
     // feature methods (chainable)
     default(value: number): NumberAdjuster;
+    allowNull(value?: number|null /* = null */): NumberAdjuster;
     allowEmptyString(value?: number|null /* = null */): NumberAdjuster;
     only(...values: number[]): NumberAdjuster;
     minValue(value: number, adjust?: boolean /* = false */): NumberAdjuster;
@@ -370,6 +371,25 @@ assert.strictEqual(
 assert.throws(
     () => adjuster.number().adjust(undefined),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `allowNull([value])`
+Allow a `null` for input, and adjust to `value`.
+
+If this method is not called, `adjust(null)` causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.number().allowNull(1).adjust(null),
+    1);
+
+// should cause error
+assert.throws(
+    () => adjuster.number().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
 #### `allowEmptyString([value])`
