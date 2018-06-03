@@ -11,6 +11,7 @@ validate and adjust input values
 ## Table of Contents
 
 * [Install](#install)
+* [Import / Require](#import-/-require)
 * [Reference](#reference)
     * [types and constants](#types-and-constants)
     * [basic usage](#basic-usage)
@@ -31,6 +32,20 @@ validate and adjust input values
 install from [npm registry](https://www.npmjs.com/package/adjuster).
 ```bash
 npm install -S adjuster
+```
+
+## Import / Require
+
+### import (using [Babel](https://babeljs.io/))
+
+```javascript
+import adjuster from "adjuster";
+```
+
+### CommonJS
+
+```javascript
+let adjuster = require("adjuster").default;
 ```
 
 ## Reference
