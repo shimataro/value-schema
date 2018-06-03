@@ -15,6 +15,7 @@ function adjust(data, constraints, onError = null, onErrorAll = null)
 	{
 		const adjustedValue = constraints[key].adjust(data[key], (err) =>
 		{
+			err.key = key;
 			if(onError === null && onErrorAll === null)
 			{
 				throw err;
@@ -23,7 +24,7 @@ function adjust(data, constraints, onError = null, onErrorAll = null)
 			errs[key] = err;
 			if(onError !== null)
 			{
-				return onError(key, err);
+				return onError(err);
 			}
 		});
 
@@ -42,7 +43,6 @@ function adjust(data, constraints, onError = null, onErrorAll = null)
 
 /**
  * @callback adjust~OnError
- * @param {string} key
  * @param {AdjusterError} err
  */
 /**
