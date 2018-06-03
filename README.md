@@ -45,7 +45,7 @@ import adjuster from "adjuster";
 ### CommonJS
 
 ```javascript
-let adjuster = require("adjuster").default;
+var adjuster = require("adjuster").default;
 ```
 
 ## Reference
