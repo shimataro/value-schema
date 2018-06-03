@@ -73,6 +73,62 @@ Checksum algorithms for `adjuster.numericString()`.
 For more information, see [numeric string](#numeric-string).
 
 ### basic usage
+#### ambient declarations
+
+```typescript
+namespace adjuster {
+    export declare function adjust(data: Object, adjusters: Object, onError?: (key: string, err: AdjusterError) => any, onErrorAll?: (errs: Object) => void): Object;
+}
+```
+
+#### `adjuster.adjust(data, adjusters[, onError[, onErrorAll]])`
+Validate and adjust a input value.
+
+##### `data`
+The object values to adjust; e.g. `req.queries`, `req.body` (in [Express](http://expressjs.com/))
+
+This `data` is not overwritten.
+
+##### `adjusters`
+Constraints object for adjustment.
+
+* key: the name of `data` to adjust value
+* value: the adjustment object; see below examples
+
+##### `onError(key, err)`
+Callback function for each errors.
+If no errors, this function will not be called.
+
+This parameter can be omitted.
+
+* `key`
+    * a name of the errored key in `adjusters`
+* `err`
+    * an instance of `AdjusterError`
+* returns
+    * an adjuted value
+    * `undefined` means this key will not be included in returned object from `adjuster.adjust()`
+* throws
+    * an exception that will thrown from `adjuster.adjust()`
+    * remaining adjustment processes will be cancelled
+
+##### `onErrorAll(errs)`
+Callback function for all errors.
+If no errors, this function will not be called.
+
+This parameter can be omitted.
+
+If both `onError()` and `onErrorAll()` are omitted, `adjuster.adjust()` will throw `AdjusterError` on first error and remaining adjustment process will be cancelled.
+
+* `errs`
+    * the object of all errors.
+    * key: a name of the errord key in `adjusters`
+    * value: an instance of `AdjusterError`
+* return value will be ignored
+* throws
+    * an exception that will thrown from `adjuster.adjust()`
+
+##### examples
 
 ```javascript
 import adjuster from "adjuster";
@@ -119,6 +175,128 @@ const expected = {
 
 const adjusted = adjuster.adjust(input, adjusters);
 assert.deepStrictEqual(adjusted, expected);
+```
+
+```javascript
+// error handling 1
+import adjuster from "adjuster";
+import assert from "assert";
+
+const adjusters = {
+    id: adjuster.number().minValue(1),
+    name: adjuster.string().maxLength(16, true),
+    email: adjuster.email(),
+};
+const input = {
+    id: 0, // error! (>= 1)
+    name: "", // error! (empty string is not allowed)
+    email: "john@example.com", // OK
+};
+const expected = {
+    id: 100,
+    email: "john@example.com",
+};
+
+const adjusted = adjuster.adjust(input, adjusters, (key, err) => {
+    switch(key) {
+        case "id":
+            return 100;
+        case "name":
+            return; // undefined
+    }
+});
+assert.deepStrictEqual(adjusted, expected);
+```
+
+
+```javascript
+// error handling 2
+import adjuster from "adjuster";
+
+const adjusters = {
+    id: adjuster.number().minValue(1),
+    name: adjuster.string().maxLength(16, true),
+    email: adjuster.email(),
+};
+const input = {
+    id: 0, // error! (>= 1)
+    name: "", // error! (empty string is not allowed)
+    email: "john@example.com", // OK
+};
+
+try {
+    const adjusted = adjuster.adjust(input, adjusters, (key, err) => {
+        switch(key) {
+            case "id":
+                throw new Error("ID must be greater than 0");
+            case "name":
+                throw new Error("name must be filled");
+            case "email":
+                throw new Error("email must be valid mail address");
+        }
+    });
+}
+catch(err) {
+    // do something
+}
+```
+
+```javascript
+// error handling 3
+import adjuster from "adjuster";
+
+const adjusters = {
+    id: adjuster.number().minValue(1),
+    name: adjuster.string().maxLength(16, true),
+    email: adjuster.email(),
+};
+const input = {
+    id: 0, // error! (>= 1)
+    name: "", // error! (empty string is not allowed)
+    email: "john@example.com", // OK
+};
+
+try {
+    const adjusted = adjuster.adjust(input, adjusters, null, (errs) => {
+        const messages = [];
+        if(errs.id) {
+            messages.push("ID must be greater than 0");
+        }
+        if(errs.name) {
+            messages.push("name must be filled");
+        }
+        if(errs.email) {
+            messages.push("email must be valid mail address");
+        }
+        throw new Error(messages.join("\n"));
+    });
+}
+catch(err) {
+    // do something
+}
+```
+
+```javascript
+// error handling 4
+import adjuster from "adjuster";
+
+const adjusters = {
+    id: adjuster.number().minValue(1),
+    name: adjuster.string().maxLength(16, true),
+    email: adjuster.email(),
+};
+const input = {
+    id: 0, // error! (>= 1)
+    name: "", // error! (empty string is not allowed)
+    email: "john@example.com", // OK
+};
+
+try {
+    const adjusted = adjuster.adjust(input, adjusters);
+}
+catch(err) {
+    // catches a first error (`id`)
+}
 ```
 
 ### number
