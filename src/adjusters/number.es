@@ -2,7 +2,7 @@ import AdjusterBase from "../libs/AdjusterBase";
 
 import Default from "../libs/decorators/default";
 import AllowEmptyString from "../libs/decorators/allowEmptyString";
-import In from "../libs/decorators/in";
+import Only from "../libs/decorators/only";
 import Type from "../libs/decorators/number/type";
 import MinValue from "../libs/decorators/number/minValue";
 import MaxValue from "../libs/decorators/number/maxValue";
@@ -21,7 +21,7 @@ export default () =>
  */
 @MaxValue
 @MinValue
-@In
+@Only
 @Type
 @AllowEmptyString
 @Default
@@ -46,7 +46,7 @@ class NumberAdjuster extends AdjusterBase
 	/**
 	 * accept only specified values
 	 * @method
-	 * @name NumberAdjuster#in
+	 * @name NumberAdjuster#only
 	 * @param {...number} values values to be accepted
 	 * @return {NumberAdjuster}
 	 */

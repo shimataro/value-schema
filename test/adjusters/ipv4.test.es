@@ -1,26 +1,10 @@
 import adjuster from "index";
 
 {
-	describe("required", testRequired);
 	describe("default", testDefault);
-	describe("emptyString", testEmptyString);
 	describe("allowEmptyString", testAllowEmptyString);
+	describe("trim", testTrim);
 	describe("pattern", testPattern);
-}
-
-/**
- * required value
- */
-function testRequired()
-{
-	const objAdjuster = adjuster.ipv4();
-	it("should cause error(s)", () =>
-	{
-		expect(() =>
-		{
-			objAdjuster.adjust(undefined);
-		}).toThrow(adjuster.CAUSE.REQUIRED);
-	});
 }
 
 /**
@@ -28,37 +12,58 @@ function testRequired()
  */
 function testDefault()
 {
-	const objAdjuster = adjuster.ipv4().default("1.1.1.1");
 	it("should be adjusted", () =>
 	{
-		expect(objAdjuster.adjust(undefined)).toEqual("1.1.1.1");
+		expect(adjuster.ipv4().default("1.1.1.1")
+			.adjust(undefined)).toEqual("1.1.1.1");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.ipv4()
+				.adjust(undefined);
+		}).toThrow(adjuster.CAUSE.REQUIRED);
 	});
 }
 
 /**
  * empty string
  */
-function testEmptyString()
+function testAllowEmptyString()
 {
-	const objAdjuster = adjuster.ipv4();
+	it("should be OK", () =>
+	{
+		expect(adjuster.ipv4().allowEmptyString("1.1.1.1")
+			.adjust("")).toEqual("1.1.1.1");
+	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust("");
+			adjuster.ipv4()
+				.adjust("");
 		}).toThrow(adjuster.CAUSE.EMPTY);
 	});
 }
 
 /**
- * empty string (allowd)
+ * remove whitespace from both ends
  */
-function testAllowEmptyString()
+function testTrim()
 {
-	const objAdjuster = adjuster.ipv4().allowEmptyString("1.1.1.1");
-	it("should be OK", () =>
+	it("should be adjusted", () =>
 	{
-		expect(objAdjuster.adjust("")).toEqual("1.1.1.1");
+		expect(adjuster.ipv4().trim()
+			.adjust("\r\n 1.1.1.1 \t ")).toEqual("1.1.1.1");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.ipv4().trim()
+				.adjust(" \t\r\n ");
+		}).toThrow(adjuster.CAUSE.EMPTY);
 	});
 }
 
@@ -67,7 +72,6 @@ function testAllowEmptyString()
  */
 function testPattern()
 {
-	const objAdjuster = adjuster.ipv4();
 	it("should be OK", () =>
 	{
 		const values = [
@@ -77,7 +81,8 @@ function testPattern()
 		];
 		for(const value of values)
 		{
-			expect(objAdjuster.adjust(value)).toEqual(value);
+			expect(adjuster.ipv4()
+				.adjust(value)).toEqual(value);
 		}
 	});
 	it("should cause error(s)", () =>
@@ -92,7 +97,8 @@ function testPattern()
 		{
 			expect(() =>
 			{
-				objAdjuster.adjust(value);
+				adjuster.ipv4()
+					.adjust(value);
 			}).toThrow(adjuster.CAUSE.PATTERN);
 		}
 	});

@@ -9,7 +9,8 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 		ignoreEachErrors: _featureIgnoreEachErrors,
 		eachDefault: _featureEachDefault,
 		eachAllowEmptyString: _featureEachAllowEmptyString,
-		eachIn: _featureEachIn,
+		eachTrim: _featureEachTrim,
+		eachOnly: _featureEachOnly,
 		eachMinLength: _featureEachMinLength,
 		eachMaxLength: _featureEachMaxLength,
 		eachPattern: _featureEachPattern,
@@ -55,13 +56,22 @@ function _featureEachAllowEmptyString(params, value = null)
 }
 
 /**
+ * remove whitespace from both ends for each elements
+ * @param {Object} params parameters
+ */
+function _featureEachTrim(params)
+{
+	params.objAdjuster.trim();
+}
+
+/**
  * accept only specified values for each elements
  * @param {Object} params parameters
  * @param {...string} values values to be accepted
  */
-function _featureEachIn(params, ...values)
+function _featureEachOnly(params, ...values)
 {
-	params.objAdjuster.in(...values);
+	params.objAdjuster.only(...values);
 }
 
 /**
@@ -118,7 +128,7 @@ function _adjust(params, values)
 				[CAUSE.TYPE]: CAUSE.EACH_TYPE,
 				[CAUSE.EMPTY]: CAUSE.EACH_EMPTY,
 				[CAUSE.REQUIRED]: CAUSE.EACH_REQUIRED,
-				[CAUSE.IN]: CAUSE.EACH_IN,
+				[CAUSE.ONLY]: CAUSE.EACH_ONLY,
 				[CAUSE.MIN_LENGTH]: CAUSE.EACH_MIN_LENGTH,
 				[CAUSE.MAX_LENGTH]: CAUSE.EACH_MAX_LENGTH,
 				[CAUSE.PATTERN]: CAUSE.EACH_PATTERN,

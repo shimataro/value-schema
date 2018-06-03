@@ -3,18 +3,19 @@ export default adjust;
 /**
  * adjust multiple variables (as object)
  * @param {Object<string, *>} data
- * @param {Object<string, AdjusterBase>} adjusters
+ * @param {Object<string, AdjusterBase>} constraints
  * @param {?adjust~OnError} onError
  * @param {?adjust~OnErrorAll} onErrorAll
  */
-function adjust(data, adjusters, onError = null, onErrorAll = null)
+function adjust(data, constraints, onError = null, onErrorAll = null)
 {
 	const result = {};
 	const errs = {};
-	for(const key of Object.keys(adjusters))
+	for(const key of Object.keys(constraints))
 	{
-		const adjustedValue = adjusters[key].adjust(data[key], (err) =>
+		const adjustedValue = constraints[key].adjust(data[key], (err) =>
 		{
+			err.key = key;
 			if(onError === null && onErrorAll === null)
 			{
 				throw err;
@@ -23,7 +24,7 @@ function adjust(data, adjusters, onError = null, onErrorAll = null)
 			errs[key] = err;
 			if(onError !== null)
 			{
-				return onError(key, err);
+				return onError(err);
 			}
 		});
 
@@ -42,7 +43,6 @@ function adjust(data, adjusters, onError = null, onErrorAll = null)
 
 /**
  * @callback adjust~OnError
- * @param {string} key
  * @param {AdjusterError} err
  */
 /**

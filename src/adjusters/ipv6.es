@@ -3,6 +3,7 @@ import AdjusterBase from "../libs/AdjusterBase";
 import Default from "../libs/decorators/default";
 import AllowEmptyString from "../libs/decorators/allowEmptyString";
 import Type from "../libs/decorators/string/type";
+import Trim from "../libs/decorators/string/trim";
 import Pattern from "../libs/decorators/string/pattern";
 
 import {PATTERN as PATTERN_IPV4} from "./ipv4";
@@ -38,8 +39,9 @@ export default () =>
  * adjuster for IPv6
  */
 @Pattern
-@Type
 @AllowEmptyString
+@Trim
+@Type
 @Default
 class IPv6Adjuster extends AdjusterBase
 {
@@ -62,16 +64,17 @@ class IPv6Adjuster extends AdjusterBase
 	 */
 
 	/**
-	 * allow empty string
+	 * remove whitespace from both ends
 	 * @method
-	 * @name IPv6Adjuster#allowEmptyString
-	 * @param {?string} [value=null] value on empty
+	 * @name IPv6Adjuster#trim
 	 * @return {IPv6Adjuster}
 	 */
 
 	/**
-	 * specify acceptable pattern by regular expression
-	 * @param {string|String|RegExp} pattern acceptable pattern(regular expression); string or RegExp
+	 * allow empty string
+	 * @method
+	 * @name IPv6Adjuster#allowEmptyString
+	 * @param {?string} [value=null] value on empty
 	 * @return {IPv6Adjuster}
 	 */
 

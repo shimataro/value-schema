@@ -1,6 +1,27 @@
 import AdjusterError from "./AdjusterError";
 
 /**
+ * get class decorators
+ * @function
+ * @param {function} TargetCass a target class
+ * @return {AdjusterBase.DECORATOR[]}
+ */
+const getDecorators = (() =>
+{
+	/** @type {Map<function, AdjusterBase.DECORATOR[]>} */
+	const decoratorsMap = new Map();
+
+	return (TargetClass) =>
+	{
+		if(!decoratorsMap.has(TargetClass))
+		{
+			decoratorsMap.set(TargetClass, []);
+		}
+		return decoratorsMap.get(TargetClass);
+	};
+})();
+
+/**
  * Decorator Builder
  */
 class DecoratorBuilder
@@ -51,11 +72,8 @@ class DecoratorBuilder
 			const features = this._features;
 			const adjust = this._adjust;
 
-			if(TargetClass._decorators === undefined)
-			{
-				TargetClass._decorators = [];
-			}
-			TargetClass._decorators.push({
+			const decorators = getDecorators(TargetClass);
+			decorators.push({
 				key: key,
 				adjust: adjust,
 				init: init,
@@ -68,7 +86,8 @@ class DecoratorBuilder
 				{
 					TargetClass.prototype[name] = function(...args)
 					{
-						features[name](this._params[key], ...args);
+						const params = this._params.get(key);
+						features[name](params, ...args);
 						return this;
 					};
 				}
@@ -99,15 +118,17 @@ export default class AdjusterBase
 	 */
 	constructor()
 	{
-		this._decorators = this.constructor._decorators;
-		this._params = {};
+		/** @type {Map<Symbol, Object>} */
+		this._params = new Map();
 
-		for(const decorator of this._decorators)
+		const decorators = getDecorators(this.constructor);
+		for(const decorator of decorators)
 		{
-			this._params[decorator.key] = {};
+			this._params.set(decorator.key, {});
 			if(decorator.init !== null)
 			{
-				decorator.init(this._params[decorator.key]);
+				const params = this._params.get(decorator.key);
+				decorator.init(params);
 			}
 		}
 	}
@@ -127,9 +148,11 @@ export default class AdjusterBase
 
 		try
 		{
-			for(const decorator of this._decorators)
+			const decorators = getDecorators(this.constructor);
+			for(const decorator of decorators)
 			{
-				if(decorator.adjust(this._params[decorator.key], values))
+				const params = this._params.get(decorator.key);
+				if(decorator.adjust(params, values))
 				{
 					return values.adjusted;
 				}
@@ -162,6 +185,13 @@ export default class AdjusterBase
 		return onError(err);
 	}
 }
+
+/**
+ * @typedef {Object} AdjusterBase.DECORATOR
+ * @property {Symbol} key
+ * @property {AdjusterBase.Adjust} adjust
+ * @property {?AdjusterBase.Init} init
+ */
 
 /**
  * @typedef {Object} AdjusterBase.VALUES
