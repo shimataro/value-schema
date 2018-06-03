@@ -66,7 +66,7 @@ class StringAdjuster extends AdjusterBase
 	 * set min-length
 	 * @method
 	 * @name StringAdjuster#minLength
-	 * @param {int} value min-length; error if shorter
+	 * @param {int} length min-length; error if shorter
 	 * @return {StringAdjuster}
 	 */
 

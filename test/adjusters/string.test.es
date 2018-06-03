@@ -2,15 +2,12 @@ import adjuster from "index";
 
 {
 	describe("type", testType);
-	describe("required", testRequired);
 	describe("default", testDefault);
-	describe("emptyString", testEmptyString);
 	describe("allowEmptyString", testAllowEmptyString);
 	describe("trim", testTrim);
 	describe("in", testIn);
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
-	describe("maxLength (adjusted)", testMaxLengthAdjusted);
 	describe("pattern", testPattern);
 }
 
@@ -19,26 +16,13 @@ import adjuster from "index";
  */
 function testType()
 {
-	const objAdjuster = adjuster.string();
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust(0)).toEqual("0");
-		expect(objAdjuster.adjust(-1)).toEqual("-1");
-	});
-}
+		expect(adjuster.string()
+			.adjust(0)).toEqual("0");
 
-/**
- * required value
- */
-function testRequired()
-{
-	const objAdjuster = adjuster.string();
-	it("should cause error(s)", () =>
-	{
-		expect(() =>
-		{
-			objAdjuster.adjust(undefined);
-		}).toThrow(adjuster.CAUSE.REQUIRED);
+		expect(adjuster.string()
+			.adjust(-1)).toEqual("-1");
 	});
 }
 
@@ -47,37 +31,38 @@ function testRequired()
  */
 function testDefault()
 {
-	const objAdjuster = adjuster.string().default("xyz");
 	it("should be adjusted", () =>
 	{
-		expect(objAdjuster.adjust(undefined)).toEqual("xyz");
+		expect(adjuster.string().default("xyz")
+			.adjust(undefined)).toEqual("xyz");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.string()
+				.adjust(undefined);
+		}).toThrow(adjuster.CAUSE.REQUIRED);
 	});
 }
 
 /**
  * empty string
  */
-function testEmptyString()
+function testAllowEmptyString()
 {
-	const objAdjuster = adjuster.string();
+	it("should be OK", () =>
+	{
+		expect(adjuster.string().allowEmptyString("qwerty")
+			.adjust("")).toEqual("qwerty");
+	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust("");
+			adjuster.string()
+				.adjust("");
 		}).toThrow(adjuster.CAUSE.EMPTY);
-	});
-}
-
-/**
- * empty string (allowed)
- */
-function testAllowEmptyString()
-{
-	const objAdjuster = adjuster.string().allowEmptyString("qwerty");
-	it("should be OK", () =>
-	{
-		expect(objAdjuster.adjust("")).toEqual("qwerty");
 	});
 }
 
@@ -86,16 +71,17 @@ function testAllowEmptyString()
  */
 function testTrim()
 {
-	const objAdjuster = adjuster.string().trim();
 	it("should be adjusted", () =>
 	{
-		expect(objAdjuster.adjust("\r\n hell, word \t ")).toEqual("hell, word");
+		expect(adjuster.string().trim()
+			.adjust("\r\n hell, word \t ")).toEqual("hell, word");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust(" \t\r\n ");
+			adjuster.string().trim()
+				.adjust(" \t\r\n ");
 		}).toThrow(adjuster.CAUSE.EMPTY);
 	});
 }
@@ -105,19 +91,26 @@ function testTrim()
  */
 function testIn()
 {
-	const objAdjuster = adjuster.string().in("", "eat", "sleep", "play");
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust("")).toEqual("");
-		expect(objAdjuster.adjust("eat")).toEqual("eat");
-		expect(objAdjuster.adjust("sleep")).toEqual("sleep");
-		expect(objAdjuster.adjust("play")).toEqual("play");
+		expect(adjuster.string().in("", "eat", "sleep", "play")
+			.adjust("")).toEqual("");
+
+		expect(adjuster.string().in("", "eat", "sleep", "play")
+			.adjust("eat")).toEqual("eat");
+
+		expect(adjuster.string().in("", "eat", "sleep", "play")
+			.adjust("sleep")).toEqual("sleep");
+
+		expect(adjuster.string().in("", "eat", "sleep", "play")
+			.adjust("play")).toEqual("play");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust("study");
+			adjuster.string().in("", "eat", "sleep", "play")
+				.adjust("study");
 		}).toThrow(adjuster.CAUSE.IN);
 	});
 }
@@ -127,16 +120,17 @@ function testIn()
  */
 function testMinLength()
 {
-	const objAdjuster = adjuster.string().minLength(4);
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust("1234")).toEqual("1234");
+		expect(adjuster.string().minLength(4)
+			.adjust("1234")).toEqual("1234");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust("abc");
+			adjuster.string().minLength(4)
+				.adjust("abc");
 		}).toThrow(adjuster.CAUSE.MIN_LENGTH);
 	});
 }
@@ -146,29 +140,23 @@ function testMinLength()
  */
 function testMaxLength()
 {
-	const objAdjuster = adjuster.string().maxLength(8);
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust("12345678")).toEqual("12345678");
+		expect(adjuster.string().maxLength(8)
+			.adjust("12345678")).toEqual("12345678");
+	});
+	it("should be adjusted", () =>
+	{
+		expect(adjuster.string().maxLength(8, true)
+			.adjust("123456789")).toEqual("12345678");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust("123456789");
+			adjuster.string().maxLength(8)
+				.adjust("123456789");
 		}).toThrow(adjuster.CAUSE.MAX_LENGTH);
-	});
-}
-
-/**
- * maximum length of string (adjusted)
- */
-function testMaxLengthAdjusted()
-{
-	const objAdjuster = adjuster.string().maxLength(8, true);
-	it("should be adjusted", () =>
-	{
-		expect(objAdjuster.adjust("123456789")).toEqual("12345678");
 	});
 }
 
@@ -177,23 +165,29 @@ function testMaxLengthAdjusted()
  */
 function testPattern()
 {
-	const objAdjuster = adjuster.string().pattern(/^Go+gle$/);
 	it("should be OK", () =>
 	{
-		expect(objAdjuster.adjust("Gogle")).toEqual("Gogle");
-		expect(objAdjuster.adjust("Google")).toEqual("Google");
-		expect(objAdjuster.adjust("Gooogle")).toEqual("Gooogle");
+		expect(adjuster.string().pattern(/^Go+gle$/)
+			.adjust("Gogle")).toEqual("Gogle");
+
+		expect(adjuster.string().pattern(/^Go+gle$/)
+			.adjust("Google")).toEqual("Google");
+
+		expect(adjuster.string().pattern(/^Go+gle$/)
+			.adjust("Gooogle")).toEqual("Gooogle");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			objAdjuster.adjust("Ggle");
+			adjuster.string().pattern(/^Go+gle$/)
+				.adjust("Ggle");
 		}).toThrow(adjuster.CAUSE.PATTERN);
 
 		expect(() =>
 		{
-			objAdjuster.adjust("google");
+			adjuster.string().pattern(/^Go+gle$/)
+				.adjust("google");
 		}).toThrow(adjuster.CAUSE.PATTERN);
 	});
 }

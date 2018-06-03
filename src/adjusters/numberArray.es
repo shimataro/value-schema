@@ -62,7 +62,7 @@ class NumberArrayAdjuster extends AdjusterBase
 	 * set min-length of array elements
 	 * @method
 	 * @name NumberArrayAdjuster#minLength
-	 * @param {int} value min-length; error if shorter
+	 * @param {int} length min-length; error if shorter
 	 * @return {NumberArrayAdjuster}
 	 */
 

@@ -77,11 +77,11 @@ For more information, see [numeric string](#numeric-string).
 
 ```typescript
 namespace adjuster {
-    export declare function adjust(data: Object, adjusters: Object, onError?: (key: string, err: AdjusterError) => any, onErrorAll?: (errs: Object) => void): Object;
+    export declare function adjust(data: Object, constraints: Object, onError?: (key: string, err: AdjusterError) => any, onErrorAll?: (errs: Object) => void): Object;
 }
 ```
 
-#### `adjuster.adjust(data, adjusters[, onError[, onErrorAll]])`
+#### `adjuster.adjust(data, constraints[, onError[, onErrorAll]])`
 Validate and adjust a input value.
 
 ##### `data`
@@ -89,7 +89,7 @@ The object values to adjust; e.g. `req.queries`, `req.body` (in [Express](http:/
 
 This `data` is not overwritten.
 
-##### `adjusters`
+##### `constraints`
 Constraints object for adjustment.
 
 * key: the name of `data` to adjust value
@@ -102,7 +102,7 @@ If no errors, this function will not be called.
 This parameter can be omitted.
 
 * `key`
-    * a name of the errored key in `adjusters`
+    * a name of the errored key in `constraints`
 * `err`
     * an instance of `AdjusterError`
 * returns
@@ -122,7 +122,7 @@ If both `onError()` and `onErrorAll()` are omitted, `adjuster.adjust()` will thr
 
 * `errs`
     * the object of all errors.
-    * key: a name of the errord key in `adjusters`
+    * key: a name of the errord key in `constraints`
     * value: an instance of `AdjusterError`
 * return value will be ignored
 * throws
@@ -134,7 +134,7 @@ If both `onError()` and `onErrorAll()` are omitted, `adjuster.adjust()` will thr
 import adjuster from "adjuster";
 import assert from "assert";
 
-const adjusters = {
+const constraints = {
     id: adjuster.number().minValue(1),
     name: adjuster.string().maxLength(16, true),
     email: adjuster.email(),
@@ -173,7 +173,7 @@ const expected = {
     offset: 0,
 };
 
-const adjusted = adjuster.adjust(input, adjusters);
+const adjusted = adjuster.adjust(input, constraints);
 assert.deepStrictEqual(adjusted, expected);
 ```
 
@@ -182,7 +182,7 @@ assert.deepStrictEqual(adjusted, expected);
 import adjuster from "adjuster";
 import assert from "assert";
 
-const adjusters = {
+const constraints = {
     id: adjuster.number().minValue(1),
     name: adjuster.string().maxLength(16, true),
     email: adjuster.email(),
@@ -197,7 +197,7 @@ const expected = {
     email: "john@example.com",
 };
 
-const adjusted = adjuster.adjust(input, adjusters, (key, err) => {
+const adjusted = adjuster.adjust(input, constraints, (key, err) => {
     switch(key) {
         case "id":
             return 100;
@@ -213,7 +213,7 @@ assert.deepStrictEqual(adjusted, expected);
 // error handling 2
 import adjuster from "adjuster";
 
-const adjusters = {
+const constraints = {
     id: adjuster.number().minValue(1),
     name: adjuster.string().maxLength(16, true),
     email: adjuster.email(),
@@ -225,7 +225,7 @@ const input = {
 };
 
 try {
-    const adjusted = adjuster.adjust(input, adjusters, (key, err) => {
+    const adjusted = adjuster.adjust(input, constraints, (key, err) => {
         switch(key) {
             case "id":
                 throw new Error("ID must be greater than 0");
@@ -245,7 +245,7 @@ catch(err) {
 // error handling 3
 import adjuster from "adjuster";
 
-const adjusters = {
+const constraints = {
     id: adjuster.number().minValue(1),
     name: adjuster.string().maxLength(16, true),
     email: adjuster.email(),
@@ -257,7 +257,7 @@ const input = {
 };
 
 try {
-    const adjusted = adjuster.adjust(input, adjusters, null, (errs) => {
+    const adjusted = adjuster.adjust(input, constraints, null, (errs) => {
         const messages = [];
         if(errs.id) {
             messages.push("ID must be greater than 0");
@@ -280,7 +280,7 @@ catch(err) {
 // error handling 4
 import adjuster from "adjuster";
 
-const adjusters = {
+const constraints = {
     id: adjuster.number().minValue(1),
     name: adjuster.string().maxLength(16, true),
     email: adjuster.email(),
@@ -292,7 +292,7 @@ const input = {
 };
 
 try {
-    const adjusted = adjuster.adjust(input, adjusters);
+    const adjusted = adjuster.adjust(input, constraints);
 }
 catch(err) {
     // catches a first error (`id`)
