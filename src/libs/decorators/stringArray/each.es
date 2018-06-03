@@ -10,7 +10,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 		eachDefault: _featureEachDefault,
 		eachAllowEmptyString: _featureEachAllowEmptyString,
 		eachTrim: _featureEachTrim,
-		eachIn: _featureEachIn,
+		eachOnly: _featureEachOnly,
 		eachMinLength: _featureEachMinLength,
 		eachMaxLength: _featureEachMaxLength,
 		eachPattern: _featureEachPattern,
@@ -69,9 +69,9 @@ function _featureEachTrim(params)
  * @param {Object} params parameters
  * @param {...string} values values to be accepted
  */
-function _featureEachIn(params, ...values)
+function _featureEachOnly(params, ...values)
 {
-	params.objAdjuster.in(...values);
+	params.objAdjuster.only(...values);
 }
 
 /**
@@ -128,7 +128,7 @@ function _adjust(params, values)
 				[CAUSE.TYPE]: CAUSE.EACH_TYPE,
 				[CAUSE.EMPTY]: CAUSE.EACH_EMPTY,
 				[CAUSE.REQUIRED]: CAUSE.EACH_REQUIRED,
-				[CAUSE.IN]: CAUSE.EACH_IN,
+				[CAUSE.ONLY]: CAUSE.EACH_ONLY,
 				[CAUSE.MIN_LENGTH]: CAUSE.EACH_MIN_LENGTH,
 				[CAUSE.MAX_LENGTH]: CAUSE.EACH_MAX_LENGTH,
 				[CAUSE.PATTERN]: CAUSE.EACH_PATTERN,

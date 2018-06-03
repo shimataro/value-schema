@@ -9,7 +9,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 		ignoreEachErrors: _featureIgnoreEachErrors,
 		eachDefault: _featureEachDefault,
 		eachAllowEmptyString: _featureEachAllowEmptyString,
-		eachIn: _featureEachIn,
+		eachOnly: _featureEachOnly,
 		eachMinValue: _featureEachMinValue,
 		eachMaxValue: _featureEachMaxValue,
 	})
@@ -58,9 +58,9 @@ function _featureEachAllowEmptyString(params, value = null)
  * @param {Object} params parameters
  * @param {...number} values values to be accepted
  */
-function _featureEachIn(params, ...values)
+function _featureEachOnly(params, ...values)
 {
-	params.objAdjuster.in(...values);
+	params.objAdjuster.only(...values);
 }
 
 /**
@@ -108,7 +108,7 @@ function _adjust(params, values)
 				[CAUSE.TYPE]: CAUSE.EACH_TYPE,
 				[CAUSE.EMPTY]: CAUSE.EACH_EMPTY,
 				[CAUSE.REQUIRED]: CAUSE.EACH_REQUIRED,
-				[CAUSE.IN]: CAUSE.EACH_IN,
+				[CAUSE.ONLY]: CAUSE.EACH_ONLY,
 				[CAUSE.MIN_VALUE]: CAUSE.EACH_MIN_VALUE,
 				[CAUSE.MAX_VALUE]: CAUSE.EACH_MAX_VALUE,
 			};

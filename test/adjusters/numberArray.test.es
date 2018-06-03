@@ -11,7 +11,7 @@ import adjuster from "index";
 	describe("ignoreEachErrors", testIgnoreEachErrors);
 	describe("eachDefault", testEachDefault);
 	describe("eachAllowEmptyString", testEachAllowEmptyString);
-	describe("eachIn", testEachIn);
+	describe("eachOnly", testEachOnly);
 	describe("eachMinValue", testEachMinValue);
 	describe("eachMaxValue", testEachMaxValue);
 }
@@ -237,20 +237,20 @@ function testEachAllowEmptyString()
 /**
  * each elements; set
  */
-function testEachIn()
+function testEachOnly()
 {
 	it("should be OK", () =>
 	{
-		expect(adjuster.numberArray().eachIn(1, 2, 3)
+		expect(adjuster.numberArray().eachOnly(1, 2, 3)
 			.adjust([1, 2, 3])).toEqual([1, 2, 3]);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			adjuster.numberArray().eachIn(1, 2, 3)
+			adjuster.numberArray().eachOnly(1, 2, 3)
 				.adjust([0, 1, 2]);
-		}).toThrow(adjuster.CAUSE.EACH_IN);
+		}).toThrow(adjuster.CAUSE.EACH_ONLY);
 	});
 }
 

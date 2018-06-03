@@ -138,7 +138,7 @@ const constraints = {
     id: adjuster.number().minValue(1),
     name: adjuster.string().maxLength(16, true),
     email: adjuster.email(),
-    state: adjuster.string().in("active", "inactive"),
+    state: adjuster.string().only("active", "inactive"),
     classes: adjuster.numberArray().separatedBy(",").ignoreEachErrors(),
     skills: adjuster.stringArray().separatedBy(",").ignoreEachErrors(),
     credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD),
@@ -318,7 +318,7 @@ interface NumberAdjuster {
     // feature methods (chainable)
     default(value: number): NumberAdjuster;
     allowEmptyString(value?: number|null /* = null */): NumberAdjuster;
-    in(...values: number[]): NumberAdjuster;
+    only(...values: number[]): NumberAdjuster;
     minValue(value: number, adjust?: boolean /* = false */): NumberAdjuster;
     maxValue(value: number, adjust?: boolean /* = false */): NumberAdjuster;
 }
@@ -391,7 +391,7 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
 ```
 
-#### `in(...values)`
+#### `only(...values)`
 Accept only `values`.
 
 If input value is not in `values`, `adjust()` method causes `AdjusterError`.
@@ -401,13 +401,13 @@ If input value is not in `values`, `adjust()` method causes `AdjusterError`.
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.number().in(1, 3, 5).adjust(1),
+    adjuster.number().only(1, 3, 5).adjust(1),
     1);
 
 // should cause error
 assert.throws(
-    () => adjuster.number().in(1, 3, 5).adjust(2),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IN));
+    () => adjuster.number().only(1, 3, 5).adjust(2),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.ONLY));
 ```
 
 #### `minValue(value[, adjust])`
@@ -480,7 +480,7 @@ interface NumberArrayAdjuster {
     ignoreEachErrors(): NumberArrayAdjuster;
     eachDefault(value: number): NumberArrayAdjuster;
     eachAllowEmptyString(value?: number|null /* = null */): NumberArrayAdjuster;
-    eachIn(...values: number[]): NumberArrayAdjuster;
+    eachOnly(...values: number[]): NumberArrayAdjuster;
     eachMinValue(value: number, adjust?: boolean /* = false */): NumberArrayAdjuster;
     eachMaxValue(value: number, adjust?: boolean /* = false */): NumberArrayAdjuster;
 }
@@ -687,7 +687,7 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_EMPTY));
 ```
 
-#### `eachIn(...values)`
+#### `eachOnly(...values)`
 Accept only `values` for each elements of input.
 
 ##### examples
@@ -695,13 +695,13 @@ Accept only `values` for each elements of input.
 ```javascript
 // should be OK
 assert.deepStrictEqual(
-    adjuster.numberArray().eachIn(1, 2, 3).adjust([1, 2]),
+    adjuster.numberArray().eachOnly(1, 2, 3).adjust([1, 2]),
     [1, 2]);
 
 // should cause error
 assert.throws(
-    () => adjuster.numberArray().eachIn(1, 2, 3).adjust([0, 1]),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_IN));
+    () => adjuster.numberArray().eachOnly(1, 2, 3).adjust([0, 1]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_ONLY));
 ```
 
 #### `eachMinValue(value[, adjust])`
@@ -774,7 +774,7 @@ interface StringAdjuster {
     default(value: string): StringAdjuster;
     allowEmptyString(value?: string|null /* = null */): StringAdjuster;
     trim(): StringAdjuster;
-    in(...values: string[]): StringAdjuster;
+    only(...values: string[]): StringAdjuster;
     minLength(length: number): StringAdjuster;
     maxLength(length: number, adjust?: boolean /* = false */): StringAdjuster;
     pattern(pattern: string|RegExp): StringAdjuster;
@@ -850,7 +850,7 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
 ```
 
-#### `in(...values)`
+#### `only(...values)`
 Accept only `values`.
 
 ##### examples
@@ -858,16 +858,16 @@ Accept only `values`.
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.string().in("eat", "sleep", "play").adjust("sleep"),
+    adjuster.string().only("eat", "sleep", "play").adjust("sleep"),
     "sleep");
 assert.strictEqual(
-    adjuster.string().in("").adjust(""),
+    adjuster.string().only("").adjust(""),
     "");
 
 // should cause error
 assert.throws(
-    () => adjuster.string().in("eat", "sleep", "play").adjust("study"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.IN));
+    () => adjuster.string().only("eat", "sleep", "play").adjust("study"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.ONLY));
 ```
 
 #### `minLength(length)`
@@ -955,7 +955,7 @@ interface StringArrayAdjuster {
     eachDefault(value: string): StringArrayAdjuster;
     eachAllowEmptyString(value?: string|null /* = null */): StringArrayAdjuster;
     eachTrim(): StringArrayAdjuster;
-    eachIn(...values: string[]): StringArrayAdjuster;
+    eachOnly(...values: string[]): StringArrayAdjuster;
     eachMinLength(length: number): StringArrayAdjuster;
     eachMaxLength(length: number, adjust?: boolean /* = false */): StringArrayAdjuster;
     eachPattern(pattern: string|RegExp): StringArrayAdjuster;
@@ -1163,7 +1163,7 @@ assert.deepStrictEqual(
     ["a", "b", "c"]);
 ```
 
-#### `eachIn(...values)`
+#### `eachOnly(...values)`
 Accept only `values` for each elements of input.
 
 ##### examples
@@ -1171,13 +1171,13 @@ Accept only `values` for each elements of input.
 ```javascript
 // should be adjusted
 assert.deepStrictEqual(
-    adjuster.stringArray().eachIn("a", "b").adjust(["a"]),
+    adjuster.stringArray().eachOnly("a", "b").adjust(["a"]),
     ["a"]);
 
 // should cause errors
 assert.throws(
-    () => adjuster.stringArray().eachIn("a", "b").adjust(["x"]),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_IN));
+    () => adjuster.stringArray().eachOnly("a", "b").adjust(["x"]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_ONLY));
 ```
 
 #### `eachMinLength(length[, adjust])`
