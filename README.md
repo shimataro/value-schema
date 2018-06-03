@@ -11,7 +11,7 @@ validate and adjust input values
 ## Table of Contents
 
 * [Install](#install)
-* [Import / Require](#import-/-require)
+* [Import / Require](#import--require)
 * [Reference](#reference)
     * [types and constants](#types-and-constants)
     * [basic usage](#basic-usage)
