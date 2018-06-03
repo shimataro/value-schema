@@ -16,7 +16,7 @@ function testAdjust()
 			id: adjuster.number().minValue(1),
 			name: adjuster.string().maxLength(16, true),
 			email: adjuster.email(),
-			state: adjuster.string().in("active", "inactive"),
+			state: adjuster.string().only("active", "inactive"),
 			classes: adjuster.numberArray().separatedBy(",").ignoreEachErrors(),
 			skills: adjuster.stringArray().separatedBy(",").ignoreEachErrors(),
 			credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD),

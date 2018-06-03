@@ -5,7 +5,7 @@ import adjuster from "index";
 	describe("default", testDefault);
 	describe("allowEmptyString", testAllowEmptyString);
 	describe("trim", testTrim);
-	describe("in", testIn);
+	describe("only", testOnly);
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
 	describe("pattern", testPattern);
@@ -89,29 +89,29 @@ function testTrim()
 /**
  * set
  */
-function testIn()
+function testOnly()
 {
 	it("should be OK", () =>
 	{
-		expect(adjuster.string().in("", "eat", "sleep", "play")
+		expect(adjuster.string().only("", "eat", "sleep", "play")
 			.adjust("")).toEqual("");
 
-		expect(adjuster.string().in("", "eat", "sleep", "play")
+		expect(adjuster.string().only("", "eat", "sleep", "play")
 			.adjust("eat")).toEqual("eat");
 
-		expect(adjuster.string().in("", "eat", "sleep", "play")
+		expect(adjuster.string().only("", "eat", "sleep", "play")
 			.adjust("sleep")).toEqual("sleep");
 
-		expect(adjuster.string().in("", "eat", "sleep", "play")
+		expect(adjuster.string().only("", "eat", "sleep", "play")
 			.adjust("play")).toEqual("play");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			adjuster.string().in("", "eat", "sleep", "play")
+			adjuster.string().only("", "eat", "sleep", "play")
 				.adjust("study");
-		}).toThrow(adjuster.CAUSE.IN);
+		}).toThrow(adjuster.CAUSE.ONLY);
 	});
 }
 

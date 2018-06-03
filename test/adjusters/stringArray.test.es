@@ -12,7 +12,7 @@ import adjuster from "index";
 	describe("eachDefault", testEachDefault);
 	describe("eachAllowEmptyString", testEachAllowEmptyString);
 	describe("eachTrim", testEachTrim);
-	describe("eachIn", testEachIn);
+	describe("eachOnly", testEachOnly);
 	describe("eachMinLength", testEachMinLength);
 	describe("eachMaxLength", testEachMaxLength);
 	describe("eachPattern", testEachPattern);
@@ -255,20 +255,20 @@ function testEachTrim()
 /**
  * each elements; set
  */
-function testEachIn()
+function testEachOnly()
 {
 	it("should be OK", () =>
 	{
-		expect(adjuster.stringArray().eachIn("a", "b", "c")
+		expect(adjuster.stringArray().eachOnly("a", "b", "c")
 			.adjust(["a", "b", "c"])).toEqual(["a", "b", "c"]);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			adjuster.stringArray().eachIn("a", "b", "c")
+			adjuster.stringArray().eachOnly("a", "b", "c")
 				.adjust(["a", "b", "x"]);
-		}).toThrow(adjuster.CAUSE.EACH_IN);
+		}).toThrow(adjuster.CAUSE.EACH_ONLY);
 	});
 }
 
