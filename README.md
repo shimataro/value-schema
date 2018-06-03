@@ -61,6 +61,7 @@ The `AdjusterError` object represents an error when trying to adjust invalid val
 |`message`|human-readable description of the error, including a string `cause`|
 |`cause`|the cause of adjustment error; see `adjuster.CAUSE`|
 |`value`|the value to adjust|
+|`key`|key name that caused error; only filled in `adjuster.adjust()`, otherwise `null`|
 
 #### `adjuster.CAUSE`
 The cause of adjustment error.
@@ -77,7 +78,7 @@ For more information, see [numeric string](#numeric-string).
 
 ```typescript
 namespace adjuster {
-    export declare function adjust(data: Object, constraints: Object, onError?: (key: string, err: AdjusterError) => any, onErrorAll?: (errs: Object) => void): Object;
+    export declare function adjust(data: Object, constraints: Object, onError?: (err: AdjusterError) => any, onErrorAll?: (errs: Object) => void): Object;
 }
 ```
 
@@ -95,16 +96,15 @@ Constraints object for adjustment.
 * key: the name of `data` to adjust value
 * value: the adjustment object; see below examples
 
-##### `onError(key, err)`
+##### `onError(err)`
 Callback function for each errors.
 If no errors, this function will not be called.
 
 This parameter can be omitted.
 
-* `key`
-    * a name of the errored key in `constraints`
 * `err`
     * an instance of `AdjusterError`
+    * `err.key` indicates a key name that caused error
 * returns
     * an adjuted value
     * `undefined` means this key will not be included in returned object from `adjuster.adjust()`
@@ -197,12 +197,14 @@ const expected = {
     email: "john@example.com",
 };
 
-const adjusted = adjuster.adjust(input, constraints, (key, err) => {
-    switch(key) {
+const adjusted = adjuster.adjust(input, constraints, (err) => {
+    switch(err.key) {
         case "id":
             return 100;
         case "name":
             return; // undefined
+        default:
+            return;
     }
 });
 assert.deepStrictEqual(adjusted, expected);
@@ -225,14 +227,16 @@ const input = {
 };
 
 try {
-    const adjusted = adjuster.adjust(input, constraints, (key, err) => {
-        switch(key) {
+    const adjusted = adjuster.adjust(input, constraints, (err) => {
+        switch(err.key) {
             case "id":
                 throw new Error("ID must be greater than 0");
             case "name":
                 throw new Error("name must be filled");
             case "email":
                 throw new Error("email must be valid mail address");
+            default:
+                throw new Error("unknown error");
         }
     });
 }
@@ -295,7 +299,7 @@ try {
     const adjusted = adjuster.adjust(input, constraints);
 }
 catch(err) {
-    // catches a first error (`id`)
+    // catch a first error (key caused is in `err.key`)
 }
 ```
 
