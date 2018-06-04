@@ -117,6 +117,8 @@ If this parameter is omitted, `adjuster.adjust()` throws `AdjusterError` on firs
 
 ##### examples
 
+###### successful
+
 ```javascript
 import adjuster from "adjuster";
 import assert from "assert";
@@ -165,8 +167,10 @@ const adjusted = adjuster.adjust(input, constraints);
 assert.deepStrictEqual(adjusted, expected);
 ```
 
+###### error handling 1
+adjust errors
+
 ```javascript
-// error handling 1: use error handler and adjust errors
 import adjuster from "adjuster";
 import assert from "assert";
 
@@ -185,23 +189,29 @@ const expected = {
     email: "john@example.com",
 };
 
-const adjusted = adjuster.adjust(input, constraints, (err) => {
-    if(err === null)
-    {
-        // adjustment finished
-        return;
-    }
-
-    if(err.key === "id")
-    {
-        return 100;
-    }
-});
+const adjusted = adjuster.adjust(input, constraints, generateErrorHandler());
 assert.deepStrictEqual(adjusted, expected);
+
+function generateErrorHandler() {
+    return (err) => {
+        if(err === null) {
+            // adjustment finished
+            return;
+        }
+
+        if(err.key === "id") {
+            // adjust to 100 on `id` error
+            return 100;
+        }
+        // remove otherwise
+    };
+}
 ```
 
+###### error handling 2
+throw exception after finished
+
 ```javascript
-// error handling 2: use error handler and throw exception after finished
 import adjuster from "adjuster";
 import assert from "assert";
 
@@ -216,13 +226,10 @@ const input = {
     email: "john@example.com", // OK
 };
 
-function generateErrorHandler()
-{
+function generateErrorHandler() {
     const messages = [];
-    return (err) =>
-    {
-        if(err === null)
-        {
+    return (err) => {
+        if(err === null) {
             // adjustment finished; join key name as message
             throw new Error(messages.join(","));
         }
@@ -241,8 +248,10 @@ catch(err) {
 }
 ```
 
+###### error handling 3
+catch a first error by omitting error handler
+
 ```javascript
-// error handling 3: omit error handler and catch a first error
 import adjuster from "adjuster";
 import assert from "assert";
 
