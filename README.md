@@ -192,17 +192,14 @@ const expected = {
 const adjusted = adjuster.adjust(input, constraints, generateErrorHandler());
 assert.deepStrictEqual(adjusted, expected);
 
-function generateErrorHandler()
-{
+function generateErrorHandler() {
     return (err) => {
-        if(err === null)
-        {
+        if(err === null) {
             // adjustment finished
             return;
         }
 
-        if(err.key === "id")
-        {
+        if(err.key === "id") {
             // adjust to 100 on `id` error
             return 100;
         }
@@ -229,13 +226,10 @@ const input = {
     email: "john@example.com", // OK
 };
 
-function generateErrorHandler()
-{
+function generateErrorHandler() {
     const messages = [];
-    return (err) =>
-    {
-        if(err === null)
-        {
+    return (err) => {
+        if(err === null) {
             // adjustment finished; join key name as message
             throw new Error(messages.join(","));
         }
