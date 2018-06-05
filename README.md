@@ -78,15 +78,15 @@ For more information, see [numeric string](#numeric-string).
 
 ```typescript
 namespace adjuster {
-    export declare function adjust(data: Object, constraints: Object, onError?: (err: AdjusterError) => any, onErrorAll?: (errs: Object) => void): Object;
+    export declare function adjust(data: Object, constraints: Object, onError?: (err: AdjusterError|null) => any): Object;
 }
 ```
 
-#### `adjuster.adjust(data, constraints[, onError[, onErrorAll]])`
+#### `adjuster.adjust(data, constraints[, onError])`
 Validate and adjust a input value.
 
 ##### `data`
-The object values to adjust; e.g. `req.queries`, `req.body` (in [Express](http://expressjs.com/))
+An object to adjust; e.g. `req.query`, `req.body` (in [Express](http://expressjs.com/))
 
 This `data` is not overwritten.
 
@@ -100,35 +100,25 @@ Constraints object for adjustment.
 Callback function for each errors.
 If no errors, this function will not be called.
 
-This parameter can be omitted.
+If this parameter is omitted, `adjuster.adjust()` throws `AdjusterError` on first error and remaining adjustment process will be cancelled.
 
 * `err`
-    * an instance of `AdjusterError`
+    * an instance of `AdjusterError` or `null`
     * `err.key` indicates a key name that caused error
+    * `err` will be `null` after all adjustment has finished and errors has occurred
+        * `onError()` will no longer be called after `null` passed
 * returns
     * an adjuted value
     * `undefined` means this key will not be included in returned object from `adjuster.adjust()`
+    * return value of `onError(null)` is ignored
 * throws
     * an exception that will thrown from `adjuster.adjust()`
     * remaining adjustment processes will be cancelled
 
-##### `onErrorAll(errs)`
-Callback function for all errors.
-If no errors, this function will not be called.
-
-This parameter can be omitted.
-
-If both `onError()` and `onErrorAll()` are omitted, `adjuster.adjust()` will throw `AdjusterError` on first error and remaining adjustment process will be cancelled.
-
-* `errs`
-    * the object of all errors.
-    * key: a name of the errord key in `constraints`
-    * value: an instance of `AdjusterError`
-* return value will be ignored
-* throws
-    * an exception that will thrown from `adjuster.adjust()`
-
 ##### examples
+
+###### successful
+For more information, see below references about [`adjuster.number()`](#number), [`adjuster.string()`](#string), and so on.
 
 ```javascript
 import adjuster from "adjuster";
@@ -177,8 +167,10 @@ const adjusted = adjuster.adjust(input, constraints);
 assert.deepStrictEqual(adjusted, expected);
 ```
 
+###### error handling 1
+adjust errors
+
 ```javascript
-// error handling 1
 import adjuster from "adjuster";
 import assert from "assert";
 
@@ -197,23 +189,31 @@ const expected = {
     email: "john@example.com",
 };
 
-const adjusted = adjuster.adjust(input, constraints, (err) => {
-    switch(err.key) {
-        case "id":
-            return 100;
-        case "name":
-            return; // undefined
-        default:
-            return;
-    }
-});
+const adjusted = adjuster.adjust(input, constraints, generateErrorHandler());
 assert.deepStrictEqual(adjusted, expected);
+
+function generateErrorHandler() {
+    return (err) => {
+        if(err === null) {
+            // adjustment finished
+            return;
+        }
+
+        if(err.key === "id") {
+            // adjust to 100 on `id` error
+            return 100;
+        }
+        // remove otherwise
+    };
+}
 ```
 
+###### error handling 2
+throw exception after finished
 
 ```javascript
-// error handling 2
 import adjuster from "adjuster";
+import assert from "assert";
 
 const constraints = {
     id: adjuster.number().minValue(1),
@@ -226,63 +226,34 @@ const input = {
     email: "john@example.com", // OK
 };
 
-try {
-    const adjusted = adjuster.adjust(input, constraints, (err) => {
-        switch(err.key) {
-            case "id":
-                throw new Error("ID must be greater than 0");
-            case "name":
-                throw new Error("name must be filled");
-            case "email":
-                throw new Error("email must be valid mail address");
-            default:
-                throw new Error("unknown error");
+function generateErrorHandler() {
+    const messages = [];
+    return (err) => {
+        if(err === null) {
+            // adjustment finished; join key name as message
+            throw new Error(messages.join(","));
         }
-    });
+
+        // append key name
+        messages.push(err.key);
+    };
+}
+
+try {
+    adjuster.adjust(input, constraints, generateErrorHandler());
 }
 catch(err) {
     // do something
+    assert.strictEqual(err.message, "id,name");
 }
 ```
 
-```javascript
-// error handling 3
-import adjuster from "adjuster";
-
-const constraints = {
-    id: adjuster.number().minValue(1),
-    name: adjuster.string().maxLength(16, true),
-    email: adjuster.email(),
-};
-const input = {
-    id: 0, // error! (>= 1)
-    name: "", // error! (empty string is not allowed)
-    email: "john@example.com", // OK
-};
-
-try {
-    const adjusted = adjuster.adjust(input, constraints, null, (errs) => {
-        const messages = [];
-        if(errs.id) {
-            messages.push("ID must be greater than 0");
-        }
-        if(errs.name) {
-            messages.push("name must be filled");
-        }
-        if(errs.email) {
-            messages.push("email must be valid mail address");
-        }
-        throw new Error(messages.join("\n"));
-    });
-}
-catch(err) {
-    // do something
-}
-```
+###### error handling 3
+catch a first error by omitting error handler
 
 ```javascript
-// error handling 4
 import adjuster from "adjuster";
+import assert from "assert";
 
 const constraints = {
     id: adjuster.number().minValue(1),
@@ -299,7 +270,8 @@ try {
     const adjusted = adjuster.adjust(input, constraints);
 }
 catch(err) {
-    // catch a first error (key caused is in `err.key`)
+    // catch a first error
+    assert.strictEqual(err.key, "id");
 }
 ```
 

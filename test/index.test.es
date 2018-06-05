@@ -80,14 +80,71 @@ function testError()
 
 		const adjusted = adjuster.adjust(input, constraints, (err) =>
 		{
+			if(err === null)
+			{
+				// adjustment finished
+				return;
+			}
+
 			switch(err.key)
 			{
 			case "id":
 				return 100;
-			default:
-				return undefined;
 			}
 		});
 		expect(adjusted).toEqual(expected);
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			const constraints = {
+				id: adjuster.number().minValue(1),
+				name: adjuster.string().maxLength(16, true),
+				email: adjuster.email(),
+			};
+			const input = {
+				id: 0, // error! (>= 1)
+				name: "", // error! (empty string is not allowed)
+				email: "john@example.com", // OK
+			};
+
+			adjuster.adjust(input, constraints, generateErrorHandler());
+
+			/**
+			 * error handler generator
+			 */
+			function generateErrorHandler()
+			{
+				const messages = [];
+				return (err) =>
+				{
+					if(err === null)
+					{
+						// adjustment finished; join key name as message
+						throw new Error(messages.join(","));
+					}
+
+					// append key name
+					messages.push(err.key);
+				};
+			}
+		}).toThrow("id,name");
+
+		expect(() =>
+		{
+			const constraints = {
+				id: adjuster.number().minValue(1),
+				name: adjuster.string().maxLength(16, true),
+				email: adjuster.email(),
+			};
+			const input = {
+				id: 0, // error! (>= 1)
+				name: "", // error! (empty string is not allowed)
+				email: "john@example.com", // OK
+			};
+
+			adjuster.adjust(input, constraints);
+		}).toThrow(); // throw a first error if error handler is omitted
 	});
 }
