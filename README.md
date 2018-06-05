@@ -1562,6 +1562,7 @@ interface IPv4Adjuster {
 
     // feature methods (chainable)
     default(value: string): IPv4Adjuster;
+    allowNull(value?: string|null /* = null */): IPv4Adjuster;
     allowEmptyString(value?: string|null /* = null */): IPv4Adjuster;
     trim(): IPv4Adjuster;
 }
@@ -1613,6 +1614,23 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
 ```
 
+#### `allowNull([value])`
+Allow a `null` for input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.ipv4().allowNull("0.0.0.0").adjust(null),
+    "0.0.0.0");
+
+// should cause error
+assert.throws(
+    () => adjuster.ipv4().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
+```
+
 #### `allowEmptyString([value])`
 Allow an empty string(`""`) for input, and adjust to `value`.
 
@@ -1661,6 +1679,7 @@ interface IPv6Adjuster {
 
     // feature methods (chainable)
     default(value: string): IPv6Adjuster;
+    allowNull(value?: string|null /* = null */): IPv6Adjuster;
     allowEmptyString(value?: string|null /* = null */): IPv6Adjuster;
     trim(): IPv6Adjuster;
 }
@@ -1718,6 +1737,23 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
 ```
 
+#### `allowNull([value])`
+Allow a `null` for input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.ipv6().allowNull("::").adjust(null),
+    "::");
+
+// should cause error
+assert.throws(
+    () => adjuster.ipv6().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
+```
+
 #### `allowEmptyString([value])`
 Allow an empty string(`""`) for input, and adjust to `value`.
 
@@ -1769,6 +1805,7 @@ interface EmailAdjuster {
 
     // feature methods (chainable)
     default(value: string): EmailAdjuster;
+    allowNull(value?: string|null /* = null */): EmailAdjuster;
     allowEmptyString(value?: string|null /* = null */): EmailAdjuster;
     trim(): EmailAdjuster;
     pattern(pattern: string|RegExp): EmailAdjuster;
@@ -1843,6 +1880,23 @@ assert.strictEqual(
 assert.throws(
     () => adjuster.email().adjust(undefined),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `allowNull([value])`
+Allow a `null` for input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.email().allowNull("user@example.com").adjust(null),
+    "user@example.com");
+
+// should cause error
+assert.throws(
+    () => adjuster.email().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
 #### `allowEmptyString([value])`
