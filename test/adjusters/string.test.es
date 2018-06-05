@@ -3,6 +3,7 @@ import adjuster from "index";
 {
 	describe("type", testType);
 	describe("default", testDefault);
+	describe("allowNull", testAllowNull);
 	describe("allowEmptyString", testAllowEmptyString);
 	describe("trim", testTrim);
 	describe("only", testOnly);
@@ -43,6 +44,26 @@ function testDefault()
 			adjuster.string()
 				.adjust(undefined);
 		}).toThrow(adjuster.CAUSE.REQUIRED);
+	});
+}
+
+/**
+ * null
+ */
+function testAllowNull()
+{
+	it("should be adjusted", () =>
+	{
+		expect(adjuster.string().allowNull("abc")
+			.adjust(null)).toEqual("abc");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.string()
+				.adjust(null);
+		}).toThrow(adjuster.CAUSE.NULL);
 	});
 }
 

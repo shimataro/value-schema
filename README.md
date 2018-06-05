@@ -764,6 +764,7 @@ interface StringAdjuster {
 
     // feature methods (chainable)
     default(value: string): StringAdjuster;
+    allowNull(value?: string|null /* = null */): StringAdjuster;
     allowEmptyString(value?: string|null /* = null */): StringAdjuster;
     trim(): StringAdjuster;
     only(...values: string[]): StringAdjuster;
@@ -805,6 +806,25 @@ assert.strictEqual(
 assert.throws(
     () => adjuster.string().adjust(undefined),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `allowNull([value])`
+Allow a `null` for input, and adjust to `value`.
+
+If this method is not called, `adjust(null)` causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.string().allowNull("x").adjust(null),
+    "x");
+
+// should cause error
+assert.throws(
+    () => adjuster.string().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
 #### `allowEmptyString([value])`
