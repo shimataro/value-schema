@@ -118,12 +118,12 @@ If this parameter is omitted, `adjuster.adjust()` throws `AdjusterError` on firs
 ##### examples
 
 ###### successful
+For more information, see below references about [`adjuster.number()`](#number), [`adjuster.string()`](#string), and so on.
 
 ```javascript
 import adjuster from "adjuster";
 import assert from "assert";
 
-// for more information, see the below references; such as `adjuster.number()`, `adjuster.string()`
 const constraints = {
     id: adjuster.number().minValue(1),
     name: adjuster.string().maxLength(16, true),
