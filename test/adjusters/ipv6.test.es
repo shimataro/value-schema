@@ -2,6 +2,7 @@ import adjuster from "index";
 
 {
 	describe("default", testDefault);
+	describe("allowNull", testAllowNull);
 	describe("allowEmptyString", testAllowEmptyString);
 	describe("trim", testTrim);
 	describe("pattern", testPattern);
@@ -24,6 +25,26 @@ function testDefault()
 			adjuster.ipv6()
 				.adjust(undefined);
 		}).toThrow(adjuster.CAUSE.REQUIRED);
+	});
+}
+
+/**
+ * null
+ */
+function testAllowNull()
+{
+	it("should be OK", () =>
+	{
+		expect(adjuster.ipv6().allowNull("::1")
+			.adjust(null)).toEqual("::1");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.ipv6()
+				.adjust(null);
+		}).toThrow(adjuster.CAUSE.NULL);
 	});
 }
 
