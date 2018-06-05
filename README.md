@@ -464,6 +464,7 @@ interface NumberArrayAdjuster {
 
     // feature methods (chainable)
     default(value: number[]): NumberArrayAdjuster;
+    allowNull(value?: number[]|null /* = null */): NumberArrayAdjuster;
     allowEmptyString(value: number[]|null /* = null */): NumberArrayAdjuster;
     separatedBy(separator: string|RegExp): NumberArrayAdjuster;
     toArray(): NumberArrayAdjuster;
@@ -471,6 +472,7 @@ interface NumberArrayAdjuster {
     maxLength(length: number, adjust?: boolean /* = false */): NumberArrayAdjuster;
     ignoreEachErrors(): NumberArrayAdjuster;
     eachDefault(value: number): NumberArrayAdjuster;
+    eachAllowNull(value?: number|null /* = null */): NumberArrayAdjuster;
     eachAllowEmptyString(value?: number|null /* = null */): NumberArrayAdjuster;
     eachOnly(...values: number[]): NumberArrayAdjuster;
     eachMinValue(value: number, adjust?: boolean /* = false */): NumberArrayAdjuster;
@@ -520,6 +522,25 @@ assert.deepStrictEqual(
 assert.throws(
     () => adjuster.numberArray().adjust(undefined),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `allowNull([value])`
+Allow a `null` for input, and adjust to `value`.
+
+If this method is not called, `adjust(null)` causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.numberArray().allowNull([1, 2, 3]).adjust(null),
+    [1, 2, 3]);
+
+// should cause error
+assert.throws(
+    () => adjuster.numberArray().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
 #### `allowEmptyString([value])`
@@ -662,6 +683,23 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_REQUIRED));
 ```
 
+#### `eachAllowNull([value])`
+Allow a `null` for each elements of input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.numberArray().eachAllowNull(2).adjust([1, null, 3]),
+    [1, 2, 3]);
+
+// should cause error
+assert.throws(
+    () => adjuster.numberArray().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_NULL));
+```
+
 #### `eachAllowEmptyString([value])`
 Allow an empty string(`""`) for each elements of input, and adjust to `value`.
 
@@ -671,7 +709,7 @@ Allow an empty string(`""`) for each elements of input, and adjust to `value`.
 // should be adjusted
 assert.deepStrictEqual(
     adjuster.numberArray().eachAllowEmptyString(2).adjust([1, "", 3]),
-    [1, 999, 3]);
+    [1, 2, 3]);
 
 // should cause eerror
 assert.throws(

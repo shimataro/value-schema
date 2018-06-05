@@ -1,6 +1,7 @@
 import AdjusterBase from "../libs/AdjusterBase";
 
 import Default from "../libs/decorators/default";
+import AllowNull from "../libs/decorators/allowNull";
 import AllowEmptyString from "../libs/decorators/allowEmptyString";
 import Type from "../libs/decorators/array/type";
 import MinLength from "../libs/decorators/array/minLength";
@@ -24,6 +25,7 @@ export default () =>
 @Each
 @Type
 @AllowEmptyString
+@AllowNull
 @Default
 class NumberArrayAdjuster extends AdjusterBase
 {
@@ -32,6 +34,14 @@ class NumberArrayAdjuster extends AdjusterBase
 	 * @method
 	 * @name NumberArrayAdjuster#default
 	 * @param {number[]} value default value
+	 * @return {NumberArrayAdjuster}
+	 */
+
+	/**
+	 * allow null
+	 * @method
+	 * @name NumberArrayAdjuster#allowNull
+	 * @param {?number[]} [value=null] value on null
 	 * @return {NumberArrayAdjuster}
 	 */
 
@@ -87,6 +97,14 @@ class NumberArrayAdjuster extends AdjusterBase
 	 * @method
 	 * @name NumberArrayAdjuster#eachDefault
 	 * @param {?number} value default value
+	 * @return {NumberArrayAdjuster}
+	 */
+
+	/**
+	 * allow null for each elements
+	 * @method
+	 * @name NumberArrayAdjuster#eachAllowNull
+	 * @param {?number} [value=null] value on null
 	 * @return {NumberArrayAdjuster}
 	 */
 

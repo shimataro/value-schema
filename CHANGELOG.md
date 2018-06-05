@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 * `adjuster.number().allowNull()`
+* `adjuster.numberArray().allowNull()`
+* `adjuster.numberArray().eachAllowNull()`
 * `adjuster.string().allowNull()`
 
 ### Changed
