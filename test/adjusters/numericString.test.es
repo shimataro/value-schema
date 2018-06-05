@@ -2,6 +2,7 @@ import adjuster from "index";
 
 {
 	describe("type", testType);
+	describe("allowNull", testAllowNull);
 	describe("joinArray", testJoinArray);
 	describe("separatedBy", testSeparatedBy);
 	describe("minLength", testMinLength);
@@ -24,6 +25,26 @@ function testType()
 	{
 		expect(adjuster.numericString()
 			.adjust(1111222233334444)).toEqual("1111222233334444");
+	});
+}
+
+/**
+ * null
+ */
+function testAllowNull()
+{
+	it("should be adjusted", () =>
+	{
+		expect(adjuster.numericString().allowNull("123")
+			.adjust(null)).toEqual("123");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.numericString()
+				.adjust(null);
+		}).toThrow(adjuster.CAUSE.NULL);
 	});
 }
 

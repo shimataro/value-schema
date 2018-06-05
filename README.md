@@ -1340,6 +1340,7 @@ interface NumericStringAdjuster {
 
     // feature methods (chainable)
     default(value: string): NumericStringAdjuster;
+    allowNull(value?: string|null /* = null */): NumericStringAdjuster;
     allowEmptyString(value?: string|null /* = null */): NumericStringAdjuster;
     joinArray(): NumericStringAdjuster;
     separatedBy(separator: string|RegExp): NumericStringAdjuster;
@@ -1381,6 +1382,23 @@ assert.strictEqual(
 assert.throws(
     () => adjuster.numericString().adjust(undefined),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `allowNull([value])`
+Allow a `null` for input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.numericString().allowNull("456").adjust(null),
+    "456");
+
+// should cause error
+assert.throws(
+    () => adjuster.numericString().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
 #### `allowEmptyString([value])`
