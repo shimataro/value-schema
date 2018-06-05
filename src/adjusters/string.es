@@ -1,6 +1,7 @@
 import AdjusterBase from "../libs/AdjusterBase";
 
 import Default from "../libs/decorators/default";
+import AllowNull from "../libs/decorators/allowNull";
 import AllowEmptyString from "../libs/decorators/allowEmptyString";
 import Only from "../libs/decorators/only";
 import Type from "../libs/decorators/string/type";
@@ -28,6 +29,7 @@ export default () =>
 @Only
 @Trim
 @Type
+@AllowNull
 @Default
 class StringAdjuster extends AdjusterBase
 {
@@ -36,6 +38,14 @@ class StringAdjuster extends AdjusterBase
 	 * @method
 	 * @name StringAdjuster#default
 	 * @param {string} value default value
+	 * @return {StringAdjuster}
+	 */
+
+	/**
+	 * allow null
+	 * @method
+	 * @name StringAdjuster#allowNull
+	 * @param {?string} [value=null] value on null
 	 * @return {StringAdjuster}
 	 */
 
