@@ -3,13 +3,15 @@ import adjuster from "index";
 {
 	describe("type", testType);
 	describe("default", testDefault);
-	describe("empty", testEmptyString);
+	describe("allowNull", testAllowNull);
+	describe("allowEmptyString", testAllowEmptyString);
 	describe("separatedBy", testSeparatedBy);
 	describe("toArray", testToArray);
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
 	describe("ignoreEachErrors", testIgnoreEachErrors);
 	describe("eachDefault", testEachDefault);
+	describe("eachAllowNull", testEachAllowNull);
 	describe("eachAllowEmptyString", testEachAllowEmptyString);
 	describe("eachOnly", testEachOnly);
 	describe("eachMinValue", testEachMinValue);
@@ -70,9 +72,29 @@ function testDefault()
 }
 
 /**
+ * null
+ */
+function testAllowNull()
+{
+	it("should be adjusted", () =>
+	{
+		expect(adjuster.numberArray().allowNull([1, 2, 3])
+			.adjust(null)).toEqual([1, 2, 3]);
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.numberArray()
+				.adjust(null);
+		}).toThrow(adjuster.CAUSE.NULL);
+	});
+}
+
+/**
  * empty string
  */
-function testEmptyString()
+function testAllowEmptyString()
 {
 	it("should be adjusted", () =>
 	{
@@ -211,6 +233,31 @@ function testEachDefault()
 			adjuster.numberArray().eachDefault(999)
 				.adjust([1, "", 3]);
 		}).toThrow(adjuster.CAUSE.EACH_EMPTY);
+	});
+}
+
+/**
+ * each elements; null
+ */
+function testEachAllowNull()
+{
+	it("should be adjusted", () =>
+	{
+		expect(adjuster.numberArray().eachAllowNull(999)
+			.adjust([1, null, 3])).toEqual([1, 999, 3]);
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.numberArray()
+				.adjust([1, null, 3]);
+		}).toThrow(adjuster.CAUSE.EACH_NULL);
+		expect(() =>
+		{
+			adjuster.numberArray().eachAllowNull(999)
+				.adjust([1, undefined, 3]);
+		}).toThrow(adjuster.CAUSE.EACH_REQUIRED);
 	});
 }
 

@@ -8,6 +8,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.features({
 		ignoreEachErrors: _featureIgnoreEachErrors,
 		eachDefault: _featureEachDefault,
+		eachAllowNull: _featureEachAllowNull,
 		eachAllowEmptyString: _featureEachAllowEmptyString,
 		eachOnly: _featureEachOnly,
 		eachMinValue: _featureEachMinValue,
@@ -41,6 +42,16 @@ function _featureIgnoreEachErrors(params)
 function _featureEachDefault(params, value)
 {
 	params.objAdjuster.default(value);
+}
+
+/**
+ * allow null for each elements
+ * @param {Object} params parameters
+ * @param {?number} [value=null] value on null
+ */
+function _featureEachAllowNull(params, value = null)
+{
+	params.objAdjuster.allowNull(value);
 }
 
 /**
@@ -106,6 +117,7 @@ function _adjust(params, values)
 
 			const causeMap = {
 				[CAUSE.TYPE]: CAUSE.EACH_TYPE,
+				[CAUSE.NULL]: CAUSE.EACH_NULL,
 				[CAUSE.EMPTY]: CAUSE.EACH_EMPTY,
 				[CAUSE.REQUIRED]: CAUSE.EACH_REQUIRED,
 				[CAUSE.ONLY]: CAUSE.EACH_ONLY,
