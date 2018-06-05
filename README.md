@@ -226,6 +226,14 @@ const input = {
     email: "john@example.com", // OK
 };
 
+try {
+    adjuster.adjust(input, constraints, generateErrorHandler());
+}
+catch(err) {
+    // do something
+    assert.strictEqual(err.message, "id,name");
+}
+
 function generateErrorHandler() {
     const messages = [];
     return (err) => {
@@ -237,14 +245,6 @@ function generateErrorHandler() {
         // append key name
         messages.push(err.key);
     };
-}
-
-try {
-    adjuster.adjust(input, constraints, generateErrorHandler());
-}
-catch(err) {
-    // do something
-    assert.strictEqual(err.message, "id,name");
 }
 ```
 
