@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * `adjuster.string().allowNull()`
 * `adjuster.stringArray().allowNull()`
 * `adjuster.stringArray().eachAllowNull()`
+* `adjuster.numericString().allowNull()`
 
 ### Changed
 * 3rd parameter of `adjuster.adjust()`, `onError`, receives `null` argument after all adjustment has finished and errors has occurred
