@@ -31,12 +31,13 @@
     "build": "babel src --out-dir dist --source-maps",
     "watch": "babel src --out-dir dist --source-maps --watch",
     "postinstall": "npm run build",
-    "test": "NODE_PATH=./dist jest",
+    "test": "cross-env NODE_PATH=./dist jest",
     "lint": "eslint src test --ext .es",
     "check-updates": "ncu"
   },
   "devDependencies": {
     "babel-eslint": "8.2.3",
+    "cross-env": "^5.1.6",
     "eslint": "4.19.1",
     "jest": "23.1.0",
     "npm-check-updates": "2.14.2"
