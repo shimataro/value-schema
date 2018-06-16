@@ -1,6 +1,7 @@
 import AdjusterBase from "../libs/AdjusterBase";
 
 import Default from "../libs/decorators/default";
+import AllowNull from "../libs/decorators/allowNull";
 import AllowEmptyString from "../libs/decorators/allowEmptyString";
 import Type from "../libs/decorators/string/type";
 import Trim from "../libs/decorators/string/trim";
@@ -29,6 +30,7 @@ export default () =>
 @AllowEmptyString
 @Trim
 @Type
+@AllowNull
 @Default
 class IPv4Adjuster extends AdjusterBase
 {
@@ -47,6 +49,14 @@ class IPv4Adjuster extends AdjusterBase
 	 * @method
 	 * @name IPv4Adjuster#default
 	 * @param {string} value default value
+	 * @return {IPv4Adjuster}
+	 */
+
+	/**
+	 * allow null
+	 * @method
+	 * @name IPv4Adjuster#allowNull
+	 * @param {?string} [value=null] value on null
 	 * @return {IPv4Adjuster}
 	 */
 

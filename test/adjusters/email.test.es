@@ -2,6 +2,7 @@ import adjuster from "index";
 
 {
 	describe("default", testDefault);
+	describe("allowNull", testAllowNull);
 	describe("allowEmptyString", testAllowEmptyString);
 	describe("trim", testTrim);
 	describe("maxLength", testMaxLength);
@@ -26,6 +27,26 @@ function testDefault()
 			adjuster.email()
 				.adjust(undefined);
 		}).toThrow(adjuster.CAUSE.REQUIRED);
+	});
+}
+
+/**
+ * null
+ */
+function testAllowNull()
+{
+	it("should be OK", () =>
+	{
+		expect(adjuster.email().allowNull("empty@example.com")
+			.adjust(null)).toEqual("empty@example.com");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.email()
+				.adjust(null);
+		}).toThrow(adjuster.CAUSE.NULL);
 	});
 }
 

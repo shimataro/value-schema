@@ -1,5 +1,3 @@
-import AdjusterError from "./AdjusterError";
-
 /**
  * get class decorators
  * @function
@@ -136,10 +134,10 @@ export default class AdjusterBase
 	/**
 	 * do adjust
 	 * @param {*} value value to be checked
-	 * @param {?AdjusterBase.OnError} [onError=null] callback function on error
+	 * @param {AdjusterBase.OnError} [onError] callback function on error
 	 * @return {*}
 	 */
-	adjust(value, onError = null)
+	adjust(value, onError = AdjusterBase.onErrorDefault)
 	{
 		const values = {
 			original: value,
@@ -162,27 +160,17 @@ export default class AdjusterBase
 		}
 		catch(err)
 		{
-			return AdjusterBase._handleError(onError, err.cause, err.value);
+			return onError(err);
 		}
 	}
 
 	/**
-	 * error handler
-	 * @param {?AdjusterBase.OnError} onError callback function on error
-	 * @param {string} cause
-	 * @param {*} value
-	 * @return {*}
-	 * @protected
+	 * default error handler
+	 * @param {AdjusterError} err error object
 	 */
-	static _handleError(onError, cause, value)
+	static onErrorDefault(err)
 	{
-		const err = new AdjusterError(cause, value);
-		if(onError === null)
-		{
-			throw err;
-		}
-
-		return onError(err);
+		throw err;
 	}
 }
 

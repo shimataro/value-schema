@@ -11,7 +11,7 @@ validate and adjust input values
 ## Table of Contents
 
 * [Install](#install)
-* [Import / Require](#import--require)
+* [Loading](#loading)
 * [Reference](#reference)
     * [types and constants](#types-and-constants)
     * [basic usage](#basic-usage)
@@ -34,9 +34,9 @@ install from [npm registry](https://www.npmjs.com/package/adjuster).
 npm install -S adjuster
 ```
 
-## Import / Require
+## Loading
 
-### import (using [Babel](https://babeljs.io/))
+### using [Babel](https://babeljs.io/)
 
 ```javascript
 import adjuster from "adjuster";
@@ -47,6 +47,12 @@ import adjuster from "adjuster";
 ```javascript
 var adjuster = require("adjuster").default;
 ```
+or
+```javascript
+var {default: adjuster} = require("adjuster");
+```
+
+ES Modules(`.mjs`) is not provided for now.
 
 ## Reference
 ### types and constants
@@ -78,15 +84,15 @@ For more information, see [numeric string](#numeric-string).
 
 ```typescript
 namespace adjuster {
-    export declare function adjust(data: Object, constraints: Object, onError?: (err: AdjusterError) => any, onErrorAll?: (errs: Object) => void): Object;
+    export declare function adjust(data: Object, constraints: Object, onError?: (err: AdjusterError|null) => any): Object;
 }
 ```
 
-#### `adjuster.adjust(data, constraints[, onError[, onErrorAll]])`
+#### `adjuster.adjust(data, constraints[, onError])`
 Validate and adjust a input value.
 
 ##### `data`
-The object values to adjust; e.g. `req.queries`, `req.body` (in [Express](http://expressjs.com/))
+An object to adjust; e.g. `req.query`, `req.body` (in [Express](http://expressjs.com/))
 
 This `data` is not overwritten.
 
@@ -100,35 +106,25 @@ Constraints object for adjustment.
 Callback function for each errors.
 If no errors, this function will not be called.
 
-This parameter can be omitted.
+If this parameter is omitted, `adjuster.adjust()` throws `AdjusterError` on first error and remaining adjustment process will be cancelled.
 
 * `err`
-    * an instance of `AdjusterError`
+    * an instance of `AdjusterError` or `null`
     * `err.key` indicates a key name that caused error
+    * `err` will be `null` after all adjustment has finished and errors has occurred
+        * `onError()` will no longer be called after `null` passed
 * returns
     * an adjuted value
     * `undefined` means this key will not be included in returned object from `adjuster.adjust()`
+    * return value of `onError(null)` is ignored
 * throws
     * an exception that will thrown from `adjuster.adjust()`
     * remaining adjustment processes will be cancelled
 
-##### `onErrorAll(errs)`
-Callback function for all errors.
-If no errors, this function will not be called.
-
-This parameter can be omitted.
-
-If both `onError()` and `onErrorAll()` are omitted, `adjuster.adjust()` will throw `AdjusterError` on first error and remaining adjustment process will be cancelled.
-
-* `errs`
-    * the object of all errors.
-    * key: a name of the errord key in `constraints`
-    * value: an instance of `AdjusterError`
-* return value will be ignored
-* throws
-    * an exception that will thrown from `adjuster.adjust()`
-
 ##### examples
+
+###### successful
+For more information, see below references about [`adjuster.number()`](#number), [`adjuster.string()`](#string), and so on.
 
 ```javascript
 import adjuster from "adjuster";
@@ -177,8 +173,10 @@ const adjusted = adjuster.adjust(input, constraints);
 assert.deepStrictEqual(adjusted, expected);
 ```
 
+###### error handling 1
+adjust errors
+
 ```javascript
-// error handling 1
 import adjuster from "adjuster";
 import assert from "assert";
 
@@ -197,23 +195,31 @@ const expected = {
     email: "john@example.com",
 };
 
-const adjusted = adjuster.adjust(input, constraints, (err) => {
-    switch(err.key) {
-        case "id":
-            return 100;
-        case "name":
-            return; // undefined
-        default:
-            return;
-    }
-});
+const adjusted = adjuster.adjust(input, constraints, generateErrorHandler());
 assert.deepStrictEqual(adjusted, expected);
+
+function generateErrorHandler() {
+    return (err) => {
+        if(err === null) {
+            // adjustment finished
+            return;
+        }
+
+        if(err.key === "id") {
+            // adjust to 100 on `id` error
+            return 100;
+        }
+        // remove otherwise
+    };
+}
 ```
 
+###### error handling 2
+throw exception after finished
 
 ```javascript
-// error handling 2
 import adjuster from "adjuster";
+import assert from "assert";
 
 const constraints = {
     id: adjuster.number().minValue(1),
@@ -227,62 +233,33 @@ const input = {
 };
 
 try {
-    const adjusted = adjuster.adjust(input, constraints, (err) => {
-        switch(err.key) {
-            case "id":
-                throw new Error("ID must be greater than 0");
-            case "name":
-                throw new Error("name must be filled");
-            case "email":
-                throw new Error("email must be valid mail address");
-            default:
-                throw new Error("unknown error");
-        }
-    });
+    adjuster.adjust(input, constraints, generateErrorHandler());
 }
 catch(err) {
     // do something
+    assert.strictEqual(err.message, "id,name");
+}
+
+function generateErrorHandler() {
+    const messages = [];
+    return (err) => {
+        if(err === null) {
+            // adjustment finished; join key name as message
+            throw new Error(messages.join(","));
+        }
+
+        // append key name
+        messages.push(err.key);
+    };
 }
 ```
 
-```javascript
-// error handling 3
-import adjuster from "adjuster";
-
-const constraints = {
-    id: adjuster.number().minValue(1),
-    name: adjuster.string().maxLength(16, true),
-    email: adjuster.email(),
-};
-const input = {
-    id: 0, // error! (>= 1)
-    name: "", // error! (empty string is not allowed)
-    email: "john@example.com", // OK
-};
-
-try {
-    const adjusted = adjuster.adjust(input, constraints, null, (errs) => {
-        const messages = [];
-        if(errs.id) {
-            messages.push("ID must be greater than 0");
-        }
-        if(errs.name) {
-            messages.push("name must be filled");
-        }
-        if(errs.email) {
-            messages.push("email must be valid mail address");
-        }
-        throw new Error(messages.join("\n"));
-    });
-}
-catch(err) {
-    // do something
-}
-```
+###### error handling 3
+catch a first error by omitting error handler
 
 ```javascript
-// error handling 4
 import adjuster from "adjuster";
+import assert from "assert";
 
 const constraints = {
     id: adjuster.number().minValue(1),
@@ -299,7 +276,8 @@ try {
     const adjusted = adjuster.adjust(input, constraints);
 }
 catch(err) {
-    // catch a first error (key caused is in `err.key`)
+    // catch a first error
+    assert.strictEqual(err.key, "id");
 }
 ```
 
@@ -313,10 +291,11 @@ namespace adjuster {
 
 interface NumberAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (cause: string, value: any) => number|void): number;
+    adjust(value: any, onError?: (err: AdjusterError) => number|void): number;
 
     // feature methods (chainable)
     default(value: number): NumberAdjuster;
+    allowNull(value?: number|null /* = null */): NumberAdjuster;
     allowEmptyString(value?: number|null /* = null */): NumberAdjuster;
     only(...values: number[]): NumberAdjuster;
     minValue(value: number, adjust?: boolean /* = false */): NumberAdjuster;
@@ -370,6 +349,25 @@ assert.strictEqual(
 assert.throws(
     () => adjuster.number().adjust(undefined),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `allowNull([value])`
+Allow a `null` for input, and adjust to `value`.
+
+If this method is not called, `adjust(null)` causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.number().allowNull(1).adjust(null),
+    1);
+
+// should cause error
+assert.throws(
+    () => adjuster.number().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
 #### `allowEmptyString([value])`
@@ -468,10 +466,11 @@ namespace adjuster {
 
 interface NumberArrayAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (cause: string, value: any) => number[]|void): number[];
+    adjust(value: any, onError?: (err: AdjusterError) => number[]|void): number[];
 
     // feature methods (chainable)
     default(value: number[]): NumberArrayAdjuster;
+    allowNull(value?: number[]|null /* = null */): NumberArrayAdjuster;
     allowEmptyString(value: number[]|null /* = null */): NumberArrayAdjuster;
     separatedBy(separator: string|RegExp): NumberArrayAdjuster;
     toArray(): NumberArrayAdjuster;
@@ -479,6 +478,7 @@ interface NumberArrayAdjuster {
     maxLength(length: number, adjust?: boolean /* = false */): NumberArrayAdjuster;
     ignoreEachErrors(): NumberArrayAdjuster;
     eachDefault(value: number): NumberArrayAdjuster;
+    eachAllowNull(value?: number|null /* = null */): NumberArrayAdjuster;
     eachAllowEmptyString(value?: number|null /* = null */): NumberArrayAdjuster;
     eachOnly(...values: number[]): NumberArrayAdjuster;
     eachMinValue(value: number, adjust?: boolean /* = false */): NumberArrayAdjuster;
@@ -528,6 +528,25 @@ assert.deepStrictEqual(
 assert.throws(
     () => adjuster.numberArray().adjust(undefined),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `allowNull([value])`
+Allow a `null` for input, and adjust to `value`.
+
+If this method is not called, `adjust(null)` causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.numberArray().allowNull([1, 2, 3]).adjust(null),
+    [1, 2, 3]);
+
+// should cause error
+assert.throws(
+    () => adjuster.numberArray().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
 #### `allowEmptyString([value])`
@@ -670,6 +689,23 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_REQUIRED));
 ```
 
+#### `eachAllowNull([value])`
+Allow a `null` for each elements of input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.numberArray().eachAllowNull(2).adjust([1, null, 3]),
+    [1, 2, 3]);
+
+// should cause error
+assert.throws(
+    () => adjuster.numberArray().adjust([1, null, 3]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_NULL));
+```
+
 #### `eachAllowEmptyString([value])`
 Allow an empty string(`""`) for each elements of input, and adjust to `value`.
 
@@ -679,7 +715,7 @@ Allow an empty string(`""`) for each elements of input, and adjust to `value`.
 // should be adjusted
 assert.deepStrictEqual(
     adjuster.numberArray().eachAllowEmptyString(2).adjust([1, "", 3]),
-    [1, 999, 3]);
+    [1, 2, 3]);
 
 // should cause eerror
 assert.throws(
@@ -768,10 +804,11 @@ namespace adjuster {
 
 interface StringAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (cause: string, value: any) => string|void): string;
+    adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
 
     // feature methods (chainable)
     default(value: string): StringAdjuster;
+    allowNull(value?: string|null /* = null */): StringAdjuster;
     allowEmptyString(value?: string|null /* = null */): StringAdjuster;
     trim(): StringAdjuster;
     only(...values: string[]): StringAdjuster;
@@ -813,6 +850,25 @@ assert.strictEqual(
 assert.throws(
     () => adjuster.string().adjust(undefined),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `allowNull([value])`
+Allow a `null` for input, and adjust to `value`.
+
+If this method is not called, `adjust(null)` causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.string().allowNull("x").adjust(null),
+    "x");
+
+// should cause error
+assert.throws(
+    () => adjuster.string().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
 #### `allowEmptyString([value])`
@@ -942,10 +998,11 @@ namespace adjuster {
 
 interface StringArrayAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (cause: string, value: any) => string[]|void): string[];
+    adjust(value: any, onError?: (err: AdjusterError) => string[]|void): string[];
 
     // feature methods (chainable)
     default(value: string[]): StringArrayAdjuster;
+    allowNull(value?: string[]|null /* = null */): StringArrayAdjuster;
     allowEmptyString(value: string[]|null /* = null */): StringArrayAdjuster;
     separatedBy(separator: string|RegExp): StringArrayAdjuster;
     toArray(): StringArrayAdjuster;
@@ -953,6 +1010,7 @@ interface StringArrayAdjuster {
     maxLength(length: number, adjust?: boolean /* = false */): StringArrayAdjuster;
     ignoreEachErrors(): StringArrayAdjuster;
     eachDefault(value: string): StringArrayAdjuster;
+    eachAllowNull(value?: string|null /* = null */): StringArrayAdjuster;
     eachAllowEmptyString(value?: string|null /* = null */): StringArrayAdjuster;
     eachTrim(): StringArrayAdjuster;
     eachOnly(...values: string[]): StringArrayAdjuster;
@@ -996,6 +1054,25 @@ assert.deepStrictEqual(
 assert.throws(
     () => adjuster.stringArray().adjust(undefined),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `allowNull([value])`
+Allow a `null` for input, and adjust to `value`.
+
+If this method is not called, `adjust(null)` causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.stringArray().allowNull(["a", "b"]).adjust(null),
+    ["a", "b"]);
+
+// should cause error
+assert.throws(
+    () => adjuster.stringArray().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
 #### `allowEmptyString([value])`
@@ -1134,6 +1211,23 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_REQUIRED));
 ```
 
+#### `eachAllowNull([value])`
+Allow a `null` for each elements of input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.stringArray().eachAllowNull("z").adjust(["a", null, "b"]),
+    ["a", "z", "b"]);
+
+// should cause error
+assert.throws(
+    () => adjuster.stringArray().adjust(["a", null, "b"]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_NULL));
+```
+
 #### `eachAllowEmptyString([value])`
 Allow an empty string(`""`) for each elements of input, and adjust to `value`.
 
@@ -1248,10 +1342,11 @@ namespace adjuster {
 
 interface NumericStringAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (cause: string, value: any) => string|void): string;
+    adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
 
     // feature methods (chainable)
     default(value: string): NumericStringAdjuster;
+    allowNull(value?: string|null /* = null */): NumericStringAdjuster;
     allowEmptyString(value?: string|null /* = null */): NumericStringAdjuster;
     joinArray(): NumericStringAdjuster;
     separatedBy(separator: string|RegExp): NumericStringAdjuster;
@@ -1293,6 +1388,23 @@ assert.strictEqual(
 assert.throws(
     () => adjuster.numericString().adjust(undefined),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `allowNull([value])`
+Allow a `null` for input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.numericString().allowNull("456").adjust(null),
+    "456");
+
+// should cause error
+assert.throws(
+    () => adjuster.numericString().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
 #### `allowEmptyString([value])`
@@ -1452,10 +1564,11 @@ namespace adjuster {
 
 interface IPv4Adjuster {
     // adjustment method
-    adjust(value: any, onError?: (cause: string, value: any) => string|void): string;
+    adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
 
     // feature methods (chainable)
     default(value: string): IPv4Adjuster;
+    allowNull(value?: string|null /* = null */): IPv4Adjuster;
     allowEmptyString(value?: string|null /* = null */): IPv4Adjuster;
     trim(): IPv4Adjuster;
 }
@@ -1507,6 +1620,23 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
 ```
 
+#### `allowNull([value])`
+Allow a `null` for input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.ipv4().allowNull("0.0.0.0").adjust(null),
+    "0.0.0.0");
+
+// should cause error
+assert.throws(
+    () => adjuster.ipv4().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
+```
+
 #### `allowEmptyString([value])`
 Allow an empty string(`""`) for input, and adjust to `value`.
 
@@ -1551,10 +1681,11 @@ namespace adjuster {
 
 interface IPv6Adjuster {
     // adjustment method
-    adjust(value: any, onError?: (cause: string, value: any) => string|void): string;
+    adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
 
     // feature methods (chainable)
     default(value: string): IPv6Adjuster;
+    allowNull(value?: string|null /* = null */): IPv6Adjuster;
     allowEmptyString(value?: string|null /* = null */): IPv6Adjuster;
     trim(): IPv6Adjuster;
 }
@@ -1612,6 +1743,23 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
 ```
 
+#### `allowNull([value])`
+Allow a `null` for input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.ipv6().allowNull("::").adjust(null),
+    "::");
+
+// should cause error
+assert.throws(
+    () => adjuster.ipv6().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
+```
+
 #### `allowEmptyString([value])`
 Allow an empty string(`""`) for input, and adjust to `value`.
 
@@ -1659,10 +1807,11 @@ namespace adjuster {
 
 interface EmailAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (cause: string, value: any) => string|void): string;
+    adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
 
     // feature methods (chainable)
     default(value: string): EmailAdjuster;
+    allowNull(value?: string|null /* = null */): EmailAdjuster;
     allowEmptyString(value?: string|null /* = null */): EmailAdjuster;
     trim(): EmailAdjuster;
     pattern(pattern: string|RegExp): EmailAdjuster;
@@ -1739,6 +1888,23 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
 ```
 
+#### `allowNull([value])`
+Allow a `null` for input, and adjust to `value`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.email().allowNull("user@example.com").adjust(null),
+    "user@example.com");
+
+// should cause error
+assert.throws(
+    () => adjuster.email().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
+```
+
 #### `allowEmptyString([value])`
 Allow an empty string(`""`) for input, and adjust to `value`.
 
@@ -1789,7 +1955,7 @@ assert.strictEqual(
 
 // should cause errors
 assert.throws(
-    () => adjuster.email().trim().adjust("......@example.com"),
+    () => adjuster.email().adjust("......@example.com"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
