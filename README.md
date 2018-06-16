@@ -11,7 +11,7 @@ validate and adjust input values
 ## Table of Contents
 
 * [Install](#install)
-* [Import / Require](#import--require)
+* [Loading](#loading)
 * [Reference](#reference)
     * [types and constants](#types-and-constants)
     * [basic usage](#basic-usage)
@@ -34,9 +34,9 @@ install from [npm registry](https://www.npmjs.com/package/adjuster).
 npm install -S adjuster
 ```
 
-## Import / Require
+## Loading
 
-### import (using [Babel](https://babeljs.io/))
+### using [Babel](https://babeljs.io/)
 
 ```javascript
 import adjuster from "adjuster";
@@ -47,6 +47,12 @@ import adjuster from "adjuster";
 ```javascript
 var adjuster = require("adjuster").default;
 ```
+or
+```javascript
+var {default: adjuster} = require("adjuster");
+```
+
+ES Modules(`.mjs`) is not provided for now.
 
 ## Reference
 ### types and constants
