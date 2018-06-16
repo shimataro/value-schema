@@ -1955,7 +1955,7 @@ assert.strictEqual(
 
 // should cause errors
 assert.throws(
-    () => adjuster.email().trim().adjust("......@example.com"),
+    () => adjuster.email().adjust("......@example.com"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
