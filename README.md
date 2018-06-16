@@ -291,7 +291,7 @@ namespace adjuster {
 
 interface NumberAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (cause: string, value: any) => number|void): number;
+    adjust(value: any, onError?: (err: AdjusterError) => number|void): number;
 
     // feature methods (chainable)
     default(value: number): NumberAdjuster;
@@ -466,7 +466,7 @@ namespace adjuster {
 
 interface NumberArrayAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (cause: string, value: any) => number[]|void): number[];
+    adjust(value: any, onError?: (err: AdjusterError) => number[]|void): number[];
 
     // feature methods (chainable)
     default(value: number[]): NumberArrayAdjuster;
@@ -804,7 +804,7 @@ namespace adjuster {
 
 interface StringAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (cause: string, value: any) => string|void): string;
+    adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
 
     // feature methods (chainable)
     default(value: string): StringAdjuster;
@@ -998,7 +998,7 @@ namespace adjuster {
 
 interface StringArrayAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (cause: string, value: any) => string[]|void): string[];
+    adjust(value: any, onError?: (err: AdjusterError) => string[]|void): string[];
 
     // feature methods (chainable)
     default(value: string[]): StringArrayAdjuster;
@@ -1342,7 +1342,7 @@ namespace adjuster {
 
 interface NumericStringAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (cause: string, value: any) => string|void): string;
+    adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
 
     // feature methods (chainable)
     default(value: string): NumericStringAdjuster;
@@ -1564,7 +1564,7 @@ namespace adjuster {
 
 interface IPv4Adjuster {
     // adjustment method
-    adjust(value: any, onError?: (cause: string, value: any) => string|void): string;
+    adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
 
     // feature methods (chainable)
     default(value: string): IPv4Adjuster;
@@ -1681,7 +1681,7 @@ namespace adjuster {
 
 interface IPv6Adjuster {
     // adjustment method
-    adjust(value: any, onError?: (cause: string, value: any) => string|void): string;
+    adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
 
     // feature methods (chainable)
     default(value: string): IPv6Adjuster;
@@ -1807,7 +1807,7 @@ namespace adjuster {
 
 interface EmailAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (cause: string, value: any) => string|void): string;
+    adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
 
     // feature methods (chainable)
     default(value: string): EmailAdjuster;

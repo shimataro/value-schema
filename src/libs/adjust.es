@@ -1,22 +1,15 @@
 export default adjust;
 
+import AdjusterBase from "./AdjusterBase";
+
 /**
  * adjust multiple variables (as object)
  * @param {Object<string, *>} data
  * @param {Object<string, AdjusterBase>} constraints
- * @param {?AdjusterBase.OnError} [onError=null]
+ * @param {AdjusterBase.OnError} [onError]
  */
-function adjust(data, constraints, onError = null)
+function adjust(data, constraints, onError = AdjusterBase.onErrorDefault)
 {
-	if(onError === null)
-	{
-		// just throw if onError is omitted
-		onError = (err) =>
-		{
-			throw err;
-		};
-	}
-
 	const result = {};
 	let hasError = false;
 	for(const key of Object.keys(constraints))
