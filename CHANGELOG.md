@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * 3rd parameter of `adjuster.adjust()`, `onError`, receives `null` argument after all adjustment has finished and errors has occurred
 * remove 4th parameter of `adjuster.adjust()`, `onErrorAll`
 
+### Fixed
+* description about error handler in [README.md](README.md)
+
 ## [0.8.0] - 2018-06-03
 ### Added
 * `adjuster.email().trim()`
