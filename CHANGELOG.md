@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+* `adjuster.number()` limits input value Limit the value to `Number.MIN_SAFE_INTEGER` or more and `Number.MAX_SAFE_INTEGER` or less
 
 ## [0.9.0] - 2018-06-16
 ### Added
