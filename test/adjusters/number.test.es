@@ -142,6 +142,8 @@ function testMinValue()
 {
 	it("should be OK", () =>
 	{
+		expect(adjuster.number()
+			.adjust(Number.MIN_SAFE_INTEGER)).toEqual(Number.MIN_SAFE_INTEGER);
 		expect(adjuster.number().minValue(10)
 			.adjust(10)).toEqual(10);
 	});
@@ -152,6 +154,11 @@ function testMinValue()
 	});
 	it("should cause error(s)", () =>
 	{
+		expect(() =>
+		{
+			adjuster.number()
+				.adjust(Number.MIN_SAFE_INTEGER - 1);
+		}).toThrow(adjuster.CAUSE.MIN_VALUE);
 		expect(() =>
 		{
 			adjuster.number().minValue(10)
@@ -167,6 +174,8 @@ function testMaxValue()
 {
 	it("should be OK", () =>
 	{
+		expect(adjuster.number()
+			.adjust(Number.MAX_SAFE_INTEGER)).toEqual(Number.MAX_SAFE_INTEGER);
 		expect(adjuster.number().maxValue(100)
 			.adjust(100)).toEqual(100);
 	});
@@ -177,6 +186,11 @@ function testMaxValue()
 	});
 	it("should cause error(s)", () =>
 	{
+		expect(() =>
+		{
+			adjuster.number()
+				.adjust(Number.MAX_SAFE_INTEGER + 1);
+		}).toThrow(adjuster.CAUSE.MAX_VALUE);
 		expect(() =>
 		{
 			adjuster.number().maxValue(100)

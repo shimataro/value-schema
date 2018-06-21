@@ -15,7 +15,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
  */
 function _init(params)
 {
-	params.flag = false;
+	params.value = Number.MAX_SAFE_INTEGER;
 }
 
 /**
@@ -27,7 +27,6 @@ function _init(params)
  */
 function _featureMaxValue(params, value, adjust = false)
 {
-	params.flag = true;
 	params.value = value;
 	params.adjust = adjust;
 }
@@ -41,10 +40,6 @@ function _featureMaxValue(params, value, adjust = false)
  */
 function _adjust(params, values)
 {
-	if(!params.flag)
-	{
-		return false;
-	}
 	if(values.adjusted <= params.value)
 	{
 		return false;

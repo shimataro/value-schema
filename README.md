@@ -413,10 +413,15 @@ Limit minimum value to `value`.
 
 If input value is less than `value`, `adjust()` method returns `value` (if `adjust` is truthy) or causes `AdjusterError` (falsy; default).
 
+By default, `value` equals `Number.MIN_SAFE_INTEGER`.
+
 ##### examples
 
 ```javascript
 // should be OK
+assert.strictEqual(
+    adjuster.number().adjust(Number.MIN_SAFE_INTEGER),
+    Number.MIN_SAFE_INTEGER);
 assert.strictEqual(
     adjuster.number().minValue(1).adjust(1),
     1);
@@ -428,6 +433,9 @@ assert.strictEqual(
 
 // should cause errors
 assert.throws(
+    () => adjuster.number().adjust(Number.MIN_SAFE_INTEGER - 1),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_VALUE));
+assert.throws(
     () => adjuster.number().minValue(1).adjust(0),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_VALUE));
 ```
@@ -437,10 +445,15 @@ Limit maximum value to `value`.
 
 If input value is greater than `value`, `adjust()` method returns `value` (if `adjust` is truthy) or causes `AdjusterError` (falsy; default).
 
+By default, `value` equals `Number.MAX_SAFE_INTEGER`.
+
 ##### examples
 
 ```javascript
 // should be OK
+assert.strictEqual(
+    adjuster.number().adjust(Number.MAX_SAFE_INTEGER),
+    Number.MAX_SAFE_INTEGER);
 assert.strictEqual(
     adjuster.number().maxValue(1).adjust(1),
     1);
@@ -451,6 +464,9 @@ assert.strictEqual(
     100);
 
 // should cause errors
+assert.throws(
+    () => adjuster.number().adjust(Number.MAX_SAFE_INTEGER + 1),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_VALUE));
 assert.throws(
     () => adjuster.number().maxValue(100).adjust(101),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_VALUE));
