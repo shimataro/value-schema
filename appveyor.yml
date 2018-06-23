@@ -5,6 +5,10 @@ environment:
   matrix: # jest no longer supports v4
     - nodejs_version: "6"
     - nodejs_version: "8"
+branches:
+  only:
+    - "master"
+    - "develop"
 cache:
   - "node_modules"
 install:
