@@ -2,7 +2,7 @@
 # https://www.appveyor.com/docs/lang/nodejs-iojs/
 
 environment:
-  matrix: # jest no longer supports v4
+  matrix: # jest and eslint no longer support v4
     - nodejs_version: "6"
     - nodejs_version: "8"
 branches:

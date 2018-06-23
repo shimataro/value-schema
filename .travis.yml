@@ -1,5 +1,5 @@
 language: "node_js"
-node_js: # jest no longer supports v4
+node_js: # jest and eslint no longer support v4
   - "6"
   - "8"
 os:
