@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Changed
-* `adjuster.number()` limits input value Limit the value to `Number.MIN_SAFE_INTEGER` or more and `Number.MAX_SAFE_INTEGER` or less
+* `adjuster.number()` limits input value to `Number.MIN_SAFE_INTEGER` or more and `Number.MAX_SAFE_INTEGER` or less
 
 ## [0.9.0] - 2018-06-16
 ### Added
