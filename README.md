@@ -1981,11 +1981,11 @@ assert.throws(
 
 See [CHANGELOG.md](CHANGELOG.md).
 
-[image-build-windows]: https://img.shields.io/appveyor/ci/shimataro/node-adjuster/develop.svg?label=windows
+[image-build-windows]: https://img.shields.io/appveyor/ci/shimataro/node-adjuster/develop.svg?label=Windows
 [link-build-windows]: https://ci.appveyor.com/project/shimataro/node-adjuster
 [image-build-macos]: https://img.shields.io/travis/shimataro/node-adjuster/develop.svg?label=macOS
 [link-build-macos]: https://travis-ci.org/shimataro/node-adjuster
-[image-build-linux]: https://img.shields.io/travis/shimataro/node-adjuster/develop.svg?label=linux
+[image-build-linux]: https://img.shields.io/travis/shimataro/node-adjuster/develop.svg?label=Linux
 [link-build-linux]: https://travis-ci.org/shimataro/node-adjuster
 [image-release]: https://img.shields.io/github/release/shimataro/node-adjuster.svg
 [link-release]: https://github.com/shimataro/node-adjuster/releases
