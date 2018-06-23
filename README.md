@@ -1,10 +1,12 @@
 node-adjuster
 ===
 
-[![Build Status](https://img.shields.io/travis/shimataro/node-adjuster/develop.svg)](https://travis-ci.org/shimataro/node-adjuster)
-[![Release](https://img.shields.io/github/release/shimataro/node-adjuster.svg)](https://github.com/shimataro/node-adjuster/releases)
-![Node.js version](https://img.shields.io/node/v/adjuster.svg)
-![License](https://img.shields.io/github/license/shimataro/node-adjuster.svg)
+[![Build Status (Windows)][image-build-windows]][link-build-windows]
+[![Build Status (macOS)][image-build-macos]][link-build-macos]
+[![Build Status (Linux)][image-build-linux]][link-build-linux]
+[![Release][image-release]][link-release]
+![Node.js version][image-engine]
+![License][image-license]
 
 validate and adjust input values
 
@@ -413,10 +415,15 @@ Limit minimum value to `value`.
 
 If input value is less than `value`, `adjust()` method returns `value` (if `adjust` is truthy) or causes `AdjusterError` (falsy; default).
 
+By default, `value` equals `Number.MIN_SAFE_INTEGER`.
+
 ##### examples
 
 ```javascript
 // should be OK
+assert.strictEqual(
+    adjuster.number().adjust(Number.MIN_SAFE_INTEGER),
+    Number.MIN_SAFE_INTEGER);
 assert.strictEqual(
     adjuster.number().minValue(1).adjust(1),
     1);
@@ -428,6 +435,9 @@ assert.strictEqual(
 
 // should cause errors
 assert.throws(
+    () => adjuster.number().adjust(Number.MIN_SAFE_INTEGER - 1),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_VALUE));
+assert.throws(
     () => adjuster.number().minValue(1).adjust(0),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_VALUE));
 ```
@@ -437,10 +447,15 @@ Limit maximum value to `value`.
 
 If input value is greater than `value`, `adjust()` method returns `value` (if `adjust` is truthy) or causes `AdjusterError` (falsy; default).
 
+By default, `value` equals `Number.MAX_SAFE_INTEGER`.
+
 ##### examples
 
 ```javascript
 // should be OK
+assert.strictEqual(
+    adjuster.number().adjust(Number.MAX_SAFE_INTEGER),
+    Number.MAX_SAFE_INTEGER);
 assert.strictEqual(
     adjuster.number().maxValue(1).adjust(1),
     1);
@@ -451,6 +466,9 @@ assert.strictEqual(
     100);
 
 // should cause errors
+assert.throws(
+    () => adjuster.number().adjust(Number.MAX_SAFE_INTEGER + 1),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_VALUE));
 assert.throws(
     () => adjuster.number().maxValue(100).adjust(101),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_VALUE));
@@ -1962,3 +1980,14 @@ assert.throws(
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md).
+
+[image-build-windows]: https://img.shields.io/appveyor/ci/shimataro/node-adjuster/master.svg?label=Windows
+[link-build-windows]: https://ci.appveyor.com/project/shimataro/node-adjuster
+[image-build-macos]: https://img.shields.io/travis/shimataro/node-adjuster/master.svg?label=macOS
+[link-build-macos]: https://travis-ci.org/shimataro/node-adjuster
+[image-build-linux]: https://img.shields.io/travis/shimataro/node-adjuster/master.svg?label=Linux
+[link-build-linux]: https://travis-ci.org/shimataro/node-adjuster
+[image-release]: https://img.shields.io/github/release/shimataro/node-adjuster.svg
+[link-release]: https://github.com/shimataro/node-adjuster/releases
+[image-engine]: https://img.shields.io/node/v/adjuster.svg
+[image-license]: https://img.shields.io/github/license/shimataro/node-adjuster.svg
