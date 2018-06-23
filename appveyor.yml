@@ -8,13 +8,13 @@ environment:
 cache:
   - "node_modules"
 install:
-  - "ps: Install-Product node $env:nodejs_version"
-  - "if exist node_modules npm prune"
-  - "if exist node_modules npm rebuild"
-  - "npm install"
+  - ps: Install-Product node $env:nodejs_version
+  - if exist node_modules npm prune
+  - if exist node_modules npm rebuild
+  - npm install
 test_script:
-  - "node --version"
-  - "npm --version"
-  - "npm test"
-  - "npm run lint"
+  - node --version
+  - npm --version
+  - npm test
+  - npm run lint
 build: "off"
