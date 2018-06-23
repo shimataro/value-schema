@@ -74,7 +74,7 @@ function testError()
 			email: "john@example.com", // OK
 		};
 		const expected = {
-			id: 100,
+			id: 1,
 			email: "john@example.com",
 		};
 
