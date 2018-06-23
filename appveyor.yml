@@ -1,0 +1,24 @@
+# https://www.appveyor.com/docs/appveyor-yml
+# https://www.appveyor.com/docs/lang/nodejs-iojs/
+
+environment:
+  matrix: # jest no longer supports v4
+    - nodejs_version: "6"
+    - nodejs_version: "8"
+branches:
+  only:
+    - "master"
+    - "develop"
+cache:
+  - "node_modules"
+install:
+  - ps: "Install-Product node $env:nodejs_version"
+  - "if exist node_modules npm prune"
+  - "if exist node_modules npm rebuild"
+  - "npm install"
+test_script:
+  - "node --version"
+  - "npm --version"
+  - "npm test"
+  - "npm run lint"
+build: "off"
