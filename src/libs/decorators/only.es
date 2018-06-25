@@ -5,7 +5,7 @@ import AdjusterError from "../AdjusterError";
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.features({
-		allowEmptyString: _featureAllowEmptyString,
+		only: _featureOnly,
 	})
 	.build();
 
@@ -19,14 +19,14 @@ function _init(params)
 }
 
 /**
- * allow empty string
+ * accept only specified values
  * @param {Object} params parameters
- * @param {*} [value=null] value on empty
+ * @param {...*} values values to be accepted
  */
-function _featureAllowEmptyString(params, value = null)
+function _featureOnly(params, ...values)
 {
 	params.flag = true;
-	params.valueOnEmpty = value;
+	params.values = new Set(values);
 }
 
 /**
@@ -38,17 +38,15 @@ function _featureAllowEmptyString(params, value = null)
  */
 function _adjust(params, values)
 {
-	if(values.adjusted !== "")
+	if(!params.flag)
 	{
 		return false;
 	}
-
-	if(params.flag)
+	if(params.values.has(values.adjusted))
 	{
-		values.adjusted = params.valueOnEmpty;
 		return true;
 	}
 
-	const cause = CAUSE.EMPTY;
+	const cause = CAUSE.ONLY;
 	throw new AdjusterError(cause, values.original);
 }

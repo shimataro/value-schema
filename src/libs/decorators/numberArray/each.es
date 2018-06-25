@@ -8,8 +8,9 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.features({
 		ignoreEachErrors: _featureIgnoreEachErrors,
 		eachDefault: _featureEachDefault,
+		eachAllowNull: _featureEachAllowNull,
 		eachAllowEmptyString: _featureEachAllowEmptyString,
-		eachIn: _featureEachIn,
+		eachOnly: _featureEachOnly,
 		eachMinValue: _featureEachMinValue,
 		eachMaxValue: _featureEachMaxValue,
 	})
@@ -44,6 +45,16 @@ function _featureEachDefault(params, value)
 }
 
 /**
+ * allow null for each elements
+ * @param {Object} params parameters
+ * @param {?number} [value=null] value on null
+ */
+function _featureEachAllowNull(params, value = null)
+{
+	params.objAdjuster.allowNull(value);
+}
+
+/**
  * allow empty string for each elements
  * @param {Object} params parameters
  * @param {?number} [value=null] value on empty
@@ -58,9 +69,9 @@ function _featureEachAllowEmptyString(params, value = null)
  * @param {Object} params parameters
  * @param {...number} values values to be accepted
  */
-function _featureEachIn(params, ...values)
+function _featureEachOnly(params, ...values)
 {
-	params.objAdjuster.in(...values);
+	params.objAdjuster.only(...values);
 }
 
 /**
@@ -106,9 +117,10 @@ function _adjust(params, values)
 
 			const causeMap = {
 				[CAUSE.TYPE]: CAUSE.EACH_TYPE,
+				[CAUSE.NULL]: CAUSE.EACH_NULL,
 				[CAUSE.EMPTY]: CAUSE.EACH_EMPTY,
 				[CAUSE.REQUIRED]: CAUSE.EACH_REQUIRED,
-				[CAUSE.IN]: CAUSE.EACH_IN,
+				[CAUSE.ONLY]: CAUSE.EACH_ONLY,
 				[CAUSE.MIN_VALUE]: CAUSE.EACH_MIN_VALUE,
 				[CAUSE.MAX_VALUE]: CAUSE.EACH_MAX_VALUE,
 			};

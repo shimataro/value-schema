@@ -4,7 +4,7 @@
  * @property {string} TYPE
  * @property {string} REQUIRED
  * @property {string} EMPTY
- * @property {string} IN
+ * @property {string} ONLY
  * @property {string} MIN_VALUE
  * @property {string} MAX_VALUE
  * @property {string} MIN_LENGTH
@@ -13,8 +13,9 @@
  * @property {string} ARRAY
  * @property {string} EACH_TYPE
  * @property {string} EACH_REQUIRED
+ * @property {string} EACH_NULL
  * @property {string} EACH_EMPTY
- * @property {string} EACH_IN
+ * @property {string} EACH_ONLY
  * @property {string} EACH_MIN_VALUE
  * @property {string} EACH_MAX_VALUE
  * @property {string} EACH_MIN_LENGTH
@@ -25,8 +26,9 @@
 export const CAUSE = {
 	TYPE: "type",
 	REQUIRED: "required",
+	NULL: "null",
 	EMPTY: "empty",
-	IN: "in",
+	ONLY: "only",
 
 	MIN_VALUE: "min-value",
 	MAX_VALUE: "max-value",
@@ -38,8 +40,9 @@ export const CAUSE = {
 	ARRAY: "array",
 	EACH_TYPE: "each-type",
 	EACH_REQUIRED: "each-required",
+	EACH_NULL: "each-null",
 	EACH_EMPTY: "each-empty",
-	EACH_IN: "each-in",
+	EACH_ONLY: "each-only",
 	EACH_MIN_VALUE: "each-min-value",
 	EACH_MAX_VALUE: "each-max-value",
 	EACH_MIN_LENGTH: "each-min-length",

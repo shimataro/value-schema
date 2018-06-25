@@ -6,8 +6,51 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Others
-* use changelog
 * use [Babel 7](https://github.com/babel/babel/wiki/Babel-7)
+
+## [0.10.0] - 2018-06-23
+### Changed
+* `adjuster.number()` limits input value to `Number.MIN_SAFE_INTEGER` or more and `Number.MAX_SAFE_INTEGER` or less
+
+### Others
+* support Microsoft Windows officially
+
+## [0.9.0] - 2018-06-16
+### Added
+* `adjuster.number().allowNull()`
+* `adjuster.numberArray().allowNull()`
+* `adjuster.numberArray().eachAllowNull()`
+* `adjuster.string().allowNull()`
+* `adjuster.stringArray().allowNull()`
+* `adjuster.stringArray().eachAllowNull()`
+* `adjuster.numericString().allowNull()`
+* `adjuster.ipv4().allowNull()`
+* `adjuster.ipv6().allowNull()`
+* `adjuster.email().allowNull()`
+
+### Changed
+* 3rd parameter of `adjuster.adjust()`, `onError`, receives `null` argument after all adjustment has finished and errors has occurred
+* remove 4th parameter of `adjuster.adjust()`, `onErrorAll`
+
+### Fixed
+* description about error handler in [README.md](README.md)
+
+## [0.8.0] - 2018-06-03
+### Added
+* `adjuster.email().trim()`
+* `adjuster.ipv4().trim()`
+* `adjuster.ipv6().trim()`
+* `adjuster.string().trim()`
+* `adjuster.stringArray().eachTrim()`
+
+### Changed
+* `AdjusterError.prototype.key` indicates a key name that caused error; only filled in `adjuster.adjust()`, otherwise `null`
+* error handler for `adjuster.adjust()` needs only 1 parameters `err`; `key` is in `err.key`
+* rename `.in()` to `.only()`
+
+### Others
+* use changelog
+* reference in README
 
 ## [0.7.0] - 2018-05-20
 ### Added
@@ -65,7 +108,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.1.0] - 2018-04-18
 * First release.
 
-[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v0.10.0...HEAD
+[0.10.0]: https://github.com/shimataro/node-adjuster/compare/v0.9.0...v0.10.0
+[0.9.0]: https://github.com/shimataro/node-adjuster/compare/v0.8.0...v0.9.0
+[0.8.0]: https://github.com/shimataro/node-adjuster/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/shimataro/node-adjuster/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/shimataro/node-adjuster/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/shimataro/node-adjuster/compare/v0.4.0...v0.5.0

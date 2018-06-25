@@ -1,51 +1,44 @@
 export default adjust;
 
+import AdjusterBase from "./AdjusterBase";
+
 /**
  * adjust multiple variables (as object)
  * @param {Object<string, *>} data
- * @param {Object<string, AdjusterBase>} adjusters
- * @param {?adjust~OnError} onError
- * @param {?adjust~OnErrorAll} onErrorAll
+ * @param {Object<string, AdjusterBase>} constraints
+ * @param {AdjusterBase.OnError} [onError]
  */
-function adjust(data, adjusters, onError = null, onErrorAll = null)
+function adjust(data, constraints, onError = AdjusterBase.onErrorDefault)
 {
 	const result = {};
-	const errs = {};
-	for(const key of Object.keys(adjusters))
+	let hasError = false;
+	for(const key of Object.keys(constraints))
 	{
-		const adjustedValue = adjusters[key].adjust(data[key], (err) =>
-		{
-			if(onError === null && onErrorAll === null)
-			{
-				throw err;
-			}
-
-			errs[key] = err;
-			if(onError !== null)
-			{
-				return onError(key, err);
-			}
-		});
-
+		const adjustedValue = constraints[key].adjust(data[key], generateErrorHandler(key));
 		if(adjustedValue !== undefined)
 		{
 			result[key] = adjustedValue;
 		}
 	}
 
-	if(Object.keys(errs).length > 0 && onErrorAll !== null)
+	if(hasError)
 	{
-		onErrorAll(errs);
+		onError(null);
 	}
 	return result;
-}
 
-/**
- * @callback adjust~OnError
- * @param {string} key
- * @param {AdjusterError} err
- */
-/**
- * @callback adjust~OnErrorAll
- * @param {Object<string, AdjusterError>} errs
- */
+	/**
+	 * error handler generator (to avoid "no-loop-fun" error on eslint)
+	 * @param {string} key key
+	 */
+	function generateErrorHandler(key)
+	{
+		return (err) =>
+		{
+			hasError = true;
+
+			err.key = key;
+			return onError(err);
+		};
+	}
+}

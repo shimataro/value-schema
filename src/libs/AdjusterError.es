@@ -15,5 +15,6 @@ export default class AdjusterError extends Error
 		this.name = "AdjusterError";
 		this.cause = cause;
 		this.value = value;
+		this.key = null;
 	}
 }

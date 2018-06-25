@@ -1,6 +1,7 @@
 import AdjusterBase from "../libs/AdjusterBase";
 
 import Default from "../libs/decorators/default";
+import AllowNull from "../libs/decorators/allowNull";
 import AllowEmptyString from "../libs/decorators/allowEmptyString";
 import Type from "../libs/decorators/array/type";
 import MinLength from "../libs/decorators/array/minLength";
@@ -24,6 +25,7 @@ export default () =>
 @Each
 @Type
 @AllowEmptyString
+@AllowNull
 @Default
 class StringArrayAdjuster extends AdjusterBase
 {
@@ -32,6 +34,14 @@ class StringArrayAdjuster extends AdjusterBase
 	 * @method
 	 * @name StringArrayAdjuster#default
 	 * @param {string[]} value default value
+	 * @return {StringArrayAdjuster}
+	 */
+
+	/**
+	 * allow null
+	 * @method
+	 * @name StringArrayAdjuster#allowNull
+	 * @param {?string[]} [value=null] value on null
 	 * @return {StringArrayAdjuster}
 	 */
 
@@ -87,6 +97,21 @@ class StringArrayAdjuster extends AdjusterBase
 	 * @method
 	 * @name StringArrayAdjuster#eachDefault
 	 * @param {?string} value default value
+	 * @return {StringArrayAdjuster}
+	 */
+
+	/**
+	 * remove whitespace from both ends for each elements
+	 * @method
+	 * @name StringArrayAdjuster#eachTrim
+	 * @return {StringArrayAdjuster}
+	 */
+
+	/**
+	 * allow null for each elements
+	 * @method
+	 * @name StringArrayAdjuster#eachAllowNull
+	 * @param {?string} [value=null] value on null
 	 * @return {StringArrayAdjuster}
 	 */
 
