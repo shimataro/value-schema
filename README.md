@@ -5,8 +5,8 @@ node-adjuster
 [![Build Status (macOS)][image-build-macos]][link-build-macos]
 [![Build Status (Linux)][image-build-linux]][link-build-linux]
 [![Release][image-release]][link-release]
-![Node.js version][image-engine]
-![License][image-license]
+[![Node.js version][image-engine]][link-engine]
+[![License][image-license]][link-license]
 
 validate and adjust input values
 
@@ -1990,4 +1990,6 @@ See [CHANGELOG.md](CHANGELOG.md).
 [image-release]: https://img.shields.io/github/release/shimataro/node-adjuster.svg
 [link-release]: https://github.com/shimataro/node-adjuster/releases
 [image-engine]: https://img.shields.io/node/v/adjuster.svg
+[link-engine]: https://nodejs.org/
 [image-license]: https://img.shields.io/github/license/shimataro/node-adjuster.svg
+[link-license]: ./LICENSE
