@@ -36,7 +36,6 @@ npm run check-updates -- -u
 ```bash
 rm -rf npm-shrinkwrap.json node_modules &&
 npm install &&
-rm -rf package-lock.json npm-shrinkwrap.json &&
 npm shrinkwrap
 ```
 
