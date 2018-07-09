@@ -7,6 +7,7 @@ import adjuster from "index";
 
 /**
  * test for adjust multiple variables
+ * @return {void}
  */
 function testAdjust()
 {
@@ -58,6 +59,7 @@ function testAdjust()
 
 /**
  * error handling
+ * @return {void}
  */
 function testError()
 {
@@ -113,6 +115,7 @@ function testError()
 
 			/**
 			 * error handler generator
+			 * @return {AdjusterBase.OnError} error handler
 			 */
 			function generateErrorHandler()
 			{

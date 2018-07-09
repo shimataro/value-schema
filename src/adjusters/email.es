@@ -37,7 +37,7 @@ const REGEXP = new RegExp(`^${PATTERN}$`);
 
 /**
  * factory
- * @return {EmailAdjuster}
+ * @return {EmailAdjuster} adjuster object
  */
 export default () =>
 {

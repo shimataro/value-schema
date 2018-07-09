@@ -12,7 +12,7 @@ import Pattern from "../libs/decorators/string/pattern";
 
 /**
  * factory
- * @return {StringAdjuster}
+ * @return {StringAdjuster} adjuster object
  */
 export default () =>
 {

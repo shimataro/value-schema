@@ -10,7 +10,7 @@ import Each from "../libs/decorators/stringArray/each";
 
 /**
  * factory
- * @return {StringArrayAdjuster}
+ * @return {StringArrayAdjuster} adjuster object
  */
 export default () =>
 {

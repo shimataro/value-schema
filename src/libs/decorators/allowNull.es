@@ -12,6 +12,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * init
  * @param {Object} params parameters
+ * @return {void}
  */
 function _init(params)
 {
@@ -22,6 +23,7 @@ function _init(params)
  * allow null
  * @param {Object} params parameters
  * @param {*} [value=null] value on null
+ * @return {void}
  */
 function _featureAllowNull(params, value = null)
 {
