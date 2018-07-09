@@ -22,6 +22,7 @@ import adjuster from "index";
 
 /**
  * type
+ * @return {void}
  */
 function testType()
 {
@@ -50,6 +51,7 @@ function testType()
 
 /**
  * default value
+ * @return {void}
  */
 function testDefault()
 {
@@ -70,6 +72,7 @@ function testDefault()
 
 /**
  * null
+ * @return {void}
  */
 function testAllowNull()
 {
@@ -90,6 +93,7 @@ function testAllowNull()
 
 /**
  * empty string
+ * @return {void}
  */
 function testAllowEmptyString()
 {
@@ -110,6 +114,7 @@ function testAllowEmptyString()
 
 /**
  * separator
+ * @return {void}
  */
 function testSeparatedBy()
 {
@@ -130,6 +135,7 @@ function testSeparatedBy()
 
 /**
  * convert to array
+ * @return {void}
  */
 function testToArray()
 {
@@ -150,6 +156,7 @@ function testToArray()
 
 /**
  * minimum length of elements
+ * @return {void}
  */
 function testMinLength()
 {
@@ -170,6 +177,7 @@ function testMinLength()
 
 /**
  * maximum length of elements
+ * @return {void}
  */
 function testMaxLength()
 {
@@ -198,6 +206,7 @@ function testMaxLength()
 
 /**
  * ignore elements' error
+ * @return {void}
  */
 function testIgnoreEachErrors()
 {
@@ -213,6 +222,7 @@ function testIgnoreEachErrors()
 
 /**
  * each elements; default value
+ * @return {void}
  */
 function testEachDefault()
 {
@@ -239,6 +249,7 @@ function testEachDefault()
 
 /**
  * each elements; null
+ * @return {void}
  */
 function testEachAllowNull()
 {
@@ -264,6 +275,7 @@ function testEachAllowNull()
 
 /**
  * each elements; empty string
+ * @return {void}
  */
 function testEachAllowEmptyString()
 {
@@ -289,6 +301,7 @@ function testEachAllowEmptyString()
 
 /**
  * each elements; trim
+ * @return {void}
  */
 function testEachTrim()
 {
@@ -301,6 +314,7 @@ function testEachTrim()
 
 /**
  * each elements; set
+ * @return {void}
  */
 function testEachOnly()
 {
@@ -321,6 +335,7 @@ function testEachOnly()
 
 /**
  * each elements; minimum length of string
+ * @return {void}
  */
 function testEachMinLength()
 {
@@ -341,6 +356,7 @@ function testEachMinLength()
 
 /**
  * each elements; maximum length of string
+ * @return {void}
  */
 function testEachMaxLength()
 {
@@ -369,6 +385,7 @@ function testEachMaxLength()
 
 /**
  * each elements; pattern
+ * @return {void}
  */
 function testEachPattern()
 {

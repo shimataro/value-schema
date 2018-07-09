@@ -12,6 +12,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * init
  * @param {Object} params parameters
+ * @return {void}
  */
 function _init(params)
 {
@@ -22,6 +23,7 @@ function _init(params)
  * validate by checksum
  * @param {Object} params parameters
  * @param {string} algorithm checksum algorithm
+ * @return {void}
  */
 function _featureChecksum(params, algorithm)
 {
@@ -32,7 +34,7 @@ function _featureChecksum(params, algorithm)
 /**
  * adjust
  * @param {Object} params parameters
- * @param {AdjusterBase.VALUES} values
+ * @param {AdjusterBase.VALUES} values original / adjusted values
  * @return {boolean} end adjustment
  * @throws {AdjusterError}
  */
@@ -55,6 +57,7 @@ function _adjust(params, values)
  * check string
  * @param {string} value value to check
  * @param {string} algorithm check algorithm
+ * @return {boolean} OK/NG
  */
 function check(value, algorithm)
 {

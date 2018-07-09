@@ -10,6 +10,7 @@ import adjuster from "index";
 
 /**
  * default value
+ * @return {void}
  */
 function testDefault()
 {
@@ -30,6 +31,7 @@ function testDefault()
 
 /**
  * null
+ * @return {void}
  */
 function testAllowNull()
 {
@@ -50,6 +52,7 @@ function testAllowNull()
 
 /**
  * empty string
+ * @return {void}
  */
 function testAllowEmptyString()
 {
@@ -70,6 +73,7 @@ function testAllowEmptyString()
 
 /**
  * remove whitespace from both ends
+ * @return {void}
  */
 function testTrim()
 {
@@ -90,6 +94,7 @@ function testTrim()
 
 /**
  * IPv4 pattern
+ * @return {void}
  */
 function testPattern()
 {

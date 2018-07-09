@@ -12,6 +12,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * init
  * @param {Object} params parameters
+ * @return {void}
  */
 function _init(params)
 {
@@ -23,7 +24,7 @@ function _init(params)
  * @param {Object} params parameters
  * @param {number} value min-value
  * @param {boolean} [adjust=false] adjust to min-value if value < min-value; default is ERROR
- * @return {NumberAdjuster}
+ * @return {void}
  */
 function _featureMinValue(params, value, adjust = false)
 {
@@ -34,7 +35,7 @@ function _featureMinValue(params, value, adjust = false)
 /**
  * adjust
  * @param {Object} params parameters
- * @param {AdjusterBase.VALUES} values
+ * @param {AdjusterBase.VALUES} values original / adjusted values
  * @return {boolean} end adjustment
  * @throws {AdjusterError}
  */

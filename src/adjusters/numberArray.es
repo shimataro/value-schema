@@ -10,7 +10,7 @@ import Each from "../libs/decorators/numberArray/each";
 
 /**
  * factory
- * @return {NumberArrayAdjuster}
+ * @return {NumberArrayAdjuster} adjuster object
  */
 export default () =>
 {

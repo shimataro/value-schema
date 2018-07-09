@@ -13,7 +13,7 @@ import Checksum from "../libs/decorators/numericString/checksum";
 
 /**
  * factory
- * @return {NumericStringAdjuster}
+ * @return {NumericStringAdjuster} adjuster object
  */
 export default () =>
 {

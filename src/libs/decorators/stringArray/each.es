@@ -21,6 +21,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * init
  * @param {Object} params parameters
+ * @return {void}
  */
 function _init(params)
 {
@@ -30,6 +31,7 @@ function _init(params)
 /**
  * ignore each elements error
  * @param {Object} params parameters
+ * @return {void}
  */
 function _featureIgnoreEachErrors(params)
 {
@@ -40,6 +42,7 @@ function _featureIgnoreEachErrors(params)
  * set a default value for each elements
  * @param {Object} params parameters
  * @param {?string} value default value
+ * @return {void}
  */
 function _featureEachDefault(params, value)
 {
@@ -50,6 +53,7 @@ function _featureEachDefault(params, value)
  * allow null for each elements
  * @param {Object} params parameters
  * @param {?number} [value=null] value on null
+ * @return {void}
  */
 function _featureEachAllowNull(params, value = null)
 {
@@ -60,6 +64,7 @@ function _featureEachAllowNull(params, value = null)
  * allow empty string for each elements
  * @param {Object} params parameters
  * @param {?string} [value=null] value on empty
+ * @return {void}
  */
 function _featureEachAllowEmptyString(params, value = null)
 {
@@ -69,6 +74,7 @@ function _featureEachAllowEmptyString(params, value = null)
 /**
  * remove whitespace from both ends for each elements
  * @param {Object} params parameters
+ * @return {void}
  */
 function _featureEachTrim(params)
 {
@@ -79,6 +85,7 @@ function _featureEachTrim(params)
  * accept only specified values for each elements
  * @param {Object} params parameters
  * @param {...string} values values to be accepted
+ * @return {void}
  */
 function _featureEachOnly(params, ...values)
 {
@@ -88,7 +95,8 @@ function _featureEachOnly(params, ...values)
 /**
  * set min-length for each elements
  * @param {Object} params parameters
- * @param {int} length min-length; error if shorter
+ * @param {int} value min-length; error if shorter
+ * @return {void}
  */
 function _featureEachMinLength(params, value)
 {
@@ -98,8 +106,9 @@ function _featureEachMinLength(params, value)
 /**
  * set max-length for each elements
  * @param {Object} params parameters
- * @param {int} length max-length
+ * @param {int} value max-length
  * @param {boolean} [adjust=false] truncate if longer; default is ERROR
+ * @return {void}
  */
 function _featureEachMaxLength(params, value, adjust = false)
 {
@@ -110,6 +119,7 @@ function _featureEachMaxLength(params, value, adjust = false)
  * specify acceptable pattern by regular expression for each elements
  * @param {Object} params parameters
  * @param {string|String|RegExp} pattern acceptable pattern(regular expression); string or RegExp
+ * @return {void}
  */
 function _featureEachPattern(params, pattern)
 {

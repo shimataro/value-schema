@@ -19,6 +19,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * init
  * @param {Object} params parameters
+ * @return {void}
  */
 function _init(params)
 {
@@ -28,6 +29,7 @@ function _init(params)
 /**
  * ignore each elements error
  * @param {Object} params parameters
+ * @return {void}
  */
 function _featureIgnoreEachErrors(params)
 {
@@ -38,6 +40,7 @@ function _featureIgnoreEachErrors(params)
  * set a default value for each elements
  * @param {Object} params parameters
  * @param {?number} value default value
+ * @return {void}
  */
 function _featureEachDefault(params, value)
 {
@@ -48,6 +51,7 @@ function _featureEachDefault(params, value)
  * allow null for each elements
  * @param {Object} params parameters
  * @param {?number} [value=null] value on null
+ * @return {void}
  */
 function _featureEachAllowNull(params, value = null)
 {
@@ -58,6 +62,7 @@ function _featureEachAllowNull(params, value = null)
  * allow empty string for each elements
  * @param {Object} params parameters
  * @param {?number} [value=null] value on empty
+ * @return {void}
  */
 function _featureEachAllowEmptyString(params, value = null)
 {
@@ -68,6 +73,7 @@ function _featureEachAllowEmptyString(params, value = null)
  * accept only specified values for each elements
  * @param {Object} params parameters
  * @param {...number} values values to be accepted
+ * @return {void}
  */
 function _featureEachOnly(params, ...values)
 {
@@ -79,6 +85,7 @@ function _featureEachOnly(params, ...values)
  * @param {Object} params parameters
  * @param {number} value min-value
  * @param {boolean} [adjust=false] adjust to min-value if value < min-value; default is ERROR
+ * @return {void}
  */
 function _featureEachMinValue(params, value, adjust = false)
 {
@@ -90,6 +97,7 @@ function _featureEachMinValue(params, value, adjust = false)
  * @param {Object} params parameters
  * @param {number} value min-value
  * @param {boolean} [adjust=false] adjust to min-value if value < min-value; default is ERROR
+ * @return {void}
  */
 function _featureEachMaxValue(params, value, adjust = false)
 {
