@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.10.1] - 2018-07-09
 ### Others
 * follow `valid-jsdoc` option for ESLint
 * follow `wrap-regex` option for ESLint
@@ -109,7 +111,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.1.0] - 2018-04-18
 * First release.
 
-[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v0.10.0...HEAD
+[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v0.10.1...HEAD
+[0.10.1]: https://github.com/shimataro/node-adjuster/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/shimataro/node-adjuster/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/shimataro/node-adjuster/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/shimataro/node-adjuster/compare/v0.7.0...v0.8.0
