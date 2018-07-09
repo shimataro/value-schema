@@ -1,5 +1,6 @@
 # temporary files
 *~
+*.bak
 *.tmp
 *.swp
 *.log
