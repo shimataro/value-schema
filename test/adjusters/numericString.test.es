@@ -13,6 +13,7 @@ import adjuster from "index";
 
 /**
  * type
+ * @return {void}
  */
 function testType()
 {
@@ -30,6 +31,7 @@ function testType()
 
 /**
  * null
+ * @return {void}
  */
 function testAllowNull()
 {
@@ -50,6 +52,7 @@ function testAllowNull()
 
 /**
  * join array into string
+ * @return {void}
  */
 function testJoinArray()
 {
@@ -70,6 +73,7 @@ function testJoinArray()
 
 /**
  * separator
+ * @return {void}
  */
 function testSeparatedBy()
 {
@@ -90,6 +94,7 @@ function testSeparatedBy()
 
 /**
  * min-length
+ * @return {void}
  */
 function testMinLength()
 {
@@ -115,6 +120,7 @@ function testMinLength()
 
 /**
  * max-length
+ * @return {void}
  */
 function testMaxLength()
 {
@@ -144,6 +150,7 @@ function testMaxLength()
 
 /**
  * checksum - Luhn algorithm
+ * @return {void}
  */
 function testChecksumLuhn()
 {
@@ -166,6 +173,7 @@ function testChecksumLuhn()
 
 /**
  * checksum - Modulus 10 / Weight 3:1
+ * @return {void}
  */
 function testChecksumModulus10Weight31()
 {

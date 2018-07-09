@@ -26,7 +26,7 @@ class DecoratorBuilder
 {
 	/**
 	 * constructor
-	 * @param {AdjusterBase.Adjust} adjust
+	 * @param {AdjusterBase.Adjust} adjust adjuster function
 	 */
 	constructor(adjust)
 	{
@@ -37,8 +37,8 @@ class DecoratorBuilder
 
 	/**
 	 * add init function
-	 * @param {AdjusterBase.Init} init
-	 * @return {DecoratorBuilder}
+	 * @param {AdjusterBase.Init} init initializer
+	 * @return {DecoratorBuilder} builder object (to be chained)
 	 */
 	init(init)
 	{
@@ -49,7 +49,7 @@ class DecoratorBuilder
 	/**
 	 * add feature functions
 	 * @param {Object<string, AdjusterBase.Feature>} features feature functions
-	 * @return {DecoratorBuilder}
+	 * @return {DecoratorBuilder} builder object (to be chained)
 	 */
 	features(features)
 	{
@@ -59,7 +59,7 @@ class DecoratorBuilder
 
 	/**
 	 * build decorator
-	 * @return {AdjusterBase.ClassDecorator}
+	 * @return {AdjusterBase.ClassDecorator} decorator function
 	 */
 	build()
 	{
@@ -103,8 +103,8 @@ export default class AdjusterBase
 {
 	/**
 	 * returns DecoratorBuilder
-	 * @param {function} adjust
-	 * @return {DecoratorBuilder}
+	 * @param {function} adjust adjuster function
+	 * @return {DecoratorBuilder} builder object (to be chained)
 	 */
 	static decoratorBuilder(adjust)
 	{
@@ -135,7 +135,7 @@ export default class AdjusterBase
 	 * do adjust
 	 * @param {*} value value to be checked
 	 * @param {AdjusterBase.OnError} [onError] callback function on error
-	 * @return {*}
+	 * @return {*} adjusted value
 	 */
 	adjust(value, onError = AdjusterBase.onErrorDefault)
 	{
@@ -167,6 +167,7 @@ export default class AdjusterBase
 	/**
 	 * default error handler
 	 * @param {AdjusterError} err error object
+	 * @return {void}
 	 */
 	static onErrorDefault(err)
 	{

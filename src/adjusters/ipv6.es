@@ -29,7 +29,7 @@ export {PATTERN};
 
 /**
  * factory
- * @return {IPv6Adjuster}
+ * @return {IPv6Adjuster} adjuster object
  */
 export default () =>
 {

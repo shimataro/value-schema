@@ -254,7 +254,7 @@ rules: # https://eslint.org/docs/rules/
   unicode-bom:
     - error
     - never
-  valid-jsdoc: 'off'
+  valid-jsdoc: error
   vars-on-top: error
   wrap-iife: error
   wrap-regex: error

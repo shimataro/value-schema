@@ -15,6 +15,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * init
  * @param {Object} params parameters
+ * @return {void}
  */
 function _init(params)
 {
@@ -26,6 +27,7 @@ function _init(params)
  * allow string and set separator
  * @param {Object} params parameters
  * @param {string|String|RegExp} separator separator
+ * @return {void}
  */
 function _featureSeparatedBy(params, separator)
 {
@@ -36,6 +38,7 @@ function _featureSeparatedBy(params, separator)
 /**
  * convert to array, if not
  * @param {Object} params parameters
+ * @return {void}
  */
 function _featureToArray(params)
 {

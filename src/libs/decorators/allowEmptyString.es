@@ -12,6 +12,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * init
  * @param {Object} params parameters
+ * @return {void}
  */
 function _init(params)
 {
@@ -22,6 +23,7 @@ function _init(params)
  * allow empty string
  * @param {Object} params parameters
  * @param {*} [value=null] value on empty
+ * @return {void}
  */
 function _featureAllowEmptyString(params, value = null)
 {

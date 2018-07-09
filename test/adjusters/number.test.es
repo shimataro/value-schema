@@ -12,6 +12,7 @@ import adjuster from "index";
 
 /**
  * type
+ * @return {void}
  */
 function testType()
 {
@@ -46,6 +47,7 @@ function testType()
 
 /**
  * default value
+ * @return {void}
  */
 function testDefault()
 {
@@ -71,6 +73,7 @@ function testDefault()
 
 /**
  * null
+ * @return {void}
  */
 function testAllowNull()
 {
@@ -91,6 +94,7 @@ function testAllowNull()
 
 /**
  * empty string
+ * @return {void}
  */
 function testAllowEmptyString()
 {
@@ -111,6 +115,7 @@ function testAllowEmptyString()
 
 /**
  * set
+ * @return {void}
  */
 function testOnly()
 {
@@ -137,6 +142,7 @@ function testOnly()
 
 /**
  * minimum value
+ * @return {void}
  */
 function testMinValue()
 {
@@ -169,6 +175,7 @@ function testMinValue()
 
 /**
  * maximum value
+ * @return {void}
  */
 function testMaxValue()
 {

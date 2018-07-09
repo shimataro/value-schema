@@ -12,6 +12,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * init
  * @param {Object} params parameters
+ * @return {void}
  */
 function _init(params)
 {
@@ -23,6 +24,7 @@ function _init(params)
  * @param {Object} params parameters
  * @param {int} length max-length; error if longer
  * @param {boolean} [adjust=false] truncate if longer; default is ERROR
+ * @return {void}
  */
 function _featureMaxLength(params, length, adjust = false)
 {
@@ -34,7 +36,7 @@ function _featureMaxLength(params, length, adjust = false)
 /**
  * adjust
  * @param {Object} params parameters
- * @param {AdjusterBase.VALUES} values
+ * @param {AdjusterBase.VALUES} values original / adjusted values
  * @return {boolean} end adjustment
  * @throws {AdjusterError}
  */

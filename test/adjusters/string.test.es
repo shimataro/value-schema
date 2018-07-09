@@ -14,6 +14,7 @@ import adjuster from "index";
 
 /**
  * type
+ * @return {void}
  */
 function testType()
 {
@@ -29,6 +30,7 @@ function testType()
 
 /**
  * default value
+ * @return {void}
  */
 function testDefault()
 {
@@ -49,6 +51,7 @@ function testDefault()
 
 /**
  * null
+ * @return {void}
  */
 function testAllowNull()
 {
@@ -69,6 +72,7 @@ function testAllowNull()
 
 /**
  * empty string
+ * @return {void}
  */
 function testAllowEmptyString()
 {
@@ -89,6 +93,7 @@ function testAllowEmptyString()
 
 /**
  * remove whitespace from both ends
+ * @return {void}
  */
 function testTrim()
 {
@@ -109,6 +114,7 @@ function testTrim()
 
 /**
  * set
+ * @return {void}
  */
 function testOnly()
 {
@@ -138,6 +144,7 @@ function testOnly()
 
 /**
  * minimum length of string
+ * @return {void}
  */
 function testMinLength()
 {
@@ -158,6 +165,7 @@ function testMinLength()
 
 /**
  * maximum length of string
+ * @return {void}
  */
 function testMaxLength()
 {
@@ -183,6 +191,7 @@ function testMaxLength()
 
 /**
  * pattern
+ * @return {void}
  */
 function testPattern()
 {
