@@ -1,6 +1,6 @@
 #!/bin/bash
 # requires following packages:
-# - git; I believe already installed.
+# - git; I believe you have already installed.
 # - sed; GNU sed is preferred. POSIX sed may not work.
 
 BASE_BRANCH="develop"
@@ -110,7 +110,12 @@ function finish() {
 	echo -e "\tRelease title: \033[1;31mnode-adjuster ${VERSION} released\033[0;39m"
 	echo -e "\tDescription this release: (see CHANGELOG.md)"
 	echo -e "7. Publish!"
+	echo -e "\tgit checkout master"
+	echo -e "\tgit pull"
 	echo -e "\tnpm publish --access=public"
+	echo -e "8. Post processing"
+	echo -e "\tgit checkout ${BASE_BRANCH}"
+	echo -e "\tgit pull"
 	echo -e ""
 	echo -e "That's all!"
 }
