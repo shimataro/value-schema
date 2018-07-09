@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Others
 * follow `valid-jsdoc` option for ESLint
+* follow `wrap-regex` option for ESLint
 
 ## [0.10.0] - 2018-06-23
 ### Changed

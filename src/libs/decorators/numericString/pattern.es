@@ -2,6 +2,8 @@ import {CAUSE} from "../../constants";
 import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
 
+const REGEXP = /^\d+$/;
+
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
@@ -14,7 +16,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
  */
 function _adjust(params, values)
 {
-	if(/^\d+$/.test(values.adjusted))
+	if(REGEXP.test(values.adjusted))
 	{
 		return false;
 	}
