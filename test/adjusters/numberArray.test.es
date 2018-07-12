@@ -13,6 +13,7 @@ import adjuster from "index";
 	describe("eachDefault", testEachDefault);
 	describe("eachAcceptNull", testEachAcceptNull);
 	describe("eachAcceptEmptyString", testEachAcceptEmptyString);
+	describe("eachAcceptSpecialFormats", testEachAcceptSpecialFormats);
 	describe("eachOnly", testEachOnly);
 	describe("eachMinValue", testEachMinValue);
 	describe("eachMaxValue", testEachMaxValue);
@@ -290,6 +291,27 @@ function testEachAcceptEmptyString()
 			adjuster.numberArray().eachAcceptEmptyString(999)
 				.adjust([1, undefined, 3]);
 		}).toThrow(adjuster.CAUSE.EACH_REQUIRED);
+	});
+}
+
+/**
+ * each elements; special formats
+ * @return {void}
+ */
+function testEachAcceptSpecialFormats()
+{
+	it("should be adjusted", () =>
+	{
+		expect(adjuster.numberArray().eachAcceptSpecialFormats()
+			.adjust(["1e+2", "0x100", "0o100", "0b100"])).toEqual([100, 256, 64, 4]);
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.numberArray()
+				.adjust(["1e+2", "0x100", "0o100", "0b100"]);
+		}).toThrow(adjuster.CAUSE.EACH_TYPE);
 	});
 }
 
