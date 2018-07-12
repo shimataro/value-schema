@@ -10,6 +10,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 		eachDefault: _featureEachDefault,
 		eachAcceptNull: _featureEachAcceptNull,
 		eachAcceptEmptyString: _featureEachAcceptEmptyString,
+		eachAcceptSpecialFormats: _featureEachAcceptSpecialFormats,
 		eachOnly: _featureEachOnly,
 		eachMinValue: _featureEachMinValue,
 		eachMaxValue: _featureEachMaxValue,
@@ -67,6 +68,16 @@ function _featureEachAcceptNull(params, value = null)
 function _featureEachAcceptEmptyString(params, value = null)
 {
 	params.objAdjuster.acceptEmptyString(value);
+}
+
+/**
+ * accept special formats for each elements
+ * @param {Object} params parameters
+ * @return {void}
+ */
+function _featureEachAcceptSpecialFormats(params)
+{
+	params.objAdjuster.acceptSpecialFormats();
 }
 
 /**

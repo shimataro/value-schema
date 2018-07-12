@@ -117,6 +117,13 @@ class NumberArrayAdjuster extends AdjusterBase
 	 */
 
 	/**
+	 * accept special formats for each elements
+	 * @method
+	 * @name NumberArrayAdjuster#eachAcceptSpecialFormats
+	 * @return {NumberArrayAdjuster}
+	 */
+
+	/**
 	 * accept only specified values for each elements
 	 * @method
 	 * @name NumberArrayAdjuster#eachIn

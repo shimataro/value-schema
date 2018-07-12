@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 * `adjuster.number().acceptSpecialFormats()`
+* `adjuster.numberArray().eachAcceptSpecialFormats()`
 
 ### Changed
 * rename method; `allowEmptyString()` to `acceptEmptyString()`

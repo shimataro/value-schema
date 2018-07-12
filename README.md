@@ -531,6 +531,7 @@ interface NumberArrayAdjuster {
     eachDefault(value: number): NumberArrayAdjuster;
     eachAcceptNull(value?: number|null /* = null */): NumberArrayAdjuster;
     eachAcceptEmptyString(value?: number|null /* = null */): NumberArrayAdjuster;
+    eachAcceptSpecialFormats(): NumberArrayAdjuster;
     eachOnly(...values: number[]): NumberArrayAdjuster;
     eachMinValue(value: number, adjust?: boolean /* = false */): NumberArrayAdjuster;
     eachMaxValue(value: number, adjust?: boolean /* = false */): NumberArrayAdjuster;
@@ -772,6 +773,23 @@ assert.deepStrictEqual(
 assert.throws(
     () => adjuster.numberArray().adjust([""]),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_EMPTY));
+```
+
+#### `eachAcceptSpecialFormats()`
+Accept all special number formats for each elements of input.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.numberArray().eachAcceptSpecialFormats().adjust(["1e+2", "0x100", "0o100", "0b100"]),
+    [100, 256, 64, 4]);
+
+// should cause eerror
+assert.throws(
+    () => adjuster.numberArray().adjust(["1e+2", "0x100", "0o100", "0b100"]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_TYPE));
 ```
 
 #### `eachOnly(...values)`

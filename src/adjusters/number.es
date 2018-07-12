@@ -59,7 +59,6 @@ class NumberAdjuster extends AdjusterBase
 	 * accept all special formats; i.e., "1e+10", "0x100"
 	 * @method
 	 * @name NumberAdjuster#acceptSpecialFormats
-	 * @param {?number} [value=null] value on empty
 	 * @return {NumberAdjuster}
 	 */
 
