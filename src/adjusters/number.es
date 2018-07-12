@@ -1,8 +1,8 @@
 import AdjusterBase from "../libs/AdjusterBase";
 
 import Default from "../libs/decorators/default";
-import AllowNull from "../libs/decorators/allowNull";
-import AllowEmptyString from "../libs/decorators/allowEmptyString";
+import AcceptNull from "../libs/decorators/acceptNull";
+import AcceptEmptyString from "../libs/decorators/acceptEmptyString";
 import Only from "../libs/decorators/only";
 import Type from "../libs/decorators/number/type";
 import MinValue from "../libs/decorators/number/minValue";
@@ -24,8 +24,8 @@ export default () =>
 @MinValue
 @Only
 @Type
-@AllowEmptyString
-@AllowNull
+@AcceptEmptyString
+@AcceptNull
 @Default
 class NumberAdjuster extends AdjusterBase
 {
@@ -38,17 +38,17 @@ class NumberAdjuster extends AdjusterBase
 	 */
 
 	/**
-	 * allow null
+	 * accept null
 	 * @method
-	 * @name NumberAdjuster#allowNull
+	 * @name NumberAdjuster#acceptNull
 	 * @param {?number} [value=null] value on null
 	 * @return {NumberAdjuster}
 	 */
 
 	/**
-	 * allow empty string
+	 * accept empty string
 	 * @method
-	 * @name NumberAdjuster#allowEmptyString
+	 * @name NumberAdjuster#acceptEmptyString
 	 * @param {?number} [value=null] value on empty
 	 * @return {NumberAdjuster}
 	 */

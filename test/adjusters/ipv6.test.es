@@ -2,8 +2,8 @@ import adjuster from "index";
 
 {
 	describe("default", testDefault);
-	describe("allowNull", testAllowNull);
-	describe("allowEmptyString", testAllowEmptyString);
+	describe("acceptNull", testAcceptNull);
+	describe("acceptEmptyString", testAcceptEmptyString);
 	describe("trim", testTrim);
 	describe("pattern", testPattern);
 }
@@ -33,11 +33,11 @@ function testDefault()
  * null
  * @return {void}
  */
-function testAllowNull()
+function testAcceptNull()
 {
 	it("should be OK", () =>
 	{
-		expect(adjuster.ipv6().allowNull("::1")
+		expect(adjuster.ipv6().acceptNull("::1")
 			.adjust(null)).toEqual("::1");
 	});
 	it("should cause error(s)", () =>
@@ -54,11 +54,11 @@ function testAllowNull()
  * empty string
  * @return {void}
  */
-function testAllowEmptyString()
+function testAcceptEmptyString()
 {
 	it("should be OK", () =>
 	{
-		expect(adjuster.ipv6().allowEmptyString("::1")
+		expect(adjuster.ipv6().acceptEmptyString("::1")
 			.adjust("")).toEqual("::1");
 	});
 	it("should cause error(s)", () =>

@@ -1,8 +1,8 @@
 import AdjusterBase from "../libs/AdjusterBase";
 
 import Default from "../libs/decorators/default";
-import AllowNull from "../libs/decorators/allowNull";
-import AllowEmptyString from "../libs/decorators/allowEmptyString";
+import AcceptNull from "../libs/decorators/acceptNull";
+import AcceptEmptyString from "../libs/decorators/acceptEmptyString";
 import Type from "../libs/decorators/string/type";
 import Trim from "../libs/decorators/string/trim";
 import Pattern from "../libs/decorators/string/pattern";
@@ -49,10 +49,10 @@ export default () =>
  */
 @Pattern
 @MaxLength
-@AllowEmptyString
+@AcceptEmptyString
 @Trim
 @Type
-@AllowNull
+@AcceptNull
 @Default
 class EmailAdjuster extends AdjusterBase
 {
@@ -75,9 +75,9 @@ class EmailAdjuster extends AdjusterBase
 	 */
 
 	/**
-	 * allow null
+	 * accept null
 	 * @method
-	 * @name EmailAdjuster#allowNull
+	 * @name EmailAdjuster#acceptNull
 	 * @param {?string} [value=null] value on null
 	 * @return {EmailAdjuster}
 	 */
@@ -90,9 +90,9 @@ class EmailAdjuster extends AdjusterBase
 	 */
 
 	/**
-	 * allow empty string
+	 * accept empty string
 	 * @method
-	 * @name EmailAdjuster#allowEmptyString
+	 * @name EmailAdjuster#acceptEmptyString
 	 * @param {?string} [value=null] value on empty
 	 * @return {EmailAdjuster}
 	 */

@@ -1,8 +1,8 @@
 import AdjusterBase from "../libs/AdjusterBase";
 
 import Default from "../libs/decorators/default";
-import AllowNull from "../libs/decorators/allowNull";
-import AllowEmptyString from "../libs/decorators/allowEmptyString";
+import AcceptNull from "../libs/decorators/acceptNull";
+import AcceptEmptyString from "../libs/decorators/acceptEmptyString";
 import Type from "../libs/decorators/array/type";
 import MinLength from "../libs/decorators/array/minLength";
 import MaxLength from "../libs/decorators/array/maxLength";
@@ -24,8 +24,8 @@ export default () =>
 @MinLength
 @Each
 @Type
-@AllowEmptyString
-@AllowNull
+@AcceptEmptyString
+@AcceptNull
 @Default
 class StringArrayAdjuster extends AdjusterBase
 {
@@ -38,23 +38,23 @@ class StringArrayAdjuster extends AdjusterBase
 	 */
 
 	/**
-	 * allow null
+	 * accept null
 	 * @method
-	 * @name StringArrayAdjuster#allowNull
+	 * @name StringArrayAdjuster#acceptNull
 	 * @param {?string[]} [value=null] value on null
 	 * @return {StringArrayAdjuster}
 	 */
 
 	/**
-	 * allow empty string
+	 * accept empty string
 	 * @method
-	 * @name StringArrayAdjuster#allowEmptyString
+	 * @name StringArrayAdjuster#acceptEmptyString
 	 * @param {?string[]} [value=null] value on empty
 	 * @return {StringArrayAdjuster}
 	 */
 
 	/**
-	 * allow string and set separator
+	 * accept string and set separator
 	 * @method
 	 * @name StringArrayAdjuster#separatedBy
 	 * @param {string|String|RegExp} separator separator
@@ -108,17 +108,17 @@ class StringArrayAdjuster extends AdjusterBase
 	 */
 
 	/**
-	 * allow null for each elements
+	 * accept null for each elements
 	 * @method
-	 * @name StringArrayAdjuster#eachAllowNull
+	 * @name StringArrayAdjuster#eachAcceptNull
 	 * @param {?string} [value=null] value on null
 	 * @return {StringArrayAdjuster}
 	 */
 
 	/**
-	 * allow empty string for each elements
+	 * accept empty string for each elements
 	 * @method
-	 * @name StringArrayAdjuster#eachAllowEmptyString
+	 * @name StringArrayAdjuster#eachAcceptEmptyString
 	 * @param {?string} [value=null] value on empty
 	 * @return {StringArrayAdjuster}
 	 */

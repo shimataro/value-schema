@@ -2,7 +2,7 @@ import adjuster from "index";
 
 {
 	describe("type", testType);
-	describe("allowNull", testAllowNull);
+	describe("acceptNull", testAcceptNull);
 	describe("joinArray", testJoinArray);
 	describe("separatedBy", testSeparatedBy);
 	describe("minLength", testMinLength);
@@ -33,11 +33,11 @@ function testType()
  * null
  * @return {void}
  */
-function testAllowNull()
+function testAcceptNull()
 {
 	it("should be adjusted", () =>
 	{
-		expect(adjuster.numericString().allowNull("123")
+		expect(adjuster.numericString().acceptNull("123")
 			.adjust(null)).toEqual("123");
 	});
 	it("should cause error(s)", () =>

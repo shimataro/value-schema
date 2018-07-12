@@ -24,7 +24,7 @@ function _init(params)
 }
 
 /**
- * allow string and set separator
+ * accept string and set separator
  * @param {Object} params parameters
  * @param {string|String|RegExp} separator separator
  * @return {void}
