@@ -34,6 +34,18 @@ function testType()
 
 		expect(adjuster.number()
 			.adjust("-789")).toEqual(-789);
+
+		expect(adjuster.number().acceptSpecialFormats()
+			.adjust("1e+2")).toEqual(100);
+
+		expect(adjuster.number().acceptSpecialFormats()
+			.adjust("0x100")).toEqual(256);
+
+		expect(adjuster.number().acceptSpecialFormats()
+			.adjust("0o100")).toEqual(64);
+
+		expect(adjuster.number().acceptSpecialFormats()
+			.adjust("0b100")).toEqual(4);
 	});
 	it("should cause error(s)", () =>
 	{
@@ -41,6 +53,30 @@ function testType()
 		{
 			adjuster.number()
 				.adjust("abc");
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.number()
+				.adjust("1e+2");
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.number()
+				.adjust("0x100");
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.number()
+				.adjust("0o100");
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.number()
+				.adjust("0b100");
 		}).toThrow(adjuster.CAUSE.TYPE);
 	});
 }

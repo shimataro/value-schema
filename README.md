@@ -299,6 +299,7 @@ interface NumberAdjuster {
     default(value: number): NumberAdjuster;
     acceptNull(value?: number|null /* = null */): NumberAdjuster;
     acceptEmptyString(value?: number|null /* = null */): NumberAdjuster;
+    acceptSpecialFormats(): NumberAdjuster;
     only(...values: number[]): NumberAdjuster;
     minValue(value: number, adjust?: boolean /* = false */): NumberAdjuster;
     maxValue(value: number, adjust?: boolean /* = false */): NumberAdjuster;
@@ -389,6 +390,38 @@ assert.strictEqual(
 assert.throws(
     () => adjuster.number().adjust(""),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+```
+
+#### `acceptSpecialFormats()`
+Accept all special number formats; i.e., "1e+10", "0x100", "0o100", "0b100".
+
+If this method is not called, the above examples causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.number().acceptSpecialFormats().adjust("1e+2"),
+    100);
+
+assert.strictEqual(
+    adjuster.number().acceptSpecialFormats().adjust("0x100"),
+    256);
+
+assert.strictEqual(
+    adjuster.number().acceptSpecialFormats().adjust("0o100"),
+    64);
+
+assert.strictEqual(
+    adjuster.number().acceptSpecialFormats().adjust("0b100"),
+    4);
+
+// should cause error
+assert.throws(
+    () => adjuster.number().adjust("1e+2"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+
 ```
 
 #### `only(...values)`
