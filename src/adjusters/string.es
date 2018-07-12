@@ -1,8 +1,8 @@
 import AdjusterBase from "../libs/AdjusterBase";
 
 import Default from "../libs/decorators/default";
-import AllowNull from "../libs/decorators/allowNull";
-import AllowEmptyString from "../libs/decorators/allowEmptyString";
+import AcceptNull from "../libs/decorators/acceptNull";
+import AcceptEmptyString from "../libs/decorators/acceptEmptyString";
 import Only from "../libs/decorators/only";
 import Type from "../libs/decorators/string/type";
 import Trim from "../libs/decorators/string/trim";
@@ -25,11 +25,11 @@ export default () =>
 @Pattern
 @MaxLength
 @MinLength
-@AllowEmptyString
+@AcceptEmptyString
 @Only
 @Trim
 @Type
-@AllowNull
+@AcceptNull
 @Default
 class StringAdjuster extends AdjusterBase
 {
@@ -42,9 +42,9 @@ class StringAdjuster extends AdjusterBase
 	 */
 
 	/**
-	 * allow null
+	 * accept null
 	 * @method
-	 * @name StringAdjuster#allowNull
+	 * @name StringAdjuster#acceptNull
 	 * @param {?string} [value=null] value on null
 	 * @return {StringAdjuster}
 	 */
@@ -57,9 +57,9 @@ class StringAdjuster extends AdjusterBase
 	 */
 
 	/**
-	 * allow empty string
+	 * accept empty string
 	 * @method
-	 * @name StringAdjuster#allowEmptyString
+	 * @name StringAdjuster#acceptEmptyString
 	 * @param {?string} [value=null] value on empty
 	 * @return {StringAdjuster}
 	 */

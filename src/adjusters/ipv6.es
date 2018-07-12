@@ -1,8 +1,8 @@
 import AdjusterBase from "../libs/AdjusterBase";
 
 import Default from "../libs/decorators/default";
-import AllowNull from "../libs/decorators/allowNull";
-import AllowEmptyString from "../libs/decorators/allowEmptyString";
+import AcceptNull from "../libs/decorators/acceptNull";
+import AcceptEmptyString from "../libs/decorators/acceptEmptyString";
 import Type from "../libs/decorators/string/type";
 import Trim from "../libs/decorators/string/trim";
 import Pattern from "../libs/decorators/string/pattern";
@@ -40,10 +40,10 @@ export default () =>
  * adjuster for IPv6
  */
 @Pattern
-@AllowEmptyString
+@AcceptEmptyString
 @Trim
 @Type
-@AllowNull
+@AcceptNull
 @Default
 class IPv6Adjuster extends AdjusterBase
 {
@@ -66,9 +66,9 @@ class IPv6Adjuster extends AdjusterBase
 	 */
 
 	/**
-	 * allow null
+	 * accept null
 	 * @method
-	 * @name IPv6Adjuster#allowNull
+	 * @name IPv6Adjuster#acceptNull
 	 * @param {?string} [value=null] value on null
 	 * @return {IPv6Adjuster}
 	 */
@@ -81,9 +81,9 @@ class IPv6Adjuster extends AdjusterBase
 	 */
 
 	/**
-	 * allow empty string
+	 * accept empty string
 	 * @method
-	 * @name IPv6Adjuster#allowEmptyString
+	 * @name IPv6Adjuster#acceptEmptyString
 	 * @param {?string} [value=null] value on empty
 	 * @return {IPv6Adjuster}
 	 */

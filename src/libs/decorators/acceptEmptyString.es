@@ -5,7 +5,7 @@ import AdjusterError from "../AdjusterError";
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.features({
-		allowEmptyString: _featureAllowEmptyString,
+		acceptEmptyString: _featureAcceptEmptyString,
 	})
 	.build();
 
@@ -20,12 +20,12 @@ function _init(params)
 }
 
 /**
- * allow empty string
+ * accept empty string
  * @param {Object} params parameters
  * @param {*} [value=null] value on empty
  * @return {void}
  */
-function _featureAllowEmptyString(params, value = null)
+function _featureAcceptEmptyString(params, value = null)
 {
 	params.flag = true;
 	params.valueOnEmpty = value;

@@ -3,8 +3,8 @@ import adjuster from "index";
 {
 	describe("type", testType);
 	describe("default", testDefault);
-	describe("allowNull", testAllowNull);
-	describe("allowEmptyString", testAllowEmptyString);
+	describe("acceptNull", testAcceptNull);
+	describe("acceptEmptyString", testAcceptEmptyString);
 	describe("trim", testTrim);
 	describe("only", testOnly);
 	describe("minLength", testMinLength);
@@ -53,11 +53,11 @@ function testDefault()
  * null
  * @return {void}
  */
-function testAllowNull()
+function testAcceptNull()
 {
 	it("should be adjusted", () =>
 	{
-		expect(adjuster.string().allowNull("abc")
+		expect(adjuster.string().acceptNull("abc")
 			.adjust(null)).toEqual("abc");
 	});
 	it("should cause error(s)", () =>
@@ -74,11 +74,11 @@ function testAllowNull()
  * empty string
  * @return {void}
  */
-function testAllowEmptyString()
+function testAcceptEmptyString()
 {
 	it("should be OK", () =>
 	{
-		expect(adjuster.string().allowEmptyString("qwerty")
+		expect(adjuster.string().acceptEmptyString("qwerty")
 			.adjust("")).toEqual("qwerty");
 	});
 	it("should cause error(s)", () =>
