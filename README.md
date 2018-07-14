@@ -202,12 +202,12 @@ assert.deepStrictEqual(adjusted, expected);
 
 function generateErrorHandler() {
     return (err) => {
-        if(err === null) {
+        if (err === null) {
             // adjustment finished
             return;
         }
 
-        if(err.key === "id") {
+        if (err.key === "id") {
             // adjust to 100 on `id` error
             return 100;
         }
@@ -237,7 +237,7 @@ const input = {
 try {
     adjuster.adjust(input, constraints, generateErrorHandler());
 }
-catch(err) {
+catch (err) {
     // do something
     assert.strictEqual(err.message, "id,name");
 }
@@ -245,7 +245,7 @@ catch(err) {
 function generateErrorHandler() {
     const messages = [];
     return (err) => {
-        if(err === null) {
+        if (err === null) {
             // adjustment finished; join key name as message
             throw new Error(messages.join(","));
         }
@@ -277,7 +277,7 @@ const input = {
 try {
     const adjusted = adjuster.adjust(input, constraints);
 }
-catch(err) {
+catch (err) {
     // catch a first error
     assert.strictEqual(err.key, "id");
 }
@@ -393,7 +393,7 @@ assert.throws(
 ```
 
 #### `acceptSpecialFormats()`
-Accept all special number formats; i.e., "1e+10", "0x100", "0o100", "0b100".
+Accept all special number formats; i.e., `"1e+2"`, `"0x100"`, `"0o100"`, `"0b100"`.
 
 If this method is not called, the above examples causes `AdjusterError`.
 
@@ -404,15 +404,12 @@ If this method is not called, the above examples causes `AdjusterError`.
 assert.strictEqual(
     adjuster.number().acceptSpecialFormats().adjust("1e+2"),
     100);
-
 assert.strictEqual(
     adjuster.number().acceptSpecialFormats().adjust("0x100"),
     256);
-
 assert.strictEqual(
     adjuster.number().acceptSpecialFormats().adjust("0o100"),
     64);
-
 assert.strictEqual(
     adjuster.number().acceptSpecialFormats().adjust("0b100"),
     4);
@@ -1092,6 +1089,8 @@ interface StringArrayAdjuster {
 #### `adjust(value[, onError])`
 Validate and adjust input values.
 
+##### examples
+
 ```javascript
 // should be OK
 assert.deepStrictEqual(
@@ -1113,6 +1112,9 @@ assert.throws(
 Accept `undefined` for input, and adjust to `value`.
 
 If this method is not called, `adjust(undefined)` causes `AdjusterError`.
+
+##### examples
+
 ```javascript
 // should be adjusted
 assert.deepStrictEqual(
@@ -1149,6 +1151,8 @@ Accept an empty string(`""`) for input, and adjust to `value`.
 
 If this method is not called, `adjust("")` causes `AdjusterError`.
 
+##### examples
+
 ```javascript
 // should be adjusted
 assert.deepStrictEqual(
@@ -1165,6 +1169,8 @@ assert.throws(
 Assume an input value is string and separated by `separator`.
 
 If an input type is array, this method does nothing.
+
+##### examples
 
 ```javascript
 // should be OK
