@@ -6,7 +6,7 @@
 BASE_BRANCH="develop"
 
 URL_PRODUCT="https://github.com/shimataro/node-adjuster"
-URL_RELEASE="${URL_PRODUCT}/releases"
+URL_RELEASE="${URL_PRODUCT}/releases/new"
 
 COLOR_ERROR="\e[1;41m"
 COLOR_SECTION="\e[1;34m"
