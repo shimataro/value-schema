@@ -1,8 +1,8 @@
 import AdjusterBase from "../libs/AdjusterBase";
 
 import Default from "../libs/decorators/default";
-import AllowNull from "../libs/decorators/allowNull";
-import AllowEmptyString from "../libs/decorators/allowEmptyString";
+import AcceptNull from "../libs/decorators/acceptNull";
+import AcceptEmptyString from "../libs/decorators/acceptEmptyString";
 import Type from "../libs/decorators/array/type";
 import MinLength from "../libs/decorators/array/minLength";
 import MaxLength from "../libs/decorators/array/maxLength";
@@ -24,8 +24,8 @@ export default () =>
 @MinLength
 @Each
 @Type
-@AllowEmptyString
-@AllowNull
+@AcceptEmptyString
+@AcceptNull
 @Default
 class NumberArrayAdjuster extends AdjusterBase
 {
@@ -38,23 +38,23 @@ class NumberArrayAdjuster extends AdjusterBase
 	 */
 
 	/**
-	 * allow null
+	 * accept null
 	 * @method
-	 * @name NumberArrayAdjuster#allowNull
+	 * @name NumberArrayAdjuster#acceptNull
 	 * @param {?number[]} [value=null] value on null
 	 * @return {NumberArrayAdjuster}
 	 */
 
 	/**
-	 * allow empty string
+	 * accept empty string
 	 * @method
-	 * @name NumberArrayAdjuster#allowEmptyString
+	 * @name NumberArrayAdjuster#acceptEmptyString
 	 * @param {?number[]} [value=null] value on empty
 	 * @return {NumberArrayAdjuster}
 	 */
 
 	/**
-	 * allow string and set separator
+	 * accept string and set separator
 	 * @method
 	 * @name NumberArrayAdjuster#separatedBy
 	 * @param {string|String|RegExp} separator separator
@@ -101,18 +101,25 @@ class NumberArrayAdjuster extends AdjusterBase
 	 */
 
 	/**
-	 * allow null for each elements
+	 * accept null for each elements
 	 * @method
-	 * @name NumberArrayAdjuster#eachAllowNull
+	 * @name NumberArrayAdjuster#eachAcceptNull
 	 * @param {?number} [value=null] value on null
 	 * @return {NumberArrayAdjuster}
 	 */
 
 	/**
-	 * allow empty string for each elements
+	 * accept empty string for each elements
 	 * @method
-	 * @name NumberArrayAdjuster#eachAllowEmptyString
+	 * @name NumberArrayAdjuster#eachAcceptEmptyString
 	 * @param {?number} [value=null] value on empty
+	 * @return {NumberArrayAdjuster}
+	 */
+
+	/**
+	 * accept special formats for each elements
+	 * @method
+	 * @name NumberArrayAdjuster#eachAcceptSpecialFormats
 	 * @return {NumberArrayAdjuster}
 	 */
 

@@ -1,8 +1,8 @@
 import AdjusterBase from "../libs/AdjusterBase";
 
 import Default from "../libs/decorators/default";
-import AllowNull from "../libs/decorators/allowNull";
-import AllowEmptyString from "../libs/decorators/allowEmptyString";
+import AcceptNull from "../libs/decorators/acceptNull";
+import AcceptEmptyString from "../libs/decorators/acceptEmptyString";
 import Type from "../libs/decorators/string/type";
 import MinLength from "../libs/decorators/string/minLength";
 import MaxLength from "../libs/decorators/string/maxLength";
@@ -30,8 +30,8 @@ export default () =>
 @SeparatedBy
 @Type
 @JoinArray
-@AllowEmptyString
-@AllowNull
+@AcceptEmptyString
+@AcceptNull
 @Default
 class NumericStringAdjuster extends AdjusterBase
 {
@@ -44,17 +44,17 @@ class NumericStringAdjuster extends AdjusterBase
 	 */
 
 	/**
-	 * allow null
+	 * accept null
 	 * @method
-	 * @name NumericStringAdjuster#allowNull
+	 * @name NumericStringAdjuster#acceptNull
 	 * @param {?string} [value=null] value on null
 	 * @return {NumericStringAdjuster}
 	 */
 
 	/**
-	 * allow empty string
+	 * accept empty string
 	 * @method
-	 * @name NumericStringAdjuster#allowEmptyString
+	 * @name NumericStringAdjuster#acceptEmptyString
 	 * @param {?string} [value=null] value on empty
 	 * @return {NumericStringAdjuster}
 	 */

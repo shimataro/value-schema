@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.11.0] - 2018-07-16
+### Added
+* `adjuster.number().acceptSpecialFormats()`
+* `adjuster.numberArray().eachAcceptSpecialFormats()`
+
+### Changed
+* rename method; `allowEmptyString()` to `acceptEmptyString()`
+* rename method; `allowNull()` to `acceptNull()`
+* rename method; `eachAllowEmptyString()` to `eachAcceptEmptyString()`
+* rename method; `eachAllowNull()` to `eachAcceptNull()`
+
 ## [0.10.1] - 2018-07-09
 ### Others
 * follow `valid-jsdoc` option for ESLint
@@ -111,7 +122,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.1.0] - 2018-04-18
 * First release.
 
-[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v0.10.1...HEAD
+[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/shimataro/node-adjuster/compare/v0.10.1...v0.11.0
 [0.10.1]: https://github.com/shimataro/node-adjuster/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/shimataro/node-adjuster/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/shimataro/node-adjuster/compare/v0.8.0...v0.9.0

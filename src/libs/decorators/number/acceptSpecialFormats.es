@@ -1,11 +1,13 @@
-import {CAUSE} from "../constants";
-import AdjusterBase from "../AdjusterBase";
-import AdjusterError from "../AdjusterError";
+import {CAUSE} from "../../constants";
+import AdjusterBase from "../../AdjusterBase";
+import AdjusterError from "../../AdjusterError";
+
+const REGEXP = /^\s*[+-]?(\d+(\.\d*)?|\.\d+)\s*$/;
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.features({
-		allowEmptyString: _featureAllowEmptyString,
+		acceptSpecialFormats: _acceptSpecialFormats,
 	})
 	.build();
 
@@ -20,15 +22,13 @@ function _init(params)
 }
 
 /**
- * allow empty string
+ * accept special formats; i.e., "1e+10", "0x100", "0b100"
  * @param {Object} params parameters
- * @param {*} [value=null] value on empty
  * @return {void}
  */
-function _featureAllowEmptyString(params, value = null)
+function _acceptSpecialFormats(params)
 {
 	params.flag = true;
-	params.valueOnEmpty = value;
 }
 
 /**
@@ -40,17 +40,15 @@ function _featureAllowEmptyString(params, value = null)
  */
 function _adjust(params, values)
 {
-	if(values.adjusted !== "")
+	if(params.flag)
+	{
+		return false;
+	}
+	if(REGEXP.test(values.adjusted))
 	{
 		return false;
 	}
 
-	if(params.flag)
-	{
-		values.adjusted = params.valueOnEmpty;
-		return true;
-	}
-
-	const cause = CAUSE.EMPTY;
+	const cause = CAUSE.TYPE;
 	throw new AdjusterError(cause, values.original);
 }

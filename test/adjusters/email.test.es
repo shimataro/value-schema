@@ -2,8 +2,8 @@ import adjuster from "index";
 
 {
 	describe("default", testDefault);
-	describe("allowNull", testAllowNull);
-	describe("allowEmptyString", testAllowEmptyString);
+	describe("acceptNull", testAcceptNull);
+	describe("acceptEmptyString", testAcceptEmptyString);
 	describe("trim", testTrim);
 	describe("maxLength", testMaxLength);
 	describe("pattern", testPattern);
@@ -35,11 +35,11 @@ function testDefault()
  * null
  * @return {void}
  */
-function testAllowNull()
+function testAcceptNull()
 {
 	it("should be OK", () =>
 	{
-		expect(adjuster.email().allowNull("empty@example.com")
+		expect(adjuster.email().acceptNull("empty@example.com")
 			.adjust(null)).toEqual("empty@example.com");
 	});
 	it("should cause error(s)", () =>
@@ -56,11 +56,11 @@ function testAllowNull()
  * empty string
  * @return {void}
  */
-function testAllowEmptyString()
+function testAcceptEmptyString()
 {
 	it("should be OK", () =>
 	{
-		expect(adjuster.email().allowEmptyString("empty@example.com")
+		expect(adjuster.email().acceptEmptyString("empty@example.com")
 			.adjust("")).toEqual("empty@example.com");
 	});
 	it("should cause error(s)", () =>

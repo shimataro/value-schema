@@ -8,8 +8,9 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.features({
 		ignoreEachErrors: _featureIgnoreEachErrors,
 		eachDefault: _featureEachDefault,
-		eachAllowNull: _featureEachAllowNull,
-		eachAllowEmptyString: _featureEachAllowEmptyString,
+		eachAcceptNull: _featureEachAcceptNull,
+		eachAcceptEmptyString: _featureEachAcceptEmptyString,
+		eachAcceptSpecialFormats: _featureEachAcceptSpecialFormats,
 		eachOnly: _featureEachOnly,
 		eachMinValue: _featureEachMinValue,
 		eachMaxValue: _featureEachMaxValue,
@@ -48,25 +49,35 @@ function _featureEachDefault(params, value)
 }
 
 /**
- * allow null for each elements
+ * accept null for each elements
  * @param {Object} params parameters
  * @param {?number} [value=null] value on null
  * @return {void}
  */
-function _featureEachAllowNull(params, value = null)
+function _featureEachAcceptNull(params, value = null)
 {
-	params.objAdjuster.allowNull(value);
+	params.objAdjuster.acceptNull(value);
 }
 
 /**
- * allow empty string for each elements
+ * accept empty string for each elements
  * @param {Object} params parameters
  * @param {?number} [value=null] value on empty
  * @return {void}
  */
-function _featureEachAllowEmptyString(params, value = null)
+function _featureEachAcceptEmptyString(params, value = null)
 {
-	params.objAdjuster.allowEmptyString(value);
+	params.objAdjuster.acceptEmptyString(value);
+}
+
+/**
+ * accept special formats for each elements
+ * @param {Object} params parameters
+ * @return {void}
+ */
+function _featureEachAcceptSpecialFormats(params)
+{
+	params.objAdjuster.acceptSpecialFormats();
 }
 
 /**

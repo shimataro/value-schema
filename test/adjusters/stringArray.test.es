@@ -3,16 +3,16 @@ import adjuster from "index";
 {
 	describe("type", testType);
 	describe("default", testDefault);
-	describe("allowNull", testAllowNull);
-	describe("allowEmptyString", testAllowEmptyString);
+	describe("acceptNull", testAcceptNull);
+	describe("acceptEmptyString", testAcceptEmptyString);
 	describe("separatedBy", testSeparatedBy);
 	describe("toArray", testToArray);
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
 	describe("ignoreEachErrors", testIgnoreEachErrors);
 	describe("eachDefault", testEachDefault);
-	describe("eachAllowNull", testEachAllowNull);
-	describe("eachAllowEmptyString", testEachAllowEmptyString);
+	describe("eachAcceptNull", testEachAcceptNull);
+	describe("eachAcceptEmptyString", testEachAcceptEmptyString);
 	describe("eachTrim", testEachTrim);
 	describe("eachOnly", testEachOnly);
 	describe("eachMinLength", testEachMinLength);
@@ -74,11 +74,11 @@ function testDefault()
  * null
  * @return {void}
  */
-function testAllowNull()
+function testAcceptNull()
 {
 	it("should be adjusted", () =>
 	{
-		expect(adjuster.stringArray().allowNull(["a", "b", "c"])
+		expect(adjuster.stringArray().acceptNull(["a", "b", "c"])
 			.adjust(null)).toEqual(["a", "b", "c"]);
 	});
 	it("should cause error(s)", () =>
@@ -95,11 +95,11 @@ function testAllowNull()
  * empty string
  * @return {void}
  */
-function testAllowEmptyString()
+function testAcceptEmptyString()
 {
 	it("should be adjusted", () =>
 	{
-		expect(adjuster.stringArray().allowEmptyString(["a", "b"])
+		expect(adjuster.stringArray().acceptEmptyString(["a", "b"])
 			.adjust("")).toEqual(["a", "b"]);
 	});
 	it("should cause error(s)", () =>
@@ -251,11 +251,11 @@ function testEachDefault()
  * each elements; null
  * @return {void}
  */
-function testEachAllowNull()
+function testEachAcceptNull()
 {
 	it("should be adjusted", () =>
 	{
-		expect(adjuster.stringArray().eachAllowNull("z")
+		expect(adjuster.stringArray().eachAcceptNull("z")
 			.adjust(["a", null, "b"])).toEqual(["a", "z", "b"]);
 	});
 	it("should cause error(s)", () =>
@@ -267,7 +267,7 @@ function testEachAllowNull()
 		}).toThrow(adjuster.CAUSE.EACH_NULL);
 		expect(() =>
 		{
-			adjuster.stringArray().eachAllowNull("z")
+			adjuster.stringArray().eachAcceptNull("z")
 				.adjust(["a", undefined, "b"]);
 		}).toThrow(adjuster.CAUSE.EACH_REQUIRED);
 	});
@@ -277,11 +277,11 @@ function testEachAllowNull()
  * each elements; empty string
  * @return {void}
  */
-function testEachAllowEmptyString()
+function testEachAcceptEmptyString()
 {
 	it("should be adjusted", () =>
 	{
-		expect(adjuster.stringArray().eachAllowEmptyString("z")
+		expect(adjuster.stringArray().eachAcceptEmptyString("z")
 			.adjust(["a", "", "b"])).toEqual(["a", "z", "b"]);
 	});
 	it("should cause error(s)", () =>
@@ -293,7 +293,7 @@ function testEachAllowEmptyString()
 		}).toThrow(adjuster.CAUSE.EACH_EMPTY);
 		expect(() =>
 		{
-			adjuster.stringArray().eachAllowEmptyString("z")
+			adjuster.stringArray().eachAcceptEmptyString("z")
 				.adjust(["a", undefined, "b"]);
 		}).toThrow(adjuster.CAUSE.EACH_REQUIRED);
 	});

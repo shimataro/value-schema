@@ -202,12 +202,12 @@ assert.deepStrictEqual(adjusted, expected);
 
 function generateErrorHandler() {
     return (err) => {
-        if(err === null) {
+        if (err === null) {
             // adjustment finished
             return;
         }
 
-        if(err.key === "id") {
+        if (err.key === "id") {
             // adjust to 100 on `id` error
             return 100;
         }
@@ -237,7 +237,7 @@ const input = {
 try {
     adjuster.adjust(input, constraints, generateErrorHandler());
 }
-catch(err) {
+catch (err) {
     // do something
     assert.strictEqual(err.message, "id,name");
 }
@@ -245,7 +245,7 @@ catch(err) {
 function generateErrorHandler() {
     const messages = [];
     return (err) => {
-        if(err === null) {
+        if (err === null) {
             // adjustment finished; join key name as message
             throw new Error(messages.join(","));
         }
@@ -277,7 +277,7 @@ const input = {
 try {
     const adjusted = adjuster.adjust(input, constraints);
 }
-catch(err) {
+catch (err) {
     // catch a first error
     assert.strictEqual(err.key, "id");
 }
@@ -297,8 +297,9 @@ interface NumberAdjuster {
 
     // feature methods (chainable)
     default(value: number): NumberAdjuster;
-    allowNull(value?: number|null /* = null */): NumberAdjuster;
-    allowEmptyString(value?: number|null /* = null */): NumberAdjuster;
+    acceptNull(value?: number|null /* = null */): NumberAdjuster;
+    acceptEmptyString(value?: number|null /* = null */): NumberAdjuster;
+    acceptSpecialFormats(): NumberAdjuster;
     only(...values: number[]): NumberAdjuster;
     minValue(value: number, adjust?: boolean /* = false */): NumberAdjuster;
     maxValue(value: number, adjust?: boolean /* = false */): NumberAdjuster;
@@ -335,7 +336,7 @@ assert.throws( // ... or try-catch syntax
 ```
 
 #### `default(value)`
-Allow `undefined` for input, and adjust to `value`.
+Accept `undefined` for input, and adjust to `value`.
 
 If this method is not called, `adjust(undefined)` causes `AdjusterError`.
 
@@ -353,8 +354,8 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
 ```
 
-#### `allowNull([value])`
-Allow a `null` for input, and adjust to `value`.
+#### `acceptNull([value])`
+Accept a `null` for input, and adjust to `value`.
 
 If this method is not called, `adjust(null)` causes `AdjusterError`.
 
@@ -363,7 +364,7 @@ If this method is not called, `adjust(null)` causes `AdjusterError`.
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.number().allowNull(1).adjust(null),
+    adjuster.number().acceptNull(1).adjust(null),
     1);
 
 // should cause error
@@ -372,8 +373,8 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
-#### `allowEmptyString([value])`
-Allow an empty string(`""`) for input, and adjust to `value`.
+#### `acceptEmptyString([value])`
+Accept an empty string(`""`) for input, and adjust to `value`.
 
 If this method is not called, `adjust("")` causes `AdjusterError`.
 
@@ -382,13 +383,42 @@ If this method is not called, `adjust("")` causes `AdjusterError`.
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.number().allowEmptyString(1).adjust(""),
+    adjuster.number().acceptEmptyString(1).adjust(""),
     1);
 
 // should cause error
 assert.throws(
     () => adjuster.number().adjust(""),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+```
+
+#### `acceptSpecialFormats()`
+Accept all special number formats; i.e., `"1e+2"`, `"0x100"`, `"0o100"`, `"0b100"`.
+
+If this method is not called, the above examples causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.number().acceptSpecialFormats().adjust("1e+2"),
+    100);
+assert.strictEqual(
+    adjuster.number().acceptSpecialFormats().adjust("0x100"),
+    256);
+assert.strictEqual(
+    adjuster.number().acceptSpecialFormats().adjust("0o100"),
+    64);
+assert.strictEqual(
+    adjuster.number().acceptSpecialFormats().adjust("0b100"),
+    4);
+
+// should cause error
+assert.throws(
+    () => adjuster.number().adjust("1e+2"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+
 ```
 
 #### `only(...values)`
@@ -488,16 +518,17 @@ interface NumberArrayAdjuster {
 
     // feature methods (chainable)
     default(value: number[]): NumberArrayAdjuster;
-    allowNull(value?: number[]|null /* = null */): NumberArrayAdjuster;
-    allowEmptyString(value: number[]|null /* = null */): NumberArrayAdjuster;
+    acceptNull(value?: number[]|null /* = null */): NumberArrayAdjuster;
+    acceptEmptyString(value: number[]|null /* = null */): NumberArrayAdjuster;
     separatedBy(separator: string|RegExp): NumberArrayAdjuster;
     toArray(): NumberArrayAdjuster;
     minLength(length: number): NumberArrayAdjuster;
     maxLength(length: number, adjust?: boolean /* = false */): NumberArrayAdjuster;
     ignoreEachErrors(): NumberArrayAdjuster;
     eachDefault(value: number): NumberArrayAdjuster;
-    eachAllowNull(value?: number|null /* = null */): NumberArrayAdjuster;
-    eachAllowEmptyString(value?: number|null /* = null */): NumberArrayAdjuster;
+    eachAcceptNull(value?: number|null /* = null */): NumberArrayAdjuster;
+    eachAcceptEmptyString(value?: number|null /* = null */): NumberArrayAdjuster;
+    eachAcceptSpecialFormats(): NumberArrayAdjuster;
     eachOnly(...values: number[]): NumberArrayAdjuster;
     eachMinValue(value: number, adjust?: boolean /* = false */): NumberArrayAdjuster;
     eachMaxValue(value: number, adjust?: boolean /* = false */): NumberArrayAdjuster;
@@ -530,7 +561,7 @@ assert.throws(
 ```
 
 #### `default(value)`
-Allow `undefined` for input, and adjust to `value`.
+Accept `undefined` for input, and adjust to `value`.
 
 If this method is not called, `adjust(undefined)` causes `AdjusterError`.
 
@@ -548,8 +579,8 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
 ```
 
-#### `allowNull([value])`
-Allow a `null` for input, and adjust to `value`.
+#### `acceptNull([value])`
+Accept a `null` for input, and adjust to `value`.
 
 If this method is not called, `adjust(null)` causes `AdjusterError`.
 
@@ -558,7 +589,7 @@ If this method is not called, `adjust(null)` causes `AdjusterError`.
 ```javascript
 // should be adjusted
 assert.deepStrictEqual(
-    adjuster.numberArray().allowNull([1, 2, 3]).adjust(null),
+    adjuster.numberArray().acceptNull([1, 2, 3]).adjust(null),
     [1, 2, 3]);
 
 // should cause error
@@ -567,8 +598,8 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
-#### `allowEmptyString([value])`
-Allow an empty string(`""`) for input, and adjust to `value`.
+#### `acceptEmptyString([value])`
+Accept an empty string(`""`) for input, and adjust to `value`.
 
 If this method is not called, `adjust("")` causes `AdjusterError`.
 
@@ -577,7 +608,7 @@ If this method is not called, `adjust("")` causes `AdjusterError`.
 ```javascript
 // should be adjusted
 assert.deepStrictEqual(
-    adjuster.numberArray().allowEmptyString([1, 2]).adjust(""),
+    adjuster.numberArray().acceptEmptyString([1, 2]).adjust(""),
     [1, 2]);
 
 // should cause error
@@ -691,7 +722,7 @@ assert.throws(
 ```
 
 #### `eachDefault(value)`
-Allow `undefined` for each elements of input, and adjust to `value`.
+Accept `undefined` for each elements of input, and adjust to `value`.
 
 ##### examples
 
@@ -707,15 +738,15 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_REQUIRED));
 ```
 
-#### `eachAllowNull([value])`
-Allow a `null` for each elements of input, and adjust to `value`.
+#### `eachAcceptNull([value])`
+Accept a `null` for each elements of input, and adjust to `value`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.deepStrictEqual(
-    adjuster.numberArray().eachAllowNull(2).adjust([1, null, 3]),
+    adjuster.numberArray().eachAcceptNull(2).adjust([1, null, 3]),
     [1, 2, 3]);
 
 // should cause error
@@ -724,21 +755,38 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_NULL));
 ```
 
-#### `eachAllowEmptyString([value])`
-Allow an empty string(`""`) for each elements of input, and adjust to `value`.
+#### `eachAcceptEmptyString([value])`
+Accept an empty string(`""`) for each elements of input, and adjust to `value`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.deepStrictEqual(
-    adjuster.numberArray().eachAllowEmptyString(2).adjust([1, "", 3]),
+    adjuster.numberArray().eachAcceptEmptyString(2).adjust([1, "", 3]),
     [1, 2, 3]);
 
 // should cause eerror
 assert.throws(
     () => adjuster.numberArray().adjust([""]),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_EMPTY));
+```
+
+#### `eachAcceptSpecialFormats()`
+Accept all special number formats for each elements of input.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.numberArray().eachAcceptSpecialFormats().adjust(["1e+2", "0x100", "0o100", "0b100"]),
+    [100, 256, 64, 4]);
+
+// should cause eerror
+assert.throws(
+    () => adjuster.numberArray().adjust(["1e+2", "0x100", "0o100", "0b100"]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_TYPE));
 ```
 
 #### `eachOnly(...values)`
@@ -826,8 +874,8 @@ interface StringAdjuster {
 
     // feature methods (chainable)
     default(value: string): StringAdjuster;
-    allowNull(value?: string|null /* = null */): StringAdjuster;
-    allowEmptyString(value?: string|null /* = null */): StringAdjuster;
+    acceptNull(value?: string|null /* = null */): StringAdjuster;
+    acceptEmptyString(value?: string|null /* = null */): StringAdjuster;
     trim(): StringAdjuster;
     only(...values: string[]): StringAdjuster;
     minLength(length: number): StringAdjuster;
@@ -854,7 +902,7 @@ assert.strictEqual(
 ```
 
 #### `default(value)`
-Allow `undefined` for input, and adjust to `value`.
+Accept `undefined` for input, and adjust to `value`.
 
 ##### examples
 
@@ -870,8 +918,8 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
 ```
 
-#### `allowNull([value])`
-Allow a `null` for input, and adjust to `value`.
+#### `acceptNull([value])`
+Accept a `null` for input, and adjust to `value`.
 
 If this method is not called, `adjust(null)` causes `AdjusterError`.
 
@@ -880,7 +928,7 @@ If this method is not called, `adjust(null)` causes `AdjusterError`.
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.string().allowNull("x").adjust(null),
+    adjuster.string().acceptNull("x").adjust(null),
     "x");
 
 // should cause error
@@ -889,15 +937,15 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
-#### `allowEmptyString([value])`
-Allow an empty string(`""`) for input, and adjust to `value`.
+#### `acceptEmptyString([value])`
+Accept an empty string(`""`) for input, and adjust to `value`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.string().allowEmptyString("xyz").adjust(""),
+    adjuster.string().acceptEmptyString("xyz").adjust(""),
     "xyz");
 
 // should cause error
@@ -1020,16 +1068,16 @@ interface StringArrayAdjuster {
 
     // feature methods (chainable)
     default(value: string[]): StringArrayAdjuster;
-    allowNull(value?: string[]|null /* = null */): StringArrayAdjuster;
-    allowEmptyString(value: string[]|null /* = null */): StringArrayAdjuster;
+    acceptNull(value?: string[]|null /* = null */): StringArrayAdjuster;
+    acceptEmptyString(value: string[]|null /* = null */): StringArrayAdjuster;
     separatedBy(separator: string|RegExp): StringArrayAdjuster;
     toArray(): StringArrayAdjuster;
     minLength(length: number): StringArrayAdjuster;
     maxLength(length: number, adjust?: boolean /* = false */): StringArrayAdjuster;
     ignoreEachErrors(): StringArrayAdjuster;
     eachDefault(value: string): StringArrayAdjuster;
-    eachAllowNull(value?: string|null /* = null */): StringArrayAdjuster;
-    eachAllowEmptyString(value?: string|null /* = null */): StringArrayAdjuster;
+    eachAcceptNull(value?: string|null /* = null */): StringArrayAdjuster;
+    eachAcceptEmptyString(value?: string|null /* = null */): StringArrayAdjuster;
     eachTrim(): StringArrayAdjuster;
     eachOnly(...values: string[]): StringArrayAdjuster;
     eachMinLength(length: number): StringArrayAdjuster;
@@ -1040,6 +1088,8 @@ interface StringArrayAdjuster {
 
 #### `adjust(value[, onError])`
 Validate and adjust input values.
+
+##### examples
 
 ```javascript
 // should be OK
@@ -1059,9 +1109,12 @@ assert.throws(
 ```
 
 #### `default(value)`
-Allow `undefined` for input, and adjust to `value`.
+Accept `undefined` for input, and adjust to `value`.
 
 If this method is not called, `adjust(undefined)` causes `AdjusterError`.
+
+##### examples
+
 ```javascript
 // should be adjusted
 assert.deepStrictEqual(
@@ -1074,8 +1127,8 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
 ```
 
-#### `allowNull([value])`
-Allow a `null` for input, and adjust to `value`.
+#### `acceptNull([value])`
+Accept a `null` for input, and adjust to `value`.
 
 If this method is not called, `adjust(null)` causes `AdjusterError`.
 
@@ -1084,7 +1137,7 @@ If this method is not called, `adjust(null)` causes `AdjusterError`.
 ```javascript
 // should be adjusted
 assert.deepStrictEqual(
-    adjuster.stringArray().allowNull(["a", "b"]).adjust(null),
+    adjuster.stringArray().acceptNull(["a", "b"]).adjust(null),
     ["a", "b"]);
 
 // should cause error
@@ -1093,15 +1146,17 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
-#### `allowEmptyString([value])`
-Allow an empty string(`""`) for input, and adjust to `value`.
+#### `acceptEmptyString([value])`
+Accept an empty string(`""`) for input, and adjust to `value`.
 
 If this method is not called, `adjust("")` causes `AdjusterError`.
+
+##### examples
 
 ```javascript
 // should be adjusted
 assert.deepStrictEqual(
-    adjuster.stringArray().allowEmptyString(["a", "b"]).adjust(""),
+    adjuster.stringArray().acceptEmptyString(["a", "b"]).adjust(""),
     ["a", "b"]);
 
 // should cause errors
@@ -1114,6 +1169,8 @@ assert.throws(
 Assume an input value is string and separated by `separator`.
 
 If an input type is array, this method does nothing.
+
+##### examples
 
 ```javascript
 // should be OK
@@ -1213,7 +1270,7 @@ assert.throws(
 ```
 
 #### `eachDefault(value)`
-Allow `undefined` for each elements of input, and adjust to `value`.
+Accept `undefined` for each elements of input, and adjust to `value`.
 
 ##### examples
 
@@ -1229,15 +1286,15 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_REQUIRED));
 ```
 
-#### `eachAllowNull([value])`
-Allow a `null` for each elements of input, and adjust to `value`.
+#### `eachAcceptNull([value])`
+Accept a `null` for each elements of input, and adjust to `value`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.deepStrictEqual(
-    adjuster.stringArray().eachAllowNull("z").adjust(["a", null, "b"]),
+    adjuster.stringArray().eachAcceptNull("z").adjust(["a", null, "b"]),
     ["a", "z", "b"]);
 
 // should cause error
@@ -1246,15 +1303,15 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_NULL));
 ```
 
-#### `eachAllowEmptyString([value])`
-Allow an empty string(`""`) for each elements of input, and adjust to `value`.
+#### `eachAcceptEmptyString([value])`
+Accept an empty string(`""`) for each elements of input, and adjust to `value`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.deepStrictEqual(
-    adjuster.stringArray().eachAllowEmptyString("z").adjust(["a", "", "b"]),
+    adjuster.stringArray().eachAcceptEmptyString("z").adjust(["a", "", "b"]),
     ["a", "z", "b"]);
 
 // should cause errors
@@ -1364,8 +1421,8 @@ interface NumericStringAdjuster {
 
     // feature methods (chainable)
     default(value: string): NumericStringAdjuster;
-    allowNull(value?: string|null /* = null */): NumericStringAdjuster;
-    allowEmptyString(value?: string|null /* = null */): NumericStringAdjuster;
+    acceptNull(value?: string|null /* = null */): NumericStringAdjuster;
+    acceptEmptyString(value?: string|null /* = null */): NumericStringAdjuster;
     joinArray(): NumericStringAdjuster;
     separatedBy(separator: string|RegExp): NumericStringAdjuster;
     minLength(length: number): NumericStringAdjuster;
@@ -1392,7 +1449,7 @@ assert.strictEqual(
 ```
 
 #### `default(value)`
-Allow `undefined` for input, and adjust to `value`.
+Accpet `undefined` for input, and adjust to `value`.
 
 ##### examples
 
@@ -1408,15 +1465,15 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
 ```
 
-#### `allowNull([value])`
-Allow a `null` for input, and adjust to `value`.
+#### `acceptNull([value])`
+Accept a `null` for input, and adjust to `value`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.numericString().allowNull("456").adjust(null),
+    adjuster.numericString().acceptNull("456").adjust(null),
     "456");
 
 // should cause error
@@ -1425,15 +1482,15 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
-#### `allowEmptyString([value])`
-Allow an empty string(`""`) for input, and adjust to `value`.
+#### `acceptEmptyString([value])`
+Accept an empty string(`""`) for input, and adjust to `value`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.numericString().allowEmptyString("456").adjust(""),
+    adjuster.numericString().acceptEmptyString("456").adjust(""),
     "456");
 
 // should cause error
@@ -1586,8 +1643,8 @@ interface IPv4Adjuster {
 
     // feature methods (chainable)
     default(value: string): IPv4Adjuster;
-    allowNull(value?: string|null /* = null */): IPv4Adjuster;
-    allowEmptyString(value?: string|null /* = null */): IPv4Adjuster;
+    acceptNull(value?: string|null /* = null */): IPv4Adjuster;
+    acceptEmptyString(value?: string|null /* = null */): IPv4Adjuster;
     trim(): IPv4Adjuster;
 }
 ```
@@ -1622,7 +1679,7 @@ assert.throws(
 ```
 
 #### `default(value)`
-Allow `undefined` for input, and adjust to `value`.
+Accept `undefined` for input, and adjust to `value`.
 
 ##### examples
 
@@ -1638,15 +1695,15 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
 ```
 
-#### `allowNull([value])`
-Allow a `null` for input, and adjust to `value`.
+#### `acceptNull([value])`
+Accept a `null` for input, and adjust to `value`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.ipv4().allowNull("0.0.0.0").adjust(null),
+    adjuster.ipv4().acceptNull("0.0.0.0").adjust(null),
     "0.0.0.0");
 
 // should cause error
@@ -1655,15 +1712,15 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
-#### `allowEmptyString([value])`
-Allow an empty string(`""`) for input, and adjust to `value`.
+#### `acceptEmptyString([value])`
+Accept an empty string(`""`) for input, and adjust to `value`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.ipv4().allowEmptyString("0.0.0.0").adjust(""),
+    adjuster.ipv4().acceptEmptyString("0.0.0.0").adjust(""),
     "0.0.0.0");
 
 // should cause error
@@ -1703,8 +1760,8 @@ interface IPv6Adjuster {
 
     // feature methods (chainable)
     default(value: string): IPv6Adjuster;
-    allowNull(value?: string|null /* = null */): IPv6Adjuster;
-    allowEmptyString(value?: string|null /* = null */): IPv6Adjuster;
+    acceptNull(value?: string|null /* = null */): IPv6Adjuster;
+    acceptEmptyString(value?: string|null /* = null */): IPv6Adjuster;
     trim(): IPv6Adjuster;
 }
 ```
@@ -1745,7 +1802,7 @@ assert.throws(
 ```
 
 #### `default(value)`
-Allow `undefined` for input, and adjust to `value`.
+Accept `undefined` for input, and adjust to `value`.
 
 ##### examples
 
@@ -1761,15 +1818,15 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
 ```
 
-#### `allowNull([value])`
-Allow a `null` for input, and adjust to `value`.
+#### `acceptNull([value])`
+Accept a `null` for input, and adjust to `value`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.ipv6().allowNull("::").adjust(null),
+    adjuster.ipv6().acceptNull("::").adjust(null),
     "::");
 
 // should cause error
@@ -1778,15 +1835,15 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
-#### `allowEmptyString([value])`
-Allow an empty string(`""`) for input, and adjust to `value`.
+#### `acceptEmptyString([value])`
+Accept an empty string(`""`) for input, and adjust to `value`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.ipv6().allowEmptyString("::").adjust(""),
+    adjuster.ipv6().acceptEmptyString("::").adjust(""),
     "::");
 
 // should cause error
@@ -1829,8 +1886,8 @@ interface EmailAdjuster {
 
     // feature methods (chainable)
     default(value: string): EmailAdjuster;
-    allowNull(value?: string|null /* = null */): EmailAdjuster;
-    allowEmptyString(value?: string|null /* = null */): EmailAdjuster;
+    acceptNull(value?: string|null /* = null */): EmailAdjuster;
+    acceptEmptyString(value?: string|null /* = null */): EmailAdjuster;
     trim(): EmailAdjuster;
     pattern(pattern: string|RegExp): EmailAdjuster;
 }
@@ -1890,7 +1947,7 @@ assert.throws(
 ```
 
 #### `default(value)`
-Allow `undefined` for input, and adjust to `value`.
+Accept `undefined` for input, and adjust to `value`.
 
 ##### examples
 
@@ -1906,15 +1963,15 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
 ```
 
-#### `allowNull([value])`
-Allow a `null` for input, and adjust to `value`.
+#### `acceptNull([value])`
+Accept a `null` for input, and adjust to `value`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.email().allowNull("user@example.com").adjust(null),
+    adjuster.email().acceptNull("user@example.com").adjust(null),
     "user@example.com");
 
 // should cause error
@@ -1923,15 +1980,15 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
 ```
 
-#### `allowEmptyString([value])`
-Allow an empty string(`""`) for input, and adjust to `value`.
+#### `acceptEmptyString([value])`
+Accept an empty string(`""`) for input, and adjust to `value`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.email().allowEmptyString("user@example.com").adjust(""),
+    adjuster.email().acceptEmptyString("user@example.com").adjust(""),
     "user@example.com");
 
 // should cause error
@@ -1968,7 +2025,7 @@ Specify acceptable pattern by regular expression.
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.email().pattern(/^[\w\.]+@([\w\-]+\.)+\w+$/).adjust("......@example.com"), // allow leading/trailing/consecutively dots
+    adjuster.email().pattern(/^[\w\.]+@([\w\-]+\.)+\w+$/).adjust("......@example.com"), // accept leading/trailing/consecutively dots
     "user@example.com");
 
 // should cause errors
