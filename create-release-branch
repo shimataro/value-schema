@@ -24,7 +24,7 @@ function main() {
 	cd `dirname ${0}`
 
 	if [ $# -lt 1 ]; then
-		usage ${0}
+		usage
 	fi
 
 	local VERSION=$1
@@ -45,7 +45,7 @@ function main() {
 }
 
 function usage() {
-	local COMMAND=`basename ${1}`
+	local COMMAND=`basename ${0}`
 
 	echo -e "${COLOR_SECTION}NAME${COLOR_RESET}
 	${COMMAND} - Prepare for new release
@@ -62,7 +62,7 @@ ${COLOR_SECTION}DESCRIPTION${COLOR_RESET}
 	- verify
 	- ...and commit!
 
-	${COLOR_OPTION}new-version${COLOR_RESET} must follow \"Symantec Versioning\" <https://semver.org/>.
+	${COLOR_OPTION}new-version${COLOR_RESET} must follow \"Semantic Versioning\" <https://semver.org/>.
 "
 	exit 1
 }
