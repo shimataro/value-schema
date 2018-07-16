@@ -1,4 +1,4 @@
-import {CAUSE, NUMERIC_STRING_CHECKSUM_ALGORITHM} from "./libs/constants";
+import {CAUSE, NUMERIC_STRING_CHECKSUM_ALGORITHM, STRING_PATTERN} from "./libs/constants";
 import adjust from "./libs/adjust";
 import factoryNumber from "./adjusters/number";
 import factoryNumberArray from "./adjusters/numberArray";
@@ -15,6 +15,8 @@ export default {
 	CAUSE: CAUSE,
 	/** @type {adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM} */
 	NUMERIC_STRING_CHECKSUM_ALGORITHM: NUMERIC_STRING_CHECKSUM_ALGORITHM,
+	/** @type {adjuster.STRING_PATTERN} */
+	STRING_PATTERN: STRING_PATTERN,
 
 	adjust: adjust,
 

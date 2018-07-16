@@ -77,9 +77,14 @@ The cause of adjustment error.
 For more information, see below examples.
 
 #### `adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM`
-Checksum algorithms for `adjuster.numericString()`.
+Checksum algorithms for `adjuster.numericString().checksum()`.
 
 For more information, see [numeric string](#numeric-string).
+
+#### `adjuster.STRING_PATTERN`
+Regular expressions for `adjuster.string().pattern()`.
+
+For more information, see [string](#string).
 
 ### basic usage
 #### ambient declarations
@@ -1036,6 +1041,12 @@ assert.throws(
 #### `pattern(pattern)`
 Specify acceptable pattern by regular expression.
 
+You can also use `adjuster.STRING_PATTERN` constants
+
+|constant|explanation|
+|--------|-----------|
+|`adjuster.STRING_PATTERN.URI`|URI that follows [RFC3986](https://tools.ietf.org/html/rfc3986)|
+
 ##### examples
 
 ```javascript
@@ -1046,10 +1057,17 @@ assert.deepStrictEqual(
 assert.deepStrictEqual(
     adjuster.string().pattern("^Go+gle$").adjust("Google"),
     "Google");
+assert.deepStrictEqual(
+    adjuster.string().pattern(adjuster.STRING_PATTERN.URI).adjust("https://example.com/path/to/resource?name=value#hash"),
+    "https://example.com/path/to/resource?name=value#hash");
+
 
 // should cause error
 assert.throws(
     () => adjuster.string().pattern(/^Go+gle$/).adjust("Ggle"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(
+    () => adjuster.string().pattern(adjuster.STRING_PATTERN.URI).adjust("https://例.com/"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
