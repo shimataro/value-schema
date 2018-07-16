@@ -62,7 +62,7 @@ ${COLOR_SECTION}DESCRIPTION${COLOR_RESET}
 	- verify
 	- ...and commit!
 
-	${COLOR_OPTION}new-version${COLOR_RESET} must follow \"Symantec Versioning\" <https://semver.org/>.
+	${COLOR_OPTION}new-version${COLOR_RESET} must follow \"Semantic Versioning\" <https://semver.org/>.
 "
 	exit 1
 }
