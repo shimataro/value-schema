@@ -72,7 +72,7 @@ function check_version_format() {
 		return
 	fi
 
-	echo -e "${COLOR_ERROR}ERROR:${COLOR_RESET} Follow \"Semantic Versioning\" for new version: https://semver.org/
+	echo -e "${COLOR_ERROR}ERROR:${COLOR_RESET} Follow \"Semantic Versioning\" <https://semver.org/> for new version.
 " >&2
 	exit 2
 }
