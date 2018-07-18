@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 * `adjuster.STRING_PATTERN`, regular expressions for `adjuster.string().pattern()`
 
+### Fixed
+* `adjuster.number().adjust(true)` throws an error; should return `1`
+
 ## [0.11.0] - 2018-07-16
 ### Added
 * `adjuster.number().acceptSpecialFormats()`
