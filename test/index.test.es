@@ -16,6 +16,7 @@ function testAdjust()
 		const constraints = {
 			id: adjuster.number().minValue(1),
 			name: adjuster.string().maxLength(16, true),
+			age: adjuster.number().integer(true).minValue(0),
 			email: adjuster.email(),
 			state: adjuster.string().only("active", "inactive"),
 			classes: adjuster.numberArray().separatedBy(",").ignoreEachErrors(),
@@ -23,12 +24,13 @@ function testAdjust()
 			credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD),
 			remote_addr: adjuster.ipv4(),
 			remote_addr_ipv6: adjuster.ipv6(),
-			limit: adjuster.number().default(10).minValue(1, true).maxValue(100, true),
-			offset: adjuster.number().default(0).minValue(0, true),
+			limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true),
+			offset: adjuster.number().integer().default(0).minValue(0, true),
 		};
 		const input = {
 			id: "1",
 			name: "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Ciprin Cipriano de la Santísima Trinidad Ruiz y Picasso",
+			age: 20.5,
 			email: "picasso@example.com",
 			state: "active",
 			classes: "1,3,abc,4",
@@ -41,6 +43,7 @@ function testAdjust()
 		const expected = {
 			id: 1,
 			name: "Pablo Diego José",
+			age: 20,
 			email: "picasso@example.com",
 			state: "active",
 			classes: [1, 3, 4],

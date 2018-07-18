@@ -4,7 +4,6 @@ import Default from "../libs/decorators/default";
 import AcceptNull from "../libs/decorators/acceptNull";
 import AcceptEmptyString from "../libs/decorators/acceptEmptyString";
 import Only from "../libs/decorators/only";
-import AcceptSpecialFormats from "../libs/decorators/number/acceptSpecialFormats";
 import Type from "../libs/decorators/number/type";
 import MinValue from "../libs/decorators/number/minValue";
 import MaxValue from "../libs/decorators/number/maxValue";
@@ -25,7 +24,6 @@ export default () =>
 @MinValue
 @Only
 @Type
-@AcceptSpecialFormats
 @AcceptEmptyString
 @AcceptNull
 @Default
@@ -59,6 +57,14 @@ class NumberAdjuster extends AdjusterBase
 	 * accept all special formats; i.e., "1e+10", "0x100"
 	 * @method
 	 * @name NumberAdjuster#acceptSpecialFormats
+	 * @return {NumberAdjuster}
+	 */
+
+	/**
+	 * limit value to integer
+	 * @method
+	 * @name NumberAdjuster#integer
+	 * @param {boolean} [adjust=false] adjust to integer value is not an integer; default is ERROR
 	 * @return {NumberAdjuster}
 	 */
 

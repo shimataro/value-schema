@@ -77,9 +77,14 @@ The cause of adjustment error.
 For more information, see below examples.
 
 #### `adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM`
-Checksum algorithms for `adjuster.numericString()`.
+Checksum algorithms for `adjuster.numericString().checksum()`.
 
 For more information, see [numeric string](#numeric-string).
+
+#### `adjuster.STRING_PATTERN`
+Regular expressions for `adjuster.string().pattern()`.
+
+For more information, see [string](#string).
 
 ### basic usage
 #### ambient declarations
@@ -135,6 +140,7 @@ import assert from "assert";
 const constraints = {
     id: adjuster.number().minValue(1),
     name: adjuster.string().maxLength(16, true),
+    age: adjuster.number().integer(true).minValue(0),
     email: adjuster.email(),
     state: adjuster.string().only("active", "inactive"),
     classes: adjuster.numberArray().separatedBy(",").ignoreEachErrors(),
@@ -142,12 +148,13 @@ const constraints = {
     credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD),
     remote_addr: adjuster.ipv4(),
     remote_addr_ipv6: adjuster.ipv6(),
-    limit: adjuster.number().default(10).minValue(1, true).maxValue(100, true),
-    offset: adjuster.number().default(0).minValue(0, true),
+    limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true),
+    offset: adjuster.number().integer().default(0).minValue(0, true),
 };
 const input = {
     id: "1",
     name: "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Ciprin Cipriano de la Santísima Trinidad Ruiz y Picasso",
+    age: 20.5,
     email: "picasso@example.com",
     state: "active",
     classes: "1,3,abc,4",
@@ -160,6 +167,7 @@ const input = {
 const expected = {
     id: 1,
     name: "Pablo Diego José",
+    age: 20,
     email: "picasso@example.com",
     state: "active",
     classes: [1, 3, 4],
@@ -300,6 +308,7 @@ interface NumberAdjuster {
     acceptNull(value?: number|null /* = null */): NumberAdjuster;
     acceptEmptyString(value?: number|null /* = null */): NumberAdjuster;
     acceptSpecialFormats(): NumberAdjuster;
+    integer(adjust?: boolean /* = false */): NumberAdjuster;
     only(...values: number[]): NumberAdjuster;
     minValue(value: number, adjust?: boolean /* = false */): NumberAdjuster;
     maxValue(value: number, adjust?: boolean /* = false */): NumberAdjuster;
@@ -323,6 +332,12 @@ assert.strictEqual(
 assert.strictEqual(
     adjuster.number().adjust("-123"),
     -123);
+assert.strictEqual(
+    adjuster.number().adjust(true),
+    1);
+assert.strictEqual(
+    adjuster.number().adjust(false),
+    0);
 
 // should cause error
 assert.strictEqual( // catch error by callback function (that returns a value from adjust() method)
@@ -332,6 +347,9 @@ assert.strictEqual( // catch error by callback function (that returns a value fr
     10);
 assert.throws( // ... or try-catch syntax
     () => adjuster.number().adjust("abc"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(
+    () => adjuster.number().adjust("true"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
 ```
 
@@ -419,6 +437,40 @@ assert.throws(
     () => adjuster.number().adjust("1e+2"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
 
+```
+
+#### `integer([adjust])`
+Limit an input value to integer.
+
+If `adjust` is true, value will be adjusted to an integer.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.number().integer(true).adjust(3.14),
+    3);
+assert.strictEqual(
+    adjuster.number().integer(true).adjust("3.14"),
+    3);
+assert.strictEqual(
+    adjuster.number().integer(true).adjust(-3.14),
+    -3);
+assert.strictEqual(
+    adjuster.number().integer(true).adjust("-3.14"),
+    -3);
+
+// should cause error
+assert.throws(
+    () => adjuster.number().integer().adjust(3.14),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(
+    () => adjuster.number().integer().adjust("3.14"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(
+    () => adjuster.number().integer().adjust("3."),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
 ```
 
 #### `only(...values)`
@@ -1036,6 +1088,12 @@ assert.throws(
 #### `pattern(pattern)`
 Specify acceptable pattern by regular expression.
 
+You can also use `adjuster.STRING_PATTERN` constants
+
+|constant|explanation|
+|--------|-----------|
+|`adjuster.STRING_PATTERN.URI`|URI that follows [RFC3986](https://tools.ietf.org/html/rfc3986)|
+
 ##### examples
 
 ```javascript
@@ -1046,10 +1104,17 @@ assert.deepStrictEqual(
 assert.deepStrictEqual(
     adjuster.string().pattern("^Go+gle$").adjust("Google"),
     "Google");
+assert.deepStrictEqual(
+    adjuster.string().pattern(adjuster.STRING_PATTERN.URI).adjust("https://example.com/path/to/resource?name=value#hash"),
+    "https://example.com/path/to/resource?name=value#hash");
+
 
 // should cause error
 assert.throws(
     () => adjuster.string().pattern(/^Go+gle$/).adjust("Ggle"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+assert.throws(
+    () => adjuster.string().pattern(adjuster.STRING_PATTERN.URI).adjust("https://例.com/"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
@@ -1602,23 +1667,18 @@ Check an input value by specified algorithm.
 assert.strictEqual(
     adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111111"),
     "4111111111111111");
-
 assert.strictEqual(
     adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD).adjust("4111111111111111"), // alias of LUHN
     "4111111111111111");
-
 assert.strictEqual(
     adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1).adjust("9784101092058"),
     "9784101092058");
-
 assert.strictEqual(
     adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
     "9784101092058");
-
 assert.strictEqual(
     adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.EAN).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
     "9784101092058");
-
 assert.strictEqual(
     adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.JAN).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
     "9784101092058");

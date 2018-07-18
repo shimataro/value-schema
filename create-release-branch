@@ -6,7 +6,8 @@
 BASE_BRANCH="develop"
 
 URL_PRODUCT="https://github.com/shimataro/node-adjuster"
-URL_RELEASE="${URL_PRODUCT}/releases"
+URL_COMPARE="${URL_PRODUCT}/compare"
+URL_RELEASE="${URL_PRODUCT}/releases/new"
 
 COLOR_ERROR="\e[1;41m"
 COLOR_SECTION="\e[1;34m"
@@ -23,7 +24,7 @@ function main() {
 	cd `dirname ${0}`
 
 	if [ $# -lt 1 ]; then
-		usage ${0}
+		usage
 	fi
 
 	local VERSION=$1
@@ -44,7 +45,7 @@ function main() {
 }
 
 function usage() {
-	local COMMAND=`basename ${1}`
+	local COMMAND=`basename ${0}`
 
 	echo -e "${COLOR_SECTION}NAME${COLOR_RESET}
 	${COMMAND} - Prepare for new release
@@ -61,7 +62,7 @@ ${COLOR_SECTION}DESCRIPTION${COLOR_RESET}
 	- verify
 	- ...and commit!
 
-	${COLOR_OPTION}new-version${COLOR_RESET} must follow \"Symantec Versioning\" <https://semver.org/>.
+	${COLOR_OPTION}new-version${COLOR_RESET} must follow \"Semantic Versioning\" <https://semver.org/>.
 "
 	exit 1
 }
@@ -71,7 +72,7 @@ function check_version_format() {
 		return
 	fi
 
-	echo -e "${COLOR_ERROR}ERROR:${COLOR_RESET} Follow \"Semantic Versioning\" for new version: https://semver.org/
+	echo -e "${COLOR_ERROR}ERROR:${COLOR_RESET} Follow \"Semantic Versioning\" <https://semver.org/> for new version.
 " >&2
 	exit 2
 }
@@ -150,21 +151,23 @@ Remaining processes are...
 	${COLOR_COMMAND}git diff ${BASE_BRANCH} ${BRANCH}${COLOR_RESET}
 2. Push to remote origin
 	${COLOR_COMMAND}git push --set-upstream origin ${BRANCH}${COLOR_RESET}
-3. Visit ${URL_PRODUCT}
-4. Create a pull-request: ${COLOR_BRANCH}${BRANCH}${COLOR_RESET} to ${COLOR_BRANCH}${BASE_BRANCH}${COLOR_RESET}
+3. Create a pull-request: ${COLOR_BRANCH}${BRANCH}${COLOR_RESET} to ${COLOR_BRANCH}${BASE_BRANCH}${COLOR_RESET}
+	${URL_COMPARE}/${BASE_BRANCH}...${BRANCH}
 	select ${COLOR_SELECT}Squash and merge${COLOR_RESET}
-5. Create a pull-request: ${COLOR_BRANCH}${BASE_BRANCH}${COLOR_RESET} to ${COLOR_BRANCH}master${COLOR_RESET}
+4. Create a pull-request: ${COLOR_BRANCH}${BASE_BRANCH}${COLOR_RESET} to ${COLOR_BRANCH}master${COLOR_RESET}
+	${URL_COMPARE}/master...${BASE_BRANCH}
 	select ${COLOR_SELECT}Create a merge commit${COLOR_RESET}
-6. Create release: ${URL_RELEASE}
+5. Create a new release
+	${URL_RELEASE}
 	Tag version: ${COLOR_INPUT}${TAG}${COLOR_RESET}
 	Target: ${COLOR_INPUT}master${COLOR_RESET}
 	Release title: ${COLOR_INPUT}node-adjuster ${VERSION} released${COLOR_RESET}
-	Description this release: (see CHANGELOG.md)
-7. Publish!
+	Description this release: (copy and paste CHANGELOG.md)
+6. Publish!
 	${COLOR_COMMAND}git checkout master${COLOR_RESET}
 	${COLOR_COMMAND}git pull${COLOR_RESET}
 	${COLOR_COMMAND}npm publish --access=public${COLOR_RESET}
-8. Post processing
+7. Post processing
 	${COLOR_COMMAND}git checkout ${BASE_BRANCH}${COLOR_RESET}
 	${COLOR_COMMAND}git pull${COLOR_RESET}
 
