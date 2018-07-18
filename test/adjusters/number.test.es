@@ -22,7 +22,7 @@ function testType()
 			.adjust(0)).toEqual(0);
 
 		expect(adjuster.number()
-			.adjust(1)).toEqual(1);
+			.adjust(3.14)).toEqual(3.14);
 	});
 	it("should be adjusted", () =>
 	{
@@ -34,6 +34,18 @@ function testType()
 
 		expect(adjuster.number()
 			.adjust("-789")).toEqual(-789);
+
+		expect(adjuster.number().integer(true)
+			.adjust(3.14)).toEqual(3);
+
+		expect(adjuster.number().integer(true)
+			.adjust("3.14")).toEqual(3);
+
+		expect(adjuster.number().integer(true)
+			.adjust(-3.14)).toEqual(-3);
+
+		expect(adjuster.number().integer(true)
+			.adjust("-3.14")).toEqual(-3);
 
 		expect(adjuster.number()
 			.adjust(true)).toEqual(1);
@@ -58,7 +70,31 @@ function testType()
 		expect(() =>
 		{
 			adjuster.number()
-				.adjust("abc");
+				.adjust("true");
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.number()
+				.adjust("false");
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.number().integer()
+				.adjust(3.14);
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.number().integer()
+				.adjust("3.14");
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.number().integer()
+				.adjust("3.");
 		}).toThrow(adjuster.CAUSE.TYPE);
 
 		expect(() =>
