@@ -328,6 +328,12 @@ assert.strictEqual(
 assert.strictEqual(
     adjuster.number().adjust("-123"),
     -123);
+assert.strictEqual(
+    adjuster.number().adjust(true),
+    1);
+assert.strictEqual(
+    adjuster.number().adjust(false),
+    0);
 
 // should cause error
 assert.strictEqual( // catch error by callback function (that returns a value from adjust() method)
@@ -337,6 +343,9 @@ assert.strictEqual( // catch error by callback function (that returns a value fr
     10);
 assert.throws( // ... or try-catch syntax
     () => adjuster.number().adjust("abc"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(
+    () => adjuster.number().adjust("true"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
 ```
 

@@ -40,6 +40,11 @@ function _acceptSpecialFormats(params)
  */
 function _adjust(params, values)
 {
+	if(typeof values.adjusted !== "string")
+	{
+		return false;
+	}
+
 	if(params.flag)
 	{
 		return false;

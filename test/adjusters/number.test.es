@@ -35,6 +35,12 @@ function testType()
 		expect(adjuster.number()
 			.adjust("-789")).toEqual(-789);
 
+		expect(adjuster.number()
+			.adjust(true)).toEqual(1);
+
+		expect(adjuster.number()
+			.adjust(false)).toEqual(0);
+
 		expect(adjuster.number().acceptSpecialFormats()
 			.adjust("1e+2")).toEqual(100);
 
