@@ -140,6 +140,7 @@ import assert from "assert";
 const constraints = {
     id: adjuster.number().minValue(1),
     name: adjuster.string().maxLength(16, true),
+    age: adjuster.number().integer(true).minValue(0),
     email: adjuster.email(),
     state: adjuster.string().only("active", "inactive"),
     classes: adjuster.numberArray().separatedBy(",").ignoreEachErrors(),
@@ -147,12 +148,13 @@ const constraints = {
     credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD),
     remote_addr: adjuster.ipv4(),
     remote_addr_ipv6: adjuster.ipv6(),
-    limit: adjuster.number().default(10).minValue(1, true).maxValue(100, true),
-    offset: adjuster.number().default(0).minValue(0, true),
+    limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true),
+    offset: adjuster.number().integer().default(0).minValue(0, true),
 };
 const input = {
     id: "1",
     name: "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Ciprin Cipriano de la Santísima Trinidad Ruiz y Picasso",
+    age: 20.5,
     email: "picasso@example.com",
     state: "active",
     classes: "1,3,abc,4",
@@ -165,6 +167,7 @@ const input = {
 const expected = {
     id: 1,
     name: "Pablo Diego José",
+    age: 20,
     email: "picasso@example.com",
     state: "active",
     classes: [1, 3, 4],
@@ -305,6 +308,7 @@ interface NumberAdjuster {
     acceptNull(value?: number|null /* = null */): NumberAdjuster;
     acceptEmptyString(value?: number|null /* = null */): NumberAdjuster;
     acceptSpecialFormats(): NumberAdjuster;
+    integer(adjust?: boolean /* = false */): NumberAdjuster;
     only(...values: number[]): NumberAdjuster;
     minValue(value: number, adjust?: boolean /* = false */): NumberAdjuster;
     maxValue(value: number, adjust?: boolean /* = false */): NumberAdjuster;
@@ -433,6 +437,40 @@ assert.throws(
     () => adjuster.number().adjust("1e+2"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
 
+```
+
+#### `integer([adjust])`
+Limit an input value to integer.
+
+If `adjust` is true, value will be adjusted to an integer.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.number().integer(true).adjust(3.14),
+    3);
+assert.strictEqual(
+    adjuster.number().integer(true).adjust("3.14"),
+    3);
+assert.strictEqual(
+    adjuster.number().integer(true).adjust(-3.14),
+    -3);
+assert.strictEqual(
+    adjuster.number().integer(true).adjust("-3.14"),
+    -3);
+
+// should cause error
+assert.throws(
+    () => adjuster.number().integer().adjust(3.14),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(
+    () => adjuster.number().integer().adjust("3.14"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(
+    () => adjuster.number().integer().adjust("3."),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
 ```
 
 #### `only(...values)`
