@@ -126,7 +126,7 @@ class NumberArrayAdjuster extends AdjusterBase
 	/**
 	 * accept only specified values for each elements
 	 * @method
-	 * @name NumberArrayAdjuster#eachIn
+	 * @name NumberArrayAdjuster#eachOnly
 	 * @param {...number} values values to be accepted
 	 * @return {NumberArrayAdjuster}
 	 */

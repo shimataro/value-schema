@@ -126,7 +126,7 @@ class StringArrayAdjuster extends AdjusterBase
 	/**
 	 * accept only specified values for each elements
 	 * @method
-	 * @name StringArrayAdjuster#eachIn
+	 * @name StringArrayAdjuster#eachOnly
 	 * @param {...string} values values to be accepted
 	 * @return {StringArrayAdjuster}
 	 */
