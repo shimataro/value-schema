@@ -124,9 +124,17 @@ class NumberArrayAdjuster extends AdjusterBase
 	 */
 
 	/**
+	 * limit value to integer for each elements
+	 * @method
+	 * @name NumberArrayAdjuster#eachInteger
+	 * @param {boolean} [adjust=false] adjust to integer value is not an integer; default is ERROR
+	 * @return {NumberArrayAdjuster}
+	 */
+
+	/**
 	 * accept only specified values for each elements
 	 * @method
-	 * @name NumberArrayAdjuster#eachIn
+	 * @name NumberArrayAdjuster#eachOnly
 	 * @param {...number} values values to be accepted
 	 * @return {NumberArrayAdjuster}
 	 */

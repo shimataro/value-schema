@@ -581,6 +581,7 @@ interface NumberArrayAdjuster {
     eachAcceptNull(value?: number|null /* = null */): NumberArrayAdjuster;
     eachAcceptEmptyString(value?: number|null /* = null */): NumberArrayAdjuster;
     eachAcceptSpecialFormats(): NumberArrayAdjuster;
+    eachInteger(adjust?: boolean /* = false */): NumberArrayAdjuster;
     eachOnly(...values: number[]): NumberArrayAdjuster;
     eachMinValue(value: number, adjust?: boolean /* = false */): NumberArrayAdjuster;
     eachMaxValue(value: number, adjust?: boolean /* = false */): NumberArrayAdjuster;

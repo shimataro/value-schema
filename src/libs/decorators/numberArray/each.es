@@ -11,6 +11,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 		eachAcceptNull: _featureEachAcceptNull,
 		eachAcceptEmptyString: _featureEachAcceptEmptyString,
 		eachAcceptSpecialFormats: _featureEachAcceptSpecialFormats,
+		eachInteger: _featureEachInteger,
 		eachOnly: _featureEachOnly,
 		eachMinValue: _featureEachMinValue,
 		eachMaxValue: _featureEachMaxValue,
@@ -78,6 +79,17 @@ function _featureEachAcceptEmptyString(params, value = null)
 function _featureEachAcceptSpecialFormats(params)
 {
 	params.objAdjuster.acceptSpecialFormats();
+}
+
+/**
+ * limit value to integer for each elements
+ * @param {Object} params parameters
+ * @param {boolean} [adjust=false] adjust to integer value is not an integer; default is ERROR
+ * @return {void}
+ */
+function _featureEachInteger(params, adjust = false)
+{
+	params.objAdjuster.integer(adjust);
 }
 
 /**

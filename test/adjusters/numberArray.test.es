@@ -14,6 +14,7 @@ import adjuster from "index";
 	describe("eachAcceptNull", testEachAcceptNull);
 	describe("eachAcceptEmptyString", testEachAcceptEmptyString);
 	describe("eachAcceptSpecialFormats", testEachAcceptSpecialFormats);
+	describe("eachInteger", testEachInteger);
 	describe("eachOnly", testEachOnly);
 	describe("eachMinValue", testEachMinValue);
 	describe("eachMaxValue", testEachMaxValue);
@@ -311,6 +312,32 @@ function testEachAcceptSpecialFormats()
 		{
 			adjuster.numberArray()
 				.adjust(["1e+2", "0x100", "0o100", "0b100"]);
+		}).toThrow(adjuster.CAUSE.EACH_TYPE);
+	});
+}
+
+/**
+ * each elements; integer
+ * @return {void}
+ */
+function testEachInteger()
+{
+	it("should be OK", () =>
+	{
+		expect(adjuster.numberArray().eachInteger()
+			.adjust([1, 2, 3])).toEqual([1, 2, 3]);
+	});
+	it("should be adjusted", () =>
+	{
+		expect(adjuster.numberArray().eachInteger(true)
+			.adjust([3.14, -3.14, "3.14"])).toEqual([3, -3, 3]);
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.numberArray().eachInteger()
+				.adjust([3.14]);
 		}).toThrow(adjuster.CAUSE.EACH_TYPE);
 	});
 }
