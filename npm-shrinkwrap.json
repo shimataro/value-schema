@@ -1,6 +1,6 @@
 {
   "name": "adjuster",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
@@ -4189,7 +4189,7 @@
         "escodegen": "1.11.0",
         "html-encoding-sniffer": "1.0.2",
         "left-pad": "1.3.0",
-        "nwsapi": "2.0.5",
+        "nwsapi": "2.0.6",
         "parse5": "4.0.0",
         "pn": "1.1.0",
         "request": "2.87.0",
@@ -7124,9 +7124,9 @@
       "integrity": "sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0="
     },
     "nwsapi": {
-      "version": "2.0.5",
-      "resolved": "https://registry.npmjs.org/nwsapi/-/nwsapi-2.0.5.tgz",
-      "integrity": "sha512-cqfA/wLUW6YbFQLkd5ZKq2SCaZkCoxehU9qt6ccMwH3fHbzUkcien9BzOgfBXfIkxeWnRFKb1ZKmjwaa9MYOMw==",
+      "version": "2.0.6",
+      "resolved": "https://registry.npmjs.org/nwsapi/-/nwsapi-2.0.6.tgz",
+      "integrity": "sha512-Gue18WcHPYOmviCH3v7wbbzp5uE3RfUxGh/i2i/M+LT0Up5HMtcAWmnj7RtW6HH/YMEtDVF5/nMH36DISU5bpg==",
       "dev": true
     },
     "oauth-sign": {
