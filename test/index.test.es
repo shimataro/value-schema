@@ -103,6 +103,14 @@ function testError()
 	{
 		expect(() =>
 		{
+			const constraints = {};
+			const input = 123;
+
+			adjuster.adjust(input, constraints);
+		}).toThrow(adjuster.CAUSE.NOT_OBJECT); // input must be an object
+
+		expect(() =>
+		{
 			const constraints = {
 				id: adjuster.number().minValue(1),
 				name: adjuster.string().maxLength(16, true),

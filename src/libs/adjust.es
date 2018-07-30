@@ -1,6 +1,8 @@
 export default adjust;
 
+import {CAUSE} from "./constants";
 import AdjusterBase from "./AdjusterBase";
+import AdjusterError from "./AdjusterError";
 
 /**
  * adjust multiple variables (as object)
@@ -11,6 +13,13 @@ import AdjusterBase from "./AdjusterBase";
  */
 function adjust(data, constraints, onError = AdjusterBase.onErrorDefault)
 {
+	if(typeof data !== "object")
+	{
+		const cause = CAUSE.NOT_OBJECT;
+		const err = new AdjusterError(cause, data);
+		return onError(err);
+	}
+
 	const result = {};
 	let hasError = false;
 	for(const key of Object.keys(constraints))
