@@ -104,10 +104,26 @@ function testError()
 		expect(() =>
 		{
 			const constraints = {};
-			const input = 123;
+			const input = 0;
 
 			adjuster.adjust(input, constraints);
 		}).toThrow(adjuster.CAUSE.NOT_OBJECT); // input must be an object
+
+		expect(() =>
+		{
+			const constraints = {};
+			const input = null;
+
+			adjuster.adjust(input, constraints);
+		}).toThrow(adjuster.CAUSE.NOT_OBJECT); // input must be an object; typeof null === "object"
+
+		expect(() =>
+		{
+			const constraints = {};
+			const input = [];
+
+			adjuster.adjust(input, constraints);
+		}).toThrow(adjuster.CAUSE.NOT_OBJECT); // input must be an object; typeof [] === "object"
 
 		expect(() =>
 		{

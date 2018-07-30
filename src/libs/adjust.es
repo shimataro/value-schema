@@ -1,6 +1,7 @@
 export default adjust;
 
 import {CAUSE} from "./constants";
+import {isObject} from "./utilities";
 import AdjusterBase from "./AdjusterBase";
 import AdjusterError from "./AdjusterError";
 
@@ -13,7 +14,7 @@ import AdjusterError from "./AdjusterError";
  */
 function adjust(data, constraints, onError = AdjusterBase.onErrorDefault)
 {
-	if(typeof data !== "object")
+	if(!isObject(data))
 	{
 		const cause = CAUSE.NOT_OBJECT;
 		const err = new AdjusterError(cause, data);
