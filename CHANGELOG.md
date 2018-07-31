@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 * Introduction in `README.md`
 
+### Fixed
+* build error in Windows
+
 ## [0.13.0] - 2018-07-20
 ### Added
 * `adjuster.numberArray().eachInteger()`
