@@ -54,6 +54,7 @@
       "es",
       "js"
     ],
+    "testEnvironment": "node",
     "testRegex": "\\.(test|spec)\\.es$",
     "transform": {
       "\\.es$": "babel-jest"
