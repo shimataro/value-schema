@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 * Introduction in `README.md`
 
+### Changed
+* cause an error `adjuster.CAUSE.NOT_OBJECT` when `input` type of `adjuster.adjust()` is not an object
+
 ### Fixed
 * build error in Windows
 
