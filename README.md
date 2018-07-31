@@ -12,6 +12,7 @@ validate and adjust input values
 
 ## Table of Contents
 
+* [Introduction](#introduction)
 * [Install](#install)
 * [Loading](#loading)
 * [Reference](#reference)
@@ -28,6 +29,16 @@ validate and adjust input values
 * [Changelog](#changelog)
 
 ---
+
+## Introduction
+
+All of web applications need to handle input parameter, consists of following steps:
+* fill default values
+* cast types
+* validate values
+* ...and revise them if needed
+
+`node-adjuster` does all of them, by compact and highly readable code!
 
 ## Install
 
