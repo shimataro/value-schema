@@ -47,7 +47,7 @@ install from [npm registry](https://www.npmjs.com/package/adjuster).
 npm install -S adjuster
 ```
 
-NOTICE: package name is `adjuster`, NOT `node-adjuster`!
+NOTE: package name is `adjuster`, NOT `node-adjuster`!
 
 ## Loading
 
