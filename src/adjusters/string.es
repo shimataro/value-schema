@@ -76,7 +76,7 @@ class StringAdjuster extends AdjusterBase
 	 * set min-length
 	 * @method
 	 * @name StringAdjuster#minLength
-	 * @param {int} length min-length; error if shorter
+	 * @param {number} length min-length; error if shorter
 	 * @return {StringAdjuster}
 	 */
 
@@ -84,7 +84,7 @@ class StringAdjuster extends AdjusterBase
 	 * set max-length
 	 * @method
 	 * @name StringAdjuster#maxLength
-	 * @param {int} length max-length; error if longer
+	 * @param {number} length max-length; error if longer
 	 * @param {boolean} [adjust=false] truncate if longer; default is ERROR
 	 * @return {StringAdjuster}
 	 */
