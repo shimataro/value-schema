@@ -22,7 +22,7 @@ function _init(params)
 /**
  * set min-length
  * @param {Object} params parameters
- * @param {int} length min-length; error if shorter
+ * @param {number} length min-length; error if shorter
  * @return {void}
  */
 function _featureMinLength(params, length)

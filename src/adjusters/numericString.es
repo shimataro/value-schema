@@ -78,7 +78,7 @@ class NumericStringAdjuster extends AdjusterBase
 	 * set min-length
 	 * @method
 	 * @name NumericStringAdjuster#minLength
-	 * @param {int} length min-length; error if shorter
+	 * @param {number} length min-length; error if shorter
 	 * @return {NumericStringAdjuster}
 	 */
 
@@ -86,7 +86,7 @@ class NumericStringAdjuster extends AdjusterBase
 	 * set max-length
 	 * @method
 	 * @name NumericStringAdjuster#maxLength
-	 * @param {int} length max-length; error if longer
+	 * @param {number} length max-length; error if longer
 	 * @param {boolean} [adjust=false] truncate if longer; default is ERROR
 	 * @return {NumericStringAdjuster}
 	 */

@@ -22,7 +22,7 @@ function _init(params)
 /**
  * set max-length
  * @param {Object} params parameters
- * @param {int} length max-length; error if longer
+ * @param {number} length max-length; error if longer
  * @param {boolean} [adjust=false] truncate if longer; default is ERROR
  * @return {void}
  */

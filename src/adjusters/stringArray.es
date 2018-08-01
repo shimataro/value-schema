@@ -72,7 +72,7 @@ class StringArrayAdjuster extends AdjusterBase
 	 * set min-length of array elements
 	 * @method
 	 * @name StringArrayAdjuster#minLength
-	 * @param {int} length min-length; error if shorter
+	 * @param {number} length min-length; error if shorter
 	 * @return {StringArrayAdjuster}
 	 */
 
@@ -80,7 +80,7 @@ class StringArrayAdjuster extends AdjusterBase
 	 * set max-length of array elements
 	 * @method
 	 * @name StringArrayAdjuster#maxLength
-	 * @param {int} length max-length
+	 * @param {number} length max-length
 	 * @param {boolean} [adjust=false] truncate if longer; default is ERROR
 	 * @return {StringArrayAdjuster}
 	 */
@@ -135,7 +135,7 @@ class StringArrayAdjuster extends AdjusterBase
 	 * set min-length for each elements
 	 * @method
 	 * @name StringArrayAdjuster#eachMinLength
-	 * @param {int} length min-length; error if shorter
+	 * @param {number} length min-length; error if shorter
 	 * @return {StringArrayAdjuster}
 	 */
 
@@ -143,7 +143,7 @@ class StringArrayAdjuster extends AdjusterBase
 	 * set max-length for each elements
 	 * @method
 	 * @name StringArrayAdjuster#eachMaxLength
-	 * @param {int} length max-length
+	 * @param {number} length max-length
 	 * @param {boolean} [adjust=false] truncate if longer; default is ERROR
 	 * @return {StringArrayAdjuster}
 	 */
