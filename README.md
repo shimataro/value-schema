@@ -32,7 +32,7 @@ validate and adjust input values
 
 ## Introduction
 
-All of web applications need to handle input parameter, consists of following steps:
+All of web applications need handling input parameters, consists of following steps:
 * fill default values
 * cast types
 * validate values
