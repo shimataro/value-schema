@@ -46,7 +46,7 @@ All of web applications need handling input parameters, consists of following st
 import adjuster from "adjuster";
 import assert from "assert";
 
-const constraints = {
+const constraints = { // constraints for input
     id: adjuster.number().minValue(1), // number, >=1
     name: adjuster.string().maxLength(16, true), // string, max 16 characters (trim if over)
     age: adjuster.number().integer(true).minValue(0), // number, integer (trim if decimal), >=0
@@ -88,7 +88,10 @@ const expected = { // should be adjusted to this
     offset: 0,
 };
 
+// Let's adjust!
 const adjusted = adjuster.adjust(input, constraints);
+
+// verification
 assert.deepStrictEqual(adjusted, expected);
 ```
 
