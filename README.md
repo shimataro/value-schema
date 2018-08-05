@@ -40,6 +40,62 @@ All of web applications need handling input parameters, consists of following st
 
 `node-adjuster` does all of them, by compact and highly readable code!
 
+### example
+
+```javascript
+import adjuster from "adjuster";
+import assert from "assert";
+
+const constraints = {
+    id: adjuster.number().minValue(1), // number, >=1
+    name: adjuster.string().maxLength(16, true), // string, max 16 characters (trim if over)
+    age: adjuster.number().integer(true).minValue(0), // number, integer (trim if decimal), >=0
+    email: adjuster.email(), // e-mail
+    state: adjuster.string().only("active", "inactive"), // string, accept only "active" and "inactive"
+    classes: adjuster.numberArray().separatedBy(",").ignoreEachErrors(), // array of number, separated by ",", ignore errors
+    skills: adjuster.stringArray().separatedBy(",").ignoreEachErrors(), // array of string, separated by ",", ignore errors
+    credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD), // numeric string, separated by "-", check by Luhn algorithm
+    remote_addr: adjuster.ipv4(), // IPv4
+    remote_addr_ipv6: adjuster.ipv6(), // IPv6
+    limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true), // number, integer, omittable (set 10 if omitted), >=1 (set 1 if less), <=100 (set 100 if greater)
+    offset: adjuster.number().integer().default(0).minValue(0, true), // number, integer, omiitable (set 0 if omited), >=0 (set 0 if less)
+};
+const input = { // input values
+    id: "1",
+    name: "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Ciprin Cipriano de la Santísima Trinidad Ruiz y Picasso",
+    age: 20.5,
+    email: "picasso@example.com",
+    state: "active",
+    classes: "1,3,abc,4",
+    skills: "c,c++,javascript,python,,swift,kotlin",
+    credit_card: "4111-1111-1111-1111",
+    remote_addr: "127.0.0.1",
+    remote_addr_ipv6: "::1",
+    limit: "0",
+};
+const expected = { // should be adjusted to this
+    id: 1,
+    name: "Pablo Diego José",
+    age: 20,
+    email: "picasso@example.com",
+    state: "active",
+    classes: [1, 3, 4],
+    skills: ["c", "c++", "javascript", "python", "swift", "kotlin"],
+    credit_card: "4111111111111111",
+    remote_addr: "127.0.0.1",
+    remote_addr_ipv6: "::1",
+    limit: 1,
+    offset: 0,
+};
+
+const adjusted = adjuster.adjust(input, constraints);
+assert.deepStrictEqual(adjusted, expected);
+```
+
+That's all! No control flows! Isn't it cool?
+
+For details, see [basic usage](#basic-usage).
+
 ## Install
 
 install from [npm registry](https://www.npmjs.com/package/adjuster).
