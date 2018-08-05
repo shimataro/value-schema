@@ -51,7 +51,7 @@ const constraints = { // constraints for input
     name: adjuster.string().maxLength(16, true), // string, max 16 characters (trim if over)
     age: adjuster.number().integer(true).minValue(0), // number, integer (trim if decimal), >=0
     email: adjuster.email(), // e-mail
-    state: adjuster.string().only("active", "inactive"), // string, accept only "active" and "inactive"
+    state: adjuster.string().only("active", "inactive"), // string, accepts only "active" and "inactive"
     classes: adjuster.numberArray().separatedBy(",").ignoreEachErrors(), // array of number, separated by ",", ignore errors
     skills: adjuster.stringArray().separatedBy(",").ignoreEachErrors(), // array of string, separated by ",", ignore errors
     credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD), // numeric string, separated by "-", check by Luhn algorithm
