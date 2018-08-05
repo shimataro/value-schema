@@ -48,17 +48,17 @@ import assert from "assert";
 
 const constraints = { // constraints for input
     id: adjuster.number().minValue(1), // number, >=1
-    name: adjuster.string().maxLength(16, true), // string, max 16 characters (trim if over)
-    age: adjuster.number().integer(true).minValue(0), // number, integer (trim if decimal), >=0
+    name: adjuster.string().maxLength(16, true), // string, max 16 characters (trims if over)
+    age: adjuster.number().integer(true).minValue(0), // number, integer (trims if decimal), >=0
     email: adjuster.email(), // e-mail
     state: adjuster.string().only("active", "inactive"), // string, accepts only "active" and "inactive"
-    classes: adjuster.numberArray().separatedBy(",").ignoreEachErrors(), // array of number, separated by ",", ignore errors
-    skills: adjuster.stringArray().separatedBy(",").ignoreEachErrors(), // array of string, separated by ",", ignore errors
-    credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD), // numeric string, separated by "-", check by Luhn algorithm
+    classes: adjuster.numberArray().separatedBy(",").ignoreEachErrors(), // array of number, separated by ",", ignores errors
+    skills: adjuster.stringArray().separatedBy(",").ignoreEachErrors(), // array of string, separated by ",", ignores errors
+    credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD), // numeric string, separated by "-", checks by Luhn algorithm
     remote_addr: adjuster.ipv4(), // IPv4
     remote_addr_ipv6: adjuster.ipv6(), // IPv6
-    limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true), // number, integer, omittable (set 10 if omitted), >=1 (set 1 if less), <=100 (set 100 if greater)
-    offset: adjuster.number().integer().default(0).minValue(0, true), // number, integer, omiitable (set 0 if omited), >=0 (set 0 if less)
+    limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true), // number, integer, omittable (sets 10 if omitted), >=1 (sets 1 if less), <=100 (sets 100 if greater)
+    offset: adjuster.number().integer().default(0).minValue(0, true), // number, integer, omiitable (sets 0 if omited), >=0 (sets 0 if less)
 };
 const input = { // input values
     id: "1",
