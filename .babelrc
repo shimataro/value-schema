@@ -1,9 +1,16 @@
 {
+  "comments": false,
   "presets": [
     ["@babel/preset-env", {"targets": {"node": "current"}, "useBuiltIns": "usage"}]
   ],
   "plugins": [
     ["@babel/plugin-proposal-decorators", {"legacy": true}]
   ],
-  "comments": false
+  "env": {
+    "esm": {
+      "presets": [
+        ["@babel/preset-env", {"targets": {"node": "current"}, "useBuiltIns": "usage", "modules": false}]
+      ]
+    }
+  }
 }
