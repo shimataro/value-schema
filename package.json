@@ -29,11 +29,11 @@
   },
   "scripts": {
     "build": "npm run build-core",
-    "build-core": "babel src --out-dir dist --source-maps --extensions .mjs",
+    "build-core": "babel ./src --out-dir ./dist --source-maps --extensions .mjs",
     "watch": "npm run build-core -- --watch",
     "postinstall": "npm run build",
     "test": "cross-env NODE_PATH=./src jest",
-    "lint": "eslint src test --ext .mjs",
+    "lint": "eslint ./src ./test --ext .mjs",
     "check-updates": "ncu"
   },
   "devDependencies": {
