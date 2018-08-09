@@ -28,8 +28,9 @@
     "node": ">= 4.0.0"
   },
   "scripts": {
-    "build": "babel src --out-dir dist --source-maps --extensions .mjs",
-    "watch": "babel src --out-dir dist --source-maps --extensions .mjs --watch",
+    "build": "npm run build-core",
+    "build-core": "babel src --out-dir dist --source-maps --extensions .mjs",
+    "watch": "npm run build-core -- --watch",
     "postinstall": "npm run build",
     "test": "cross-env NODE_PATH=./src jest",
     "lint": "eslint src test --ext .mjs",
