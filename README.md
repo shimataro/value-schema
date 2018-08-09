@@ -126,7 +126,11 @@ or
 var {default: adjuster} = require("adjuster");
 ```
 
-ES Modules(`.mjs`) is not provided for now.
+### ES Modules
+```javascript
+// foo.mjs - in the same way as Babel!
+import adjuster from "adjuster";
+```
 
 ## Reference
 ### types and constants
