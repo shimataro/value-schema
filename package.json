@@ -31,7 +31,7 @@
     "build": "babel src --out-dir dist --source-maps --extensions .mjs",
     "watch": "babel src --out-dir dist --source-maps --extensions .mjs --watch",
     "postinstall": "npm run build",
-    "test": "cross-env NODE_PATH=./dist jest",
+    "test": "cross-env NODE_PATH=./src jest",
     "lint": "eslint src test --ext .mjs",
     "check-updates": "ncu"
   },
