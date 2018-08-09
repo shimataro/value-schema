@@ -14,9 +14,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 * build error in Windows
 
-### Others
-* use [Babel 7](https://github.com/babel/babel/wiki/Babel-7)
-
 ## [0.13.0] - 2018-07-20
 ### Added
 * `adjuster.numberArray().eachInteger()`
