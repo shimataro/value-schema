@@ -1,17 +1,9 @@
 {
   "presets": [
-    [
-      "env",
-      {
-        "targets": {
-          "node": "current"
-        },
-        "useBuiltIns": true
-      }
-    ]
+    ["@babel/preset-env", {"targets": {"node": "current"}, "useBuiltIns": "usage"}]
   ],
   "plugins": [
-    "transform-decorators-legacy"
+    ["@babel/plugin-proposal-decorators", {"legacy": true}]
   ],
   "comments": false
 }
