@@ -28,11 +28,11 @@
     "node": ">= 4.0.0"
   },
   "scripts": {
-    "build": "babel src --out-dir dist --source-maps",
-    "watch": "babel src --out-dir dist --source-maps --watch",
+    "build": "babel src --out-dir dist --source-maps --extensions .mjs",
+    "watch": "babel src --out-dir dist --source-maps --extensions .mjs --watch",
     "postinstall": "npm run build",
     "test": "cross-env NODE_PATH=./dist jest",
-    "lint": "eslint src test --ext .es",
+    "lint": "eslint src test --ext .mjs",
     "check-updates": "ncu"
   },
   "devDependencies": {
@@ -51,13 +51,13 @@
   "jest": {
     "verbose": false,
     "moduleFileExtensions": [
-      "es",
-      "js"
+      "js",
+      "mjs"
     ],
     "testEnvironment": "node",
-    "testRegex": "\\.(test|spec)\\.es$",
+    "testRegex": "\\.(test|spec)\\.mjs$",
     "transform": {
-      "\\.es$": "babel-jest"
+      "\\.mjs$": "babel-jest"
     }
   }
 }
