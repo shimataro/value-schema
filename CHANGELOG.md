@@ -5,8 +5,49 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+* Introduction in `README.md`
+
+### Changed
+* cause an error `adjuster.CAUSE.NOT_OBJECT` when `input` type of `adjuster.adjust()` is not an object
+
+### Fixed
+* build error in Windows
+
 ### Others
 * use [Babel 7](https://github.com/babel/babel/wiki/Babel-7)
+
+## [0.13.0] - 2018-07-20
+### Added
+* `adjuster.numberArray().eachInteger()`
+
+### Fixed
+* `adjuster.numberArray().eachIn()` in JSDoc (should be `adjuster.numberArray().eachOnly()`)
+* `adjuster.stringArray().eachIn()` in JSDoc (should be `adjuster.stringArray().eachOnly()`)
+
+## [0.12.0] - 2018-07-18
+### Added
+* `adjuster.STRING_PATTERN`, regular expressions for `adjuster.string().pattern()`
+* `adjuster.number().integer()`
+
+### Fixed
+* `adjuster.number().adjust(true)` throws an error; should return `1`
+
+## [0.11.0] - 2018-07-16
+### Added
+* `adjuster.number().acceptSpecialFormats()`
+* `adjuster.numberArray().eachAcceptSpecialFormats()`
+
+### Changed
+* rename method; `allowEmptyString()` to `acceptEmptyString()`
+* rename method; `allowNull()` to `acceptNull()`
+* rename method; `eachAllowEmptyString()` to `eachAcceptEmptyString()`
+* rename method; `eachAllowNull()` to `eachAcceptNull()`
+
+## [0.10.1] - 2018-07-09
+### Others
+* follow `valid-jsdoc` option for ESLint
+* follow `wrap-regex` option for ESLint
 
 ## [0.10.0] - 2018-06-23
 ### Changed
@@ -108,7 +149,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.1.0] - 2018-04-18
 * First release.
 
-[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v0.10.0...HEAD
+[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v0.13.0...HEAD
+[0.13.0]: https://github.com/shimataro/node-adjuster/compare/v0.12.0...v0.13.0
+[0.12.0]: https://github.com/shimataro/node-adjuster/compare/v0.11.0...v0.12.0
+[0.11.0]: https://github.com/shimataro/node-adjuster/compare/v0.10.1...v0.11.0
+[0.10.1]: https://github.com/shimataro/node-adjuster/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/shimataro/node-adjuster/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/shimataro/node-adjuster/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/shimataro/node-adjuster/compare/v0.7.0...v0.8.0

@@ -1,7 +1,7 @@
 {
   "name": "adjuster",
   "description": "validate and adjust input values",
-  "version": "0.10.0",
+  "version": "0.13.0",
   "author": "shimataro",
   "license": "MIT",
   "repository": {
@@ -28,37 +28,38 @@
     "node": ">= 4.0.0"
   },
   "scripts": {
-    "build": "babel src --out-dir dist --source-maps",
-    "watch": "babel src --out-dir dist --source-maps --watch",
+    "build": "npm run build-core",
+    "build-core": "babel ./src --out-dir ./dist --source-maps --extensions .mjs",
+    "watch": "npm run build-core -- --watch",
     "postinstall": "npm run build",
-    "test": "cross-env NODE_PATH=./dist jest",
-    "lint": "eslint src test --ext .es",
+    "test": "cross-env NODE_PATH=./src jest",
+    "lint": "eslint ./src ./test --ext .mjs",
     "check-updates": "ncu"
   },
   "devDependencies": {
-    "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "8.2.4",
-    "babel-jest": "22.4.4",
+    "babel-eslint": "8.2.6",
     "cross-env": "5.2.0",
-    "eslint": "5.0.0",
-    "jest": "23.1.0",
+    "eslint": "5.1.0",
+    "jest": "23.4.1",
     "npm-check-updates": "2.14.2"
   },
   "dependencies": {
-    "@babel/cli": "7.0.0-beta.47",
-    "@babel/core": "7.0.0-beta.47",
-    "@babel/preset-env": "7.0.0-beta.47",
-    "@babel/preset-stage-0": "7.0.0-beta.47"
+    "@babel/cli": "7.0.0-beta.56",
+    "@babel/core": "7.0.0-beta.56",
+    "@babel/plugin-proposal-decorators": "7.0.0-beta.56",
+    "@babel/preset-env": "7.0.0-beta.56",
+    "babel-core": "7.0.0-bridge.0"
   },
   "jest": {
     "verbose": false,
     "moduleFileExtensions": [
-      "es",
-      "js"
+      "js",
+      "mjs"
     ],
-    "testRegex": "\\.(test|spec)\\.es$",
+    "testEnvironment": "node",
+    "testRegex": "\\.(test|spec)\\.mjs$",
     "transform": {
-      "\\.es$": "babel-jest"
+      "\\.mjs$": "babel-jest"
     }
   }
 }
