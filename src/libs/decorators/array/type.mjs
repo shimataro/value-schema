@@ -1,5 +1,5 @@
 import {CAUSE} from "../../constants";
-import {isString} from "../../types";
+import {isString, isArray} from "../../types";
 import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
 
@@ -53,7 +53,7 @@ function _featureToArray(params)
  */
 function _adjust(params, values)
 {
-	if(Array.isArray(values.adjusted))
+	if(isArray(values.adjusted))
 	{
 		return false;
 	}
