@@ -7,17 +7,7 @@ export {isString, isObject};
  */
 function isString(value)
 {
-	if(typeof value === "string")
-	{
-		return true;
-	}
-	if(value instanceof String)
-	{
-		return true;
-	}
-
-	// false otherwise
-	return false;
+	return typeof value === "string";
 }
 
 /**

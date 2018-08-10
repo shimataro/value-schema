@@ -1,8 +1,7 @@
 import {CAUSE} from "../../constants";
+import {isString} from "../../types";
 import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
-
-import {isString} from "../../utilities";
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)

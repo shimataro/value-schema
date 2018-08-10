@@ -1,3 +1,4 @@
+import {isString} from "../../types";
 import AdjusterBase from "../../AdjusterBase";
 
 export default AdjusterBase.decoratorBuilder(_adjust)
@@ -12,7 +13,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
  */
 function _adjust(params, values)
 {
-	if(typeof values.adjusted === "string")
+	if(isString(values.adjusted))
 	{
 		return false;
 	}
