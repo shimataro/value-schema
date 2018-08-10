@@ -19,6 +19,5 @@ install:
 test_script:
   - "node --version"
   - "npm --version"
-  - "npm test"
-  - "npm run lint"
+  - "npm run verify"
 build: "off"
