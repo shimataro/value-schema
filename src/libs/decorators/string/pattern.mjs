@@ -1,4 +1,4 @@
-import {isString} from "../../utilities";
+import {isString} from "../../types";
 import {CAUSE} from "../../constants";
 import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";

@@ -1,8 +1,7 @@
 import {CAUSE} from "../../constants";
+import {isString, isArray} from "../../types";
 import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
-
-import {isString} from "../../utilities";
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
@@ -54,7 +53,7 @@ function _featureToArray(params)
  */
 function _adjust(params, values)
 {
-	if(Array.isArray(values.adjusted))
+	if(isArray(values.adjusted))
 	{
 		return false;
 	}

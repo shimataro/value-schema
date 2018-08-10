@@ -1,3 +1,4 @@
+import {isArray} from "../../types";
 import AdjusterBase from "../../AdjusterBase";
 
 export default AdjusterBase.decoratorBuilder(_adjust)
@@ -36,7 +37,7 @@ function _featureJoinArray(params)
  */
 function _adjust(params, values)
 {
-	if(Array.isArray(values.adjusted) && params.flag)
+	if(isArray(values.adjusted) && params.flag)
 	{
 		values.adjusted = values.adjusted.join("");
 	}

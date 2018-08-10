@@ -1,4 +1,5 @@
 import {CAUSE} from "../../constants";
+import {isString} from "../../types";
 import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
 
@@ -56,7 +57,7 @@ function _integer(params, adjust = false)
  */
 function _adjust(params, values)
 {
-	if(typeof values.adjusted === "string")
+	if(isString(values.adjusted))
 	{
 		if(!_checkNumberFormat(params, values.adjusted))
 		{

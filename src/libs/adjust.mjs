@@ -1,7 +1,7 @@
 export default adjust;
 
 import {CAUSE} from "./constants";
-import {isObject} from "./utilities";
+import {isObject} from "./types";
 import AdjusterBase from "./AdjusterBase";
 import AdjusterError from "./AdjusterError";
 

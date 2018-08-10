@@ -1,4 +1,4 @@
-export {isString, isObject};
+export {isString, isArray, isObject};
 
 /**
  * check whether given value is string or not
@@ -7,17 +7,17 @@ export {isString, isObject};
  */
 function isString(value)
 {
-	if(typeof value === "string")
-	{
-		return true;
-	}
-	if(value instanceof String)
-	{
-		return true;
-	}
+	return typeof value === "string";
+}
 
-	// false otherwise
-	return false;
+/**
+ * check whether given value is an array or not
+ * @param {*} value value to chheck
+ * @return {boolean} yes/no
+ */
+function isArray(value)
+{
+	return Array.isArray(value);
 }
 
 /**
@@ -35,7 +35,7 @@ function isObject(value)
 	{
 		return false;
 	}
-	if(Array.isArray(value))
+	if(isArray(value))
 	{
 		return false;
 	}
