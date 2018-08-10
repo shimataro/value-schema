@@ -10,7 +10,7 @@ branches:
     - "master"
     - "develop"
 cache:
-  - "$HOME/.npm"
+  - "node_modules"
 install:
   - ps: "Install-Product node $env:nodejs_version"
   - "if exist node_modules npm prune"
