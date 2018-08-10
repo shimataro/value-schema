@@ -23,4 +23,5 @@ Thumbs.db
 /*.iml
 /nbproject/
 /.project
-/.vscode/
+/.vscode/**
+!/.vscode/tasks.json
