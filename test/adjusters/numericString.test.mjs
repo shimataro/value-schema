@@ -167,7 +167,7 @@ function testChecksumLuhn()
 		{
 			adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD)
 				.adjust("12345");
-		}).toThrow(adjuster.CAUSE.NUMERIC_STRING_CHECKSUM);
+		}).toThrow(adjuster.CAUSE.CHECKSUM);
 	});
 }
 
@@ -190,6 +190,6 @@ function testChecksumModulus10Weight31()
 		{
 			adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13)
 				.adjust("978-4-10-109205-1");
-		}).toThrow(adjuster.CAUSE.NUMERIC_STRING_CHECKSUM);
+		}).toThrow(adjuster.CAUSE.CHECKSUM);
 	});
 }
