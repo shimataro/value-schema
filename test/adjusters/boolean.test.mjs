@@ -39,7 +39,7 @@ function testType()
 		expect(adjuster.boolean()
 			.adjust("-1")).toEqual(true);
 
-		// "0" is truthy in JavaScript, but node-adjuster adjusts to falsy!
+		// "0" is truthy in JavaScript, but node-adjuster adjusts it to false!
 		expect(adjuster.boolean()
 			.adjust("0")).toEqual(false);
 
