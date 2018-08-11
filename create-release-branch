@@ -128,7 +128,7 @@ function regenerate_npm_shrinkwrap() {
 }
 
 function verify_package() {
-	npm test && npm run lint
+	npm run verify
 }
 
 function commit_changes() {
