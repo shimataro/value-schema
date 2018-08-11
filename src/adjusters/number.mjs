@@ -30,6 +30,13 @@ export default () =>
 class NumberAdjuster extends AdjusterBase
 {
 	/**
+	 * enable strict type check
+	 * @method
+	 * @name NumberAdjuster#strict
+	 * @return {NumberAdjuster}
+	 */
+
+	/**
 	 * set default value
 	 * @method
 	 * @name NumberAdjuster#default
