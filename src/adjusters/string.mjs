@@ -34,6 +34,13 @@ export default () =>
 class StringAdjuster extends AdjusterBase
 {
 	/**
+	 * enable strict type check
+	 * @method
+	 * @name StringAdjuster#strict
+	 * @return {StringAdjuster}
+	 */
+
+	/**
 	 * set default value
 	 * @method
 	 * @name StringAdjuster#default
