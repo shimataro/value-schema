@@ -1,4 +1,14 @@
-export {isNumber, isInteger, isString, isArray, isObject};
+export {isBoolean, isNumber, isInteger, isString, isArray, isObject};
+
+/**
+ * check whether given value is a boolean or not
+ * @param {*} value value to check
+ * @return {boolean} Yes/No
+ */
+function isBoolean(value)
+{
+	return typeof value === "boolean";
+}
 
 /**
  * check whether given value is a number or not
@@ -7,7 +17,17 @@ export {isNumber, isInteger, isString, isArray, isObject};
  */
 function isNumber(value)
 {
-	return typeof value === "number";
+	if(typeof value !== "number")
+	{
+		return false;
+	}
+	if(Number.isNaN(value))
+	{
+		return false;
+	}
+
+	// true otherwise
+	return true;
 }
 
 /**
