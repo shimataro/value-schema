@@ -146,7 +146,7 @@ function testMinLength()
 	{
 		expect(() =>
 		{
-			adjuster.numberArray().minLength(1)
+			adjuster.array().minLength(1)
 				.adjust([]);
 		}).toThrow(adjuster.CAUSE.MIN_LENGTH);
 	});
