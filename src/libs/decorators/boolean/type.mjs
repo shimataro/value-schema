@@ -3,6 +3,9 @@ import {isBoolean, isNumber, isString} from "../../types";
 import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
 
+const REGEXP_TRUE = /^\s*true\s*$/i;
+const REGEXP_FALSE = /^\s*false\s*$/i;
+
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.features({
@@ -55,13 +58,13 @@ function _adjust(params, values)
 	if(isString(adjusted))
 	{
 		// "true" is true, "false" is false
-		switch(adjusted.toLowerCase())
+		if(REGEXP_TRUE.test(adjusted))
 		{
-		case "true":
 			values.adjusted = true;
 			return false;
-
-		case "false":
+		}
+		if(REGEXP_FALSE.test(adjusted))
+		{
 			values.adjusted = false;
 			return false;
 		}

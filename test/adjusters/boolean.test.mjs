@@ -49,9 +49,13 @@ function testType()
 		expect(adjuster.boolean()
 			.adjust("TRUE")).toEqual(true);
 		expect(adjuster.boolean()
+			.adjust(" \ttrue\r\n")).toEqual(true);
+		expect(adjuster.boolean()
 			.adjust("false")).toEqual(false);
 		expect(adjuster.boolean()
 			.adjust("FALSE")).toEqual(false);
+		expect(adjuster.boolean()
+			.adjust(" \rfalse\r\n")).toEqual(false);
 	});
 	it("should cause error(s)", () =>
 	{
