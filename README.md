@@ -402,6 +402,7 @@ interface NumberAdjuster {
     adjust(value: any, onError?: (err: AdjusterError) => number|void): number;
 
     // feature methods (chainable)
+    strict(): NumberAdjuster;
     default(value: number): NumberAdjuster;
     acceptNull(value?: number|null /* = null */): NumberAdjuster;
     acceptEmptyString(value?: number|null /* = null */): NumberAdjuster;
@@ -448,6 +449,29 @@ assert.throws( // ... or try-catch syntax
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
 assert.throws(
     () => adjuster.number().adjust("true"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+```
+
+#### `strict()`
+Enable strict type check.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.number().adjust("123"),
+    123);
+assert.strictEqual(
+    adjuster.number().adjust(true),
+    1);
+
+// should cause error
+assert.throws(
+    () => adjuster.number().strict().adjust("123"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(
+    () => adjuster.number().strict().adjust(true),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
 ```
 
