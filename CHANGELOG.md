@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * `adjuster.boolean()`
 * `adjuster.number().strict()`
 * `adjuster.string().strict()`
+* `adjuster.array()`
 
 ## [0.14.0] - 2018-08-11
 ### Added

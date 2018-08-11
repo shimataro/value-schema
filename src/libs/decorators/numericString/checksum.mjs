@@ -49,7 +49,7 @@ function _adjust(params, values)
 		return false;
 	}
 
-	const cause = CAUSE.NUMERIC_STRING_CHECKSUM;
+	const cause = CAUSE.CHECKSUM;
 	throw new AdjusterError(cause, values.original);
 }
 

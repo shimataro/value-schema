@@ -11,6 +11,7 @@
  * @property {string} MIN_LENGTH
  * @property {string} MAX_LENGTH
  * @property {string} PATTERN
+ * @property {string} CHECKSUM
  * @property {string} ARRAY
  * @property {string} EACH_TYPE
  * @property {string} EACH_REQUIRED
@@ -22,7 +23,7 @@
  * @property {string} EACH_MIN_LENGTH
  * @property {string} EACH_MAX_LENGTH
  * @property {string} EACH_PATTERN
- * @property {string} NUMERIC_STRING_CHECKSUM
+ * @property {string} EACH_CHECKSUM
  */
 export const CAUSE = {
 	NOT_OBJECT: "not-object",
@@ -40,6 +41,8 @@ export const CAUSE = {
 	MAX_LENGTH: "max-length",
 	PATTERN: "pattern",
 
+	CHECKSUM: "checksum",
+
 	ARRAY: "array",
 	EACH_TYPE: "each-type",
 	EACH_REQUIRED: "each-required",
@@ -51,8 +54,7 @@ export const CAUSE = {
 	EACH_MIN_LENGTH: "each-min-length",
 	EACH_MAX_LENGTH: "each-max-length",
 	EACH_PATTERN: "each-pattern",
-
-	NUMERIC_STRING_CHECKSUM: "numeric-string-checksum",
+	EACH_CHECKSUM: "each-checksum",
 };
 
 /**
