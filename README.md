@@ -1026,6 +1026,7 @@ interface BooleanAdjuster {
 
     // feature methods (chainable)
     strict(): BooleanAdjuster;
+    acceptAllNumbers(): BooleanAdjuster;
     default(value: boolean): BooleanAdjuster;
     acceptNull(value?: boolean|null /* = null */): BooleanAdjuster;
     acceptEmptyString(value?: boolean|null /* = null */): BooleanAdjuster;
@@ -1053,9 +1054,6 @@ assert.strictEqual(
     adjuster.boolean().adjust(1),
     true);
 assert.strictEqual(
-    adjuster.boolean().adjust(-1),
-    true);
-assert.strictEqual(
     adjuster.boolean().adjust(0),
     false);
 assert.strictEqual(
@@ -1078,6 +1076,9 @@ assert.strictEqual(
     false);
 
 // should cause error
+assert.throws(
+    () => adjuster.boolean().adjust(-1), // accepts only 0,1
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
 assert.throws(
     () => adjuster.boolean().adjust("abc"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
@@ -1109,6 +1110,21 @@ assert.throws(
 assert.throws(
     () => adjuster.boolean().strict().adjust("true"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+```
+
+### `acceptAllNumbers()`
+Accept all numbers, other than 0 / 1.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.boolean().acceptAllNumbers().adjust(-1),
+    true);
+assert.strictEqual(
+    adjuster.boolean().acceptAllNumbers().adjust("100"),
+    true);
 ```
 
 #### `default(value)`

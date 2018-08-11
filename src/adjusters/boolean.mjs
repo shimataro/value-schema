@@ -27,7 +27,13 @@ class BooleanAdjuster extends AdjusterBase
 	 * enable strict type check
 	 * @method
 	 * @name BooleanAdjuster#strict
-	 * @param {boolean} value default value
+	 * @return {BooleanAdjuster}
+	 */
+
+	/**
+	 * accept all numbers as boolean
+	 * @method
+	 * @name BooleanAdjuster#acceptAllNumbers
 	 * @return {BooleanAdjuster}
 	 */
 

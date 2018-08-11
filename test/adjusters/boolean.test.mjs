@@ -30,18 +30,25 @@ function testType()
 		expect(adjuster.boolean()
 			.adjust(1)).toEqual(true);
 		expect(adjuster.boolean()
-			.adjust(-1)).toEqual(true);
-		expect(adjuster.boolean()
 			.adjust(0)).toEqual(false);
 
 		expect(adjuster.boolean()
 			.adjust("1")).toEqual(true);
 		expect(adjuster.boolean()
-			.adjust("-1")).toEqual(true);
+			.adjust("0")).toEqual(false); // "0" is truthy in JavaScript, but node-adjuster adjusts it to false!
 
-		// "0" is truthy in JavaScript, but node-adjuster adjusts it to false!
-		expect(adjuster.boolean()
+		expect(adjuster.boolean().acceptAllNumbers()
+			.adjust(1)).toEqual(true);
+		expect(adjuster.boolean().acceptAllNumbers()
+			.adjust(0)).toEqual(false);
+		expect(adjuster.boolean().acceptAllNumbers()
+			.adjust(-1)).toEqual(true);
+		expect(adjuster.boolean().acceptAllNumbers()
+			.adjust("1")).toEqual(true);
+		expect(adjuster.boolean().acceptAllNumbers()
 			.adjust("0")).toEqual(false);
+		expect(adjuster.boolean().acceptAllNumbers()
+			.adjust("-1")).toEqual(true);
 
 		// "true" is true, "false" is false!
 		expect(adjuster.boolean()
@@ -59,6 +66,18 @@ function testType()
 	});
 	it("should cause error(s)", () =>
 	{
+		expect(() =>
+		{
+			adjuster.boolean()
+				.adjust(-1);
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.boolean()
+				.adjust("-1");
+		}).toThrow(adjuster.CAUSE.TYPE);
+
 		expect(() =>
 		{
 			adjuster.boolean()

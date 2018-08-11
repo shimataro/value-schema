@@ -10,6 +10,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.features({
 		strict: _strict,
+		acceptAllNumbers: _acceptAllNumbers,
 	})
 	.build();
 
@@ -21,6 +22,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 function _init(params)
 {
 	params.flagStrict = false;
+	params.flagAcceptAllNumbers = false;
 }
 
 /**
@@ -31,6 +33,16 @@ function _init(params)
 function _strict(params)
 {
 	params.flagStrict = true;
+}
+
+/**
+ * accept all numbers, other than 0 / 1
+ * @param {Object} params parameters
+ * @return {void}
+ */
+function _acceptAllNumbers(params)
+{
+	params.flagAcceptAllNumbers = true;
 }
 
 /**
@@ -75,8 +87,11 @@ function _adjust(params, values)
 
 	if(isNumber(adjusted))
 	{
-		values.adjusted = Boolean(adjusted);
-		return false;
+		if(adjusted === 0 || adjusted === 1 || params.flagAcceptAllNumbers)
+		{
+			values.adjusted = Boolean(adjusted);
+			return false;
+		}
 	}
 
 	_throwError(values);
