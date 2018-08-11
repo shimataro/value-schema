@@ -1,7 +1,27 @@
-export {isString, isArray, isObject};
+export {isNumber, isInteger, isString, isArray, isObject};
 
 /**
- * check whether given value is string or not
+ * check whether given value is a number or not
+ * @param {*} value value to check
+ * @return {boolean} Yes/No
+ */
+function isNumber(value)
+{
+	return typeof value === "number";
+}
+
+/**
+ * check whether given value is an integer or not
+ * @param {*} value value to check
+ * @return {boolean} Yes/No
+ */
+function isInteger(value)
+{
+	return Number.isSafeInteger(value);
+}
+
+/**
+ * check whether given value is a string or not
  * @param {*} value value to check
  * @return {boolean} Yes/No
  */
