@@ -93,6 +93,13 @@ class StringArrayAdjuster extends AdjusterBase
 	 */
 
 	/**
+	 * enable strict type check for each elements
+	 * @method
+	 * @name StringArrayAdjuster#eachStrict
+	 * @return {StringArrayAdjuster}
+	 */
+
+	/**
 	 * set a default value for each elements
 	 * @method
 	 * @name StringArrayAdjuster#eachDefault

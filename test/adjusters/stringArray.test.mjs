@@ -10,6 +10,7 @@ import adjuster from "index";
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
 	describe("ignoreEachErrors", testIgnoreEachErrors);
+	describe("eachStrict", testEachStrict);
 	describe("eachDefault", testEachDefault);
 	describe("eachAcceptNull", testEachAcceptNull);
 	describe("eachAcceptEmptyString", testEachAcceptEmptyString);
@@ -217,6 +218,27 @@ function testIgnoreEachErrors()
 
 		expect(adjuster.stringArray().ignoreEachErrors().separatedBy(",")
 			.adjust("a,,b,c,")).toEqual(["a", "b", "c"]);
+	});
+}
+
+/**
+ * each elements; strict type check
+ * @return {void}
+ */
+function testEachStrict()
+{
+	it("should be adjusted", () =>
+	{
+		expect(adjuster.stringArray()
+			.adjust([true, "2", 3])).toEqual(["true", "2", "3"]);
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.stringArray().eachStrict()
+				.adjust([true, "2", 3]);
+		}).toThrow(adjuster.CAUSE.EACH_TYPE);
 	});
 }
 
