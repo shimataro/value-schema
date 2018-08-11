@@ -1024,6 +1024,7 @@ interface StringAdjuster {
     adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
 
     // feature methods (chainable)
+    strict(): StringAdjuster;
     default(value: string): StringAdjuster;
     acceptNull(value?: string|null /* = null */): StringAdjuster;
     acceptEmptyString(value?: string|null /* = null */): StringAdjuster;
@@ -1050,6 +1051,29 @@ assert.strictEqual(
 assert.strictEqual(
     adjuster.string().adjust(123),
     "123");
+```
+
+#### `strict()`
+Enable strict type check.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.string().adjust(123),
+    "123");
+assert.strictEqual(
+    adjuster.string().adjust(true),
+    "true");
+
+// should cause error
+assert.throws(
+    () => adjuster.string().strict().adjust(123),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(
+    () => adjuster.string().strict().adjust(true),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
 ```
 
 #### `default(value)`
