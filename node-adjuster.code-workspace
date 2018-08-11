@@ -5,9 +5,6 @@
     }
   ],
   "settings": {
-    "files.associations": {
-      "*.es": "javascript"
-    },
     "eslint.enable": true,
     "json.format.enable": true,
     "javascript.format.enable": true,

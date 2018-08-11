@@ -5,7 +5,7 @@ import AdjusterError from "../../AdjusterError";
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.features({
-		minLength: _featureMinLength,
+		maxLength: _featureMaxLength,
 	})
 	.build();
 
@@ -20,15 +20,17 @@ function _init(params)
 }
 
 /**
- * set min-length
+ * set max-length
  * @param {Object} params parameters
- * @param {int} length min-length; error if shorter
+ * @param {number} length max-length; error if longer
+ * @param {boolean} [adjust=false] truncate if longer; default is ERROR
  * @return {void}
  */
-function _featureMinLength(params, length)
+function _featureMaxLength(params, length, adjust = false)
 {
 	params.flag = true;
 	params.length = length;
+	params.adjust = adjust;
 }
 
 /**
@@ -44,11 +46,17 @@ function _adjust(params, values)
 	{
 		return false;
 	}
-	if(values.adjusted.length >= params.length)
+	if(values.adjusted.length <= params.length)
 	{
 		return false;
 	}
 
-	const cause = CAUSE.MIN_LENGTH;
+	if(params.adjust)
+	{
+		values.adjusted = values.adjusted.substr(0, params.length);
+		return false;
+	}
+
+	const cause = CAUSE.MAX_LENGTH;
 	throw new AdjusterError(cause, values.original);
 }

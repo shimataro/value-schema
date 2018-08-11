@@ -1,7 +1,7 @@
 {
   "name": "adjuster",
   "description": "validate and adjust input values",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "author": "shimataro",
   "license": "MIT",
   "repository": {
@@ -20,7 +20,9 @@
     "validate",
     "validator",
     "ajust",
-    "adjuster"
+    "adjuster",
+    "revise",
+    "revisor"
   ],
   "main": "./dist/index",
   "types": "./src/index.d.ts",
@@ -28,35 +30,44 @@
     "node": ">= 4.0.0"
   },
   "scripts": {
-    "build": "babel src --out-dir dist --source-maps",
-    "watch": "babel src --out-dir dist --source-maps --watch",
+    "build": "run-p build:**",
+    "build:cjs": "npm run build-core",
+    "build:esm": "cross-env BABEL_ENV=esm npm run build-core -- --keep-file-extension",
+    "build-core": "babel ./src --out-dir ./dist --source-maps",
+    "watch": "run-p watch:**",
+    "watch:cjs": "npm run build-core -- --watch",
+    "watch:esm": "cross-env BABEL_ENV=esm npm run build-core -- --keep-file-extension --watch",
     "postinstall": "npm run build",
-    "test": "cross-env NODE_PATH=./dist jest",
-    "lint": "eslint src test --ext .es",
+    "test": "cross-env NODE_PATH=./src jest",
+    "verify": "run-p test verify:**",
+    "verify:lint": "eslint ./src ./test --ext .mjs",
     "check-updates": "ncu"
   },
   "devDependencies": {
     "babel-eslint": "8.2.6",
     "cross-env": "5.2.0",
-    "eslint": "5.1.0",
-    "jest": "23.4.1",
+    "eslint": "5.3.0",
+    "jest": "23.5.0",
     "npm-check-updates": "2.14.2"
   },
   "dependencies": {
-    "babel-cli": "6.26.0",
-    "babel-core": "6.26.3",
-    "babel-plugin-transform-decorators-legacy": "1.3.5",
-    "babel-preset-env": "1.7.0"
+    "@babel/cli": "7.0.0-rc.1",
+    "@babel/core": "7.0.0-rc.1",
+    "@babel/plugin-proposal-decorators": "7.0.0-rc.1",
+    "@babel/preset-env": "7.0.0-rc.1",
+    "babel-core": "7.0.0-bridge.0",
+    "npm-run-all": "4.1.3"
   },
   "jest": {
     "verbose": false,
     "moduleFileExtensions": [
-      "es",
-      "js"
+      "js",
+      "mjs"
     ],
-    "testRegex": "\\.(test|spec)\\.es$",
+    "testEnvironment": "node",
+    "testRegex": "\\.(test|spec)\\.mjs$",
     "transform": {
-      "\\.es$": "babel-jest"
+      "\\.mjs$": "babel-jest"
     }
   }
 }

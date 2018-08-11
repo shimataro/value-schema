@@ -1,20 +1,16 @@
 {
+  "comments": false,
   "presets": [
-    [
-      "env",
-      {
-        "targets": {
-          "node": "current"
-        },
-        "exclude": [
-          "transform-regenerator"
-        ],
-        "useBuiltIns": true
-      }
-    ]
+    ["@babel/preset-env", {"targets": {"node": "current"}, "useBuiltIns": "usage"}]
   ],
   "plugins": [
-    "transform-decorators-legacy"
+    ["@babel/plugin-proposal-decorators", {"legacy": true}]
   ],
-  "comments": false
+  "env": {
+    "esm": {
+      "presets": [
+        ["@babel/preset-env", {"targets": {"node": "current"}, "useBuiltIns": "usage", "modules": false}]
+      ]
+    }
+  }
 }

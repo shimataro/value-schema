@@ -95,7 +95,7 @@ function _featureEachOnly(params, ...values)
 /**
  * set min-length for each elements
  * @param {Object} params parameters
- * @param {int} value min-length; error if shorter
+ * @param {number} value min-length; error if shorter
  * @return {void}
  */
 function _featureEachMinLength(params, value)
@@ -106,7 +106,7 @@ function _featureEachMinLength(params, value)
 /**
  * set max-length for each elements
  * @param {Object} params parameters
- * @param {int} value max-length
+ * @param {number} value max-length
  * @param {boolean} [adjust=false] truncate if longer; default is ERROR
  * @return {void}
  */

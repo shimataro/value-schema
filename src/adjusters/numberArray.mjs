@@ -72,7 +72,7 @@ class NumberArrayAdjuster extends AdjusterBase
 	 * set min-length of array elements
 	 * @method
 	 * @name NumberArrayAdjuster#minLength
-	 * @param {int} length min-length; error if shorter
+	 * @param {number} length min-length; error if shorter
 	 * @return {NumberArrayAdjuster}
 	 */
 
@@ -80,7 +80,7 @@ class NumberArrayAdjuster extends AdjusterBase
 	 * set max-length of array elements
 	 * @method
 	 * @name NumberArrayAdjuster#maxLength
-	 * @param {int} length max-length
+	 * @param {number} length max-length
 	 * @param {boolean} [adjust=false] truncate if longer; default is ERROR
 	 * @return {NumberArrayAdjuster}
 	 */

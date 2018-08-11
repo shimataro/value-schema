@@ -1,11 +1,10 @@
-import {CAUSE} from "../../constants";
+import {isArray} from "../../types";
 import AdjusterBase from "../../AdjusterBase";
-import AdjusterError from "../../AdjusterError";
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.features({
-		minLength: _featureMinLength,
+		joinArray: _featureJoinArray,
 	})
 	.build();
 
@@ -20,19 +19,17 @@ function _init(params)
 }
 
 /**
- * set min-length of array
+ * join array into string
  * @param {Object} params parameters
- * @param {int} length max-length
  * @return {void}
  */
-function _featureMinLength(params, length)
+function _featureJoinArray(params)
 {
 	params.flag = true;
-	params.length = length;
 }
 
 /**
- * adjuster
+ * adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
  * @return {boolean} end adjustment
@@ -40,15 +37,10 @@ function _featureMinLength(params, length)
  */
 function _adjust(params, values)
 {
-	if(!params.flag)
+	if(isArray(values.adjusted) && params.flag)
 	{
-		return false;
-	}
-	if(values.adjusted.length >= params.length)
-	{
-		return false;
+		values.adjusted = values.adjusted.join("");
 	}
 
-	const cause = CAUSE.MIN_LENGTH;
-	throw new AdjusterError(cause, values.original);
+	return false;
 }
