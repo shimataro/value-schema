@@ -93,6 +93,13 @@ class NumberArrayAdjuster extends AdjusterBase
 	 */
 
 	/**
+	 * enable strict type check for each elements
+	 * @method
+	 * @name NumberArrayAdjuster#eachStrict
+	 * @return {NumberArrayAdjuster}
+	 */
+
+	/**
 	 * set a default value for each elements
 	 * @method
 	 * @name NumberArrayAdjuster#eachDefault
