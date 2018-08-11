@@ -21,10 +21,38 @@ function testType()
 	it("should be OK", () =>
 	{
 		expect(adjuster.string()
+			.adjust("abc")).toEqual("abc");
+
+		expect(adjuster.string().strict()
+			.adjust("abc")).toEqual("abc");
+	});
+	it("should be adjusted", () =>
+	{
+		expect(adjuster.string()
 			.adjust(0)).toEqual("0");
 
 		expect(adjuster.string()
 			.adjust(-1)).toEqual("-1");
+
+		expect(adjuster.string()
+			.adjust(true)).toEqual("true");
+
+		expect(adjuster.string()
+			.adjust(false)).toEqual("false");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.string().strict()
+				.adjust(0);
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.string().strict()
+				.adjust(true);
+		}).toThrow(adjuster.CAUSE.TYPE);
 	});
 }
 

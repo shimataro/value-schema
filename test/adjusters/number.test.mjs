@@ -23,6 +23,12 @@ function testType()
 
 		expect(adjuster.number()
 			.adjust(3.14)).toEqual(3.14);
+
+		expect(adjuster.number().strict()
+			.adjust(0)).toEqual(0);
+
+		expect(adjuster.number().strict()
+			.adjust(3.14)).toEqual(3.14);
 	});
 	it("should be adjusted", () =>
 	{
@@ -119,6 +125,18 @@ function testType()
 		{
 			adjuster.number()
 				.adjust("0b100");
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.number().strict()
+				.adjust("1");
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.number().strict()
+				.adjust(true);
 		}).toThrow(adjuster.CAUSE.TYPE);
 	});
 }

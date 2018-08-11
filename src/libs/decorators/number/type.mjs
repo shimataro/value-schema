@@ -1,5 +1,5 @@
 import {CAUSE} from "../../constants";
-import {isString} from "../../types";
+import {isNumber, isInteger, isString} from "../../types";
 import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
 
@@ -9,6 +9,7 @@ const REGEXP_INTEGER = /^\s*[+-]?\d+\s*$/;
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.features({
+		strict: _strict,
 		acceptSpecialFormats: _acceptSpecialFormats,
 		integer: _integer,
 	})
@@ -21,9 +22,20 @@ export default AdjusterBase.decoratorBuilder(_adjust)
  */
 function _init(params)
 {
+	params.flagStrict = false;
 	params.flagAcceptSpecialFormats = false;
 	params.flagInteger = false;
 	params.flagIntegerAdjust = false;
+}
+
+/**
+ * enable strict type check
+ * @param {Object} params parameters parameters
+ * @return {void}
+ */
+function _strict(params)
+{
+	params.flagStrict = true;
 }
 
 /**
@@ -132,6 +144,12 @@ function _getRegExpForNumber(params)
  */
 function _toNumber(params, value)
 {
+	// strict check
+	if(!isNumber(value) && params.flagStrict)
+	{
+		return false;
+	}
+
 	const adjustedValue = Number(value);
 	if(isNaN(adjustedValue))
 	{
@@ -145,7 +163,7 @@ function _toNumber(params, value)
 	}
 
 	// already integer
-	if(Number.isSafeInteger(adjustedValue))
+	if(isInteger(adjustedValue))
 	{
 		return adjustedValue;
 	}
