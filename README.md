@@ -455,6 +455,10 @@ assert.throws(
 #### `strict()`
 Enable strict type check.
 
+**HANDLE WITH CARE!**
+In URL encoding, all values will be treated as string.
+Use this method when your system accepts **ONLY** JSON encoding (`application/json`)
+
 ##### examples
 
 ```javascript
