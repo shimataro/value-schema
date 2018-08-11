@@ -1,5 +1,6 @@
 import {CAUSE, NUMERIC_STRING_CHECKSUM_ALGORITHM, STRING_PATTERN} from "./libs/constants";
 import adjust from "./libs/adjust";
+import factoryBoolean from "./adjusters/boolean";
 import factoryNumber from "./adjusters/number";
 import factoryNumberArray from "./adjusters/numberArray";
 import factoryString from "./adjusters/string";
@@ -20,6 +21,7 @@ export default {
 
 	adjust: adjust,
 
+	boolean: factoryBoolean,
 	number: factoryNumber,
 	numberArray: factoryNumberArray,
 	string: factoryString,
