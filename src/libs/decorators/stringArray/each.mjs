@@ -7,6 +7,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.features({
 		ignoreEachErrors: _featureIgnoreEachErrors,
+		eachStrict: _featureEachStrict,
 		eachDefault: _featureEachDefault,
 		eachAcceptNull: _featureEachAcceptNull,
 		eachAcceptEmptyString: _featureEachAcceptEmptyString,
@@ -36,6 +37,16 @@ function _init(params)
 function _featureIgnoreEachErrors(params)
 {
 	params.ignoreEachErrors = true;
+}
+
+/**
+ * enable strict type check for each elements
+ * @param {Object} params parameters
+ * @return {void}
+ */
+function _featureEachStrict(params)
+{
+	params.objAdjuster.strict();
 }
 
 /**

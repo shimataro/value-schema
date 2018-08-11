@@ -1464,6 +1464,7 @@ interface StringArrayAdjuster {
     minLength(length: number): StringArrayAdjuster;
     maxLength(length: number, adjust?: boolean /* = false */): StringArrayAdjuster;
     ignoreEachErrors(): StringArrayAdjuster;
+    eachStrict(): StringArrayAdjuster;
     eachDefault(value: string): StringArrayAdjuster;
     eachAcceptNull(value?: string|null /* = null */): StringArrayAdjuster;
     eachAcceptEmptyString(value?: string|null /* = null */): StringArrayAdjuster;
@@ -1656,6 +1657,23 @@ assert.deepStrictEqual(
 assert.throws(
     () => adjuster.stringArray().adjust(["a", "", 1]),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_EMPTY));
+```
+
+#### `eachStrict()`
+Enable strict type check for each elements of input.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.stringArray().adjust([true, "2", 3]),
+    ["true", "2", "3"]);
+
+// should cause error
+assert.throws(
+    () => adjuster.stringArray().eachStrict().adjust([true, "2", 3]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_TYPE));
 ```
 
 #### `eachDefault(value)`
