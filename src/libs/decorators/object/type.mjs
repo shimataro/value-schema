@@ -1,14 +1,13 @@
 import {CAUSE} from "../../constants";
+import {isObject} from "../../types";
 import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
-
-const REGEXP = /^\d+$/;
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
 /**
- * adjust
+ * adjuster
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
  * @return {boolean} end adjustment
@@ -16,10 +15,11 @@ export default AdjusterBase.decoratorBuilder(_adjust)
  */
 function _adjust(params, values)
 {
-	if(REGEXP.test(values.adjusted))
+	if(isObject(values.adjusted))
 	{
 		return false;
 	}
 
-	AdjusterError.raise(CAUSE.PATTERN, values);
+	const cause = CAUSE.TYPE;
+	throw new AdjusterError(cause, values.original);
 }

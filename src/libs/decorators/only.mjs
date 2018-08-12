@@ -49,6 +49,5 @@ function _adjust(params, values)
 		return true;
 	}
 
-	const cause = CAUSE.ONLY;
-	throw new AdjusterError(cause, values.original);
+	AdjusterError.raise(CAUSE.ONLY, values);
 }

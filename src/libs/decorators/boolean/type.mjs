@@ -64,7 +64,7 @@ function _adjust(params, values)
 	if(params.flagStrict)
 	{
 		// strict check mode
-		_throwError(adjusted);
+		AdjusterError.raise(CAUSE.TYPE, values);
 	}
 
 	if(isString(adjusted))
@@ -94,17 +94,5 @@ function _adjust(params, values)
 		}
 	}
 
-	_throwError(values);
-}
-
-/**
- * throw TYPE error
- * @param {AdjusterBase.VALUES} values original / adjusted values
- * @return {void}
- * @throws {AdjusterError}
- */
-function _throwError(values)
-{
-	const cause = CAUSE.TYPE;
-	throw new AdjusterError(cause, values.original);
+	AdjusterError.raise(CAUSE.TYPE, values);
 }
