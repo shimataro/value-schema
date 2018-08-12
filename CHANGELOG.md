@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * `adjuster.string().strict()`
 * `adjuster.array()`
 
+### Deleted
+* `adjuster.stringArray()` - use `adjuster.array()` instead
+
 ## [0.14.0] - 2018-08-11
 ### Added
 * Introduction in `README.md`
