@@ -21,6 +21,5 @@ function _adjust(params, values)
 		return false;
 	}
 
-	const cause = CAUSE.PATTERN;
-	throw new AdjusterError(cause, values.original);
+	AdjusterError.raise(CAUSE.PATTERN, values);
 }

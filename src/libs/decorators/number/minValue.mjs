@@ -51,6 +51,5 @@ function _adjust(params, values)
 		return false;
 	}
 
-	const cause = CAUSE.MIN_VALUE;
-	throw new AdjusterError(cause, values.original);
+	AdjusterError.raise(CAUSE.MIN_VALUE, values);
 }

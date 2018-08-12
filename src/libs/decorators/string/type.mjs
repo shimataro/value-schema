@@ -47,8 +47,7 @@ function _adjust(params, values)
 	// strict check
 	if(params.flagStrict)
 	{
-		const cause = CAUSE.TYPE;
-		throw new AdjusterError(cause, values.original);
+		AdjusterError.raise(CAUSE.TYPE, values);
 	}
 
 	values.adjusted = String(values.adjusted);

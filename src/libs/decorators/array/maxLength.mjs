@@ -57,6 +57,5 @@ function _adjust(params, values)
 		return false;
 	}
 
-	const cause = CAUSE.MAX_LENGTH;
-	throw new AdjusterError(cause, values.original);
+	AdjusterError.raise(CAUSE.MAX_LENGTH, values);
 }

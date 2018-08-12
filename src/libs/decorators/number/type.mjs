@@ -73,30 +73,18 @@ function _adjust(params, values)
 	{
 		if(!_checkNumberFormat(params, values.adjusted))
 		{
-			_throwError(values);
+			AdjusterError.raise(CAUSE.TYPE, values);
 		}
 	}
 
 	const adjusted = _toNumber(params, values.adjusted);
 	if(adjusted === false)
 	{
-		_throwError(values);
+		AdjusterError.raise(CAUSE.TYPE, values);
 	}
 
 	values.adjusted = adjusted;
 	return false;
-}
-
-/**
- * throw TYPE error
- * @param {AdjusterBase.VALUES} values original / adjusted values
- * @return {void}
- * @throws {AdjusterError}
- */
-function _throwError(values)
-{
-	const cause = CAUSE.TYPE;
-	throw new AdjusterError(cause, values.original);
 }
 
 /**
