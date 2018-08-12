@@ -12,7 +12,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * init
  * @param {Object} params parameters
- * @return {void}
+ * @returns {void}
  */
 function _init(params)
 {
@@ -23,7 +23,7 @@ function _init(params)
  * accept empty string
  * @param {Object} params parameters
  * @param {*} [value=null] value on empty
- * @return {void}
+ * @returns {void}
  */
 function _featureAcceptEmptyString(params, value = null)
 {
@@ -35,7 +35,7 @@ function _featureAcceptEmptyString(params, value = null)
  * adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
- * @return {boolean} end adjustment
+ * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
 function _adjust(params, values)

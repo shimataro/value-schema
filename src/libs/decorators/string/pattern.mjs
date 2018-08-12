@@ -13,7 +13,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * init
  * @param {Object} params parameters
- * @return {void}
+ * @returns {void}
  */
 function _init(params)
 {
@@ -24,7 +24,7 @@ function _init(params)
  * specify acceptable pattern by regular expression
  * @param {Object} params parameters
  * @param {string|RegExp} pattern acceptable pattern(regular expression); string or RegExp
- * @return {void}
+ * @returns {void}
  */
 function _featurePattern(params, pattern)
 {
@@ -41,7 +41,7 @@ function _featurePattern(params, pattern)
  * adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
- * @return {boolean} end adjustment
+ * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
 function _adjust(params, values)

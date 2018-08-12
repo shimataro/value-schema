@@ -12,7 +12,7 @@ import adjuster from "index";
 
 /**
  * default value
- * @return {void}
+ * @returns {void}
  */
 function testDefault()
 {
@@ -33,7 +33,7 @@ function testDefault()
 
 /**
  * null
- * @return {void}
+ * @returns {void}
  */
 function testAcceptNull()
 {
@@ -54,7 +54,7 @@ function testAcceptNull()
 
 /**
  * empty string
- * @return {void}
+ * @returns {void}
  */
 function testAcceptEmptyString()
 {
@@ -75,7 +75,7 @@ function testAcceptEmptyString()
 
 /**
  * remove whitespace from both ends
- * @return {void}
+ * @returns {void}
  */
 function testTrim()
 {
@@ -96,7 +96,7 @@ function testTrim()
 
 /**
  * maximum length of e-mail
- * @return {void}
+ * @returns {void}
  */
 function testMaxLength()
 {
@@ -134,7 +134,7 @@ function testMaxLength()
 
 /**
  * custom pattern
- * @return {void}
+ * @returns {void}
  */
 function testPattern()
 {
@@ -161,7 +161,7 @@ function testPattern()
 
 /**
  * e-mail format
- * @return {void}
+ * @returns {void}
  */
 function testEmail()
 {

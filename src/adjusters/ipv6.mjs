@@ -29,7 +29,7 @@ export {PATTERN};
 
 /**
  * factory
- * @return {IPv6Adjuster} adjuster instance
+ * @returns {IPv6Adjuster} adjuster instance
  */
 export default () =>
 {
@@ -62,7 +62,7 @@ class IPv6Adjuster extends AdjusterBase
 	 * @method
 	 * @name IPv6Adjuster#default
 	 * @param {string} value default value
-	 * @return {IPv6Adjuster}
+	 * @returns {IPv6Adjuster}
 	 */
 
 	/**
@@ -70,14 +70,14 @@ class IPv6Adjuster extends AdjusterBase
 	 * @method
 	 * @name IPv6Adjuster#acceptNull
 	 * @param {?string} [value=null] value on null
-	 * @return {IPv6Adjuster}
+	 * @returns {IPv6Adjuster}
 	 */
 
 	/**
 	 * remove whitespace from both ends
 	 * @method
 	 * @name IPv6Adjuster#trim
-	 * @return {IPv6Adjuster}
+	 * @returns {IPv6Adjuster}
 	 */
 
 	/**
@@ -85,7 +85,7 @@ class IPv6Adjuster extends AdjusterBase
 	 * @method
 	 * @name IPv6Adjuster#acceptEmptyString
 	 * @param {?string} [value=null] value on empty
-	 * @return {IPv6Adjuster}
+	 * @returns {IPv6Adjuster}
 	 */
 
 	/**
@@ -94,7 +94,7 @@ class IPv6Adjuster extends AdjusterBase
 	 * @name IPv6Adjuster#adjust
 	 * @param {*} value value to be checked
 	 * @param {?AdjusterBase.OnError} [onError=null] callback function on error
-	 * @return {string} adjusted value
+	 * @returns {string} adjusted value
 	 * @throws {AdjusterError}
 	 */
 }

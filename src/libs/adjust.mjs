@@ -10,7 +10,7 @@ import AdjusterError from "./AdjusterError";
  * @param {Object<string, *>} data data to be adjusted
  * @param {Object<string, AdjusterBase>} constraints adjuster objects
  * @param {AdjusterBase.OnError} [onError] error handler
- * @return {Object<string, *>} adjusted data
+ * @returns {Object<string, *>} adjusted data
  */
 function adjust(data, constraints, onError = AdjusterBase.onErrorDefault)
 {
@@ -41,7 +41,7 @@ function adjust(data, constraints, onError = AdjusterBase.onErrorDefault)
 	/**
 	 * error handler generator (to avoid "no-loop-fun" error on eslint)
 	 * @param {string} key key
-	 * @return {AdjusterBase.onError} error handler
+	 * @returns {AdjusterBase.onError} error handler
 	 */
 	function generateErrorHandler(key)
 	{

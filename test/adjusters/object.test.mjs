@@ -10,7 +10,7 @@ import adjuster from "index";
 
 /**
  * type
- * @return {void}
+ * @returns {void}
  */
 function testType()
 {
@@ -41,7 +41,7 @@ function testType()
 
 /**
  * default value
- * @return {void}
+ * @returns {void}
  */
 function testDefault()
 {
@@ -62,7 +62,7 @@ function testDefault()
 
 /**
  * null
- * @return {void}
+ * @returns {void}
  */
 function testAcceptNull()
 {
@@ -83,7 +83,7 @@ function testAcceptNull()
 
 /**
  * empty string
- * @return {void}
+ * @returns {void}
  */
 function testAcceptEmptyString()
 {
@@ -104,7 +104,7 @@ function testAcceptEmptyString()
 
 /**
  * constraints
- * @return {void}
+ * @returns {void}
  */
 function testConstraints()
 {

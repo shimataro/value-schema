@@ -12,7 +12,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * init
  * @param {Object} params parameters
- * @return {void}
+ * @returns {void}
  */
 function _init(params)
 {
@@ -23,7 +23,7 @@ function _init(params)
  * validate by checksum
  * @param {Object} params parameters
  * @param {string} algorithm checksum algorithm
- * @return {void}
+ * @returns {void}
  */
 function _featureChecksum(params, algorithm)
 {
@@ -35,7 +35,7 @@ function _featureChecksum(params, algorithm)
  * adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
- * @return {boolean} end adjustment
+ * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
 function _adjust(params, values)
@@ -56,7 +56,7 @@ function _adjust(params, values)
  * check string
  * @param {string} value value to check
  * @param {string} algorithm check algorithm
- * @return {boolean} OK/NG
+ * @returns {boolean} OK/NG
  */
 function check(value, algorithm)
 {
@@ -76,7 +76,7 @@ function check(value, algorithm)
 /**
  * check by Luhn algorithm (used by credit card)
  * @param {string} value value to check
- * @return {boolean} OK/NG
+ * @returns {boolean} OK/NG
  */
 function checkLuhn(value)
 {
@@ -101,7 +101,7 @@ function checkLuhn(value)
 /**
  * check by Modulus 10 / Weight 3:1 algorithm (used by ISBN/EAN/JAN)
  * @param {string} value value to check
- * @return {boolean} OK/NG
+ * @returns {boolean} OK/NG
  */
 function checkModulus10Weight31(value)
 {

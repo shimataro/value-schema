@@ -12,7 +12,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * init
  * @param {Object} params parameters
- * @return {void}
+ * @returns {void}
  */
 function _init(params)
 {
@@ -23,7 +23,7 @@ function _init(params)
  * set min-length of array
  * @param {Object} params parameters
  * @param {number} length max-length
- * @return {void}
+ * @returns {void}
  */
 function _featureMinLength(params, length)
 {
@@ -35,7 +35,7 @@ function _featureMinLength(params, length)
  * adjuster
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
- * @return {boolean} end adjustment
+ * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
 function _adjust(params, values)
