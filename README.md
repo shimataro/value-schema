@@ -26,6 +26,7 @@ validate and adjust input values
     * [IPv6](#ipv6)
     * [email](#email)
     * [array](#array)
+    * [object](#object)
 * [Changelog](#changelog)
 
 ---
@@ -1716,7 +1717,7 @@ namespace adjuster {
 
 interface ArrayAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => Array|void): number[];
+    adjust(value: any, onError?: (err: AdjusterError) => Array|void): Array;
 
     // feature methods (chainable)
     default(value: Array): ArrayAdjuster;
@@ -1915,6 +1916,128 @@ assert.deepStrictEqual(
 assert.throws(
     () => adjuster.array().each(adjuster.number()).adjust([true, "abc", 2]),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_TYPE));
+```
+
+### object
+#### ambient declarations
+
+```typescript
+namespace adjuster {
+    export declare function object(): ObjectAdjuster;
+}
+
+interface ObjectAdjuster {
+    // adjustment method
+    adjust(value: any, onError?: (err: AdjusterError) => Object|void): Object;
+
+    // feature methods (chainable)
+    default(value: Object): ObjectAdjuster;
+    acceptNull(value?: Object|null /* = null */): ObjectAdjuster;
+    acceptEmptyString(value: Object|null /* = null */): ObjectAdjuster;
+    constraints(constraints): ObjectAdjuster;
+}
+```
+
+#### `adjust(value[, onError])`
+Validate and adjust input values.
+
+##### examples
+
+```javascript
+// should be OK
+assert.deepStrictEqual(
+    adjuster.object().adjust({a: 1, b: 2}),
+    {a: 1, b: 2});
+
+// should cause error
+assert.throws(
+    () => adjuster.object().adjust("abc"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(
+    () => adjuster.object().adjust(0),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+```
+
+#### `default(value)`
+Accept `undefined` for input, and adjust to `value`.
+
+If this method is not called, `adjust(undefined)` causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.object().default({a: 1, b: 2}).adjust(undefined),
+    {a: 1, b: 2});
+
+// should cause error
+assert.throws(
+    () => adjuster.object().adjust(undefined),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `acceptNull([value])`
+Accept a `null` for input, and adjust to `value`.
+
+If this method is not called, `adjust(null)` causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.object().acceptNull({a: 1, b: 2}).adjust(null),
+    {a: 1, b: 2});
+
+// should cause error
+assert.throws(
+    () => adjuster.object().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
+```
+
+#### `acceptEmptyString([value])`
+Accept an empty string(`""`) for input, and adjust to `value`.
+
+If this method is not called, `adjust("")` causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.object().acceptEmptyString({a: 1, b: 2}).adjust(""),
+    {a: 1, b: 2});
+
+// should cause error
+assert.throws(
+    () => adjuster.object().adjust(""),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+```
+
+#### `constraints(constraints)`
+Assume an input value is string and separated by `separator`.
+
+If an input type is array, this method does nothing.
+
+##### examples
+
+```javascript
+// should be OK
+const constraints = {a: adjuster.number(), b: adjuster.string()};
+assert.deepStrictEqual(
+    adjuster.object().constraints(constraints).adjust({a: 1, b: "2"}),
+    {a: 1, b: "2"});
+
+// should be adjusted
+assert.deepStrictEqual(
+    adjuster.object().constraints(constraints).adjust({a: 1, b: 2}),
+    {a: 1, b: "2"});
+
+// should cause error
+assert.throws(
+    () => adjuster.object().constraints(constraints).adjust({a: "x", b: "2"}),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
 ```
 
 ## Changelog

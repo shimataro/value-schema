@@ -75,8 +75,7 @@ function _adjust(params, values)
 			{
 				err.cause = causeMap[err.cause];
 			}
-			throw new AdjusterError(err.cause, values.original);
-
+			AdjusterError.raise(err.cause, values);
 		});
 
 		if(adjustedElement === undefined)
