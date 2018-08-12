@@ -16,7 +16,7 @@ export {PATTERN};
 
 /**
  * factory
- * @return {IPv4Adjuster} adjuster object
+ * @return {IPv4Adjuster} adjuster instance
  */
 export default () =>
 {

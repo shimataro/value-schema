@@ -10,7 +10,7 @@ import Each from "../libs/decorators/array/each";
 
 /**
  * factory
- * @return {ArrayAdjuster} adjuster object
+ * @return {ArrayAdjuster} adjuster instance
  */
 export default () =>
 {
@@ -89,7 +89,7 @@ class ArrayAdjuster extends AdjusterBase
 	 * apply constraints for each elements
 	 * @method
 	 * @name ArrayAdjuster#each
-	 * @param {AdjusterBase} objAdjuster adjuster to apply
+	 * @param {AdjusterBase} adjusterInstance adjuster to apply
 	 * @param {boolean} [ignoreEachErrors=false] ignore errors of each elements
 	 * @return {ArrayAdjuster}
 	 */

@@ -7,7 +7,7 @@ import Type from "../libs/decorators/boolean/type";
 
 /**
  * factory
- * @return {BooleanAdjuster} adjuster object
+ * @return {BooleanAdjuster} adjuster instance
  */
 export default () =>
 {

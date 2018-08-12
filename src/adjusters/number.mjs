@@ -10,7 +10,7 @@ import MaxValue from "../libs/decorators/number/maxValue";
 
 /**
  * factory
- * @return {NumberAdjuster} adjuster object
+ * @return {NumberAdjuster} adjuster instance
  */
 export default () =>
 {
