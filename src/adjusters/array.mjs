@@ -18,7 +18,7 @@ export default () =>
 };
 
 /**
- * adjuster for array of string
+ * adjuster for array
  */
 @MaxLength
 @MinLength
@@ -33,7 +33,7 @@ class ArrayAdjuster extends AdjusterBase
 	 * set default value; enable to omit
 	 * @method
 	 * @name ArrayAdjuster#default
-	 * @param {string[]} value default value
+	 * @param {Array} value default value
 	 * @return {ArrayAdjuster}
 	 */
 
@@ -41,7 +41,7 @@ class ArrayAdjuster extends AdjusterBase
 	 * accept null
 	 * @method
 	 * @name ArrayAdjuster#acceptNull
-	 * @param {?string[]} [value=null] value on null
+	 * @param {?Array} [value=null] value on null
 	 * @return {ArrayAdjuster}
 	 */
 
@@ -49,7 +49,7 @@ class ArrayAdjuster extends AdjusterBase
 	 * accept empty string
 	 * @method
 	 * @name ArrayAdjuster#acceptEmptyString
-	 * @param {?string[]} [value=null] value on empty
+	 * @param {?Array} [value=null] value on empty
 	 * @return {ArrayAdjuster}
 	 */
 
@@ -100,6 +100,6 @@ class ArrayAdjuster extends AdjusterBase
 	 * @name ArrayAdjuster#adjust
 	 * @param {*} value value to be checked
 	 * @param {?AdjusterBase.OnError} [onError=null] callback function on error
-	 * @return {string[]} adjusted value
+	 * @return {Array} adjusted value
 	 */
 }
