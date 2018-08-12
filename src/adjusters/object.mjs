@@ -8,7 +8,7 @@ import Constraints from "../libs/decorators/object/constraints";
 
 /**
  * factory
- * @return {ObjectAdjuster} adjuster instance
+ * @returns {ObjectAdjuster} adjuster instance
  */
 export default () =>
 {
@@ -30,7 +30,7 @@ class ObjectAdjuster extends AdjusterBase
 	 * @method
 	 * @name ObjectAdjuster#default
 	 * @param {Object} value default value
-	 * @return {ObjectAdjuster}
+	 * @returns {ObjectAdjuster}
 	 */
 
 	/**
@@ -38,7 +38,7 @@ class ObjectAdjuster extends AdjusterBase
 	 * @method
 	 * @name ObjectAdjuster#acceptNull
 	 * @param {?Object} [value=null] value on null
-	 * @return {ObjectAdjuster}
+	 * @returns {ObjectAdjuster}
 	 */
 
 	/**
@@ -46,7 +46,7 @@ class ObjectAdjuster extends AdjusterBase
 	 * @method
 	 * @name ObjectAdjuster#acceptEmptyString
 	 * @param {?Object} [value=null] value on empty
-	 * @return {ObjectAdjuster}
+	 * @returns {ObjectAdjuster}
 	 */
 
 	/**
@@ -54,7 +54,7 @@ class ObjectAdjuster extends AdjusterBase
 	 * @method
 	 * @name ObjectAdjuster#constraints
 	 * @param {Object<string, AdjusterBase>} constraints constraints to apply
-	 * @return {ObjectAdjuster}
+	 * @returns {ObjectAdjuster}
 	 */
 
 	/**
@@ -63,6 +63,6 @@ class ObjectAdjuster extends AdjusterBase
 	 * @name ObjectAdjuster#adjust
 	 * @param {*} value value to be checked
 	 * @param {?AdjusterBase.OnError} [onError=null] callback function on error
-	 * @return {Object} adjusted value
+	 * @returns {Object} adjusted value
 	 */
 }

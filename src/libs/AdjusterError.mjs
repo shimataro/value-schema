@@ -7,7 +7,7 @@ export default class AdjusterError extends Error
 	 * throw an error
 	 * @param {string} cause cause of error
 	 * @param {AdjusterBase.VALUES} values original / adjusted values
-	 * @return {void}
+	 * @returns {void}
 	 * @throws {AdjusterError}
 	 */
 	static raise(cause, values)

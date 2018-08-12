@@ -13,7 +13,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * init
  * @param {Object} params parameters
- * @return {void}
+ * @returns {void}
  */
 function _init(params)
 {
@@ -23,7 +23,7 @@ function _init(params)
 /**
  * enable strict type check
  * @param {Object} params parameters parameters
- * @return {void}
+ * @returns {void}
  */
 function _strict(params)
 {
@@ -34,7 +34,7 @@ function _strict(params)
  * adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
- * @return {boolean} end adjustment
+ * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
 function _adjust(params, values)

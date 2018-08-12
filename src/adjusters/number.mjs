@@ -10,7 +10,7 @@ import MaxValue from "../libs/decorators/number/maxValue";
 
 /**
  * factory
- * @return {NumberAdjuster} adjuster object
+ * @returns {NumberAdjuster} adjuster instance
  */
 export default () =>
 {
@@ -33,7 +33,7 @@ class NumberAdjuster extends AdjusterBase
 	 * enable strict type check
 	 * @method
 	 * @name NumberAdjuster#strict
-	 * @return {NumberAdjuster}
+	 * @returns {NumberAdjuster}
 	 */
 
 	/**
@@ -41,7 +41,7 @@ class NumberAdjuster extends AdjusterBase
 	 * @method
 	 * @name NumberAdjuster#default
 	 * @param {number} value default value
-	 * @return {NumberAdjuster}
+	 * @returns {NumberAdjuster}
 	 */
 
 	/**
@@ -49,7 +49,7 @@ class NumberAdjuster extends AdjusterBase
 	 * @method
 	 * @name NumberAdjuster#acceptNull
 	 * @param {?number} [value=null] value on null
-	 * @return {NumberAdjuster}
+	 * @returns {NumberAdjuster}
 	 */
 
 	/**
@@ -57,14 +57,14 @@ class NumberAdjuster extends AdjusterBase
 	 * @method
 	 * @name NumberAdjuster#acceptEmptyString
 	 * @param {?number} [value=null] value on empty
-	 * @return {NumberAdjuster}
+	 * @returns {NumberAdjuster}
 	 */
 
 	/**
 	 * accept all special formats; i.e., "1e+10", "0x100"
 	 * @method
 	 * @name NumberAdjuster#acceptSpecialFormats
-	 * @return {NumberAdjuster}
+	 * @returns {NumberAdjuster}
 	 */
 
 	/**
@@ -72,7 +72,7 @@ class NumberAdjuster extends AdjusterBase
 	 * @method
 	 * @name NumberAdjuster#integer
 	 * @param {boolean} [adjust=false] adjust to integer value is not an integer; default is ERROR
-	 * @return {NumberAdjuster}
+	 * @returns {NumberAdjuster}
 	 */
 
 	/**
@@ -80,7 +80,7 @@ class NumberAdjuster extends AdjusterBase
 	 * @method
 	 * @name NumberAdjuster#only
 	 * @param {...number} values values to be accepted
-	 * @return {NumberAdjuster}
+	 * @returns {NumberAdjuster}
 	 */
 
 	/**
@@ -89,7 +89,7 @@ class NumberAdjuster extends AdjusterBase
 	 * @name NumberAdjuster#minValue
 	 * @param {number} value min-value
 	 * @param {boolean} [adjust=false] adjust to min-value if value < min-value; default is ERROR
-	 * @return {NumberAdjuster}
+	 * @returns {NumberAdjuster}
 	 */
 
 	/**
@@ -98,7 +98,7 @@ class NumberAdjuster extends AdjusterBase
 	 * @name NumberAdjuster#maxValue
 	 * @param {number} value max-value
 	 * @param {boolean} [adjust=false] adjust to max-value if value > max-value; default is ERROR
-	 * @return {NumberAdjuster}
+	 * @returns {NumberAdjuster}
 	 */
 
 	/**
@@ -107,7 +107,7 @@ class NumberAdjuster extends AdjusterBase
 	 * @name NumberAdjuster#adjust
 	 * @param {*} value value to be checked
 	 * @param {?AdjusterBase.OnError} [onError=null] callback function on error
-	 * @return {number} adjusted value
+	 * @returns {number} adjusted value
 	 * @throws {AdjusterError}
 	 */
 }

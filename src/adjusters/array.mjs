@@ -10,7 +10,7 @@ import Each from "../libs/decorators/array/each";
 
 /**
  * factory
- * @return {ArrayAdjuster} adjuster object
+ * @returns {ArrayAdjuster} adjuster instance
  */
 export default () =>
 {
@@ -34,7 +34,7 @@ class ArrayAdjuster extends AdjusterBase
 	 * @method
 	 * @name ArrayAdjuster#default
 	 * @param {Array} value default value
-	 * @return {ArrayAdjuster}
+	 * @returns {ArrayAdjuster}
 	 */
 
 	/**
@@ -42,7 +42,7 @@ class ArrayAdjuster extends AdjusterBase
 	 * @method
 	 * @name ArrayAdjuster#acceptNull
 	 * @param {?Array} [value=null] value on null
-	 * @return {ArrayAdjuster}
+	 * @returns {ArrayAdjuster}
 	 */
 
 	/**
@@ -50,7 +50,7 @@ class ArrayAdjuster extends AdjusterBase
 	 * @method
 	 * @name ArrayAdjuster#acceptEmptyString
 	 * @param {?Array} [value=null] value on empty
-	 * @return {ArrayAdjuster}
+	 * @returns {ArrayAdjuster}
 	 */
 
 	/**
@@ -58,14 +58,14 @@ class ArrayAdjuster extends AdjusterBase
 	 * @method
 	 * @name ArrayAdjuster#separatedBy
 	 * @param {string|RegExp} separator separator
-	 * @return {ArrayAdjuster}
+	 * @returns {ArrayAdjuster}
 	 */
 
 	/**
 	 * convert to array, if not
 	 * @method
 	 * @name ArrayAdjuster#toArray
-	 * @return {ArrayAdjuster}
+	 * @returns {ArrayAdjuster}
 	 */
 
 	/**
@@ -73,7 +73,7 @@ class ArrayAdjuster extends AdjusterBase
 	 * @method
 	 * @name ArrayAdjuster#minLength
 	 * @param {number} length min-length; error if shorter
-	 * @return {ArrayAdjuster}
+	 * @returns {ArrayAdjuster}
 	 */
 
 	/**
@@ -82,16 +82,16 @@ class ArrayAdjuster extends AdjusterBase
 	 * @name ArrayAdjuster#maxLength
 	 * @param {number} length max-length
 	 * @param {boolean} [adjust=false] truncate if longer; default is ERROR
-	 * @return {ArrayAdjuster}
+	 * @returns {ArrayAdjuster}
 	 */
 
 	/**
 	 * apply constraints for each elements
 	 * @method
 	 * @name ArrayAdjuster#each
-	 * @param {AdjusterBase} objAdjuster adjuster to apply
+	 * @param {AdjusterBase} adjusterInstance adjuster to apply
 	 * @param {boolean} [ignoreEachErrors=false] ignore errors of each elements
-	 * @return {ArrayAdjuster}
+	 * @returns {ArrayAdjuster}
 	 */
 
 	/**
@@ -100,6 +100,6 @@ class ArrayAdjuster extends AdjusterBase
 	 * @name ArrayAdjuster#adjust
 	 * @param {*} value value to be checked
 	 * @param {?AdjusterBase.OnError} [onError=null] callback function on error
-	 * @return {Array} adjusted value
+	 * @returns {Array} adjusted value
 	 */
 }

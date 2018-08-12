@@ -11,7 +11,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * init
  * @param {Object} params parameters
- * @return {void}
+ * @returns {void}
  */
 function _init(params)
 {
@@ -22,7 +22,7 @@ function _init(params)
  * apply constraints
  * @param {Object} params parameters
  * @param {Object<string, AdjusterBase>} constraints constraints to apply
- * @return {void}
+ * @returns {void}
  */
 function _featureConstraints(params, constraints)
 {
@@ -33,7 +33,7 @@ function _featureConstraints(params, constraints)
  * adjuster
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
- * @return {boolean} end adjustment
+ * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
 function _adjust(params, values)

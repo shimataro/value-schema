@@ -37,7 +37,7 @@ const REGEXP = new RegExp(`^${PATTERN}$`);
 
 /**
  * factory
- * @return {EmailAdjuster} adjuster object
+ * @returns {EmailAdjuster} adjuster instance
  */
 export default () =>
 {
@@ -71,7 +71,7 @@ class EmailAdjuster extends AdjusterBase
 	 * @method
 	 * @name EmailAdjuster#default
 	 * @param {string} value default value
-	 * @return {EmailAdjuster}
+	 * @returns {EmailAdjuster}
 	 */
 
 	/**
@@ -79,14 +79,14 @@ class EmailAdjuster extends AdjusterBase
 	 * @method
 	 * @name EmailAdjuster#acceptNull
 	 * @param {?string} [value=null] value on null
-	 * @return {EmailAdjuster}
+	 * @returns {EmailAdjuster}
 	 */
 
 	/**
 	 * remove whitespace from both ends
 	 * @method
 	 * @name EmailAdjuster#trim
-	 * @return {EmailAdjuster}
+	 * @returns {EmailAdjuster}
 	 */
 
 	/**
@@ -94,15 +94,15 @@ class EmailAdjuster extends AdjusterBase
 	 * @method
 	 * @name EmailAdjuster#acceptEmptyString
 	 * @param {?string} [value=null] value on empty
-	 * @return {EmailAdjuster}
+	 * @returns {EmailAdjuster}
 	 */
 
 	/**
 	 * specify acceptable pattern by regular expression
 	 * @method
 	 * @name EmailAdjuster#pattern
-	 * @param {string|String|RegExp} pattern acceptable pattern(regular expression); string or RegExp
-	 * @return {EmailAdjuster}
+	 * @param {string|RegExp} pattern acceptable pattern(regular expression); string or RegExp
+	 * @returns {EmailAdjuster}
 	 */
 
 	/**
@@ -111,7 +111,7 @@ class EmailAdjuster extends AdjusterBase
 	 * @name EmailAdjuster#adjust
 	 * @param {*} value value to be checked
 	 * @param {?AdjusterBase.OnError} [onError=null] callback function on error
-	 * @return {string} adjusted value
+	 * @returns {string} adjusted value
 	 * @throws {AdjusterError}
 	 */
 }

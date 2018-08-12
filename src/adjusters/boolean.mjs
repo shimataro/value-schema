@@ -7,7 +7,7 @@ import Type from "../libs/decorators/boolean/type";
 
 /**
  * factory
- * @return {BooleanAdjuster} adjuster object
+ * @returns {BooleanAdjuster} adjuster instance
  */
 export default () =>
 {
@@ -27,14 +27,14 @@ class BooleanAdjuster extends AdjusterBase
 	 * enable strict type check
 	 * @method
 	 * @name BooleanAdjuster#strict
-	 * @return {BooleanAdjuster}
+	 * @returns {BooleanAdjuster}
 	 */
 
 	/**
 	 * accept all numbers as boolean
 	 * @method
 	 * @name BooleanAdjuster#acceptAllNumbers
-	 * @return {BooleanAdjuster}
+	 * @returns {BooleanAdjuster}
 	 */
 
 	/**
@@ -42,7 +42,7 @@ class BooleanAdjuster extends AdjusterBase
 	 * @method
 	 * @name BooleanAdjuster#default
 	 * @param {boolean} value default value
-	 * @return {BooleanAdjuster}
+	 * @returns {BooleanAdjuster}
 	 */
 
 	/**
@@ -50,7 +50,7 @@ class BooleanAdjuster extends AdjusterBase
 	 * @method
 	 * @name BooleanAdjuster#acceptNull
 	 * @param {?boolean} [value=null] value on null
-	 * @return {BooleanAdjuster}
+	 * @returns {BooleanAdjuster}
 	 */
 
 	/**
@@ -58,7 +58,7 @@ class BooleanAdjuster extends AdjusterBase
 	 * @method
 	 * @name BooleanAdjuster#acceptEmptyString
 	 * @param {?boolean} [value=null] value on empty
-	 * @return {BooleanAdjuster}
+	 * @returns {BooleanAdjuster}
 	 */
 
 	/**
@@ -67,7 +67,7 @@ class BooleanAdjuster extends AdjusterBase
 	 * @name BooleanAdjuster#adjust
 	 * @param {*} value value to be checked
 	 * @param {?AdjusterBase.OnError} [onError=null] callback function on error
-	 * @return {boolean} adjusted value
+	 * @returns {boolean} adjusted value
 	 * @throws {AdjusterError}
 	 */
 }

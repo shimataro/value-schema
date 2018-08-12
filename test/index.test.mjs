@@ -7,7 +7,7 @@ import adjuster from "index";
 
 /**
  * test for adjust multiple variables
- * @return {void}
+ * @returns {void}
  */
 function testAdjust()
 {
@@ -62,7 +62,7 @@ function testAdjust()
 
 /**
  * error handling
- * @return {void}
+ * @returns {void}
  */
 function testError()
 {
@@ -142,7 +142,7 @@ function testError()
 
 			/**
 			 * error handler generator
-			 * @return {AdjusterBase.OnError} error handler
+			 * @returns {AdjusterBase.OnError} error handler
 			 */
 			function generateErrorHandler()
 			{

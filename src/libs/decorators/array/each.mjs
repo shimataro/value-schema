@@ -12,7 +12,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * init
  * @param {Object} params parameters
- * @return {void}
+ * @returns {void}
  */
 function _init(params)
 {
@@ -25,7 +25,7 @@ function _init(params)
  * @param {Object} params parameters
  * @param {AdjusterBase} objAdjuster adjuster to apply
  * @param {boolean} [ignoreEachErrors=false] ignore errors of each elements
- * @return {void}
+ * @returns {void}
  */
 function _featureEach(params, objAdjuster, ignoreEachErrors = false)
 {
@@ -37,7 +37,7 @@ function _featureEach(params, objAdjuster, ignoreEachErrors = false)
  * adjuster
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
- * @return {boolean} end adjustment
+ * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
 function _adjust(params, values)

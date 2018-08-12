@@ -16,7 +16,7 @@ export {PATTERN};
 
 /**
  * factory
- * @return {IPv4Adjuster} adjuster object
+ * @returns {IPv4Adjuster} adjuster instance
  */
 export default () =>
 {
@@ -49,7 +49,7 @@ class IPv4Adjuster extends AdjusterBase
 	 * @method
 	 * @name IPv4Adjuster#default
 	 * @param {string} value default value
-	 * @return {IPv4Adjuster}
+	 * @returns {IPv4Adjuster}
 	 */
 
 	/**
@@ -57,14 +57,14 @@ class IPv4Adjuster extends AdjusterBase
 	 * @method
 	 * @name IPv4Adjuster#acceptNull
 	 * @param {?string} [value=null] value on null
-	 * @return {IPv4Adjuster}
+	 * @returns {IPv4Adjuster}
 	 */
 
 	/**
 	 * remove whitespace from both ends
 	 * @method
 	 * @name IPv4Adjuster#trim
-	 * @return {IPv4Adjuster}
+	 * @returns {IPv4Adjuster}
 	 */
 
 	/**
@@ -72,7 +72,7 @@ class IPv4Adjuster extends AdjusterBase
 	 * @method
 	 * @name IPv4Adjuster#acceptEmptyString
 	 * @param {?string} [value=null] value on empty
-	 * @return {IPv4Adjuster}
+	 * @returns {IPv4Adjuster}
 	 */
 
 	/**
@@ -81,7 +81,7 @@ class IPv4Adjuster extends AdjusterBase
 	 * @name IPv4Adjuster#adjust
 	 * @param {*} value value to be checked
 	 * @param {?AdjusterBase.OnError} [onError=null] callback function on error
-	 * @return {string} adjusted value
+	 * @returns {string} adjusted value
 	 * @throws {AdjusterError}
 	 */
 }

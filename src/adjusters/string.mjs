@@ -12,7 +12,7 @@ import Pattern from "../libs/decorators/string/pattern";
 
 /**
  * factory
- * @return {StringAdjuster} adjuster object
+ * @returns {StringAdjuster} adjuster instance
  */
 export default () =>
 {
@@ -37,7 +37,7 @@ class StringAdjuster extends AdjusterBase
 	 * enable strict type check
 	 * @method
 	 * @name StringAdjuster#strict
-	 * @return {StringAdjuster}
+	 * @returns {StringAdjuster}
 	 */
 
 	/**
@@ -45,7 +45,7 @@ class StringAdjuster extends AdjusterBase
 	 * @method
 	 * @name StringAdjuster#default
 	 * @param {string} value default value
-	 * @return {StringAdjuster}
+	 * @returns {StringAdjuster}
 	 */
 
 	/**
@@ -53,14 +53,14 @@ class StringAdjuster extends AdjusterBase
 	 * @method
 	 * @name StringAdjuster#acceptNull
 	 * @param {?string} [value=null] value on null
-	 * @return {StringAdjuster}
+	 * @returns {StringAdjuster}
 	 */
 
 	/**
 	 * remove whitespace from both ends
 	 * @method
 	 * @name StringAdjuster#trim
-	 * @return {StringAdjuster}
+	 * @returns {StringAdjuster}
 	 */
 
 	/**
@@ -68,7 +68,7 @@ class StringAdjuster extends AdjusterBase
 	 * @method
 	 * @name StringAdjuster#acceptEmptyString
 	 * @param {?string} [value=null] value on empty
-	 * @return {StringAdjuster}
+	 * @returns {StringAdjuster}
 	 */
 
 	/**
@@ -76,7 +76,7 @@ class StringAdjuster extends AdjusterBase
 	 * @method
 	 * @name StringAdjuster#only
 	 * @param {...string} values values to be accepted
-	 * @return {StringAdjuster}
+	 * @returns {StringAdjuster}
 	 */
 
 	/**
@@ -84,7 +84,7 @@ class StringAdjuster extends AdjusterBase
 	 * @method
 	 * @name StringAdjuster#minLength
 	 * @param {number} length min-length; error if shorter
-	 * @return {StringAdjuster}
+	 * @returns {StringAdjuster}
 	 */
 
 	/**
@@ -93,15 +93,15 @@ class StringAdjuster extends AdjusterBase
 	 * @name StringAdjuster#maxLength
 	 * @param {number} length max-length; error if longer
 	 * @param {boolean} [adjust=false] truncate if longer; default is ERROR
-	 * @return {StringAdjuster}
+	 * @returns {StringAdjuster}
 	 */
 
 	/**
 	 * specify acceptable pattern by regular expression
 	 * @method
 	 * @name StringAdjuster#pattern
-	 * @param {string|String|RegExp} pattern acceptable pattern(regular expression); string or RegExp
-	 * @return {StringAdjuster}
+	 * @param {string|RegExp} pattern acceptable pattern(regular expression); string or RegExp
+	 * @returns {StringAdjuster}
 	 */
 
 	/**
@@ -110,7 +110,7 @@ class StringAdjuster extends AdjusterBase
 	 * @name StringAdjuster#adjust
 	 * @param {*} value value to be checked
 	 * @param {?AdjusterBase.OnError} [onError=null] callback function on error
-	 * @return {string} adjusted value
+	 * @returns {string} adjusted value
 	 * @throws {AdjusterError}
 	 */
 }

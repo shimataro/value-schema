@@ -15,7 +15,7 @@ import adjuster from "index";
 
 /**
  * type
- * @return {void}
+ * @returns {void}
  */
 function testType()
 {
@@ -37,7 +37,7 @@ function testType()
 
 /**
  * default value
- * @return {void}
+ * @returns {void}
  */
 function testDefault()
 {
@@ -58,7 +58,7 @@ function testDefault()
 
 /**
  * null
- * @return {void}
+ * @returns {void}
  */
 function testAcceptNull()
 {
@@ -79,7 +79,7 @@ function testAcceptNull()
 
 /**
  * empty string
- * @return {void}
+ * @returns {void}
  */
 function testAcceptEmptyString()
 {
@@ -100,7 +100,7 @@ function testAcceptEmptyString()
 
 /**
  * separator
- * @return {void}
+ * @returns {void}
  */
 function testSeparatedBy()
 {
@@ -113,7 +113,7 @@ function testSeparatedBy()
 
 /**
  * convert to array
- * @return {void}
+ * @returns {void}
  */
 function testToArray()
 {
@@ -134,7 +134,7 @@ function testToArray()
 
 /**
  * minimum length of elements
- * @return {void}
+ * @returns {void}
  */
 function testMinLength()
 {
@@ -155,7 +155,7 @@ function testMinLength()
 
 /**
  * maximum length of elements
- * @return {void}
+ * @returns {void}
  */
 function testMaxLength()
 {
@@ -184,7 +184,7 @@ function testMaxLength()
 
 /**
  * array of number
- * @return {void}
+ * @returns {void}
  */
 function testNumber()
 {
@@ -323,7 +323,7 @@ function testNumber()
 
 /**
  * array of string
- * @return {void}
+ * @returns {void}
  */
 function testString()
 {

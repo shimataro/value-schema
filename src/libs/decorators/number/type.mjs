@@ -18,7 +18,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * init
  * @param {Object} params parameters
- * @return {void}
+ * @returns {void}
  */
 function _init(params)
 {
@@ -31,7 +31,7 @@ function _init(params)
 /**
  * enable strict type check
  * @param {Object} params parameters parameters
- * @return {void}
+ * @returns {void}
  */
 function _strict(params)
 {
@@ -41,7 +41,7 @@ function _strict(params)
 /**
  * accept special formats; i.e., "1e+10", "0x100", "0b100"
  * @param {Object} params parameters
- * @return {void}
+ * @returns {void}
  */
 function _acceptSpecialFormats(params)
 {
@@ -52,7 +52,7 @@ function _acceptSpecialFormats(params)
  * limit to integer
  * @param {Object} params parameters
  * @param {boolean} [adjust=false] adjust value or not
- * @return {void}
+ * @returns {void}
  */
 function _integer(params, adjust = false)
 {
@@ -64,7 +64,7 @@ function _integer(params, adjust = false)
  * adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
- * @return {boolean} end adjustment
+ * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
 function _adjust(params, values)
@@ -91,7 +91,7 @@ function _adjust(params, values)
  * check the format of value
  * @param {Object} params parameters
  * @param {string} value value to check
- * @return {boolean} OK/NG
+ * @returns {boolean} OK/NG
  */
 function _checkNumberFormat(params, value)
 {
@@ -106,7 +106,7 @@ function _checkNumberFormat(params, value)
 /**
  * get RegExp pattern for number
  * @param {Object} params parameters
- * @return {RegExp|null} regular expression pattern
+ * @returns {RegExp|null} regular expression pattern
  */
 function _getRegExpForNumber(params)
 {
@@ -128,7 +128,7 @@ function _getRegExpForNumber(params)
  * convert to number
  * @param {Object} params parameters
  * @param {*} value value to convert
- * @return {number|boolean} adjusted value or false(if failed)
+ * @returns {number|boolean} adjusted value or false(if failed)
  */
 function _toNumber(params, value)
 {
