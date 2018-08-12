@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * `adjuster.number().strict()`
 * `adjuster.string().strict()`
 * `adjuster.array()`
+* `adjuster.object()`
 
 ### Deleted
 * `adjuster.numberArray()` - use `adjuster.array()` instead
