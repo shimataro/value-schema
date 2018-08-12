@@ -3,7 +3,6 @@ import adjust from "./libs/adjust";
 import factoryBoolean from "./adjusters/boolean";
 import factoryNumber from "./adjusters/number";
 import factoryString from "./adjusters/string";
-import factoryStringArray from "./adjusters/stringArray";
 import factoryNumericString from "./adjusters/numericString";
 import factoryIPv4 from "./adjusters/ipv4";
 import factoryIPv6 from "./adjusters/ipv6";
@@ -24,7 +23,6 @@ export default {
 	boolean: factoryBoolean,
 	number: factoryNumber,
 	string: factoryString,
-	stringArray: factoryStringArray,
 	numericString: factoryNumericString,
 	ipv4: factoryIPv4,
 	ipv6: factoryIPv6,

@@ -10,6 +10,7 @@ import adjuster from "index";
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
 	describe("number", testNumber);
+	describe("string", testString);
 }
 
 /**
@@ -317,5 +318,69 @@ function testNumber()
 			adjuster.array().each(adjuster.number().maxValue(10))
 				.adjust([9, 10, 11]);
 		}).toThrow(adjuster.CAUSE.EACH_MAX_VALUE);
+	});
+}
+
+/**
+ * array of string
+ * @return {void}
+ */
+function testString()
+{
+	it("should be OK", () =>
+	{
+		expect(adjuster.array().each(adjuster.string().only("a", "b", "c"))
+			.adjust(["a", "b", "c"])).toEqual(["a", "b", "c"]);
+
+		expect(adjuster.array().each(adjuster.string().minLength(3))
+			.adjust(["abc", "xyz"])).toEqual(["abc", "xyz"]);
+
+		expect(adjuster.array().each(adjuster.string().maxLength(3))
+			.adjust(["abc", "xyz"])).toEqual(["abc", "xyz"]);
+		expect(adjuster.array().each(adjuster.string().maxLength(3, true))
+			.adjust(["abc", "xyz"])).toEqual(["abc", "xyz"]);
+
+		expect(adjuster.array().each(adjuster.string().pattern(/^Go+gle$/))
+			.adjust(["Gogle", "Google", "Gooogle"])).toEqual(["Gogle", "Google", "Gooogle"]);
+	});
+	it("should be adjusted", () =>
+	{
+		expect(adjuster.array().each(adjuster.string())
+			.adjust([false, true, 2, "+3", "-4"])).toEqual(["false", "true", "2", "+3", "-4"]);
+
+		expect(adjuster.array().each(adjuster.string().trim())
+			.adjust([" a", "b\t", "\rc\n"])).toEqual(["a", "b", "c"]);
+
+		expect(adjuster.array().each(adjuster.string().only("a", "b", "c"))
+			.adjust(["a", "b", "c"])).toEqual(["a", "b", "c"]);
+
+		expect(adjuster.array().each(adjuster.string().maxLength(3, true))
+			.adjust(["abcd", "xyz0"])).toEqual(["abc", "xyz"]);
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.array().each(adjuster.string().only("a", "b", "c"))
+				.adjust(["a", "b", "x"]);
+		}).toThrow(adjuster.CAUSE.EACH_ONLY);
+
+		expect(() =>
+		{
+			adjuster.array().each(adjuster.string().minLength(3))
+				.adjust(["ab", "xy"]);
+		}).toThrow(adjuster.CAUSE.EACH_MIN_LENGTH);
+
+		expect(() =>
+		{
+			adjuster.array().each(adjuster.string().maxLength(3))
+				.adjust(["abcd", "xyz0"]);
+		}).toThrow(adjuster.CAUSE.EACH_MAX_LENGTH);
+
+		expect(() =>
+		{
+			adjuster.array().each(adjuster.string().pattern(/^Go+gle$/))
+				.adjust(["google", "Ggle"]);
+		}).toThrow(adjuster.CAUSE.EACH_PATTERN);
 	});
 }

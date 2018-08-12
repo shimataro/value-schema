@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Deleted
 * `adjuster.numberArray()` - use `adjuster.array()` instead
+* `adjuster.stringArray()` - use `adjuster.array()` instead
 
 ## [0.14.0] - 2018-08-11
 ### Added
