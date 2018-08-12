@@ -107,7 +107,7 @@ function testError()
 			const input = 0;
 
 			adjuster.adjust(input, constraints);
-		}).toThrow(adjuster.CAUSE.NOT_OBJECT); // input must be an object
+		}).toThrow(adjuster.CAUSE.TYPE); // input must be an object
 
 		expect(() =>
 		{
@@ -115,7 +115,7 @@ function testError()
 			const input = null;
 
 			adjuster.adjust(input, constraints);
-		}).toThrow(adjuster.CAUSE.NOT_OBJECT); // input must be an object; typeof null === "object"
+		}).toThrow(adjuster.CAUSE.TYPE); // input must be an object; typeof null === "object"
 
 		expect(() =>
 		{
@@ -123,7 +123,7 @@ function testError()
 			const input = [];
 
 			adjuster.adjust(input, constraints);
-		}).toThrow(adjuster.CAUSE.NOT_OBJECT); // input must be an object; typeof [] === "object"
+		}).toThrow(adjuster.CAUSE.TYPE); // input must be an object; typeof [] === "object"
 
 		expect(() =>
 		{
