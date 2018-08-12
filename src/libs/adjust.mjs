@@ -16,7 +16,7 @@ function adjust(data, constraints, onError = AdjusterBase.onErrorDefault)
 {
 	if(!isObject(data))
 	{
-		const cause = CAUSE.NOT_OBJECT;
+		const cause = CAUSE.TYPE;
 		const err = new AdjusterError(cause, data);
 		return onError(err);
 	}

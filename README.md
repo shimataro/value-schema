@@ -386,7 +386,7 @@ try {
 }
 catch (err) {
     assert.strictEqual(err.key, null);
-    assert.strictEqual(err.cause, adjuster.CAUSE.NOT_OBJECT);
+    assert.strictEqual(err.cause, adjuster.CAUSE.TYPE);
 }
 ```
 

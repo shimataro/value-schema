@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * `adjuster.array()`
 * `adjuster.object()`
 
+### Changed
+* cause an error `adjuster.CAUSE.TYPE` instead of  `adjuster.CAUSE.NOT_OBJECT`
+
 ### Deleted
 * `adjuster.numberArray()` - use `adjuster.array()` instead
 * `adjuster.stringArray()` - use `adjuster.array()` instead

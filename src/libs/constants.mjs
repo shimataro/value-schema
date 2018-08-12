@@ -1,7 +1,6 @@
 /**
  * cause of error
  * @typedef {Object} adjuster.CAUSE
- * @property {string} NOT_OBJECT
  * @property {string} TYPE
  * @property {string} REQUIRED
  * @property {string} EMPTY
@@ -26,8 +25,6 @@
  * @property {string} EACH_CHECKSUM
  */
 export const CAUSE = {
-	NOT_OBJECT: "not-object",
-
 	TYPE: "type",
 	REQUIRED: "required",
 	NULL: "null",
