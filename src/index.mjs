@@ -8,6 +8,7 @@ import factoryIPv4 from "./adjusters/ipv4";
 import factoryIPv6 from "./adjusters/ipv6";
 import factoryEmail from "./adjusters/email";
 import factoryArray from "./adjusters/array";
+import factoryObject from "./adjusters/object";
 
 /** @namespace adjuster */
 export default {
@@ -28,4 +29,5 @@ export default {
 	ipv6: factoryIPv6,
 	email: factoryEmail,
 	array: factoryArray,
+	object: factoryObject,
 };
