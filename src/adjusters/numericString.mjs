@@ -70,7 +70,7 @@ class NumericStringAdjuster extends AdjusterBase
 	 * ignore separator
 	 * @method
 	 * @name NumericStringAdjuster#separatedBy
-	 * @param {string|String|RegExp} separator separator
+	 * @param {string|RegExp} separator separator
 	 * @return {NumericStringAdjuster}
 	 */
 

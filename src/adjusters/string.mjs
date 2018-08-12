@@ -100,7 +100,7 @@ class StringAdjuster extends AdjusterBase
 	 * specify acceptable pattern by regular expression
 	 * @method
 	 * @name StringAdjuster#pattern
-	 * @param {string|String|RegExp} pattern acceptable pattern(regular expression); string or RegExp
+	 * @param {string|RegExp} pattern acceptable pattern(regular expression); string or RegExp
 	 * @return {StringAdjuster}
 	 */
 

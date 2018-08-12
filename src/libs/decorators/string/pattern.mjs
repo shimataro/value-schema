@@ -23,7 +23,7 @@ function _init(params)
 /**
  * specify acceptable pattern by regular expression
  * @param {Object} params parameters
- * @param {string|String|RegExp} pattern acceptable pattern(regular expression); string or RegExp
+ * @param {string|RegExp} pattern acceptable pattern(regular expression); string or RegExp
  * @return {void}
  */
 function _featurePattern(params, pattern)

@@ -101,7 +101,7 @@ class EmailAdjuster extends AdjusterBase
 	 * specify acceptable pattern by regular expression
 	 * @method
 	 * @name EmailAdjuster#pattern
-	 * @param {string|String|RegExp} pattern acceptable pattern(regular expression); string or RegExp
+	 * @param {string|RegExp} pattern acceptable pattern(regular expression); string or RegExp
 	 * @return {EmailAdjuster}
 	 */
 

@@ -25,7 +25,7 @@ function _init(params)
 /**
  * accept string and set separator
  * @param {Object} params parameters
- * @param {string|String|RegExp} separator separator
+ * @param {string|RegExp} separator separator
  * @return {void}
  */
 function _featureSeparatedBy(params, separator)
