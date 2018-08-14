@@ -3,8 +3,8 @@ import {isBoolean, isNumber, isString} from "../../types";
 import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
 
-const REGEXP_TRUE = /^\s*true\s*$/i;
-const REGEXP_FALSE = /^\s*false\s*$/i;
+const REGEXP_TRUE = /^\s*(true|yes|on)\s*$/i;
+const REGEXP_FALSE = /^\s*(false|no|off)\s*$/i;
 
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)

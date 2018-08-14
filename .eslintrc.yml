@@ -3,8 +3,8 @@ env: # https://eslint.org/docs/user-guide/configuring#specifying-environments
   es6: true
   node: true
   jest: true
-extends: 'eslint:recommended'
-parser: "babel-eslint"
+extends: eslint:recommended
+parser: babel-eslint
 parserOptions:
   sourceType: module
 rules: # https://eslint.org/docs/rules/
@@ -29,8 +29,10 @@ rules: # https://eslint.org/docs/rules/
     - allman
   callback-return: error
   capitalized-comments: 'off'
-  class-methods-use-this: 'off'
-  comma-dangle: 'off'
+  class-methods-use-this: error
+  comma-dangle:
+    - error
+    - always-multiline
   comma-spacing:
     - error
     - after: true
@@ -45,7 +47,7 @@ rules: # https://eslint.org/docs/rules/
   consistent-return: 'off'
   consistent-this: error
   curly: error
-  default-case: "off"
+  default-case: 'off'
   dot-location:
     - error
     - property
@@ -57,7 +59,9 @@ rules: # https://eslint.org/docs/rules/
   for-direction: error
   func-call-spacing: error
   func-name-matching: error
-  func-names: "off"
+  func-names:
+    - error
+    - never
   func-style:
     - error
     - declaration
@@ -73,7 +77,9 @@ rules: # https://eslint.org/docs/rules/
   implicit-arrow-linebreak:
     - error
     - below
-  indent: 'off'
+  indent:
+    - error
+    - tab
   indent-legacy: 'off'
   init-declarations: error
   jsx-quotes: error
@@ -197,7 +203,7 @@ rules: # https://eslint.org/docs/rules/
   no-whitespace-before-property: error
   no-with: error
   nonblock-statement-body-position: error
-  object-curly-newline: "off"
+  object-curly-newline: 'off'
   object-curly-spacing:
     - error
     - never
