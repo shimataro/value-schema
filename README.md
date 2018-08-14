@@ -146,7 +146,7 @@ The `AdjusterError` object represents an error when trying to adjust invalid val
 |`message`|human-readable description of the error, including a string `cause`|
 |`cause`|the cause of adjustment error; see `adjuster.CAUSE`|
 |`value`|the value to adjust|
-|`key`|key name that caused error; only filled in `adjuster.adjust()`, otherwise `null`|
+|`stack`|an array path to key name that caused error; number for array, string for object; for nested object or array|
 
 #### `adjuster.CAUSE`
 The cause of adjustment error.
@@ -194,7 +194,7 @@ If this parameter is omitted, `adjuster.adjust()` throws `AdjusterError` on firs
 
 * `err`
     * an instance of `AdjusterError` or `null`
-    * `err.key` indicates a key name that caused error
+    * `err.stack` indicates path to key name that caused error: `{string|number}[]`
     * `err` will be `null` after all adjustment has finished and errors has occurred
         * `onError()` will no longer be called after `null` passed
 * returns
@@ -292,7 +292,8 @@ function generateErrorHandler() {
             return;
         }
 
-        if (err.key === "id") {
+        const key = err.stacks.shift(); // ["id"]
+        if (key === "id") {
             // adjust to 100 on `id` error
             return 100;
         }
@@ -336,7 +337,8 @@ function generateErrorHandler() {
         }
 
         // append key name
-        messages.push(err.key);
+        const key = err.stacks.shift(); // ["id"]
+        messages.push(key);
     };
 }
 ```
@@ -364,7 +366,7 @@ try {
 }
 catch (err) {
     // catch a first error
-    assert.strictEqual(err.key, "id");
+    assert.deepStrictEqual(err.stack, ["id"]);
 }
 ```
 
@@ -385,7 +387,7 @@ try {
     const adjusted = adjuster.adjust(input, constraints);
 }
 catch (err) {
-    assert.strictEqual(err.key, null);
+    assert.deepStrictEqual(err.stack, []);
     assert.strictEqual(err.cause, adjuster.CAUSE.TYPE);
 }
 ```
