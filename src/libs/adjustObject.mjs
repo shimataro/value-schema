@@ -9,15 +9,15 @@ import AdjusterError from "./AdjusterError";
  * @param {Object<string, *>} data data to be adjusted
  * @param {Object<string, AdjusterBase>} constraints adjuster objects
  * @param {AdjusterBase.OnError} onError error handler
- * @param {(string|number)[]} stack error keys stack
+ * @param {(string|number)[]} keyStack path to key that caused error
  * @returns {Object<string, *>} adjusted data
  */
-function adjustObject(data, constraints, onError, stack)
+function adjustObject(data, constraints, onError, keyStack)
 {
 	if(!isObject(data))
 	{
 		const cause = CAUSE.TYPE;
-		const err = new AdjusterError(cause, data, stack);
+		const err = new AdjusterError(cause, data, keyStack);
 		return onError(err);
 	}
 
@@ -25,7 +25,7 @@ function adjustObject(data, constraints, onError, stack)
 	let hasError = false;
 	for(const key of Object.keys(constraints))
 	{
-		const adjustedValue = constraints[key]._adjust(data[key], errorHandler, [...stack, key]);
+		const adjustedValue = constraints[key]._adjust(data[key], errorHandler, [...keyStack, key]);
 		if(adjustedValue !== undefined)
 		{
 			result[key] = adjustedValue;

@@ -35,11 +35,11 @@ function _featureOnly(params, ...values)
  * adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
- * @param {(string|number)[]} stack error keys stack
+ * @param {(string|number)[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
-function _adjust(params, values, stack)
+function _adjust(params, values, keyStack)
 {
 	if(!params.flag)
 	{
@@ -50,5 +50,5 @@ function _adjust(params, values, stack)
 		return true;
 	}
 
-	AdjusterError.raise(CAUSE.ONLY, values, stack);
+	AdjusterError.raise(CAUSE.ONLY, values, keyStack);
 }

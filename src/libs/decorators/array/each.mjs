@@ -36,11 +36,11 @@ function _featureEach(params, objAdjuster, ignoreEachErrors = false)
  * adjuster
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
- * @param {(string|number)[]} stack error keys stack
+ * @param {(string|number)[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
-function _adjust(params, values, stack)
+function _adjust(params, values, keyStack)
 {
 	const {objAdjuster, ignoreEachErrors} = params;
 	if(objAdjuster === null)
@@ -59,8 +59,8 @@ function _adjust(params, values, stack)
 				return;
 			}
 
-			AdjusterError.raise(err.cause, values, err.stack);
-		}, [...stack, idx]);
+			AdjusterError.raise(err.cause, values, err.keyStack);
+		}, [...keyStack, idx]);
 
 		if(adjustedElement === undefined)
 		{

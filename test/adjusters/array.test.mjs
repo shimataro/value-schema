@@ -244,7 +244,7 @@ function testNumber()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.TYPE);
-			expect(err.stack).toEqual([1]);
+			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
@@ -256,7 +256,7 @@ function testNumber()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.REQUIRED);
-			expect(err.stack).toEqual([1]);
+			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
@@ -268,7 +268,7 @@ function testNumber()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.NULL);
-			expect(err.stack).toEqual([1]);
+			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
@@ -280,7 +280,7 @@ function testNumber()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.EMPTY);
-			expect(err.stack).toEqual([1]);
+			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
@@ -292,7 +292,7 @@ function testNumber()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.NULL);
-			expect(err.stack).toEqual([1]);
+			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
@@ -304,7 +304,7 @@ function testNumber()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.EMPTY);
-			expect(err.stack).toEqual([1]);
+			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
@@ -316,7 +316,7 @@ function testNumber()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.REQUIRED);
-			expect(err.stack).toEqual([1]);
+			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
@@ -328,7 +328,7 @@ function testNumber()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.EMPTY);
-			expect(err.stack).toEqual([1]);
+			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
@@ -340,7 +340,7 @@ function testNumber()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.REQUIRED);
-			expect(err.stack).toEqual([1]);
+			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
@@ -352,7 +352,7 @@ function testNumber()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.NULL);
-			expect(err.stack).toEqual([1]);
+			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
@@ -364,7 +364,7 @@ function testNumber()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.TYPE);
-			expect(err.stack).toEqual([0]);
+			expect(err.keyStack).toEqual([0]);
 		}
 
 		try
@@ -376,7 +376,7 @@ function testNumber()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.TYPE);
-			expect(err.stack).toEqual([0]);
+			expect(err.keyStack).toEqual([0]);
 		}
 
 		try
@@ -388,7 +388,7 @@ function testNumber()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.ONLY);
-			expect(err.stack).toEqual([0]);
+			expect(err.keyStack).toEqual([0]);
 		}
 
 		try
@@ -400,7 +400,7 @@ function testNumber()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.MIN_VALUE);
-			expect(err.stack).toEqual([0]);
+			expect(err.keyStack).toEqual([0]);
 		}
 
 		try
@@ -412,7 +412,7 @@ function testNumber()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.MAX_VALUE);
-			expect(err.stack).toEqual([2]);
+			expect(err.keyStack).toEqual([2]);
 		}
 	});
 }
@@ -464,7 +464,7 @@ function testString()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.ONLY);
-			expect(err.stack).toEqual([2]);
+			expect(err.keyStack).toEqual([2]);
 		}
 
 		try
@@ -476,7 +476,7 @@ function testString()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.MIN_LENGTH);
-			expect(err.stack).toEqual([0]);
+			expect(err.keyStack).toEqual([0]);
 		}
 
 		try
@@ -488,7 +488,7 @@ function testString()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.MAX_LENGTH);
-			expect(err.stack).toEqual([1]);
+			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
@@ -500,7 +500,7 @@ function testString()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.PATTERN);
-			expect(err.stack).toEqual([0]);
+			expect(err.keyStack).toEqual([0]);
 		}
 	});
 }

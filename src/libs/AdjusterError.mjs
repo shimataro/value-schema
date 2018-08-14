@@ -7,28 +7,28 @@ export default class AdjusterError extends Error
 	 * throw an error
 	 * @param {string} cause cause of error
 	 * @param {AdjusterBase.VALUES} values original / adjusted values
-	 * @param {(string|number)[]} stack error keys stack
+	 * @param {(string|number)[]} keyStack path to key that caused error
 	 * @returns {void}
 	 * @throws {AdjusterError}
 	 */
-	static raise(cause, values, stack)
+	static raise(cause, values, keyStack)
 	{
-		throw new AdjusterError(cause, values.original, stack);
+		throw new AdjusterError(cause, values.original, keyStack);
 	}
 
 	/**
 	 * constructor
 	 * @param {string} cause cause of error
 	 * @param {*} value original value
-	 * @param {(string|number)[]} stack error keys stack
+	 * @param {(string|number)[]} keyStack path to key that caused error
 	 */
-	constructor(cause, value, stack)
+	constructor(cause, value, keyStack)
 	{
-		super(`Adjuster Error: ${cause}; ${value}; ${stack}`);
+		super(`Adjuster Error: ${cause}; ${value}; ${keyStack}`);
 
 		this.name = "AdjusterError";
 		this.cause = cause;
 		this.value = value;
-		this.stack = [...stack];
+		this.keyStack = [...keyStack];
 	}
 }

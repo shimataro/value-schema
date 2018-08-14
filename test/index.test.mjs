@@ -91,7 +91,7 @@ function testError()
 				return;
 			}
 
-			switch(err.stack.shift())
+			switch(err.keyStack.shift())
 			{
 			case "id":
 				return 100;
@@ -155,12 +155,12 @@ function testError()
 						throw new Error(messages.join(","));
 					}
 
-					if(err.stack.length === 0)
+					if(err.keyStack.length === 0)
 					{
 						return;
 					}
 					// append key name
-					messages.push(err.stack[0]);
+					messages.push(err.keyStack[0]);
 				};
 			}
 		}).toThrow("id,name");
@@ -199,7 +199,7 @@ function testError()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.MIN_VALUE);
-			expect(err.stack).toEqual(["id"]);
+			expect(err.keyStack).toEqual(["id"]);
 		}
 
 		try
@@ -217,7 +217,7 @@ function testError()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.TYPE);
-			expect(err.stack).toEqual(["ids", 3]);
+			expect(err.keyStack).toEqual(["ids", 3]);
 		}
 
 		try
@@ -252,7 +252,7 @@ function testError()
 		catch(err)
 		{
 			expect(err.cause).toEqual(adjuster.CAUSE.TYPE);
-			expect(err.stack).toEqual(["infoList", 1, "id"]);
+			expect(err.keyStack).toEqual(["infoList", 1, "id"]);
 		}
 	});
 }
