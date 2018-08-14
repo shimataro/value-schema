@@ -35,10 +35,11 @@ function _featureAcceptNull(params, value = null)
  * adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
+ * @param {(string|number)[]} stack error keys stack
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
-function _adjust(params, values)
+function _adjust(params, values, stack)
 {
 	if(values.adjusted !== null)
 	{
@@ -51,6 +52,5 @@ function _adjust(params, values)
 		return true;
 	}
 
-	AdjusterError.raise(CAUSE.NULL, values);
+	AdjusterError.raise(CAUSE.NULL, values, stack);
 }
-

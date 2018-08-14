@@ -11,15 +11,16 @@ export default AdjusterBase.decoratorBuilder(_adjust)
  * adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
+ * @param {(string|number)[]} stack error keys stack
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
-function _adjust(params, values)
+function _adjust(params, values, stack)
 {
 	if(REGEXP.test(values.adjusted))
 	{
 		return false;
 	}
 
-	AdjusterError.raise(CAUSE.PATTERN, values);
+	AdjusterError.raise(CAUSE.PATTERN, values, stack);
 }

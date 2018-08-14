@@ -64,23 +64,24 @@ function _integer(params, adjust = false)
  * adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
+ * @param {(string|number)[]} stack error keys stack
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
-function _adjust(params, values)
+function _adjust(params, values, stack)
 {
 	if(isString(values.adjusted))
 	{
 		if(!_checkNumberFormat(params, values.adjusted))
 		{
-			AdjusterError.raise(CAUSE.TYPE, values);
+			AdjusterError.raise(CAUSE.TYPE, values, stack);
 		}
 	}
 
 	const adjusted = _toNumber(params, values.adjusted);
 	if(adjusted === false)
 	{
-		AdjusterError.raise(CAUSE.TYPE, values);
+		AdjusterError.raise(CAUSE.TYPE, values, stack);
 	}
 
 	values.adjusted = adjusted;

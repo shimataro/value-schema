@@ -35,7 +35,7 @@ function _featureJoinArray(params)
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
-function _adjust(params, values)
+function _adjust(params, values /* , stack*/)
 {
 	if(isArray(values.adjusted) && params.flag)
 	{

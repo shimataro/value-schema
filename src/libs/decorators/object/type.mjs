@@ -10,16 +10,16 @@ export default AdjusterBase.decoratorBuilder(_adjust)
  * adjuster
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
+ * @param {(string|number)[]} stack error keys stack
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
-function _adjust(params, values)
+function _adjust(params, values, stack)
 {
 	if(isObject(values.adjusted))
 	{
 		return false;
 	}
 
-	const cause = CAUSE.TYPE;
-	throw new AdjusterError(cause, values.original);
+	AdjusterError.raise(CAUSE.TYPE, values.original, stack);
 }

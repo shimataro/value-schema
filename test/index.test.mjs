@@ -91,7 +91,7 @@ function testError()
 				return;
 			}
 
-			switch(err.key)
+			switch(err.stack.shift())
 			{
 			case "id":
 				return 100;
@@ -155,8 +155,12 @@ function testError()
 						throw new Error(messages.join(","));
 					}
 
+					if(err.stack.length === 0)
+					{
+						return;
+					}
 					// append key name
-					messages.push(err.key);
+					messages.push(err.stack[0]);
 				};
 			}
 		}).toThrow("id,name");
@@ -176,5 +180,79 @@ function testError()
 
 			adjuster.adjust(input, constraints);
 		}).toThrow(); // throw a first error if error handler is omitted
+
+		try
+		{
+			const constraints = {
+				id: adjuster.number().minValue(1),
+				name: adjuster.string().maxLength(4, true),
+			};
+			const input = {
+				id: "0",
+				name: "John Doe",
+				dummy: true,
+			};
+			adjuster.object().constraints(constraints)
+				.adjust(input);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.MIN_VALUE);
+			expect(err.stack).toEqual(["id"]);
+		}
+
+		try
+		{
+			const constraints = {
+				ids: adjuster.array().each(adjuster.number().minValue(1)),
+			};
+			const input = {
+				ids: [true, "2", "+3", "four", 5],
+			};
+			adjuster.object().constraints(constraints)
+				.adjust(input);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.TYPE);
+			expect(err.stack).toEqual(["ids", 3]);
+		}
+
+		try
+		{
+			// complex constraints
+			const constraints = {
+				infoList: adjuster.array().each(adjuster.object().constraints({
+					id: adjuster.number(),
+					name: adjuster.string().maxLength(8),
+				})),
+			};
+			const input = {
+				infoList: [
+					{
+						id: "1",
+						name: "John Doe",
+					},
+					{
+						id: "two", // ERROR!
+						name: "John Doe",
+					},
+					{
+						id: 3,
+						name: "John Doe 2", // ERROR!
+					},
+				],
+			};
+			adjuster.object().constraints(constraints)
+				.adjust(input);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.TYPE);
+			expect(err.stack).toEqual(["infoList", 1, "id"]);
+		}
 	});
 }

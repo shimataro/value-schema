@@ -37,10 +37,11 @@ function _featureMaxLength(params, length, adjust = false)
  * adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
+ * @param {(string|number)[]} stack error keys stack
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
-function _adjust(params, values)
+function _adjust(params, values, stack)
 {
 	if(!params.flag)
 	{
@@ -57,5 +58,5 @@ function _adjust(params, values)
 		return false;
 	}
 
-	AdjusterError.raise(CAUSE.MAX_LENGTH, values);
+	AdjusterError.raise(CAUSE.MAX_LENGTH, values, stack);
 }

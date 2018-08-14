@@ -48,10 +48,11 @@ function _featureToArray(params)
  * adjuster
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
+ * @param {(string|number)[]} stack error keys stack
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
-function _adjust(params, values)
+function _adjust(params, values, stack)
 {
 	if(isArray(values.adjusted))
 	{
@@ -70,5 +71,5 @@ function _adjust(params, values)
 		return false;
 	}
 
-	AdjusterError.raise(CAUSE.TYPE, values);
+	AdjusterError.raise(CAUSE.TYPE, values, stack);
 }

@@ -13,29 +13,27 @@ export default AdjusterBase.decoratorBuilder(_adjust)
  * adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
+ * @param {(string|number)[]} stack error keys stack
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
-function _adjust(params, values)
+function _adjust(params, values, stack)
 {
-	const cause = CAUSE.MAX_LENGTH;
-	const err = new AdjusterError(cause, values.original);
-
 	if(values.adjusted.length > MAX_LENGTH)
 	{
-		throw err;
+		AdjusterError.raise(CAUSE.MAX_LENGTH, values, stack);
 	}
 
 	const atPosition = values.adjusted.lastIndexOf("@");
 	if(atPosition > MAX_LENGTH_LOCAL)
 	{
 		// local-part length error
-		throw err;
+		AdjusterError.raise(CAUSE.MAX_LENGTH, values, stack);
 	}
 	if(values.adjusted.length - atPosition - 1 > MAX_LENGTH_DOMAIN)
 	{
 		// domain-part length error
-		throw err;
+		AdjusterError.raise(CAUSE.MAX_LENGTH, values, stack);
 	}
 
 	return false;

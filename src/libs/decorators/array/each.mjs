@@ -1,4 +1,3 @@
-import {CAUSE} from "../../constants";
 import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
 
@@ -37,10 +36,11 @@ function _featureEach(params, objAdjuster, ignoreEachErrors = false)
  * adjuster
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
+ * @param {(string|number)[]} stack error keys stack
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
-function _adjust(params, values)
+function _adjust(params, values, stack)
 {
 	const {objAdjuster, ignoreEachErrors} = params;
 	if(objAdjuster === null)
@@ -49,34 +49,18 @@ function _adjust(params, values)
 	}
 
 	const adjusted = [];
-	for(const element of values.adjusted)
+	for(let idx = 0; idx < values.adjusted.length; idx += 1)
 	{
-		const adjustedElement = objAdjuster.adjust(element, (err) =>
+		const element = values.adjusted[idx];
+		const adjustedElement = objAdjuster._adjust(element, (err) =>
 		{
 			if(ignoreEachErrors)
 			{
 				return;
 			}
 
-			const causeMap = {
-				[CAUSE.TYPE]: CAUSE.EACH_TYPE,
-				[CAUSE.NULL]: CAUSE.EACH_NULL,
-				[CAUSE.EMPTY]: CAUSE.EACH_EMPTY,
-				[CAUSE.REQUIRED]: CAUSE.EACH_REQUIRED,
-				[CAUSE.ONLY]: CAUSE.EACH_ONLY,
-				[CAUSE.MIN_VALUE]: CAUSE.EACH_MIN_VALUE,
-				[CAUSE.MAX_VALUE]: CAUSE.EACH_MAX_VALUE,
-				[CAUSE.MIN_LENGTH]: CAUSE.EACH_MIN_LENGTH,
-				[CAUSE.MAX_LENGTH]: CAUSE.EACH_MAX_LENGTH,
-				[CAUSE.PATTERN]: CAUSE.EACH_PATTERN,
-				[CAUSE.CHECKSUM]: CAUSE.EACH_CHECKSUM,
-			};
-			if(causeMap.hasOwnProperty(err.cause))
-			{
-				err.cause = causeMap[err.cause];
-			}
-			AdjusterError.raise(err.cause, values);
-		});
+			AdjusterError.raise(err.cause, values, err.stack);
+		}, [...stack, idx]);
 
 		if(adjustedElement === undefined)
 		{
