@@ -734,16 +734,40 @@ assert.strictEqual(
     adjuster.boolean().adjust("0"), // "0" is truthy in JavaScript, but node-adjuster adjusts to false!
     false);
 assert.strictEqual(
-    adjuster.boolean().adjust("true"), // "true" is true, "false" is false!
+    adjuster.boolean().adjust("true"), // "true" / "yes" / "on" are true, "false" / "no" / "off" are false!
     true);
 assert.strictEqual(
     adjuster.boolean().adjust("TRUE"),
+    true);
+assert.strictEqual(
+    adjuster.boolean().adjust("yes"),
+    true);
+assert.strictEqual(
+    adjuster.boolean().adjust("YES"),
+    true);
+assert.strictEqual(
+    adjuster.boolean().adjust("on"),
+    true);
+assert.strictEqual(
+    adjuster.boolean().adjust("ON"),
     true);
 assert.strictEqual(
     adjuster.boolean().adjust("false"),
     false);
 assert.strictEqual(
     adjuster.boolean().adjust("FALSE"),
+    false);
+assert.strictEqual(
+    adjuster.boolean().adjust("no"),
+    false);
+assert.strictEqual(
+    adjuster.boolean().adjust("NO"),
+    false);
+assert.strictEqual(
+    adjuster.boolean().adjust("off"),
+    false);
+assert.strictEqual(
+    adjuster.boolean().adjust("OFF"),
     false);
 
 // should cause error
