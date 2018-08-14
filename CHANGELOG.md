@@ -11,10 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * `adjuster.string().strict()`
 * `adjuster.array()`
 * `adjuster.object()`
+* `err.keyStack` indicates path to key that caused error; for nested object or array
 
 ### Changed
 * cause an error `adjuster.CAUSE.TYPE` instead of  `adjuster.CAUSE.NOT_OBJECT`
-* `err.keyStack` indicates path to key that caused error; for nested object or array
 
 ### Deleted
 * `adjuster.numberArray()` - use `adjuster.array()` instead
