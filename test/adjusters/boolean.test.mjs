@@ -63,6 +63,26 @@ function testType()
 			.adjust("FALSE")).toEqual(false);
 		expect(adjuster.boolean()
 			.adjust(" \rfalse\r\n")).toEqual(false);
+
+		// "yes" is true, "no" is false!
+		expect(adjuster.boolean()
+			.adjust("yes")).toEqual(true);
+		expect(adjuster.boolean()
+			.adjust("YES")).toEqual(true);
+		expect(adjuster.boolean()
+			.adjust("no")).toEqual(false);
+		expect(adjuster.boolean()
+			.adjust("NO")).toEqual(false);
+
+		// "on" is true, "off" is false!
+		expect(adjuster.boolean()
+			.adjust("on")).toEqual(true);
+		expect(adjuster.boolean()
+			.adjust("ON")).toEqual(true);
+		expect(adjuster.boolean()
+			.adjust("off")).toEqual(false);
+		expect(adjuster.boolean()
+			.adjust("OFF")).toEqual(false);
 	});
 	it("should cause error(s)", () =>
 	{
