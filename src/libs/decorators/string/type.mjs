@@ -1,5 +1,5 @@
 import {CAUSE} from "../../constants";
-import {isString} from "../../types";
+import {isString, isArray, isObject} from "../../types";
 import AdjusterBase from "../../AdjusterBase";
 import AdjusterError from "../../AdjusterError";
 
@@ -47,6 +47,12 @@ function _adjust(params, values, keyStack)
 
 	// strict check
 	if(params.flagStrict)
+	{
+		AdjusterError.raise(CAUSE.TYPE, values, keyStack);
+	}
+
+	// array or object cannot be convert to string
+	if(isArray(values.adjusted) || isObject(values.adjusted))
 	{
 		AdjusterError.raise(CAUSE.TYPE, values, keyStack);
 	}

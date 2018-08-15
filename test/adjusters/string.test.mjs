@@ -44,6 +44,18 @@ function testType()
 	{
 		expect(() =>
 		{
+			adjuster.string()
+				.adjust([]);
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.string()
+				.adjust({});
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
 			adjuster.string().strict()
 				.adjust(0);
 		}).toThrow(adjuster.CAUSE.TYPE);

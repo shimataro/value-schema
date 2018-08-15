@@ -67,7 +67,7 @@ function testJoinArray()
 		{
 			adjuster.numericString()
 				.adjust(["1111", "2222", "3333", "4444"]);
-		}).toThrow(adjuster.CAUSE.PATTERN);
+		}).toThrow(adjuster.CAUSE.TYPE);
 	});
 }
 
