@@ -146,7 +146,57 @@ The `AdjusterError` object represents an error when trying to adjust invalid val
 |`message`|human-readable description of the error, including a string `cause`|
 |`cause`|the cause of adjustment error; see `adjuster.CAUSE`|
 |`value`|the value to adjust|
-|`keyStack`|an array path to key name that caused error; number for array, string for object; for nested object or array|
+|`keyStack`|an array path to key name(for object) or index(for array) that caused error; for nested object or array|
+
+See below example.
+For detail about constraints / `adjuster`, see [basic usage](#basic-usage)
+
+```javascript
+import adjuster from "adjuster";
+import assert from "assert";
+
+const constraints = {
+    foo: adjuster.array().each(adjuster.object().constraints({
+        bar: adjuster.object().constraints({
+            baz: adjuster.number(),
+        }),
+    })),
+};
+const input = {
+    foo: [
+        {
+            bar: {
+                baz: 1,
+            },
+        },
+        {
+            bar: {
+                baz: 2,
+            },
+        },
+        { // index 2
+            bar: {
+                baz: "three", // ERROR!
+            },
+        },
+        {
+            bar: {
+                baz: 4,
+            },
+        },
+    ],
+};
+assert.throws(
+    () => {
+        adjuster.adjust(input, constraints);
+    },
+    (err) => {
+        assert.strictEqual(err.name, "AdjusterError");
+        assert.strictEqual(err.cause, adjuster.CAUSE.TYPE),
+        assert.deepStrictEqual(err.keyStack, ["foo", 2, "bar", "baz"]); // route to error key/index: object(key="foo") -> array(index=2) -> object(key="bar") -> object(key="baz")
+        return true;
+    });
+```
 
 #### `adjuster.CAUSE`
 The cause of adjustment error.
