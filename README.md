@@ -1299,7 +1299,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => adjuster.numericString().adjust(["1234", "5678"]),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
 ```
 
 #### `minLength(length)`
