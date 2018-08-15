@@ -235,89 +235,185 @@ function testNumber()
 	});
 	it("should cause error(s)", () =>
 	{
-		expect(() =>
+		try
 		{
 			adjuster.array().each(adjuster.number())
 				.adjust([false, "abc", true, "+2"]);
-		}).toThrow(adjuster.CAUSE.EACH_TYPE);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.TYPE);
+			expect(err.keyStack).toEqual([1]);
+		}
 
-		expect(() =>
+		try
 		{
 			adjuster.array().each(adjuster.number())
 				.adjust([1, undefined, 3]);
-		}).toThrow(adjuster.CAUSE.EACH_REQUIRED);
-		expect(() =>
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.REQUIRED);
+			expect(err.keyStack).toEqual([1]);
+		}
+
+		try
 		{
 			adjuster.array().each(adjuster.number())
 				.adjust([1, null, 3]);
-		}).toThrow(adjuster.CAUSE.EACH_NULL);
-		expect(() =>
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.NULL);
+			expect(err.keyStack).toEqual([1]);
+		}
+
+		try
 		{
 			adjuster.array().each(adjuster.number())
 				.adjust([1, "", 3]);
-		}).toThrow(adjuster.CAUSE.EACH_EMPTY);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.EMPTY);
+			expect(err.keyStack).toEqual([1]);
+		}
 
-		expect(() =>
+		try
 		{
 			adjuster.array().each(adjuster.number().default(999))
 				.adjust([1, null, 3]);
-		}).toThrow(adjuster.CAUSE.EACH_NULL);
-		expect(() =>
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.NULL);
+			expect(err.keyStack).toEqual([1]);
+		}
+
+		try
 		{
 			adjuster.array().each(adjuster.number().default(999))
 				.adjust([1, "", 3]);
-		}).toThrow(adjuster.CAUSE.EACH_EMPTY);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.EMPTY);
+			expect(err.keyStack).toEqual([1]);
+		}
 
-		expect(() =>
+		try
 		{
 			adjuster.array().each(adjuster.number().acceptNull(999))
 				.adjust([1, undefined, 3]);
-		}).toThrow(adjuster.CAUSE.EACH_REQUIRED);
-		expect(() =>
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.REQUIRED);
+			expect(err.keyStack).toEqual([1]);
+		}
+
+		try
 		{
 			adjuster.array().each(adjuster.number().acceptNull(999))
 				.adjust([1, "", 3]);
-		}).toThrow(adjuster.CAUSE.EACH_EMPTY);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.EMPTY);
+			expect(err.keyStack).toEqual([1]);
+		}
 
-		expect(() =>
+		try
 		{
 			adjuster.array().each(adjuster.number().acceptEmptyString(999))
 				.adjust([1, undefined, 3]);
-		}).toThrow(adjuster.CAUSE.EACH_REQUIRED);
-		expect(() =>
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.REQUIRED);
+			expect(err.keyStack).toEqual([1]);
+		}
+
+		try
 		{
 			adjuster.array().each(adjuster.number().acceptEmptyString(999))
 				.adjust([1, null, 3]);
-		}).toThrow(adjuster.CAUSE.EACH_NULL);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.NULL);
+			expect(err.keyStack).toEqual([1]);
+		}
 
-		expect(() =>
+		try
 		{
 			adjuster.array().each(adjuster.number())
 				.adjust(["1e+2", "0x100", "0o100", "0b100"]);
-		}).toThrow(adjuster.CAUSE.EACH_TYPE);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.TYPE);
+			expect(err.keyStack).toEqual([0]);
+		}
 
-		expect(() =>
+		try
 		{
 			adjuster.array().each(adjuster.number().integer())
 				.adjust([3.14]);
-		}).toThrow(adjuster.CAUSE.EACH_TYPE);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.TYPE);
+			expect(err.keyStack).toEqual([0]);
+		}
 
-		expect(() =>
+		try
 		{
 			adjuster.array().each(adjuster.number().only(1, 2, 3))
 				.adjust([0, 1, 2]);
-		}).toThrow(adjuster.CAUSE.EACH_ONLY);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.ONLY);
+			expect(err.keyStack).toEqual([0]);
+		}
 
-		expect(() =>
+		try
 		{
 			adjuster.array().each(adjuster.number().minValue(10))
 				.adjust([9, 10, 11]);
-		}).toThrow(adjuster.CAUSE.EACH_MIN_VALUE);
-		expect(() =>
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.MIN_VALUE);
+			expect(err.keyStack).toEqual([0]);
+		}
+
+		try
 		{
 			adjuster.array().each(adjuster.number().maxValue(10))
 				.adjust([9, 10, 11]);
-		}).toThrow(adjuster.CAUSE.EACH_MAX_VALUE);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.MAX_VALUE);
+			expect(err.keyStack).toEqual([2]);
+		}
 	});
 }
 
@@ -359,28 +455,52 @@ function testString()
 	});
 	it("should cause error(s)", () =>
 	{
-		expect(() =>
+		try
 		{
 			adjuster.array().each(adjuster.string().only("a", "b", "c"))
 				.adjust(["a", "b", "x"]);
-		}).toThrow(adjuster.CAUSE.EACH_ONLY);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.ONLY);
+			expect(err.keyStack).toEqual([2]);
+		}
 
-		expect(() =>
+		try
 		{
 			adjuster.array().each(adjuster.string().minLength(3))
 				.adjust(["ab", "xy"]);
-		}).toThrow(adjuster.CAUSE.EACH_MIN_LENGTH);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.MIN_LENGTH);
+			expect(err.keyStack).toEqual([0]);
+		}
 
-		expect(() =>
+		try
 		{
 			adjuster.array().each(adjuster.string().maxLength(3))
-				.adjust(["abcd", "xyz0"]);
-		}).toThrow(adjuster.CAUSE.EACH_MAX_LENGTH);
+				.adjust(["abc", "xyz0"]);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.MAX_LENGTH);
+			expect(err.keyStack).toEqual([1]);
+		}
 
-		expect(() =>
+		try
 		{
 			adjuster.array().each(adjuster.string().pattern(/^Go+gle$/))
 				.adjust(["google", "Ggle"]);
-		}).toThrow(adjuster.CAUSE.EACH_PATTERN);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.PATTERN);
+			expect(err.keyStack).toEqual([0]);
+		}
 	});
 }

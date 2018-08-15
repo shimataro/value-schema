@@ -34,10 +34,11 @@ function _strict(params)
  * adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
+ * @param {(string|number)[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
-function _adjust(params, values)
+function _adjust(params, values, keyStack)
 {
 	if(isString(values.adjusted))
 	{
@@ -47,7 +48,7 @@ function _adjust(params, values)
 	// strict check
 	if(params.flagStrict)
 	{
-		AdjusterError.raise(CAUSE.TYPE, values);
+		AdjusterError.raise(CAUSE.TYPE, values, keyStack);
 	}
 
 	values.adjusted = String(values.adjusted);

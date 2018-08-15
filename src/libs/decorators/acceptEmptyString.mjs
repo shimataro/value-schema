@@ -35,10 +35,11 @@ function _featureAcceptEmptyString(params, value = null)
  * adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
+ * @param {(string|number)[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
-function _adjust(params, values)
+function _adjust(params, values, keyStack)
 {
 	if(values.adjusted !== "")
 	{
@@ -51,5 +52,5 @@ function _adjust(params, values)
 		return true;
 	}
 
-	AdjusterError.raise(CAUSE.EMPTY, values);
+	AdjusterError.raise(CAUSE.EMPTY, values, keyStack);
 }

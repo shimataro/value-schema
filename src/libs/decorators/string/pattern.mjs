@@ -41,10 +41,11 @@ function _featurePattern(params, pattern)
  * adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
+ * @param {(string|number)[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
-function _adjust(params, values)
+function _adjust(params, values, keyStack)
 {
 	if(!params.flag)
 	{
@@ -55,5 +56,5 @@ function _adjust(params, values)
 		return false;
 	}
 
-	AdjusterError.raise(CAUSE.PATTERN, values);
+	AdjusterError.raise(CAUSE.PATTERN, values, keyStack);
 }

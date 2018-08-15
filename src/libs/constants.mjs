@@ -12,17 +12,6 @@
  * @property {string} PATTERN
  * @property {string} CHECKSUM
  * @property {string} ARRAY
- * @property {string} EACH_TYPE
- * @property {string} EACH_REQUIRED
- * @property {string} EACH_NULL
- * @property {string} EACH_EMPTY
- * @property {string} EACH_ONLY
- * @property {string} EACH_MIN_VALUE
- * @property {string} EACH_MAX_VALUE
- * @property {string} EACH_MIN_LENGTH
- * @property {string} EACH_MAX_LENGTH
- * @property {string} EACH_PATTERN
- * @property {string} EACH_CHECKSUM
  */
 export const CAUSE = {
 	TYPE: "type",
@@ -41,17 +30,6 @@ export const CAUSE = {
 	CHECKSUM: "checksum",
 
 	ARRAY: "array",
-	EACH_TYPE: "each-type",
-	EACH_REQUIRED: "each-required",
-	EACH_NULL: "each-null",
-	EACH_EMPTY: "each-empty",
-	EACH_ONLY: "each-only",
-	EACH_MIN_VALUE: "each-min-value",
-	EACH_MAX_VALUE: "each-max-value",
-	EACH_MIN_LENGTH: "each-min-length",
-	EACH_MAX_LENGTH: "each-max-length",
-	EACH_PATTERN: "each-pattern",
-	EACH_CHECKSUM: "each-checksum",
 };
 
 /**

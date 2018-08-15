@@ -146,7 +146,57 @@ The `AdjusterError` object represents an error when trying to adjust invalid val
 |`message`|human-readable description of the error, including a string `cause`|
 |`cause`|the cause of adjustment error; see `adjuster.CAUSE`|
 |`value`|the value to adjust|
-|`key`|key name that caused error; only filled in `adjuster.adjust()`, otherwise `null`|
+|`keyStack`|an array path to key name(for object) or index(for array) that caused error; for nested object or array|
+
+See below example.
+For detail about constraints / `adjuster`, see [basic usage](#basic-usage)
+
+```javascript
+import adjuster from "adjuster";
+import assert from "assert";
+
+const constraints = {
+    foo: adjuster.array().each(adjuster.object().constraints({
+        bar: adjuster.object().constraints({
+            baz: adjuster.number(),
+        }),
+    })),
+};
+const input = {
+    foo: [
+        {
+            bar: {
+                baz: 1,
+            },
+        },
+        {
+            bar: {
+                baz: 2,
+            },
+        },
+        { // index 2
+            bar: {
+                baz: "three", // ERROR!
+            },
+        },
+        {
+            bar: {
+                baz: 4,
+            },
+        },
+    ],
+};
+assert.throws(
+    () => {
+        adjuster.adjust(input, constraints);
+    },
+    (err) => {
+        assert.strictEqual(err.name, "AdjusterError");
+        assert.strictEqual(err.cause, adjuster.CAUSE.TYPE),
+        assert.deepStrictEqual(err.keyStack, ["foo", 2, "bar", "baz"]); // route to error key/index: object(key="foo") -> array(index=2) -> object(key="bar") -> object(key="baz")
+        return true;
+    });
+```
 
 #### `adjuster.CAUSE`
 The cause of adjustment error.
@@ -194,7 +244,7 @@ If this parameter is omitted, `adjuster.adjust()` throws `AdjusterError` on firs
 
 * `err`
     * an instance of `AdjusterError` or `null`
-    * `err.key` indicates a key name that caused error
+    * `err.keyStack` indicates path to key name that caused error: `{string|number}[]`
     * `err` will be `null` after all adjustment has finished and errors has occurred
         * `onError()` will no longer be called after `null` passed
 * returns
@@ -292,7 +342,8 @@ function generateErrorHandler() {
             return;
         }
 
-        if (err.key === "id") {
+        const key = err.keyStacks.shift(); // ["id"]
+        if (key === "id") {
             // adjust to 100 on `id` error
             return 100;
         }
@@ -336,7 +387,8 @@ function generateErrorHandler() {
         }
 
         // append key name
-        messages.push(err.key);
+        const key = err.keyStacks.shift(); // ["id"]
+        messages.push(key);
     };
 }
 ```
@@ -364,7 +416,7 @@ try {
 }
 catch (err) {
     // catch a first error
-    assert.strictEqual(err.key, "id");
+    assert.deepStrictEqual(err.keyStack, ["id"]);
 }
 ```
 
@@ -385,7 +437,7 @@ try {
     const adjusted = adjuster.adjust(input, constraints);
 }
 catch (err) {
-    assert.strictEqual(err.key, null);
+    assert.deepStrictEqual(err.keyStack, []);
     assert.strictEqual(err.cause, adjuster.CAUSE.TYPE);
 }
 ```

@@ -49,10 +49,11 @@ function _acceptAllNumbers(params)
  * adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
+ * @param {(string|number)[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
-function _adjust(params, values)
+function _adjust(params, values, keyStack)
 {
 	let {adjusted} = values;
 
@@ -64,7 +65,7 @@ function _adjust(params, values)
 	if(params.flagStrict)
 	{
 		// strict check mode
-		AdjusterError.raise(CAUSE.TYPE, values);
+		AdjusterError.raise(CAUSE.TYPE, values, keyStack);
 	}
 
 	if(isString(adjusted))
@@ -94,5 +95,5 @@ function _adjust(params, values)
 		}
 	}
 
-	AdjusterError.raise(CAUSE.TYPE, values);
+	AdjusterError.raise(CAUSE.TYPE, values, keyStack);
 }

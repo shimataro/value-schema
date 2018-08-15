@@ -35,10 +35,11 @@ function _featureMinLength(params, length)
  * adjuster
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
+ * @param {(string|number)[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
-function _adjust(params, values)
+function _adjust(params, values, keyStack)
 {
 	if(!params.flag)
 	{
@@ -49,5 +50,5 @@ function _adjust(params, values)
 		return false;
 	}
 
-	AdjusterError.raise(CAUSE.MIN_LENGTH, values);
+	AdjusterError.raise(CAUSE.MIN_LENGTH, values, keyStack);
 }

@@ -126,21 +126,4 @@ function testConstraints()
 		expect(adjuster.object().constraints(constraints)
 			.adjust(input)).toEqual(expected);
 	});
-	it("should cause error(s)", () =>
-	{
-		expect(() =>
-		{
-			const constraints = {
-				id: adjuster.number().minValue(1),
-				name: adjuster.string().maxLength(4, true),
-			};
-			const input = {
-				id: "0",
-				name: "John Doe",
-				dummy: true,
-			};
-			adjuster.object().constraints(constraints)
-				.adjust(input);
-		}).toThrow(adjuster.CAUSE.MIN_VALUE);
-	});
 }
