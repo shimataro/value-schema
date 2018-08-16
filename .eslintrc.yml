@@ -4,6 +4,8 @@ env: # https://eslint.org/docs/user-guide/configuring#specifying-environments
   node: true
   jest: true
 extends: eslint:recommended
+plugins:
+  - import
 parser: babel-eslint
 parserOptions:
   sourceType: module
@@ -268,3 +270,8 @@ rules: # https://eslint.org/docs/rules/
   yoda:
     - error
     - never
+  import/extensions:
+    - error
+    - never
+  import/no-unresolved:
+    - error
