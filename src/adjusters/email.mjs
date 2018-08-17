@@ -1,12 +1,12 @@
 import AdjusterBase from "../libs/AdjusterBase";
 
-import Default from "../libs/decorators/default";
-import AcceptNull from "../libs/decorators/acceptNull";
-import AcceptEmptyString from "../libs/decorators/acceptEmptyString";
-import Type from "../libs/decorators/string/type";
-import Trim from "../libs/decorators/string/trim";
-import Pattern from "../libs/decorators/string/pattern";
-import MaxLength from "../libs/decorators/email/maxLength";
+import Default from "../decorators/default";
+import AcceptNull from "../decorators/acceptNull";
+import AcceptEmptyString from "../decorators/acceptEmptyString";
+import Type from "../decorators/string/type";
+import Trim from "../decorators/string/trim";
+import Pattern from "../decorators/string/pattern";
+import MaxLength from "../decorators/email/maxLength";
 
 import {PATTERN as PATTERN_IPV4} from "./ipv4";
 import {PATTERN as PATTERN_IPV6} from "./ipv6";
