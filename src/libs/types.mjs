@@ -52,7 +52,7 @@ function isString(value)
 
 /**
  * check whether given value is an array or not
- * @param {*} value value to chheck
+ * @param {*} value value to check
  * @returns {boolean} yes/no
  */
 function isArray(value)
