@@ -135,7 +135,7 @@ function testMaxLength()
 	{
 		expect(adjuster.numericString().maxLength(4, true)
 			.adjust("11111")).toEqual("1111");
-		expect(adjuster.numericString().maxLength(4, 1).separatedBy("-")
+		expect(adjuster.numericString().maxLength(4, true).separatedBy("-")
 			.adjust("111-222")).toEqual("1112");
 	});
 	it("should cause error(s)", () =>
