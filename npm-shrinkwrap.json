@@ -1,6 +1,6 @@
 {
   "name": "adjuster",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
@@ -2199,9 +2199,9 @@
       }
     },
     "eslint": {
-      "version": "5.3.0",
-      "resolved": "https://registry.npmjs.org/eslint/-/eslint-5.3.0.tgz",
-      "integrity": "sha512-N/tCqlMKkyNvAvLu+zI9AqDasnSLt00K+Hu8kdsERliC9jYEc8ck12XtjvOXrBKu8fK6RrBcN9bat6Xk++9jAg==",
+      "version": "5.4.0",
+      "resolved": "https://registry.npmjs.org/eslint/-/eslint-5.4.0.tgz",
+      "integrity": "sha512-UIpL91XGex3qtL6qwyCQJar2j3osKxK9e3ano3OcGEIRM4oWIpCkDg9x95AXEC2wMs7PnxzOkPZ2gq+tsMS9yg==",
       "dev": true,
       "requires": {
         "ajv": "6.5.3",
@@ -2238,7 +2238,6 @@
         "regexpp": "2.0.0",
         "require-uncached": "1.0.3",
         "semver": "5.5.1",
-        "string.prototype.matchall": "2.0.0",
         "strip-ansi": "4.0.0",
         "strip-json-comments": "2.0.1",
         "table": "4.0.3",
@@ -3074,12 +3073,6 @@
       "version": "3.0.0",
       "resolved": "https://registry.npmjs.org/has-flag/-/has-flag-3.0.0.tgz",
       "integrity": "sha1-tdRU3CGZriJWmfNGfloH87lVuv0="
-    },
-    "has-symbols": {
-      "version": "1.0.0",
-      "resolved": "https://registry.npmjs.org/has-symbols/-/has-symbols-1.0.0.tgz",
-      "integrity": "sha1-uhqPGvKg/DllD1yFA2dwQSIGO0Q=",
-      "dev": true
     },
     "has-value": {
       "version": "1.0.0",
@@ -8359,15 +8352,6 @@
         "safe-regex": "1.1.0"
       }
     },
-    "regexp.prototype.flags": {
-      "version": "1.2.0",
-      "resolved": "https://registry.npmjs.org/regexp.prototype.flags/-/regexp.prototype.flags-1.2.0.tgz",
-      "integrity": "sha512-ztaw4M1VqgMwl9HlPpOuiYgItcHlunW0He2fE6eNfT6E/CF2FtYi9ofOYe4mKntstYk0Fyh/rDRBdS3AnxjlrA==",
-      "dev": true,
-      "requires": {
-        "define-properties": "1.1.3"
-      }
-    },
     "regexpp": {
       "version": "2.0.0",
       "resolved": "https://registry.npmjs.org/regexpp/-/regexpp-2.0.0.tgz",
@@ -9036,19 +9020,6 @@
       "requires": {
         "is-fullwidth-code-point": "2.0.0",
         "strip-ansi": "4.0.0"
-      }
-    },
-    "string.prototype.matchall": {
-      "version": "2.0.0",
-      "resolved": "https://registry.npmjs.org/string.prototype.matchall/-/string.prototype.matchall-2.0.0.tgz",
-      "integrity": "sha512-WoZ+B2ypng1dp4iFLF2kmZlwwlE19gmjgKuhL1FJfDgCREWb3ye3SDVHSzLH6bxfnvYmkCxbzkmWcQZHA4P//Q==",
-      "dev": true,
-      "requires": {
-        "define-properties": "1.1.3",
-        "es-abstract": "1.12.0",
-        "function-bind": "1.1.1",
-        "has-symbols": "1.0.0",
-        "regexp.prototype.flags": "1.2.0"
       }
     },
     "string.prototype.padend": {
