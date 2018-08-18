@@ -35,8 +35,8 @@ function _featureMaxValue(params, value, adjust = false)
 /**
  * adjust
  * @param {Object} params parameters
- * @param {adjuster._.types.decorator.Values} values original / adjusted values
- * @param {adjuster._.types.Key[]} keyStack path to key that caused error
+ * @param {DecoratorValues} values original / adjusted values
+ * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */

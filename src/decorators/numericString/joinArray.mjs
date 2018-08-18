@@ -31,7 +31,7 @@ function _featureJoinArray(params)
 /**
  * adjust
  * @param {Object} params parameters
- * @param {adjuster._.types.decorator.Values} values original / adjusted values
+ * @param {DecoratorValues} values original / adjusted values
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */

@@ -1,15 +1,15 @@
 /**
  * get class decorators
  * @function
- * @param {adjuster._.types.decorator.Class} TargetClass a target class
- * @returns {adjuster._.types.decorator.Info[]}
+ * @param {Class} TargetClass a target class
+ * @returns {DecoratorInfo[]}
  */
 const getDecorators = (() =>
 {
-	/** @type {Map<adjuster._.types.decorator.Class, adjuster._.types.decorator.Info[]>} */
+	/** @type {Map<Class, DecoratorInfo[]>} */
 	const decoratorsMap = new Map();
 
-	return (/** @type {adjuster._.types.decorator.Class} */ TargetClass) =>
+	return (/** @type {Class} */ TargetClass) =>
 	{
 		if(!decoratorsMap.has(TargetClass))
 		{
@@ -26,7 +26,7 @@ class DecoratorBuilder
 {
 	/**
 	 * constructor
-	 * @param {adjuster._.types.decorator.Adjust} adjust adjuster function
+	 * @param {DecoratorAdjust} adjust adjuster function
 	 */
 	constructor(adjust)
 	{
@@ -37,7 +37,7 @@ class DecoratorBuilder
 
 	/**
 	 * add init function
-	 * @param {adjuster._.types.decorator.Init} init initializer
+	 * @param {DecoratorInit} init initializer
 	 * @returns {DecoratorBuilder} builder object (to be chained)
 	 */
 	init(init)
@@ -48,7 +48,7 @@ class DecoratorBuilder
 
 	/**
 	 * add feature functions
-	 * @param {Object<string, adjuster._.types.decorator.Feature>} features feature functions
+	 * @param {Object<string, DecoratorFeature>} features feature functions
 	 * @returns {DecoratorBuilder} builder object (to be chained)
 	 */
 	features(features)
@@ -59,11 +59,11 @@ class DecoratorBuilder
 
 	/**
 	 * build decorator
-	 * @returns {adjuster._.types.decorator.ClassDecorator} decorator function
+	 * @returns {ClassDecorator} decorator function
 	 */
 	build()
 	{
-		return (/** @type {adjuster._.types.decorator.Class} */ TargetClass) =>
+		return (/** @type {Class} */ TargetClass) =>
 		{
 			const key = Symbol("");
 			const init = this._init;
@@ -134,7 +134,7 @@ export default class AdjusterBase
 	/**
 	 * do adjust
 	 * @param {*} value value to be checked
-	 * @param {adjuster._.types.ErrorHandler} [onError] callback function on error
+	 * @param {ErrorHandler} [onError] callback function on error
 	 * @returns {*} adjusted value
 	 */
 	adjust(value, onError = AdjusterBase.onErrorDefault)
@@ -145,8 +145,8 @@ export default class AdjusterBase
 	/**
 	 * do adjust (core)
 	 * @param {*} value value to be checked
-	 * @param {adjuster._.types.ErrorHandler} [onError] callback function on error
-	 * @param {adjuster._.types.Key[]} keyStack path to key that caused error
+	 * @param {ErrorHandler} [onError] callback function on error
+	 * @param {Key[]} keyStack path to key that caused error
 	 * @returns {*} adjusted value
 	 * @protected
 	 */
