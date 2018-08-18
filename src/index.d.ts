@@ -488,7 +488,7 @@ type ConstantsCause = {
 	ARRAY: string,
 }
 type ConstantsStringOptions = {
-	PATTERNS: {
+	PATTERN: {
 		URI: string,
 	},
 }
