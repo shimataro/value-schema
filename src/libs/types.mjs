@@ -1,9 +1,49 @@
-export {isString, isArray, isObject};
+export {isBoolean, isNumber, isInteger, isString, isArray, isObject};
 
 /**
- * check whether given value is string or not
+ * check whether given value is a boolean or not
  * @param {*} value value to check
- * @return {boolean} Yes/No
+ * @returns {boolean} Yes/No
+ */
+function isBoolean(value)
+{
+	return typeof value === "boolean";
+}
+
+/**
+ * check whether given value is a number or not
+ * @param {*} value value to check
+ * @returns {boolean} Yes/No
+ */
+function isNumber(value)
+{
+	if(typeof value !== "number")
+	{
+		return false;
+	}
+	if(Number.isNaN(value))
+	{
+		return false;
+	}
+
+	// true otherwise
+	return true;
+}
+
+/**
+ * check whether given value is an integer or not
+ * @param {*} value value to check
+ * @returns {boolean} Yes/No
+ */
+function isInteger(value)
+{
+	return Number.isSafeInteger(value);
+}
+
+/**
+ * check whether given value is a string or not
+ * @param {*} value value to check
+ * @returns {boolean} Yes/No
  */
 function isString(value)
 {
@@ -12,8 +52,8 @@ function isString(value)
 
 /**
  * check whether given value is an array or not
- * @param {*} value value to chheck
- * @return {boolean} yes/no
+ * @param {*} value value to check
+ * @returns {boolean} yes/no
  */
 function isArray(value)
 {
@@ -23,7 +63,7 @@ function isArray(value)
 /**
  * check whether given value is an object or not
  * @param {*} value value to check
- * @return {boolean} Yes/No
+ * @returns {boolean} Yes/No
  */
 function isObject(value)
 {

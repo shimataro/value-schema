@@ -1,4 +1,4 @@
-import adjuster from "index";
+import adjuster from "index"; // eslint-disable-line import/no-unresolved
 
 {
 	describe("type", testType);
@@ -14,23 +14,63 @@ import adjuster from "index";
 
 /**
  * type
- * @return {void}
+ * @returns {void}
  */
 function testType()
 {
 	it("should be OK", () =>
 	{
 		expect(adjuster.string()
+			.adjust("abc")).toEqual("abc");
+
+		expect(adjuster.string().strict()
+			.adjust("abc")).toEqual("abc");
+	});
+	it("should be adjusted", () =>
+	{
+		expect(adjuster.string()
 			.adjust(0)).toEqual("0");
 
 		expect(adjuster.string()
 			.adjust(-1)).toEqual("-1");
+
+		expect(adjuster.string()
+			.adjust(true)).toEqual("true");
+
+		expect(adjuster.string()
+			.adjust(false)).toEqual("false");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.string()
+				.adjust([]);
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.string()
+				.adjust({});
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.string().strict()
+				.adjust(0);
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.string().strict()
+				.adjust(true);
+		}).toThrow(adjuster.CAUSE.TYPE);
 	});
 }
 
 /**
  * default value
- * @return {void}
+ * @returns {void}
  */
 function testDefault()
 {
@@ -51,7 +91,7 @@ function testDefault()
 
 /**
  * null
- * @return {void}
+ * @returns {void}
  */
 function testAcceptNull()
 {
@@ -72,7 +112,7 @@ function testAcceptNull()
 
 /**
  * empty string
- * @return {void}
+ * @returns {void}
  */
 function testAcceptEmptyString()
 {
@@ -93,7 +133,7 @@ function testAcceptEmptyString()
 
 /**
  * remove whitespace from both ends
- * @return {void}
+ * @returns {void}
  */
 function testTrim()
 {
@@ -114,7 +154,7 @@ function testTrim()
 
 /**
  * set
- * @return {void}
+ * @returns {void}
  */
 function testOnly()
 {
@@ -144,7 +184,7 @@ function testOnly()
 
 /**
  * minimum length of string
- * @return {void}
+ * @returns {void}
  */
 function testMinLength()
 {
@@ -165,7 +205,7 @@ function testMinLength()
 
 /**
  * maximum length of string
- * @return {void}
+ * @returns {void}
  */
 function testMaxLength()
 {
@@ -191,7 +231,7 @@ function testMaxLength()
 
 /**
  * pattern
- * @return {void}
+ * @returns {void}
  */
 function testPattern()
 {
@@ -206,7 +246,7 @@ function testPattern()
 		expect(adjuster.string().pattern(/^Go+gle$/)
 			.adjust("Gooogle")).toEqual("Gooogle");
 
-		expect(adjuster.string().pattern(adjuster.STRING_PATTERN.URI)
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
 			.adjust("https://example.com/path/to/resource?name=value#hash")).toEqual("https://example.com/path/to/resource?name=value#hash");
 	});
 	it("should cause error(s)", () =>
@@ -225,7 +265,7 @@ function testPattern()
 
 		expect(() =>
 		{
-			adjuster.string().pattern(adjuster.STRING_PATTERN.URI)
+			adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
 				.adjust("https://例.com/");
 		}).toThrow(adjuster.CAUSE.PATTERN);
 	});

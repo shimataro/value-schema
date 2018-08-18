@@ -2,7 +2,7 @@
  * get class decorators
  * @function
  * @param {function} TargetCass a target class
- * @return {AdjusterBase.DECORATOR[]}
+ * @returns {AdjusterBase.DECORATOR[]}
  */
 const getDecorators = (() =>
 {
@@ -38,7 +38,7 @@ class DecoratorBuilder
 	/**
 	 * add init function
 	 * @param {AdjusterBase.Init} init initializer
-	 * @return {DecoratorBuilder} builder object (to be chained)
+	 * @returns {DecoratorBuilder} builder object (to be chained)
 	 */
 	init(init)
 	{
@@ -49,7 +49,7 @@ class DecoratorBuilder
 	/**
 	 * add feature functions
 	 * @param {Object<string, AdjusterBase.Feature>} features feature functions
-	 * @return {DecoratorBuilder} builder object (to be chained)
+	 * @returns {DecoratorBuilder} builder object (to be chained)
 	 */
 	features(features)
 	{
@@ -59,7 +59,7 @@ class DecoratorBuilder
 
 	/**
 	 * build decorator
-	 * @return {AdjusterBase.ClassDecorator} decorator function
+	 * @returns {AdjusterBase.ClassDecorator} decorator function
 	 */
 	build()
 	{
@@ -104,7 +104,7 @@ export default class AdjusterBase
 	/**
 	 * returns DecoratorBuilder
 	 * @param {function} adjust adjuster function
-	 * @return {DecoratorBuilder} builder object (to be chained)
+	 * @returns {DecoratorBuilder} builder object (to be chained)
 	 */
 	static decoratorBuilder(adjust)
 	{
@@ -135,9 +135,22 @@ export default class AdjusterBase
 	 * do adjust
 	 * @param {*} value value to be checked
 	 * @param {AdjusterBase.OnError} [onError] callback function on error
-	 * @return {*} adjusted value
+	 * @returns {*} adjusted value
 	 */
 	adjust(value, onError = AdjusterBase.onErrorDefault)
+	{
+		return this._adjust(value, onError, []);
+	}
+
+	/**
+	 * do adjust (core)
+	 * @param {*} value value to be checked
+	 * @param {AdjusterBase.OnError} [onError] callback function on error
+	 * @param {(string|number)[]} keyStack path to key that caused error
+	 * @returns {*} adjusted value
+	 * @protected
+	 */
+	_adjust(value, onError, keyStack)
 	{
 		const values = {
 			original: value,
@@ -150,7 +163,7 @@ export default class AdjusterBase
 			for(const decorator of decorators)
 			{
 				const params = this._params.get(decorator.key);
-				if(decorator.adjust(params, values))
+				if(decorator.adjust(params, values, keyStack))
 				{
 					return values.adjusted;
 				}
@@ -167,7 +180,7 @@ export default class AdjusterBase
 	/**
 	 * default error handler
 	 * @param {AdjusterError} err error object
-	 * @return {void}
+	 * @returns {void}
 	 */
 	static onErrorDefault(err)
 	{
@@ -191,7 +204,7 @@ export default class AdjusterBase
  * type of callback function on error
  * @callback AdjusterBase.OnError
  * @param {AdjusterError} err
- * @return {*}
+ * @returns {*}
  */
 
 /**
@@ -210,12 +223,12 @@ export default class AdjusterBase
  * @callback AdjusterBase.Adjust
  * @param {Object} params parameters
  * @param {AdjusterBase.VALUES} values original / adjusted values
- * @return {boolean} end adjustment
+ * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
 /**
  * class decorator
  * @callback AdjusterBase.ClassDecorator
  * @param {class} TargetClass
- * @return {class}
+ * @returns {class}
  */

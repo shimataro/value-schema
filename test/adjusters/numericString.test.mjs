@@ -1,4 +1,4 @@
-import adjuster from "index";
+import adjuster from "index"; // eslint-disable-line import/no-unresolved
 
 {
 	describe("type", testType);
@@ -13,7 +13,7 @@ import adjuster from "index";
 
 /**
  * type
- * @return {void}
+ * @returns {void}
  */
 function testType()
 {
@@ -31,7 +31,7 @@ function testType()
 
 /**
  * null
- * @return {void}
+ * @returns {void}
  */
 function testAcceptNull()
 {
@@ -52,7 +52,7 @@ function testAcceptNull()
 
 /**
  * join array into string
- * @return {void}
+ * @returns {void}
  */
 function testJoinArray()
 {
@@ -67,13 +67,13 @@ function testJoinArray()
 		{
 			adjuster.numericString()
 				.adjust(["1111", "2222", "3333", "4444"]);
-		}).toThrow(adjuster.CAUSE.PATTERN);
+		}).toThrow(adjuster.CAUSE.TYPE);
 	});
 }
 
 /**
  * separator
- * @return {void}
+ * @returns {void}
  */
 function testSeparatedBy()
 {
@@ -94,7 +94,7 @@ function testSeparatedBy()
 
 /**
  * min-length
- * @return {void}
+ * @returns {void}
  */
 function testMinLength()
 {
@@ -120,7 +120,7 @@ function testMinLength()
 
 /**
  * max-length
- * @return {void}
+ * @returns {void}
  */
 function testMaxLength()
 {
@@ -150,46 +150,46 @@ function testMaxLength()
 
 /**
  * checksum - Luhn algorithm
- * @return {void}
+ * @returns {void}
  */
 function testChecksumLuhn()
 {
 	it("should be OK", () =>
 	{
-		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD)
+		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD)
 			.adjust("49927398716")).toEqual("49927398716");
-		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD)
+		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD)
 			.adjust("049927398716")).toEqual("049927398716");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD)
+			adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD)
 				.adjust("12345");
-		}).toThrow(adjuster.CAUSE.NUMERIC_STRING_CHECKSUM);
+		}).toThrow(adjuster.CAUSE.CHECKSUM);
 	});
 }
 
 /**
  * checksum - Modulus 10 / Weight 3:1
- * @return {void}
+ * @returns {void}
  */
 function testChecksumModulus10Weight31()
 {
 	it("should be OK", () =>
 	{
-		expect(adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13)
+		expect(adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13)
 			.adjust("978-4-10-109205-8")).toEqual("9784101092058"); // https://ja.wikipedia.org/wiki/ISBN
-		expect(adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13)
+		expect(adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13)
 			.adjust("978-0-306-40615-7")).toEqual("9780306406157"); // https://en.wikipedia.org/wiki/International_Standard_Book_Number
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13)
+			adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13)
 				.adjust("978-4-10-109205-1");
-		}).toThrow(adjuster.CAUSE.NUMERIC_STRING_CHECKSUM);
+		}).toThrow(adjuster.CAUSE.CHECKSUM);
 	});
 }

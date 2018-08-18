@@ -1,4 +1,4 @@
-import adjuster from "index";
+import adjuster from "index"; // eslint-disable-line import/no-unresolved
 
 {
 	describe("default", testDefault);
@@ -10,7 +10,7 @@ import adjuster from "index";
 
 /**
  * default value
- * @return {void}
+ * @returns {void}
  */
 function testDefault()
 {
@@ -31,7 +31,7 @@ function testDefault()
 
 /**
  * null
- * @return {void}
+ * @returns {void}
  */
 function testAcceptNull()
 {
@@ -52,7 +52,7 @@ function testAcceptNull()
 
 /**
  * empty string
- * @return {void}
+ * @returns {void}
  */
 function testAcceptEmptyString()
 {
@@ -73,7 +73,7 @@ function testAcceptEmptyString()
 
 /**
  * remove whitespace from both ends
- * @return {void}
+ * @returns {void}
  */
 function testTrim()
 {
@@ -94,7 +94,7 @@ function testTrim()
 
 /**
  * IPv4 pattern
- * @return {void}
+ * @returns {void}
  */
 function testPattern()
 {

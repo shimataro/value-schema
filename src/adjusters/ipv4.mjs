@@ -1,11 +1,11 @@
 import AdjusterBase from "../libs/AdjusterBase";
 
-import Default from "../libs/decorators/default";
-import AcceptNull from "../libs/decorators/acceptNull";
-import AcceptEmptyString from "../libs/decorators/acceptEmptyString";
-import Type from "../libs/decorators/string/type";
-import Trim from "../libs/decorators/string/trim";
-import Pattern from "../libs/decorators/string/pattern";
+import Default from "../decorators/default";
+import AcceptNull from "../decorators/acceptNull";
+import AcceptEmptyString from "../decorators/acceptEmptyString";
+import Type from "../decorators/string/type";
+import Trim from "../decorators/string/trim";
+import Pattern from "../decorators/string/pattern";
 
 const PATTERN_COMPONENT = `(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})`;
 const PATTERN = `${PATTERN_COMPONENT}(\\.${PATTERN_COMPONENT}){3}`;
@@ -16,7 +16,7 @@ export {PATTERN};
 
 /**
  * factory
- * @return {IPv4Adjuster} adjuster object
+ * @returns {IPv4Adjuster} adjuster instance
  */
 export default () =>
 {
@@ -49,7 +49,7 @@ class IPv4Adjuster extends AdjusterBase
 	 * @method
 	 * @name IPv4Adjuster#default
 	 * @param {string} value default value
-	 * @return {IPv4Adjuster}
+	 * @returns {IPv4Adjuster}
 	 */
 
 	/**
@@ -57,14 +57,14 @@ class IPv4Adjuster extends AdjusterBase
 	 * @method
 	 * @name IPv4Adjuster#acceptNull
 	 * @param {?string} [value=null] value on null
-	 * @return {IPv4Adjuster}
+	 * @returns {IPv4Adjuster}
 	 */
 
 	/**
 	 * remove whitespace from both ends
 	 * @method
 	 * @name IPv4Adjuster#trim
-	 * @return {IPv4Adjuster}
+	 * @returns {IPv4Adjuster}
 	 */
 
 	/**
@@ -72,7 +72,7 @@ class IPv4Adjuster extends AdjusterBase
 	 * @method
 	 * @name IPv4Adjuster#acceptEmptyString
 	 * @param {?string} [value=null] value on empty
-	 * @return {IPv4Adjuster}
+	 * @returns {IPv4Adjuster}
 	 */
 
 	/**
@@ -81,7 +81,7 @@ class IPv4Adjuster extends AdjusterBase
 	 * @name IPv4Adjuster#adjust
 	 * @param {*} value value to be checked
 	 * @param {?AdjusterBase.OnError} [onError=null] callback function on error
-	 * @return {string} adjusted value
+	 * @returns {string} adjusted value
 	 * @throws {AdjusterError}
 	 */
 }

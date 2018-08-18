@@ -1,4 +1,4 @@
-import adjuster from "index";
+import adjuster from "index"; // eslint-disable-line import/no-unresolved
 
 {
 	describe("adjust", testAdjust);
@@ -7,7 +7,7 @@ import adjuster from "index";
 
 /**
  * test for adjust multiple variables
- * @return {void}
+ * @returns {void}
  */
 function testAdjust()
 {
@@ -19,9 +19,9 @@ function testAdjust()
 			age: adjuster.number().integer(true).minValue(0),
 			email: adjuster.email(),
 			state: adjuster.string().only("active", "inactive"),
-			classes: adjuster.numberArray().separatedBy(",").ignoreEachErrors(),
-			skills: adjuster.stringArray().separatedBy(",").ignoreEachErrors(),
-			credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD),
+			classes: adjuster.array().separatedBy(",").each(adjuster.number(), true),
+			skills: adjuster.array().separatedBy(",").each(adjuster.string(), true),
+			credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD),
 			remote_addr: adjuster.ipv4(),
 			remote_addr_ipv6: adjuster.ipv6(),
 			limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true),
@@ -62,7 +62,7 @@ function testAdjust()
 
 /**
  * error handling
- * @return {void}
+ * @returns {void}
  */
 function testError()
 {
@@ -91,7 +91,7 @@ function testError()
 				return;
 			}
 
-			switch(err.key)
+			switch(err.keyStack.shift())
 			{
 			case "id":
 				return 100;
@@ -107,7 +107,7 @@ function testError()
 			const input = 0;
 
 			adjuster.adjust(input, constraints);
-		}).toThrow(adjuster.CAUSE.NOT_OBJECT); // input must be an object
+		}).toThrow(adjuster.CAUSE.TYPE); // input must be an object
 
 		expect(() =>
 		{
@@ -115,7 +115,7 @@ function testError()
 			const input = null;
 
 			adjuster.adjust(input, constraints);
-		}).toThrow(adjuster.CAUSE.NOT_OBJECT); // input must be an object; typeof null === "object"
+		}).toThrow(adjuster.CAUSE.TYPE); // input must be an object; typeof null === "object"
 
 		expect(() =>
 		{
@@ -123,7 +123,7 @@ function testError()
 			const input = [];
 
 			adjuster.adjust(input, constraints);
-		}).toThrow(adjuster.CAUSE.NOT_OBJECT); // input must be an object; typeof [] === "object"
+		}).toThrow(adjuster.CAUSE.TYPE); // input must be an object; typeof [] === "object"
 
 		expect(() =>
 		{
@@ -142,7 +142,7 @@ function testError()
 
 			/**
 			 * error handler generator
-			 * @return {AdjusterBase.OnError} error handler
+			 * @returns {AdjusterBase.OnError} error handler
 			 */
 			function generateErrorHandler()
 			{
@@ -155,8 +155,12 @@ function testError()
 						throw new Error(messages.join(","));
 					}
 
+					if(err.keyStack.length === 0)
+					{
+						return;
+					}
 					// append key name
-					messages.push(err.key);
+					messages.push(err.keyStack[0]);
 				};
 			}
 		}).toThrow("id,name");
@@ -176,5 +180,79 @@ function testError()
 
 			adjuster.adjust(input, constraints);
 		}).toThrow(); // throw a first error if error handler is omitted
+
+		try
+		{
+			const constraints = {
+				id: adjuster.number().minValue(1),
+				name: adjuster.string().maxLength(4, true),
+			};
+			const input = {
+				id: "0",
+				name: "John Doe",
+				dummy: true,
+			};
+			adjuster.object().constraints(constraints)
+				.adjust(input);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.MIN_VALUE);
+			expect(err.keyStack).toEqual(["id"]);
+		}
+
+		try
+		{
+			const constraints = {
+				ids: adjuster.array().each(adjuster.number().minValue(1)),
+			};
+			const input = {
+				ids: [true, "2", "+3", "four", 5],
+			};
+			adjuster.object().constraints(constraints)
+				.adjust(input);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.TYPE);
+			expect(err.keyStack).toEqual(["ids", 3]);
+		}
+
+		try
+		{
+			// complex constraints
+			const constraints = {
+				infoList: adjuster.array().each(adjuster.object().constraints({
+					id: adjuster.number(),
+					name: adjuster.string().maxLength(8),
+				})),
+			};
+			const input = {
+				infoList: [
+					{
+						id: "1",
+						name: "John Doe",
+					},
+					{
+						id: "two", // ERROR!
+						name: "John Doe",
+					},
+					{
+						id: 3,
+						name: "John Doe 2", // ERROR!
+					},
+				],
+			};
+			adjuster.object().constraints(constraints)
+				.adjust(input);
+			expect(true).toEqual(false);
+		}
+		catch(err)
+		{
+			expect(err.cause).toEqual(adjuster.CAUSE.TYPE);
+			expect(err.keyStack).toEqual(["infoList", 1, "id"]);
+		}
 	});
 }

@@ -1,4 +1,4 @@
-import adjuster from "index";
+import adjuster from "index"; // eslint-disable-line import/no-unresolved
 
 {
 	describe("type", testType);
@@ -12,7 +12,7 @@ import adjuster from "index";
 
 /**
  * type
- * @return {void}
+ * @returns {void}
  */
 function testType()
 {
@@ -22,6 +22,12 @@ function testType()
 			.adjust(0)).toEqual(0);
 
 		expect(adjuster.number()
+			.adjust(3.14)).toEqual(3.14);
+
+		expect(adjuster.number().strict()
+			.adjust(0)).toEqual(0);
+
+		expect(adjuster.number().strict()
 			.adjust(3.14)).toEqual(3.14);
 	});
 	it("should be adjusted", () =>
@@ -120,12 +126,24 @@ function testType()
 			adjuster.number()
 				.adjust("0b100");
 		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.number().strict()
+				.adjust("1");
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.number().strict()
+				.adjust(true);
+		}).toThrow(adjuster.CAUSE.TYPE);
 	});
 }
 
 /**
  * default value
- * @return {void}
+ * @returns {void}
  */
 function testDefault()
 {
@@ -151,7 +169,7 @@ function testDefault()
 
 /**
  * null
- * @return {void}
+ * @returns {void}
  */
 function testAcceptNull()
 {
@@ -172,7 +190,7 @@ function testAcceptNull()
 
 /**
  * empty string
- * @return {void}
+ * @returns {void}
  */
 function testAcceptEmptyString()
 {
@@ -193,7 +211,7 @@ function testAcceptEmptyString()
 
 /**
  * set
- * @return {void}
+ * @returns {void}
  */
 function testOnly()
 {
@@ -220,7 +238,7 @@ function testOnly()
 
 /**
  * minimum value
- * @return {void}
+ * @returns {void}
  */
 function testMinValue()
 {
@@ -253,7 +271,7 @@ function testMinValue()
 
 /**
  * maximum value
- * @return {void}
+ * @returns {void}
  */
 function testMaxValue()
 {
