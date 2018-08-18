@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.15.0] - 2018-08-18
 ### Added
 * `adjuster.boolean()`
 * `adjuster.number().strict()`
@@ -18,6 +20,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * reject array and object in `adjuster.string()`
 * in `numericString`, when `.joinArray()` is not called and an array is passed, cause an error `adjuster.CAUSE.TYPE` instead of `adjuster.CAUSE.PATTERN`
 * rename `STRING_PATTERN` to `STRING.PATTERN`, `NUMERIC_STRING_CHECKSUM_ALGORITHM` to `NUMERIC_STRING.CHECKSUM_ALGORITHM`
+
+### Fixed
+* installation error!
 
 ### Deleted
 * `adjuster.numberArray()` - use `adjuster.array()` instead
@@ -169,7 +174,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.1.0] - 2018-04-18
 * First release.
 
-[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v0.14.0...HEAD
+[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v0.15.0...HEAD
+[0.15.0]: https://github.com/shimataro/node-adjuster/compare/v0.14.0...v0.15.0
 [0.14.0]: https://github.com/shimataro/node-adjuster/compare/v0.13.0...v0.14.0
 [0.13.0]: https://github.com/shimataro/node-adjuster/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/shimataro/node-adjuster/compare/v0.11.0...v0.12.0
