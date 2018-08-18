@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * in `numericString`, when `.joinArray()` is not called and an array is passed, cause an error `adjuster.CAUSE.TYPE` instead of `adjuster.CAUSE.PATTERN`
 * rename `STRING_PATTERN` to `STRING.PATTERN`, `NUMERIC_STRING_CHECKSUM_ALGORITHM` to `NUMERIC_STRING.CHECKSUM_ALGORITHM`
 
+### Fixed
+* installation error!
+
 ### Deleted
 * `adjuster.numberArray()` - use `adjuster.array()` instead
 * `adjuster.stringArray()` - use `adjuster.array()` instead
