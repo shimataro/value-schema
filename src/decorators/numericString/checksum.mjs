@@ -1,4 +1,4 @@
-import {CAUSE, NUMERIC_STRING_CHECKSUM_ALGORITHM} from "../../libs/constants";
+import {CAUSE, NUMERIC_STRING} from "../../libs/constants";
 import AdjusterBase from "../../libs/AdjusterBase";
 import AdjusterError from "../../libs/AdjusterError";
 
@@ -63,10 +63,10 @@ function check(value, algorithm)
 {
 	switch(algorithm)
 	{
-	case NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN:
+	case NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN:
 		return checkLuhn(value);
 
-	case NUMERIC_STRING_CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1:
+	case NUMERIC_STRING.CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1:
 		return checkModulus10Weight31(value);
 
 	default:

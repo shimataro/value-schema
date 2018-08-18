@@ -246,7 +246,7 @@ function testPattern()
 		expect(adjuster.string().pattern(/^Go+gle$/)
 			.adjust("Gooogle")).toEqual("Gooogle");
 
-		expect(adjuster.string().pattern(adjuster.STRING_PATTERN.URI)
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
 			.adjust("https://example.com/path/to/resource?name=value#hash")).toEqual("https://example.com/path/to/resource?name=value#hash");
 	});
 	it("should cause error(s)", () =>
@@ -265,7 +265,7 @@ function testPattern()
 
 		expect(() =>
 		{
-			adjuster.string().pattern(adjuster.STRING_PATTERN.URI)
+			adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
 				.adjust("https://例.com/");
 		}).toThrow(adjuster.CAUSE.PATTERN);
 	});

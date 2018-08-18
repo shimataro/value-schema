@@ -55,7 +55,7 @@ const constraints = { // constraints for input
     state: adjuster.string().only("active", "inactive"), // string, accepts only "active" and "inactive"
     classes: adjuster.array().separatedBy(",").each(adjuster.number(), true), // array of number, separated by ",", ignores errors
     skills: adjuster.array().separatedBy(",").each(adjuster.string(), true), // array of string, separated by ",", ignores errors
-    credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD), // numeric string, separated by "-", checks by Luhn algorithm
+    credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD), // numeric string, separated by "-", checks by Luhn algorithm
     remote_addr: adjuster.ipv4(), // IPv4
     remote_addr_ipv6: adjuster.ipv6(), // IPv6
     limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true), // number, integer, omittable (sets 10 if omitted), >=1 (sets 1 if less), <=100 (sets 100 if greater)
@@ -203,12 +203,12 @@ The cause of adjustment error.
 
 For more information, see below examples.
 
-#### `adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM`
+#### `adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM`
 Checksum algorithms for `adjuster.numericString().checksum()`.
 
 For more information, see [numeric string](#numeric-string).
 
-#### `adjuster.STRING_PATTERN`
+#### `adjuster.STRING.PATTERN`
 Regular expressions for `adjuster.string().pattern()`.
 
 For more information, see [string](#string).
@@ -272,7 +272,7 @@ const constraints = {
     state: adjuster.string().only("active", "inactive"),
     classes: adjuster.array().separatedBy(",").each(adjuster.number(), true), // "true" means to ignore each errors
     skills: adjuster.array().separatedBy(",").each(adjuster.string(), true),
-    credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD),
+    credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD),
     remote_addr: adjuster.ipv4(),
     remote_addr_ipv6: adjuster.ipv6(),
     limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true),
@@ -1131,11 +1131,11 @@ assert.throws(
 #### `pattern(pattern)`
 Specify acceptable pattern by regular expression.
 
-You can also use `adjuster.STRING_PATTERN` constants
+You can also use `adjuster.STRING.PATTERN` constants
 
 |constant|explanation|
 |--------|-----------|
-|`adjuster.STRING_PATTERN.URI`|URI that follows [RFC3986](https://tools.ietf.org/html/rfc3986)|
+|`adjuster.STRING.PATTERN.URI`|URI that follows [RFC3986](https://tools.ietf.org/html/rfc3986)|
 
 ##### examples
 
@@ -1148,7 +1148,7 @@ assert.deepStrictEqual(
     adjuster.string().pattern("^Go+gle$").adjust("Google"),
     "Google");
 assert.deepStrictEqual(
-    adjuster.string().pattern(adjuster.STRING_PATTERN.URI).adjust("https://example.com/path/to/resource?name=value#hash"),
+    adjuster.string().pattern(adjuster.STRING.PATTERN.URI).adjust("https://example.com/path/to/resource?name=value#hash"),
     "https://example.com/path/to/resource?name=value#hash");
 
 
@@ -1157,7 +1157,7 @@ assert.throws(
     () => adjuster.string().pattern(/^Go+gle$/).adjust("Ggle"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 assert.throws(
-    () => adjuster.string().pattern(adjuster.STRING_PATTERN.URI).adjust("https://例.com/"),
+    () => adjuster.string().pattern(adjuster.STRING.PATTERN.URI).adjust("https://例.com/"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
@@ -1346,35 +1346,35 @@ Check an input value by specified algorithm.
 
 |algorithm name|explanation|used by|constant|aliases|
 |--------------|-----------|-------|--------|-------|
-|`"luhn"`|[Luhn algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm)|credit card|`adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN`|`adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD`|
-|`"modulus10/weight3:1"`|[Modulus 10 / Weight 3:1](https://en.wikipedia.org/wiki/International_Standard_Book_Number#ISBN-13_check_digit_calculation)|ISBN-13, EAN, JAN|`adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1`|`adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13` / `adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.EAN` / `adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.JAN`|
+|`"luhn"`|[Luhn algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm)|credit card|`adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN`|`adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD`|
+|`"modulus10/weight3:1"`|[Modulus 10 / Weight 3:1](https://en.wikipedia.org/wiki/International_Standard_Book_Number#ISBN-13_check_digit_calculation)|ISBN-13, EAN, JAN|`adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1`|`adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13` / `adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.EAN` / `adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.JAN`|
 
 ##### examples
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111111"),
+    adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111111"),
     "4111111111111111");
 assert.strictEqual(
-    adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD).adjust("4111111111111111"), // alias of LUHN
+    adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD).adjust("4111111111111111"), // alias of LUHN
     "4111111111111111");
 assert.strictEqual(
-    adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1).adjust("9784101092058"),
+    adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1).adjust("9784101092058"),
     "9784101092058");
 assert.strictEqual(
-    adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
+    adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
     "9784101092058");
 assert.strictEqual(
-    adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.EAN).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
+    adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.EAN).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
     "9784101092058");
 assert.strictEqual(
-    adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.JAN).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
+    adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.JAN).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
     "9784101092058");
 
 // should cause error
 assert.throws(
-    () => adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111112"),
+    () => adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111112"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.CHECKSUM));
 ```
 

@@ -156,16 +156,16 @@ function testChecksumLuhn()
 {
 	it("should be OK", () =>
 	{
-		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD)
+		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD)
 			.adjust("49927398716")).toEqual("49927398716");
-		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD)
+		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD)
 			.adjust("049927398716")).toEqual("049927398716");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			adjuster.numericString().checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.CREDIT_CARD)
+			adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD)
 				.adjust("12345");
 		}).toThrow(adjuster.CAUSE.CHECKSUM);
 	});
@@ -179,16 +179,16 @@ function testChecksumModulus10Weight31()
 {
 	it("should be OK", () =>
 	{
-		expect(adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13)
+		expect(adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13)
 			.adjust("978-4-10-109205-8")).toEqual("9784101092058"); // https://ja.wikipedia.org/wiki/ISBN
-		expect(adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13)
+		expect(adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13)
 			.adjust("978-0-306-40615-7")).toEqual("9780306406157"); // https://en.wikipedia.org/wiki/International_Standard_Book_Number
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING_CHECKSUM_ALGORITHM.ISBN13)
+			adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13)
 				.adjust("978-4-10-109205-1");
 		}).toThrow(adjuster.CAUSE.CHECKSUM);
 	});
