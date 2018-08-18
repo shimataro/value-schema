@@ -45,6 +45,7 @@
     "check-updates": "ncu"
   },
   "devDependencies": {
+    "@types/jest": "23.3.1",
     "babel-eslint": "8.2.6",
     "eslint": "5.4.0",
     "eslint-plugin-import": "2.14.0",
