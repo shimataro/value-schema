@@ -160,7 +160,14 @@ function _toNumber(params, value)
 	// parse as integer
 	if(params.flagIntegerAdjust)
 	{
-		return parseInt(adjustedValue, 10);
+		if(adjustedValue > 0)
+		{
+			return Math.floor(adjustedValue);
+		}
+		else
+		{
+			return Math.ceil(adjustedValue);
+		}
 	}
 
 	// not an integer
