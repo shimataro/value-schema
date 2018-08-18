@@ -6,10 +6,10 @@ import AdjusterError from "./AdjusterError";
 
 /**
  * adjust an object
- * @param {adjuster.Types.Input} data object to be adjusted
- * @param {adjuster.Types.Constraints} constraints adjuster objects
- * @param {adjuster.Types.ErrorHandler<Object>} onError error handler
- * @param {adjuster.Types.Key[]} keyStack path to key that caused error
+ * @param {adjuster._.types.Input} data object to be adjusted
+ * @param {adjuster._.types.Constraints} constraints adjuster objects
+ * @param {adjuster._.types.ErrorHandler<Object>} onError error handler
+ * @param {adjuster._.types.Key[]} keyStack path to key that caused error
  * @returns {Object<string, *>} adjusted data
  */
 function adjustObject(data, constraints, onError, keyStack)

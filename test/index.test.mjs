@@ -142,7 +142,7 @@ function testError()
 
 			/**
 			 * error handler generator
-			 * @returns {adjuster.Types.ErrorHandler} error handler
+			 * @returns {adjuster._.types.ErrorHandler} error handler
 			 */
 			function generateErrorHandler()
 			{

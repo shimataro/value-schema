@@ -6,8 +6,8 @@ export default class AdjusterError extends Error
 	/**
 	 * throw an error
 	 * @param {string} cause cause of error
-	 * @param {adjuster.Types._decorator.Values} values original / adjusted values
-	 * @param {adjuster.Types.Key[]} keyStack path to key that caused error
+	 * @param {adjuster._.types.decorator.Values} values original / adjusted values
+	 * @param {adjuster._.types.Key[]} keyStack path to key that caused error
 	 * @returns {void}
 	 * @throws {AdjusterError}
 	 */
@@ -20,7 +20,7 @@ export default class AdjusterError extends Error
 	 * constructor
 	 * @param {string} cause cause of error
 	 * @param {*} value original value
-	 * @param {adjuster.Types.Key[]} keyStack path to key that caused error
+	 * @param {adjuster._.types.Key[]} keyStack path to key that caused error
 	 */
 	constructor(cause, value, keyStack)
 	{

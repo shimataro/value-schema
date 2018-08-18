@@ -47,8 +47,8 @@ function _featureToArray(params)
 /**
  * adjuster
  * @param {Object} params parameters
- * @param {adjuster.Types._decorator.Values} values original / adjusted values
- * @param {adjuster.Types.Key[]} keyStack path to key that caused error
+ * @param {adjuster._.types.decorator.Values} values original / adjusted values
+ * @param {adjuster._.types.Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
