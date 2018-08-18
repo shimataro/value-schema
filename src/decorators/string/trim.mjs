@@ -30,7 +30,7 @@ function _featureTrim(params)
 /**
  * adjust
  * @param {Object} params parameters
- * @param {AdjusterBase.VALUES} values original / adjusted values
+ * @param {adjuster.Types._decorator.Values} values original / adjusted values
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */

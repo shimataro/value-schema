@@ -21,7 +21,7 @@ function _init(params)
 /**
  * apply constraints
  * @param {Object} params parameters
- * @param {Object<string, AdjusterBase>} constraints constraints to apply
+ * @param {adjuster.Types.Constraints} constraints constraints to apply
  * @returns {void}
  */
 function _featureConstraints(params, constraints)
@@ -32,8 +32,8 @@ function _featureConstraints(params, constraints)
 /**
  * adjuster
  * @param {Object} params parameters
- * @param {AdjusterBase.VALUES} values original / adjusted values
- * @param {(string|number)[]} keyStack path to key that caused error
+ * @param {adjuster.Types._decorator.Values} values original / adjusted values
+ * @param {adjuster.Types.Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
