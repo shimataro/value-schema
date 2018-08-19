@@ -504,6 +504,7 @@ type ConstantsNumericStringOptions = {
 	},
 }
 
+// internal types
 type DecoratorValues = {
 	original: Input,
 	adjusted: Input,
