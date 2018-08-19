@@ -6,10 +6,10 @@ import AdjusterError from "./AdjusterError";
 
 /**
  * adjust an object
- * @param {Object<string, *>} data data to be adjusted
- * @param {Object<string, AdjusterBase>} constraints adjuster objects
- * @param {AdjusterBase.OnError} onError error handler
- * @param {(string|number)[]} keyStack path to key that caused error
+ * @param {Input} data object to be adjusted
+ * @param {Constraints} constraints adjuster objects
+ * @param {ErrorHandler<Object>} onError error handler
+ * @param {Key[]} keyStack path to key that caused error
  * @returns {Object<string, *>} adjusted data
  */
 function adjustObject(data, constraints, onError, keyStack)

@@ -34,10 +34,15 @@ validate and adjust input values
 ## Introduction
 
 All of web applications need handling input parameters, consists of following steps:
-* fill default values
-* cast types
-* validate values
-* ...and revise them if needed
+1. existence check
+    * all required parameters exist?
+    * fill omittable parameters by default values
+1. type check
+    * e.g., `typeof age === "number`
+    * cast them if needed; `"20"`(string) to `20`(number)
+1. domain check
+    * e.g., `1 <= limit & limit <= 100`
+    * revise them if needed; `0` to `1`
 
 `node-adjuster` does all of them, by compact and highly readable code!
 
@@ -218,7 +223,7 @@ For more information, see [string](#string).
 
 ```typescript
 namespace adjuster {
-    export declare function adjust(data: Object, constraints: Object, onError?: (err: AdjusterError|null) => any): Object;
+    export declare function adjust(data: any, constraints: Object, onError?: (err: AdjusterError|null) => any): Object;
 }
 ```
 

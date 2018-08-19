@@ -43,45 +43,4 @@ class IPv4Adjuster extends AdjusterBase
 
 		this.pattern(REGEXP);
 	}
-
-	/**
-	 * set default value
-	 * @method
-	 * @name IPv4Adjuster#default
-	 * @param {string} value default value
-	 * @returns {IPv4Adjuster}
-	 */
-
-	/**
-	 * accept null
-	 * @method
-	 * @name IPv4Adjuster#acceptNull
-	 * @param {?string} [value=null] value on null
-	 * @returns {IPv4Adjuster}
-	 */
-
-	/**
-	 * remove whitespace from both ends
-	 * @method
-	 * @name IPv4Adjuster#trim
-	 * @returns {IPv4Adjuster}
-	 */
-
-	/**
-	 * accept empty string
-	 * @method
-	 * @name IPv4Adjuster#acceptEmptyString
-	 * @param {?string} [value=null] value on empty
-	 * @returns {IPv4Adjuster}
-	 */
-
-	/**
-	 * do adjust
-	 * @method
-	 * @name IPv4Adjuster#adjust
-	 * @param {*} value value to be checked
-	 * @param {?AdjusterBase.OnError} [onError=null] callback function on error
-	 * @returns {string} adjusted value
-	 * @throws {AdjusterError}
-	 */
 }

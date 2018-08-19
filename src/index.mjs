@@ -1,30 +1,29 @@
 import {CAUSE, STRING, NUMERIC_STRING} from "./libs/constants";
 import adjust from "./libs/adjust";
-import factoryBoolean from "./adjusters/boolean";
-import factoryNumber from "./adjusters/number";
-import factoryString from "./adjusters/string";
-import factoryNumericString from "./adjusters/numericString";
-import factoryIPv4 from "./adjusters/ipv4";
-import factoryIPv6 from "./adjusters/ipv6";
-import factoryEmail from "./adjusters/email";
-import factoryArray from "./adjusters/array";
-import factoryObject from "./adjusters/object";
+import boolean from "./adjusters/boolean";
+import number from "./adjusters/number";
+import string from "./adjusters/string";
+import numericString from "./adjusters/numericString";
+import ipv4 from "./adjusters/ipv4";
+import ipv6 from "./adjusters/ipv6";
+import email from "./adjusters/email";
+import array from "./adjusters/array";
+import object from "./adjusters/object";
 
-/** @namespace adjuster */
 export default {
-	CAUSE: CAUSE,
-	STRING: STRING,
-	NUMERIC_STRING: NUMERIC_STRING,
+	CAUSE,
+	STRING,
+	NUMERIC_STRING,
 
-	adjust: adjust,
+	adjust,
 
-	boolean: factoryBoolean,
-	number: factoryNumber,
-	string: factoryString,
-	numericString: factoryNumericString,
-	ipv4: factoryIPv4,
-	ipv6: factoryIPv6,
-	email: factoryEmail,
-	array: factoryArray,
-	object: factoryObject,
+	boolean,
+	number,
+	string,
+	numericString,
+	ipv4,
+	ipv6,
+	email,
+	array,
+	object,
 };
