@@ -23,7 +23,7 @@ function _init(params)
 /**
  * specify acceptable pattern by regular expression
  * @param {Object} params parameters
- * @param {string|RegExp} pattern acceptable pattern(regular expression); string or RegExp
+ * @param {Pattern} pattern acceptable pattern(regular expression); string or RegExp
  * @returns {void}
  */
 function _featurePattern(params, pattern)
@@ -40,8 +40,8 @@ function _featurePattern(params, pattern)
 /**
  * adjust
  * @param {Object} params parameters
- * @param {AdjusterBase.VALUES} values original / adjusted values
- * @param {(string|number)[]} keyStack path to key that caused error
+ * @param {DecoratorValues} values original / adjusted values
+ * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */

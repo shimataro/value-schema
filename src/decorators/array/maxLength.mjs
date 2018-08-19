@@ -36,8 +36,8 @@ function _featureMaxLength(params, length, adjust = false)
 /**
  * adjuster
  * @param {Object} params parameters
- * @param {AdjusterBase.VALUES} values original / adjusted values
- * @param {(string|number)[]} keyStack path to key that caused error
+ * @param {DecoratorValues} values original / adjusted values
+ * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */

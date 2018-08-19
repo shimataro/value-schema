@@ -56,45 +56,4 @@ class IPv6Adjuster extends AdjusterBase
 
 		this.pattern(REGEXP);
 	}
-
-	/**
-	 * set default value
-	 * @method
-	 * @name IPv6Adjuster#default
-	 * @param {string} value default value
-	 * @returns {IPv6Adjuster}
-	 */
-
-	/**
-	 * accept null
-	 * @method
-	 * @name IPv6Adjuster#acceptNull
-	 * @param {?string} [value=null] value on null
-	 * @returns {IPv6Adjuster}
-	 */
-
-	/**
-	 * remove whitespace from both ends
-	 * @method
-	 * @name IPv6Adjuster#trim
-	 * @returns {IPv6Adjuster}
-	 */
-
-	/**
-	 * accept empty string
-	 * @method
-	 * @name IPv6Adjuster#acceptEmptyString
-	 * @param {?string} [value=null] value on empty
-	 * @returns {IPv6Adjuster}
-	 */
-
-	/**
-	 * do adjust
-	 * @method
-	 * @name IPv6Adjuster#adjust
-	 * @param {*} value value to be checked
-	 * @param {?AdjusterBase.OnError} [onError=null] callback function on error
-	 * @returns {string} adjusted value
-	 * @throws {AdjusterError}
-	 */
 }
