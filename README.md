@@ -223,7 +223,7 @@ For more information, see [string](#string).
 
 ```typescript
 namespace adjuster {
-    export declare function adjust(data: Object, constraints: Object, onError?: (err: AdjusterError|null) => any): Object;
+    export declare function adjust(data: any, constraints: Object, onError?: (err: AdjusterError|null) => any): Object;
 }
 ```
 
