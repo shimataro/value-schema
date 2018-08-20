@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+* `EMAIL`, `IPV4`, `IPV6` to `adjuster.STRING.PATTERN`
+
+### Fixed
+* type of `adjuster.STRING.PATTERN.URI`
 
 ## [0.15.1] - 2018-08-19
 ### Others
