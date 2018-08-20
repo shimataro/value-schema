@@ -4,7 +4,8 @@
     ["@babel/preset-env", {"targets": {"node": "current"}, "useBuiltIns": "usage"}]
   ],
   "plugins": [
-    ["@babel/plugin-proposal-decorators", {"legacy": true}]
+    ["@babel/plugin-proposal-decorators", {"legacy": true}],
+    ["add-module-exports"]
   ],
   "env": {
     "esm": {
