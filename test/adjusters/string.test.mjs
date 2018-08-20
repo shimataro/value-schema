@@ -246,6 +246,9 @@ function testPattern()
 		expect(adjuster.string().pattern(/^Go+gle$/)
 			.adjust("Gooogle")).toEqual("Gooogle");
 
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.EMAIL)
+			.adjust("john.doe@example.com")).toEqual("john.doe@example.com");
+
 		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
 			.adjust("https://example.com/path/to/resource?name=value#hash")).toEqual("https://example.com/path/to/resource?name=value#hash");
 	});
@@ -261,6 +264,12 @@ function testPattern()
 		{
 			adjuster.string().pattern(/^Go+gle$/)
 				.adjust("google");
+		}).toThrow(adjuster.CAUSE.PATTERN);
+
+		expect(() =>
+		{
+			adjuster.string().pattern(adjuster.STRING.PATTERN.EMAIL)
+				.adjust("john..doe@example.com");
 		}).toThrow(adjuster.CAUSE.PATTERN);
 
 		expect(() =>
