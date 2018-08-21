@@ -125,11 +125,7 @@ import adjuster from "adjuster";
 ### CommonJS
 
 ```javascript
-var adjuster = require("adjuster").default;
-```
-or
-```javascript
-var {default: adjuster} = require("adjuster");
+var adjuster = require("adjuster");
 ```
 
 ### ES Modules
