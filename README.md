@@ -116,21 +116,23 @@ NOTE: package name is `adjuster`, NOT `node-adjuster`!
 
 ## Loading
 
-### using [Babel](https://babeljs.io/)
-
-```javascript
-import adjuster from "adjuster";
-```
-
 ### CommonJS
 
 ```javascript
+// foo.js
 var adjuster = require("adjuster");
 ```
 
 ### ES Modules
 ```javascript
-// foo.mjs - in the same way as Babel!
+// foo.mjs
+import adjuster from "adjuster";
+```
+
+### using [Babel](https://babeljs.io/)
+
+```javascript
+// same as ES Modules!
 import adjuster from "adjuster";
 ```
 
