@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 * `EMAIL`, `IPV4`, `IPV6` to `adjuster.STRING.PATTERN`
 
+### Changed
+* change loading method for CJS; use `var adjuster = require("adjuster");` instead of `var adjuster = require("adjuster").default;`
+
 ### Fixed
 * type of `adjuster.STRING.PATTERN.URI`
 

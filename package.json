@@ -58,6 +58,7 @@
     "@babel/plugin-proposal-decorators": "7.0.0-rc.1",
     "@babel/preset-env": "7.0.0-rc.1",
     "babel-core": "7.0.0-bridge.0",
+    "babel-plugin-add-module-exports": "0.3.3",
     "cross-env": "5.2.0",
     "npm-run-all": "4.1.3"
   },
