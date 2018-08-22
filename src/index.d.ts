@@ -51,167 +51,167 @@ interface BooleanAdjuster extends AdjusterBase<boolean>
 {
 	/**
 	 * enable strict type check
-	 * @returns BooleanAdjuster
+	 * @returns chainable instance
 	 */
-	strict(): BooleanAdjuster
+	strict(): this
 
 	/**
 	 * accept all numbers as boolean
-	 * @returns BooleanAdjuster
+	 * @returns chainable instance
 	 */
-	acceptAllNumbers(): BooleanAdjuster
+	acceptAllNumbers(): this
 
 	/**
 	 * set default value
 	 * @param value default value
-	 * @returns BooleanAdjuster
+	 * @returns chainable instance
 	 */
-	default(value: boolean): BooleanAdjuster
+	default(value: boolean): this
 
 	/**
 	 * accept null
 	 * @param [value=null] value on null
-	 * @returns BooleanAdjuster
+	 * @returns chainable instance
 	 */
-	acceptNull(value?: boolean | null): BooleanAdjuster
+	acceptNull(value?: boolean | null): this
 
 	/**
 	 * accept empty string
 	 * @param [value=null] value on empty
-	 * @returns BooleanAdjuster
+	 * @returns chainable instance
 	 */
-	acceptEmptyString(value?: boolean | null): BooleanAdjuster
+	acceptEmptyString(value?: boolean | null): this
 }
 
 interface NumberAdjuster extends AdjusterBase<number>
 {
 	/**
 	 * enable strict type check
-	 * @returns NumberAdjuster
+	 * @returns chainable instance
 	 */
-	strict(): NumberAdjuster
+	strict(): this
 
 	/**
 	 * set default value
 	 * @param value default value
-	 * @returns NumberAdjuster
+	 * @returns chainable instance
 	 */
-	default(value: number): NumberAdjuster
+	default(value: number): this
 
 	/**
 	 * accept null
 	 * @param [value=null] value on null
-	 * @returns NumberAdjuster
+	 * @returns chainable instance
 	 */
-	acceptNull(value?: number | null): NumberAdjuster
+	acceptNull(value?: number | null): this
 
 	/**
 	 * accept empty string
 	 * @param [value=null] value on empty
-	 * @returns NumberAdjuster
+	 * @returns chainable instance
 	 */
-	acceptEmptyString(value?: number | null): NumberAdjuster
+	acceptEmptyString(value?: number | null): this
 
 	/**
 	 * accept all special formats; i.e., "1e+10", "0x100"
-	 * @returns NumberAdjuster
+	 * @returns chainable instance
 	 */
-	acceptSpecialFormats(): NumberAdjuster
+	acceptSpecialFormats(): this
 
 	/**
-	 * limit value to integer
+	 * limit value to integer chain
 	 * @param [adjust=false] adjust to integer value is not an integer; default is ERROR
-	 * @returns NumberAdjuster
+	 * @returns chainable instance
 	 */
-	integer(adjust?: boolean): NumberAdjuster
+	integer(adjust?: boolean): this
 
 	/**
 	 * accept only specified values
 	 * @param values values to be accepted
-	 * @returns NumberAdjuster
+	 * @returns chainable instance
 	 */
-	only(...values: number[]): NumberAdjuster
+	only(...values: number[]): this
 
 	/**
 	 * set min-value
 	 * @param value min-value
 	 * @param [adjust=false] adjust to min-value if value < min-value; default is ERROR
-	 * @returns NumberAdjuster
+	 * @returns chainable instance
 	 */
-	minValue(value: number, adjust?: boolean): NumberAdjuster
+	minValue(value: number, adjust?: boolean): this
 
 	/**
 	 * set max-value
 	 * @param value max-value
 	 * @param [adjust=false] adjust to max-value if value > max-value; default is ERROR
-	 * @returns NumberAdjuster
+	 * @returns chainable instance
 	 */
-	maxValue(value: number, adjust?: boolean): NumberAdjuster
+	maxValue(value: number, adjust?: boolean): this
 }
 
 interface StringAdjuster extends AdjusterBase<string>
 {
 	/**
 	 * enable strict type check
-	 * @returns StringAdjuster
+	 * @returns chainable instance
 	 */
-	strict(): StringAdjuster
+	strict(): this
 
 	/**
 	 * set default value
 	 * @param value default value
-	 * @returns StringAdjuster
+	 * @returns chainable instance
 	 */
-	default(value: string): StringAdjuster
+	default(value: string): this
 
 	/**
 	 * accept null
 	 * @param [value=null] value on null
-	 * @returns StringAdjuster
+	 * @returns chainable instance
 	 */
-	acceptNull(value?: string | null): StringAdjuster
+	acceptNull(value?: string | null): this
 
 	/**
 	 * accept empty string
 	 * @param [value=null] value on empty
-	 * @returns StringAdjuster
+	 * @returns chainable instance
 	 */
-	acceptEmptyString(value?: string | null): StringAdjuster
+	acceptEmptyString(value?: string | null): this
 
 	/**
 	 * remove whitespace from both ends
-	 * @returns StringAdjuster
+	 * @returns chainable instance
 	 */
-	trim(): StringAdjuster
+	trim(): this
 
 	/**
 	 * accept only specified values
 	 * @param values values to be accepted
-	 * @returns StringAdjuster
+	 * @returns chainable instance
 	 */
-	only(...values: string[]): StringAdjuster
+	only(...values: string[]): this
 
 	/**
 	 * set min-length
 	 * @param length min-length; error if shorter
-	 * @returns StringAdjuster
+	 * @returns chainable instance
 	 */
-	minLength(length: number): StringAdjuster
+	minLength(length: number): this
 
 	/**
 	 * set max-length
 	 * @param length max-length; error if longer
 	 * @param [adjust=false] truncate if longer; default is ERROR
-	 * @returns StringAdjuster
+	 * @returns chainable instance
 	 */
-	maxLength(length: number, adjust?: boolean): StringAdjuster
+	maxLength(length: number, adjust?: boolean): this
 
 	/**
 	 * specify acceptable pattern by regular expression
 	 * @param pattern acceptable pattern(regular expression); string or RegExp
-	 * @returns StringAdjuster
+	 * @returns chainable instance
 	 */
-	pattern(pattern: Pattern): StringAdjuster
+	pattern(pattern: Pattern): this
 }
 
 interface NumericStringAdjuster extends AdjusterBase<string>
@@ -219,58 +219,58 @@ interface NumericStringAdjuster extends AdjusterBase<string>
 	/**
 	 * set default value
 	 * @param value default value
-	 * @returns NumericStringAdjuster
+	 * @returns chainable instance
 	 */
-	default(value: string): NumericStringAdjuster
+	default(value: string): this
 
 	/**
 	 * accept null
 	 * @param [value=null] value on null
-	 * @returns NumericStringAdjuster
+	 * @returns chainable instance
 	 */
-	acceptNull(value?: string | null): NumericStringAdjuster
+	acceptNull(value?: string | null): this
 
 	/**
 	 * accept empty string
 	 * @param [value=null] value on empty
-	 * @returns NumericStringAdjuster
+	 * @returns chainable instance
 	 */
-	acceptEmptyString(value?: string | null): NumericStringAdjuster
+	acceptEmptyString(value?: string | null): this
 
 	/**
 	 * join array into string
-	 * @returns NumericStringAdjuster
+	 * @returns chainable instance
 	 */
-	joinArray(): NumericStringAdjuster
+	joinArray(): this
 
 	/**
 	 * ignore separator
 	 * @param separator separator
-	 * @returns NumericStringAdjuster
+	 * @returns chainable instance
 	 */
-	separatedBy(separator: Pattern): NumericStringAdjuster
+	separatedBy(separator: Pattern): this
 
 	/**
 	 * set min-length
 	 * @param length min-length; error if shorter
-	 * @returns NumericStringAdjuster
+	 * @returns chainable instance
 	 */
-	minLength(length: number): NumericStringAdjuster
+	minLength(length: number): this
 
 	/**
 	 * set max-length
 	 * @param length max-length; error if longer
 	 * @param [adjust=false] truncate if longer; default is ERROR
-	 * @returns NumericStringAdjuster
+	 * @returns chainable instance
 	 */
-	maxLength(length: number, adjust?: boolean): NumericStringAdjuster
+	maxLength(length: number, adjust?: boolean): this
 
 	/**
 	 * validate by checksum
 	 * @param algorithm checksum algorithm
-	 * @returns NumericStringAdjuster
+	 * @returns chainable instance
 	 */
-	checksum(algorithm: string): NumericStringAdjuster
+	checksum(algorithm: string): this
 }
 
 interface IPv4Adjuster extends AdjusterBase<string>
@@ -278,29 +278,29 @@ interface IPv4Adjuster extends AdjusterBase<string>
 	/**
 	 * set default value
 	 * @param value default value
-	 * @returns IPv4Adjuster
+	 * @returns chainable instance
 	 */
-	default(value: string): IPv4Adjuster
+	default(value: string): this
 
 	/**
 	 * accept null
 	 * @param [value=null] value on null
-	 * @returns IPv4Adjuster
+	 * @returns chainable instance
 	 */
-	acceptNull(value?: string | null): IPv4Adjuster
+	acceptNull(value?: string | null): this
 
 	/**
 	 * accept empty string
 	 * @param [value=null] value on empty
-	 * @returns IPv4Adjuster
+	 * @returns chainable instance
 	 */
-	acceptEmptyString(value?: string | null): IPv4Adjuster
+	acceptEmptyString(value?: string | null): this
 
 	/**
 	 * remove whitespace from both ends
-	 * @returns IPv4Adjuster
+	 * @returns chainable instance
 	 */
-	trim(): IPv4Adjuster
+	trim(): this
 }
 
 interface IPv6Adjuster extends AdjusterBase<string>
@@ -308,29 +308,29 @@ interface IPv6Adjuster extends AdjusterBase<string>
 	/**
 	 * set default value
 	 * @param value default value
-	 * @returns IPv6Adjuster
+	 * @returns chainable instance
 	 */
-	default(value: string): IPv6Adjuster
+	default(value: string): this
 
 	/**
 	 * accept null
 	 * @param [value=null] value on null
-	 * @returns IPv6Adjuster
+	 * @returns chainable instance
 	 */
-	acceptNull(value?: string | null): IPv6Adjuster
+	acceptNull(value?: string | null): this
 
 	/**
 	 * accept empty string
 	 * @param [value=null] value on empty
-	 * @returns IPv6Adjuster
+	 * @returns chainable instance
 	 */
-	acceptEmptyString(value?: string | null): IPv6Adjuster
+	acceptEmptyString(value?: string | null): this
 
 	/**
 	 * remove whitespace from both ends
-	 * @returns IPv6Adjuster
+	 * @returns chainable instance
 	 */
-	trim(): IPv6Adjuster
+	trim(): this
 }
 
 interface EmailAdjuster extends AdjusterBase<string>
@@ -338,36 +338,36 @@ interface EmailAdjuster extends AdjusterBase<string>
 	/**
 	 * set default value
 	 * @param value default value
-	 * @returns EmailAdjuster
+	 * @returns chainable instance
 	 */
-	default(value: string): EmailAdjuster
+	default(value: string): this
 
 	/**
 	 * accept null
 	 * @param [value=null] value on null
-	 * @returns EmailAdjuster
+	 * @returns chainable instance
 	 */
-	acceptNull(value?: string | null): EmailAdjuster
+	acceptNull(value?: string | null): this
 
 	/**
 	 * accept empty string
 	 * @param [value=null] value on empty
-	 * @returns EmailAdjuster
+	 * @returns chainable instance
 	 */
-	acceptEmptyString(value?: string | null): EmailAdjuster
+	acceptEmptyString(value?: string | null): this
 
 	/**
 	 * remove whitespace from both ends
-	 * @returns EmailAdjuster
+	 * @returns chainable instance
 	 */
-	trim(): EmailAdjuster
+	trim(): this
 
 	/**
 	 * specify acceptable pattern by regular expression
 	 * @param pattern acceptable pattern(regular expression); string or RegExp
-	 * @returns EmailAdjuster
+	 * @returns chainable instance
 	 */
-	pattern(pattern: Pattern): EmailAdjuster
+	pattern(pattern: Pattern): this
 }
 
 interface ArrayAdjuster extends AdjusterBase<any[]>
@@ -376,59 +376,59 @@ interface ArrayAdjuster extends AdjusterBase<any[]>
 	/**
 	 * set default value; enable to omit
 	 * @param value default value
-	 * @returns ArrayAdjuster
+	 * @returns chainable instance
 	 */
-	default(value: any[]): ArrayAdjuster
+	default(value: any[]): this
 
 	/**
 	 * accept null
 	 * @param [value=null] value on null
-	 * @returns ArrayAdjuster
+	 * @returns chainable instance
 	 */
-	acceptNull(value?: any[] | null): ArrayAdjuster
+	acceptNull(value?: any[] | null): this
 
 	/**
 	 * accept empty string
 	 * @param [value=null] value on empty
-	 * @returns ArrayAdjuster
+	 * @returns chainable instance
 	 */
-	acceptEmptyString(value?: any[] | null): ArrayAdjuster
+	acceptEmptyString(value?: any[] | null): this
 
 	/**
 	 * accept string and set separator
 	 * @param separator separator
-	 * @returns ArrayAdjuster
+	 * @returns chainable instance
 	 */
-	separatedBy(separator: Pattern): ArrayAdjuster
+	separatedBy(separator: Pattern): this
 
 	/**
 	 * convert to array, if not
-	 * @returns ArrayAdjuster
+	 * @returns chainable instance
 	 */
-	toArray(): ArrayAdjuster
+	toArray(): this
 
 	/**
 	 * set min-length of array elements
 	 * @param length min-length; error if shorter
-	 * @returns ArrayAdjuster
+	 * @returns chainable instance
 	 */
-	minLength(length: number): ArrayAdjuster
+	minLength(length: number): this
 
 	/**
 	 * set max-length of array elements
 	 * @param length max-length
 	 * @param [adjust=false] truncate if longer; default is ERROR
-	 * @returns ArrayAdjuster
+	 * @returns chainable instance
 	 */
-	maxLength(length: number, adjust?: boolean): ArrayAdjuster
+	maxLength(length: number, adjust?: boolean): this
 
 	/**
 	 * apply constraints for each elements
 	 * @param adjusterInstance adjuster to apply
 	 * @param [ignoreEachErrors=false] ignore errors of each elements
-	 * @returns ArrayAdjuster
+	 * @returns chainable instance
 	 */
-	each(adjusterInstance: AdjusterBase<any>, ignoreEachErrors?: boolean): ArrayAdjuster
+	each(adjusterInstance: AdjusterBase<any>, ignoreEachErrors?: boolean): this
 }
 
 interface ObjectAdjuster extends AdjusterBase<Object>
@@ -436,30 +436,30 @@ interface ObjectAdjuster extends AdjusterBase<Object>
 	/**
 	 * set default value; enable to omit
 	 * @param value default value
-	 * @returns ObjectAdjuster
+	 * @returns chainable instance
 	 */
-	default(value: Object): ObjectAdjuster
+	default(value: Object): this
 
 	/**
 	 * accept null
 	 * @param [value=null] value on null
-	 * @returns ObjectAdjuster
+	 * @returns chainable instance
 	 */
-	acceptNull(value?: Object | null): ObjectAdjuster
+	acceptNull(value?: Object | null): this
 
 	/**
 	 * accept empty string
 	 * @param [value=null] value on empty
-	 * @returns ObjectAdjuster
+	 * @returns chainable instance
 	 */
-	acceptEmptyString(value?: Object | null): ObjectAdjuster
+	acceptEmptyString(value?: Object | null): this
 
 	/**
 	 * apply constraints
 	 * @param constraints constraints to apply
-	 * @returns ObjectAdjuster
+	 * @returns chainable instance
 	 */
-	constraints(constraints: Constraints): ObjectAdjuster
+	constraints(constraints: Constraints): this
 }
 
 // type definitions
