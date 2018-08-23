@@ -124,12 +124,20 @@ var adjuster = require("adjuster");
 ```
 
 ### ES Modules
+
 ```javascript
 // foo.mjs
 import adjuster from "adjuster";
 ```
 
-### using [Babel](https://babeljs.io/)
+### TypeScript
+
+```typescript
+// foo.ts
+import * as adjuster from "adjuster";
+```
+
+### ES6 Modules with [Babel](https://babeljs.io/)
 
 ```javascript
 // same as ES Modules!
@@ -458,15 +466,15 @@ interface NumberAdjuster {
     adjust(value: any, onError?: (err: AdjusterError) => number|void): number;
 
     // feature methods (chainable)
-    strict(): NumberAdjuster;
-    default(value: number): NumberAdjuster;
-    acceptNull(value?: number|null /* = null */): NumberAdjuster;
-    acceptEmptyString(value?: number|null /* = null */): NumberAdjuster;
-    acceptSpecialFormats(): NumberAdjuster;
-    integer(adjust?: boolean /* = false */): NumberAdjuster;
-    only(...values: number[]): NumberAdjuster;
-    minValue(value: number, adjust?: boolean /* = false */): NumberAdjuster;
-    maxValue(value: number, adjust?: boolean /* = false */): NumberAdjuster;
+    strict(): this;
+    default(value: number): this;
+    acceptNull(value?: number|null /* = null */): this;
+    acceptEmptyString(value?: number|null /* = null */): this;
+    acceptSpecialFormats(): this;
+    integer(adjust?: boolean /* = false */): this;
+    only(...values: number[]): this;
+    minValue(value: number, adjust?: boolean /* = false */): this;
+    maxValue(value: number, adjust?: boolean /* = false */): this;
 }
 ```
 
@@ -751,11 +759,11 @@ interface BooleanAdjuster {
     adjust(value: any, onError?: (err: AdjusterError) => boolean|void): number;
 
     // feature methods (chainable)
-    strict(): BooleanAdjuster;
-    acceptAllNumbers(): BooleanAdjuster;
-    default(value: boolean): BooleanAdjuster;
-    acceptNull(value?: boolean|null /* = null */): BooleanAdjuster;
-    acceptEmptyString(value?: boolean|null /* = null */): BooleanAdjuster;
+    strict(): this;
+    acceptAllNumbers(): this;
+    default(value: boolean): this;
+    acceptNull(value?: boolean|null /* = null */): this;
+    acceptEmptyString(value?: boolean|null /* = null */): this;
 }
 ```
 
@@ -947,15 +955,15 @@ interface StringAdjuster {
     adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
 
     // feature methods (chainable)
-    strict(): StringAdjuster;
-    default(value: string): StringAdjuster;
-    acceptNull(value?: string|null /* = null */): StringAdjuster;
-    acceptEmptyString(value?: string|null /* = null */): StringAdjuster;
-    trim(): StringAdjuster;
-    only(...values: string[]): StringAdjuster;
-    minLength(length: number): StringAdjuster;
-    maxLength(length: number, adjust?: boolean /* = false */): StringAdjuster;
-    pattern(pattern: string|RegExp): StringAdjuster;
+    strict(): this;
+    default(value: string): this;
+    acceptNull(value?: string|null /* = null */): this;
+    acceptEmptyString(value?: string|null /* = null */): this;
+    trim(): this;
+    only(...values: string[]): this;
+    minLength(length: number): this;
+    maxLength(length: number, adjust?: boolean /* = false */): this;
+    pattern(pattern: string|RegExp): this;
 }
 ```
 
@@ -1180,14 +1188,14 @@ interface NumericStringAdjuster {
     adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
 
     // feature methods (chainable)
-    default(value: string): NumericStringAdjuster;
-    acceptNull(value?: string|null /* = null */): NumericStringAdjuster;
-    acceptEmptyString(value?: string|null /* = null */): NumericStringAdjuster;
-    joinArray(): NumericStringAdjuster;
-    separatedBy(separator: string|RegExp): NumericStringAdjuster;
-    minLength(length: number): NumericStringAdjuster;
-    maxLength(length: number, adjust?: boolean /* = false */): NumericStringAdjuster;
-    checksum(algorithm: string): NumericStringAdjuster;
+    default(value: string): this;
+    acceptNull(value?: string|null /* = null */): this;
+    acceptEmptyString(value?: string|null /* = null */): this;
+    joinArray(): this;
+    separatedBy(separator: string|RegExp): this;
+    minLength(length: number): this;
+    maxLength(length: number, adjust?: boolean /* = false */): this;
+    checksum(algorithm: string): this;
 }
 ```
 
@@ -1397,10 +1405,10 @@ interface IPv4Adjuster {
     adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
 
     // feature methods (chainable)
-    default(value: string): IPv4Adjuster;
-    acceptNull(value?: string|null /* = null */): IPv4Adjuster;
-    acceptEmptyString(value?: string|null /* = null */): IPv4Adjuster;
-    trim(): IPv4Adjuster;
+    default(value: string): this;
+    acceptNull(value?: string|null /* = null */): this;
+    acceptEmptyString(value?: string|null /* = null */): this;
+    trim(): this;
 }
 ```
 
@@ -1514,10 +1522,10 @@ interface IPv6Adjuster {
     adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
 
     // feature methods (chainable)
-    default(value: string): IPv6Adjuster;
-    acceptNull(value?: string|null /* = null */): IPv6Adjuster;
-    acceptEmptyString(value?: string|null /* = null */): IPv6Adjuster;
-    trim(): IPv6Adjuster;
+    default(value: string): this;
+    acceptNull(value?: string|null /* = null */): this;
+    acceptEmptyString(value?: string|null /* = null */): this;
+    trim(): this;
 }
 ```
 
@@ -1640,11 +1648,11 @@ interface EmailAdjuster {
     adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
 
     // feature methods (chainable)
-    default(value: string): EmailAdjuster;
-    acceptNull(value?: string|null /* = null */): EmailAdjuster;
-    acceptEmptyString(value?: string|null /* = null */): EmailAdjuster;
-    trim(): EmailAdjuster;
-    pattern(pattern: string|RegExp): EmailAdjuster;
+    default(value: string): this;
+    acceptNull(value?: string|null /* = null */): this;
+    acceptEmptyString(value?: string|null /* = null */): this;
+    trim(): this;
+    pattern(pattern: string|RegExp): this;
 }
 ```
 
@@ -1802,14 +1810,14 @@ interface ArrayAdjuster {
     adjust(value: any, onError?: (err: AdjusterError) => Array|void): Array;
 
     // feature methods (chainable)
-    default(value: Array): ArrayAdjuster;
-    acceptNull(value?: Array|null /* = null */): ArrayAdjuster;
-    acceptEmptyString(value: Array|null /* = null */): ArrayAdjuster;
-    separatedBy(separator: string|RegExp): ArrayAdjuster;
-    toArray(): ArrayAdjuster;
-    minLength(length: number): ArrayAdjuster;
-    maxLength(length: number, adjust?: boolean /* = false */): ArrayAdjuster;
-    each(adjusterInstance: AdjusterBase, ignoreEachErrors: boolean /* = false */): ArrayAdjuster;
+    default(value: Array): this;
+    acceptNull(value?: Array|null /* = null */): this;
+    acceptEmptyString(value: Array|null /* = null */): this;
+    separatedBy(separator: string|RegExp): this;
+    toArray(): this;
+    minLength(length: number): this;
+    maxLength(length: number, adjust?: boolean /* = false */): this;
+    each(adjusterInstance: AdjusterBase, ignoreEachErrors: boolean /* = false */): this;
 }
 ```
 
@@ -2013,9 +2021,9 @@ interface ObjectAdjuster {
     adjust(value: any, onError?: (err: AdjusterError) => Object|void): Object;
 
     // feature methods (chainable)
-    default(value: Object): ObjectAdjuster;
-    acceptNull(value?: Object|null /* = null */): ObjectAdjuster;
-    acceptEmptyString(value: Object|null /* = null */): ObjectAdjuster;
+    default(value: Object): this;
+    acceptNull(value?: Object|null /* = null */): this;
+    acceptEmptyString(value: Object|null /* = null */): this;
     constraints(constraints): ObjectAdjuster;
 }
 ```
