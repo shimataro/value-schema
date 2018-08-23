@@ -124,12 +124,20 @@ var adjuster = require("adjuster");
 ```
 
 ### ES Modules
+
 ```javascript
 // foo.mjs
 import adjuster from "adjuster";
 ```
 
-### using [Babel](https://babeljs.io/)
+### TypeScript
+
+```typescript
+// foo.ts
+import * as adjuster from "adjuster";
+```
+
+### ES6 Modules with [Babel](https://babeljs.io/)
 
 ```javascript
 // same as ES Modules!
