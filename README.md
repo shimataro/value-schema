@@ -4,6 +4,7 @@ node-adjuster
 [![Build Status (Windows)][image-build-windows]][link-build-windows]
 [![Build Status (macOS)][image-build-macos]][link-build-macos]
 [![Build Status (Linux)][image-build-linux]][link-build-linux]
+[![Code Coverage][image-code-coverage]][link-code-coverage]
 [![Release][image-release]][link-release]
 [![Node.js version][image-engine]][link-engine]
 [![License][image-license]][link-license]
@@ -2140,6 +2141,8 @@ See [CHANGELOG.md](CHANGELOG.md).
 [link-build-macos]: https://travis-ci.org/shimataro/node-adjuster
 [image-build-linux]: https://img.shields.io/travis/shimataro/node-adjuster/master.svg?label=Linux
 [link-build-linux]: https://travis-ci.org/shimataro/node-adjuster
+[image-code-coverage]: https://codecov.io/gh/shimataro/node-adjuster/branch/master/graph/badge.svg
+[link-code-coverage]: https://codecov.io/gh/shimataro/node-adjuster
 [image-release]: https://img.shields.io/github/release/shimataro/node-adjuster.svg
 [link-release]: https://github.com/shimataro/node-adjuster/releases
 [image-engine]: https://img.shields.io/node/v/adjuster.svg
