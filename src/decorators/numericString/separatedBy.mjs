@@ -20,7 +20,7 @@ function _init(params)
 /**
  * ignore separator
  * @param {Object} params parameters
- * @param {Pattern} separator separator
+ * @param {Separator} separator separator
  * @returns {void}
  */
 function _featureSeparatedBy(params, separator)
