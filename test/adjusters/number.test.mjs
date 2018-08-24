@@ -204,6 +204,9 @@ function testAcceptEmptyString()
 	{
 		expect(adjuster.number().acceptEmptyString(123)
 			.adjust("")).toEqual(123);
+
+		expect(adjuster.number().acceptEmptyString()
+			.adjust("")).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{

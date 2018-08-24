@@ -62,6 +62,9 @@ function testAcceptEmptyString()
 	{
 		expect(adjuster.email().acceptEmptyString("empty@example.com")
 			.adjust("")).toEqual("empty@example.com");
+
+		expect(adjuster.email().acceptEmptyString()
+			.adjust("")).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{

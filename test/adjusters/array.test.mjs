@@ -87,6 +87,9 @@ function testAcceptEmptyString()
 	{
 		expect(adjuster.array().acceptEmptyString([1, "a"])
 			.adjust("")).toEqual([1, "a"]);
+
+		expect(adjuster.array().acceptEmptyString()
+			.adjust("")).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{

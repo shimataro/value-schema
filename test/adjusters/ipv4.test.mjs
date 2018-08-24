@@ -60,6 +60,9 @@ function testAcceptEmptyString()
 	{
 		expect(adjuster.ipv4().acceptEmptyString("1.1.1.1")
 			.adjust("")).toEqual("1.1.1.1");
+
+		expect(adjuster.ipv4().acceptEmptyString()
+			.adjust("")).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{

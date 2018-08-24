@@ -9,6 +9,7 @@ import adjuster from "index"; // eslint-disable-line import/no-unresolved
 	describe("maxLength", testMaxLength);
 	describe("checksum (Luhn)", testChecksumLuhn);
 	describe("checksum (Modulus 10 / Weight 3:1)", testChecksumModulus10Weight31);
+	describe("checksum (Others)", testChecksumOthers);
 }
 
 /**
@@ -190,6 +191,22 @@ function testChecksumModulus10Weight31()
 		{
 			adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13)
 				.adjust("978-4-10-109205-1");
+		}).toThrow(adjuster.CAUSE.CHECKSUM);
+	});
+}
+
+/**
+ * checksum - Others
+ * @returns {void}
+ */
+function testChecksumOthers()
+{
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.numericString().checksum("not-exist-algorithm")
+				.adjust("0123456789");
 		}).toThrow(adjuster.CAUSE.CHECKSUM);
 	});
 }
