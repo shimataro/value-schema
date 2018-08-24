@@ -66,6 +66,9 @@ function testAcceptNull()
 	{
 		expect(adjuster.array().acceptNull([1, "a"])
 			.adjust(null)).toEqual([1, "a"]);
+
+		expect(adjuster.array().acceptNull()
+			.adjust(null)).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{
@@ -87,6 +90,9 @@ function testAcceptEmptyString()
 	{
 		expect(adjuster.array().acceptEmptyString([1, "a"])
 			.adjust("")).toEqual([1, "a"]);
+
+		expect(adjuster.array().acceptEmptyString()
+			.adjust("")).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{
