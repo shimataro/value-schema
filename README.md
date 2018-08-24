@@ -42,7 +42,7 @@ All of web applications need handling input parameters, consists of following st
     * e.g., `typeof age === "number`
     * cast them if needed; `"20"`(string) to `20`(number)
 1. domain check
-    * e.g., `1 <= limit & limit <= 100`
+    * e.g., `1 <= limit && limit <= 100`
     * revise them if needed; `0` to `1`
 
 `node-adjuster` does all of them, by compact and highly readable code!
