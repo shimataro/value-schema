@@ -964,7 +964,7 @@ interface StringAdjuster {
     only(...values: string[]): this;
     minLength(length: number): this;
     maxLength(length: number, adjust?: boolean /* = false */): this;
-    pattern(pattern: string|RegExp): this;
+    pattern(pattern: RegExp): this;
 }
 ```
 
@@ -1159,9 +1159,6 @@ You can also use `adjuster.STRING.PATTERN` constants
 assert.deepStrictEqual(
     adjuster.string().pattern(/^Go+gle$/).adjust("Gogle"),
     "Gogle");
-assert.deepStrictEqual(
-    adjuster.string().pattern("^Go+gle$").adjust("Google"),
-    "Google");
 assert.deepStrictEqual(
     adjuster.string().pattern(adjuster.STRING.PATTERN.URI).adjust("https://example.com/path/to/resource?name=value#hash"),
     "https://example.com/path/to/resource?name=value#hash");
@@ -1653,7 +1650,7 @@ interface EmailAdjuster {
     acceptNull(value?: string|null /* = null */): this;
     acceptEmptyString(value?: string|null /* = null */): this;
     trim(): this;
-    pattern(pattern: string|RegExp): this;
+    pattern(pattern: RegExp): this;
 }
 ```
 
