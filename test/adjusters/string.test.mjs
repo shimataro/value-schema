@@ -99,6 +99,9 @@ function testAcceptNull()
 	{
 		expect(adjuster.string().acceptNull("abc")
 			.adjust(null)).toEqual("abc");
+
+		expect(adjuster.string().acceptNull()
+			.adjust(null)).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{
@@ -120,6 +123,9 @@ function testAcceptEmptyString()
 	{
 		expect(adjuster.string().acceptEmptyString("qwerty")
 			.adjust("")).toEqual("qwerty");
+
+		expect(adjuster.string().acceptEmptyString()
+			.adjust("")).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{

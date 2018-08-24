@@ -208,10 +208,10 @@ interface StringAdjuster extends AdjusterBase<string>
 
 	/**
 	 * specify acceptable pattern by regular expression
-	 * @param pattern acceptable pattern(regular expression); string or RegExp
+	 * @param pattern acceptable pattern(regular expression)
 	 * @returns chainable instance
 	 */
-	pattern(pattern: Pattern): this
+	pattern(pattern: RegExp): this
 }
 
 interface NumericStringAdjuster extends AdjusterBase<string>
@@ -248,7 +248,7 @@ interface NumericStringAdjuster extends AdjusterBase<string>
 	 * @param separator separator
 	 * @returns chainable instance
 	 */
-	separatedBy(separator: Pattern): this
+	separatedBy(separator: Separator): this
 
 	/**
 	 * set min-length
@@ -364,10 +364,10 @@ interface EmailAdjuster extends AdjusterBase<string>
 
 	/**
 	 * specify acceptable pattern by regular expression
-	 * @param pattern acceptable pattern(regular expression); string or RegExp
+	 * @param pattern acceptable pattern(regular expression)
 	 * @returns chainable instance
 	 */
-	pattern(pattern: Pattern): this
+	pattern(pattern: RegExp): this
 }
 
 interface ArrayAdjuster extends AdjusterBase<any[]>
@@ -399,7 +399,7 @@ interface ArrayAdjuster extends AdjusterBase<any[]>
 	 * @param separator separator
 	 * @returns chainable instance
 	 */
-	separatedBy(separator: Pattern): this
+	separatedBy(separator: Separator): this
 
 	/**
 	 * convert to array, if not
@@ -467,7 +467,7 @@ type Input = null | boolean | number | string | any[] | Object
 type Constraints = { [name: string]: AdjusterBase<any> }
 type ErrorHandler<T = any> = (err: AdjusterError | null) => T | void
 type Key = string | number
-type Pattern = RegExp | string
+type Separator = RegExp | string
 
 type ConstantsCause = {
 	TYPE: string,

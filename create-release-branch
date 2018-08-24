@@ -171,7 +171,10 @@ Remaining processes are...
 	${COLOR_COMMAND}npm publish ${DIR_TMP} --access=public${COLOR_RESET}
 7. Post processing
 	${COLOR_COMMAND}rm -rf ${DIR_TMP}${COLOR_RESET}
+	${COLOR_COMMAND}git checkout ${BASE_BRANCH}${COLOR_RESET}
 	${COLOR_COMMAND}git pull${COLOR_RESET}
+	${COLOR_COMMAND}git fetch -p${COLOR_RESET}
+	${COLOR_COMMAND}git branch -D ${BRANCH}${COLOR_RESET}
 
 That's all!
 "

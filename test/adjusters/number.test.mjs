@@ -129,6 +129,12 @@ function testType()
 
 		expect(() =>
 		{
+			adjuster.number()
+				.adjust({});
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
 			adjuster.number().strict()
 				.adjust("1");
 		}).toThrow(adjuster.CAUSE.TYPE);
@@ -198,6 +204,9 @@ function testAcceptEmptyString()
 	{
 		expect(adjuster.number().acceptEmptyString(123)
 			.adjust("")).toEqual(123);
+
+		expect(adjuster.number().acceptEmptyString()
+			.adjust("")).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{

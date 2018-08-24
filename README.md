@@ -4,6 +4,7 @@ node-adjuster
 [![Build Status (Windows)][image-build-windows]][link-build-windows]
 [![Build Status (macOS)][image-build-macos]][link-build-macos]
 [![Build Status (Linux)][image-build-linux]][link-build-linux]
+[![Code Coverage][image-code-coverage]][link-code-coverage]
 [![Release][image-release]][link-release]
 [![Node.js version][image-engine]][link-engine]
 [![License][image-license]][link-license]
@@ -41,7 +42,7 @@ All of web applications need handling input parameters, consists of following st
     * e.g., `typeof age === "number`
     * cast them if needed; `"20"`(string) to `20`(number)
 1. domain check
-    * e.g., `1 <= limit & limit <= 100`
+    * e.g., `1 <= limit && limit <= 100`
     * revise them if needed; `0` to `1`
 
 `node-adjuster` does all of them, by compact and highly readable code!
@@ -963,7 +964,7 @@ interface StringAdjuster {
     only(...values: string[]): this;
     minLength(length: number): this;
     maxLength(length: number, adjust?: boolean /* = false */): this;
-    pattern(pattern: string|RegExp): this;
+    pattern(pattern: RegExp): this;
 }
 ```
 
@@ -1158,9 +1159,6 @@ You can also use `adjuster.STRING.PATTERN` constants
 assert.deepStrictEqual(
     adjuster.string().pattern(/^Go+gle$/).adjust("Gogle"),
     "Gogle");
-assert.deepStrictEqual(
-    adjuster.string().pattern("^Go+gle$").adjust("Google"),
-    "Google");
 assert.deepStrictEqual(
     adjuster.string().pattern(adjuster.STRING.PATTERN.URI).adjust("https://example.com/path/to/resource?name=value#hash"),
     "https://example.com/path/to/resource?name=value#hash");
@@ -1652,7 +1650,7 @@ interface EmailAdjuster {
     acceptNull(value?: string|null /* = null */): this;
     acceptEmptyString(value?: string|null /* = null */): this;
     trim(): this;
-    pattern(pattern: string|RegExp): this;
+    pattern(pattern: RegExp): this;
 }
 ```
 
@@ -2140,6 +2138,8 @@ See [CHANGELOG.md](CHANGELOG.md).
 [link-build-macos]: https://travis-ci.org/shimataro/node-adjuster
 [image-build-linux]: https://img.shields.io/travis/shimataro/node-adjuster/master.svg?label=Linux
 [link-build-linux]: https://travis-ci.org/shimataro/node-adjuster
+[image-code-coverage]: https://codecov.io/gh/shimataro/node-adjuster/branch/master/graph/badge.svg
+[link-code-coverage]: https://codecov.io/gh/shimataro/node-adjuster
 [image-release]: https://img.shields.io/github/release/shimataro/node-adjuster.svg
 [link-release]: https://github.com/shimataro/node-adjuster/releases
 [image-engine]: https://img.shields.io/node/v/adjuster.svg
