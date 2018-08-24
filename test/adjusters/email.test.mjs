@@ -41,6 +41,9 @@ function testAcceptNull()
 	{
 		expect(adjuster.email().acceptNull("empty@example.com")
 			.adjust(null)).toEqual("empty@example.com");
+
+		expect(adjuster.email().acceptNull()
+			.adjust(null)).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{

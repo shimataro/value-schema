@@ -66,6 +66,9 @@ function testAcceptNull()
 	{
 		expect(adjuster.array().acceptNull([1, "a"])
 			.adjust(null)).toEqual([1, "a"]);
+
+		expect(adjuster.array().acceptNull()
+			.adjust(null)).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{

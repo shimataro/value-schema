@@ -70,6 +70,9 @@ function testAcceptNull()
 	{
 		expect(adjuster.object().acceptNull({})
 			.adjust(null)).toEqual({});
+
+		expect(adjuster.object().acceptNull()
+			.adjust(null)).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{

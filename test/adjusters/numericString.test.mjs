@@ -40,6 +40,9 @@ function testAcceptNull()
 	{
 		expect(adjuster.numericString().acceptNull("123")
 			.adjust(null)).toEqual("123");
+
+		expect(adjuster.numericString().acceptNull()
+			.adjust(null)).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{

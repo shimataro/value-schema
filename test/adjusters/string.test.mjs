@@ -99,6 +99,9 @@ function testAcceptNull()
 	{
 		expect(adjuster.string().acceptNull("abc")
 			.adjust(null)).toEqual("abc");
+
+		expect(adjuster.string().acceptNull()
+			.adjust(null)).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{

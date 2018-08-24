@@ -39,6 +39,9 @@ function testAcceptNull()
 	{
 		expect(adjuster.ipv6().acceptNull("::1")
 			.adjust(null)).toEqual("::1");
+
+		expect(adjuster.ipv6().acceptNull()
+			.adjust(null)).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{
