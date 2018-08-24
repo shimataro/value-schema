@@ -1,7 +1,12 @@
+# https://docs.travis-ci.com/user/languages/javascript-with-nodejs/
+# https://github.com/codecov/example-node
+
 language: "node_js"
 node_js: # jest and eslint no longer support v4
   - "6"
   - "8"
+install:
+  - "npm install -g codecov"
 os:
   - "linux"
   - "osx"
@@ -14,3 +19,4 @@ cache:
     - "node_modules"
 script:
   - "npm run verify"
+  - "codecov"

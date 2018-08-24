@@ -72,6 +72,8 @@
     "testRegex": "\\.(test|spec)\\.mjs$",
     "transform": {
       "\\.mjs$": "babel-jest"
-    }
+    },
+    "collectCoverage": true,
+    "coverageDirectory": "./coverage/"
   }
 }
