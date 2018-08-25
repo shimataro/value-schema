@@ -208,7 +208,7 @@ function testChecksumOthers()
 	{
 		expect(() =>
 		{
-			adjuster.numericString().checksum("not-exist-algorithm")
+			adjuster.numericString().checksum("no-such-algorithm")
 				.adjust("0123456789");
 		}).toThrow(adjuster.CAUSE.CHECKSUM);
 	});
