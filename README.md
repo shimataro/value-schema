@@ -150,15 +150,28 @@ import adjuster from "adjuster";
 #### `AdjusterError`
 The `AdjusterError` object represents an error when trying to adjust invalid value.
 
+##### ambient declaration
+
+```typescript
+interface AdjusterError extends Error
+{
+    name: string
+    message: string
+	cause: string
+	value: any
+	keyStack: (string|number)[]
+}
+```
+
 ##### properties
 
 |name|description|
 |----|-----------|
 |`name`|`"AdjusterError"`|
 |`message`|human-readable description of the error, including a string `cause`|
-|`cause`|the cause of adjustment error; see `adjuster.CAUSE`|
-|`value`|the value to adjust|
-|`keyStack`|an array path to key name(for object) or index(for array) that caused error; for nested object or array|
+|`cause`|cause of adjustment error; see `adjuster.CAUSE`|
+|`value`|value to adjust|
+|`keyStack`|array consists of path to key name(for object) or index(for array) that caused error; for nested object or array|
 
 See below example.
 For detail about constraints / `adjuster`, see [basic usage](#basic-usage)
