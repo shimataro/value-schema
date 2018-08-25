@@ -39,7 +39,7 @@ All of web applications need handling input parameters, consists of following st
     * all required parameters exist?
     * fill omittable parameters by default values
 1. type check
-    * e.g., `typeof age === "number`
+    * e.g., `typeof age === "number"`
     * cast them if needed; `"20"`(string) to `20`(number)
 1. domain check
     * e.g., `1 <= limit && limit <= 100`
