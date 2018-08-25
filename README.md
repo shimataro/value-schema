@@ -2152,7 +2152,7 @@ See [CHANGELOG.md](CHANGELOG.md).
 [link-build-macos]: https://travis-ci.org/shimataro/node-adjuster
 [image-build-linux]: https://img.shields.io/travis/shimataro/node-adjuster/master.svg?label=Linux
 [link-build-linux]: https://travis-ci.org/shimataro/node-adjuster
-[image-code-coverage]: https://codecov.io/gh/shimataro/node-adjuster/branch/master/graph/badge.svg
+[image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/node-adjuster/master.svg
 [link-code-coverage]: https://codecov.io/gh/shimataro/node-adjuster
 [image-release]: https://img.shields.io/github/release/shimataro/node-adjuster.svg
 [link-release]: https://github.com/shimataro/node-adjuster/releases
