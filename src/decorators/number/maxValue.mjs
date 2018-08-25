@@ -10,18 +10,26 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
 /**
+ * @package
+ * @typedef {Object} Params-Number-MaxValue
+ * @property {number} value
+ * @property {boolean} adjust
+ */
+
+/**
  * init
- * @param {Object} params parameters
+ * @param {Params-Number-MaxValue} params parameters
  * @returns {void}
  */
 function _init(params)
 {
 	params.value = Number.MAX_SAFE_INTEGER;
+	params.adjust = false;
 }
 
 /**
  * set min-value
- * @param {Object} params parameters
+ * @param {Params-Number-MaxValue} params parameters
  * @param {number} value max-value
  * @param {boolean} [adjust=false] adjust to max-value if value > max-value; default is ERROR
  * @returns {void}
@@ -34,7 +42,7 @@ function _featureMaxValue(params, value, adjust = false)
 
 /**
  * adjust
- * @param {Object} params parameters
+ * @param {Params-Number-MaxValue} params parameters
  * @param {DecoratorValues} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
