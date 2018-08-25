@@ -180,6 +180,7 @@ For detail about constraints / `adjuster`, see [basic usage](#basic-usage)
 import adjuster from "adjuster";
 import assert from "assert";
 
+// {foo: Array<{bar: {baz: number}}>}
 const constraints = {
     foo: adjuster.array().each(adjuster.object().constraints({
         bar: adjuster.object().constraints({
