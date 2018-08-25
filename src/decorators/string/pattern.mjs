@@ -10,14 +10,15 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
 /**
- * @typedef {Object} _TypeParamsStringPattern
+ * @package
+ * @typedef {Object} Params-String-Pattern
  * @property {boolean} flag
  * @property {RegExp} pattern
  */
 
 /**
  * init
- * @param {_TypeParamsStringPattern} params parameters
+ * @param {Params-String-Pattern} params parameters
  * @returns {void}
  */
 function _init(params)
@@ -28,7 +29,7 @@ function _init(params)
 
 /**
  * specify acceptable pattern by regular expression
- * @param {_TypeParamsStringPattern} params parameters
+ * @param {Params-String-Pattern} params parameters
  * @param {RegExp} pattern acceptable pattern(regular expression)
  * @returns {void}
  */
@@ -40,7 +41,7 @@ function _featurePattern(params, pattern)
 
 /**
  * adjust
- * @param {_TypeParamsStringPattern} params parameters
+ * @param {Params-String-Pattern} params parameters
  * @param {DecoratorValues} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
