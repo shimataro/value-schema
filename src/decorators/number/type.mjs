@@ -16,8 +16,17 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
 /**
+ * @package
+ * @typedef {Object} Params-Number-Type
+ * @property {boolean} flagStrict
+ * @property {boolean} flagAcceptSpecialFormats
+ * @property {boolean} flagInteger
+ * @property {boolean} flagIntegerAdjust
+ */
+
+/**
  * init
- * @param {Object} params parameters
+ * @param {Params-Number-Type} params parameters
  * @returns {void}
  */
 function _init(params)
@@ -30,7 +39,7 @@ function _init(params)
 
 /**
  * enable strict type check
- * @param {Object} params parameters parameters
+ * @param {Params-Number-Type} params parameters
  * @returns {void}
  */
 function _strict(params)
@@ -40,7 +49,7 @@ function _strict(params)
 
 /**
  * accept special formats; i.e., "1e+10", "0x100", "0b100"
- * @param {Object} params parameters
+ * @param {Params-Number-Type} params parameters
  * @returns {void}
  */
 function _acceptSpecialFormats(params)
@@ -50,7 +59,7 @@ function _acceptSpecialFormats(params)
 
 /**
  * limit to integer
- * @param {Object} params parameters
+ * @param {Params-Number-Type} params parameters
  * @param {boolean} [adjust=false] adjust value or not
  * @returns {void}
  */
@@ -62,7 +71,7 @@ function _integer(params, adjust = false)
 
 /**
  * adjust
- * @param {Object} params parameters
+ * @param {Params-Number-Type} params parameters
  * @param {DecoratorValues} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
@@ -90,7 +99,7 @@ function _adjust(params, values, keyStack)
 
 /**
  * check the format of value
- * @param {Object} params parameters
+ * @param {Params-Number-Type} params parameters
  * @param {string} value value to check
  * @returns {boolean} OK/NG
  */
@@ -106,7 +115,7 @@ function _checkNumberFormat(params, value)
 
 /**
  * get RegExp pattern for number
- * @param {Object} params parameters
+ * @param {Params-Number-Type} params parameters
  * @returns {RegExp|null} regular expression pattern
  */
 function _getRegExpForNumber(params)
@@ -127,7 +136,7 @@ function _getRegExpForNumber(params)
 
 /**
  * convert to number
- * @param {Object} params parameters
+ * @param {Params-Number-Type} params parameters
  * @param {*} value value to convert
  * @returns {number|boolean} adjusted value or false(if failed)
  */

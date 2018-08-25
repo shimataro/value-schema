@@ -8,8 +8,15 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
 /**
+ * @package
+ * @typedef {Object} Params-NumericString-SeparatedBy
+ * @property {boolean} flag
+ * @property {Separator} separator
+ */
+
+/**
  * init
- * @param {Object} params parameters
+ * @param {Params-NumericString-SeparatedBy} params parameters
  * @returns {void}
  */
 function _init(params)
@@ -19,7 +26,7 @@ function _init(params)
 
 /**
  * ignore separator
- * @param {Object} params parameters
+ * @param {Params-NumericString-SeparatedBy} params parameters
  * @param {Separator} separator separator
  * @returns {void}
  */
@@ -31,7 +38,7 @@ function _featureSeparatedBy(params, separator)
 
 /**
  * adjust
- * @param {Object} params parameters
+ * @param {Params-NumericString-SeparatedBy} params parameters
  * @param {DecoratorValues} values original / adjusted values
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
