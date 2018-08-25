@@ -10,8 +10,15 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
 /**
+ * @package
+ * @typedef {Object} Params-Default
+ * @property {boolean} flag
+ * @property {*} value
+ */
+
+/**
  * init
- * @param {Object} params parameters
+ * @param {Params-Default} params parameters
  * @returns {void}
  */
 function _init(params)
@@ -21,7 +28,7 @@ function _init(params)
 
 /**
  * set default value
- * @param {Object} params parameters
+ * @param {Params-Default} params parameters
  * @param {*} value default value
  * @returns {void}
  */
@@ -33,7 +40,7 @@ function _featureDefault(params, value)
 
 /**
  * adjuster
- * @param {Object} params parameters
+ * @param {Params-Default} params parameters
  * @param {DecoratorValues} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment

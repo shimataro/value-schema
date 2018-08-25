@@ -10,18 +10,26 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
 /**
+ * @package
+ * @typedef {Object} Params-Number-MinValue
+ * @property {number} value
+ * @property {boolean} adjust
+ */
+
+/**
  * init
- * @param {Object} params parameters
+ * @param {Params-Number-MinValue} params parameters
  * @returns {void}
  */
 function _init(params)
 {
 	params.value = Number.MIN_SAFE_INTEGER;
+	params.adjust = false;
 }
 
 /**
  * set min-value
- * @param {Object} params parameters
+ * @param {Params-Number-MinValue} params parameters
  * @param {number} value min-value
  * @param {boolean} [adjust=false] adjust to min-value if value < min-value; default is ERROR
  * @returns {void}
@@ -34,7 +42,7 @@ function _featureMinValue(params, value, adjust = false)
 
 /**
  * adjust
- * @param {Object} params parameters
+ * @param {Params-Number-MinValue} params parameters
  * @param {DecoratorValues} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
