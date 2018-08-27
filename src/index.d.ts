@@ -520,6 +520,3 @@ type DecoratorInfo<T = any> = {
 type DecoratorInit = (params: Object) => void
 type DecoratorFeature = (params: Object, ...args: any[]) => void
 type DecoratorAdjust<T = any> = (params: Object, value: DecoratorValues, onError?: ErrorHandler<T>) => boolean
-
-type Class = Function
-type ClassDecorator = (TargetClass: Class) => Class

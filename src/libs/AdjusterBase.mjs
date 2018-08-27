@@ -1,15 +1,15 @@
 /**
  * get class decorators
  * @function
- * @param {Class} TargetClass a target class
+ * @param {AdjusterBase} TargetClass a target class
  * @returns {DecoratorInfo[]}
  */
 const getDecorators = (() =>
 {
-	/** @type {Map<Class, DecoratorInfo[]>} */
+	/** @type {Map<AdjusterBase, DecoratorInfo[]>} */
 	const decoratorsMap = new Map();
 
-	return (/** @type {Class} */ TargetClass) =>
+	return (/** @type {AdjusterBase} */ TargetClass) =>
 	{
 		if(!decoratorsMap.has(TargetClass))
 		{
@@ -59,11 +59,11 @@ class DecoratorBuilder
 
 	/**
 	 * build decorator
-	 * @returns {ClassDecorator} decorator function
+	 * @returns {function(AdjusterBase): AdjusterBase} decorator function
 	 */
 	build()
 	{
-		return (/** @type {Class} */ TargetClass) =>
+		return (/** @type {AdjusterBase} */ TargetClass) =>
 		{
 			const key = Symbol("");
 			const init = this._init;
