@@ -6,7 +6,7 @@ export default class AdjusterError extends Error
 	/**
 	 * throw an error
 	 * @param {string} cause cause of error
-	 * @param {DecoratorValues} values original / adjusted values
+	 * @param {Decorator-Values} values original / adjusted values
 	 * @param {Key[]} keyStack path to key that caused error
 	 * @returns {void}
 	 * @throws {AdjusterError}

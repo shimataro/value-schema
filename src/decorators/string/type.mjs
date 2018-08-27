@@ -12,7 +12,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 
 /**
  * @package
- * @typedef {Object} Params-String-Type
+ * @typedef {Params} Params-String-Type
  * @property {boolean} flagStrict
  */
 
@@ -39,7 +39,7 @@ function _strict(params)
 /**
  * adjust
  * @param {Params-String-Type} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
