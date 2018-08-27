@@ -11,7 +11,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 
 /**
  * @package
- * @typedef {Object} Params-String-MinLength
+ * @typedef {Params} Params-String-MinLength
  * @property {boolean} flag
  * @property {number} length
  */
@@ -41,7 +41,7 @@ function _featureMinLength(params, length)
 /**
  * adjust
  * @param {Params-String-MinLength} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}

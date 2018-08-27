@@ -17,7 +17,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 
 /**
  * @package
- * @typedef {Object} Params-Number-Type
+ * @typedef {Params} Params-Number-Type
  * @property {boolean} flagStrict
  * @property {boolean} flagAcceptSpecialFormats
  * @property {boolean} flagInteger
@@ -72,7 +72,7 @@ function _integer(params, adjust = false)
 /**
  * adjust
  * @param {Params-Number-Type} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}

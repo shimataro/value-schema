@@ -11,7 +11,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 
 /**
  * @package
- * @typedef {Object} Params-Only
+ * @typedef {Params} Params-Only
  * @property {boolean} flag
  * @property {Set<*>} values
  */
@@ -41,7 +41,7 @@ function _featureOnly(params, ...values)
 /**
  * adjust
  * @param {Params-Only} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}

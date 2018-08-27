@@ -9,7 +9,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 
 /**
  * @package
- * @typedef {Object} Params-String-Trim
+ * @typedef {Params} Params-String-Trim
  * @property {boolean} flag
  */
 
@@ -36,7 +36,7 @@ function _featureTrim(params)
 /**
  * adjust
  * @param {Params-String-Trim} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {Decorator-Values} values original / adjusted values
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
