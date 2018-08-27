@@ -506,17 +506,3 @@ type ConstantsNumericStringOptions = {
 		JAN: string,
 	},
 }
-
-// internal types
-type DecoratorValues = {
-	original: Input,
-	adjusted: Input,
-}
-type DecoratorInfo<T = any> = {
-	key: Symbol,
-	init: DecoratorInit
-	adjust?: DecoratorAdjust<T>,
-}
-type DecoratorInit = (params: Object) => void
-type DecoratorFeature = (params: Object, ...args: any[]) => void
-type DecoratorAdjust<T = any> = (params: Object, value: DecoratorValues, onError?: ErrorHandler<T>) => boolean

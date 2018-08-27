@@ -10,7 +10,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 
 /**
  * @package
- * @typedef {Object} Params-Object-Constraints
+ * @typedef {Params} Params-Object-Constraints
  * @property {Constraints} constraints
  */
 
@@ -38,7 +38,7 @@ function _featureConstraints(params, constraints)
 /**
  * adjuster
  * @param {Params-Object-Constraints} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}

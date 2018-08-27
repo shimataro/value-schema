@@ -13,7 +13,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 
 /**
  * @package
- * @typedef {Object} Params-Array-Type
+ * @typedef {Params} Params-Array-Type
  * @property {boolean} flagSeparatedBy
  * @property {boolean} flagToArray
  * @property {Separator} separator
@@ -55,7 +55,7 @@ function _featureToArray(params)
 /**
  * adjuster
  * @param {Params-Array-Type} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}

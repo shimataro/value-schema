@@ -11,7 +11,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 
 /**
  * @package
- * @typedef {Object} Params-NumericString-Checksum
+ * @typedef {Params} Params-NumericString-Checksum
  * @property {boolean} flag
  * @property {string} algorithm
  */
@@ -41,7 +41,7 @@ function _featureChecksum(params, algorithm)
 /**
  * adjust
  * @param {Params-NumericString-Checksum} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}

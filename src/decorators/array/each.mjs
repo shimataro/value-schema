@@ -10,7 +10,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 
 /**
  * @package
- * @typedef {Object} Params-Array-Each
+ * @typedef {Params} Params-Array-Each
  * @property {AdjusterBase} objAdjuster
  * @property {boolean} ignoreEachErrors
  */
@@ -42,7 +42,7 @@ function _featureEach(params, objAdjuster, ignoreEachErrors = false)
 /**
  * adjuster
  * @param {Params-Array-Each} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
