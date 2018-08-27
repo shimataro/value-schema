@@ -15,8 +15,15 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
 /**
+ * @package
+ * @typedef {Params} Params-Boolean-Type
+ * @property {boolean} flagStrict
+ * @property {boolean} flagAcceptAllNumbers
+ */
+
+/**
  * init
- * @param {Object} params parameters
+ * @param {Params-Boolean-Type} params parameters
  * @returns {void}
  */
 function _init(params)
@@ -27,7 +34,7 @@ function _init(params)
 
 /**
  * enable strict type check
- * @param {Object} params parameters
+ * @param {Params-Boolean-Type} params parameters
  * @returns {void}
  */
 function _strict(params)
@@ -37,7 +44,7 @@ function _strict(params)
 
 /**
  * accept all numbers, other than 0 / 1
- * @param {Object} params parameters
+ * @param {Params-Boolean-Type} params parameters
  * @returns {void}
  */
 function _acceptAllNumbers(params)
@@ -47,8 +54,8 @@ function _acceptAllNumbers(params)
 
 /**
  * adjust
- * @param {Object} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {Params-Boolean-Type} params parameters
+ * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}

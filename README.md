@@ -39,7 +39,7 @@ All of web applications need handling input parameters, consists of following st
     * all required parameters exist?
     * fill omittable parameters by default values
 1. type check
-    * e.g., `typeof age === "number`
+    * e.g., `typeof age === "number"`
     * cast them if needed; `"20"`(string) to `20`(number)
 1. domain check
     * e.g., `1 <= limit && limit <= 100`
@@ -150,15 +150,28 @@ import adjuster from "adjuster";
 #### `AdjusterError`
 The `AdjusterError` object represents an error when trying to adjust invalid value.
 
+##### ambient declaration
+
+```typescript
+interface AdjusterError extends Error
+{
+    name: string
+    message: string
+	cause: string
+	value: any
+	keyStack: (string|number)[]
+}
+```
+
 ##### properties
 
 |name|description|
 |----|-----------|
 |`name`|`"AdjusterError"`|
 |`message`|human-readable description of the error, including a string `cause`|
-|`cause`|the cause of adjustment error; see `adjuster.CAUSE`|
-|`value`|the value to adjust|
-|`keyStack`|an array path to key name(for object) or index(for array) that caused error; for nested object or array|
+|`cause`|cause of adjustment error; see `adjuster.CAUSE`|
+|`value`|value to adjust|
+|`keyStack`|array consists of path to key name(for object) or index(for array) that caused error; for nested object or array|
 
 See below example.
 For detail about constraints / `adjuster`, see [basic usage](#basic-usage)
@@ -167,6 +180,7 @@ For detail about constraints / `adjuster`, see [basic usage](#basic-usage)
 import adjuster from "adjuster";
 import assert from "assert";
 
+// {foo: Array<{bar: {baz: number}}>}
 const constraints = {
     foo: adjuster.array().each(adjuster.object().constraints({
         bar: adjuster.object().constraints({
@@ -2138,7 +2152,7 @@ See [CHANGELOG.md](CHANGELOG.md).
 [link-build-macos]: https://travis-ci.org/shimataro/node-adjuster
 [image-build-linux]: https://img.shields.io/travis/shimataro/node-adjuster/master.svg?label=Linux
 [link-build-linux]: https://travis-ci.org/shimataro/node-adjuster
-[image-code-coverage]: https://codecov.io/gh/shimataro/node-adjuster/branch/master/graph/badge.svg
+[image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/node-adjuster/master.svg
 [link-code-coverage]: https://codecov.io/gh/shimataro/node-adjuster
 [image-release]: https://img.shields.io/github/release/shimataro/node-adjuster.svg
 [link-release]: https://github.com/shimataro/node-adjuster/releases

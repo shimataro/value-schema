@@ -8,8 +8,14 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
 /**
+ * @package
+ * @typedef {Params} Params-String-Trim
+ * @property {boolean} flag
+ */
+
+/**
  * init
- * @param {Object} params parameters
+ * @param {Params-String-Trim} params parameters
  * @returns {void}
  */
 function _init(params)
@@ -19,7 +25,7 @@ function _init(params)
 
 /**
  * remove whitespace from both ends
- * @param {Object} params parameters
+ * @param {Params-String-Trim} params parameters
  * @returns {void}
  */
 function _featureTrim(params)
@@ -29,8 +35,8 @@ function _featureTrim(params)
 
 /**
  * adjust
- * @param {Object} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {Params-String-Trim} params parameters
+ * @param {Decorator-Values} values original / adjusted values
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */

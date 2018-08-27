@@ -8,8 +8,8 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 
 /**
  * adjuster
- * @param {Object} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {{}} params parameters
+ * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}

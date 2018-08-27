@@ -12,42 +12,50 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
 /**
+ * @package
+ * @typedef {Params} Params-Array-Type
+ * @property {boolean} flagSeparatedBy
+ * @property {boolean} flagToArray
+ * @property {Separator} separator
+ */
+
+/**
  * init
- * @param {Object} params parameters
+ * @param {Params-Array-Type} params parameters
  * @returns {void}
  */
 function _init(params)
 {
-	params.separatedBy = false;
-	params.toArray = false;
+	params.flagSeparatedBy = false;
+	params.flagToArray = false;
 }
 
 /**
  * accept string and set separator
- * @param {Object} params parameters
+ * @param {Params-Array-Type} params parameters
  * @param {Separator} separator separator
  * @returns {void}
  */
 function _featureSeparatedBy(params, separator)
 {
-	params.separatedBy = true;
+	params.flagSeparatedBy = true;
 	params.separator = separator;
 }
 
 /**
  * convert to array, if not
- * @param {Object} params parameters
+ * @param {Params-Array-Type} params parameters
  * @returns {void}
  */
 function _featureToArray(params)
 {
-	params.toArray = true;
+	params.flagToArray = true;
 }
 
 /**
  * adjuster
- * @param {Object} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {Params-Array-Type} params parameters
+ * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
@@ -59,13 +67,13 @@ function _adjust(params, values, keyStack)
 		return false;
 	}
 
-	if(isString(values.adjusted) && params.separatedBy)
+	if(isString(values.adjusted) && params.flagSeparatedBy)
 	{
 		values.adjusted = values.adjusted.split(params.separator);
 		return false;
 	}
 
-	if(params.toArray)
+	if(params.flagToArray)
 	{
 		values.adjusted = [values.adjusted];
 		return false;

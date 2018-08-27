@@ -10,8 +10,15 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
 /**
+ * @package
+ * @typedef {Params} Params-Array-MinLength
+ * @property {boolean} flag
+ * @property {number} length
+ */
+
+/**
  * init
- * @param {Object} params parameters
+ * @param {Params-Array-MinLength} params parameters
  * @returns {void}
  */
 function _init(params)
@@ -21,7 +28,7 @@ function _init(params)
 
 /**
  * set min-length of array
- * @param {Object} params parameters
+ * @param {Params-Array-MinLength} params parameters
  * @param {number} length max-length
  * @returns {void}
  */
@@ -33,8 +40,8 @@ function _featureMinLength(params, length)
 
 /**
  * adjuster
- * @param {Object} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {Params-Array-MinLength} params parameters
+ * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}

@@ -10,8 +10,15 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
 /**
+ * @package
+ * @typedef {Params} Params-AcceptNull
+ * @property {boolean} flag
+ * @property {*|null} valueOnNull
+ */
+
+/**
  * init
- * @param {Object} params parameters
+ * @param {Params-AcceptNull} params parameters
  * @returns {void}
  */
 function _init(params)
@@ -21,7 +28,7 @@ function _init(params)
 
 /**
  * accept null
- * @param {Object} params parameters
+ * @param {Params-AcceptNull} params parameters
  * @param {*} [value=null] value on null
  * @returns {void}
  */
@@ -33,8 +40,8 @@ function _featureAcceptNull(params, value = null)
 
 /**
  * adjust
- * @param {Object} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {Params-AcceptNull} params parameters
+ * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}

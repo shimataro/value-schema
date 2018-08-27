@@ -1,15 +1,15 @@
 /**
  * get class decorators
  * @function
- * @param {Class} TargetClass a target class
- * @returns {DecoratorInfo[]}
+ * @param {AdjusterBase} TargetClass a target class
+ * @returns {Decorator-Info[]}
  */
 const getDecorators = (() =>
 {
-	/** @type {Map<Class, DecoratorInfo[]>} */
+	/** @type {Map<AdjusterBase, Decorator-Info[]>} */
 	const decoratorsMap = new Map();
 
-	return (/** @type {Class} */ TargetClass) =>
+	return (/** @type {AdjusterBase} */ TargetClass) =>
 	{
 		if(!decoratorsMap.has(TargetClass))
 		{
@@ -26,7 +26,7 @@ class DecoratorBuilder
 {
 	/**
 	 * constructor
-	 * @param {DecoratorAdjust} adjust adjuster function
+	 * @param {Decorator-Adjust} adjust adjuster function
 	 */
 	constructor(adjust)
 	{
@@ -37,7 +37,7 @@ class DecoratorBuilder
 
 	/**
 	 * add init function
-	 * @param {DecoratorInit} init initializer
+	 * @param {Decorator-Init} init initializer
 	 * @returns {DecoratorBuilder} builder object (to be chained)
 	 */
 	init(init)
@@ -48,7 +48,7 @@ class DecoratorBuilder
 
 	/**
 	 * add feature functions
-	 * @param {Object<string, DecoratorFeature>} features feature functions
+	 * @param {Object<string, Decorator-Feature>} features feature functions
 	 * @returns {DecoratorBuilder} builder object (to be chained)
 	 */
 	features(features)
@@ -59,11 +59,11 @@ class DecoratorBuilder
 
 	/**
 	 * build decorator
-	 * @returns {ClassDecorator} decorator function
+	 * @returns {function(AdjusterBase): AdjusterBase} decorator function
 	 */
 	build()
 	{
-		return (/** @type {Class} */ TargetClass) =>
+		return (/** @type {AdjusterBase} */ TargetClass) =>
 		{
 			const key = Symbol("");
 			const init = this._init;
@@ -145,7 +145,7 @@ export default class AdjusterBase
 	/**
 	 * do adjust (core)
 	 * @param {*} value value to be checked
-	 * @param {ErrorHandler} [onError] callback function on error
+	 * @param {ErrorHandler} onError callback function on error
 	 * @param {Key[]} keyStack path to key that caused error
 	 * @returns {*} adjusted value
 	 * @protected
@@ -187,3 +187,39 @@ export default class AdjusterBase
 		throw err;
 	}
 }
+
+/**
+ * @package
+ * @typedef {Object} Params
+ */
+/**
+ * @package
+ * @typedef {Object} Decorator-Values
+ * @property {Input} original
+ * @property {Input} adjusted
+ */
+/**
+ * @package
+ * @typedef {Object} Decorator-Info
+ * @property {Symbol} key
+ * @property {Decorator-Init} init
+ * @property {Decorator-Adjust} [adjust]
+ */
+/**
+ * @package
+ * @typedef {function} Decorator-Init
+ * @param {Params} params
+ */
+/**
+ * @package
+ * @typedef {function} Decorator-Feature
+ * @param {Params} params
+ * @param {...*} args
+ */
+/**
+ * @typedef {function} Decorator-Adjust
+ * @param {Params} params
+ * @param {Decorator-Values} value
+ * @param {ErrorHandler} [onError]
+ * @returns {boolean} end adjustment or not
+ */

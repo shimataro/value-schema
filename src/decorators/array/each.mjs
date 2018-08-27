@@ -9,8 +9,15 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
 /**
+ * @package
+ * @typedef {Params} Params-Array-Each
+ * @property {AdjusterBase} objAdjuster
+ * @property {boolean} ignoreEachErrors
+ */
+
+/**
  * init
- * @param {Object} params parameters
+ * @param {Params-Array-Each} params parameters
  * @returns {void}
  */
 function _init(params)
@@ -21,7 +28,7 @@ function _init(params)
 
 /**
  * apply constraints for each elements
- * @param {Object} params parameters
+ * @param {Params-Array-Each} params parameters
  * @param {AdjusterBase} objAdjuster adjuster to apply
  * @param {boolean} [ignoreEachErrors=false] ignore errors of each elements
  * @returns {void}
@@ -34,8 +41,8 @@ function _featureEach(params, objAdjuster, ignoreEachErrors = false)
 
 /**
  * adjuster
- * @param {Object} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {Params-Array-Each} params parameters
+ * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
@@ -73,4 +80,3 @@ function _adjust(params, values, keyStack)
 	values.adjusted = adjusted;
 	return false;
 }
-

@@ -9,8 +9,14 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 	.build();
 
 /**
+ * @package
+ * @typedef {Params} Params-NumericString-JoinArray
+ * @property {boolean} flag
+ */
+
+/**
  * init
- * @param {Object} params parameters
+ * @param {Params-NumericString-JoinArray} params parameters
  * @returns {void}
  */
 function _init(params)
@@ -20,7 +26,7 @@ function _init(params)
 
 /**
  * join array into string
- * @param {Object} params parameters
+ * @param {Params-NumericString-JoinArray} params parameters
  * @returns {void}
  */
 function _featureJoinArray(params)
@@ -30,8 +36,8 @@ function _featureJoinArray(params)
 
 /**
  * adjust
- * @param {Object} params parameters
- * @param {DecoratorValues} values original / adjusted values
+ * @param {Params-NumericString-JoinArray} params parameters
+ * @param {Decorator-Values} values original / adjusted values
  * @returns {boolean} end adjustment
  * @throws {AdjusterError}
  */
