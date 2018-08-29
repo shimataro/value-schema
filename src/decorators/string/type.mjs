@@ -1,5 +1,5 @@
 import {CAUSE} from "../../libs/constants";
-import {isString, isArray, isObject} from "../../libs/types";
+import {isScalar, isString} from "../../libs/types";
 import AdjusterBase from "../../libs/AdjusterBase";
 import AdjusterError from "../../libs/AdjusterError";
 
@@ -57,8 +57,8 @@ function _adjust(params, values, keyStack)
 		AdjusterError.raise(CAUSE.TYPE, values, keyStack);
 	}
 
-	// array or object cannot be convert to string
-	if(isArray(values.adjusted) || isObject(values.adjusted))
+	// non-scalar value cannot be convert to string
+	if(!isScalar(values.adjusted))
 	{
 		AdjusterError.raise(CAUSE.TYPE, values, keyStack);
 	}

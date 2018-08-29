@@ -1,5 +1,5 @@
 import {CAUSE} from "../../libs/constants";
-import {isNumber, isInteger, isString} from "../../libs/types";
+import {isScalar, isNumber, isInteger, isString} from "../../libs/types";
 import AdjusterBase from "../../libs/AdjusterBase";
 import AdjusterError from "../../libs/AdjusterError";
 
@@ -145,6 +145,12 @@ function _toNumber(params, value)
 	// strict check
 	if(!isNumber(value) && params.flagStrict)
 	{
+		return false;
+	}
+
+	if(!isScalar(value))
+	{
+		// not a scalar value
 		return false;
 	}
 

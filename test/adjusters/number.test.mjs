@@ -87,6 +87,12 @@ function testType()
 
 		expect(() =>
 		{
+			adjuster.number().acceptSpecialFormats()
+				.adjust("true");
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
 			adjuster.number().integer()
 				.adjust(3.14);
 		}).toThrow(adjuster.CAUSE.TYPE);
@@ -125,6 +131,12 @@ function testType()
 		{
 			adjuster.number()
 				.adjust("0b100");
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.number()
+				.adjust([]);
 		}).toThrow(adjuster.CAUSE.TYPE);
 
 		expect(() =>
