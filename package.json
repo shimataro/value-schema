@@ -47,19 +47,19 @@
   "devDependencies": {
     "@types/core-js": "2.5.0",
     "@types/jest": "23.3.1",
-    "@types/node": "10.9.2",
-    "babel-eslint": "8.2.6",
+    "@types/node": "10.9.3",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "9.0.0",
     "eslint": "5.4.0",
     "eslint-plugin-import": "2.14.0",
     "jest": "23.5.0",
     "npm-check-updates": "2.14.2"
   },
   "dependencies": {
-    "@babel/cli": "7.0.0-rc.4",
-    "@babel/core": "7.0.0-rc.4",
-    "@babel/plugin-proposal-decorators": "7.0.0-rc.4",
-    "@babel/preset-env": "7.0.0-rc.4",
-    "babel-core": "7.0.0-bridge.0",
+    "@babel/cli": "7.0.0",
+    "@babel/core": "7.0.0",
+    "@babel/plugin-proposal-decorators": "7.0.0",
+    "@babel/preset-env": "7.0.0",
     "babel-plugin-add-module-exports": "0.3.3",
     "cross-env": "5.2.0",
     "npm-run-all": "4.1.3"
