@@ -130,6 +130,12 @@ function testType()
 		expect(() =>
 		{
 			adjuster.number()
+				.adjust([]);
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.number()
 				.adjust({});
 		}).toThrow(adjuster.CAUSE.TYPE);
 

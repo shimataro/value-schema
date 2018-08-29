@@ -1,4 +1,19 @@
-export {isBoolean, isNumber, isInteger, isString, isArray, isObject};
+export {isScalar, isBoolean, isNumber, isInteger, isString, isArray, isObject};
+
+/**
+ * check whether given value is a scalar or not
+ * @param {*} value value to check
+ * @returns {boolean} Yes/No
+ */
+function isScalar(value)
+{
+	if(value === null)
+	{
+		return true;
+	}
+
+	return typeof value !== "object";
+}
 
 /**
  * check whether given value is a boolean or not
