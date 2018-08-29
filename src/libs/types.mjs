@@ -7,12 +7,7 @@ export {isScalar, isBoolean, isNumber, isInteger, isString, isArray, isObject};
  */
 function isScalar(value)
 {
-	if(value === null)
-	{
-		return true;
-	}
-
-	return typeof value !== "object";
+	return value === null || typeof value !== "object";
 }
 
 /**
