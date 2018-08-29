@@ -77,10 +77,6 @@ function isArray(value)
  */
 function isObject(value)
 {
-	if(typeof value !== "object")
-	{
-		return false;
-	}
 	if(value === null)
 	{
 		return false;
@@ -90,6 +86,5 @@ function isObject(value)
 		return false;
 	}
 
-	// true otherwise
-	return true;
+	return typeof value === "object";
 }
