@@ -155,7 +155,7 @@ function _toNumber(params, value)
 	}
 
 	const adjustedValue = Number(value);
-	if(isNaN(adjustedValue))
+	if(!isNumber(adjustedValue))
 	{
 		// failed to cast
 		return false;
