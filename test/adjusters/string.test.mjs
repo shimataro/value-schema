@@ -241,47 +241,128 @@ function testMaxLength()
  */
 function testPattern()
 {
-	it("should be OK", () =>
+	describe("ipv4", () =>
 	{
-		expect(adjuster.string().pattern(/^Go+gle$/)
-			.adjust("Gogle")).toEqual("Gogle");
-
-		expect(adjuster.string().pattern(/^Go+gle$/)
-			.adjust("Google")).toEqual("Google");
-
-		expect(adjuster.string().pattern(/^Go+gle$/)
-			.adjust("Gooogle")).toEqual("Gooogle");
-
-		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.EMAIL)
-			.adjust("john.doe@example.com")).toEqual("john.doe@example.com");
-
-		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
-			.adjust("https://example.com/path/to/resource?name=value#hash")).toEqual("https://example.com/path/to/resource?name=value#hash");
+		it("should be OK", () =>
+		{
+			expect(adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4)
+				.adjust("0.0.0.0")).toEqual("0.0.0.0");
+			expect(adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4)
+				.adjust("192.168.0.1")).toEqual("192.168.0.1");
+			expect(adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4)
+				.adjust("255.255.255.255")).toEqual("255.255.255.255");
+		});
+		it("should cause error(s)", () =>
+		{
+			expect(() =>
+			{
+				adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4)
+					.adjust("0.0.0.");
+			}).toThrow(adjuster.CAUSE.PATTERN);
+			expect(() =>
+			{
+				adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4)
+					.adjust("0.0.0.0.");
+			}).toThrow(adjuster.CAUSE.PATTERN);
+			expect(() =>
+			{
+				adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4)
+					.adjust("255.255.255.256");
+			}).toThrow(adjuster.CAUSE.PATTERN);
+			expect(() =>
+			{
+				adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4)
+					.adjust("999.255.255.255");
+			}).toThrow(adjuster.CAUSE.PATTERN);
+		});
 	});
-	it("should cause error(s)", () =>
+	describe("ipv6", () =>
 	{
-		expect(() =>
+		it("should be OK", () =>
 		{
-			adjuster.string().pattern(/^Go+gle$/)
-				.adjust("Ggle");
-		}).toThrow(adjuster.CAUSE.PATTERN);
+			expect(adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)
+				.adjust("0000:0000:0000:0000:0000:0000:0000:0000")).toEqual("0000:0000:0000:0000:0000:0000:0000:0000");
+			expect(adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)
+				.adjust("::1")).toEqual("::1");
+			expect(adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)
+				.adjust("::")).toEqual("::");
+			expect(adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)
+				.adjust("1::1")).toEqual("1::1");
 
-		expect(() =>
+			// IPv4-mapped address
+			expect(adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)
+				.adjust("::ffff:192.0.2.1")).toEqual("::ffff:192.0.2.1");
+		});
+		it("should cause error(s)", () =>
 		{
-			adjuster.string().pattern(/^Go+gle$/)
-				.adjust("google");
-		}).toThrow(adjuster.CAUSE.PATTERN);
+			expect(() =>
+			{
+				adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)
+					.adjust("0000");
+			}).toThrow(adjuster.CAUSE.PATTERN);
+			expect(() =>
+			{
+				adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)
+					.adjust("ffff:");
+			}).toThrow(adjuster.CAUSE.PATTERN);
+			expect(() =>
+			{
+				adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)
+					.adjust("0000:0000:0000:0000:0000:0000:0000:0000:");
+			}).toThrow(adjuster.CAUSE.PATTERN);
+		});
+	});
+	describe("uri", () =>
+	{
+		it("should be OK", () =>
+		{
+			expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
+				.adjust("https://example.com/path/to/resource?name=value#hash")).toEqual("https://example.com/path/to/resource?name=value#hash");
+		});
+		it("should cause error(s)", () =>
+		{
+			expect(() =>
+			{
+				adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
+					.adjust("https://例.com/");
+			}).toThrow(adjuster.CAUSE.PATTERN);
+		});
+	});
+	describe("others", () =>
+	{
+		it("should be OK", () =>
+		{
+			expect(adjuster.string().pattern(/^Go+gle$/)
+				.adjust("Gogle")).toEqual("Gogle");
 
-		expect(() =>
-		{
-			adjuster.string().pattern(adjuster.STRING.PATTERN.EMAIL)
-				.adjust("john..doe@example.com");
-		}).toThrow(adjuster.CAUSE.PATTERN);
+			expect(adjuster.string().pattern(/^Go+gle$/)
+				.adjust("Google")).toEqual("Google");
 
-		expect(() =>
+			expect(adjuster.string().pattern(/^Go+gle$/)
+				.adjust("Gooogle")).toEqual("Gooogle");
+
+			expect(adjuster.string().pattern(adjuster.STRING.PATTERN.EMAIL)
+				.adjust("john.doe@example.com")).toEqual("john.doe@example.com");
+		});
+		it("should cause error(s)", () =>
 		{
-			adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
-				.adjust("https://例.com/");
-		}).toThrow(adjuster.CAUSE.PATTERN);
+			expect(() =>
+			{
+				adjuster.string().pattern(/^Go+gle$/)
+					.adjust("Ggle");
+			}).toThrow(adjuster.CAUSE.PATTERN);
+
+			expect(() =>
+			{
+				adjuster.string().pattern(/^Go+gle$/)
+					.adjust("google");
+			}).toThrow(adjuster.CAUSE.PATTERN);
+
+			expect(() =>
+			{
+				adjuster.string().pattern(adjuster.STRING.PATTERN.EMAIL)
+					.adjust("john..doe@example.com");
+			}).toThrow(adjuster.CAUSE.PATTERN);
+		});
 	});
 }

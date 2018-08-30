@@ -22,8 +22,8 @@ function testAdjust()
 			classes: adjuster.array().separatedBy(",").each(adjuster.number(), true),
 			skills: adjuster.array().separatedBy(",").each(adjuster.string(), true),
 			credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD),
-			remote_addr: adjuster.ipv4(),
-			remote_addr_ipv6: adjuster.ipv6(),
+			remote_addr: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4),
+			remote_addr_ipv6: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6),
 			limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true),
 			offset: adjuster.number().integer().default(0).minValue(0, true),
 		};
