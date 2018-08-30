@@ -155,9 +155,9 @@ interface AdjusterError extends Error
 {
     name: string
     message: string
-	cause: string
-	value: any
-	keyStack: (string|number)[]
+    cause: string
+    value: any
+    keyStack: (string|number)[]
 }
 ```
 
