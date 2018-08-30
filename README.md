@@ -60,8 +60,8 @@ const constraints = { // constraints for input
     classes: adjuster.array().separatedBy(",").each(adjuster.number(), true), // array of number, separated by ",", ignores errors
     skills: adjuster.array().separatedBy(",").each(adjuster.string(), true), // array of string, separated by ",", ignores errors
     credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD), // numeric string, separated by "-", checks by Luhn algorithm
-    remote_addr: adjuster.ipv4(), // IPv4
-    remote_addr_ipv6: adjuster.ipv6(), // IPv6
+    remote_addr: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4), // IPv4
+    remote_addr_ipv6: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6), // IPv6
     limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true), // number, integer, omittable (sets 10 if omitted), >=1 (sets 1 if less), <=100 (sets 100 if greater)
     offset: adjuster.number().integer().default(0).minValue(0, true), // number, integer, omiitable (sets 0 if omited), >=0 (sets 0 if less)
 };
@@ -297,8 +297,8 @@ const constraints = {
     classes: adjuster.array().separatedBy(",").each(adjuster.number(), true), // "true" means to ignore each errors
     skills: adjuster.array().separatedBy(",").each(adjuster.string(), true),
     credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD),
-    remote_addr: adjuster.ipv4(),
-    remote_addr_ipv6: adjuster.ipv6(),
+    remote_addr: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4),
+    remote_addr_ipv6: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6),
     limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true),
     offset: adjuster.number().integer().default(0).minValue(0, true),
 };
