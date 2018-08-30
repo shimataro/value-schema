@@ -241,6 +241,132 @@ function testMaxLength()
  */
 function testPattern()
 {
+	describe("ipv4", () =>
+	{
+		testPatternIpv4();
+	});
+	describe("ipv6", () =>
+	{
+		testPatternIpv6();
+	});
+	describe("uri", () =>
+	{
+		testPatternUri();
+	});
+	describe("others", () =>
+	{
+		testPatternOthers();
+	});
+}
+
+/**
+ * pattern; IPv4
+ * @returns {void}
+ */
+function testPatternIpv4()
+{
+	it("should be OK", () =>
+	{
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4)
+			.adjust("0.0.0.0")).toEqual("0.0.0.0");
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4)
+			.adjust("192.168.0.1")).toEqual("192.168.0.1");
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4)
+			.adjust("255.255.255.255")).toEqual("255.255.255.255");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4)
+				.adjust("0.0.0.");
+		}).toThrow(adjuster.CAUSE.PATTERN);
+		expect(() =>
+		{
+			adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4)
+				.adjust("0.0.0.0.");
+		}).toThrow(adjuster.CAUSE.PATTERN);
+		expect(() =>
+		{
+			adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4)
+				.adjust("255.255.255.256");
+		}).toThrow(adjuster.CAUSE.PATTERN);
+		expect(() =>
+		{
+			adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4)
+				.adjust("999.255.255.255");
+		}).toThrow(adjuster.CAUSE.PATTERN);
+	});
+}
+
+/**
+ * pattern; IPv6
+ * @returns {void}
+ */
+function testPatternIpv6()
+{
+	it("should be OK", () =>
+	{
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)
+			.adjust("0000:0000:0000:0000:0000:0000:0000:0000")).toEqual("0000:0000:0000:0000:0000:0000:0000:0000");
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)
+			.adjust("::1")).toEqual("::1");
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)
+			.adjust("::")).toEqual("::");
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)
+			.adjust("1::1")).toEqual("1::1");
+
+		// IPv4-mapped address
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)
+			.adjust("::ffff:192.0.2.1")).toEqual("::ffff:192.0.2.1");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)
+				.adjust("0000");
+		}).toThrow(adjuster.CAUSE.PATTERN);
+		expect(() =>
+		{
+			adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)
+				.adjust("ffff:");
+		}).toThrow(adjuster.CAUSE.PATTERN);
+		expect(() =>
+		{
+			adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)
+				.adjust("0000:0000:0000:0000:0000:0000:0000:0000:");
+		}).toThrow(adjuster.CAUSE.PATTERN);
+	});
+}
+
+/**
+ * pattern; URI
+ * @returns {void}
+ */
+function testPatternUri()
+{
+	it("should be OK", () =>
+	{
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
+			.adjust("https://example.com/path/to/resource?name=value#hash")).toEqual("https://example.com/path/to/resource?name=value#hash");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
+				.adjust("https://例.com/");
+		}).toThrow(adjuster.CAUSE.PATTERN);
+	});
+}
+
+/**
+ * pattern; Others
+ * @returns {void}
+ */
+function testPatternOthers()
+{
 	it("should be OK", () =>
 	{
 		expect(adjuster.string().pattern(/^Go+gle$/)
@@ -254,9 +380,6 @@ function testPattern()
 
 		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.EMAIL)
 			.adjust("john.doe@example.com")).toEqual("john.doe@example.com");
-
-		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
-			.adjust("https://example.com/path/to/resource?name=value#hash")).toEqual("https://example.com/path/to/resource?name=value#hash");
 	});
 	it("should cause error(s)", () =>
 	{
@@ -276,12 +399,6 @@ function testPattern()
 		{
 			adjuster.string().pattern(adjuster.STRING.PATTERN.EMAIL)
 				.adjust("john..doe@example.com");
-		}).toThrow(adjuster.CAUSE.PATTERN);
-
-		expect(() =>
-		{
-			adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
-				.adjust("https://例.com/");
 		}).toThrow(adjuster.CAUSE.PATTERN);
 	});
 }
