@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.0-rc.4] - 2018-08-30
+### Changed
+* `adjuster.number().adjust([])` causes `adjuster.CAUSE.TYPE`
+
 ## [1.0.0-rc.3] - 2018-08-28
 ### Others
 * documents proofreading
@@ -201,7 +205,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.1.0] - 2018-04-18
 * First release.
 
-[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.3...HEAD
+[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.4...HEAD
+[1.0.0-rc.4]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.3...v1.0.0-rc.4
 [1.0.0-rc.3]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.2...v1.0.0-rc.3
 [1.0.0-rc.2]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.1...v1.0.0-rc.2
 [1.0.0-rc.1]: https://github.com/shimataro/node-adjuster/compare/v0.16.0...v1.0.0-rc.1

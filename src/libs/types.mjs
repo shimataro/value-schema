@@ -1,4 +1,14 @@
-export {isBoolean, isNumber, isInteger, isString, isArray, isObject};
+export {isScalar, isBoolean, isNumber, isInteger, isString, isArray, isObject};
+
+/**
+ * check whether given value is a scalar or not
+ * @param {*} value value to check
+ * @returns {boolean} Yes/No
+ */
+function isScalar(value)
+{
+	return value === null || typeof value !== "object";
+}
 
 /**
  * check whether given value is a boolean or not
@@ -67,10 +77,6 @@ function isArray(value)
  */
 function isObject(value)
 {
-	if(typeof value !== "object")
-	{
-		return false;
-	}
 	if(value === null)
 	{
 		return false;
@@ -80,6 +86,5 @@ function isObject(value)
 		return false;
 	}
 
-	// true otherwise
-	return true;
+	return typeof value === "object";
 }
