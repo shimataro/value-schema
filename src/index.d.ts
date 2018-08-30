@@ -16,8 +16,6 @@ declare namespace adjuster
 	function number(): NumberAdjuster
 	function string(): StringAdjuster
 	function numericString(): NumericStringAdjuster
-	function ipv4(): IPv4Adjuster
-	function ipv6(): IPv6Adjuster
 	function email(): EmailAdjuster
 	function array(): ArrayAdjuster
 	function object(): ObjectAdjuster
