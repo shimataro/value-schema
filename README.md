@@ -268,7 +268,7 @@ If this parameter is omitted, `adjuster.adjust()` throws `AdjusterError` on firs
 
 * `err`
     * an instance of `AdjusterError` or `null`
-    * `err.keyStack` indicates path to key name that caused error: `{string | number}[]`
+    * `err.keyStack` indicates path to key name that caused error: `(string | number)[]`
     * `err` will be `null` after all adjustment has finished and errors has occurred
         * `onError()` will no longer be called after `null` passed
 * returns
