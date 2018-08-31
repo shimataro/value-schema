@@ -250,9 +250,9 @@ namespace adjuster {
 Validate and adjust a input value.
 
 ##### `data`
-An object to adjust; e.g. `req.query`, `req.body` (in [Express](http://expressjs.com/))
+An object to adjust; e.g., `req.query`, `req.body` (in [Express](http://expressjs.com/))
 
-This `data` is not overwritten.
+`data` will not be overwritten.
 
 ##### `constraints`
 Constraints object for adjustment.
