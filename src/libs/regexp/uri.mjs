@@ -7,7 +7,7 @@ import {PATTERN as PATTERN_IPV6} from "./ipv6";
 const PCT_ENCODED = `%${HEXDIG}${HEXDIG}`;
 
 // Reserved Characters: https://tools.ietf.org/html/rfc3986#section-2.2
-// const GEN_DELIMS = `[:\\/?#\\[]@]`;
+// const GEN_DELIMS = `[:/?#\\[]@]`;
 const SUB_DELIMS = `[!$&'()*+,;=]`;
 // const RESERVED = `(${GEN_DELIMS}|${SUB_DELIMS})`;
 
