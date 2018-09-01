@@ -1,16 +1,13 @@
 // URI pattern follows RFC3986: https://tools.ietf.org/html/rfc3986
+import {ALPHA, DIGIT, HEXDIG} from "./rfc";
 import {PATTERN as PATTERN_IPV4} from "./ipv4";
 import {PATTERN as PATTERN_IPV6} from "./ipv6";
-
-const ALPHA = `[a-z]`;
-const DIGIT = `[0-9]`;
-const HEXDIG = `[0-9a-f]`;
 
 // Percent-Encoding: https://tools.ietf.org/html/rfc3986#section-2.1
 const PCT_ENCODED = `%${HEXDIG}${HEXDIG}`;
 
 // Reserved Characters: https://tools.ietf.org/html/rfc3986#section-2.2
-// const GEN_DELIMS = `[:\\/?#\\[]@]`;
+// const GEN_DELIMS = `[:/?#\\[]@]`;
 const SUB_DELIMS = `[!$&'()*+,;=]`;
 // const RESERVED = `(${GEN_DELIMS}|${SUB_DELIMS})`;
 
