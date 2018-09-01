@@ -18,8 +18,6 @@ export const CAUSE = {
 	PATTERN: "pattern",
 
 	CHECKSUM: "checksum",
-
-	ARRAY: "array",
 };
 
 export const STRING = {
