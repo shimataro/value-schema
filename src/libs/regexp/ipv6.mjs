@@ -1,7 +1,7 @@
 import {PATTERN as PATTERN_IPV4} from "./ipv4";
 
-const PATTERN_CHARSET = "[\\da-fA-F]";
-const PATTERN_COMPONENT = `${PATTERN_CHARSET}{1,4}`;
+const PATTERN_CLASS = "[\\da-fA-F]";
+const PATTERN_COMPONENT = `${PATTERN_CLASS}{1,4}`;
 
 const PATTERN_0 = `:(((:${PATTERN_COMPONENT}){1,7})|((:${PATTERN_COMPONENT}){0,5}:${PATTERN_IPV4})|:)`;
 const PATTERN_1 = `(${PATTERN_COMPONENT}:){1}(((:${PATTERN_COMPONENT}){1,6})|((:${PATTERN_COMPONENT}){0,4}:${PATTERN_IPV4})|:)`;
