@@ -422,8 +422,6 @@ type ConstantsCause = {
 	PATTERN: string,
 
 	CHECKSUM: string,
-
-	ARRAY: string,
 }
 type ConstantsStringOptions = {
 	PATTERN: {
