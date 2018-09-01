@@ -55,7 +55,7 @@ const constraints = { // constraints for input
     id: adjuster.number().minValue(1), // number, >=1
     name: adjuster.string().maxLength(16, true), // string, max 16 characters (trims if over)
     age: adjuster.number().integer(true).minValue(0), // number, integer (trims if decimal), >=0
-    email: adjuster.email(), // e-mail
+    email: adjuster.email(), // email
     state: adjuster.string().only("active", "inactive"), // string, accepts only "active" and "inactive"
     classes: adjuster.array().separatedBy(",").each(adjuster.number(), true), // array of number, separated by ",", ignores errors
     skills: adjuster.array().separatedBy(",").each(adjuster.string(), true), // array of string, separated by ",", ignores errors
