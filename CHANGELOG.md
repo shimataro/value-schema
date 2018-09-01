@@ -5,9 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Deleted
+### Removed
 * `adjuster.ipv4()` - use `adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4)` instead
 * `adjuster.ipv6()` - use `adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)` instead
+
+### Fixed
+* RegExp pattern; `adjuster.STRING.PATTERN.URI`
 
 ## [1.0.0-rc.4] - 2018-08-30
 ### Changed
@@ -58,7 +61,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 * installation error!
 
-### Deleted
+### Removed
 * `adjuster.numberArray()` - use `adjuster.array()` instead
 * `adjuster.stringArray()` - use `adjuster.array()` instead
 * `err.key` - use `err.keyStack` instead

@@ -350,6 +350,30 @@ function testPatternUri()
 	{
 		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
 			.adjust("https://example.com/path/to/resource?name=value#hash")).toEqual("https://example.com/path/to/resource?name=value#hash");
+
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
+			.adjust("https://192.168.10.2/")).toEqual("https://192.168.10.2/");
+
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
+			.adjust("https://[fe80::a1b3:125d:c1f8:4781]/")).toEqual("https://[fe80::a1b3:125d:c1f8:4781]/");
+
+		// https://tools.ietf.org/html/rfc3986#section-1.1.2
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
+			.adjust("ftp://ftp.is.co.za/rfc/rfc1808.txt")).toEqual("ftp://ftp.is.co.za/rfc/rfc1808.txt");
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
+			.adjust("http://www.ietf.org/rfc/rfc2396.txt")).toEqual("http://www.ietf.org/rfc/rfc2396.txt");
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
+			.adjust("ldap://[2001:db8::7]/c=GB?objectClass?one")).toEqual("ldap://[2001:db8::7]/c=GB?objectClass?one");
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
+			.adjust("mailto:John.Doe@example.com")).toEqual("mailto:John.Doe@example.com");
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
+			.adjust("news:comp.infosystems.www.servers.unix")).toEqual("news:comp.infosystems.www.servers.unix");
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
+			.adjust("tel:+1-816-555-1212")).toEqual("tel:+1-816-555-1212");
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
+			.adjust("telnet://192.0.2.16:80/")).toEqual("telnet://192.0.2.16:80/");
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.URI)
+			.adjust("urn:oasis:names:specification:docbook:dtd:xml:4.1.2")).toEqual("urn:oasis:names:specification:docbook:dtd:xml:4.1.2");
 	});
 	it("should cause error(s)", () =>
 	{
