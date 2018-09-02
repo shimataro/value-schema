@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.0-rc.5] - 2018-09-02
+### Removed
+* `adjuster.ipv4()` - use `adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4)` instead
+* `adjuster.ipv6()` - use `adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6)` instead
+
+### Fixed
+* RegExp pattern; `adjuster.STRING.PATTERN.URI`
+
 ## [1.0.0-rc.4] - 2018-08-30
 ### Changed
 * `adjuster.number().adjust([])` causes `adjuster.CAUSE.TYPE`
@@ -55,7 +63,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 * installation error!
 
-### Deleted
+### Removed
 * `adjuster.numberArray()` - use `adjuster.array()` instead
 * `adjuster.stringArray()` - use `adjuster.array()` instead
 * `err.key` - use `err.keyStack` instead
@@ -205,7 +213,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.1.0] - 2018-04-18
 * First release.
 
-[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.4...HEAD
+[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.5...HEAD
+[1.0.0-rc.5]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.4...v1.0.0-rc.5
 [1.0.0-rc.4]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.3...v1.0.0-rc.4
 [1.0.0-rc.3]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.2...v1.0.0-rc.3
 [1.0.0-rc.2]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.1...v1.0.0-rc.2

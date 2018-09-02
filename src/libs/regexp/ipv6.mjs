@@ -1,19 +1,30 @@
-import {PATTERN as PATTERN_IPV4} from "./ipv4";
+import {HEXDIG} from "./rfc";
+import {PATTERN as IPV4ADDRESS} from "./ipv4";
 
-const PATTERN_CHARSET = "[\\da-fA-F]";
-const PATTERN_COMPONENT = `${PATTERN_CHARSET}{1,4}`;
+const H16 = `${HEXDIG}{1,4}`; // 16 bits of address represented in hexadecimal
+const LS32 = `(${H16}:${H16}|${IPV4ADDRESS})`; // least-significant 32 bits of address
 
-const PATTERN_0 = `:(((:${PATTERN_COMPONENT}){1,7})|((:${PATTERN_COMPONENT}){0,5}:${PATTERN_IPV4})|:)`;
-const PATTERN_1 = `(${PATTERN_COMPONENT}:){1}(((:${PATTERN_COMPONENT}){1,6})|((:${PATTERN_COMPONENT}){0,4}:${PATTERN_IPV4})|:)`;
-const PATTERN_2 = `(${PATTERN_COMPONENT}:){2}(((:${PATTERN_COMPONENT}){1,5})|((:${PATTERN_COMPONENT}){0,3}:${PATTERN_IPV4})|:)`;
-const PATTERN_3 = `(${PATTERN_COMPONENT}:){3}(((:${PATTERN_COMPONENT}){1,4})|((:${PATTERN_COMPONENT}){0,2}:${PATTERN_IPV4})|:)`;
-const PATTERN_4 = `(${PATTERN_COMPONENT}:){4}(((:${PATTERN_COMPONENT}){1,3})|((:${PATTERN_COMPONENT}){0,1}:${PATTERN_IPV4})|:)`;
-const PATTERN_5 = `(${PATTERN_COMPONENT}:){5}(((:${PATTERN_COMPONENT}){1,2})|:${PATTERN_IPV4}|:)`;
-const PATTERN_6 = `(${PATTERN_COMPONENT}:){6}(:${PATTERN_COMPONENT}|${PATTERN_IPV4}|:)`;
-const PATTERN_7 = `(${PATTERN_COMPONENT}:){7}(${PATTERN_COMPONENT}|:)`;
+// IPv6address =                            6( h16 ":" ) ls32
+//             /                       "::" 5( h16 ":" ) ls32
+//             / [               h16 ] "::" 4( h16 ":" ) ls32
+//             / [ *1( h16 ":" ) h16 ] "::" 3( h16 ":" ) ls32
+//             / [ *2( h16 ":" ) h16 ] "::" 2( h16 ":" ) ls32
+//             / [ *3( h16 ":" ) h16 ] "::"    h16 ":"   ls32
+//             / [ *4( h16 ":" ) h16 ] "::"              ls32
+//             / [ *5( h16 ":" ) h16 ] "::"              h16
+//             / [ *6( h16 ":" ) h16 ] "::"
+const IPV6ADDRESS_1 = `(${H16}:){6}${LS32}`;
+const IPV6ADDRESS_2 = `::(${H16}:){5}${LS32}`;
+const IPV6ADDRESS_3 = `(${H16})?::(${H16}:){4}${LS32}`;
+const IPV6ADDRESS_4 = `((${H16}:){0,1}${H16})?::(${H16}:){3}${LS32}`;
+const IPV6ADDRESS_5 = `((${H16}:){0,2}${H16})?::(${H16}:){2}${LS32}`;
+const IPV6ADDRESS_6 = `((${H16}:){0,3}${H16})?::${H16}:${LS32}`;
+const IPV6ADDRESS_7 = `((${H16}:){0,4}${H16})?::${LS32}`;
+const IPV6ADDRESS_8 = `((${H16}:){0,5}${H16})?::${H16}`;
+const IPV6ADDRESS_9 = `((${H16}:){0,6}${H16})?::`;
+const IPV6ADDRESS = `(${IPV6ADDRESS_1}|${IPV6ADDRESS_2}|${IPV6ADDRESS_3}|${IPV6ADDRESS_4}|${IPV6ADDRESS_5}|${IPV6ADDRESS_6}|${IPV6ADDRESS_7}|${IPV6ADDRESS_8}|${IPV6ADDRESS_9})`;
 
-const PATTERN = `(${PATTERN_0}|${PATTERN_1}|${PATTERN_2}|${PATTERN_3}|${PATTERN_4}|${PATTERN_5}|${PATTERN_6}|${PATTERN_7})`;
-
-const REGEXP = new RegExp(`^${PATTERN}$`);
+const PATTERN = IPV6ADDRESS;
+const REGEXP = new RegExp(`^${PATTERN}$`, "i");
 
 export {PATTERN, REGEXP};

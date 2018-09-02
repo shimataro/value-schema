@@ -23,8 +23,6 @@ validate and adjust input values
     * [boolean](#boolean)
     * [string](#string)
     * [numeric string](#numeric-string)
-    * [IPv4](#ipv4)
-    * [IPv6](#ipv6)
     * [email](#email)
     * [array](#array)
     * [object](#object)
@@ -57,13 +55,13 @@ const constraints = { // constraints for input
     id: adjuster.number().minValue(1), // number, >=1
     name: adjuster.string().maxLength(16, true), // string, max 16 characters (trims if over)
     age: adjuster.number().integer(true).minValue(0), // number, integer (trims if decimal), >=0
-    email: adjuster.email(), // e-mail
+    email: adjuster.email(), // email
     state: adjuster.string().only("active", "inactive"), // string, accepts only "active" and "inactive"
     classes: adjuster.array().separatedBy(",").each(adjuster.number(), true), // array of number, separated by ",", ignores errors
     skills: adjuster.array().separatedBy(",").each(adjuster.string(), true), // array of string, separated by ",", ignores errors
     credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD), // numeric string, separated by "-", checks by Luhn algorithm
-    remote_addr: adjuster.ipv4(), // IPv4
-    remote_addr_ipv6: adjuster.ipv6(), // IPv6
+    remote_addr: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4), // IPv4
+    remote_addr_ipv6: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6), // IPv6
     limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true), // number, integer, omittable (sets 10 if omitted), >=1 (sets 1 if less), <=100 (sets 100 if greater)
     offset: adjuster.number().integer().default(0).minValue(0, true), // number, integer, omiitable (sets 0 if omited), >=0 (sets 0 if less)
 };
@@ -157,9 +155,9 @@ interface AdjusterError extends Error
 {
     name: string
     message: string
-	cause: string
-	value: any
-	keyStack: (string|number)[]
+    cause: string
+    value: any
+    keyStack: (string | number)[]
 }
 ```
 
@@ -244,7 +242,7 @@ For more information, see [string](#string).
 
 ```typescript
 namespace adjuster {
-    export declare function adjust(data: any, constraints: Object, onError?: (err: AdjusterError|null) => any): Object;
+    export declare function adjust(data: any, constraints: Object, onError?: (err: AdjusterError | null) => any): Object;
 }
 ```
 
@@ -252,9 +250,9 @@ namespace adjuster {
 Validate and adjust a input value.
 
 ##### `data`
-An object to adjust; e.g. `req.query`, `req.body` (in [Express](http://expressjs.com/))
+An object to adjust; e.g., `req.query`, `req.body` (in [Express](http://expressjs.com/))
 
-This `data` is not overwritten.
+`data` will not be overwritten.
 
 ##### `constraints`
 Constraints object for adjustment.
@@ -270,7 +268,7 @@ If this parameter is omitted, `adjuster.adjust()` throws `AdjusterError` on firs
 
 * `err`
     * an instance of `AdjusterError` or `null`
-    * `err.keyStack` indicates path to key name that caused error: `{string|number}[]`
+    * `err.keyStack` indicates path to key name that caused error: `(string | number)[]`
     * `err` will be `null` after all adjustment has finished and errors has occurred
         * `onError()` will no longer be called after `null` passed
 * returns
@@ -299,8 +297,8 @@ const constraints = {
     classes: adjuster.array().separatedBy(",").each(adjuster.number(), true), // "true" means to ignore each errors
     skills: adjuster.array().separatedBy(",").each(adjuster.string(), true),
     credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD),
-    remote_addr: adjuster.ipv4(),
-    remote_addr_ipv6: adjuster.ipv6(),
+    remote_addr: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4),
+    remote_addr_ipv6: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6),
     limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true),
     offset: adjuster.number().integer().default(0).minValue(0, true),
 };
@@ -478,13 +476,13 @@ namespace adjuster {
 
 interface NumberAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => number|void): number;
+    adjust(value: any, onError?: (err: AdjusterError) => number | void): number;
 
     // feature methods (chainable)
     strict(): this;
     default(value: number): this;
-    acceptNull(value?: number|null /* = null */): this;
-    acceptEmptyString(value?: number|null /* = null */): this;
+    acceptNull(value?: number | null /* = null */): this;
+    acceptEmptyString(value?: number | null /* = null */): this;
     acceptSpecialFormats(): this;
     integer(adjust?: boolean /* = false */): this;
     only(...values: number[]): this;
@@ -771,14 +769,14 @@ namespace adjuster {
 
 interface BooleanAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => boolean|void): number;
+    adjust(value: any, onError?: (err: AdjusterError) => boolean | void): number;
 
     // feature methods (chainable)
     strict(): this;
     acceptAllNumbers(): this;
     default(value: boolean): this;
-    acceptNull(value?: boolean|null /* = null */): this;
-    acceptEmptyString(value?: boolean|null /* = null */): this;
+    acceptNull(value?: boolean | null /* = null */): this;
+    acceptEmptyString(value?: boolean | null /* = null */): this;
 }
 ```
 
@@ -967,13 +965,13 @@ namespace adjuster {
 
 interface StringAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
+    adjust(value: any, onError?: (err: AdjusterError) => string | void): string;
 
     // feature methods (chainable)
     strict(): this;
     default(value: string): this;
-    acceptNull(value?: string|null /* = null */): this;
-    acceptEmptyString(value?: string|null /* = null */): this;
+    acceptNull(value?: string | null /* = null */): this;
+    acceptEmptyString(value?: string | null /* = null */): this;
     trim(): this;
     only(...values: string[]): this;
     minLength(length: number): this;
@@ -1197,14 +1195,14 @@ namespace adjuster {
 
 interface NumericStringAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
+    adjust(value: any, onError?: (err: AdjusterError) => string | void): string;
 
     // feature methods (chainable)
     default(value: string): this;
-    acceptNull(value?: string|null /* = null */): this;
-    acceptEmptyString(value?: string|null /* = null */): this;
+    acceptNull(value?: string | null /* = null */): this;
+    acceptEmptyString(value?: string | null /* = null */): this;
     joinArray(): this;
-    separatedBy(separator: string|RegExp): this;
+    separatedBy(separator: string | RegExp): this;
     minLength(length: number): this;
     maxLength(length: number, adjust?: boolean /* = false */): this;
     checksum(algorithm: string): this;
@@ -1404,249 +1402,6 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.CHECKSUM));
 ```
 
-### IPv4
-#### ambient declarations
-
-```typescript
-namespace adjuster {
-    export declare function ipv4(): IPv4Adjuster;
-}
-
-interface IPv4Adjuster {
-    // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
-
-    // feature methods (chainable)
-    default(value: string): this;
-    acceptNull(value?: string|null /* = null */): this;
-    acceptEmptyString(value?: string|null /* = null */): this;
-    trim(): this;
-}
-```
-
-#### `adjust(value[, onError])`
-Validate and adjust a input value.
-
-##### examples
-
-```javascript
-// should be OK
-assert.strictEqual(
-    adjuster.ipv4().adjust("0.0.0.0"),
-    "0.0.0.0");
-assert.strictEqual(
-    adjuster.ipv4().adjust("192.168.0.1"),
-    "192.168.0.1");
-assert.strictEqual(
-    adjuster.ipv4().adjust("255.255.255.255"),
-    "255.255.255.255");
-
-// should cause error
-assert.throws(
-    () => adjuster.ipv4().adjust("0.0.0."),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-assert.throws(
-    () => adjuster.ipv4().adjust("0.0.0.0."),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-assert.throws(
-    () => adjuster.ipv4().adjust("255.255.255.256"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-```
-
-#### `default(value)`
-Accept `undefined` for input, and adjust to `value`.
-
-##### examples
-
-```javascript
-// should be adjusted
-assert.strictEqual(
-    adjuster.ipv4().default("0.0.0.0").adjust(undefined),
-    "0.0.0.0");
-
-// should cause error
-assert.throws(
-    () => adjuster.ipv4().adjust(undefined),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
-```
-
-#### `acceptNull([value])`
-Accept a `null` for input, and adjust to `value`.
-
-##### examples
-
-```javascript
-// should be adjusted
-assert.strictEqual(
-    adjuster.ipv4().acceptNull("0.0.0.0").adjust(null),
-    "0.0.0.0");
-
-// should cause error
-assert.throws(
-    () => adjuster.ipv4().adjust(null),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
-```
-
-#### `acceptEmptyString([value])`
-Accept an empty string(`""`) for input, and adjust to `value`.
-
-##### examples
-
-```javascript
-// should be adjusted
-assert.strictEqual(
-    adjuster.ipv4().acceptEmptyString("0.0.0.0").adjust(""),
-    "0.0.0.0");
-
-// should cause error
-assert.throws(
-    () => adjuster.ipv4().adjust(""),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
-```
-
-#### `trim()`
-Remove whitespace from both ends of input.
-
-##### examples
-
-```javascript
-// should be adjusted
-assert.strictEqual(
-    adjuster.ipv4().trim().adjust("\r\n 1.1.1.1 \t "),
-    "1.1.1.1");
-
-// should cause error
-assert.throws(
-    () => adjuster.ipv4().trim().adjust(" \t\r\n "),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
-```
-
-### IPv6
-#### ambient declarations
-
-```typescript
-namespace adjuster {
-    export declare function ipv6(): IPv6Adjuster;
-}
-
-interface IPv6Adjuster {
-    // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
-
-    // feature methods (chainable)
-    default(value: string): this;
-    acceptNull(value?: string|null /* = null */): this;
-    acceptEmptyString(value?: string|null /* = null */): this;
-    trim(): this;
-}
-```
-
-#### `adjust(value[, onError])`
-Validate and adjust a input value.
-
-##### examples
-
-```javascript
-// should be OK
-assert.strictEqual(
-    adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000"),
-    "0000:0000:0000:0000:0000:0000:0000:0000");
-assert.strictEqual(
-    adjuster.ipv6().adjust("::1"),
-    "::1");
-assert.strictEqual(
-    adjuster.ipv6().adjust("::"),
-    "::");
-assert.strictEqual(
-    adjuster.ipv6().adjust("1::1"),
-    "1::1");
-assert.strictEqual(
-    adjuster.ipv6().adjust("::ffff:192.0.2.1"), // IPv4-mapped address
-    "::ffff:192.0.2.1");
-
-// should cause error
-assert.throws(
-    () => adjuster.ipv6().adjust("0000"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-assert.throws(
-    () => adjuster.ipv6().adjust("ffff:"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-assert.throws(
-    () => adjuster.ipv6().adjust("0000:0000:0000:0000:0000:0000:0000:0000:"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-```
-
-#### `default(value)`
-Accept `undefined` for input, and adjust to `value`.
-
-##### examples
-
-```javascript
-// should be adjusted
-assert.strictEqual(
-    adjuster.ipv6().default("::").adjust(undefined),
-    "::");
-
-// should cause error
-assert.throws(
-    () => adjuster.ipv6().adjust(undefined),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
-```
-
-#### `acceptNull([value])`
-Accept a `null` for input, and adjust to `value`.
-
-##### examples
-
-```javascript
-// should be adjusted
-assert.strictEqual(
-    adjuster.ipv6().acceptNull("::").adjust(null),
-    "::");
-
-// should cause error
-assert.throws(
-    () => adjuster.ipv6().adjust(null),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
-```
-
-#### `acceptEmptyString([value])`
-Accept an empty string(`""`) for input, and adjust to `value`.
-
-##### examples
-
-```javascript
-// should be adjusted
-assert.strictEqual(
-    adjuster.ipv6().acceptEmptyString("::").adjust(""),
-    "::");
-
-// should cause error
-assert.throws(
-    () => adjuster.ipv6().adjust(""),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
-```
-
-#### `trim()`
-Remove whitespace from both ends of input.
-
-##### examples
-
-```javascript
-// should be adjusted
-assert.strictEqual(
-    adjuster.ipv6().trim().adjust("\r\n ::1 \t "),
-    "::1");
-
-// should cause error
-assert.throws(
-    () => adjuster.ipv6().adjust("\r\n ::1 \t "),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
-assert.throws(
-    () => adjuster.ipv6().trim().adjust(" \t\r\n "),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
-```
-
 ### email
 #### ambient declarations
 
@@ -1657,12 +1412,12 @@ namespace adjuster {
 
 interface EmailAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => string|void): string;
+    adjust(value: any, onError?: (err: AdjusterError) => string | void): string;
 
     // feature methods (chainable)
     default(value: string): this;
-    acceptNull(value?: string|null /* = null */): this;
-    acceptEmptyString(value?: string|null /* = null */): this;
+    acceptNull(value?: string | null /* = null */): this;
+    acceptEmptyString(value?: string | null /* = null */): this;
     trim(): this;
     pattern(pattern: RegExp): this;
 }
@@ -1819,13 +1574,13 @@ namespace adjuster {
 
 interface ArrayAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => Array|void): Array;
+    adjust(value: any, onError?: (err: AdjusterError) => Array | void): Array;
 
     // feature methods (chainable)
     default(value: Array): this;
-    acceptNull(value?: Array|null /* = null */): this;
-    acceptEmptyString(value: Array|null /* = null */): this;
-    separatedBy(separator: string|RegExp): this;
+    acceptNull(value?: Array | null /* = null */): this;
+    acceptEmptyString(value: Array | null /* = null */): this;
+    separatedBy(separator: string | RegExp): this;
     toArray(): this;
     minLength(length: number): this;
     maxLength(length: number, adjust?: boolean /* = false */): this;
@@ -2030,12 +1785,12 @@ namespace adjuster {
 
 interface ObjectAdjuster {
     // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => Object|void): Object;
+    adjust(value: any, onError?: (err: AdjusterError) => Object | void): Object;
 
     // feature methods (chainable)
     default(value: Object): this;
-    acceptNull(value?: Object|null /* = null */): this;
-    acceptEmptyString(value: Object|null /* = null */): this;
+    acceptNull(value?: Object | null /* = null */): this;
+    acceptEmptyString(value: Object | null /* = null */): this;
     constraints(constraints): ObjectAdjuster;
 }
 ```

@@ -3,15 +3,20 @@ import {PATTERN as PATTERN_IPV6} from "./ipv6";
 
 // https://tools.ietf.org/html/rfc5321
 // https://tools.ietf.org/html/rfc5322
-const PATTERN_CHARSET_DOT = "[\\w!#$%&'*+\\-\\/=?^`{|}~]";
-const PATTERN_CHARSET_QUOTED = "[\\w!#$%&'*+\\-\\/=?^`{|}~. ()<>\\[\\]:;@,]";
-const PATTERN_CHARSET_TLD = "[a-zA-Z]";
-const PATTERN_CHARSET_SLD = "[a-zA-Z\\d\\-]";
+const PATTERN_CHARSET_DOT = `\\w!#$%&'*+\\-\\/=?^\`{|}~`;
+const PATTERN_CHARSET_QUOTED = `${PATTERN_CHARSET_DOT}. ()<>\\[\\]:;@,`;
+const PATTERN_CHARSET_TLD = `a-zA-Z`;
+const PATTERN_CHARSET_SLD = `${PATTERN_CHARSET_TLD}\\d\\-`;
 
-const PATTERN_COMPONENT_DOT = `${PATTERN_CHARSET_DOT}+`;
-const PATTERN_COMPONENT_QUOTED = `(${PATTERN_CHARSET_QUOTED}|\\\\[\\\\"])+`;
-const PATTERN_COMPONENT_TLD = `${PATTERN_CHARSET_TLD}+`;
-const PATTERN_COMPONENT_SLD = `${PATTERN_CHARSET_SLD}+`;
+const PATTERN_CLASS_DOT = `[${PATTERN_CHARSET_DOT}]`;
+const PATTERN_CLASS_QUOTED = `[${PATTERN_CHARSET_QUOTED}]`;
+const PATTERN_CLASS_TLD = `[${PATTERN_CHARSET_TLD}]`;
+const PATTERN_CLASS_SLD = `[${PATTERN_CHARSET_SLD}]`;
+
+const PATTERN_COMPONENT_DOT = `${PATTERN_CLASS_DOT}+`;
+const PATTERN_COMPONENT_QUOTED = `(${PATTERN_CLASS_QUOTED}|\\\\[\\\\"])+`;
+const PATTERN_COMPONENT_TLD = `${PATTERN_CLASS_TLD}+`;
+const PATTERN_COMPONENT_SLD = `${PATTERN_CLASS_SLD}+`;
 
 const PATTERN_LOCAL_DOT = `${PATTERN_COMPONENT_DOT}(\\.${PATTERN_COMPONENT_DOT})*`;
 const PATTERN_LOCAL_QUOTED = `"${PATTERN_COMPONENT_QUOTED}"`;

@@ -16,8 +16,6 @@ declare namespace adjuster
 	function number(): NumberAdjuster
 	function string(): StringAdjuster
 	function numericString(): NumericStringAdjuster
-	function ipv4(): IPv4Adjuster
-	function ipv6(): IPv6Adjuster
 	function email(): EmailAdjuster
 	function array(): ArrayAdjuster
 	function object(): ObjectAdjuster
@@ -273,66 +271,6 @@ interface NumericStringAdjuster extends AdjusterBase<string>
 	checksum(algorithm: string): this
 }
 
-interface IPv4Adjuster extends AdjusterBase<string>
-{
-	/**
-	 * set default value
-	 * @param value default value
-	 * @returns chainable instance
-	 */
-	default(value: string): this
-
-	/**
-	 * accept null
-	 * @param [value=null] value on null
-	 * @returns chainable instance
-	 */
-	acceptNull(value?: string | null): this
-
-	/**
-	 * accept empty string
-	 * @param [value=null] value on empty
-	 * @returns chainable instance
-	 */
-	acceptEmptyString(value?: string | null): this
-
-	/**
-	 * remove whitespace from both ends
-	 * @returns chainable instance
-	 */
-	trim(): this
-}
-
-interface IPv6Adjuster extends AdjusterBase<string>
-{
-	/**
-	 * set default value
-	 * @param value default value
-	 * @returns chainable instance
-	 */
-	default(value: string): this
-
-	/**
-	 * accept null
-	 * @param [value=null] value on null
-	 * @returns chainable instance
-	 */
-	acceptNull(value?: string | null): this
-
-	/**
-	 * accept empty string
-	 * @param [value=null] value on empty
-	 * @returns chainable instance
-	 */
-	acceptEmptyString(value?: string | null): this
-
-	/**
-	 * remove whitespace from both ends
-	 * @returns chainable instance
-	 */
-	trim(): this
-}
-
 interface EmailAdjuster extends AdjusterBase<string>
 {
 	/**
@@ -484,8 +422,6 @@ type ConstantsCause = {
 	PATTERN: string,
 
 	CHECKSUM: string,
-
-	ARRAY: string,
 }
 type ConstantsStringOptions = {
 	PATTERN: {
