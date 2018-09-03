@@ -10,7 +10,7 @@ declare namespace adjuster
 	 * @param [onError] error handler
 	 * @returns adjusted data
 	 */
-	function adjust(data: Input, constraints: Constraints, onError?: ErrorHandler): Object
+	function adjust(data: Input, constraints: Constraints, onError?: ErrorHandler): CollectionObject
 
 	function boolean(): BooleanAdjuster
 	function number(): NumberAdjuster
@@ -308,29 +308,28 @@ interface EmailAdjuster extends AdjusterBase<string>
 	pattern(pattern: RegExp): this
 }
 
-interface ArrayAdjuster extends AdjusterBase<any[]>
+interface ArrayAdjuster extends AdjusterBase<CollectionArray>
 {
-
 	/**
 	 * set default value; enable to omit
 	 * @param value default value
 	 * @returns chainable instance
 	 */
-	default(value: any[]): this
+	default(value: CollectionArray): this
 
 	/**
 	 * accept null
 	 * @param [value=null] value on null
 	 * @returns chainable instance
 	 */
-	acceptNull(value?: any[] | null): this
+	acceptNull(value?: CollectionArray | null): this
 
 	/**
 	 * accept empty string
 	 * @param [value=null] value on empty
 	 * @returns chainable instance
 	 */
-	acceptEmptyString(value?: any[] | null): this
+	acceptEmptyString(value?: CollectionArray | null): this
 
 	/**
 	 * accept string and set separator
@@ -369,28 +368,28 @@ interface ArrayAdjuster extends AdjusterBase<any[]>
 	each(adjusterInstance: AdjusterBase<any>, ignoreEachErrors?: boolean): this
 }
 
-interface ObjectAdjuster extends AdjusterBase<Object>
+interface ObjectAdjuster extends AdjusterBase<CollectionObject>
 {
 	/**
 	 * set default value; enable to omit
 	 * @param value default value
 	 * @returns chainable instance
 	 */
-	default(value: Object): this
+	default(value: CollectionObject): this
 
 	/**
 	 * accept null
 	 * @param [value=null] value on null
 	 * @returns chainable instance
 	 */
-	acceptNull(value?: Object | null): this
+	acceptNull(value?: CollectionObject | null): this
 
 	/**
 	 * accept empty string
 	 * @param [value=null] value on empty
 	 * @returns chainable instance
 	 */
-	acceptEmptyString(value?: Object | null): this
+	acceptEmptyString(value?: CollectionObject | null): this
 
 	/**
 	 * apply constraints
@@ -401,8 +400,10 @@ interface ObjectAdjuster extends AdjusterBase<Object>
 }
 
 // type definitions
-type Input = null | boolean | number | string | any[] | Object
+type CollectionArray = any[]
+type CollectionObject = { [name: string]: any }
 type Constraints = { [name: string]: AdjusterBase<any> }
+type Input = null | boolean | number | string | CollectionArray | CollectionObject
 type ErrorHandler<T = any> = (err: AdjusterError | null) => T | void
 type Key = string | number
 type Separator = RegExp | string
