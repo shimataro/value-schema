@@ -1160,6 +1160,7 @@ You can also use `adjuster.STRING.PATTERN` constants
 |constant|explanation|
 |--------|-----------|
 |`adjuster.STRING.PATTERN.EMAIL`|email address that follows [RFC5321](https://tools.ietf.org/html/rfc5321) / [RFC5322](https://tools.ietf.org/html/rfc5322)|
+|`adjuster.STRING.PATTERN.HTTP`|HTTP/HTTPS URL|
 |`adjuster.STRING.PATTERN.IPV4`|IPv4 address|
 |`adjuster.STRING.PATTERN.IPV6`|IPv6 address|
 |`adjuster.STRING.PATTERN.URI`|URI that follows [RFC3986](https://tools.ietf.org/html/rfc3986)|
