@@ -241,6 +241,10 @@ function testMaxLength()
  */
 function testPattern()
 {
+	describe("http", () =>
+	{
+		testpatternHttp();
+	});
 	describe("ipv4", () =>
 	{
 		testPatternIpv4();
@@ -256,6 +260,45 @@ function testPattern()
 	describe("others", () =>
 	{
 		testPatternOthers();
+	});
+}
+
+/**
+ * pattern; HTTP
+ * @returns {void}
+ */
+function testpatternHttp()
+{
+	it("should be OK", () =>
+	{
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
+			.adjust("https://user:password@example.com:8080")).toEqual("https://user:password@example.com:8080");
+
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
+			.adjust("https://example.com/path/to/resource?name=value#hash")).toEqual("https://example.com/path/to/resource?name=value#hash");
+
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
+			.adjust("https://192.168.10.2/")).toEqual("https://192.168.10.2/");
+
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
+			.adjust("https://[fe80::a1b3:125d:c1f8:4781]/")).toEqual("https://[fe80::a1b3:125d:c1f8:4781]/");
+
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
+			.adjust("https://github.com/shimataro/node-adjuster")).toEqual("https://github.com/shimataro/node-adjuster");
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
+			.adjust("https://www.npmjs.com/package/adjuster")).toEqual("https://www.npmjs.com/package/adjuster");
+
+		// https://tools.ietf.org/html/rfc3986#section-1.1.2
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
+			.adjust("http://www.ietf.org/rfc/rfc2396.txt")).toEqual("http://www.ietf.org/rfc/rfc2396.txt");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
+				.adjust("https://例.com/");
+		}).toThrow(adjuster.CAUSE.PATTERN);
 	});
 }
 

@@ -1,5 +1,5 @@
-import {PATTERN as PATTERN_IPV4} from "./ipv4";
-import {PATTERN as PATTERN_IPV6} from "./ipv6";
+import {PATTERN_IPV4} from "./ipv4";
+import {PATTERN_IPV6} from "./ipv6";
 
 // https://tools.ietf.org/html/rfc5321
 // https://tools.ietf.org/html/rfc5322
@@ -26,8 +26,7 @@ const PATTERN_DOMAIN_GENERAL = `(${PATTERN_COMPONENT_SLD}\\.)+${PATTERN_COMPONEN
 const PATTERN_DOMAIN_IP = `\\[(${PATTERN_IPV4}|IPv6:${PATTERN_IPV6})\\]`;
 const PATTERN_DOMAIN = `(${PATTERN_DOMAIN_GENERAL}|${PATTERN_DOMAIN_IP})`;
 
-const PATTERN = `${PATTERN_LOCAL}@${PATTERN_DOMAIN}`;
+const PATTERN_EMAIL = `${PATTERN_LOCAL}@${PATTERN_DOMAIN}`;
+const REGEXP_EMAIL = new RegExp(`^${PATTERN_EMAIL}$`);
 
-const REGEXP = new RegExp(`^${PATTERN}$`);
-
-export {PATTERN, REGEXP};
+export {PATTERN_EMAIL, REGEXP_EMAIL};

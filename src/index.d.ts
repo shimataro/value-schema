@@ -427,6 +427,7 @@ type ConstantsCause = {
 type ConstantsStringOptions = {
 	PATTERN: {
 		EMAIL: RegExp,
+		HTTP: RegExp,
 		IPV4: RegExp,
 		IPV6: RegExp,
 		URI: RegExp,
