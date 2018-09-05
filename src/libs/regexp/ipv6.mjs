@@ -1,8 +1,8 @@
 import {HEXDIG} from "./rfc";
-import {PATTERN_IPV4} from "./ipv4";
+import {PATTERN_IPV4 as IPV4ADDRESS} from "./ipv4";
 
 const H16 = `${HEXDIG}{1,4}`; // 16 bits of address represented in hexadecimal
-const LS32 = `(${H16}:${H16}|${PATTERN_IPV4})`; // least-significant 32 bits of address
+const LS32 = `(${H16}:${H16}|${IPV4ADDRESS})`; // least-significant 32 bits of address
 
 // IPv6address =                            6( h16 ":" ) ls32
 //             /                       "::" 5( h16 ":" ) ls32
