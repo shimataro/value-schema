@@ -299,6 +299,12 @@ function testpatternHttp()
 			adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
 				.adjust("https://例.com/");
 		}).toThrow(adjuster.CAUSE.PATTERN);
+
+		expect(() =>
+		{
+			adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
+				.adjust("http://example.com::80/");
+		}).toThrow(adjuster.CAUSE.PATTERN);
 	});
 }
 
