@@ -8,7 +8,7 @@ import Trim from "../decorators/string/trim";
 import Pattern from "../decorators/string/pattern";
 import MaxLength from "../decorators/email/maxLength";
 
-import {REGEXP} from "../libs/regexp/email";
+import {REGEXP_EMAIL} from "../libs/regexp/email";
 
 /**
  * factory
@@ -38,6 +38,6 @@ class EmailAdjuster extends AdjusterBase
 	{
 		super();
 
-		this.pattern(REGEXP);
+		this.pattern(REGEXP_EMAIL);
 	}
 }
