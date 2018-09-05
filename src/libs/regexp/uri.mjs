@@ -57,6 +57,7 @@ const URI = `${SCHEME}:${HIER_PART}(\\?${QUERY})?(#${FRAGMENT})?`;
 const PATTERN_URI = URI;
 const REGEXP_URI = new RegExp(`^${PATTERN_URI}$`, "i");
 
+// pattern for HTTP
 const HTTP = `https?://${AUTHORITY}${PATH_ABEMPTY}(\\?${QUERY})?(#${FRAGMENT})?`;
 
 const PATTERN_HTTP = HTTP;
