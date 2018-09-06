@@ -272,6 +272,15 @@ function testpatternHttp()
 	it("should be OK", () =>
 	{
 		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
+			.adjust("https://example.com/")).toEqual("https://example.com/");
+
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
+			.adjust("https://example.com")).toEqual("https://example.com");
+
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
+			.adjust("https://example.com:")).toEqual("https://example.com:");
+
+		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
 			.adjust("https://user:password@example.com:8080")).toEqual("https://user:password@example.com:8080");
 
 		expect(adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
@@ -298,6 +307,30 @@ function testpatternHttp()
 		{
 			adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
 				.adjust("https://例.com/");
+		}).toThrow(adjuster.CAUSE.PATTERN);
+
+		expect(() =>
+		{
+			adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
+				.adjust("http:/example.com/");
+		}).toThrow(adjuster.CAUSE.PATTERN);
+
+		expect(() =>
+		{
+			adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
+				.adjust("http://example.com::80/");
+		}).toThrow(adjuster.CAUSE.PATTERN);
+
+		expect(() =>
+		{
+			adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
+				.adjust("http://example.com:abc/");
+		}).toThrow(adjuster.CAUSE.PATTERN);
+
+		expect(() =>
+		{
+			adjuster.string().pattern(adjuster.STRING.PATTERN.HTTP)
+				.adjust("https://1[fe80::a1b3:125d:c1f8:4781]/");
 		}).toThrow(adjuster.CAUSE.PATTERN);
 	});
 }
