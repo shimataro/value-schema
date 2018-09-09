@@ -3,6 +3,14 @@ export as namespace adjuster
 
 declare namespace adjuster
 {
+	interface AdjusterError extends Error
+	{
+		name: string
+		cause: string
+		value: any
+		keyStack: Key[]
+	}
+
 	/**
 	 * adjust multiple variables (as object)
 	 * @param data data to be adjusted
@@ -26,14 +34,6 @@ declare namespace adjuster
 }
 
 // interface definitions
-interface AdjusterError extends Error
-{
-	name: string
-	cause: string
-	value: any
-	keyStack: Key[]
-}
-
 interface AdjusterBase<T>
 {
 	/**
@@ -404,7 +404,7 @@ type CollectionArray = any[]
 type CollectionObject = { [name: string]: any }
 type Constraints = { [name: string]: AdjusterBase<any> }
 type Input = null | boolean | number | string | CollectionArray | CollectionObject
-type ErrorHandler<T = any> = (err: AdjusterError | null) => T | void
+type ErrorHandler<T = any> = (err: adjuster.AdjusterError | null) => T | void
 type Key = string | number
 type Separator = RegExp | string
 
