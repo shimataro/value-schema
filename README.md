@@ -145,7 +145,7 @@ import adjuster from "adjuster";
 
 ## Reference
 ### types and constants
-#### `AdjusterError`
+#### `adjuster.AdjusterError`
 The `AdjusterError` object represents an error when trying to adjust invalid value.
 
 ##### ambient declaration

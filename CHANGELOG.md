@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
+* `adjuster.AdjusterError` - for TypeScript
 * `adjuster.STRING.PATTERN.HTTP` - for test of HTTP/HTTPS URL
 
 ### Changed
