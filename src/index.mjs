@@ -1,5 +1,4 @@
 import {CAUSE, STRING, NUMERIC_STRING} from "./libs/constants";
-import AdjusterError from "./libs/AdjusterError";
 import adjust from "./libs/adjust";
 import boolean from "./adjusters/boolean";
 import number from "./adjusters/number";
@@ -13,8 +12,6 @@ export default {
 	CAUSE,
 	STRING,
 	NUMERIC_STRING,
-
-	AdjusterError,
 
 	adjust,
 
