@@ -1,5 +1,5 @@
 import {HEXDIG} from "./rfc";
-import {PATTERN as IPV4ADDRESS} from "./ipv4";
+import {PATTERN_IPV4 as IPV4ADDRESS} from "./ipv4";
 
 const H16 = `${HEXDIG}{1,4}`; // 16 bits of address represented in hexadecimal
 const LS32 = `(${H16}:${H16}|${IPV4ADDRESS})`; // least-significant 32 bits of address
@@ -24,7 +24,7 @@ const IPV6ADDRESS_8 = `((${H16}:){0,5}${H16})?::${H16}`;
 const IPV6ADDRESS_9 = `((${H16}:){0,6}${H16})?::`;
 const IPV6ADDRESS = `(${IPV6ADDRESS_1}|${IPV6ADDRESS_2}|${IPV6ADDRESS_3}|${IPV6ADDRESS_4}|${IPV6ADDRESS_5}|${IPV6ADDRESS_6}|${IPV6ADDRESS_7}|${IPV6ADDRESS_8}|${IPV6ADDRESS_9})`;
 
-const PATTERN = IPV6ADDRESS;
-const REGEXP = new RegExp(`^${PATTERN}$`, "i");
+const PATTERN_IPV6 = IPV6ADDRESS;
+const REGEXP_IPV6 = new RegExp(`^${PATTERN_IPV6}$`, "i");
 
-export {PATTERN, REGEXP};
+export {PATTERN_IPV6, REGEXP_IPV6};

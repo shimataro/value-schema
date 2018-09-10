@@ -2,7 +2,7 @@ import {DEC_OCTET} from "./rfc";
 
 const IPV4ADDRESS = `${DEC_OCTET}(\\.${DEC_OCTET}){3}`;
 
-const PATTERN = IPV4ADDRESS;
-const REGEXP = new RegExp(`^${PATTERN}$`);
+const PATTERN_IPV4 = IPV4ADDRESS;
+const REGEXP_IPV4 = new RegExp(`^${PATTERN_IPV4}$`);
 
-export {PATTERN, REGEXP};
+export {PATTERN_IPV4, REGEXP_IPV4};

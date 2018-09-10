@@ -1,7 +1,7 @@
 // URI pattern follows RFC3986: https://tools.ietf.org/html/rfc3986
 import {ALPHA, DIGIT, HEXDIG} from "./rfc";
-import {PATTERN as PATTERN_IPV4} from "./ipv4";
-import {PATTERN as PATTERN_IPV6} from "./ipv6";
+import {PATTERN_IPV4} from "./ipv4";
+import {PATTERN_IPV6} from "./ipv6";
 
 // Percent-Encoding: https://tools.ietf.org/html/rfc3986#section-2.1
 const PCT_ENCODED = `%${HEXDIG}${HEXDIG}`;
@@ -54,7 +54,13 @@ const FRAGMENT = `(${PCHAR}|[/?])*`;
 const HIER_PART = `(//${AUTHORITY}${PATH_ABEMPTY}|${PATH_ABSOLUTE}|${PATH_ROOTLESS}|${PATH_EMPTY})`;
 const URI = `${SCHEME}:${HIER_PART}(\\?${QUERY})?(#${FRAGMENT})?`;
 
-const PATTERN = URI;
-const REGEXP = new RegExp(`^${PATTERN}$`, "i");
+const PATTERN_URI = URI;
+const REGEXP_URI = new RegExp(`^${PATTERN_URI}$`, "i");
 
-export {PATTERN, REGEXP};
+// pattern for HTTP
+const HTTP = `https?://${AUTHORITY}${PATH_ABEMPTY}(\\?${QUERY})?(#${FRAGMENT})?`;
+
+const PATTERN_HTTP = HTTP;
+const REGEXP_HTTP = new RegExp(`^${PATTERN_HTTP}$`, "i");
+
+export {PATTERN_URI, REGEXP_URI, PATTERN_HTTP, REGEXP_HTTP};
