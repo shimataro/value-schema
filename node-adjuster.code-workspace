@@ -26,7 +26,8 @@
   "extensions": {
     "recommendations": [
       "dbaeumer.vscode-eslint",
-      "EditorConfig.EditorConfig"
+      "EditorConfig.EditorConfig",
+      "eg2.vscode-npm-script"
     ]
   }
 }
