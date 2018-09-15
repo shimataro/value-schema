@@ -1,6 +1,6 @@
 {
   "name": "adjuster",
-  "version": "1.0.0-rc.6",
+  "version": "1.0.0-rc.7",
   "dependencies": {
     "@babel/cli": {
       "version": "7.0.0",
