@@ -91,7 +91,6 @@ function testError()
 				return;
 			}
 
-			expect(err instanceof adjuster.AdjusterError).toEqual(true);
 			switch(err.keyStack.shift())
 			{
 			case "id":
