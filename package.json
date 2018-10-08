@@ -1,7 +1,7 @@
 {
   "name": "adjuster",
   "description": "validate and adjust input values",
-  "version": "1.0.0-rc.7",
+  "version": "1.0.0",
   "author": "shimataro",
   "license": "MIT",
   "repository": {
@@ -46,20 +46,20 @@
   },
   "devDependencies": {
     "@types/core-js": "2.5.0",
-    "@types/jest": "23.3.2",
-    "@types/node": "10.9.4",
+    "@types/jest": "23.3.3",
+    "@types/node": "10.11.4",
     "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "9.0.0",
-    "eslint": "5.6.0",
+    "babel-eslint": "10.0.1",
+    "eslint": "5.6.1",
     "eslint-plugin-import": "2.14.0",
     "jest": "23.6.0",
     "npm-check-updates": "2.14.2"
   },
   "dependencies": {
-    "@babel/cli": "7.0.0",
-    "@babel/core": "7.0.1",
-    "@babel/plugin-proposal-decorators": "7.0.0",
-    "@babel/preset-env": "7.0.0",
+    "@babel/cli": "7.1.2",
+    "@babel/core": "7.1.2",
+    "@babel/plugin-proposal-decorators": "7.1.2",
+    "@babel/preset-env": "7.1.0",
     "babel-plugin-add-module-exports": "1.0.0",
     "cross-env": "5.2.0",
     "npm-run-all": "4.1.3"
