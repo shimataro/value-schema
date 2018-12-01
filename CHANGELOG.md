@@ -5,6 +5,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Security
+* fix [event-strem incident](https://blog.npmjs.org/post/180565383195/details-about-the-event-stream-incident)
+
+## [1.0.0] - 2018-10-08
+* First stable release!
+
+## [1.0.0-rc.7] - 2018-09-15
+### Removed
+* `adjuster.AdjusterError` - reverted v1.0.0-rc.6
+
+## [1.0.0-rc.6] - 2018-09-10
 ### Added
 * `adjuster.AdjusterError` - for TypeScript
 * `adjuster.STRING.PATTERN.HTTP` - for test of HTTP/HTTPS URL
@@ -219,7 +230,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.1.0] - 2018-04-18
 * First release.
 
-[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.5...HEAD
+[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.7...v1.0.0
+[1.0.0-rc.7]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.6...v1.0.0-rc.7
+[1.0.0-rc.6]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.5...v1.0.0-rc.6
 [1.0.0-rc.5]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.4...v1.0.0-rc.5
 [1.0.0-rc.4]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.3...v1.0.0-rc.4
 [1.0.0-rc.3]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.2...v1.0.0-rc.3

@@ -1,4 +1,4 @@
-import adjuster from "index"; // eslint-disable-line import/no-unresolved
+import adjuster from "adjuster"; // eslint-disable-line import/no-unresolved
 
 {
 	describe("adjust", testAdjust);
@@ -91,7 +91,6 @@ function testError()
 				return;
 			}
 
-			expect(err instanceof adjuster.AdjusterError).toEqual(true);
 			switch(err.keyStack.shift())
 			{
 			case "id":

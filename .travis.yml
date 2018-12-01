@@ -7,6 +7,7 @@ node_js: # jest and eslint no longer support v4
   - "8"
 install:
   - "npm install -g codecov"
+  - "npm install"
 os:
   - "linux"
   - "osx"
