@@ -168,7 +168,7 @@ Remaining processes are...
 	Description this release: (copy and paste CHANGELOG.md)
 6. Publish!
 	${COLOR_COMMAND}git clone -b master ${URL_REPOSITORY} ${DIR_TMP}${COLOR_RESET}
-	${COLOR_COMMAND}npm publish ${DIR_TMP} --access=public${COLOR_RESET}
+	${COLOR_COMMAND}npm publish ${DIR_TMP}${COLOR_RESET}
 7. Post processing
 	${COLOR_COMMAND}rm -rf ${DIR_TMP}${COLOR_RESET}
 	${COLOR_COMMAND}git checkout ${BASE_BRANCH}${COLOR_RESET}

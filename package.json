@@ -12,6 +12,9 @@
     "url": "https://github.com/shimataro/node-adjuster/issues"
   },
   "homepage": "https://github.com/shimataro/node-adjuster#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "param",
     "params",
