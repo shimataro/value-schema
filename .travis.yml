@@ -22,7 +22,7 @@ script:
   - "npm run verify"
   - "codecov"
 deploy:
-  provider: npm
+  provider: "npm"
   email: "$NPM_EMAIL"
   api_key: "$NPM_TOKEN"
   on:
