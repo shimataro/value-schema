@@ -5,8 +5,6 @@
 
 BASE_BRANCH="develop"
 
-DIR_TMP="tmp"
-
 URL_PRODUCT="https://github.com/shimataro/node-adjuster"
 URL_REPOSITORY="${URL_PRODUCT}.git"
 URL_COMPARE="${URL_PRODUCT}/compare"
@@ -166,11 +164,7 @@ Remaining processes are...
 	Target: ${COLOR_INPUT}master${COLOR_RESET}
 	Release title: ${COLOR_INPUT}node-adjuster ${VERSION} released${COLOR_RESET}
 	Description this release: (copy and paste CHANGELOG.md)
-6. Publish!
-	${COLOR_COMMAND}git clone -b master ${URL_REPOSITORY} ${DIR_TMP}${COLOR_RESET}
-	${COLOR_COMMAND}npm publish ${DIR_TMP}${COLOR_RESET}
-7. Post processing
-	${COLOR_COMMAND}rm -rf ${DIR_TMP}${COLOR_RESET}
+6. Post processing
 	${COLOR_COMMAND}git checkout ${BASE_BRANCH}${COLOR_RESET}
 	${COLOR_COMMAND}git pull${COLOR_RESET}
 	${COLOR_COMMAND}git fetch -p${COLOR_RESET}
