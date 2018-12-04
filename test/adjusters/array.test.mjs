@@ -1,4 +1,4 @@
-import adjuster from "index"; // eslint-disable-line import/no-unresolved
+import adjuster from "adjuster"; // eslint-disable-line import/no-unresolved
 
 {
 	describe("type", testType);
