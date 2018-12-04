@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.0.1] - 2018-12-04
 ### Security
 * fix [event-strem incident](https://blog.npmjs.org/post/180565383195/details-about-the-event-stream-incident)
 
@@ -230,7 +232,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.1.0] - 2018-04-18
 * First release.
 
-[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/shimataro/node-adjuster/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.7...v1.0.0
 [1.0.0-rc.7]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.6...v1.0.0-rc.7
 [1.0.0-rc.6]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.5...v1.0.0-rc.6
