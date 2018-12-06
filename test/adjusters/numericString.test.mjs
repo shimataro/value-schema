@@ -2,6 +2,7 @@ import adjuster from "adjuster"; // eslint-disable-line import/no-unresolved
 
 {
 	describe("type", testType);
+	describe("default", testDefault);
 	describe("acceptNull", testAcceptNull);
 	describe("joinArray", testJoinArray);
 	describe("separatedBy", testSeparatedBy);
@@ -27,6 +28,27 @@ function testType()
 	{
 		expect(adjuster.numericString()
 			.adjust(1111222233334444)).toEqual("1111222233334444");
+	});
+}
+
+/**
+ * default value
+ * @returns {void}
+ */
+function testDefault()
+{
+	it("should be adjusted", () =>
+	{
+		expect(adjuster.numericString().default("12345")
+			.adjust(undefined)).toEqual("12345");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.numericString()
+				.adjust(undefined);
+		}).toThrow(adjuster.CAUSE.REQUIRED);
 	});
 }
 
