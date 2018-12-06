@@ -891,7 +891,7 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
 ```
 
-### `strict()`
+#### `strict()`
 
 Enable strict type check.
 
@@ -914,7 +914,7 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
 ```
 
-### `acceptAllNumbers()`
+#### `acceptAllNumbers()`
 
 Accept all numbers, other than 0 / 1.
 
@@ -1113,7 +1113,6 @@ assert.throws(
     () => adjuster.string().adjust(""),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
 ```
-
 
 #### `trim()`
 
@@ -1382,6 +1381,7 @@ assert.throws(
 ```
 
 #### `minLength(length)`
+
 Limit minimum length of input string to `length`.
 
 ##### examples
