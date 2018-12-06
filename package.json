@@ -47,6 +47,7 @@
     "lint": "run-p lint:*",
     "lint:es": "eslint ./src ./test --ext .mjs",
     "lint:md": "markdownlint . --ignore ./node_modules",
+    "lint:yaml": "yamllint .*.yml *.yml --ignore=node_modules/**/*.yml --ignore=node_modules/**/*.yaml",
     "check-updates": "ncu"
   },
   "devDependencies": {
@@ -59,7 +60,8 @@
     "eslint-plugin-import": "2.14.0",
     "jest": "23.6.0",
     "markdownlint-cli": "0.13.0",
-    "npm-check-updates": "2.15.0"
+    "npm-check-updates": "2.15.0",
+    "yaml-lint": "1.2.4"
   },
   "dependencies": {
     "@babel/cli": "7.2.0",
