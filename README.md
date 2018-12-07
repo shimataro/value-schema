@@ -250,7 +250,7 @@ For more information, see [string](#string).
 
 ```typescript
 namespace adjuster {
-    export declare function adjust(data: any, constraints: Object, onError?: (err: AdjusterError | null) => any): Object;
+    export declare function adjust<T = any>(data: any, constraints: Object, onError?: (err: AdjusterError | null) => any): T;
 }
 ```
 
@@ -345,6 +345,26 @@ const expected = {
 
 const adjusted = adjuster.adjust(input, constraints);
 assert.deepStrictEqual(adjusted, expected);
+```
+
+In TypeScript, use Generics for type-safe.
+
+```typescript
+interface Parameters {
+    foo: number
+    bar: string
+}
+
+const constraints = {
+    foo: adjuster.number(),
+    bar: adjuster.string(),
+};
+const input = {
+    foo: "12345",
+    bar: "abcde",
+};
+
+const adjusted = adjuster.adjust<Parameters>(input, constraints);
 ```
 
 ###### error handling 1
@@ -1634,12 +1654,12 @@ assert.throws(
 
 ```typescript
 namespace adjuster {
-    export declare function array(): ArrayAdjuster;
+    export declare function array<T = any[]>(): ArrayAdjuster;
 }
 
-interface ArrayAdjuster {
+interface ArrayAdjuster<T> {
     // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => Array | void): Array;
+    adjust(value: any, onError?: (err: AdjusterError) => Array | void): T;
 
     // feature methods (chainable)
     default(value: Array): this;
@@ -1855,12 +1875,12 @@ assert.throws(
 
 ```typescript
 namespace adjuster {
-    export declare function object(): ObjectAdjuster;
+    export declare function object<T = any>(): ObjectAdjuster;
 }
 
-interface ObjectAdjuster {
+interface ObjectAdjuster<T> {
     // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => Object | void): Object;
+    adjust(value: any, onError?: (err: AdjusterError) => Object | void): T;
 
     // feature methods (chainable)
     default(value: Object): this;
