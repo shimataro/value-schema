@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* `adjuster.adjust()` and `adjuster.object()` returns type `any`, accept generics for type-safe
+* `adjuster.array()` returns type `any[]`, accepts generics for type-safe
+
 ## [1.0.1] - 2018-12-04
 
 ### Security

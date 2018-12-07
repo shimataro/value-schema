@@ -10,15 +10,15 @@ declare namespace adjuster
 	 * @param [onError] error handler
 	 * @returns adjusted data
 	 */
-	function adjust(data: Input, constraints: Constraints, onError?: ErrorHandler): CollectionObject
+	function adjust<T = any>(data: Input, constraints: Constraints, onError?: ErrorHandler): T
 
 	function boolean(): BooleanAdjuster
 	function number(): NumberAdjuster
 	function string(): StringAdjuster
 	function numericString(): NumericStringAdjuster
 	function email(): EmailAdjuster
-	function array(): ArrayAdjuster
-	function object(): ObjectAdjuster
+	function array<T = any[]>(): ArrayAdjuster<T>
+	function object<T = any>(): ObjectAdjuster<T>
 
 	const CAUSE: ConstantsCause;
 	const STRING: ConstantsStringOptions;
@@ -308,7 +308,7 @@ interface EmailAdjuster extends AdjusterBase<string>
 	pattern(pattern: RegExp): this
 }
 
-interface ArrayAdjuster extends AdjusterBase<CollectionArray>
+interface ArrayAdjuster<T> extends AdjusterBase<T>
 {
 	/**
 	 * set default value; enable to omit
@@ -368,7 +368,7 @@ interface ArrayAdjuster extends AdjusterBase<CollectionArray>
 	each(adjusterInstance: AdjusterBase<any>, ignoreEachErrors?: boolean): this
 }
 
-interface ObjectAdjuster extends AdjusterBase<CollectionObject>
+interface ObjectAdjuster<T> extends AdjusterBase<T>
 {
 	/**
 	 * set default value; enable to omit
