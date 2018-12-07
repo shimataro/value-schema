@@ -18,8 +18,8 @@ validate and adjust input values
 * [Reference](#reference)
     * [types and constants](#types-and-constants)
     * [basic usage](#basic-usage)
-    * [number](#number)
     * [boolean](#boolean)
+    * [number](#number)
     * [string](#string)
     * [numeric string](#numeric-string)
     * [email](#email)
@@ -503,6 +503,209 @@ catch (err) {
 }
 ```
 
+### boolean
+
+#### ambient declarations
+
+```typescript
+namespace adjuster {
+    export declare function boolean(): BooleanAdjuster;
+}
+
+interface BooleanAdjuster {
+    // adjustment method
+    adjust(value: any, onError?: (err: AdjusterError) => boolean | void): number;
+
+    // feature methods (chainable)
+    strict(): this;
+    acceptAllNumbers(): this;
+    default(value: boolean): this;
+    acceptNull(value?: boolean | null /* = null */): this;
+    acceptEmptyString(value?: boolean | null /* = null */): this;
+}
+```
+
+#### `adjust(value[, onError])`
+
+Validate and adjust a input value.
+
+If an error occurs, call `onError` (if specified) or throw `AdjusterError` (otherwise)
+
+##### examples
+
+```javascript
+// should be OK
+assert.strictEqual(
+    adjuster.boolean().adjust(true),
+    true);
+assert.strictEqual(
+    adjuster.boolean().adjust(false),
+    false);
+
+// should be adjusted
+assert.strictEqual(
+    adjuster.boolean().adjust(1),
+    true);
+assert.strictEqual(
+    adjuster.boolean().adjust(0),
+    false);
+assert.strictEqual(
+    adjuster.boolean().adjust("1"),
+    true);
+assert.strictEqual(
+    adjuster.boolean().adjust("0"), // "0" is truthy in JavaScript, but node-adjuster adjusts to false!
+    false);
+assert.strictEqual(
+    adjuster.boolean().adjust("true"), // "true" / "yes" / "on" are true, "false" / "no" / "off" are false!
+    true);
+assert.strictEqual(
+    adjuster.boolean().adjust("TRUE"),
+    true);
+assert.strictEqual(
+    adjuster.boolean().adjust("yes"),
+    true);
+assert.strictEqual(
+    adjuster.boolean().adjust("YES"),
+    true);
+assert.strictEqual(
+    adjuster.boolean().adjust("on"),
+    true);
+assert.strictEqual(
+    adjuster.boolean().adjust("ON"),
+    true);
+assert.strictEqual(
+    adjuster.boolean().adjust("false"),
+    false);
+assert.strictEqual(
+    adjuster.boolean().adjust("FALSE"),
+    false);
+assert.strictEqual(
+    adjuster.boolean().adjust("no"),
+    false);
+assert.strictEqual(
+    adjuster.boolean().adjust("NO"),
+    false);
+assert.strictEqual(
+    adjuster.boolean().adjust("off"),
+    false);
+assert.strictEqual(
+    adjuster.boolean().adjust("OFF"),
+    false);
+
+// should cause error
+assert.throws(
+    () => adjuster.boolean().adjust(-1), // accepts only 0,1
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(
+    () => adjuster.boolean().adjust("abc"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(
+    () => adjuster.boolean().adjust([]),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(
+    () => adjuster.boolean().adjust({}),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+```
+
+#### `strict()`
+
+Enable strict type check.
+
+**HANDLE WITH CARE!**
+In URL encoding, all values will be treated as string.
+Use this method when your system accepts **ONLY** JSON encoding (`application/json`)
+
+##### examples
+
+```javascript
+// should cause error
+assert.throws(
+    () => adjuster.boolean().strict().adjust(1),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(
+    () => adjuster.boolean().strict().adjust("1"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+assert.throws(
+    () => adjuster.boolean().strict().adjust("true"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+```
+
+#### `acceptAllNumbers()`
+
+Accept all numbers, other than 0 / 1.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.boolean().acceptAllNumbers().adjust(-1),
+    true);
+assert.strictEqual(
+    adjuster.boolean().acceptAllNumbers().adjust("100"),
+    true);
+```
+
+#### `default(value)`
+
+Accept `undefined` for input, and adjust to `value`.
+
+If this method is not called, `adjust(undefined)` causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.boolean().default(true).adjust(undefined),
+    true);
+
+// should cause error
+assert.throws(
+    () => adjuster.boolean().adjust(undefined),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+```
+
+#### `acceptNull([value])`
+
+Accept a `null` for input, and adjust to `value`.
+
+If this method is not called, `adjust(null)` causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.boolean().acceptNull(true).adjust(null),
+    true);
+
+// should cause error
+assert.throws(
+    () => adjuster.boolean().adjust(null),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
+```
+
+#### `acceptEmptyString([value])`
+
+Accept an empty string(`""`) for input, and adjust to `value`.
+
+If this method is not called, `adjust("")` causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.boolean().acceptEmptyString(true).adjust(""),
+    true);
+
+// should cause error
+assert.throws(
+    () => adjuster.boolean().adjust(""),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+```
+
 ### number
 
 #### ambient declarations
@@ -805,209 +1008,6 @@ assert.throws(
 assert.throws(
     () => adjuster.number().maxValue(100).adjust(101),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_VALUE));
-```
-
-### boolean
-
-#### ambient declarations
-
-```typescript
-namespace adjuster {
-    export declare function boolean(): BooleanAdjuster;
-}
-
-interface BooleanAdjuster {
-    // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => boolean | void): number;
-
-    // feature methods (chainable)
-    strict(): this;
-    acceptAllNumbers(): this;
-    default(value: boolean): this;
-    acceptNull(value?: boolean | null /* = null */): this;
-    acceptEmptyString(value?: boolean | null /* = null */): this;
-}
-```
-
-#### `adjust(value[, onError])`
-
-Validate and adjust a input value.
-
-If an error occurs, call `onError` (if specified) or throw `AdjusterError` (otherwise)
-
-##### examples
-
-```javascript
-// should be OK
-assert.strictEqual(
-    adjuster.boolean().adjust(true),
-    true);
-assert.strictEqual(
-    adjuster.boolean().adjust(false),
-    false);
-
-// should be adjusted
-assert.strictEqual(
-    adjuster.boolean().adjust(1),
-    true);
-assert.strictEqual(
-    adjuster.boolean().adjust(0),
-    false);
-assert.strictEqual(
-    adjuster.boolean().adjust("1"),
-    true);
-assert.strictEqual(
-    adjuster.boolean().adjust("0"), // "0" is truthy in JavaScript, but node-adjuster adjusts to false!
-    false);
-assert.strictEqual(
-    adjuster.boolean().adjust("true"), // "true" / "yes" / "on" are true, "false" / "no" / "off" are false!
-    true);
-assert.strictEqual(
-    adjuster.boolean().adjust("TRUE"),
-    true);
-assert.strictEqual(
-    adjuster.boolean().adjust("yes"),
-    true);
-assert.strictEqual(
-    adjuster.boolean().adjust("YES"),
-    true);
-assert.strictEqual(
-    adjuster.boolean().adjust("on"),
-    true);
-assert.strictEqual(
-    adjuster.boolean().adjust("ON"),
-    true);
-assert.strictEqual(
-    adjuster.boolean().adjust("false"),
-    false);
-assert.strictEqual(
-    adjuster.boolean().adjust("FALSE"),
-    false);
-assert.strictEqual(
-    adjuster.boolean().adjust("no"),
-    false);
-assert.strictEqual(
-    adjuster.boolean().adjust("NO"),
-    false);
-assert.strictEqual(
-    adjuster.boolean().adjust("off"),
-    false);
-assert.strictEqual(
-    adjuster.boolean().adjust("OFF"),
-    false);
-
-// should cause error
-assert.throws(
-    () => adjuster.boolean().adjust(-1), // accepts only 0,1
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
-assert.throws(
-    () => adjuster.boolean().adjust("abc"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
-assert.throws(
-    () => adjuster.boolean().adjust([]),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
-assert.throws(
-    () => adjuster.boolean().adjust({}),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
-```
-
-#### `strict()`
-
-Enable strict type check.
-
-**HANDLE WITH CARE!**
-In URL encoding, all values will be treated as string.
-Use this method when your system accepts **ONLY** JSON encoding (`application/json`)
-
-##### examples
-
-```javascript
-// should cause error
-assert.throws(
-    () => adjuster.boolean().strict().adjust(1),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
-assert.throws(
-    () => adjuster.boolean().strict().adjust("1"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
-assert.throws(
-    () => adjuster.boolean().strict().adjust("true"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
-```
-
-#### `acceptAllNumbers()`
-
-Accept all numbers, other than 0 / 1.
-
-##### examples
-
-```javascript
-// should be adjusted
-assert.strictEqual(
-    adjuster.boolean().acceptAllNumbers().adjust(-1),
-    true);
-assert.strictEqual(
-    adjuster.boolean().acceptAllNumbers().adjust("100"),
-    true);
-```
-
-#### `default(value)`
-
-Accept `undefined` for input, and adjust to `value`.
-
-If this method is not called, `adjust(undefined)` causes `AdjusterError`.
-
-##### examples
-
-```javascript
-// should be adjusted
-assert.strictEqual(
-    adjuster.boolean().default(true).adjust(undefined),
-    true);
-
-// should cause error
-assert.throws(
-    () => adjuster.boolean().adjust(undefined),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
-```
-
-#### `acceptNull([value])`
-
-Accept a `null` for input, and adjust to `value`.
-
-If this method is not called, `adjust(null)` causes `AdjusterError`.
-
-##### examples
-
-```javascript
-// should be adjusted
-assert.strictEqual(
-    adjuster.boolean().acceptNull(true).adjust(null),
-    true);
-
-// should cause error
-assert.throws(
-    () => adjuster.boolean().adjust(null),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
-```
-
-#### `acceptEmptyString([value])`
-
-Accept an empty string(`""`) for input, and adjust to `value`.
-
-If this method is not called, `adjust("")` causes `AdjusterError`.
-
-##### examples
-
-```javascript
-// should be adjusted
-assert.strictEqual(
-    adjuster.boolean().acceptEmptyString(true).adjust(""),
-    true);
-
-// should cause error
-assert.throws(
-    () => adjuster.boolean().adjust(""),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
 ```
 
 ### string
