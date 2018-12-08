@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* `adjuster.array<T>()` returns type `T[]`
+
 ## [1.1.0] - 2018-12-08
 
 ### Changed

@@ -17,7 +17,7 @@ declare namespace adjuster
 	function string(): StringAdjuster
 	function numericString(): NumericStringAdjuster
 	function email(): EmailAdjuster
-	function array<T = any[]>(): ArrayAdjuster<T>
+	function array<T = any>(): ArrayAdjuster<T>
 	function object<T = any>(): ObjectAdjuster<T>
 
 	const CAUSE: ConstantsCause;
@@ -308,7 +308,7 @@ interface EmailAdjuster extends AdjusterBase<string>
 	pattern(pattern: RegExp): this
 }
 
-interface ArrayAdjuster<T> extends AdjusterBase<T>
+interface ArrayAdjuster<T> extends AdjusterBase<T[]>
 {
 	/**
 	 * set default value; enable to omit

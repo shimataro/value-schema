@@ -1654,12 +1654,12 @@ assert.throws(
 
 ```typescript
 namespace adjuster {
-    export declare function array<T = any[]>(): ArrayAdjuster;
+    export declare function array<T = any>(): ArrayAdjuster;
 }
 
 interface ArrayAdjuster<T> {
     // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => Array | void): T;
+    adjust(value: any, onError?: (err: AdjusterError) => Array | void): T[];
 
     // feature methods (chainable)
     default(value: Array): this;
