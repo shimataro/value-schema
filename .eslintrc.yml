@@ -42,7 +42,8 @@ rules: # https://eslint.org/docs/rules/
   comma-style:
     - error
     - last
-  complexity: error
+  complexity:
+    - error
   computed-property-spacing:
     - error
     - never
