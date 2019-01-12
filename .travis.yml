@@ -3,14 +3,14 @@
 
 language: "node_js"
 node_js: # jest and eslint no longer support v4
-  - "6"
-  - "8"
+- "6"
+- "8"
 install:
-  - "npm install -g codecov"
-  - "npm install"
+- "npm install -g codecov"
+- "npm install"
 os:
-  - "linux"
-  - "osx"
+- "linux"
+- "osx"
 branches:
   only:
   - "master"
@@ -18,10 +18,10 @@ branches:
   - /^v\d/
 cache:
   directories:
-    - "node_modules"
+  - "node_modules"
 script:
-  - "npm run verify"
-  - "codecov"
+- "npm run verify"
+- "codecov"
 deploy:
   provider: "npm"
   on:

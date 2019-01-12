@@ -5,7 +5,7 @@ env: # https://eslint.org/docs/user-guide/configuring#specifying-environments
   jest: true
 extends: eslint:recommended
 plugins:
-  - import
+- import
 parser: babel-eslint
 parserOptions:
   sourceType: module
@@ -13,61 +13,61 @@ rules: # https://eslint.org/docs/rules/
   accessor-pairs: error
   array-bracket-newline: error
   array-bracket-spacing:
-    - error
-    - never
+  - error
+  - never
   array-callback-return: error
   arrow-body-style: 'off'
   arrow-parens:
-    - error
-    - always
+  - error
+  - always
   arrow-spacing:
-    - error
-    - after: true
-      before: true
+  - error
+  - after: true
+    before: true
   block-scoped-var: error
   block-spacing: error
   brace-style:
-    - error
-    - allman
+  - error
+  - allman
   callback-return: error
   capitalized-comments: 'off'
   class-methods-use-this: error
   comma-dangle:
-    - error
-    - always-multiline
+  - error
+  - always-multiline
   comma-spacing:
-    - error
-    - after: true
-      before: false
+  - error
+  - after: true
+    before: false
   comma-style:
-    - error
-    - last
+  - error
+  - last
   complexity:
-    - error
+  - error
   computed-property-spacing:
-    - error
-    - never
+  - error
+  - never
   consistent-return: 'off'
   consistent-this: error
   curly: error
   default-case: 'off'
   dot-location:
-    - error
-    - property
+  - error
+  - property
   dot-notation:
-    - error
-    - allowKeywords: true
+  - error
+  - allowKeywords: true
   eol-last: error
   eqeqeq: error
   for-direction: error
   func-call-spacing: error
   func-name-matching: error
   func-names:
-    - error
-    - never
+  - error
+  - never
   func-style:
-    - error
-    - declaration
+  - error
+  - declaration
   function-paren-newline: error
   generator-star-spacing: error
   getter-return: error
@@ -78,11 +78,11 @@ rules: # https://eslint.org/docs/rules/
   id-length: error
   id-match: error
   implicit-arrow-linebreak:
-    - error
-    - below
+  - error
+  - below
   indent:
-    - error
-    - tab
+  - error
+  - tab
   indent-legacy: 'off'
   init-declarations: error
   jsx-quotes: error
@@ -90,13 +90,13 @@ rules: # https://eslint.org/docs/rules/
   keyword-spacing: 'off'
   line-comment-position: 'off'
   linebreak-style:
-    - error
-    - unix
+  - error
+  - unix
   lines-around-comment: 'off'
   lines-around-directive: error
   lines-between-class-members:
-    - error
-    - always
+  - error
+  - always
   max-depth: error
   max-len: 'off'
   max-lines: 'off'
@@ -105,8 +105,8 @@ rules: # https://eslint.org/docs/rules/
   max-statements: 'off'
   max-statements-per-line: error
   multiline-comment-style:
-    - error
-    - separate-lines
+  - error
+  - separate-lines
   multiline-ternary: error
   new-cap: error
   new-parens: error
@@ -149,8 +149,8 @@ rules: # https://eslint.org/docs/rules/
   no-multi-spaces: error
   no-multi-str: error
   no-multiple-empty-lines:
-    - error
-    - max: 1
+  - error
+  - max: 1
   no-native-reassign: error
   no-negated-condition: error
   no-negated-in-lhs: error
@@ -208,8 +208,8 @@ rules: # https://eslint.org/docs/rules/
   nonblock-statement-body-position: error
   object-curly-newline: 'off'
   object-curly-spacing:
-    - error
-    - never
+  - error
+  - never
   object-property-newline: error
   object-shorthand: 'off'
   one-var: 'off'
@@ -233,46 +233,46 @@ rules: # https://eslint.org/docs/rules/
   require-await: error
   require-jsdoc: error
   rest-spread-spacing:
-    - error
-    - never
+  - error
+  - never
   semi: error
   semi-spacing: error
   semi-style:
-    - error
-    - last
+  - error
+  - last
   sort-imports: 'off'
   sort-keys: 'off'
   sort-vars: error
   space-before-blocks: error
   space-before-function-paren: 'off'
   space-in-parens:
-    - error
-    - never
+  - error
+  - never
   space-infix-ops: error
   space-unary-ops: error
   spaced-comment:
-    - error
-    - always
+  - error
+  - always
   strict: error
   switch-colon-spacing: error
   symbol-description: error
   template-curly-spacing:
-    - error
-    - never
+  - error
+  - never
   template-tag-spacing: error
   unicode-bom:
-    - error
-    - never
+  - error
+  - never
   valid-jsdoc: error
   vars-on-top: error
   wrap-iife: error
   wrap-regex: error
   yield-star-spacing: error
   yoda:
-    - error
-    - never
+  - error
+  - never
   import/extensions:
-    - error
-    - never
+  - error
+  - never
   import/no-unresolved:
-    - error
+  - error
