@@ -23,6 +23,11 @@ declare namespace adjuster
 	const CAUSE: ConstantsCause;
 	const STRING: ConstantsStringOptions;
 	const NUMERIC_STRING: ConstantsNumericStringOptions;
+
+	interface Constraints
+	{
+		[name: string]: AdjusterBase<any>
+	}
 }
 
 // interface definitions
@@ -396,13 +401,12 @@ interface ObjectAdjuster<T> extends AdjusterBase<T>
 	 * @param constraints constraints to apply
 	 * @returns chainable instance
 	 */
-	constraints(constraints: Constraints): this
+	constraints(constraints: adjuster.Constraints): this
 }
 
 // type definitions
 type CollectionArray = any[]
 type CollectionObject = { [name: string]: any }
-type Constraints = { [name: string]: AdjusterBase<any> }
 type Input = null | boolean | number | string | CollectionArray | CollectionObject
 type ErrorHandler<T = any> = (err: AdjusterError | null) => T | void
 type Key = string | number

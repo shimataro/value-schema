@@ -29,7 +29,7 @@ function main() {
 	fi
 
 	local VERSION=$1
-	local BRANCH="feature-v${VERSION}"
+	local BRANCH="release/v${VERSION}"
 	local TAG="v${VERSION}"
 
 	check_version_format ${VERSION}
