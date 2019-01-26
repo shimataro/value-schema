@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Others
 
+* update packages
 * export constraints type for TypeScript
 
 ## [1.2.0] - 2018-12-08
