@@ -1029,6 +1029,7 @@ interface StringAdjuster {
     acceptNull(value?: string | null /* = null */): this;
     acceptEmptyString(value?: string | null /* = null */): this;
     trim(): this;
+    case(method: string): this;
     only(...values: string[]): this;
     minLength(length: number): this;
     maxLength(length: number, adjust?: boolean /* = false */): this;
@@ -1150,6 +1151,45 @@ assert.strictEqual(
 assert.throws(
     () => adjuster.string().trim().adjust(" \t\r\n "),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+```
+
+#### `case(method)`
+
+Convert cases.
+
+##### examples
+
+```javascript
+// should be OK
+assert.strictEqual(
+    adjuster.string().case(adjuster.STRING.CASE.LOWER).adjust("LOWER"),
+    "lower");
+assert.strictEqual(
+    adjuster.string().case(adjuster.STRING.CASE.UPPER).adjust("upper"),
+    "UPPER");
+assert.strictEqual(
+    adjuster.string().case(adjuster.STRING.CASE.LOWER_CAMEL).adjust("lower_camel"),
+    "lowerCamel");
+assert.strictEqual(
+    adjuster.string().case(adjuster.STRING.CASE.UPPER_CAMEL).adjust("upper_camel"),
+    "UpperCamel");
+assert.strictEqual(
+    adjuster.string().case(adjuster.STRING.CASE.LOWER_SNAKE).adjust("lower-snake"),
+    "lower_snake");
+assert.strictEqual(
+    adjuster.string().case(adjuster.STRING.CASE.UPPER_SNAKE).adjust("upper-snake"),
+    "UPPER_SNAKE");
+assert.strictEqual(
+    adjuster.string().case(adjuster.STRING.CASE.LOWER_KEBAB).adjust("lowerKebab"),
+    "lower-kebab");
+assert.strictEqual(
+    adjuster.string().case(adjuster.STRING.CASE.UPPER_KEBAB).adjust("upperKebab"),
+    "Upper-Kebab");
+
+// should cause error
+assert.throws(
+    () => adjuster.string().case("no such case").adjust("case"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.CASE));
 ```
 
 #### `only(...values)`
