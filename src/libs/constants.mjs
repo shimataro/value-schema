@@ -13,6 +13,7 @@ export const CAUSE = {
 	MIN_VALUE: "min-value",
 	MAX_VALUE: "max-value",
 
+	CASE: "case",
 	MIN_LENGTH: "min-length",
 	MAX_LENGTH: "max-length",
 	PATTERN: "pattern",
@@ -21,6 +22,16 @@ export const CAUSE = {
 };
 
 export const STRING = {
+	CASE: {
+		LOWER: "lower",
+		UPPER: "UPPER",
+		LOWER_CAMEL: "lowerCamel",
+		UPPER_CAMEL: "UpperCamel",
+		LOWER_SNAKE: "lower_snake",
+		UPPER_SNAKE: "UPPER_SNAKE",
+		LOWER_KEBAB: "lower-kebab",
+		UPPER_KEBAB: "Upper-Kebab",
+	},
 	PATTERN: {
 		EMAIL: REGEXP_EMAIL,
 		HTTP: REGEXP_HTTP,

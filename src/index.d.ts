@@ -188,6 +188,13 @@ interface StringAdjuster extends AdjusterBase<string>
 	trim(): this
 
 	/**
+	 * convert case
+	 * @param method case method
+	 * @returns chainable instance
+	 */
+	case(method: string): this
+
+	/**
 	 * accept only specified values
 	 * @param values values to be accepted
 	 * @returns chainable instance
@@ -422,6 +429,7 @@ type ConstantsCause = {
 	MIN_VALUE: string,
 	MAX_VALUE: string,
 
+	CASE: string,
 	MIN_LENGTH: string,
 	MAX_LENGTH: string,
 	PATTERN: string,
@@ -429,6 +437,16 @@ type ConstantsCause = {
 	CHECKSUM: string,
 }
 type ConstantsStringOptions = {
+	CASE: {
+		LOWER: string, // lower
+		UPPER: string, // UPPER
+		LOWER_CAMEL: string, // lowerCamel
+		UPPER_CAMEL: string, // UpperCamel
+		LOWER_SNAKE: string, // lower_snake
+		UPPER_SNAKE: string, // UPPER_SNAKE
+		LOWER_KEBAB: string, // lower-kebab
+		UPPER_KEBAB: string, // Upper-Kebab
+	},
 	PATTERN: {
 		EMAIL: RegExp,
 		HTTP: RegExp,

@@ -6,6 +6,7 @@ import AcceptEmptyString from "../decorators/acceptEmptyString";
 import Only from "../decorators/only";
 import Type from "../decorators/string/type";
 import Trim from "../decorators/string/trim";
+import Case from "../decorators/string/case";
 import MinLength from "../decorators/string/minLength";
 import MaxLength from "../decorators/string/maxLength";
 import Pattern from "../decorators/string/pattern";
@@ -28,6 +29,7 @@ export default () =>
 @AcceptEmptyString
 @Only
 @Trim
+@Case
 @Type
 @AcceptNull
 @Default

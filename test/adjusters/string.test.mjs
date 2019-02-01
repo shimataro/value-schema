@@ -6,6 +6,7 @@ import adjuster from "adjuster"; // eslint-disable-line import/no-unresolved
 	describe("acceptNull", testAcceptNull);
 	describe("acceptEmptyString", testAcceptEmptyString);
 	describe("trim", testTrim);
+	describe("case", testCase);
 	describe("only", testOnly);
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
@@ -155,6 +156,152 @@ function testTrim()
 			adjuster.string().trim()
 				.adjust(" \t\r\n ");
 		}).toThrow(adjuster.CAUSE.EMPTY);
+	});
+}
+
+/**
+ * case
+ * @returns {void}
+ */
+function testCase()
+{
+	it("lower", () =>
+	{
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER)
+			.adjust("lower")).toEqual("lower");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER)
+			.adjust("LOWER")).toEqual("lower");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER)
+			.adjust("LoWeR")).toEqual("lower");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER)
+			.adjust("!LO-we-R!")).toEqual("lower");
+	});
+	it("UPPER", () =>
+	{
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER)
+			.adjust("UPPER")).toEqual("UPPER");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER)
+			.adjust("upper")).toEqual("UPPER");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER)
+			.adjust("uPpEr")).toEqual("UPPER");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER)
+			.adjust("!up-PE-r!")).toEqual("UPPER");
+	});
+	it("lowerCamel", () =>
+	{
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER_CAMEL)
+			.adjust("lowerCamel")).toEqual("lowerCamel");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER_CAMEL)
+			.adjust("LowerCamel")).toEqual("lowerCamel");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER_CAMEL)
+			.adjust("lower_camel")).toEqual("lowerCamel");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER_CAMEL)
+			.adjust("lower-camel")).toEqual("lowerCamel");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER_CAMEL)
+			.adjust("lower camel")).toEqual("lowerCamel");
+	});
+	it("UpperCamel", () =>
+	{
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER_CAMEL)
+			.adjust("UpperCamel")).toEqual("UpperCamel");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER_CAMEL)
+			.adjust("upperCamel")).toEqual("UpperCamel");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER_CAMEL)
+			.adjust("upper_camel")).toEqual("UpperCamel");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER_CAMEL)
+			.adjust("upper-camel")).toEqual("UpperCamel");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER_CAMEL)
+			.adjust("upper camel")).toEqual("UpperCamel");
+	});
+	it("lower_snake", () =>
+	{
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER_SNAKE)
+			.adjust("lower_snake")).toEqual("lower_snake");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER_SNAKE)
+			.adjust("LOWER_SNAKE")).toEqual("lower_snake");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER_SNAKE)
+			.adjust("lowerSnake")).toEqual("lower_snake");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER_SNAKE)
+			.adjust("lower-SNAKE")).toEqual("lower_snake");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER_SNAKE)
+			.adjust("LOWER snake")).toEqual("lower_snake");
+	});
+	it("UPPER_SNAKE", () =>
+	{
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER_SNAKE)
+			.adjust("UPPER_SNAKE")).toEqual("UPPER_SNAKE");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER_SNAKE)
+			.adjust("UPPER_SNAKE")).toEqual("UPPER_SNAKE");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER_SNAKE)
+			.adjust("UpperSnake")).toEqual("UPPER_SNAKE");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER_SNAKE)
+			.adjust("UPPER-snake")).toEqual("UPPER_SNAKE");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER_SNAKE)
+			.adjust("upper SNAKE")).toEqual("UPPER_SNAKE");
+	});
+	it("lower-kebab", () =>
+	{
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER_KEBAB)
+			.adjust("lower-kebab")).toEqual("lower-kebab");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER_KEBAB)
+			.adjust("LOWER-KEBAB")).toEqual("lower-kebab");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER_KEBAB)
+			.adjust("LowerKebab")).toEqual("lower-kebab");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER_KEBAB)
+			.adjust("lower_kebab")).toEqual("lower-kebab");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.LOWER_KEBAB)
+			.adjust("LOWER KEBAB")).toEqual("lower-kebab");
+	});
+	it("UPPER-KEBAB", () =>
+	{
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER_KEBAB)
+			.adjust("Upper-Kebab")).toEqual("Upper-Kebab");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER_KEBAB)
+			.adjust("upper-kebab")).toEqual("Upper-Kebab");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER_KEBAB)
+			.adjust("UpperKebab")).toEqual("Upper-Kebab");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER_KEBAB)
+			.adjust("upper_kebab")).toEqual("Upper-Kebab");
+
+		expect(adjuster.string().case(adjuster.STRING.CASE.UPPER_KEBAB)
+			.adjust("UPPER KEBAB")).toEqual("Upper-Kebab");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.string().case("no such case!")
+				.adjust("errrorCase_test-String");
+		}).toThrow(adjuster.CAUSE.CASE);
 	});
 }
 
