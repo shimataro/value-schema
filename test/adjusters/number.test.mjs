@@ -348,7 +348,7 @@ function testMap()
 			return value + 1;
 		}
 	});
-	it("should be incremented", () =>
+	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
