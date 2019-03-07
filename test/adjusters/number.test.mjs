@@ -8,6 +8,7 @@ import adjuster from "adjuster"; // eslint-disable-line import/no-unresolved
 	describe("only", testOnly);
 	describe("minValue", testMinValue);
 	describe("maxValue", testMaxValue);
+	describe("map", testMap);
 }
 
 /**
@@ -320,5 +321,50 @@ function testMaxValue()
 			adjuster.number().maxValue(100)
 				.adjust(101);
 		}).toThrow(adjuster.CAUSE.MAX_VALUE);
+	});
+}
+
+/**
+ * mapping
+ * @returns {void}
+ */
+function testMap()
+{
+	it("should be incremented", () =>
+	{
+		expect(adjuster.number().map(mapper)
+			.adjust(100)).toEqual(101);
+
+		expect(adjuster.number().map(mapper)
+			.adjust("1")).toEqual(2);
+
+		/**
+		 * mapping function
+		 * @param {number} value value to map
+		 * @returns {number} mapped value
+		 */
+		function mapper(value)
+		{
+			return value + 1;
+		}
+	});
+	it("should be incremented", () =>
+	{
+		expect(() =>
+		{
+			adjuster.number().map(mapper)
+				.adjust(100);
+		}).toThrow(adjuster.CAUSE.MAP);
+
+		/**
+		 * mapping function
+		 * @param {number} value value to map
+		 * @param {Function} fail callback on fail
+		 * @returns {number} mapped value
+		 */
+		function mapper(value, fail)
+		{
+			fail();
+		}
 	});
 }

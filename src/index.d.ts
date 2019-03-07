@@ -150,6 +150,13 @@ interface NumberAdjuster extends AdjusterBase<number>
 	 * @returns chainable instance
 	 */
 	maxValue(value: number, adjust?: boolean): this
+
+	/**
+	 * mapping
+	 * @param mapper mapping function
+	 * @returns chainable instance
+	 */
+	map(mapper: (value: number, fail: () => never) => number): this
 }
 
 interface StringAdjuster extends AdjusterBase<string>
