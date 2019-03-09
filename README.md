@@ -1052,6 +1052,7 @@ interface StringAdjuster {
     minLength(length: number): this;
     maxLength(length: number, adjust?: boolean /* = false */): this;
     pattern(pattern: RegExp): this;
+    map(mapper: (value: string, fail: () => never) => string): this;
 }
 ```
 
@@ -1268,6 +1269,24 @@ assert.throws(
 assert.throws(
     () => adjuster.string().pattern(adjuster.STRING.PATTERN.URI).adjust("https://例.com/"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+```
+
+#### `map(mapper)`
+
+Map input value to another value.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.number().map(value => value + value).adjust("abc")
+    "abcabc");
+
+// should cause errors
+assert.throws(
+    () => adjuster.number().map((value, fail) => fail()).adjust("abc"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAP));
 ```
 
 ### numeric string
