@@ -63,7 +63,7 @@ const constraints = { // constraints for input
     remote_addr: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4), // IPv4
     remote_addr_ipv6: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6), // IPv6
     limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true), // number, integer, omittable (sets 10 if omitted), >=1 (sets 1 if less), <=100 (sets 100 if greater)
-    offset: adjuster.number().integer().default(0).minValue(0, true), // number, integer, omiitable (sets 0 if omited), >=0 (sets 0 if less)
+    offset: adjuster.number().integer().default(0).minValue(0, true), // number, integer, omittable (sets 0 if omitted), >=0 (sets 0 if less)
 };
 const input = { // input values
     id: "1",
@@ -729,6 +729,7 @@ interface NumberAdjuster {
     only(...values: number[]): this;
     minValue(value: number, adjust?: boolean /* = false */): this;
     maxValue(value: number, adjust?: boolean /* = false */): this;
+    map(mapper: (value: number, fail: () => never) => number): this;
 }
 ```
 
@@ -1010,6 +1011,24 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_VALUE));
 ```
 
+#### `map(mapper)`
+
+Map input value to another value.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.number().map(value => value + 1).adjust(100)
+    101);
+
+// should cause errors
+assert.throws(
+    () => adjuster.number().map((value, fail) => fail()).adjust(100),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAP));
+```
+
 ### string
 
 #### ambient declarations
@@ -1033,6 +1052,7 @@ interface StringAdjuster {
     minLength(length: number): this;
     maxLength(length: number, adjust?: boolean /* = false */): this;
     pattern(pattern: RegExp): this;
+    map(mapper: (value: string, fail: () => never) => string): this;
 }
 ```
 
@@ -1251,6 +1271,24 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
+#### `map(mapper)`
+
+Map input value to another value.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.number().map(value => value + value).adjust("abc")
+    "abcabc");
+
+// should cause errors
+assert.throws(
+    () => adjuster.number().map((value, fail) => fail()).adjust("abc"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAP));
+```
+
 ### numeric string
 
 #### ambient declarations
@@ -1273,6 +1311,7 @@ interface NumericStringAdjuster {
     minLength(length: number): this;
     maxLength(length: number, adjust?: boolean /* = false */): this;
     checksum(algorithm: string): this;
+    map(mapper: (value: string, fail: () => never) => string): this;
 }
 ```
 
@@ -1477,6 +1516,24 @@ assert.strictEqual(
 assert.throws(
     () => adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111112"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.CHECKSUM));
+```
+
+#### `map(mapper)`
+
+Map input value to another value.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.number().map(value => value.substr(0, 4) + "-" + value.substr(4)).adjust("12345678")
+    "1234-5678");
+
+// should cause errors
+assert.throws(
+    () => adjuster.number().map((value, fail) => fail()).adjust("abc"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAP));
 ```
 
 ### email

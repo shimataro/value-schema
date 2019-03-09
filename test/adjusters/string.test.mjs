@@ -10,6 +10,7 @@ import adjuster from "adjuster"; // eslint-disable-line import/no-unresolved
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
 	describe("pattern", testPattern);
+	describe("map", testMap);
 }
 
 /**
@@ -500,5 +501,47 @@ function testPatternOthers()
 			adjuster.string().pattern(adjuster.STRING.PATTERN.EMAIL)
 				.adjust("john..doe@example.com");
 		}).toThrow(adjuster.CAUSE.PATTERN);
+	});
+}
+
+/**
+ * mapping
+ * @returns {void}
+ */
+function testMap()
+{
+	it("should be repeated", () =>
+	{
+		expect(adjuster.string().map(mapper)
+			.adjust("abc")).toEqual("abcabc");
+
+		/**
+		 * mapping function
+		 * @param {string} value value to map
+		 * @returns {string} mapped value
+		 */
+		function mapper(value)
+		{
+			return `${value}${value}`;
+		}
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.string().map(mapper)
+				.adjust("abc");
+		}).toThrow(adjuster.CAUSE.MAP);
+
+		/**
+		 * mapping function
+		 * @param {string} value value to map
+		 * @param {Function} fail callback on fail
+		 * @returns {string} mapped value
+		 */
+		function mapper(value, fail)
+		{
+			fail();
+		}
 	});
 }
