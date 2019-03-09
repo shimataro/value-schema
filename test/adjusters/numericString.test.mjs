@@ -11,6 +11,7 @@ import adjuster from "adjuster"; // eslint-disable-line import/no-unresolved
 	describe("checksum (Luhn)", testChecksumLuhn);
 	describe("checksum (Modulus 10 / Weight 3:1)", testChecksumModulus10Weight31);
 	describe("checksum (Others)", testChecksumOthers);
+	describe("map", testMap);
 }
 
 /**
@@ -233,5 +234,56 @@ function testChecksumOthers()
 			adjuster.numericString().checksum("no-such-algorithm")
 				.adjust("0123456789");
 		}).toThrow(adjuster.CAUSE.CHECKSUM);
+	});
+}
+
+/**
+ * checksum - Luhn algorithm
+ * @returns {void}
+ */
+function testMap()
+{
+	it("should be separated", () =>
+	{
+		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD).map(mapper)
+			.adjust("4111111111111111")).toEqual("4111-1111-1111-1111");
+		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD).map(mapper)
+			.adjust("378282246310005")).toEqual("3782-8224-6310-005");
+
+		/**
+		 * mapping function
+		 * @param {string} value value to map
+		 * @returns {string} mapped value
+		 */
+		function mapper(value)
+		{
+			// separate per 4 characters
+			const parts = [];
+			while(value.length > 0)
+			{
+				parts.push(value.substr(0, 4));
+				value = value.substr(4);
+			}
+			return parts.join("-");
+		}
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.numericString().map(mapper)
+				.adjust("12345");
+		}).toThrow(adjuster.CAUSE.MAP);
+
+		/**
+		 * mapping function
+		 * @param {string} value value to map
+		 * @param {Function} fail callback on fail
+		 * @returns {string} mapped value
+		 */
+		function mapper(value, fail)
+		{
+			fail();
+		}
 	});
 }

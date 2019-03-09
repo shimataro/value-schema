@@ -1052,6 +1052,7 @@ interface StringAdjuster {
     minLength(length: number): this;
     maxLength(length: number, adjust?: boolean /* = false */): this;
     pattern(pattern: RegExp): this;
+    map(mapper: (value: string, fail: () => never) => string): this;
 }
 ```
 
@@ -1270,6 +1271,24 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
+#### `map(mapper)`
+
+Map input value to another value.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.number().map(value => value + value).adjust("abc")
+    "abcabc");
+
+// should cause errors
+assert.throws(
+    () => adjuster.number().map((value, fail) => fail()).adjust("abc"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAP));
+```
+
 ### numeric string
 
 #### ambient declarations
@@ -1292,6 +1311,7 @@ interface NumericStringAdjuster {
     minLength(length: number): this;
     maxLength(length: number, adjust?: boolean /* = false */): this;
     checksum(algorithm: string): this;
+    map(mapper: (value: string, fail: () => never) => string): this;
 }
 ```
 
@@ -1496,6 +1516,24 @@ assert.strictEqual(
 assert.throws(
     () => adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111112"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.CHECKSUM));
+```
+
+#### `map(mapper)`
+
+Map input value to another value.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.number().map(value => value.substr(0, 4) + "-" + value.substr(4)).adjust("12345678")
+    "1234-5678");
+
+// should cause errors
+assert.throws(
+    () => adjuster.number().map((value, fail) => fail()).adjust("abc"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAP));
 ```
 
 ### email
