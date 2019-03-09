@@ -9,6 +9,7 @@ export const CAUSE = {
 	NULL: "null",
 	EMPTY: "empty",
 	ONLY: "only",
+	MAP: "map",
 
 	MIN_VALUE: "min-value",
 	MAX_VALUE: "max-value",

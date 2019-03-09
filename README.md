@@ -729,6 +729,7 @@ interface NumberAdjuster {
     only(...values: number[]): this;
     minValue(value: number, adjust?: boolean /* = false */): this;
     maxValue(value: number, adjust?: boolean /* = false */): this;
+    map(mapper: (value: number, fail: () => never) => number): this;
 }
 ```
 
@@ -1008,6 +1009,24 @@ assert.throws(
 assert.throws(
     () => adjuster.number().maxValue(100).adjust(101),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_VALUE));
+```
+
+#### `map(mapper)`
+
+Map input value to another value.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.number().map(value => value + 1).adjust(100)
+    101);
+
+// should cause errors
+assert.throws(
+    () => adjuster.number().map((value, fail) => fail()).adjust(100),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAP));
 ```
 
 ### string
