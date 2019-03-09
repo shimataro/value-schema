@@ -222,6 +222,13 @@ interface StringAdjuster extends AdjusterBase<string>
 	 * @returns chainable instance
 	 */
 	pattern(pattern: RegExp): this
+
+	/**
+	 * mapping
+	 * @param mapper mapping function
+	 * @returns chainable instance
+	 */
+	map(mapper: (value: string, fail: () => never) => string): this
 }
 
 interface NumericStringAdjuster extends AdjusterBase<string>
