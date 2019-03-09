@@ -14,7 +14,7 @@ const constraints: adjuster.Constraints = { // constraints for input
 	remote_addr: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4), // IPv4
 	remote_addr_ipv6: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6), // IPv6
 	limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true), // number, integer, omittable (sets 10 if omitted), >=1 (sets 1 if less), <=100 (sets 100 if greater)
-	offset: adjuster.number().integer().default(0).minValue(0, true), // number, integer, omiitable (sets 0 if omited), >=0 (sets 0 if less)
+	offset: adjuster.number().integer().default(0).minValue(0, true), // number, integer, omittable (sets 0 if omitted), >=0 (sets 0 if less)
 };
 const input = { // input values
 	id: "1",
