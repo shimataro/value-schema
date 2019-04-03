@@ -1,7 +1,7 @@
 {
   "comments": false,
   "presets": [
-    ["@babel/preset-env", {"targets": {"node": "current"}, "useBuiltIns": "usage"}]
+    ["@babel/preset-env", {"targets": {"node": "current"}, "useBuiltIns": "usage", "corejs": 3}]
   ],
   "plugins": [
     ["@babel/plugin-proposal-decorators", {"legacy": true}],
@@ -10,7 +10,7 @@
   "env": {
     "esm": {
       "presets": [
-        ["@babel/preset-env", {"targets": {"node": "current"}, "useBuiltIns": "usage", "modules": false}]
+        ["@babel/preset-env", {"targets": {"node": "current"}, "useBuiltIns": "usage", "corejs": 3, "modules": false}]
       ]
     }
   }
