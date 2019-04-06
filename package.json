@@ -67,8 +67,8 @@
     "babel-eslint": "10.0.1",
     "eslint": "5.16.0",
     "eslint-plugin-import": "2.16.0",
-    "jest": "24.7.0",
-    "markdownlint-cli": "0.14.1",
+    "jest": "24.7.1",
+    "markdownlint-cli": "0.15.0",
     "npm-check-updates": "^2",
     "yaml-lint": "1.2.4"
   },
