@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* `adjuster.number().transform()`
+* `adjuster.string().transform()`
+* `adjuster.numericString().transform()`
+
+### Deprecated
+
+* `adjuster.number().map()`
+* `adjuster.string().map()`
+* `adjuster.numericString().map()`
+
 ## [1.3.1] - 2019-03-09
 
 ### Added
