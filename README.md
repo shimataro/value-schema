@@ -729,6 +729,8 @@ interface NumberAdjuster {
     only(...values: number[]): this;
     minValue(value: number, adjust?: boolean /* = false */): this;
     maxValue(value: number, adjust?: boolean /* = false */): this;
+    transform(transformer: (value: number, fail: () => never) => number): this;
+    // deprecated; use transform()
     map(mapper: (value: number, fail: () => never) => number): this;
 }
 ```
@@ -1011,22 +1013,24 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_VALUE));
 ```
 
-#### `map(mapper)`
+#### `transform(transformer)` / `map(mapper)`
 
-Map input value to another value.
+Transform input value to another value.
+
+WARNING; `map()` is deprecated. use `transform()`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.number().map(value => value + 1).adjust(100)
+    adjuster.number().transform(value => value + 1).adjust(100)
     101);
 
 // should cause errors
 assert.throws(
-    () => adjuster.number().map((value, fail) => fail()).adjust(100),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAP));
+    () => adjuster.number().transform((value, fail) => fail()).adjust(100),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TRANSFORM));
 ```
 
 ### string
@@ -1052,6 +1056,8 @@ interface StringAdjuster {
     minLength(length: number): this;
     maxLength(length: number, adjust?: boolean /* = false */): this;
     pattern(pattern: RegExp): this;
+    transform(transformer: (value: string, fail: () => never) => string): this;
+    // deprecated; use transform()
     map(mapper: (value: string, fail: () => never) => string): this;
 }
 ```
@@ -1271,22 +1277,24 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
-#### `map(mapper)`
+#### `transform(transformer)` / `map(mapper)`
 
-Map input value to another value.
+Transform input value to another value.
+
+WARNING; `map()` is deprecated. use `transform()`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.number().map(value => value + value).adjust("abc")
+    adjuster.string().transform(value => value + value).adjust("abc")
     "abcabc");
 
 // should cause errors
 assert.throws(
-    () => adjuster.number().map((value, fail) => fail()).adjust("abc"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAP));
+    () => adjuster.string().transform((value, fail) => fail()).adjust("abc"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TRANSFORM));
 ```
 
 ### numeric string
@@ -1311,6 +1319,8 @@ interface NumericStringAdjuster {
     minLength(length: number): this;
     maxLength(length: number, adjust?: boolean /* = false */): this;
     checksum(algorithm: string): this;
+    transform(transformer: (value: string, fail: () => never) => string): this;
+    // deprecated; use transform()
     map(mapper: (value: string, fail: () => never) => string): this;
 }
 ```
@@ -1518,22 +1528,24 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.CHECKSUM));
 ```
 
-#### `map(mapper)`
+#### `transform(transformer)` / `map(mapper)`
 
-Map input value to another value.
+Transform input value to another value.
+
+WARNING; `map()` is deprecated. use `transform()`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.number().map(value => value.substr(0, 4) + "-" + value.substr(4)).adjust("12345678")
+    adjuster.numericString().transform(value => value.substr(0, 4) + "-" + value.substr(4)).adjust("12345678")
     "1234-5678");
 
 // should cause errors
 assert.throws(
-    () => adjuster.number().map((value, fail) => fail()).adjust("abc"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAP));
+    () => adjuster.numericString().transform((value, fail) => fail()).adjust("abc"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TRANSFORM));
 ```
 
 ### email
