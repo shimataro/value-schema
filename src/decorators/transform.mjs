@@ -5,7 +5,8 @@ import AdjusterError from "../libs/AdjusterError";
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.features({
-		map: _featureMap,
+		map: _featureTransform,
+		transform: _featureTransform,
 	})
 	.build();
 
@@ -16,10 +17,10 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 
 /**
  * @package
- * @callback Mapper
- * @param {*} value value to map
+ * @callback Transformer
+ * @param {*} value value to transform
  * @param {Fail} fail callback on fail
- * @returns {*} mapped value
+ * @returns {*} transformed value
  */
 
 /**
@@ -43,10 +44,10 @@ function _init(params)
 /**
  * accept only specified values
  * @param {Params-Only} params parameters
- * @param {Mapper} mapper mapper function
+ * @param {Transformer} mapper mapper function
  * @returns {void}
  */
-function _featureMap(params, mapper)
+function _featureTransform(params, mapper)
 {
 	params.flag = true;
 	params.mapper = mapper;
@@ -69,7 +70,7 @@ function _adjust(params, values, keyStack)
 
 	values.adjusted = params.mapper(values.adjusted, () =>
 	{
-		AdjusterError.raise(CAUSE.MAP, values, keyStack);
+		AdjusterError.raise(CAUSE.TRANSFORM, values, keyStack);
 	});
 	return false;
 }
