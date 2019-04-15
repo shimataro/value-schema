@@ -264,7 +264,7 @@ interface NumericStringAdjuster extends AdjusterBase<string>
 	 * convert full width string to half width
 	 * @returns chainable instance
 	 */
-	fullToHalf(): this
+	fullWidthToHalf(): this
 
 	/**
 	 * join array into string
