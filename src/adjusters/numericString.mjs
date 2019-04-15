@@ -7,6 +7,7 @@ import Map from "../decorators/map";
 import Type from "../decorators/string/type";
 import MinLength from "../decorators/string/minLength";
 import MaxLength from "../decorators/string/maxLength";
+import FullToHalf from "../decorators/numericString/fullToHalf";
 import JoinArray from "../decorators/numericString/joinArray";
 import SeparatedBy from "../decorators/numericString/separatedBy";
 import Pattern from "../decorators/numericString/pattern";
@@ -32,6 +33,7 @@ export default () =>
 @SeparatedBy
 @Type
 @JoinArray
+@FullToHalf
 @AcceptEmptyString
 @AcceptNull
 @Default
