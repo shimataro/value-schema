@@ -47,6 +47,6 @@ function _adjust(params, values)
 		return false;
 	}
 
-	values.adjusted = string.toHalfWidth(values.adjusted, /[０-９．]+/g);
+	values.adjusted = string.toHalfWidth(values.adjusted, /[０-９ａ-ｚＡ-Ｚ．＋－]+/g);
 	return false;
 }

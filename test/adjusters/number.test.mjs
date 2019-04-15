@@ -73,10 +73,10 @@ function testType()
 			.adjust("0b100")).toEqual(4);
 
 		expect(adjuster.number().acceptFullWidth()
-			.adjust("１２３４．５")).toEqual(1234.5);
+			.adjust("＋１２３４．５")).toEqual(1234.5);
 
 		expect(adjuster.number().acceptFullWidth()
-			.adjust("1２3４．5")).toEqual(1234.5);
+			.adjust("－1２3４．5")).toEqual(-1234.5);
 	});
 	it("should cause error(s)", () =>
 	{
