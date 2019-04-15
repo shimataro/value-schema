@@ -863,7 +863,7 @@ assert.throws(
 
 #### `acceptSpecialFormats()`
 
-Accept all special number formats; i.e., `"1e+2"`, `"0x100"`, `"0o100"`, `"0b100"`.
+Accept all special number formats; e.g., `"1e+2"`, `"0x100"`, `"0o100"`, `"0b100"`.
 
 If this method is not called, the above examples causes `AdjusterError`.
 
@@ -892,7 +892,7 @@ assert.throws(
 
 #### `acceptFullWidth()`
 
-Accept full-width string; i.e., `"１２３４．５"`, `"1２3４.５"`.
+Accept full-width string; e.g., `"１２３４．５"`, `"1２3４.５"`.
 
 If this method is not called, the above examples causes `AdjusterError`.
 
