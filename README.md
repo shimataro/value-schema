@@ -730,6 +730,8 @@ interface NumberAdjuster {
     only(...values: number[]): this;
     minValue(value: number, adjust?: boolean /* = false */): this;
     maxValue(value: number, adjust?: boolean /* = false */): this;
+    convert(converter: (value: number, fail: () => never) => number): this;
+    // deprecated; use convert()
     map(mapper: (value: number, fail: () => never) => number): this;
 }
 ```
@@ -1031,22 +1033,24 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_VALUE));
 ```
 
-#### `map(mapper)`
+#### `convert(converter)` / `map(mapper)`
 
-Map input value to another value.
+Convert input value into another value.
+
+WARNING; `map()` is deprecated. use `convert()`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.number().map(value => value + 1).adjust(100)
+    adjuster.number().convert(value => value + 1).adjust(100)
     101);
 
 // should cause errors
 assert.throws(
-    () => adjuster.number().map((value, fail) => fail()).adjust(100),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAP));
+    () => adjuster.number().convert((value, fail) => fail()).adjust(100),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.CONVERT));
 ```
 
 ### string
@@ -1072,6 +1076,8 @@ interface StringAdjuster {
     minLength(length: number): this;
     maxLength(length: number, adjust?: boolean /* = false */): this;
     pattern(pattern: RegExp): this;
+    convert(converter: (value: string, fail: () => never) => string): this;
+    // deprecated; use convert()
     map(mapper: (value: string, fail: () => never) => string): this;
 }
 ```
@@ -1291,22 +1297,24 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
-#### `map(mapper)`
+#### `convert(converter)` / `map(mapper)`
 
-Map input value to another value.
+Convert input value into another value.
+
+WARNING; `map()` is deprecated. use `convert()`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.number().map(value => value + value).adjust("abc")
+    adjuster.string().convert(value => value + value).adjust("abc")
     "abcabc");
 
 // should cause errors
 assert.throws(
-    () => adjuster.number().map((value, fail) => fail()).adjust("abc"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAP));
+    () => adjuster.string().convert((value, fail) => fail()).adjust("abc"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.CONVERT));
 ```
 
 ### numeric string
@@ -1332,6 +1340,8 @@ interface NumericStringAdjuster {
     minLength(length: number): this;
     maxLength(length: number, adjust?: boolean /* = false */): this;
     checksum(algorithm: string): this;
+    convert(converter: (value: string, fail: () => never) => string): this;
+    // deprecated; use convert()
     map(mapper: (value: string, fail: () => never) => string): this;
 }
 ```
@@ -1559,22 +1569,24 @@ assert.throws(
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.CHECKSUM));
 ```
 
-#### `map(mapper)`
+#### `convert(converter)` / `map(mapper)`
 
-Map input value to another value.
+Convert input value into another value.
+
+WARNING; `map()` is deprecated. use `convert()`.
 
 ##### examples
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    adjuster.number().map(value => value.substr(0, 4) + "-" + value.substr(4)).adjust("12345678")
+    adjuster.numericString().convert(value => value.substr(0, 4) + "-" + value.substr(4)).adjust("12345678")
     "1234-5678");
 
 // should cause errors
 assert.throws(
-    () => adjuster.number().map((value, fail) => fail()).adjust("abc"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAP));
+    () => adjuster.numericString().convert((value, fail) => fail()).adjust("abc"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.CONVERT));
 ```
 
 ### email

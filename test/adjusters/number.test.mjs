@@ -8,7 +8,7 @@ import adjuster from "adjuster"; // eslint-disable-line import/no-unresolved
 	describe("only", testOnly);
 	describe("minValue", testMinValue);
 	describe("maxValue", testMaxValue);
-	describe("map", testMap);
+	describe("convert", testConvert);
 }
 
 /**
@@ -337,25 +337,25 @@ function testMaxValue()
 }
 
 /**
- * mapping
+ * conversion
  * @returns {void}
  */
-function testMap()
+function testConvert()
 {
 	it("should be incremented", () =>
 	{
-		expect(adjuster.number().map(mapper)
+		expect(adjuster.number().convert(converter)
 			.adjust(100)).toEqual(101);
 
-		expect(adjuster.number().map(mapper)
+		expect(adjuster.number().convert(converter)
 			.adjust("1")).toEqual(2);
 
 		/**
-		 * mapping function
-		 * @param {number} value value to map
-		 * @returns {number} mapped value
+		 * conversion function
+		 * @param {number} value value to convert
+		 * @returns {number} converted value
 		 */
-		function mapper(value)
+		function converter(value)
 		{
 			return value + 1;
 		}
@@ -364,17 +364,17 @@ function testMap()
 	{
 		expect(() =>
 		{
-			adjuster.number().map(mapper)
+			adjuster.number().convert(converter)
 				.adjust(100);
-		}).toThrow(adjuster.CAUSE.MAP);
+		}).toThrow(adjuster.CAUSE.CONVERT);
 
 		/**
-		 * mapping function
-		 * @param {number} value value to map
+		 * conversion function
+		 * @param {number} value value to convert
 		 * @param {Function} fail callback on fail
-		 * @returns {number} mapped value
+		 * @returns {number} converted value
 		 */
-		function mapper(value, fail)
+		function converter(value, fail)
 		{
 			fail();
 		}

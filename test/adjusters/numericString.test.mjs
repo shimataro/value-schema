@@ -11,7 +11,7 @@ import adjuster from "adjuster"; // eslint-disable-line import/no-unresolved
 	describe("checksum (Luhn)", testChecksumLuhn);
 	describe("checksum (Modulus 10 / Weight 3:1)", testChecksumModulus10Weight31);
 	describe("checksum (Others)", testChecksumOthers);
-	describe("map", testMap);
+	describe("convert", testConvert);
 }
 
 /**
@@ -252,21 +252,21 @@ function testChecksumOthers()
  * checksum - Luhn algorithm
  * @returns {void}
  */
-function testMap()
+function testConvert()
 {
 	it("should be separated", () =>
 	{
-		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD).map(mapper)
+		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD).convert(converter)
 			.adjust("4111111111111111")).toEqual("4111-1111-1111-1111");
-		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD).map(mapper)
+		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD).convert(converter)
 			.adjust("378282246310005")).toEqual("3782-8224-6310-005");
 
 		/**
-		 * mapping function
-		 * @param {string} value value to map
-		 * @returns {string} mapped value
+		 * conversion function
+		 * @param {string} value value to convert
+		 * @returns {string} converted value
 		 */
-		function mapper(value)
+		function converter(value)
 		{
 			// separate per 4 characters
 			const parts = [];
@@ -282,17 +282,17 @@ function testMap()
 	{
 		expect(() =>
 		{
-			adjuster.numericString().map(mapper)
+			adjuster.numericString().convert(converter)
 				.adjust("12345");
-		}).toThrow(adjuster.CAUSE.MAP);
+		}).toThrow(adjuster.CAUSE.CONVERT);
 
 		/**
-		 * mapping function
-		 * @param {string} value value to map
+		 * conversion function
+		 * @param {string} value value to convert
 		 * @param {Function} fail callback on fail
-		 * @returns {string} mapped value
+		 * @returns {string} converted value
 		 */
-		function mapper(value, fail)
+		function converter(value, fail)
 		{
 			fail();
 		}

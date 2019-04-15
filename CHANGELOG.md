@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * `adjuster.number().acceptFullWidth()`
 * `adjuster.numericString().fullWidthToHalf()`
+* `adjuster.number().convert()`
+* `adjuster.string().convert()`
+* `adjuster.numericString().convert()`
+
+### Deprecated
+
+* `adjuster.number().map()`
+* `adjuster.string().map()`
+* `adjuster.numericString().map()`
 
 ## [1.3.1] - 2019-03-09
 
