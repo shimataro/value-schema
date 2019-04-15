@@ -463,6 +463,8 @@ type ConstantsCause = {
 	NULL: string,
 	EMPTY: string,
 	ONLY: string,
+	MAP: string, // deprecated; use CONVERT
+	CONVERT: string,
 
 	MIN_VALUE: string,
 	MAX_VALUE: string,
