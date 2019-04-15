@@ -48,7 +48,7 @@
     "lint:es": "eslint ./src ./test --ext .mjs",
     "lint:md": "markdownlint . --ignore ./node_modules",
     "lint:yaml": "yamllint .*.yml *.yml --ignore=node_modules/**/*.yml --ignore=node_modules/**/*.yaml",
-    "check-updates": "ncu"
+    "check-updates": "ncu -x npm-check-updates"
   },
   "dependencies": {
     "@babel/cli": "7.4.3",
