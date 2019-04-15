@@ -5,6 +5,7 @@ import AcceptNull from "../decorators/acceptNull";
 import AcceptEmptyString from "../decorators/acceptEmptyString";
 import Only from "../decorators/only";
 import Map from "../decorators/map";
+import AcceptFullWidth from "../decorators/number/acceptFullWidth";
 import Type from "../decorators/number/type";
 import MinValue from "../decorators/number/minValue";
 import MaxValue from "../decorators/number/maxValue";
@@ -26,6 +27,7 @@ export default () =>
 @MinValue
 @Only
 @Type
+@AcceptFullWidth
 @AcceptEmptyString
 @AcceptNull
 @Default
