@@ -5,7 +5,8 @@ import AdjusterError from "../libs/AdjusterError";
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.features({
-		map: _featureMap,
+		convert: _featureConvert,
+		map: _featureConvert, // deprecated
 	})
 	.build();
 
@@ -16,45 +17,45 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 
 /**
  * @package
- * @callback Mapper
- * @param {*} value value to map
+ * @callback Converter
+ * @param {*} value value to convert
  * @param {Fail} fail callback on fail
- * @returns {*} mapped value
+ * @returns {*} converted value
  */
 
 /**
  * @package
- * @typedef {Params} Params-Only
+ * @typedef {Params} Params-Convert
  * @property {boolean} flag
- * @property {Mapper | null} maper
+ * @property {Converter | null} converter
  */
 
 /**
  * init
- * @param {Params-Only} params parameters
+ * @param {Params-Convert} params parameters
  * @returns {void}
  */
 function _init(params)
 {
 	params.flag = false;
-	params.mapper = null;
+	params.converter = null;
 }
 
 /**
- * accept only specified values
- * @param {Params-Only} params parameters
- * @param {Mapper} mapper mapper function
+ * conversion values
+ * @param {Params-Convert} params parameters
+ * @param {Converter} converter conversion function
  * @returns {void}
  */
-function _featureMap(params, mapper)
+function _featureConvert(params, converter)
 {
 	params.flag = true;
-	params.mapper = mapper;
+	params.converter = converter;
 }
 
 /**
  * adjust
- * @param {Params-Only} params parameters
+ * @param {Params-Convert} params parameters
  * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
@@ -67,9 +68,9 @@ function _adjust(params, values, keyStack)
 		return false;
 	}
 
-	values.adjusted = params.mapper(values.adjusted, () =>
+	values.adjusted = params.converter(values.adjusted, () =>
 	{
-		AdjusterError.raise(CAUSE.MAP, values, keyStack);
+		AdjusterError.raise(CAUSE.CONVERT, values, keyStack);
 	});
 	return false;
 }

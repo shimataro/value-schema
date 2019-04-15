@@ -122,6 +122,12 @@ interface NumberAdjuster extends AdjusterBase<number>
 	acceptSpecialFormats(): this
 
 	/**
+	 * accept full width numeric string; i.e., "１２３．４５６"
+	 * @returns chainable instance
+	 */
+	acceptFullWidth(): this
+
+	/**
 	 * limit value to integer chain
 	 * @param [adjust=false] adjust to integer value is not an integer; default is ERROR
 	 * @returns chainable instance
@@ -152,9 +158,17 @@ interface NumberAdjuster extends AdjusterBase<number>
 	maxValue(value: number, adjust?: boolean): this
 
 	/**
+	 * conversion
+	 * @param converter conversion function
+	 * @returns chainable instance
+	 */
+	convert(converter: (value: number, fail: () => never) => number): this
+
+	/**
 	 * mapping
 	 * @param mapper mapping function
 	 * @returns chainable instance
+	 * @deprecated use convert()
 	 */
 	map(mapper: (value: number, fail: () => never) => number): this
 }
@@ -224,9 +238,17 @@ interface StringAdjuster extends AdjusterBase<string>
 	pattern(pattern: RegExp): this
 
 	/**
+	 * conversion
+	 * @param converter conversion function
+	 * @returns chainable instance
+	 */
+	convert(converter: (value: string, fail: () => never) => string): this
+
+	/**
 	 * mapping
 	 * @param mapper mapping function
 	 * @returns chainable instance
+	 * @deprecated use convert()
 	 */
 	map(mapper: (value: string, fail: () => never) => string): this
 }
@@ -253,6 +275,12 @@ interface NumericStringAdjuster extends AdjusterBase<string>
 	 * @returns chainable instance
 	 */
 	acceptEmptyString(value?: string | null): this
+
+	/**
+	 * convert full width string to half width
+	 * @returns chainable instance
+	 */
+	fullWidthToHalf(): this
 
 	/**
 	 * join array into string
@@ -290,9 +318,17 @@ interface NumericStringAdjuster extends AdjusterBase<string>
 	checksum(algorithm: string): this
 
 	/**
+	 * conversion
+	 * @param converter conversion function
+	 * @returns chainable instance
+	 */
+	convert(converter: (value: string, fail: () => never) => string): this
+
+	/**
 	 * mapping
 	 * @param mapper mapping function
 	 * @returns chainable instance
+	 * @deprecated use convert()
 	 */
 	map(mapper: (value: string, fail: () => never) => string): this
 }
@@ -439,6 +475,8 @@ type ConstantsCause = {
 	NULL: string,
 	EMPTY: string,
 	ONLY: string,
+	MAP: string, // deprecated; use CONVERT
+	CONVERT: string,
 
 	MIN_VALUE: string,
 	MAX_VALUE: string,

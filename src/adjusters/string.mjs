@@ -4,7 +4,7 @@ import Default from "../decorators/default";
 import AcceptNull from "../decorators/acceptNull";
 import AcceptEmptyString from "../decorators/acceptEmptyString";
 import Only from "../decorators/only";
-import Map from "../decorators/map";
+import Convert from "../decorators/convert";
 import Type from "../decorators/string/type";
 import Trim from "../decorators/string/trim";
 import MinLength from "../decorators/string/minLength";
@@ -23,7 +23,7 @@ export default () =>
 /**
  * adjuster for string
  */
-@Map
+@Convert
 @Pattern
 @MaxLength
 @MinLength

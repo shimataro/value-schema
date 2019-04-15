@@ -3,10 +3,11 @@ import AdjusterBase from "../libs/AdjusterBase";
 import Default from "../decorators/default";
 import AcceptNull from "../decorators/acceptNull";
 import AcceptEmptyString from "../decorators/acceptEmptyString";
-import Map from "../decorators/map";
+import Convert from "../decorators/convert";
 import Type from "../decorators/string/type";
 import MinLength from "../decorators/string/minLength";
 import MaxLength from "../decorators/string/maxLength";
+import FullWidthToHalf from "../decorators/numericString/fullWidthToHalf";
 import JoinArray from "../decorators/numericString/joinArray";
 import SeparatedBy from "../decorators/numericString/separatedBy";
 import Pattern from "../decorators/numericString/pattern";
@@ -24,7 +25,7 @@ export default () =>
 /**
  * adjuster for numeric string
  */
-@Map
+@Convert
 @Checksum
 @MaxLength
 @MinLength
@@ -32,6 +33,7 @@ export default () =>
 @SeparatedBy
 @Type
 @JoinArray
+@FullWidthToHalf
 @AcceptEmptyString
 @AcceptNull
 @Default
