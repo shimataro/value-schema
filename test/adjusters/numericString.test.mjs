@@ -29,6 +29,17 @@ function testType()
 	{
 		expect(adjuster.numericString()
 			.adjust(1111222233334444)).toEqual("1111222233334444");
+
+		expect(adjuster.numericString().fullWidthToHalf()
+			.adjust("1111２２２２3333４４４４")).toEqual("1111222233334444");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			adjuster.numericString()
+				.adjust("1111２２２２3333４４４４");
+		}).toThrow(adjuster.CAUSE.PATTERN);
 	});
 }
 

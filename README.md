@@ -725,6 +725,7 @@ interface NumberAdjuster {
     acceptNull(value?: number | null /* = null */): this;
     acceptEmptyString(value?: number | null /* = null */): this;
     acceptSpecialFormats(): this;
+    acceptFullWidth(): this;
     integer(adjust?: boolean /* = false */): this;
     only(...values: number[]): this;
     minValue(value: number, adjust?: boolean /* = false */): this;
@@ -864,7 +865,7 @@ assert.throws(
 
 #### `acceptSpecialFormats()`
 
-Accept all special number formats; i.e., `"1e+2"`, `"0x100"`, `"0o100"`, `"0b100"`.
+Accept all special number formats; e.g., `"1e+2"`, `"0x100"`, `"0o100"`, `"0b100"`.
 
 If this method is not called, the above examples causes `AdjusterError`.
 
@@ -889,7 +890,26 @@ assert.strictEqual(
 assert.throws(
     () => adjuster.number().adjust("1e+2"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+```
 
+#### `acceptFullWidth()`
+
+Accept full-width string; e.g., `"１２３４．５"`, `"1２3４.５"`.
+
+If this method is not called, the above examples causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.number().acceptFullWidth().adjust("１２３４．５"),
+    1234.5);
+
+// should cause error
+assert.throws(
+    () => adjuster.number().adjust("１２３４．５"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
 ```
 
 #### `integer([adjust])`
@@ -1314,6 +1334,7 @@ interface NumericStringAdjuster {
     default(value: string): this;
     acceptNull(value?: string | null /* = null */): this;
     acceptEmptyString(value?: string | null /* = null */): this;
+    fullWidthToHalf(): this;
     joinArray(): this;
     separatedBy(separator: string | RegExp): this;
     minLength(length: number): this;
@@ -1412,6 +1433,26 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => adjuster.numericString().adjust("4111-1111-1111-1111"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+```
+
+#### `fullWidthToHalf()`
+
+Convert full-width string to half-width; e.g., `"１２３４"`.
+
+If this method is not called, the above examples causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.numericString().fullWidthToHalf().adjust("１２３４"),
+    "1234");
+
+// should cause error
+assert.throws(
+    () => adjuster.numericString().adjust("１２３４"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
