@@ -4,7 +4,7 @@ import Default from "../decorators/default";
 import AcceptNull from "../decorators/acceptNull";
 import AcceptEmptyString from "../decorators/acceptEmptyString";
 import Only from "../decorators/only";
-import Transform from "../decorators/transform";
+import Convert from "../decorators/convert";
 import Type from "../decorators/number/type";
 import MinValue from "../decorators/number/minValue";
 import MaxValue from "../decorators/number/maxValue";
@@ -21,7 +21,7 @@ export default () =>
 /**
  * adjuster for number
  */
-@Transform
+@Convert
 @MaxValue
 @MinValue
 @Only

@@ -8,7 +8,7 @@ import adjuster from "adjuster"; // eslint-disable-line import/no-unresolved
 	describe("only", testOnly);
 	describe("minValue", testMinValue);
 	describe("maxValue", testMaxValue);
-	describe("transform", testTransform);
+	describe("convert", testConvert);
 }
 
 /**
@@ -325,25 +325,25 @@ function testMaxValue()
 }
 
 /**
- * transforming
+ * conversion
  * @returns {void}
  */
-function testTransform()
+function testConvert()
 {
 	it("should be incremented", () =>
 	{
-		expect(adjuster.number().transform(transformer)
+		expect(adjuster.number().convert(converter)
 			.adjust(100)).toEqual(101);
 
-		expect(adjuster.number().transform(transformer)
+		expect(adjuster.number().convert(converter)
 			.adjust("1")).toEqual(2);
 
 		/**
-		 * transforming function
-		 * @param {number} value value to transform
-		 * @returns {number} transformed value
+		 * conversion function
+		 * @param {number} value value to convert
+		 * @returns {number} converted value
 		 */
-		function transformer(value)
+		function converter(value)
 		{
 			return value + 1;
 		}
@@ -352,17 +352,17 @@ function testTransform()
 	{
 		expect(() =>
 		{
-			adjuster.number().transform(transformer)
+			adjuster.number().convert(converter)
 				.adjust(100);
-		}).toThrow(adjuster.CAUSE.TRANSFORM);
+		}).toThrow(adjuster.CAUSE.CONVERT);
 
 		/**
-		 * transforming function
-		 * @param {number} value value to transform
+		 * conversion function
+		 * @param {number} value value to convert
 		 * @param {Function} fail callback on fail
-		 * @returns {number} transformed value
+		 * @returns {number} converted value
 		 */
-		function transformer(value, fail)
+		function converter(value, fail)
 		{
 			fail();
 		}

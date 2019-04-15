@@ -152,17 +152,17 @@ interface NumberAdjuster extends AdjusterBase<number>
 	maxValue(value: number, adjust?: boolean): this
 
 	/**
-	 * transforming
-	 * @param transformer transforming function
+	 * conversion
+	 * @param converter conversion function
 	 * @returns chainable instance
 	 */
-	transform(transformer: (value: number, fail: () => never) => number): this
+	convert(converter: (value: number, fail: () => never) => number): this
 
 	/**
 	 * mapping
 	 * @param mapper mapping function
 	 * @returns chainable instance
-	 * @deprecated use transform()
+	 * @deprecated use convert()
 	 */
 	map(mapper: (value: number, fail: () => never) => number): this
 }
@@ -232,17 +232,17 @@ interface StringAdjuster extends AdjusterBase<string>
 	pattern(pattern: RegExp): this
 
 	/**
-	 * transforming
-	 * @param transformer transforming function
+	 * conversion
+	 * @param converter conversion function
 	 * @returns chainable instance
 	 */
-	transform(transformer: (value: string, fail: () => never) => string): this
+	convert(converter: (value: string, fail: () => never) => string): this
 
 	/**
 	 * mapping
 	 * @param mapper mapping function
 	 * @returns chainable instance
-	 * @deprecated use transform()
+	 * @deprecated use convert()
 	 */
 	map(mapper: (value: string, fail: () => never) => string): this
 }
@@ -306,17 +306,17 @@ interface NumericStringAdjuster extends AdjusterBase<string>
 	checksum(algorithm: string): this
 
 	/**
-	 * transforming
-	 * @param transformer transforming function
+	 * conversion
+	 * @param converter conversion function
 	 * @returns chainable instance
 	 */
-	transform(transformer: (value: string, fail: () => never) => string): this
+	convert(converter: (value: string, fail: () => never) => string): this
 
 	/**
 	 * mapping
 	 * @param mapper mapping function
 	 * @returns chainable instance
-	 * @deprecated use transform()
+	 * @deprecated use convert()
 	 */
 	map(mapper: (value: string, fail: () => never) => string): this
 }

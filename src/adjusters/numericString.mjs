@@ -3,7 +3,7 @@ import AdjusterBase from "../libs/AdjusterBase";
 import Default from "../decorators/default";
 import AcceptNull from "../decorators/acceptNull";
 import AcceptEmptyString from "../decorators/acceptEmptyString";
-import Transform from "../decorators/transform";
+import Convert from "../decorators/convert";
 import Type from "../decorators/string/type";
 import MinLength from "../decorators/string/minLength";
 import MaxLength from "../decorators/string/maxLength";
@@ -24,7 +24,7 @@ export default () =>
 /**
  * adjuster for numeric string
  */
-@Transform
+@Convert
 @Checksum
 @MaxLength
 @MinLength

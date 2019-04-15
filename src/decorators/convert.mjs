@@ -5,8 +5,8 @@ import AdjusterError from "../libs/AdjusterError";
 export default AdjusterBase.decoratorBuilder(_adjust)
 	.init(_init)
 	.features({
-		map: _featureTransform,
-		transform: _featureTransform,
+		convert: _featureConvert,
+		map: _featureConvert, // deprecated
 	})
 	.build();
 
@@ -17,17 +17,17 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 
 /**
  * @package
- * @callback Transformer
- * @param {*} value value to transform
+ * @callback Converter
+ * @param {*} value value to convert
  * @param {Fail} fail callback on fail
- * @returns {*} transformed value
+ * @returns {*} converted value
  */
 
 /**
  * @package
  * @typedef {Params} Params-Only
  * @property {boolean} flag
- * @property {Mapper | null} maper
+ * @property {Converter | null} converter
  */
 
 /**
@@ -38,19 +38,19 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 function _init(params)
 {
 	params.flag = false;
-	params.mapper = null;
+	params.converter = null;
 }
 
 /**
- * accept only specified values
+ * conversion values
  * @param {Params-Only} params parameters
- * @param {Transformer} mapper mapper function
+ * @param {Converter} converter conversion function
  * @returns {void}
  */
-function _featureTransform(params, mapper)
+function _featureConvert(params, converter)
 {
 	params.flag = true;
-	params.mapper = mapper;
+	params.converter = converter;
 }
 
 /**
@@ -68,9 +68,9 @@ function _adjust(params, values, keyStack)
 		return false;
 	}
 
-	values.adjusted = params.mapper(values.adjusted, () =>
+	values.adjusted = params.converter(values.adjusted, () =>
 	{
-		AdjusterError.raise(CAUSE.TRANSFORM, values, keyStack);
+		AdjusterError.raise(CAUSE.CONVERT, values, keyStack);
 	});
 	return false;
 }

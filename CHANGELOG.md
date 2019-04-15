@@ -9,9 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-* `adjuster.number().transform()`
-* `adjuster.string().transform()`
-* `adjuster.numericString().transform()`
+* `adjuster.number().convert()`
+* `adjuster.string().convert()`
+* `adjuster.numericString().convert()`
 
 ### Deprecated
 

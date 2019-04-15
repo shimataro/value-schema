@@ -11,7 +11,7 @@ import adjuster from "adjuster"; // eslint-disable-line import/no-unresolved
 	describe("checksum (Luhn)", testChecksumLuhn);
 	describe("checksum (Modulus 10 / Weight 3:1)", testChecksumModulus10Weight31);
 	describe("checksum (Others)", testChecksumOthers);
-	describe("transform", testTransform);
+	describe("convert", testConvert);
 }
 
 /**
@@ -241,21 +241,21 @@ function testChecksumOthers()
  * checksum - Luhn algorithm
  * @returns {void}
  */
-function testTransform()
+function testConvert()
 {
 	it("should be separated", () =>
 	{
-		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD).transform(transformer)
+		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD).convert(converter)
 			.adjust("4111111111111111")).toEqual("4111-1111-1111-1111");
-		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD).transform(transformer)
+		expect(adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD).convert(converter)
 			.adjust("378282246310005")).toEqual("3782-8224-6310-005");
 
 		/**
-		 * transforming function
-		 * @param {string} value value to transform
-		 * @returns {string} transformed value
+		 * conversion function
+		 * @param {string} value value to convert
+		 * @returns {string} converted value
 		 */
-		function transformer(value)
+		function converter(value)
 		{
 			// separate per 4 characters
 			const parts = [];
@@ -271,17 +271,17 @@ function testTransform()
 	{
 		expect(() =>
 		{
-			adjuster.numericString().transform(transformer)
+			adjuster.numericString().convert(converter)
 				.adjust("12345");
-		}).toThrow(adjuster.CAUSE.TRANSFORM);
+		}).toThrow(adjuster.CAUSE.CONVERT);
 
 		/**
-		 * transforming function
-		 * @param {string} value value to transform
+		 * conversion function
+		 * @param {string} value value to convert
 		 * @param {Function} fail callback on fail
-		 * @returns {string} transformed value
+		 * @returns {string} converted value
 		 */
-		function transformer(value, fail)
+		function converter(value, fail)
 		{
 			fail();
 		}

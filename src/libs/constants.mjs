@@ -9,8 +9,8 @@ export const CAUSE = {
 	NULL: "null",
 	EMPTY: "empty",
 	ONLY: "only",
-	MAP: "transform", // deprecated; use TRANSFORM
-	TRANSFORM: "transform",
+	MAP: "convert", // deprecated; use CONVERT
+	CONVERT: "convert",
 
 	MIN_VALUE: "min-value",
 	MAX_VALUE: "max-value",

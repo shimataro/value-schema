@@ -10,7 +10,7 @@ import adjuster from "adjuster"; // eslint-disable-line import/no-unresolved
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
 	describe("pattern", testPattern);
-	describe("transform", testTransform);
+	describe("convert", testConvert);
 }
 
 /**
@@ -508,19 +508,19 @@ function testPatternOthers()
  * mapping
  * @returns {void}
  */
-function testTransform()
+function testConvert()
 {
 	it("should be repeated", () =>
 	{
-		expect(adjuster.string().transform(transformer)
+		expect(adjuster.string().convert(converter)
 			.adjust("abc")).toEqual("abcabc");
 
 		/**
-		 * transforming function
-		 * @param {string} value value to transform
-		 * @returns {string} transformed value
+		 * conversion function
+		 * @param {string} value value to convert
+		 * @returns {string} converted value
 		 */
-		function transformer(value)
+		function converter(value)
 		{
 			return `${value}${value}`;
 		}
@@ -529,17 +529,17 @@ function testTransform()
 	{
 		expect(() =>
 		{
-			adjuster.string().transform(transformer)
+			adjuster.string().convert(converter)
 				.adjust("abc");
-		}).toThrow(adjuster.CAUSE.TRANSFORM);
+		}).toThrow(adjuster.CAUSE.CONVERT);
 
 		/**
-		 * transforming function
-		 * @param {string} value value to transform
+		 * conversion function
+		 * @param {string} value value to convert
 		 * @param {Function} fail callback on fail
-		 * @returns {string} transformed value
+		 * @returns {string} converted value
 		 */
-		function transformer(value, fail)
+		function converter(value, fail)
 		{
 			fail();
 		}
