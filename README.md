@@ -1326,6 +1326,7 @@ interface NumericStringAdjuster {
     default(value: string): this;
     acceptNull(value?: string | null /* = null */): this;
     acceptEmptyString(value?: string | null /* = null */): this;
+    fullWidthToHalf(): this;
     joinArray(): this;
     separatedBy(separator: string | RegExp): this;
     minLength(length: number): this;
@@ -1422,6 +1423,26 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => adjuster.numericString().adjust("4111-1111-1111-1111"),
+    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+```
+
+#### `fullWidthToHalf()`
+
+Convert full-width string to half-width; e.g., `"１２３４"`.
+
+If this method is not called, the above examples causes `AdjusterError`.
+
+##### examples
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    adjuster.numericString().fullWidthToHalf().adjust("１２３４"),
+    "1234");
+
+// should cause error
+assert.throws(
+    () => adjuster.numericString().adjust("１２３４"),
     (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
 ```
 
