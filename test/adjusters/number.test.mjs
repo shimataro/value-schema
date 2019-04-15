@@ -71,6 +71,12 @@ function testType()
 
 		expect(adjuster.number().acceptSpecialFormats()
 			.adjust("0b100")).toEqual(4);
+
+		expect(adjuster.number().acceptFullWidth()
+			.adjust("１２３４．５")).toEqual(1234.5);
+
+		expect(adjuster.number().acceptFullWidth()
+			.adjust("1２3４．5")).toEqual(1234.5);
 	});
 	it("should cause error(s)", () =>
 	{
@@ -132,6 +138,12 @@ function testType()
 		{
 			adjuster.number()
 				.adjust("0b100");
+		}).toThrow(adjuster.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			adjuster.number()
+				.adjust("１２３４．５");
 		}).toThrow(adjuster.CAUSE.TYPE);
 
 		expect(() =>

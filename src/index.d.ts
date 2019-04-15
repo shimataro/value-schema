@@ -122,6 +122,12 @@ interface NumberAdjuster extends AdjusterBase<number>
 	acceptSpecialFormats(): this
 
 	/**
+	 * accept full width numeric string; i.e., "１２３．４５６"
+	 * @returns chainable instance
+	 */
+	acceptFullWidth(): this
+
+	/**
 	 * limit value to integer chain
 	 * @param [adjust=false] adjust to integer value is not an integer; default is ERROR
 	 * @returns chainable instance
