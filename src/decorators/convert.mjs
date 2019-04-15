@@ -25,14 +25,14 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 
 /**
  * @package
- * @typedef {Params} Params-Only
+ * @typedef {Params} Params-Convert
  * @property {boolean} flag
  * @property {Converter | null} converter
  */
 
 /**
  * init
- * @param {Params-Only} params parameters
+ * @param {Params-Convert} params parameters
  * @returns {void}
  */
 function _init(params)
@@ -43,7 +43,7 @@ function _init(params)
 
 /**
  * conversion values
- * @param {Params-Only} params parameters
+ * @param {Params-Convert} params parameters
  * @param {Converter} converter conversion function
  * @returns {void}
  */
@@ -55,7 +55,7 @@ function _featureConvert(params, converter)
 
 /**
  * adjust
- * @param {Params-Only} params parameters
+ * @param {Params-Convert} params parameters
  * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
