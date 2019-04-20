@@ -133,9 +133,9 @@ export default class BaseSchema
 
 	/**
 	 * fit value to schema
-	 * @param {*} value value to be checked
+	 * @param {*} value value to fit
 	 * @param {ErrorHandler} [onError] callback function on error
-	 * @returns {*} checked value
+	 * @returns {*} fitted value
 	 */
 	fit(value, onError = BaseSchema.onErrorDefault)
 	{
@@ -144,10 +144,10 @@ export default class BaseSchema
 
 	/**
 	 * fit value to schema (core)
-	 * @param {*} value value to be checked
+	 * @param {*} value value to fit
 	 * @param {ErrorHandler} onError callback function on error
 	 * @param {Key[]} keyStack path to key that caused error
-	 * @returns {*} checked value
+	 * @returns {*} fitted value
 	 * @protected
 	 */
 	_fit(value, onError, keyStack)

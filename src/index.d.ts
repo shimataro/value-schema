@@ -5,10 +5,10 @@ declare namespace vs
 {
 	/**
 	 * fit data to schemaObject
-	 * @param data data to check
+	 * @param data data to fit
 	 * @param schemaObject schema definitions
 	 * @param [onError] error handler
-	 * @returns checked data
+	 * @returns fitted data
 	 */
 	function fit<T = any>(data: Input, schemaObject: SchemaObject, onError?: ErrorHandler): T
 
@@ -89,9 +89,9 @@ interface BaseSchema<T>
 {
 	/**
 	 * fit value to schema
-	 * @param value value to check
+	 * @param value value to fit
 	 * @param [onError=null] callback function on error
-	 * @returns checked value
+	 * @returns fitted value
 	 */
 	fit(value: Input, onError?: ErrorHandler<T>): T
 }
