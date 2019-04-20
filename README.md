@@ -94,10 +94,10 @@ const expected = { // should be fitted to this
 };
 
 // Let's fit!
-const result = vs.fit(input, schemaObject);
+const fitted = vs.fit(input, schemaObject);
 
 // verification
-assert.deepStrictEqual(result, expected);
+assert.deepStrictEqual(fitted, expected);
 ```
 
 That's all! No control flows! Isn't it cool?
@@ -341,8 +341,8 @@ const expected = {
     offset: 0,
 };
 
-const result = vs.fit(input, schemaObject);
-assert.deepStrictEqual(result, expected);
+const fitted = vs.fit(input, schemaObject);
+assert.deepStrictEqual(fitted, expected);
 ```
 
 In TypeScript, use Generics for type-safe.
@@ -388,8 +388,8 @@ const expected = {
     email: "john@example.com",
 };
 
-const result = vs.fit(input, schemaObject, generateErrorHandler());
-assert.deepStrictEqual(result, expected);
+const fitted = vs.fit(input, schemaObject, generateErrorHandler());
+assert.deepStrictEqual(fitted, expected);
 
 function generateErrorHandler() {
     return (err) => {
@@ -470,7 +470,7 @@ const input = {
 };
 
 try {
-    const result = vs.fit(input, schemaObject);
+    const fitted = vs.fit(input, schemaObject);
 }
 catch (err) {
     // catch a first error
@@ -493,7 +493,7 @@ const input = 123;
 
 try {
     // `input` must be an object
-    const result = vs.fit(input, schemaObject);
+    const fitted = vs.fit(input, schemaObject);
 }
 catch (err) {
     assert.deepStrictEqual(err.keyStack, []);

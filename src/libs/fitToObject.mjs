@@ -21,14 +21,14 @@ function fitToObject(data, schemaObject, onError, keyStack)
 		return onError(err);
 	}
 
-	const result = {};
+	const fittedObject = {};
 	let hasError = false;
 	for(const key of Object.keys(schemaObject))
 	{
 		const fittedValue = schemaObject[key]._fit(data[key], errorHandler, [...keyStack, key]);
 		if(fittedValue !== undefined)
 		{
-			result[key] = fittedValue;
+			fittedObject[key] = fittedValue;
 		}
 	}
 
@@ -36,7 +36,7 @@ function fitToObject(data, schemaObject, onError, keyStack)
 	{
 		onError(null);
 	}
-	return result;
+	return fittedObject;
 
 	/**
 	 * handler generator (to avoid "no-loop-fun" error on eslint)
