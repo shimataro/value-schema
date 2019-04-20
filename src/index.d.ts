@@ -30,6 +30,52 @@ declare namespace vs
 	}
 }
 
+// type definitions
+type CollectionArray = any[]
+type CollectionObject = { [name: string]: any }
+type Input = null | boolean | number | string | CollectionArray | CollectionObject
+type ErrorHandler<T = any> = (err: ValueSchemaError | null) => T | void
+type Key = string | number
+type Separator = RegExp | string
+
+type Cause = {
+	TYPE: string,
+	REQUIRED: string,
+	NULL: string,
+	EMPTY: string,
+	ONLY: string,
+	CONVERT: string,
+
+	MIN_VALUE: string,
+	MAX_VALUE: string,
+
+	MIN_LENGTH: string,
+	MAX_LENGTH: string,
+	PATTERN: string,
+
+	CHECKSUM: string,
+}
+type StringOptions = {
+	PATTERN: {
+		EMAIL: RegExp,
+		HTTP: RegExp,
+		IPV4: RegExp,
+		IPV6: RegExp,
+		URI: RegExp,
+	},
+}
+type NumericStringOptions = {
+	CHECKSUM_ALGORITHM: {
+		LUHN: string,
+		CREDIT_CARD: string,
+
+		MODULUS10_WEIGHT3_1: string,
+		ISBN13: string,
+		EAN: string,
+		JAN: string,
+	},
+}
+
 // interface definitions
 interface ValueSchemaError extends Error
 {
@@ -435,50 +481,4 @@ interface ObjectSchema<T> extends BaseSchema<T>
 	 * @returns chainable instance
 	 */
 	schema(schemaObject: vs.SchemaObject): this
-}
-
-// type definitions
-type CollectionArray = any[]
-type CollectionObject = { [name: string]: any }
-type Input = null | boolean | number | string | CollectionArray | CollectionObject
-type ErrorHandler<T = any> = (err: ValueSchemaError | null) => T | void
-type Key = string | number
-type Separator = RegExp | string
-
-type Cause = {
-	TYPE: string,
-	REQUIRED: string,
-	NULL: string,
-	EMPTY: string,
-	ONLY: string,
-	CONVERT: string,
-
-	MIN_VALUE: string,
-	MAX_VALUE: string,
-
-	MIN_LENGTH: string,
-	MAX_LENGTH: string,
-	PATTERN: string,
-
-	CHECKSUM: string,
-}
-type StringOptions = {
-	PATTERN: {
-		EMAIL: RegExp,
-		HTTP: RegExp,
-		IPV4: RegExp,
-		IPV6: RegExp,
-		URI: RegExp,
-	},
-}
-type NumericStringOptions = {
-	CHECKSUM_ALGORITHM: {
-		LUHN: string,
-		CREDIT_CARD: string,
-
-		MODULUS10_WEIGHT3_1: string,
-		ISBN13: string,
-		EAN: string,
-		JAN: string,
-	},
 }
