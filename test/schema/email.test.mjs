@@ -1,4 +1,4 @@
-import valueSchema from "value-schema"; // eslint-disable-line import/no-unresolved
+import vs from "value-schema"; // eslint-disable-line import/no-unresolved
 
 {
 	describe("default", testDefault);
@@ -18,16 +18,16 @@ function testDefault()
 {
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.email().default("default@example.com")
+		expect(vs.email().default("default@example.com")
 			.fit(undefined)).toEqual("default@example.com");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.email()
+			vs.email()
 				.fit(undefined);
-		}).toThrow(valueSchema.CAUSE.REQUIRED);
+		}).toThrow(vs.CAUSE.REQUIRED);
 	});
 }
 
@@ -39,19 +39,19 @@ function testAcceptNull()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.email().acceptNull("empty@example.com")
+		expect(vs.email().acceptNull("empty@example.com")
 			.fit(null)).toEqual("empty@example.com");
 
-		expect(valueSchema.email().acceptNull()
+		expect(vs.email().acceptNull()
 			.fit(null)).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.email()
+			vs.email()
 				.fit(null);
-		}).toThrow(valueSchema.CAUSE.NULL);
+		}).toThrow(vs.CAUSE.NULL);
 	});
 }
 
@@ -63,19 +63,19 @@ function testAcceptEmptyString()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.email().acceptEmptyString("empty@example.com")
+		expect(vs.email().acceptEmptyString("empty@example.com")
 			.fit("")).toEqual("empty@example.com");
 
-		expect(valueSchema.email().acceptEmptyString()
+		expect(vs.email().acceptEmptyString()
 			.fit("")).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.email()
+			vs.email()
 				.fit("");
-		}).toThrow(valueSchema.CAUSE.EMPTY);
+		}).toThrow(vs.CAUSE.EMPTY);
 	});
 }
 
@@ -87,16 +87,16 @@ function testTrim()
 {
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.email().trim()
+		expect(vs.email().trim()
 			.fit("\r\n trim@example.com \t ")).toEqual("trim@example.com");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.email().trim()
+			vs.email().trim()
 				.fit(" \t\r\n ");
-		}).toThrow(valueSchema.CAUSE.EMPTY);
+		}).toThrow(vs.CAUSE.EMPTY);
 	});
 }
 
@@ -115,7 +115,7 @@ function testMaxLength()
 		];
 		for(const value of values)
 		{
-			expect(valueSchema.email()
+			expect(vs.email()
 				.fit(value)).toEqual(value);
 		}
 	});
@@ -131,9 +131,9 @@ function testMaxLength()
 		{
 			expect(() =>
 			{
-				valueSchema.email()
+				vs.email()
 					.fit(value);
-			}).toThrow(valueSchema.CAUSE.MAX_LENGTH);
+			}).toThrow(vs.CAUSE.MAX_LENGTH);
 		}
 	});
 }
@@ -146,22 +146,22 @@ function testPattern()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.email().pattern(/^\w+@([\w-]+\.)+\w+$/)
+		expect(vs.email().pattern(/^\w+@([\w-]+\.)+\w+$/)
 			.fit("user@example.com")).toEqual("user@example.com");
 
-		expect(valueSchema.email().pattern(/^\w+@([\w-]+\.)+\w+$/)
+		expect(vs.email().pattern(/^\w+@([\w-]+\.)+\w+$/)
 			.fit("user@example-domain.com")).toEqual("user@example-domain.com");
 
-		expect(valueSchema.email().pattern(/^\w+@([\w-]+\.)+\w+$/)
+		expect(vs.email().pattern(/^\w+@([\w-]+\.)+\w+$/)
 			.fit("user@example.domain.com")).toEqual("user@example.domain.com");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.email().pattern(/^\w+@([\w-]+\.)+\w+$/)
+			vs.email().pattern(/^\w+@([\w-]+\.)+\w+$/)
 				.fit("john.doe@example.com");
-		}).toThrow(valueSchema.CAUSE.PATTERN);
+		}).toThrow(vs.CAUSE.PATTERN);
 	});
 }
 
@@ -199,7 +199,7 @@ function testEmail()
 		];
 		for(const value of values)
 		{
-			expect(valueSchema.email()
+			expect(vs.email()
 				.fit(value)).toEqual(value);
 		}
 	});
@@ -222,9 +222,9 @@ function testEmail()
 		{
 			expect(() =>
 			{
-				valueSchema.email()
+				vs.email()
 					.fit(value);
-			}).toThrow(valueSchema.CAUSE.PATTERN);
+			}).toThrow(vs.CAUSE.PATTERN);
 		}
 	});
 }

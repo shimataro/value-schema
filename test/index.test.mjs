@@ -1,4 +1,4 @@
-import valueSchema from "value-schema"; // eslint-disable-line import/no-unresolved
+import vs from "value-schema"; // eslint-disable-line import/no-unresolved
 
 {
 	describe("fit", testFit);
@@ -14,18 +14,18 @@ function testFit()
 	it("should be adjusted", () =>
 	{
 		const schemaObject = {
-			id: valueSchema.number().minValue(1),
-			name: valueSchema.string().maxLength(16, true),
-			age: valueSchema.number().integer(true).minValue(0),
-			email: valueSchema.email(),
-			state: valueSchema.string().only("active", "inactive"),
-			classes: valueSchema.array().separatedBy(",").each(valueSchema.number(), true),
-			skills: valueSchema.array().separatedBy(",").each(valueSchema.string(), true),
-			credit_card: valueSchema.numericString().separatedBy("-").checksum(valueSchema.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD),
-			remote_addr: valueSchema.string().pattern(valueSchema.STRING.PATTERN.IPV4),
-			remote_addr_ipv6: valueSchema.string().pattern(valueSchema.STRING.PATTERN.IPV6),
-			limit: valueSchema.number().integer().default(10).minValue(1, true).maxValue(100, true),
-			offset: valueSchema.number().integer().default(0).minValue(0, true),
+			id: vs.number().minValue(1),
+			name: vs.string().maxLength(16, true),
+			age: vs.number().integer(true).minValue(0),
+			email: vs.email(),
+			state: vs.string().only("active", "inactive"),
+			classes: vs.array().separatedBy(",").each(vs.number(), true),
+			skills: vs.array().separatedBy(",").each(vs.string(), true),
+			credit_card: vs.numericString().separatedBy("-").checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD),
+			remote_addr: vs.string().pattern(vs.STRING.PATTERN.IPV4),
+			remote_addr_ipv6: vs.string().pattern(vs.STRING.PATTERN.IPV6),
+			limit: vs.number().integer().default(10).minValue(1, true).maxValue(100, true),
+			offset: vs.number().integer().default(0).minValue(0, true),
 		};
 		const input = {
 			id: "1",
@@ -55,7 +55,7 @@ function testFit()
 			offset: 0,
 		};
 
-		const adjusted = valueSchema.fit(input, schemaObject);
+		const adjusted = vs.fit(input, schemaObject);
 		expect(adjusted).toEqual(expected);
 	});
 }
@@ -69,9 +69,9 @@ function testError()
 	it("should be adjusted", () =>
 	{
 		const schemaObject = {
-			id: valueSchema.number().minValue(1),
-			name: valueSchema.string().maxLength(16, true),
-			email: valueSchema.email(),
+			id: vs.number().minValue(1),
+			name: vs.string().maxLength(16, true),
+			email: vs.email(),
 		};
 		const input = {
 			id: 0, // error! (>= 1)
@@ -83,7 +83,7 @@ function testError()
 			email: "john@example.com",
 		};
 
-		const adjusted = valueSchema.fit(input, schemaObject, (err) =>
+		const adjusted = vs.fit(input, schemaObject, (err) =>
 		{
 			if(err === null)
 			{
@@ -106,31 +106,31 @@ function testError()
 			const schemaObject = {};
 			const input = 0;
 
-			valueSchema.fit(input, schemaObject);
-		}).toThrow(valueSchema.CAUSE.TYPE); // input must be an object
+			vs.fit(input, schemaObject);
+		}).toThrow(vs.CAUSE.TYPE); // input must be an object
 
 		expect(() =>
 		{
 			const schemaObject = {};
 			const input = null;
 
-			valueSchema.fit(input, schemaObject);
-		}).toThrow(valueSchema.CAUSE.TYPE); // input must be an object; typeof null === "object"
+			vs.fit(input, schemaObject);
+		}).toThrow(vs.CAUSE.TYPE); // input must be an object; typeof null === "object"
 
 		expect(() =>
 		{
 			const schemaObject = {};
 			const input = [];
 
-			valueSchema.fit(input, schemaObject);
-		}).toThrow(valueSchema.CAUSE.TYPE); // input must be an object; typeof [] === "object"
+			vs.fit(input, schemaObject);
+		}).toThrow(vs.CAUSE.TYPE); // input must be an object; typeof [] === "object"
 
 		expect(() =>
 		{
 			const schemaObject = {
-				id: valueSchema.number().minValue(1),
-				name: valueSchema.string().maxLength(16, true),
-				email: valueSchema.email(),
+				id: vs.number().minValue(1),
+				name: vs.string().maxLength(16, true),
+				email: vs.email(),
 			};
 			const input = {
 				id: 0, // error! (>= 1)
@@ -138,7 +138,7 @@ function testError()
 				email: "john@example.com", // OK
 			};
 
-			valueSchema.fit(input, schemaObject, generateErrorHandler());
+			vs.fit(input, schemaObject, generateErrorHandler());
 
 			/**
 			 * error handler generator
@@ -168,9 +168,9 @@ function testError()
 		expect(() =>
 		{
 			const schemaObject = {
-				id: valueSchema.number().minValue(1),
-				name: valueSchema.string().maxLength(16, true),
-				email: valueSchema.email(),
+				id: vs.number().minValue(1),
+				name: vs.string().maxLength(16, true),
+				email: vs.email(),
 			};
 			const input = {
 				id: 0, // error! (>= 1)
@@ -178,45 +178,45 @@ function testError()
 				email: "john@example.com", // OK
 			};
 
-			valueSchema.fit(input, schemaObject);
+			vs.fit(input, schemaObject);
 		}).toThrow(); // throw a first error if error handler is omitted
 
 		try
 		{
 			const schemaObject = {
-				id: valueSchema.number().minValue(1),
-				name: valueSchema.string().maxLength(4, true),
+				id: vs.number().minValue(1),
+				name: vs.string().maxLength(4, true),
 			};
 			const input = {
 				id: "0",
 				name: "John Doe",
 				dummy: true,
 			};
-			valueSchema.object().schema(schemaObject)
+			vs.object().schema(schemaObject)
 				.fit(input);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.MIN_VALUE);
+			expect(err.cause).toEqual(vs.CAUSE.MIN_VALUE);
 			expect(err.keyStack).toEqual(["id"]);
 		}
 
 		try
 		{
 			const schemaObject = {
-				ids: valueSchema.array().each(valueSchema.number().minValue(1)),
+				ids: vs.array().each(vs.number().minValue(1)),
 			};
 			const input = {
 				ids: [true, "2", "+3", "four", 5],
 			};
-			valueSchema.object().schema(schemaObject)
+			vs.object().schema(schemaObject)
 				.fit(input);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.TYPE);
+			expect(err.cause).toEqual(vs.CAUSE.TYPE);
 			expect(err.keyStack).toEqual(["ids", 3]);
 		}
 
@@ -224,9 +224,9 @@ function testError()
 		{
 			// complex schema
 			const schemaObject = {
-				infoList: valueSchema.array().each(valueSchema.object().schema({
-					id: valueSchema.number(),
-					name: valueSchema.string().maxLength(8),
+				infoList: vs.array().each(vs.object().schema({
+					id: vs.number(),
+					name: vs.string().maxLength(8),
 				})),
 			};
 			const input = {
@@ -245,13 +245,13 @@ function testError()
 					},
 				],
 			};
-			valueSchema.object().schema(schemaObject)
+			vs.object().schema(schemaObject)
 				.fit(input);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.TYPE);
+			expect(err.cause).toEqual(vs.CAUSE.TYPE);
 			expect(err.keyStack).toEqual(["infoList", 1, "id"]);
 		}
 	});

@@ -1,4 +1,4 @@
-import valueSchema from "value-schema"; // eslint-disable-line import/no-unresolved
+import vs from "value-schema"; // eslint-disable-line import/no-unresolved
 
 {
 	describe("type", testType);
@@ -19,156 +19,156 @@ function testType()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.number()
+		expect(vs.number()
 			.fit(0)).toEqual(0);
 
-		expect(valueSchema.number()
+		expect(vs.number()
 			.fit(3.14)).toEqual(3.14);
 
-		expect(valueSchema.number().strict()
+		expect(vs.number().strict()
 			.fit(0)).toEqual(0);
 
-		expect(valueSchema.number().strict()
+		expect(vs.number().strict()
 			.fit(3.14)).toEqual(3.14);
 	});
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.number()
+		expect(vs.number()
 			.fit("123")).toEqual(123);
 
-		expect(valueSchema.number()
+		expect(vs.number()
 			.fit("+456")).toEqual(456);
 
-		expect(valueSchema.number()
+		expect(vs.number()
 			.fit("-789")).toEqual(-789);
 
-		expect(valueSchema.number().integer(true)
+		expect(vs.number().integer(true)
 			.fit(3.14)).toEqual(3);
 
-		expect(valueSchema.number().integer(true)
+		expect(vs.number().integer(true)
 			.fit("3.14")).toEqual(3);
 
-		expect(valueSchema.number().integer(true)
+		expect(vs.number().integer(true)
 			.fit(-3.14)).toEqual(-3);
 
-		expect(valueSchema.number().integer(true)
+		expect(vs.number().integer(true)
 			.fit("-3.14")).toEqual(-3);
 
-		expect(valueSchema.number()
+		expect(vs.number()
 			.fit(true)).toEqual(1);
 
-		expect(valueSchema.number()
+		expect(vs.number()
 			.fit(false)).toEqual(0);
 
-		expect(valueSchema.number().acceptSpecialFormats()
+		expect(vs.number().acceptSpecialFormats()
 			.fit("1e+2")).toEqual(100);
 
-		expect(valueSchema.number().acceptSpecialFormats()
+		expect(vs.number().acceptSpecialFormats()
 			.fit("0x100")).toEqual(256);
 
-		expect(valueSchema.number().acceptSpecialFormats()
+		expect(vs.number().acceptSpecialFormats()
 			.fit("0o100")).toEqual(64);
 
-		expect(valueSchema.number().acceptSpecialFormats()
+		expect(vs.number().acceptSpecialFormats()
 			.fit("0b100")).toEqual(4);
 
-		expect(valueSchema.number().acceptFullWidth()
+		expect(vs.number().acceptFullWidth()
 			.fit("＋１２３４．５")).toEqual(1234.5);
 
-		expect(valueSchema.number().acceptFullWidth()
+		expect(vs.number().acceptFullWidth()
 			.fit("－1２3４．5")).toEqual(-1234.5);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.number()
+			vs.number()
 				.fit("true");
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.number()
+			vs.number()
 				.fit("false");
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.number().acceptSpecialFormats()
+			vs.number().acceptSpecialFormats()
 				.fit("true");
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.number().integer()
+			vs.number().integer()
 				.fit(3.14);
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.number().integer()
+			vs.number().integer()
 				.fit("3.14");
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.number().integer()
+			vs.number().integer()
 				.fit("3.");
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.number()
+			vs.number()
 				.fit("1e+2");
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.number()
+			vs.number()
 				.fit("0x100");
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.number()
+			vs.number()
 				.fit("0o100");
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.number()
+			vs.number()
 				.fit("0b100");
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.number()
+			vs.number()
 				.fit("１２３４．５");
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.number()
+			vs.number()
 				.fit([]);
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.number()
+			vs.number()
 				.fit({});
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.number().strict()
+			vs.number().strict()
 				.fit("1");
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.number().strict()
+			vs.number().strict()
 				.fit(true);
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 	});
 }
 
@@ -180,21 +180,21 @@ function testDefault()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.number().default(10)
+		expect(vs.number().default(10)
 			.fit(1)).toEqual(1);
 	});
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.number().default(10)
+		expect(vs.number().default(10)
 			.fit(undefined)).toEqual(10);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.number()
+			vs.number()
 				.fit(undefined);
-		}).toThrow(valueSchema.CAUSE.REQUIRED);
+		}).toThrow(vs.CAUSE.REQUIRED);
 	});
 }
 
@@ -206,16 +206,16 @@ function testAcceptNull()
 {
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.number().acceptNull(123)
+		expect(vs.number().acceptNull(123)
 			.fit(null)).toEqual(123);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.number()
+			vs.number()
 				.fit(null);
-		}).toThrow(valueSchema.CAUSE.NULL);
+		}).toThrow(vs.CAUSE.NULL);
 	});
 }
 
@@ -227,19 +227,19 @@ function testAcceptEmptyString()
 {
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.number().acceptEmptyString(123)
+		expect(vs.number().acceptEmptyString(123)
 			.fit("")).toEqual(123);
 
-		expect(valueSchema.number().acceptEmptyString()
+		expect(vs.number().acceptEmptyString()
 			.fit("")).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.number()
+			vs.number()
 				.fit("");
-		}).toThrow(valueSchema.CAUSE.EMPTY);
+		}).toThrow(vs.CAUSE.EMPTY);
 	});
 }
 
@@ -251,22 +251,22 @@ function testOnly()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.number().only(1, 3, 5)
+		expect(vs.number().only(1, 3, 5)
 			.fit(1)).toEqual(1);
 
-		expect(valueSchema.number().only(1, 3, 5)
+		expect(vs.number().only(1, 3, 5)
 			.fit(3)).toEqual(3);
 
-		expect(valueSchema.number().only(1, 3, 5)
+		expect(vs.number().only(1, 3, 5)
 			.fit(5)).toEqual(5);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.number().only(1, 3, 5)
+			vs.number().only(1, 3, 5)
 				.fit(2);
-		}).toThrow(valueSchema.CAUSE.ONLY);
+		}).toThrow(vs.CAUSE.ONLY);
 	});
 }
 
@@ -278,28 +278,28 @@ function testMinValue()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.number()
+		expect(vs.number()
 			.fit(Number.MIN_SAFE_INTEGER)).toEqual(Number.MIN_SAFE_INTEGER);
-		expect(valueSchema.number().minValue(10)
+		expect(vs.number().minValue(10)
 			.fit(10)).toEqual(10);
 	});
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.number().minValue(10, true)
+		expect(vs.number().minValue(10, true)
 			.fit(9)).toEqual(10);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.number()
+			vs.number()
 				.fit(Number.MIN_SAFE_INTEGER - 1);
-		}).toThrow(valueSchema.CAUSE.MIN_VALUE);
+		}).toThrow(vs.CAUSE.MIN_VALUE);
 		expect(() =>
 		{
-			valueSchema.number().minValue(10)
+			vs.number().minValue(10)
 				.fit(9);
-		}).toThrow(valueSchema.CAUSE.MIN_VALUE);
+		}).toThrow(vs.CAUSE.MIN_VALUE);
 	});
 }
 
@@ -311,28 +311,28 @@ function testMaxValue()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.number()
+		expect(vs.number()
 			.fit(Number.MAX_SAFE_INTEGER)).toEqual(Number.MAX_SAFE_INTEGER);
-		expect(valueSchema.number().maxValue(100)
+		expect(vs.number().maxValue(100)
 			.fit(100)).toEqual(100);
 	});
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.number().maxValue(100, true)
+		expect(vs.number().maxValue(100, true)
 			.fit(101)).toEqual(100);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.number()
+			vs.number()
 				.fit(Number.MAX_SAFE_INTEGER + 1);
-		}).toThrow(valueSchema.CAUSE.MAX_VALUE);
+		}).toThrow(vs.CAUSE.MAX_VALUE);
 		expect(() =>
 		{
-			valueSchema.number().maxValue(100)
+			vs.number().maxValue(100)
 				.fit(101);
-		}).toThrow(valueSchema.CAUSE.MAX_VALUE);
+		}).toThrow(vs.CAUSE.MAX_VALUE);
 	});
 }
 
@@ -344,10 +344,10 @@ function testConvert()
 {
 	it("should be incremented", () =>
 	{
-		expect(valueSchema.number().convert(converter)
+		expect(vs.number().convert(converter)
 			.fit(100)).toEqual(101);
 
-		expect(valueSchema.number().convert(converter)
+		expect(vs.number().convert(converter)
 			.fit("1")).toEqual(2);
 
 		/**
@@ -364,9 +364,9 @@ function testConvert()
 	{
 		expect(() =>
 		{
-			valueSchema.number().convert(converter)
+			vs.number().convert(converter)
 				.fit(100);
-		}).toThrow(valueSchema.CAUSE.CONVERT);
+		}).toThrow(vs.CAUSE.CONVERT);
 
 		/**
 		 * conversion function

@@ -1,4 +1,4 @@
-import valueSchema from "value-schema"; // eslint-disable-line import/no-unresolved
+import vs from "value-schema"; // eslint-disable-line import/no-unresolved
 
 {
 	describe("type", testType);
@@ -16,10 +16,10 @@ function testType()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.object()
+		expect(vs.object()
 			.fit({})).toEqual({});
 
-		expect(valueSchema.object()
+		expect(vs.object()
 			.fit({
 				abc: 1,
 				xyz: 2,
@@ -33,9 +33,9 @@ function testType()
 	{
 		expect(() =>
 		{
-			valueSchema.object()
+			vs.object()
 				.fit(123);
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 	});
 }
 
@@ -47,16 +47,16 @@ function testDefault()
 {
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.object().default({})
+		expect(vs.object().default({})
 			.fit(undefined)).toEqual({});
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.object()
+			vs.object()
 				.fit(undefined);
-		}).toThrow(valueSchema.CAUSE.REQUIRED);
+		}).toThrow(vs.CAUSE.REQUIRED);
 	});
 }
 
@@ -68,19 +68,19 @@ function testAcceptNull()
 {
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.object().acceptNull({})
+		expect(vs.object().acceptNull({})
 			.fit(null)).toEqual({});
 
-		expect(valueSchema.object().acceptNull()
+		expect(vs.object().acceptNull()
 			.fit(null)).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.object()
+			vs.object()
 				.fit(null);
-		}).toThrow(valueSchema.CAUSE.NULL);
+		}).toThrow(vs.CAUSE.NULL);
 	});
 }
 
@@ -92,19 +92,19 @@ function testAcceptEmptyString()
 {
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.object().acceptEmptyString({})
+		expect(vs.object().acceptEmptyString({})
 			.fit("")).toEqual({});
 
-		expect(valueSchema.object().acceptEmptyString()
+		expect(vs.object().acceptEmptyString()
 			.fit("")).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.object()
+			vs.object()
 				.fit("");
-		}).toThrow(valueSchema.CAUSE.EMPTY);
+		}).toThrow(vs.CAUSE.EMPTY);
 	});
 }
 
@@ -117,8 +117,8 @@ function testSchema()
 	it("should be adjusted", () =>
 	{
 		const schemaObject = {
-			id: valueSchema.number().minValue(1),
-			name: valueSchema.string().maxLength(4, true),
+			id: vs.number().minValue(1),
+			name: vs.string().maxLength(4, true),
 		};
 		const input = {
 			id: "123",
@@ -129,7 +129,7 @@ function testSchema()
 			id: 123,
 			name: "John",
 		};
-		expect(valueSchema.object().schema(schemaObject)
+		expect(vs.object().schema(schemaObject)
 			.fit(input)).toEqual(expected);
 	});
 }

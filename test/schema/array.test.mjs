@@ -1,4 +1,4 @@
-import valueSchema from "value-schema"; // eslint-disable-line import/no-unresolved
+import vs from "value-schema"; // eslint-disable-line import/no-unresolved
 
 {
 	describe("type", testType);
@@ -21,16 +21,16 @@ function testType()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.array()
+		expect(vs.array()
 			.fit([])).toEqual([]);
 
-		expect(valueSchema.array()
+		expect(vs.array()
 			.fit([1, 2])).toEqual([1, 2]);
 
-		expect(valueSchema.array()
+		expect(vs.array()
 			.fit(["a", "b"])).toEqual(["a", "b"]);
 
-		expect(valueSchema.array()
+		expect(vs.array()
 			.fit([1, "a"])).toEqual([1, "a"]);
 	});
 }
@@ -43,16 +43,16 @@ function testDefault()
 {
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.array().default([1, "a"])
+		expect(vs.array().default([1, "a"])
 			.fit(undefined)).toEqual([1, "a"]);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.array()
+			vs.array()
 				.fit(undefined);
-		}).toThrow(valueSchema.CAUSE.REQUIRED);
+		}).toThrow(vs.CAUSE.REQUIRED);
 	});
 }
 
@@ -64,19 +64,19 @@ function testAcceptNull()
 {
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.array().acceptNull([1, "a"])
+		expect(vs.array().acceptNull([1, "a"])
 			.fit(null)).toEqual([1, "a"]);
 
-		expect(valueSchema.array().acceptNull()
+		expect(vs.array().acceptNull()
 			.fit(null)).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.array()
+			vs.array()
 				.fit(null);
-		}).toThrow(valueSchema.CAUSE.NULL);
+		}).toThrow(vs.CAUSE.NULL);
 	});
 }
 
@@ -88,19 +88,19 @@ function testAcceptEmptyString()
 {
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.array().acceptEmptyString([1, "a"])
+		expect(vs.array().acceptEmptyString([1, "a"])
 			.fit("")).toEqual([1, "a"]);
 
-		expect(valueSchema.array().acceptEmptyString()
+		expect(vs.array().acceptEmptyString()
 			.fit("")).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.array()
+			vs.array()
 				.fit("");
-		}).toThrow(valueSchema.CAUSE.EMPTY);
+		}).toThrow(vs.CAUSE.EMPTY);
 	});
 }
 
@@ -112,7 +112,7 @@ function testSeparatedBy()
 {
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.array().separatedBy(",")
+		expect(vs.array().separatedBy(",")
 			.fit("1,a")).toEqual(["1", "a"]);
 	});
 }
@@ -125,16 +125,16 @@ function testToArray()
 {
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.array().toArray()
+		expect(vs.array().toArray()
 			.fit("abc")).toEqual(["abc"]);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.array()
+			vs.array()
 				.fit("abc");
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 	});
 }
 
@@ -146,16 +146,16 @@ function testMinLength()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.array().minLength(1)
+		expect(vs.array().minLength(1)
 			.fit(["a"])).toEqual(["a"]);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.array().minLength(1)
+			vs.array().minLength(1)
 				.fit([]);
-		}).toThrow(valueSchema.CAUSE.MIN_LENGTH);
+		}).toThrow(vs.CAUSE.MIN_LENGTH);
 	});
 }
 
@@ -167,24 +167,24 @@ function testMaxLength()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.array().maxLength(1)
+		expect(vs.array().maxLength(1)
 			.fit([1])).toEqual([1]);
 
-		expect(valueSchema.array().maxLength(1, true)
+		expect(vs.array().maxLength(1, true)
 			.fit([1])).toEqual([1]);
 	});
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.array().maxLength(1, true)
+		expect(vs.array().maxLength(1, true)
 			.fit([1, 2])).toEqual([1]);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.array().maxLength(1)
+			vs.array().maxLength(1)
 				.fit([1, 2]);
-		}).toThrow(valueSchema.CAUSE.MAX_LENGTH);
+		}).toThrow(vs.CAUSE.MAX_LENGTH);
 	});
 }
 
@@ -196,228 +196,228 @@ function testNumber()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.array().each(valueSchema.number())
+		expect(vs.array().each(vs.number())
 			.fit([3.14, 2.71])).toEqual([3.14, 2.71]);
 
-		expect(valueSchema.array().each(valueSchema.number().integer())
+		expect(vs.array().each(vs.number().integer())
 			.fit([1, 2, 3])).toEqual([1, 2, 3]);
 
-		expect(valueSchema.array().each(valueSchema.number().only(1, 2, 3))
+		expect(vs.array().each(vs.number().only(1, 2, 3))
 			.fit([1, 2, 3])).toEqual([1, 2, 3]);
 
-		expect(valueSchema.array().each(valueSchema.number().minValue(10))
+		expect(vs.array().each(vs.number().minValue(10))
 			.fit([10, 11, 12])).toEqual([10, 11, 12]);
-		expect(valueSchema.array().each(valueSchema.number().maxValue(10))
+		expect(vs.array().each(vs.number().maxValue(10))
 			.fit([8, 9, 10])).toEqual([8, 9, 10]);
 	});
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.array().each(valueSchema.number())
+		expect(vs.array().each(vs.number())
 			.fit([false, true, 2, "+3", "-4"])).toEqual([0, 1, 2, 3, -4]);
 
-		expect(valueSchema.array().each(valueSchema.number(), true)
+		expect(vs.array().each(vs.number(), true)
 			.fit([false, "abc", true, "+2"])).toEqual([0, 1, 2]);
 
-		expect(valueSchema.array().separatedBy(",").each(valueSchema.number())
+		expect(vs.array().separatedBy(",").each(vs.number())
 			.fit("1,2,3")).toEqual([1, 2, 3]);
 
-		expect(valueSchema.array().each(valueSchema.number().default(999))
+		expect(vs.array().each(vs.number().default(999))
 			.fit(["1", undefined, 3])).toEqual([1, 999, 3]);
-		expect(valueSchema.array().each(valueSchema.number().acceptNull(999))
+		expect(vs.array().each(vs.number().acceptNull(999))
 			.fit(["1", null, 3])).toEqual([1, 999, 3]);
-		expect(valueSchema.array().each(valueSchema.number().acceptEmptyString(999))
+		expect(vs.array().each(vs.number().acceptEmptyString(999))
 			.fit(["1", "", 3])).toEqual([1, 999, 3]);
 
-		expect(valueSchema.array().each(valueSchema.number().acceptSpecialFormats())
+		expect(vs.array().each(vs.number().acceptSpecialFormats())
 			.fit(["1e+2", "0x100", "0o100", "0b100"])).toEqual([100, 256, 64, 4]);
 
-		expect(valueSchema.array().each(valueSchema.number().integer(true))
+		expect(vs.array().each(vs.number().integer(true))
 			.fit([3.14, -3.14, "3.14"])).toEqual([3, -3, 3]);
 
-		expect(valueSchema.array().each(valueSchema.number().minValue(10, true))
+		expect(vs.array().each(vs.number().minValue(10, true))
 			.fit([9, 10, 11])).toEqual([10, 10, 11]);
-		expect(valueSchema.array().each(valueSchema.number().maxValue(10, true))
+		expect(vs.array().each(vs.number().maxValue(10, true))
 			.fit([9, 10, 11])).toEqual([9, 10, 10]);
 	});
 	it("should cause error(s)", () =>
 	{
 		try
 		{
-			valueSchema.array().each(valueSchema.number())
+			vs.array().each(vs.number())
 				.fit([false, "abc", true, "+2"]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.TYPE);
+			expect(err.cause).toEqual(vs.CAUSE.TYPE);
 			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.number())
+			vs.array().each(vs.number())
 				.fit([1, undefined, 3]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.REQUIRED);
+			expect(err.cause).toEqual(vs.CAUSE.REQUIRED);
 			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.number())
+			vs.array().each(vs.number())
 				.fit([1, null, 3]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.NULL);
+			expect(err.cause).toEqual(vs.CAUSE.NULL);
 			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.number())
+			vs.array().each(vs.number())
 				.fit([1, "", 3]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.EMPTY);
+			expect(err.cause).toEqual(vs.CAUSE.EMPTY);
 			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.number().default(999))
+			vs.array().each(vs.number().default(999))
 				.fit([1, null, 3]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.NULL);
+			expect(err.cause).toEqual(vs.CAUSE.NULL);
 			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.number().default(999))
+			vs.array().each(vs.number().default(999))
 				.fit([1, "", 3]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.EMPTY);
+			expect(err.cause).toEqual(vs.CAUSE.EMPTY);
 			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.number().acceptNull(999))
+			vs.array().each(vs.number().acceptNull(999))
 				.fit([1, undefined, 3]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.REQUIRED);
+			expect(err.cause).toEqual(vs.CAUSE.REQUIRED);
 			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.number().acceptNull(999))
+			vs.array().each(vs.number().acceptNull(999))
 				.fit([1, "", 3]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.EMPTY);
+			expect(err.cause).toEqual(vs.CAUSE.EMPTY);
 			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.number().acceptEmptyString(999))
+			vs.array().each(vs.number().acceptEmptyString(999))
 				.fit([1, undefined, 3]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.REQUIRED);
+			expect(err.cause).toEqual(vs.CAUSE.REQUIRED);
 			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.number().acceptEmptyString(999))
+			vs.array().each(vs.number().acceptEmptyString(999))
 				.fit([1, null, 3]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.NULL);
+			expect(err.cause).toEqual(vs.CAUSE.NULL);
 			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.number())
+			vs.array().each(vs.number())
 				.fit(["1e+2", "0x100", "0o100", "0b100"]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.TYPE);
+			expect(err.cause).toEqual(vs.CAUSE.TYPE);
 			expect(err.keyStack).toEqual([0]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.number().integer())
+			vs.array().each(vs.number().integer())
 				.fit([3.14]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.TYPE);
+			expect(err.cause).toEqual(vs.CAUSE.TYPE);
 			expect(err.keyStack).toEqual([0]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.number().only(1, 2, 3))
+			vs.array().each(vs.number().only(1, 2, 3))
 				.fit([0, 1, 2]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.ONLY);
+			expect(err.cause).toEqual(vs.CAUSE.ONLY);
 			expect(err.keyStack).toEqual([0]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.number().minValue(10))
+			vs.array().each(vs.number().minValue(10))
 				.fit([9, 10, 11]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.MIN_VALUE);
+			expect(err.cause).toEqual(vs.CAUSE.MIN_VALUE);
 			expect(err.keyStack).toEqual([0]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.number().maxValue(10))
+			vs.array().each(vs.number().maxValue(10))
 				.fit([9, 10, 11]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.MAX_VALUE);
+			expect(err.cause).toEqual(vs.CAUSE.MAX_VALUE);
 			expect(err.keyStack).toEqual([2]);
 		}
 	});
@@ -431,81 +431,81 @@ function testString()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.array().each(valueSchema.string().only("a", "b", "c"))
+		expect(vs.array().each(vs.string().only("a", "b", "c"))
 			.fit(["a", "b", "c"])).toEqual(["a", "b", "c"]);
 
-		expect(valueSchema.array().each(valueSchema.string().minLength(3))
+		expect(vs.array().each(vs.string().minLength(3))
 			.fit(["abc", "xyz"])).toEqual(["abc", "xyz"]);
 
-		expect(valueSchema.array().each(valueSchema.string().maxLength(3))
+		expect(vs.array().each(vs.string().maxLength(3))
 			.fit(["abc", "xyz"])).toEqual(["abc", "xyz"]);
-		expect(valueSchema.array().each(valueSchema.string().maxLength(3, true))
+		expect(vs.array().each(vs.string().maxLength(3, true))
 			.fit(["abc", "xyz"])).toEqual(["abc", "xyz"]);
 
-		expect(valueSchema.array().each(valueSchema.string().pattern(/^Go+gle$/))
+		expect(vs.array().each(vs.string().pattern(/^Go+gle$/))
 			.fit(["Gogle", "Google", "Gooogle"])).toEqual(["Gogle", "Google", "Gooogle"]);
 	});
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.array().each(valueSchema.string())
+		expect(vs.array().each(vs.string())
 			.fit([false, true, 2, "+3", "-4"])).toEqual(["false", "true", "2", "+3", "-4"]);
 
-		expect(valueSchema.array().each(valueSchema.string().trim())
+		expect(vs.array().each(vs.string().trim())
 			.fit([" a", "b\t", "\rc\n"])).toEqual(["a", "b", "c"]);
 
-		expect(valueSchema.array().each(valueSchema.string().only("a", "b", "c"))
+		expect(vs.array().each(vs.string().only("a", "b", "c"))
 			.fit(["a", "b", "c"])).toEqual(["a", "b", "c"]);
 
-		expect(valueSchema.array().each(valueSchema.string().maxLength(3, true))
+		expect(vs.array().each(vs.string().maxLength(3, true))
 			.fit(["abcd", "xyz0"])).toEqual(["abc", "xyz"]);
 	});
 	it("should cause error(s)", () =>
 	{
 		try
 		{
-			valueSchema.array().each(valueSchema.string().only("a", "b", "c"))
+			vs.array().each(vs.string().only("a", "b", "c"))
 				.fit(["a", "b", "x"]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.ONLY);
+			expect(err.cause).toEqual(vs.CAUSE.ONLY);
 			expect(err.keyStack).toEqual([2]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.string().minLength(3))
+			vs.array().each(vs.string().minLength(3))
 				.fit(["ab", "xy"]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.MIN_LENGTH);
+			expect(err.cause).toEqual(vs.CAUSE.MIN_LENGTH);
 			expect(err.keyStack).toEqual([0]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.string().maxLength(3))
+			vs.array().each(vs.string().maxLength(3))
 				.fit(["abc", "xyz0"]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.MAX_LENGTH);
+			expect(err.cause).toEqual(vs.CAUSE.MAX_LENGTH);
 			expect(err.keyStack).toEqual([1]);
 		}
 
 		try
 		{
-			valueSchema.array().each(valueSchema.string().pattern(/^Go+gle$/))
+			vs.array().each(vs.string().pattern(/^Go+gle$/))
 				.fit(["google", "Ggle"]);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(valueSchema.CAUSE.PATTERN);
+			expect(err.cause).toEqual(vs.CAUSE.PATTERN);
 			expect(err.keyStack).toEqual([0]);
 		}
 	});

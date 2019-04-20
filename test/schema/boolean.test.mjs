@@ -1,4 +1,4 @@
-import valueSchema from "value-schema"; // eslint-disable-line import/no-unresolved
+import vs from "value-schema"; // eslint-disable-line import/no-unresolved
 
 {
 	describe("type", testType);
@@ -15,124 +15,124 @@ function testType()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit(true)).toEqual(true);
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit(false)).toEqual(false);
 
-		expect(valueSchema.boolean().strict()
+		expect(vs.boolean().strict()
 			.fit(true)).toEqual(true);
-		expect(valueSchema.boolean().strict()
+		expect(vs.boolean().strict()
 			.fit(false)).toEqual(false);
 	});
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit(1)).toEqual(true);
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit(0)).toEqual(false);
 
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit("1")).toEqual(true);
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit("0")).toEqual(false); // "0" is truthy in JavaScript, but value-schema adjusts it to false!
 
-		expect(valueSchema.boolean().acceptAllNumbers()
+		expect(vs.boolean().acceptAllNumbers()
 			.fit(1)).toEqual(true);
-		expect(valueSchema.boolean().acceptAllNumbers()
+		expect(vs.boolean().acceptAllNumbers()
 			.fit(0)).toEqual(false);
-		expect(valueSchema.boolean().acceptAllNumbers()
+		expect(vs.boolean().acceptAllNumbers()
 			.fit(-1)).toEqual(true);
-		expect(valueSchema.boolean().acceptAllNumbers()
+		expect(vs.boolean().acceptAllNumbers()
 			.fit("1")).toEqual(true);
-		expect(valueSchema.boolean().acceptAllNumbers()
+		expect(vs.boolean().acceptAllNumbers()
 			.fit("0")).toEqual(false);
-		expect(valueSchema.boolean().acceptAllNumbers()
+		expect(vs.boolean().acceptAllNumbers()
 			.fit("-1")).toEqual(true);
 
 		// "true" is true, "false" is false!
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit("true")).toEqual(true);
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit("TRUE")).toEqual(true);
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit(" \ttrue\r\n")).toEqual(true);
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit("false")).toEqual(false);
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit("FALSE")).toEqual(false);
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit(" \rfalse\r\n")).toEqual(false);
 
 		// "yes" is true, "no" is false!
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit("yes")).toEqual(true);
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit("YES")).toEqual(true);
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit("no")).toEqual(false);
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit("NO")).toEqual(false);
 
 		// "on" is true, "off" is false!
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit("on")).toEqual(true);
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit("ON")).toEqual(true);
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit("off")).toEqual(false);
-		expect(valueSchema.boolean()
+		expect(vs.boolean()
 			.fit("OFF")).toEqual(false);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.boolean()
+			vs.boolean()
 				.fit(-1);
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.boolean()
+			vs.boolean()
 				.fit("-1");
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.boolean()
+			vs.boolean()
 				.fit("abc");
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.boolean()
+			vs.boolean()
 				.fit({});
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.boolean()
+			vs.boolean()
 				.fit([]);
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.boolean().strict()
+			vs.boolean().strict()
 				.fit(0);
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.boolean().strict()
+			vs.boolean().strict()
 				.fit("0");
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
-			valueSchema.boolean().strict()
+			vs.boolean().strict()
 				.fit("true");
-		}).toThrow(valueSchema.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.TYPE);
 	});
 }
 
@@ -144,19 +144,19 @@ function testDefault()
 {
 	it("should be adjusted", () =>
 	{
-		expect(valueSchema.boolean().default(true)
+		expect(vs.boolean().default(true)
 			.fit(undefined)).toEqual(true);
 
-		expect(valueSchema.boolean().default(true).strict()
+		expect(vs.boolean().default(true).strict()
 			.fit(undefined)).toEqual(true);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.boolean()
+			vs.boolean()
 				.fit(undefined);
-		}).toThrow(valueSchema.CAUSE.REQUIRED);
+		}).toThrow(vs.CAUSE.REQUIRED);
 	});
 }
 
@@ -168,19 +168,19 @@ function testAcceptNull()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.boolean().acceptNull(false)
+		expect(vs.boolean().acceptNull(false)
 			.fit(null)).toEqual(false);
 
-		expect(valueSchema.boolean().acceptNull(false).strict()
+		expect(vs.boolean().acceptNull(false).strict()
 			.fit(null)).toEqual(false);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.boolean()
+			vs.boolean()
 				.fit(null);
-		}).toThrow(valueSchema.CAUSE.NULL);
+		}).toThrow(vs.CAUSE.NULL);
 	});
 }
 
@@ -192,18 +192,18 @@ function testAcceptEmptyString()
 {
 	it("should be OK", () =>
 	{
-		expect(valueSchema.boolean().acceptEmptyString(false)
+		expect(vs.boolean().acceptEmptyString(false)
 			.fit("")).toEqual(false);
 
-		expect(valueSchema.boolean().acceptEmptyString(false).strict()
+		expect(vs.boolean().acceptEmptyString(false).strict()
 			.fit("")).toEqual(false);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			valueSchema.boolean()
+			vs.boolean()
 				.fit("");
-		}).toThrow(valueSchema.CAUSE.EMPTY);
+		}).toThrow(vs.CAUSE.EMPTY);
 	});
 }
