@@ -15,7 +15,7 @@ export default () =>
 };
 
 /**
- * valueSchema for boolean
+ * for boolean
  */
 @Type
 @AcceptEmptyString

@@ -20,7 +20,7 @@ export default () =>
 };
 
 /**
- * valueSchema for e-mail
+ * for e-mail
  */
 @Pattern
 @MaxLength

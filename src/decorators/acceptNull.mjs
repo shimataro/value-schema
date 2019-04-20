@@ -43,7 +43,7 @@ function _featureAcceptNull(params, value = null)
  * @param {Params-AcceptNull} params parameters
  * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
- * @returns {boolean} end adjustment
+ * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
  */
 function _fit(params, values, keyStack)

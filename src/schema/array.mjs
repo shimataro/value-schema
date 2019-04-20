@@ -18,7 +18,7 @@ export default () =>
 };
 
 /**
- * valueSchema for array
+ * for array
  */
 @MaxLength
 @MinLength

@@ -20,7 +20,7 @@ export default () =>
 };
 
 /**
- * valueSchema for number
+ * for number
  */
 @Convert
 @MaxValue

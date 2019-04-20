@@ -23,7 +23,7 @@ export default () =>
 };
 
 /**
- * valueSchema for numeric string
+ * for numeric string
  */
 @Convert
 @Checksum

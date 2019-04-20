@@ -38,7 +38,7 @@ function _featureAcceptFullWidth(params)
  * fit
  * @param {Params-Number-AcceptFullWidth} params parameters
  * @param {Decorator-Values} values original / adjusted values
- * @returns {boolean} end adjustment
+ * @returns {boolean} ends fitting
  */
 function _fit(params, values)
 {

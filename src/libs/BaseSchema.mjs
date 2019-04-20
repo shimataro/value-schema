@@ -26,7 +26,7 @@ class DecoratorBuilder
 {
 	/**
 	 * constructor
-	 * @param {Decorator-Fit} fit valueSchema function
+	 * @param {Decorator-Fit} fit value-schema function
 	 */
 	constructor(fit)
 	{
@@ -103,7 +103,7 @@ export default class BaseSchema
 {
 	/**
 	 * returns DecoratorBuilder
-	 * @param {function} fit valueSchema function
+	 * @param {function} fit value-schema function
 	 * @returns {DecoratorBuilder} builder object (to be chained)
 	 */
 	static decoratorBuilder(fit)

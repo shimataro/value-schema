@@ -21,7 +21,7 @@ export default () =>
 };
 
 /**
- * valueSchema for string
+ * for string
  */
 @Convert
 @Pattern

@@ -29,7 +29,7 @@ function _init(params)
 /**
  * apply schema to each elements
  * @param {Params-Array-Each} params parameters
- * @param {BaseSchema} schema valueSchema to apply
+ * @param {BaseSchema} schema schema object to apply
  * @param {boolean} [ignoreEachErrors=false] ignore errors of each elements
  * @returns {void}
  */
@@ -40,11 +40,11 @@ function _featureEach(params, schema, ignoreEachErrors = false)
 }
 
 /**
- * valueSchema
+ * fitting function
  * @param {Params-Array-Each} params parameters
  * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
- * @returns {boolean} end adjustment
+ * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
  */
 function _fit(params, values, keyStack)

@@ -38,7 +38,7 @@ function _featureJoinArray(params)
  * fit
  * @param {Params-NumericString-JoinArray} params parameters
  * @param {Decorator-Values} values original / adjusted values
- * @returns {boolean} end adjustment
+ * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
  */
 function _fit(params, values)

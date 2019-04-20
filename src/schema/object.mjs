@@ -16,7 +16,7 @@ export default () =>
 };
 
 /**
- * valueSchema for object
+ * for object
  */
 @Schema
 @Type
