@@ -1,15 +1,15 @@
 /**
  * get class decorators
  * @function
- * @param {AdjusterBase} TargetClass a target class
+ * @param {BaseSchema} TargetClass a target class
  * @returns {Decorator-Info[]}
  */
 const getDecorators = (() =>
 {
-	/** @type {Map<AdjusterBase, Decorator-Info[]>} */
+	/** @type {Map<BaseSchema, Decorator-Info[]>} */
 	const decoratorsMap = new Map();
 
-	return (/** @type {AdjusterBase} */ TargetClass) =>
+	return (/** @type {BaseSchema} */ TargetClass) =>
 	{
 		if(!decoratorsMap.has(TargetClass))
 		{
@@ -26,11 +26,11 @@ class DecoratorBuilder
 {
 	/**
 	 * constructor
-	 * @param {Decorator-Adjust} adjust adjuster function
+	 * @param {Decorator-Fit} fit valueSchema function
 	 */
-	constructor(adjust)
+	constructor(fit)
 	{
-		this._adjust = adjust;
+		this._fit = fit;
 		this._init = null;
 		this._features = null;
 	}
@@ -59,21 +59,21 @@ class DecoratorBuilder
 
 	/**
 	 * build decorator
-	 * @returns {function(AdjusterBase): AdjusterBase} decorator function
+	 * @returns {function(BaseSchema): BaseSchema} decorator function
 	 */
 	build()
 	{
-		return (/** @type {AdjusterBase} */ TargetClass) =>
+		return (/** @type {BaseSchema} */ TargetClass) =>
 		{
 			const key = Symbol("");
 			const init = this._init;
 			const features = this._features;
-			const adjust = this._adjust;
+			const fit = this._fit;
 
 			const decorators = getDecorators(TargetClass);
 			decorators.push({
 				key: key,
-				adjust: adjust,
+				fit: fit,
 				init: init,
 			});
 
@@ -97,18 +97,18 @@ class DecoratorBuilder
 }
 
 /**
- * Adjuster Base Class
+ * Base Schema Class
  */
-export default class AdjusterBase
+export default class BaseSchema
 {
 	/**
 	 * returns DecoratorBuilder
-	 * @param {function} adjust adjuster function
+	 * @param {function} fit valueSchema function
 	 * @returns {DecoratorBuilder} builder object (to be chained)
 	 */
-	static decoratorBuilder(adjust)
+	static decoratorBuilder(fit)
 	{
-		return new DecoratorBuilder(adjust);
+		return new DecoratorBuilder(fit);
 	}
 
 	/**
@@ -132,25 +132,25 @@ export default class AdjusterBase
 	}
 
 	/**
-	 * do adjust
+	 * fit value to schema
 	 * @param {*} value value to be checked
 	 * @param {ErrorHandler} [onError] callback function on error
-	 * @returns {*} adjusted value
+	 * @returns {*} checked value
 	 */
-	adjust(value, onError = AdjusterBase.onErrorDefault)
+	fit(value, onError = BaseSchema.onErrorDefault)
 	{
-		return this._adjust(value, onError, []);
+		return this._fit(value, onError, []);
 	}
 
 	/**
-	 * do adjust (core)
+	 * fit value to schema (core)
 	 * @param {*} value value to be checked
 	 * @param {ErrorHandler} onError callback function on error
 	 * @param {Key[]} keyStack path to key that caused error
-	 * @returns {*} adjusted value
+	 * @returns {*} checked value
 	 * @protected
 	 */
-	_adjust(value, onError, keyStack)
+	_fit(value, onError, keyStack)
 	{
 		const values = {
 			original: value,
@@ -163,7 +163,7 @@ export default class AdjusterBase
 			for(const decorator of decorators)
 			{
 				const params = this._params.get(decorator.key);
-				if(decorator.adjust(params, values, keyStack))
+				if(decorator.fit(params, values, keyStack))
 				{
 					return values.adjusted;
 				}
@@ -179,7 +179,7 @@ export default class AdjusterBase
 
 	/**
 	 * default error handler
-	 * @param {AdjusterError} err error object
+	 * @param {ValueSchemaError} err error object
 	 * @returns {void}
 	 */
 	static onErrorDefault(err)
@@ -203,7 +203,7 @@ export default class AdjusterBase
  * @typedef {Object} Decorator-Info
  * @property {Symbol} key
  * @property {Decorator-Init} init
- * @property {Decorator-Adjust} [adjust]
+ * @property {Decorator-Fit} [fit]
  */
 /**
  * @package
@@ -217,9 +217,9 @@ export default class AdjusterBase
  * @param {...*} args
  */
 /**
- * @typedef {function} Decorator-Adjust
+ * @typedef {function} Decorator-Fit
  * @param {Params} params
  * @param {Decorator-Values} value
  * @param {ErrorHandler} [onError]
- * @returns {boolean} end adjustment or not
+ * @returns {boolean} end processing or not
  */

@@ -1,19 +1,19 @@
 /**
- * Adjuster Error
+ * Value-Schema Error
  */
-export default class AdjusterError extends Error
+export default class ValueSchemaError extends Error
 {
 	/**
 	 * throw an error
 	 * @param {string} cause cause of error
-	 * @param {Decorator-Values} values original / adjusted values
+	 * @param {Decorator-Values} values original / fitted values
 	 * @param {Key[]} keyStack path to key that caused error
 	 * @returns {void}
-	 * @throws {AdjusterError}
+	 * @throws {ValueSchemaError}
 	 */
 	static raise(cause, values, keyStack)
 	{
-		throw new AdjusterError(cause, values.original, keyStack);
+		throw new ValueSchemaError(cause, values.original, keyStack);
 	}
 
 	/**
@@ -24,9 +24,9 @@ export default class AdjusterError extends Error
 	 */
 	constructor(cause, value, keyStack)
 	{
-		super(`Adjuster Error: ${cause}; ${value}; ${keyStack}`);
+		super(`${cause}; ${value}; ${keyStack}`);
 
-		this.name = "AdjusterError";
+		this.name = "ValueSchemaError";
 		this.cause = cause;
 		this.value = value;
 		this.keyStack = [...keyStack];

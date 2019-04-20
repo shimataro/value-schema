@@ -1,7 +1,7 @@
-import AdjusterBase from "../../libs/AdjusterBase";
+import BaseSchema from "../../libs/BaseSchema";
 import * as string from "../../libs/string";
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		acceptFullWidth: _featureAcceptFullWidth,
@@ -35,12 +35,12 @@ function _featureAcceptFullWidth(params)
 }
 
 /**
- * adjust
+ * fit
  * @param {Params-Number-AcceptFullWidth} params parameters
  * @param {Decorator-Values} values original / adjusted values
  * @returns {boolean} end adjustment
  */
-function _adjust(params, values)
+function _fit(params, values)
 {
 	if(!params.flag)
 	{

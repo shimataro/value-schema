@@ -1,9 +1,9 @@
 import {CAUSE} from "../../libs/constants";
 import {isScalar, isString} from "../../libs/types";
-import AdjusterBase from "../../libs/AdjusterBase";
-import AdjusterError from "../../libs/AdjusterError";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		strict: _strict,
@@ -37,14 +37,14 @@ function _strict(params)
 }
 
 /**
- * adjust
+ * fit
  * @param {Params-String-Type} params parameters
  * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values, keyStack)
+function _fit(params, values, keyStack)
 {
 	if(isString(values.adjusted))
 	{
@@ -54,13 +54,13 @@ function _adjust(params, values, keyStack)
 	// strict check
 	if(params.flagStrict)
 	{
-		AdjusterError.raise(CAUSE.TYPE, values, keyStack);
+		ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 	}
 
 	// non-scalar value cannot be convert to string
 	if(!isScalar(values.adjusted))
 	{
-		AdjusterError.raise(CAUSE.TYPE, values, keyStack);
+		ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 	}
 
 	values.adjusted = String(values.adjusted);

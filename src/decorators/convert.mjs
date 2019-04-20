@@ -1,8 +1,8 @@
 import {CAUSE} from "../libs/constants";
-import AdjusterBase from "../libs/AdjusterBase";
-import AdjusterError from "../libs/AdjusterError";
+import BaseSchema from "../libs/BaseSchema";
+import ValueSchemaError from "../libs/ValueSchemaError";
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		convert: _featureConvert,
@@ -54,14 +54,14 @@ function _featureConvert(params, converter)
 }
 
 /**
- * adjust
+ * fit
  * @param {Params-Convert} params parameters
  * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values, keyStack)
+function _fit(params, values, keyStack)
 {
 	if(!params.flag)
 	{
@@ -70,7 +70,7 @@ function _adjust(params, values, keyStack)
 
 	values.adjusted = params.converter(values.adjusted, () =>
 	{
-		AdjusterError.raise(CAUSE.CONVERT, values, keyStack);
+		ValueSchemaError.raise(CAUSE.CONVERT, values, keyStack);
 	});
 	return false;
 }

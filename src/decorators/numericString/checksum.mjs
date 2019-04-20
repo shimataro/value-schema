@@ -1,8 +1,8 @@
 import {CAUSE, NUMERIC_STRING} from "../../libs/constants";
-import AdjusterBase from "../../libs/AdjusterBase";
-import AdjusterError from "../../libs/AdjusterError";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		checksum: _featureChecksum,
@@ -39,14 +39,14 @@ function _featureChecksum(params, algorithm)
 }
 
 /**
- * adjust
+ * fit
  * @param {Params-NumericString-Checksum} params parameters
  * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values, keyStack)
+function _fit(params, values, keyStack)
 {
 	if(!params.flag)
 	{
@@ -57,7 +57,7 @@ function _adjust(params, values, keyStack)
 		return false;
 	}
 
-	AdjusterError.raise(CAUSE.CHECKSUM, values, keyStack);
+	ValueSchemaError.raise(CAUSE.CHECKSUM, values, keyStack);
 }
 
 /**

@@ -1,12 +1,12 @@
 import {CAUSE} from "../../libs/constants";
 import {isBoolean, isNumber, isString} from "../../libs/types";
-import AdjusterBase from "../../libs/AdjusterBase";
-import AdjusterError from "../../libs/AdjusterError";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
 const REGEXP_TRUE = /^\s*(true|yes|on)\s*$/i;
 const REGEXP_FALSE = /^\s*(false|no|off)\s*$/i;
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		strict: _strict,
@@ -53,14 +53,14 @@ function _acceptAllNumbers(params)
 }
 
 /**
- * adjust
+ * fit
  * @param {Params-Boolean-Type} params parameters
  * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values, keyStack)
+function _fit(params, values, keyStack)
 {
 	let {adjusted} = values;
 
@@ -72,7 +72,7 @@ function _adjust(params, values, keyStack)
 	if(params.flagStrict)
 	{
 		// strict check mode
-		AdjusterError.raise(CAUSE.TYPE, values, keyStack);
+		ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 	}
 
 	if(isString(adjusted))
@@ -102,5 +102,5 @@ function _adjust(params, values, keyStack)
 		}
 	}
 
-	AdjusterError.raise(CAUSE.TYPE, values, keyStack);
+	ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 }

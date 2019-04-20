@@ -1,12 +1,12 @@
 import {CAUSE} from "../../libs/constants";
 import {isScalar, isNumber, isInteger, isString} from "../../libs/types";
-import AdjusterBase from "../../libs/AdjusterBase";
-import AdjusterError from "../../libs/AdjusterError";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
 const REGEXP_NUMBER = /^\s*[+-]?(\d+(\.\d*)?|\.\d+)\s*$/;
 const REGEXP_INTEGER = /^\s*[+-]?\d+\s*$/;
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		strict: _strict,
@@ -21,7 +21,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
  * @property {boolean} flagStrict
  * @property {boolean} flagAcceptSpecialFormats
  * @property {boolean} flagInteger
- * @property {boolean} flagIntegerAdjust
+ * @property {boolean} flagIntegerFits
  */
 
 /**
@@ -34,7 +34,7 @@ function _init(params)
 	params.flagStrict = false;
 	params.flagAcceptSpecialFormats = false;
 	params.flagInteger = false;
-	params.flagIntegerAdjust = false;
+	params.flagIntegerFits = false;
 }
 
 /**
@@ -60,37 +60,37 @@ function _acceptSpecialFormats(params)
 /**
  * limit to integer
  * @param {Params-Number-Type} params parameters
- * @param {boolean} [adjust=false] adjust value or not
+ * @param {boolean} [fits=false] fit value to schema or not
  * @returns {void}
  */
-function _integer(params, adjust = false)
+function _integer(params, fits = false)
 {
 	params.flagInteger = true;
-	params.flagIntegerAdjust = adjust;
+	params.flagIntegerFits = fits;
 }
 
 /**
- * adjust
+ * fit
  * @param {Params-Number-Type} params parameters
  * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values, keyStack)
+function _fit(params, values, keyStack)
 {
 	if(isString(values.adjusted))
 	{
 		if(!_checkNumberFormat(params, values.adjusted))
 		{
-			AdjusterError.raise(CAUSE.TYPE, values, keyStack);
+			ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 		}
 	}
 
 	const adjusted = _toNumber(params, values.adjusted);
 	if(adjusted === false)
 	{
-		AdjusterError.raise(CAUSE.TYPE, values, keyStack);
+		ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 	}
 
 	values.adjusted = adjusted;
@@ -124,7 +124,7 @@ function _getRegExpForNumber(params)
 	{
 		return null;
 	}
-	if(params.flagInteger && !params.flagIntegerAdjust)
+	if(params.flagInteger && !params.flagIntegerFits)
 	{
 		// integer
 		return REGEXP_INTEGER;
@@ -173,7 +173,7 @@ function _toNumber(params, value)
 	}
 
 	// parse as integer
-	if(params.flagIntegerAdjust)
+	if(params.flagIntegerFits)
 	{
 		if(adjustedValue > 0)
 		{

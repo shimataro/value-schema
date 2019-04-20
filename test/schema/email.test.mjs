@@ -1,4 +1,4 @@
-import adjuster from "adjuster"; // eslint-disable-line import/no-unresolved
+import valueSchema from "value-schema"; // eslint-disable-line import/no-unresolved
 
 {
 	describe("default", testDefault);
@@ -18,16 +18,16 @@ function testDefault()
 {
 	it("should be adjusted", () =>
 	{
-		expect(adjuster.email().default("default@example.com")
-			.adjust(undefined)).toEqual("default@example.com");
+		expect(valueSchema.email().default("default@example.com")
+			.fit(undefined)).toEqual("default@example.com");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			adjuster.email()
-				.adjust(undefined);
-		}).toThrow(adjuster.CAUSE.REQUIRED);
+			valueSchema.email()
+				.fit(undefined);
+		}).toThrow(valueSchema.CAUSE.REQUIRED);
 	});
 }
 
@@ -39,19 +39,19 @@ function testAcceptNull()
 {
 	it("should be OK", () =>
 	{
-		expect(adjuster.email().acceptNull("empty@example.com")
-			.adjust(null)).toEqual("empty@example.com");
+		expect(valueSchema.email().acceptNull("empty@example.com")
+			.fit(null)).toEqual("empty@example.com");
 
-		expect(adjuster.email().acceptNull()
-			.adjust(null)).toEqual(null);
+		expect(valueSchema.email().acceptNull()
+			.fit(null)).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			adjuster.email()
-				.adjust(null);
-		}).toThrow(adjuster.CAUSE.NULL);
+			valueSchema.email()
+				.fit(null);
+		}).toThrow(valueSchema.CAUSE.NULL);
 	});
 }
 
@@ -63,19 +63,19 @@ function testAcceptEmptyString()
 {
 	it("should be OK", () =>
 	{
-		expect(adjuster.email().acceptEmptyString("empty@example.com")
-			.adjust("")).toEqual("empty@example.com");
+		expect(valueSchema.email().acceptEmptyString("empty@example.com")
+			.fit("")).toEqual("empty@example.com");
 
-		expect(adjuster.email().acceptEmptyString()
-			.adjust("")).toEqual(null);
+		expect(valueSchema.email().acceptEmptyString()
+			.fit("")).toEqual(null);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			adjuster.email()
-				.adjust("");
-		}).toThrow(adjuster.CAUSE.EMPTY);
+			valueSchema.email()
+				.fit("");
+		}).toThrow(valueSchema.CAUSE.EMPTY);
 	});
 }
 
@@ -87,16 +87,16 @@ function testTrim()
 {
 	it("should be adjusted", () =>
 	{
-		expect(adjuster.email().trim()
-			.adjust("\r\n trim@example.com \t ")).toEqual("trim@example.com");
+		expect(valueSchema.email().trim()
+			.fit("\r\n trim@example.com \t ")).toEqual("trim@example.com");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			adjuster.email().trim()
-				.adjust(" \t\r\n ");
-		}).toThrow(adjuster.CAUSE.EMPTY);
+			valueSchema.email().trim()
+				.fit(" \t\r\n ");
+		}).toThrow(valueSchema.CAUSE.EMPTY);
 	});
 }
 
@@ -115,8 +115,8 @@ function testMaxLength()
 		];
 		for(const value of values)
 		{
-			expect(adjuster.email()
-				.adjust(value)).toEqual(value);
+			expect(valueSchema.email()
+				.fit(value)).toEqual(value);
 		}
 	});
 	it("should cause error(s)", () =>
@@ -131,9 +131,9 @@ function testMaxLength()
 		{
 			expect(() =>
 			{
-				adjuster.email()
-					.adjust(value);
-			}).toThrow(adjuster.CAUSE.MAX_LENGTH);
+				valueSchema.email()
+					.fit(value);
+			}).toThrow(valueSchema.CAUSE.MAX_LENGTH);
 		}
 	});
 }
@@ -146,22 +146,22 @@ function testPattern()
 {
 	it("should be OK", () =>
 	{
-		expect(adjuster.email().pattern(/^\w+@([\w-]+\.)+\w+$/)
-			.adjust("user@example.com")).toEqual("user@example.com");
+		expect(valueSchema.email().pattern(/^\w+@([\w-]+\.)+\w+$/)
+			.fit("user@example.com")).toEqual("user@example.com");
 
-		expect(adjuster.email().pattern(/^\w+@([\w-]+\.)+\w+$/)
-			.adjust("user@example-domain.com")).toEqual("user@example-domain.com");
+		expect(valueSchema.email().pattern(/^\w+@([\w-]+\.)+\w+$/)
+			.fit("user@example-domain.com")).toEqual("user@example-domain.com");
 
-		expect(adjuster.email().pattern(/^\w+@([\w-]+\.)+\w+$/)
-			.adjust("user@example.domain.com")).toEqual("user@example.domain.com");
+		expect(valueSchema.email().pattern(/^\w+@([\w-]+\.)+\w+$/)
+			.fit("user@example.domain.com")).toEqual("user@example.domain.com");
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			adjuster.email().pattern(/^\w+@([\w-]+\.)+\w+$/)
-				.adjust("john.doe@example.com");
-		}).toThrow(adjuster.CAUSE.PATTERN);
+			valueSchema.email().pattern(/^\w+@([\w-]+\.)+\w+$/)
+				.fit("john.doe@example.com");
+		}).toThrow(valueSchema.CAUSE.PATTERN);
 	});
 }
 
@@ -199,8 +199,8 @@ function testEmail()
 		];
 		for(const value of values)
 		{
-			expect(adjuster.email()
-				.adjust(value)).toEqual(value);
+			expect(valueSchema.email()
+				.fit(value)).toEqual(value);
 		}
 	});
 	it("should cause error(s)", () =>
@@ -222,9 +222,9 @@ function testEmail()
 		{
 			expect(() =>
 			{
-				adjuster.email()
-					.adjust(value);
-			}).toThrow(adjuster.CAUSE.PATTERN);
+				valueSchema.email()
+					.fit(value);
+			}).toThrow(valueSchema.CAUSE.PATTERN);
 		}
 	});
 }

@@ -1,4 +1,4 @@
-import AdjusterBase from "../libs/AdjusterBase";
+import BaseSchema from "../libs/BaseSchema";
 
 import Default from "../decorators/default";
 import AcceptNull from "../decorators/acceptNull";
@@ -10,15 +10,15 @@ import Each from "../decorators/array/each";
 
 /**
  * factory
- * @returns {ArrayAdjuster} adjuster instance
+ * @returns {ArraySchema} schema instance
  */
 export default () =>
 {
-	return new ArrayAdjuster();
+	return new ArraySchema();
 };
 
 /**
- * adjuster for array
+ * valueSchema for array
  */
 @MaxLength
 @MinLength
@@ -27,6 +27,6 @@ export default () =>
 @AcceptEmptyString
 @AcceptNull
 @Default
-class ArrayAdjuster extends AdjusterBase
+class ArraySchema extends BaseSchema
 {
 }

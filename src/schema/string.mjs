@@ -1,43 +1,38 @@
-import AdjusterBase from "../libs/AdjusterBase";
+import BaseSchema from "../libs/BaseSchema";
 
 import Default from "../decorators/default";
 import AcceptNull from "../decorators/acceptNull";
 import AcceptEmptyString from "../decorators/acceptEmptyString";
+import Only from "../decorators/only";
+import Convert from "../decorators/convert";
 import Type from "../decorators/string/type";
 import Trim from "../decorators/string/trim";
+import MinLength from "../decorators/string/minLength";
+import MaxLength from "../decorators/string/maxLength";
 import Pattern from "../decorators/string/pattern";
-import MaxLength from "../decorators/email/maxLength";
-
-import {REGEXP_EMAIL} from "../libs/regexp/email";
 
 /**
  * factory
- * @returns {EmailAdjuster} adjuster instance
+ * @returns {StringSchema} schema instance
  */
 export default () =>
 {
-	return new EmailAdjuster();
+	return new StringSchema();
 };
 
 /**
- * adjuster for e-mail
+ * valueSchema for string
  */
+@Convert
 @Pattern
 @MaxLength
+@MinLength
 @AcceptEmptyString
+@Only
 @Trim
 @Type
 @AcceptNull
 @Default
-class EmailAdjuster extends AdjusterBase
+class StringSchema extends BaseSchema
 {
-	/**
-	 * constructor
-	 */
-	constructor()
-	{
-		super();
-
-		this.pattern(REGEXP_EMAIL);
-	}
 }

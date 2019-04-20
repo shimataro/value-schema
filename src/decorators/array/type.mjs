@@ -1,9 +1,9 @@
 import {CAUSE} from "../../libs/constants";
 import {isString, isArray} from "../../libs/types";
-import AdjusterBase from "../../libs/AdjusterBase";
-import AdjusterError from "../../libs/AdjusterError";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		separatedBy: _featureSeparatedBy,
@@ -53,14 +53,14 @@ function _featureToArray(params)
 }
 
 /**
- * adjuster
+ * valueSchema
  * @param {Params-Array-Type} params parameters
  * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values, keyStack)
+function _fit(params, values, keyStack)
 {
 	if(isArray(values.adjusted))
 	{
@@ -79,5 +79,5 @@ function _adjust(params, values, keyStack)
 		return false;
 	}
 
-	AdjusterError.raise(CAUSE.TYPE, values, keyStack);
+	ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 }

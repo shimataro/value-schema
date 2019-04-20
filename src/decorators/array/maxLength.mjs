@@ -1,8 +1,8 @@
 import {CAUSE} from "../../libs/constants";
-import AdjusterBase from "../../libs/AdjusterBase";
-import AdjusterError from "../../libs/AdjusterError";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		maxLength: _featureMaxLength,
@@ -14,7 +14,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
  * @typedef {Params} Params-Array-MaxLength
  * @property {boolean} flag
  * @property {number} length
- * @property {boolean} adjust
+ * @property {boolean} fits
  */
 
 /**
@@ -31,25 +31,25 @@ function _init(params)
  * set max-length of array
  * @param {Params-Array-MaxLength} params parameters
  * @param {number} length min-length; error if shorter
- * @param {boolean} adjust adjust value or not
+ * @param {boolean} fits fit value or not
  * @returns {void}
  */
-function _featureMaxLength(params, length, adjust = false)
+function _featureMaxLength(params, length, fits = false)
 {
 	params.flag = true;
 	params.length = length;
-	params.adjust = adjust;
+	params.fits = fits;
 }
 
 /**
- * adjuster
+ * valueSchema
  * @param {Params-Array-MaxLength} params parameters
  * @param {Decorator-Values} values original / adjusted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values, keyStack)
+function _fit(params, values, keyStack)
 {
 	if(!params.flag)
 	{
@@ -60,11 +60,11 @@ function _adjust(params, values, keyStack)
 		return false;
 	}
 
-	if(params.adjust)
+	if(params.fits)
 	{
 		values.adjusted.splice(params.length);
 		return false;
 	}
 
-	AdjusterError.raise(CAUSE.MAX_LENGTH, values, keyStack);
+	ValueSchemaError.raise(CAUSE.MAX_LENGTH, values, keyStack);
 }

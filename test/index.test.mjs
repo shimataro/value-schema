@@ -1,31 +1,31 @@
-import adjuster from "adjuster"; // eslint-disable-line import/no-unresolved
+import valueSchema from "value-schema"; // eslint-disable-line import/no-unresolved
 
 {
-	describe("adjust", testAdjust);
+	describe("fit", testFit);
 	describe("error", testError);
 }
 
 /**
- * test for adjust multiple variables
+ * test fit()
  * @returns {void}
  */
-function testAdjust()
+function testFit()
 {
 	it("should be adjusted", () =>
 	{
-		const constraints = {
-			id: adjuster.number().minValue(1),
-			name: adjuster.string().maxLength(16, true),
-			age: adjuster.number().integer(true).minValue(0),
-			email: adjuster.email(),
-			state: adjuster.string().only("active", "inactive"),
-			classes: adjuster.array().separatedBy(",").each(adjuster.number(), true),
-			skills: adjuster.array().separatedBy(",").each(adjuster.string(), true),
-			credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD),
-			remote_addr: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4),
-			remote_addr_ipv6: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6),
-			limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true),
-			offset: adjuster.number().integer().default(0).minValue(0, true),
+		const schemaObject = {
+			id: valueSchema.number().minValue(1),
+			name: valueSchema.string().maxLength(16, true),
+			age: valueSchema.number().integer(true).minValue(0),
+			email: valueSchema.email(),
+			state: valueSchema.string().only("active", "inactive"),
+			classes: valueSchema.array().separatedBy(",").each(valueSchema.number(), true),
+			skills: valueSchema.array().separatedBy(",").each(valueSchema.string(), true),
+			credit_card: valueSchema.numericString().separatedBy("-").checksum(valueSchema.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD),
+			remote_addr: valueSchema.string().pattern(valueSchema.STRING.PATTERN.IPV4),
+			remote_addr_ipv6: valueSchema.string().pattern(valueSchema.STRING.PATTERN.IPV6),
+			limit: valueSchema.number().integer().default(10).minValue(1, true).maxValue(100, true),
+			offset: valueSchema.number().integer().default(0).minValue(0, true),
 		};
 		const input = {
 			id: "1",
@@ -55,7 +55,7 @@ function testAdjust()
 			offset: 0,
 		};
 
-		const adjusted = adjuster.adjust(input, constraints);
+		const adjusted = valueSchema.fit(input, schemaObject);
 		expect(adjusted).toEqual(expected);
 	});
 }
@@ -68,10 +68,10 @@ function testError()
 {
 	it("should be adjusted", () =>
 	{
-		const constraints = {
-			id: adjuster.number().minValue(1),
-			name: adjuster.string().maxLength(16, true),
-			email: adjuster.email(),
+		const schemaObject = {
+			id: valueSchema.number().minValue(1),
+			name: valueSchema.string().maxLength(16, true),
+			email: valueSchema.email(),
 		};
 		const input = {
 			id: 0, // error! (>= 1)
@@ -83,7 +83,7 @@ function testError()
 			email: "john@example.com",
 		};
 
-		const adjusted = adjuster.adjust(input, constraints, (err) =>
+		const adjusted = valueSchema.fit(input, schemaObject, (err) =>
 		{
 			if(err === null)
 			{
@@ -103,34 +103,34 @@ function testError()
 	{
 		expect(() =>
 		{
-			const constraints = {};
+			const schemaObject = {};
 			const input = 0;
 
-			adjuster.adjust(input, constraints);
-		}).toThrow(adjuster.CAUSE.TYPE); // input must be an object
+			valueSchema.fit(input, schemaObject);
+		}).toThrow(valueSchema.CAUSE.TYPE); // input must be an object
 
 		expect(() =>
 		{
-			const constraints = {};
+			const schemaObject = {};
 			const input = null;
 
-			adjuster.adjust(input, constraints);
-		}).toThrow(adjuster.CAUSE.TYPE); // input must be an object; typeof null === "object"
+			valueSchema.fit(input, schemaObject);
+		}).toThrow(valueSchema.CAUSE.TYPE); // input must be an object; typeof null === "object"
 
 		expect(() =>
 		{
-			const constraints = {};
+			const schemaObject = {};
 			const input = [];
 
-			adjuster.adjust(input, constraints);
-		}).toThrow(adjuster.CAUSE.TYPE); // input must be an object; typeof [] === "object"
+			valueSchema.fit(input, schemaObject);
+		}).toThrow(valueSchema.CAUSE.TYPE); // input must be an object; typeof [] === "object"
 
 		expect(() =>
 		{
-			const constraints = {
-				id: adjuster.number().minValue(1),
-				name: adjuster.string().maxLength(16, true),
-				email: adjuster.email(),
+			const schemaObject = {
+				id: valueSchema.number().minValue(1),
+				name: valueSchema.string().maxLength(16, true),
+				email: valueSchema.email(),
 			};
 			const input = {
 				id: 0, // error! (>= 1)
@@ -138,7 +138,7 @@ function testError()
 				email: "john@example.com", // OK
 			};
 
-			adjuster.adjust(input, constraints, generateErrorHandler());
+			valueSchema.fit(input, schemaObject, generateErrorHandler());
 
 			/**
 			 * error handler generator
@@ -167,10 +167,10 @@ function testError()
 
 		expect(() =>
 		{
-			const constraints = {
-				id: adjuster.number().minValue(1),
-				name: adjuster.string().maxLength(16, true),
-				email: adjuster.email(),
+			const schemaObject = {
+				id: valueSchema.number().minValue(1),
+				name: valueSchema.string().maxLength(16, true),
+				email: valueSchema.email(),
 			};
 			const input = {
 				id: 0, // error! (>= 1)
@@ -178,55 +178,55 @@ function testError()
 				email: "john@example.com", // OK
 			};
 
-			adjuster.adjust(input, constraints);
+			valueSchema.fit(input, schemaObject);
 		}).toThrow(); // throw a first error if error handler is omitted
 
 		try
 		{
-			const constraints = {
-				id: adjuster.number().minValue(1),
-				name: adjuster.string().maxLength(4, true),
+			const schemaObject = {
+				id: valueSchema.number().minValue(1),
+				name: valueSchema.string().maxLength(4, true),
 			};
 			const input = {
 				id: "0",
 				name: "John Doe",
 				dummy: true,
 			};
-			adjuster.object().constraints(constraints)
-				.adjust(input);
+			valueSchema.object().schema(schemaObject)
+				.fit(input);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(adjuster.CAUSE.MIN_VALUE);
+			expect(err.cause).toEqual(valueSchema.CAUSE.MIN_VALUE);
 			expect(err.keyStack).toEqual(["id"]);
 		}
 
 		try
 		{
-			const constraints = {
-				ids: adjuster.array().each(adjuster.number().minValue(1)),
+			const schemaObject = {
+				ids: valueSchema.array().each(valueSchema.number().minValue(1)),
 			};
 			const input = {
 				ids: [true, "2", "+3", "four", 5],
 			};
-			adjuster.object().constraints(constraints)
-				.adjust(input);
+			valueSchema.object().schema(schemaObject)
+				.fit(input);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(adjuster.CAUSE.TYPE);
+			expect(err.cause).toEqual(valueSchema.CAUSE.TYPE);
 			expect(err.keyStack).toEqual(["ids", 3]);
 		}
 
 		try
 		{
-			// complex constraints
-			const constraints = {
-				infoList: adjuster.array().each(adjuster.object().constraints({
-					id: adjuster.number(),
-					name: adjuster.string().maxLength(8),
+			// complex schema
+			const schemaObject = {
+				infoList: valueSchema.array().each(valueSchema.object().schema({
+					id: valueSchema.number(),
+					name: valueSchema.string().maxLength(8),
 				})),
 			};
 			const input = {
@@ -245,13 +245,13 @@ function testError()
 					},
 				],
 			};
-			adjuster.object().constraints(constraints)
-				.adjust(input);
+			valueSchema.object().schema(schemaObject)
+				.fit(input);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(adjuster.CAUSE.TYPE);
+			expect(err.cause).toEqual(valueSchema.CAUSE.TYPE);
 			expect(err.keyStack).toEqual(["infoList", 1, "id"]);
 		}
 	});

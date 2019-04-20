@@ -1,4 +1,4 @@
-import AdjusterBase from "../libs/AdjusterBase";
+import BaseSchema from "../libs/BaseSchema";
 
 import Default from "../decorators/default";
 import AcceptNull from "../decorators/acceptNull";
@@ -12,15 +12,15 @@ import MaxValue from "../decorators/number/maxValue";
 
 /**
  * factory
- * @returns {NumberAdjuster} adjuster instance
+ * @returns {NumberSchema} schema instance
  */
 export default () =>
 {
-	return new NumberAdjuster();
+	return new NumberSchema();
 };
 
 /**
- * adjuster for number
+ * valueSchema for number
  */
 @Convert
 @MaxValue
@@ -31,6 +31,6 @@ export default () =>
 @AcceptEmptyString
 @AcceptNull
 @Default
-class NumberAdjuster extends AdjusterBase
+class NumberSchema extends BaseSchema
 {
 }
