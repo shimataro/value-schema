@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Removed
+
+* `vs.number().map()`
+* `vs.string().map()`
+* `vs.numericString().map()`
+
 ### Others
 
 * rename to `value-schema`
