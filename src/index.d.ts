@@ -235,14 +235,6 @@ interface StringSchema extends BaseSchema<string>
 	 * @returns chainable instance
 	 */
 	convert(converter: (value: string, fail: () => never) => string): this
-
-	/**
-	 * mapping
-	 * @param mapper mapping function
-	 * @returns chainable instance
-	 * @deprecated use convert()
-	 */
-	map(mapper: (value: string, fail: () => never) => string): this
 }
 
 interface NumericStringSchema extends BaseSchema<string>

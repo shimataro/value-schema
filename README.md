@@ -729,8 +729,6 @@ interface NumberSchema {
     minValue(value: number, fits?: boolean /* = false */): this;
     maxValue(value: number, fits?: boolean /* = false */): this;
     convert(converter: (value: number, fail: () => never) => number): this;
-    // deprecated; use convert()
-    map(mapper: (value: number, fail: () => never) => number): this;
 }
 ```
 
@@ -1031,11 +1029,9 @@ assert.throws(
     (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MAX_VALUE));
 ```
 
-#### `convert(converter)` / `map(mapper)`
+#### `convert(converter)`
 
 Convert input value into another value.
-
-WARNING; `map()` is deprecated. use `convert()`.
 
 ##### examples
 
@@ -1075,8 +1071,6 @@ interface StringSchema {
     maxLength(length: number, fits?: boolean /* = false */): this;
     pattern(pattern: RegExp): this;
     convert(converter: (value: string, fail: () => never) => string): this;
-    // deprecated; use convert()
-    map(mapper: (value: string, fail: () => never) => string): this;
 }
 ```
 
@@ -1295,11 +1289,9 @@ assert.throws(
     (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
 ```
 
-#### `convert(converter)` / `map(mapper)`
+#### `convert(converter)`
 
 Convert input value into another value.
-
-WARNING; `map()` is deprecated. use `convert()`.
 
 ##### examples
 
@@ -1339,8 +1331,6 @@ interface NumericStringSchema {
     maxLength(length: number, fits?: boolean /* = false */): this;
     checksum(algorithm: string): this;
     convert(converter: (value: string, fail: () => never) => string): this;
-    // deprecated; use convert()
-    map(mapper: (value: string, fail: () => never) => string): this;
 }
 ```
 
@@ -1567,11 +1557,9 @@ assert.throws(
     (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.CHECKSUM));
 ```
 
-#### `convert(converter)` / `map(mapper)`
+#### `convert(converter)`
 
 Convert input value into another value.
-
-WARNING; `map()` is deprecated. use `convert()`.
 
 ##### examples
 

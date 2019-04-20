@@ -6,7 +6,6 @@ export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		convert: _featureConvert,
-		map: _featureConvert, // deprecated
 	})
 	.build();
 

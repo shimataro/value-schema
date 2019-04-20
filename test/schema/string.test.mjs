@@ -505,7 +505,7 @@ function testPatternOthers()
 }
 
 /**
- * mapping
+ * convert
  * @returns {void}
  */
 function testConvert()
