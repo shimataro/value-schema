@@ -35,7 +35,7 @@ function testType()
 		expect(vs.boolean()
 			.fit("1")).toEqual(true);
 		expect(vs.boolean()
-			.fit("0")).toEqual(false); // "0" is truthy in JavaScript, but value-schema adjusts it to false!
+			.fit("0")).toEqual(false); // "0" is truthy in JavaScript, but value-schema fits it to false!
 
 		expect(vs.boolean().acceptAllNumbers()
 			.fit(1)).toEqual(true);

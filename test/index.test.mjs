@@ -87,7 +87,7 @@ function testError()
 		{
 			if(err === null)
 			{
-				// adjustment finished
+				// fitting finished
 				return;
 			}
 
@@ -151,7 +151,7 @@ function testError()
 				{
 					if(err === null)
 					{
-						// adjustment finished; join key name as message
+						// fitting finished; join key name as message
 						throw new Error(messages.join(","));
 					}
 

@@ -154,8 +154,8 @@ function _toNumber(params, value)
 		return false;
 	}
 
-	const adjustedValue = Number(value);
-	if(!isNumber(adjustedValue))
+	const fittedValue = Number(value);
+	if(!isNumber(fittedValue))
 	{
 		// failed to cast
 		return false;
@@ -163,25 +163,25 @@ function _toNumber(params, value)
 
 	if(!params.flagInteger)
 	{
-		return adjustedValue;
+		return fittedValue;
 	}
 
 	// already integer
-	if(isInteger(adjustedValue))
+	if(isInteger(fittedValue))
 	{
-		return adjustedValue;
+		return fittedValue;
 	}
 
 	// parse as integer
 	if(params.flagIntegerFits)
 	{
-		if(adjustedValue > 0)
+		if(fittedValue > 0)
 		{
-			return Math.floor(adjustedValue);
+			return Math.floor(fittedValue);
 		}
 		else
 		{
-			return Math.ceil(adjustedValue);
+			return Math.ceil(fittedValue);
 		}
 	}
 

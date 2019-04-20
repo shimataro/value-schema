@@ -59,7 +59,7 @@ function _fit(params, values, keyStack)
 	for(let idx = 0; idx < values.fitted.length; idx += 1)
 	{
 		const element = values.fitted[idx];
-		const adjustedElement = schema._fit(element, (err) =>
+		const fittedElement = schema._fit(element, (err) =>
 		{
 			if(ignoreEachErrors)
 			{
@@ -69,11 +69,11 @@ function _fit(params, values, keyStack)
 			ValueSchemaError.raise(err.cause, values, err.keyStack);
 		}, [...keyStack, idx]);
 
-		if(adjustedElement === undefined)
+		if(fittedElement === undefined)
 		{
 			continue;
 		}
-		fitted.push(adjustedElement);
+		fitted.push(fittedElement);
 	}
 
 	// replace fitted value
