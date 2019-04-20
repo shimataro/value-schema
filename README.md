@@ -93,7 +93,7 @@ const expected = { // should be fitted to this
     offset: 0,
 };
 
-// Let's check!
+// Let's fit!
 const result = vs.fit(input, schemaObject);
 
 // verification
@@ -170,7 +170,7 @@ interface ValueSchemaError extends Error
 |`name`|`"ValueSchemaError"`|
 |`message`|human-readable description of the error, including a string `cause`|
 |`cause`|cause of fitting error; see `vs.CAUSE`|
-|`value`|value to check|
+|`value`|value to fit|
 |`keyStack`|array consists of path to key name(for object) or index(for array) that caused error; for nested object or array|
 
 See below example.
@@ -258,7 +258,7 @@ Fit `data` to `schemaObject`.
 
 ##### `data`
 
-An object to check; e.g., `req.query`, `req.body` (in [Express](http://expressjs.com/))
+An object to fit; e.g., `req.query`, `req.body` (in [Express](http://expressjs.com/))
 
 `data` will not be overwritten.
 
@@ -266,7 +266,7 @@ An object to check; e.g., `req.query`, `req.body` (in [Express](http://expressjs
 
 Schema object.
 
-* key: property name of `data` to check
+* key: property name of `data` to fit
 * value: schema instance; see below examples
 
 ##### `onError(err)`
