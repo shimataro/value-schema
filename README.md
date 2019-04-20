@@ -507,10 +507,10 @@ catch (err) {
 
 ```typescript
 namespace vs {
-    export declare function boolean(): BooleanAdjuster;
+    export declare function boolean(): BooleanSchema;
 }
 
-interface BooleanAdjuster {
+interface BooleanSchema {
     // adjustment method
     fit(value: any, onError?: (err: ValueSchemaError) => boolean | void): number;
 
@@ -710,10 +710,10 @@ assert.throws(
 
 ```typescript
 namespace vs {
-    export declare function number(): NumberAdjuster;
+    export declare function number(): NumberSchema;
 }
 
-interface NumberAdjuster {
+interface NumberSchema {
     // adjustment method
     fit(value: any, onError?: (err: ValueSchemaError) => number | void): number;
 
@@ -1057,10 +1057,10 @@ assert.throws(
 
 ```typescript
 namespace vs {
-    export declare function string(): StringAdjuster;
+    export declare function string(): StringSchema;
 }
 
-interface StringAdjuster {
+interface StringSchema {
     // adjustment method
     fit(value: any, onError?: (err: ValueSchemaError) => string | void): string;
 
@@ -1321,10 +1321,10 @@ assert.throws(
 
 ```typescript
 namespace vs {
-    export declare function numericString(): NumericStringAdjuster;
+    export declare function numericString(): NumericStringSchema;
 }
 
-interface NumericStringAdjuster {
+interface NumericStringSchema {
     // adjustment method
     fit(value: any, onError?: (err: ValueSchemaError) => string | void): string;
 
@@ -1593,10 +1593,10 @@ assert.throws(
 
 ```typescript
 namespace vs {
-    export declare function email(): EmailAdjuster;
+    export declare function email(): EmailSchema;
 }
 
-interface EmailAdjuster {
+interface EmailSchema {
     // adjustment method
     fit(value: any, onError?: (err: ValueSchemaError) => string | void): string;
 
@@ -1762,10 +1762,10 @@ assert.throws(
 
 ```typescript
 namespace vs {
-    export declare function array<T = any>(): ArrayAdjuster;
+    export declare function array<T = any>(): ArraySchema;
 }
 
-interface ArrayAdjuster<T> {
+interface ArraySchema<T> {
     // adjustment method
     fit(value: any, onError?: (err: ValueSchemaError) => Array | void): T[];
 
@@ -1777,7 +1777,7 @@ interface ArrayAdjuster<T> {
     toArray(): this;
     minLength(length: number): this;
     maxLength(length: number, fits?: boolean /* = false */): this;
-    each(adjusterInstance: BaseSchema, ignoreEachErrors: boolean /* = false */): this;
+    each(schema: BaseSchema, ignoreEachErrors: boolean /* = false */): this;
 }
 ```
 
@@ -1953,11 +1953,11 @@ assert.throws(
     (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MAX_LENGTH));
 ```
 
-#### `each(adjusterInstance, [ignoreEachErrors])`
+#### `each(schema, [ignoreEachErrors])`
 
 Apply schema for each elements.
 
-* `adjusterInstance`
+* `schema`
     * Any above vs instance, e.g., `vs.number()`, `vs.string()`... `vs.array()`!
 * `ignoreEachErrors`
     * If `true`, ignore the errors of each element.
@@ -1983,10 +1983,10 @@ assert.throws(
 
 ```typescript
 namespace vs {
-    export declare function object<T = any>(): ObjectAdjuster;
+    export declare function object<T = any>(): ObjectSchema;
 }
 
-interface ObjectAdjuster<T> {
+interface ObjectSchema<T> {
     // adjustment method
     fit(value: any, onError?: (err: ValueSchemaError) => Object | void): T;
 
@@ -1994,7 +1994,7 @@ interface ObjectAdjuster<T> {
     default(value: Object): this;
     acceptNull(value?: Object | null /* = null */): this;
     acceptEmptyString(value: Object | null /* = null */): this;
-    schema(schema): ObjectAdjuster;
+    schema(schema): ObjectSchema;
 }
 ```
 
