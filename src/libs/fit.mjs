@@ -5,10 +5,10 @@ import BaseSchema from "./BaseSchema";
 
 /**
  * fit data to schema
- * @param {Input} data data to be adjusted
+ * @param {Input} data data to be fitted
  * @param {SchemaObject} schemaObject schema objects
  * @param {ErrorHandler} [onError] error handler
- * @returns {Object<string, *>} adjusted data
+ * @returns {Object<string, *>} fitted data
  */
 function fit(data, schemaObject, onError = BaseSchema.onErrorDefault)
 {

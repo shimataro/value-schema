@@ -11,7 +11,7 @@ import vs from "value-schema"; // eslint-disable-line import/no-unresolved
  */
 function testFit()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		const schemaObject = {
 			id: vs.number().minValue(1),
@@ -55,8 +55,8 @@ function testFit()
 			offset: 0,
 		};
 
-		const adjusted = vs.fit(input, schemaObject);
-		expect(adjusted).toEqual(expected);
+		const fitted = vs.fit(input, schemaObject);
+		expect(fitted).toEqual(expected);
 	});
 }
 
@@ -66,7 +66,7 @@ function testFit()
  */
 function testError()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		const schemaObject = {
 			id: vs.number().minValue(1),
@@ -83,7 +83,7 @@ function testError()
 			email: "john@example.com",
 		};
 
-		const adjusted = vs.fit(input, schemaObject, (err) =>
+		const fitted = vs.fit(input, schemaObject, (err) =>
 		{
 			if(err === null)
 			{
@@ -97,7 +97,7 @@ function testError()
 				return 100;
 			}
 		});
-		expect(adjusted).toEqual(expected);
+		expect(fitted).toEqual(expected);
 	});
 	it("should cause error(s)", () =>
 	{

@@ -31,7 +31,7 @@ function testType()
 		expect(vs.number().strict()
 			.fit(3.14)).toEqual(3.14);
 	});
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.number()
 			.fit("123")).toEqual(123);
@@ -183,7 +183,7 @@ function testDefault()
 		expect(vs.number().default(10)
 			.fit(1)).toEqual(1);
 	});
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.number().default(10)
 			.fit(undefined)).toEqual(10);
@@ -204,7 +204,7 @@ function testDefault()
  */
 function testAcceptNull()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.number().acceptNull(123)
 			.fit(null)).toEqual(123);
@@ -225,7 +225,7 @@ function testAcceptNull()
  */
 function testAcceptEmptyString()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.number().acceptEmptyString(123)
 			.fit("")).toEqual(123);
@@ -283,7 +283,7 @@ function testMinValue()
 		expect(vs.number().minValue(10)
 			.fit(10)).toEqual(10);
 	});
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.number().minValue(10, true)
 			.fit(9)).toEqual(10);
@@ -316,7 +316,7 @@ function testMaxValue()
 		expect(vs.number().maxValue(100)
 			.fit(100)).toEqual(100);
 	});
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.number().maxValue(100, true)
 			.fit(101)).toEqual(100);

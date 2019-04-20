@@ -41,7 +41,7 @@ function testType()
  */
 function testDefault()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.array().default([1, "a"])
 			.fit(undefined)).toEqual([1, "a"]);
@@ -62,7 +62,7 @@ function testDefault()
  */
 function testAcceptNull()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.array().acceptNull([1, "a"])
 			.fit(null)).toEqual([1, "a"]);
@@ -86,7 +86,7 @@ function testAcceptNull()
  */
 function testAcceptEmptyString()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.array().acceptEmptyString([1, "a"])
 			.fit("")).toEqual([1, "a"]);
@@ -110,7 +110,7 @@ function testAcceptEmptyString()
  */
 function testSeparatedBy()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.array().separatedBy(",")
 			.fit("1,a")).toEqual(["1", "a"]);
@@ -123,7 +123,7 @@ function testSeparatedBy()
  */
 function testToArray()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.array().toArray()
 			.fit("abc")).toEqual(["abc"]);
@@ -173,7 +173,7 @@ function testMaxLength()
 		expect(vs.array().maxLength(1, true)
 			.fit([1])).toEqual([1]);
 	});
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.array().maxLength(1, true)
 			.fit([1, 2])).toEqual([1]);
@@ -210,7 +210,7 @@ function testNumber()
 		expect(vs.array().each(vs.number().maxValue(10))
 			.fit([8, 9, 10])).toEqual([8, 9, 10]);
 	});
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.array().each(vs.number())
 			.fit([false, true, 2, "+3", "-4"])).toEqual([0, 1, 2, 3, -4]);
@@ -445,7 +445,7 @@ function testString()
 		expect(vs.array().each(vs.string().pattern(/^Go+gle$/))
 			.fit(["Gogle", "Google", "Gooogle"])).toEqual(["Gogle", "Google", "Gooogle"]);
 	});
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.array().each(vs.string())
 			.fit([false, true, 2, "+3", "-4"])).toEqual(["false", "true", "2", "+3", "-4"]);

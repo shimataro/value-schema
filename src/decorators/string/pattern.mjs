@@ -42,7 +42,7 @@ function _featurePattern(params, pattern)
 /**
  * fit
  * @param {Params-String-Pattern} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
@@ -53,7 +53,7 @@ function _fit(params, values, keyStack)
 	{
 		return false;
 	}
-	if(params.pattern.test(values.adjusted))
+	if(params.pattern.test(values.fitted))
 	{
 		return false;
 	}

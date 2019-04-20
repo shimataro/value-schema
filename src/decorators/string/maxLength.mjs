@@ -44,7 +44,7 @@ function _featureMaxLength(params, length, fit = false)
 /**
  * fit
  * @param {Params-String-MaxLength} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
@@ -55,14 +55,14 @@ function _fit(params, values, keyStack)
 	{
 		return false;
 	}
-	if(values.adjusted.length <= params.length)
+	if(values.fitted.length <= params.length)
 	{
 		return false;
 	}
 
 	if(params.fit)
 	{
-		values.adjusted = values.adjusted.substr(0, params.length);
+		values.fitted = values.fitted.substr(0, params.length);
 		return false;
 	}
 

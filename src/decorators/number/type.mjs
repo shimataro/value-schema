@@ -72,28 +72,28 @@ function _integer(params, fits = false)
 /**
  * fit
  * @param {Params-Number-Type} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
  */
 function _fit(params, values, keyStack)
 {
-	if(isString(values.adjusted))
+	if(isString(values.fitted))
 	{
-		if(!_checkNumberFormat(params, values.adjusted))
+		if(!_checkNumberFormat(params, values.fitted))
 		{
 			ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 		}
 	}
 
-	const adjusted = _toNumber(params, values.adjusted);
-	if(adjusted === false)
+	const fitted = _toNumber(params, values.fitted);
+	if(fitted === false)
 	{
 		ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 	}
 
-	values.adjusted = adjusted;
+	values.fitted = fitted;
 	return false;
 }
 
@@ -138,7 +138,7 @@ function _getRegExpForNumber(params)
  * convert to number
  * @param {Params-Number-Type} params parameters
  * @param {*} value value to convert
- * @returns {number|boolean} adjusted value or false(if failed)
+ * @returns {number|boolean} fitted value or false(if failed)
  */
 function _toNumber(params, value)
 {

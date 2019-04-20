@@ -154,7 +154,7 @@ export default class BaseSchema
 	{
 		const values = {
 			original: value,
-			adjusted: value,
+			fitted: value,
 		};
 
 		try
@@ -165,11 +165,11 @@ export default class BaseSchema
 				const params = this._params.get(decorator.key);
 				if(decorator.fit(params, values, keyStack))
 				{
-					return values.adjusted;
+					return values.fitted;
 				}
 			}
 
-			return values.adjusted;
+			return values.fitted;
 		}
 		catch(err)
 		{
@@ -196,7 +196,7 @@ export default class BaseSchema
  * @package
  * @typedef {Object} Decorator-Values
  * @property {Input} original
- * @property {Input} adjusted
+ * @property {Input} fitted
  */
 /**
  * @package

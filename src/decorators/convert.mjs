@@ -56,7 +56,7 @@ function _featureConvert(params, converter)
 /**
  * fit
  * @param {Params-Convert} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
@@ -68,7 +68,7 @@ function _fit(params, values, keyStack)
 		return false;
 	}
 
-	values.adjusted = params.converter(values.adjusted, () =>
+	values.fitted = params.converter(values.fitted, () =>
 	{
 		ValueSchemaError.raise(CAUSE.CONVERT, values, keyStack);
 	});

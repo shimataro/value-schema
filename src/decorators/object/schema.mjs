@@ -38,7 +38,7 @@ function _featureSchema(params, schema)
 /**
  * fitting function
  * @param {Params-Object-Schema} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
@@ -50,6 +50,6 @@ function _fit(params, values, keyStack)
 		return false;
 	}
 
-	values.adjusted = fitToObject(values.adjusted, params.schema, BaseSchema.onErrorDefault, keyStack);
+	values.fitted = fitToObject(values.fitted, params.schema, BaseSchema.onErrorDefault, keyStack);
 	return false;
 }

@@ -25,7 +25,7 @@ function testType()
 		expect(vs.numericString()
 			.fit("1111222233334444")).toEqual("1111222233334444");
 	});
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.numericString()
 			.fit(1111222233334444)).toEqual("1111222233334444");
@@ -49,7 +49,7 @@ function testType()
  */
 function testDefault()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.numericString().default("12345")
 			.fit(undefined)).toEqual("12345");
@@ -70,7 +70,7 @@ function testDefault()
  */
 function testAcceptNull()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.numericString().acceptNull("123")
 			.fit(null)).toEqual("123");
@@ -94,7 +94,7 @@ function testAcceptNull()
  */
 function testJoinArray()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.numericString().joinArray()
 			.fit(["1111", "2222", "3333", "4444"])).toEqual("1111222233334444");
@@ -115,7 +115,7 @@ function testJoinArray()
  */
 function testSeparatedBy()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.numericString().separatedBy("-")
 			.fit("1111-2222-3333-4444")).toEqual("1111222233334444");
@@ -169,7 +169,7 @@ function testMaxLength()
 		expect(vs.numericString().maxLength(4).separatedBy("-")
 			.fit("11-22")).toEqual("1122");
 	});
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.numericString().maxLength(4, true)
 			.fit("11111")).toEqual("1111");

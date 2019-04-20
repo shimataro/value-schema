@@ -41,21 +41,21 @@ function _featureDefault(params, value)
 /**
  * fitting function
  * @param {Params-Default} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
  */
 function _fit(params, values, keyStack)
 {
-	if(values.adjusted !== undefined)
+	if(values.fitted !== undefined)
 	{
 		return false;
 	}
 
 	if(params.flag)
 	{
-		values.adjusted = params.value;
+		values.fitted = params.value;
 		return true;
 	}
 

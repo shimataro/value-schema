@@ -25,7 +25,7 @@ function testType()
 		expect(vs.boolean().strict()
 			.fit(false)).toEqual(false);
 	});
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.boolean()
 			.fit(1)).toEqual(true);
@@ -142,7 +142,7 @@ function testType()
  */
 function testDefault()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.boolean().default(true)
 			.fit(undefined)).toEqual(true);

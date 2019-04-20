@@ -39,7 +39,7 @@ function _featureSeparatedBy(params, separator)
 /**
  * fit
  * @param {Params-NumericString-SeparatedBy} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
  */
@@ -50,6 +50,6 @@ function _fit(params, values)
 		return false;
 	}
 
-	values.adjusted = values.adjusted.split(params.separator).join("");
+	values.fitted = values.fitted.split(params.separator).join("");
 	return false;
 }

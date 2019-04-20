@@ -29,7 +29,7 @@ const input = { // input values
 	remote_addr_ipv6: "::1",
 	limit: "0",
 };
-const expected = { // should be adjusted to this
+const expected = { // should be fitted to this
 	id: 1,
 	name: "Pablo Diego José",
 	age: 20,
@@ -45,7 +45,7 @@ const expected = { // should be adjusted to this
 };
 
 // Let's fit!
-const adjusted = vs.fit(input, schemaObject);
+const fitted = vs.fit(input, schemaObject);
 
 // verification
-assert.deepStrictEqual(adjusted, expected);
+assert.deepStrictEqual(fitted, expected);

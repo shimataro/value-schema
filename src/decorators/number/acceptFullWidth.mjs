@@ -37,7 +37,7 @@ function _featureAcceptFullWidth(params)
 /**
  * fit
  * @param {Params-Number-AcceptFullWidth} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @returns {boolean} ends fitting
  */
 function _fit(params, values)
@@ -47,6 +47,6 @@ function _fit(params, values)
 		return false;
 	}
 
-	values.adjusted = string.toHalfWidth(values.adjusted, /[０-９ａ-ｚＡ-Ｚ．＋－]+/g);
+	values.fitted = string.toHalfWidth(values.fitted, /[０-９ａ-ｚＡ-Ｚ．＋－]+/g);
 	return false;
 }

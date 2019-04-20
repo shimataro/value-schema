@@ -41,7 +41,7 @@ function _featureChecksum(params, algorithm)
 /**
  * fit
  * @param {Params-NumericString-Checksum} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
@@ -52,7 +52,7 @@ function _fit(params, values, keyStack)
 	{
 		return false;
 	}
-	if(check(values.adjusted, params.algorithm))
+	if(check(values.fitted, params.algorithm))
 	{
 		return false;
 	}

@@ -41,7 +41,7 @@ function _featureMinLength(params, length)
 /**
  * fitting function
  * @param {Params-Array-MinLength} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
@@ -52,7 +52,7 @@ function _fit(params, values, keyStack)
 	{
 		return false;
 	}
-	if(values.adjusted.length >= params.length)
+	if(values.fitted.length >= params.length)
 	{
 		return false;
 	}

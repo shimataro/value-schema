@@ -10,14 +10,14 @@ export default BaseSchema.decoratorBuilder(_fit)
 /**
  * fit
  * @param {{}} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
  */
 function _fit(params, values, keyStack)
 {
-	if(REGEXP.test(values.adjusted))
+	if(REGEXP.test(values.fitted))
 	{
 		return false;
 	}

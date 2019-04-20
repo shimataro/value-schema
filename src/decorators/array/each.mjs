@@ -42,7 +42,7 @@ function _featureEach(params, schema, ignoreEachErrors = false)
 /**
  * fitting function
  * @param {Params-Array-Each} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
@@ -55,10 +55,10 @@ function _fit(params, values, keyStack)
 		return false;
 	}
 
-	const adjusted = [];
-	for(let idx = 0; idx < values.adjusted.length; idx += 1)
+	const fitted = [];
+	for(let idx = 0; idx < values.fitted.length; idx += 1)
 	{
-		const element = values.adjusted[idx];
+		const element = values.fitted[idx];
 		const adjustedElement = schema._fit(element, (err) =>
 		{
 			if(ignoreEachErrors)
@@ -73,10 +73,10 @@ function _fit(params, values, keyStack)
 		{
 			continue;
 		}
-		adjusted.push(adjustedElement);
+		fitted.push(adjustedElement);
 	}
 
-	// replace adjusted value
-	values.adjusted = adjusted;
+	// replace fitted value
+	values.fitted = fitted;
 	return false;
 }

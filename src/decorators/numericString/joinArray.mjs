@@ -37,15 +37,15 @@ function _featureJoinArray(params)
 /**
  * fit
  * @param {Params-NumericString-JoinArray} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
  */
 function _fit(params, values)
 {
-	if(isArray(values.adjusted) && params.flag)
+	if(isArray(values.fitted) && params.flag)
 	{
-		values.adjusted = values.adjusted.join("");
+		values.fitted = values.fitted.join("");
 	}
 
 	return false;

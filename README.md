@@ -78,7 +78,7 @@ const input = { // input values
     remote_addr_ipv6: "::1",
     limit: "0",
 };
-const expected = { // should be adjusted to this
+const expected = { // should be fitted to this
     id: 1,
     name: "Pablo Diego José",
     age: 20,
@@ -362,7 +362,7 @@ const input = {
     bar: "abcde",
 };
 
-const adjusted = vs.fit<Parameters>(input, schemaObject);
+const fitted = vs.fit<Parameters>(input, schemaObject);
 ```
 
 ###### error handling 1
@@ -540,7 +540,7 @@ assert.strictEqual(
     vs.boolean().fit(false),
     false);
 
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.boolean().fit(1),
     true);
@@ -635,7 +635,7 @@ Accept all numbers, other than 0 / 1.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.boolean().acceptAllNumbers().fit(-1),
     true);
@@ -653,7 +653,7 @@ If this method is not called, `fit(undefined)` causes `ValueSchemaError`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.boolean().default(true).fit(undefined),
     true);
@@ -673,7 +673,7 @@ If this method is not called, `fit(null)` causes `ValueSchemaError`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.boolean().acceptNull(true).fit(null),
     true);
@@ -693,7 +693,7 @@ If this method is not called, `fit("")` causes `ValueSchemaError`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.boolean().acceptEmptyString(true).fit(""),
     true);
@@ -748,7 +748,7 @@ assert.strictEqual(
     vs.number().fit(-123),
     -123);
 
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.number().fit("-123"),
     -123);
@@ -784,7 +784,7 @@ Use this method when your system accepts **ONLY** JSON encoding (`application/js
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.number().fit("123"),
     123);
@@ -810,7 +810,7 @@ If this method is not called, `fit(undefined)` causes `ValueSchemaError`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.number().default(1).fit(undefined),
     1);
@@ -830,7 +830,7 @@ If this method is not called, `fit(null)` causes `ValueSchemaError`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.number().acceptNull(1).fit(null),
     1);
@@ -850,7 +850,7 @@ If this method is not called, `fit("")` causes `ValueSchemaError`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.number().acceptEmptyString(1).fit(""),
     1);
@@ -870,7 +870,7 @@ If this method is not called, the above examples causes `ValueSchemaError`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.number().acceptSpecialFormats().fit("1e+2"),
     100);
@@ -899,7 +899,7 @@ If this method is not called, the above examples causes `ValueSchemaError`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.number().acceptFullWidth().fit("１２３４．５"),
     1234.5);
@@ -919,7 +919,7 @@ If `fits` is true, value will be converted to an integer.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.number().integer(true).fit(3.14),
     3);
@@ -984,7 +984,7 @@ assert.strictEqual(
     vs.number().minValue(1).fit(1),
     1);
 
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.number().minValue(1, true).fit(0),
     1);
@@ -1017,7 +1017,7 @@ assert.strictEqual(
     vs.number().maxValue(1).fit(1),
     1);
 
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.number().maxValue(100, true).fit(101),
     100);
@@ -1040,7 +1040,7 @@ WARNING; `map()` is deprecated. use `convert()`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.number().convert(value => value + 1).fit(100)
     101);
@@ -1092,7 +1092,7 @@ assert.strictEqual(
     vs.string().fit("123"),
     "123");
 
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.string().fit(123),
     "123");
@@ -1105,7 +1105,7 @@ Enable strict type check.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.string().fit(123),
     "123");
@@ -1129,7 +1129,7 @@ Accept `undefined` for input, and convert to `value`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.string().default("xyz").fit(undefined),
     "xyz");
@@ -1149,7 +1149,7 @@ If this method is not called, `fit(null)` causes `ValueSchemaError`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.string().acceptNull("x").fit(null),
     "x");
@@ -1167,7 +1167,7 @@ Accept an empty string(`""`) for input, and convert to `value`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.string().acceptEmptyString("xyz").fit(""),
     "xyz");
@@ -1185,7 +1185,7 @@ Remove whitespace from both ends of input.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.string().trim().fit("\r\n hell, word \t "),
     "hell, word");
@@ -1249,7 +1249,7 @@ assert.strictEqual(
     vs.string().maxLength(5).fit("abcde"),
     "abcde");
 
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.string().maxLength(5, true).fit("abcdefg"),
     "abcde");
@@ -1304,7 +1304,7 @@ WARNING; `map()` is deprecated. use `convert()`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.string().convert(value => value + value).fit("abc")
     "abcabc");
@@ -1356,7 +1356,7 @@ assert.strictEqual(
     vs.numericString().fit("123"),
     "123");
 
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.numericString().fit(123),
     "123");
@@ -1369,7 +1369,7 @@ Accpet `undefined` for input, and convert to `value`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.numericString().default("123").fit(undefined),
     "123");
@@ -1387,7 +1387,7 @@ Accept a `null` for input, and convert to `value`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.numericString().acceptNull("456").fit(null),
     "456");
@@ -1405,7 +1405,7 @@ Accept an empty string(`""`) for input, and convert to `value`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.numericString().acceptEmptyString("456").fit(""),
     "456");
@@ -1423,7 +1423,7 @@ Assume an input value is separated by `separator`, and ignore them.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.numericString().separatedBy("-").fit("4111-1111-1111-1111"),
     "4111111111111111");
@@ -1443,7 +1443,7 @@ If this method is not called, the above examples causes `ValueSchemaError`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.numericString().fullWidthToHalf().fit("１２３４"),
     "1234");
@@ -1477,7 +1477,7 @@ This method is useful for following form.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.numericString().joinArray().fit(["1234", "5678"]),
     "12345678");
@@ -1518,7 +1518,7 @@ assert.strictEqual(
     vs.numericString().maxLength(4).fit("1234"),
     "1234");
 
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.numericString().separatedBy("-").maxLength(5, true).fit("1234-5678"),
     "12345");
@@ -1576,7 +1576,7 @@ WARNING; `map()` is deprecated. use `convert()`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.numericString().convert(value => value.substr(0, 4) + "-" + value.substr(4)).fit("12345678")
     "1234-5678");
@@ -1670,7 +1670,7 @@ Accept `undefined` for input, and convert to `value`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.email().default("user@example.com").fit(undefined),
     "user@example.com");
@@ -1688,7 +1688,7 @@ Accept a `null` for input, and convert to `value`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.email().acceptNull("user@example.com").fit(null),
     "user@example.com");
@@ -1706,7 +1706,7 @@ Accept an empty string(`""`) for input, and convert to `value`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.email().acceptEmptyString("user@example.com").fit(""),
     "user@example.com");
@@ -1724,7 +1724,7 @@ Remove whitespace from both ends of input.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
     vs.email().trim().fit("\r\n user@example.com \t "),
     "user@example.com");
@@ -1811,7 +1811,7 @@ If this method is not called, `fit(undefined)` causes `ValueSchemaError`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
     vs.array().default([1, "a"]).fit(undefined),
     [1, "a"]);
@@ -1831,7 +1831,7 @@ If this method is not called, `fit(null)` causes `ValueSchemaError`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
     vs.array().acceptNull([1, "a"]).fit(null),
     [1, "a"]);
@@ -1851,7 +1851,7 @@ If this method is not called, `fit("")` causes `ValueSchemaError`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
     vs.array().acceptEmptyString([1, "a"]).fit(""),
     [1, "a"]);
@@ -1876,7 +1876,7 @@ assert.deepStrictEqual(
     vs.array().separatedBy(",").fit([1, 2, 3]),
     [1, 2, 3]);
 
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
     vs.array().separatedBy(",").fit("1,2,3"),
     ["1", "2", "3"]);
@@ -1899,7 +1899,7 @@ assert.deepStrictEqual(
     vs.array().toArray().fit([0]),
     [0]);
 
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
     vs.array().toArray().fit(0),
     [0]);
@@ -1942,7 +1942,7 @@ assert.deepStrictEqual(
     vs.array().maxLength(2).fit([1, 2]),
     [1, 2]);
 
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
     vs.array().maxLength(2, true).fit([1, 2, 3]),
     [1, 2]);
@@ -1966,7 +1966,7 @@ Apply schema for each elements.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
     vs.array().each(vs.number(), true).fit([true, "abc", 2]),
     [1, 2]);
@@ -2028,7 +2028,7 @@ If this method is not called, `fit(undefined)` causes `ValueSchemaError`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
     vs.object().default({a: 1, b: 2}).fit(undefined),
     {a: 1, b: 2});
@@ -2048,7 +2048,7 @@ If this method is not called, `fit(null)` causes `ValueSchemaError`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
     vs.object().acceptNull({a: 1, b: 2}).fit(null),
     {a: 1, b: 2});
@@ -2068,7 +2068,7 @@ If this method is not called, `fit("")` causes `ValueSchemaError`.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
     vs.object().acceptEmptyString({a: 1, b: 2}).fit(""),
     {a: 1, b: 2});
@@ -2094,7 +2094,7 @@ assert.deepStrictEqual(
     vs.object().schema(schema).fit({a: 1, b: "2"}),
     {a: 1, b: "2"});
 
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
     vs.object().schema(schema).fit({a: 1, b: 2}),
     {a: 1, b: "2"});

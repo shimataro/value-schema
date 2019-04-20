@@ -39,14 +39,14 @@ function _strict(params)
 /**
  * fit
  * @param {Params-String-Type} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
  */
 function _fit(params, values, keyStack)
 {
-	if(isString(values.adjusted))
+	if(isString(values.fitted))
 	{
 		return false;
 	}
@@ -58,11 +58,11 @@ function _fit(params, values, keyStack)
 	}
 
 	// non-scalar value cannot be convert to string
-	if(!isScalar(values.adjusted))
+	if(!isScalar(values.fitted))
 	{
 		ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 	}
 
-	values.adjusted = String(values.adjusted);
+	values.fitted = String(values.fitted);
 	return false;
 }

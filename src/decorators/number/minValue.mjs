@@ -43,20 +43,20 @@ function _featureMinValue(params, value, fits = false)
 /**
  * fit
  * @param {Params-Number-MinValue} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
  */
 function _fit(params, values, keyStack)
 {
-	if(values.adjusted >= params.value)
+	if(values.fitted >= params.value)
 	{
 		return false;
 	}
 	if(params.fits)
 	{
-		values.adjusted = params.value;
+		values.fitted = params.value;
 		return false;
 	}
 

@@ -6,11 +6,11 @@ import ValueSchemaError from "./ValueSchemaError";
 
 /**
  * fit data to schema object
- * @param {Input} data object to be adjusted
+ * @param {Input} data object to be fitted
  * @param {SchemaObject} schemaObject schema objects
  * @param {ErrorHandler<Object>} onError error handler
  * @param {Key[]} keyStack path to key that caused error
- * @returns {Object<string, *>} adjusted data
+ * @returns {Object<string, *>} fitted data
  */
 function fitToObject(data, schemaObject, onError, keyStack)
 {

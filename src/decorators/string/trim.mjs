@@ -36,7 +36,7 @@ function _featureTrim(params)
 /**
  * fit
  * @param {Params-String-Trim} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
  */
@@ -46,6 +46,6 @@ function _fit(params, values)
 	{
 		return false;
 	}
-	values.adjusted = values.adjusted.trim();
+	values.fitted = values.fitted.trim();
 	return false;
 }

@@ -27,7 +27,7 @@ function testType()
 		expect(vs.string().strict()
 			.fit("abc")).toEqual("abc");
 	});
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.string()
 			.fit(0)).toEqual("0");
@@ -75,7 +75,7 @@ function testType()
  */
 function testDefault()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.string().default("xyz")
 			.fit(undefined)).toEqual("xyz");
@@ -96,7 +96,7 @@ function testDefault()
  */
 function testAcceptNull()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.string().acceptNull("abc")
 			.fit(null)).toEqual("abc");
@@ -144,7 +144,7 @@ function testAcceptEmptyString()
  */
 function testTrim()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.string().trim()
 			.fit("\r\n hell, word \t ")).toEqual("hell, word");
@@ -221,7 +221,7 @@ function testMaxLength()
 		expect(vs.string().maxLength(8)
 			.fit("12345678")).toEqual("12345678");
 	});
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.string().maxLength(8, true)
 			.fit("123456789")).toEqual("12345678");

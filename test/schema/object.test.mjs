@@ -45,7 +45,7 @@ function testType()
  */
 function testDefault()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.object().default({})
 			.fit(undefined)).toEqual({});
@@ -66,7 +66,7 @@ function testDefault()
  */
 function testAcceptNull()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.object().acceptNull({})
 			.fit(null)).toEqual({});
@@ -90,7 +90,7 @@ function testAcceptNull()
  */
 function testAcceptEmptyString()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.object().acceptEmptyString({})
 			.fit("")).toEqual({});
@@ -114,7 +114,7 @@ function testAcceptEmptyString()
  */
 function testSchema()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		const schemaObject = {
 			id: vs.number().minValue(1),

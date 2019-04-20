@@ -12,25 +12,25 @@ export default BaseSchema.decoratorBuilder(_fit)
 /**
  * fit
  * @param {{}} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
  */
 function _fit(params, values, keyStack)
 {
-	if(values.adjusted.length > MAX_LENGTH)
+	if(values.fitted.length > MAX_LENGTH)
 	{
 		ValueSchemaError.raise(CAUSE.MAX_LENGTH, values, keyStack);
 	}
 
-	const atPosition = values.adjusted.lastIndexOf("@");
+	const atPosition = values.fitted.lastIndexOf("@");
 	if(atPosition > MAX_LENGTH_LOCAL)
 	{
 		// local-part length error
 		ValueSchemaError.raise(CAUSE.MAX_LENGTH, values, keyStack);
 	}
-	if(values.adjusted.length - atPosition - 1 > MAX_LENGTH_DOMAIN)
+	if(values.fitted.length - atPosition - 1 > MAX_LENGTH_DOMAIN)
 	{
 		// domain-part length error
 		ValueSchemaError.raise(CAUSE.MAX_LENGTH, values, keyStack);

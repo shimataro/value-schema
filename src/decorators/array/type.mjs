@@ -55,27 +55,27 @@ function _featureToArray(params)
 /**
  * fitting function
  * @param {Params-Array-Type} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
  */
 function _fit(params, values, keyStack)
 {
-	if(isArray(values.adjusted))
+	if(isArray(values.fitted))
 	{
 		return false;
 	}
 
-	if(isString(values.adjusted) && params.flagSeparatedBy)
+	if(isString(values.fitted) && params.flagSeparatedBy)
 	{
-		values.adjusted = values.adjusted.split(params.separator);
+		values.fitted = values.fitted.split(params.separator);
 		return false;
 	}
 
 	if(params.flagToArray)
 	{
-		values.adjusted = [values.adjusted];
+		values.fitted = [values.fitted];
 		return false;
 	}
 

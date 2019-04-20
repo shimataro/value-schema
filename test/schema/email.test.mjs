@@ -16,7 +16,7 @@ import vs from "value-schema"; // eslint-disable-line import/no-unresolved
  */
 function testDefault()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.email().default("default@example.com")
 			.fit(undefined)).toEqual("default@example.com");
@@ -85,7 +85,7 @@ function testAcceptEmptyString()
  */
 function testTrim()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
 		expect(vs.email().trim()
 			.fit("\r\n trim@example.com \t ")).toEqual("trim@example.com");

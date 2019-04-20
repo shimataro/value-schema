@@ -41,21 +41,21 @@ function _featureAcceptNull(params, value = null)
 /**
  * fit
  * @param {Params-AcceptNull} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
  * @returns {boolean} ends fitting
  * @throws {ValueSchemaError}
  */
 function _fit(params, values, keyStack)
 {
-	if(values.adjusted !== null)
+	if(values.fitted !== null)
 	{
 		return false;
 	}
 
 	if(params.flag)
 	{
-		values.adjusted = params.valueOnNull;
+		values.fitted = params.valueOnNull;
 		return true;
 	}
 
