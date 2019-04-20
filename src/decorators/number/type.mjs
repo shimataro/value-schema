@@ -1,12 +1,12 @@
 import {CAUSE} from "../../libs/constants";
 import {isScalar, isNumber, isInteger, isString} from "../../libs/types";
-import AdjusterBase from "../../libs/AdjusterBase";
-import AdjusterError from "../../libs/AdjusterError";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
 const REGEXP_NUMBER = /^\s*[+-]?(\d+(\.\d*)?|\.\d+)\s*$/;
 const REGEXP_INTEGER = /^\s*[+-]?\d+\s*$/;
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		strict: _strict,
@@ -21,7 +21,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
  * @property {boolean} flagStrict
  * @property {boolean} flagAcceptSpecialFormats
  * @property {boolean} flagInteger
- * @property {boolean} flagIntegerAdjust
+ * @property {boolean} flagIntegerFits
  */
 
 /**
@@ -34,7 +34,7 @@ function _init(params)
 	params.flagStrict = false;
 	params.flagAcceptSpecialFormats = false;
 	params.flagInteger = false;
-	params.flagIntegerAdjust = false;
+	params.flagIntegerFits = false;
 }
 
 /**
@@ -60,40 +60,40 @@ function _acceptSpecialFormats(params)
 /**
  * limit to integer
  * @param {Params-Number-Type} params parameters
- * @param {boolean} [adjust=false] adjust value or not
+ * @param {boolean} [fits=false] fit value to schema or not
  * @returns {void}
  */
-function _integer(params, adjust = false)
+function _integer(params, fits = false)
 {
 	params.flagInteger = true;
-	params.flagIntegerAdjust = adjust;
+	params.flagIntegerFits = fits;
 }
 
 /**
- * adjust
+ * fit
  * @param {Params-Number-Type} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
- * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @returns {boolean} ends fitting
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values, keyStack)
+function _fit(params, values, keyStack)
 {
-	if(isString(values.adjusted))
+	if(isString(values.fitted))
 	{
-		if(!_checkNumberFormat(params, values.adjusted))
+		if(!_checkNumberFormat(params, values.fitted))
 		{
-			AdjusterError.raise(CAUSE.TYPE, values, keyStack);
+			ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 		}
 	}
 
-	const adjusted = _toNumber(params, values.adjusted);
-	if(adjusted === false)
+	const fitted = _toNumber(params, values.fitted);
+	if(fitted === false)
 	{
-		AdjusterError.raise(CAUSE.TYPE, values, keyStack);
+		ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 	}
 
-	values.adjusted = adjusted;
+	values.fitted = fitted;
 	return false;
 }
 
@@ -124,7 +124,7 @@ function _getRegExpForNumber(params)
 	{
 		return null;
 	}
-	if(params.flagInteger && !params.flagIntegerAdjust)
+	if(params.flagInteger && !params.flagIntegerFits)
 	{
 		// integer
 		return REGEXP_INTEGER;
@@ -138,7 +138,7 @@ function _getRegExpForNumber(params)
  * convert to number
  * @param {Params-Number-Type} params parameters
  * @param {*} value value to convert
- * @returns {number|boolean} adjusted value or false(if failed)
+ * @returns {number|boolean} fitted value or false(if failed)
  */
 function _toNumber(params, value)
 {
@@ -154,8 +154,8 @@ function _toNumber(params, value)
 		return false;
 	}
 
-	const adjustedValue = Number(value);
-	if(!isNumber(adjustedValue))
+	const fittedValue = Number(value);
+	if(!isNumber(fittedValue))
 	{
 		// failed to cast
 		return false;
@@ -163,25 +163,25 @@ function _toNumber(params, value)
 
 	if(!params.flagInteger)
 	{
-		return adjustedValue;
+		return fittedValue;
 	}
 
 	// already integer
-	if(isInteger(adjustedValue))
+	if(isInteger(fittedValue))
 	{
-		return adjustedValue;
+		return fittedValue;
 	}
 
 	// parse as integer
-	if(params.flagIntegerAdjust)
+	if(params.flagIntegerFits)
 	{
-		if(adjustedValue > 0)
+		if(fittedValue > 0)
 		{
-			return Math.floor(adjustedValue);
+			return Math.floor(fittedValue);
 		}
 		else
 		{
-			return Math.ceil(adjustedValue);
+			return Math.ceil(fittedValue);
 		}
 	}
 

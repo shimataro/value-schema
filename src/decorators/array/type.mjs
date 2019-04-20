@@ -1,9 +1,9 @@
 import {CAUSE} from "../../libs/constants";
 import {isString, isArray} from "../../libs/types";
-import AdjusterBase from "../../libs/AdjusterBase";
-import AdjusterError from "../../libs/AdjusterError";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		separatedBy: _featureSeparatedBy,
@@ -53,31 +53,31 @@ function _featureToArray(params)
 }
 
 /**
- * adjuster
+ * fitting function
  * @param {Params-Array-Type} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
- * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @returns {boolean} ends fitting
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values, keyStack)
+function _fit(params, values, keyStack)
 {
-	if(isArray(values.adjusted))
+	if(isArray(values.fitted))
 	{
 		return false;
 	}
 
-	if(isString(values.adjusted) && params.flagSeparatedBy)
+	if(isString(values.fitted) && params.flagSeparatedBy)
 	{
-		values.adjusted = values.adjusted.split(params.separator);
+		values.fitted = values.fitted.split(params.separator);
 		return false;
 	}
 
 	if(params.flagToArray)
 	{
-		values.adjusted = [values.adjusted];
+		values.fitted = [values.fitted];
 		return false;
 	}
 
-	AdjusterError.raise(CAUSE.TYPE, values, keyStack);
+	ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 }

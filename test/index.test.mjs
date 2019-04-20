@@ -1,31 +1,31 @@
-import adjuster from "adjuster"; // eslint-disable-line import/no-unresolved
+import vs from "value-schema"; // eslint-disable-line import/no-unresolved
 
 {
-	describe("adjust", testAdjust);
+	describe("fit", testFit);
 	describe("error", testError);
 }
 
 /**
- * test for adjust multiple variables
+ * test fit()
  * @returns {void}
  */
-function testAdjust()
+function testFit()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
-		const constraints = {
-			id: adjuster.number().minValue(1),
-			name: adjuster.string().maxLength(16, true),
-			age: adjuster.number().integer(true).minValue(0),
-			email: adjuster.email(),
-			state: adjuster.string().only("active", "inactive"),
-			classes: adjuster.array().separatedBy(",").each(adjuster.number(), true),
-			skills: adjuster.array().separatedBy(",").each(adjuster.string(), true),
-			credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD),
-			remote_addr: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4),
-			remote_addr_ipv6: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6),
-			limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true),
-			offset: adjuster.number().integer().default(0).minValue(0, true),
+		const schemaObject = {
+			id: vs.number().minValue(1),
+			name: vs.string().maxLength(16, true),
+			age: vs.number().integer(true).minValue(0),
+			email: vs.email(),
+			state: vs.string().only("active", "inactive"),
+			classes: vs.array().separatedBy(",").each(vs.number(), true),
+			skills: vs.array().separatedBy(",").each(vs.string(), true),
+			credit_card: vs.numericString().separatedBy("-").checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD),
+			remote_addr: vs.string().pattern(vs.STRING.PATTERN.IPV4),
+			remote_addr_ipv6: vs.string().pattern(vs.STRING.PATTERN.IPV6),
+			limit: vs.number().integer().default(10).minValue(1, true).maxValue(100, true),
+			offset: vs.number().integer().default(0).minValue(0, true),
 		};
 		const input = {
 			id: "1",
@@ -55,8 +55,8 @@ function testAdjust()
 			offset: 0,
 		};
 
-		const adjusted = adjuster.adjust(input, constraints);
-		expect(adjusted).toEqual(expected);
+		const fitted = vs.fit(input, schemaObject);
+		expect(fitted).toEqual(expected);
 	});
 }
 
@@ -66,12 +66,12 @@ function testAdjust()
  */
 function testError()
 {
-	it("should be adjusted", () =>
+	it("should be fitted", () =>
 	{
-		const constraints = {
-			id: adjuster.number().minValue(1),
-			name: adjuster.string().maxLength(16, true),
-			email: adjuster.email(),
+		const schemaObject = {
+			id: vs.number().minValue(1),
+			name: vs.string().maxLength(16, true),
+			email: vs.email(),
 		};
 		const input = {
 			id: 0, // error! (>= 1)
@@ -83,11 +83,11 @@ function testError()
 			email: "john@example.com",
 		};
 
-		const adjusted = adjuster.adjust(input, constraints, (err) =>
+		const fitted = vs.fit(input, schemaObject, (err) =>
 		{
 			if(err === null)
 			{
-				// adjustment finished
+				// fitting finished
 				return;
 			}
 
@@ -97,40 +97,40 @@ function testError()
 				return 100;
 			}
 		});
-		expect(adjusted).toEqual(expected);
+		expect(fitted).toEqual(expected);
 	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
 		{
-			const constraints = {};
+			const schemaObject = {};
 			const input = 0;
 
-			adjuster.adjust(input, constraints);
-		}).toThrow(adjuster.CAUSE.TYPE); // input must be an object
+			vs.fit(input, schemaObject);
+		}).toThrow(vs.CAUSE.TYPE); // input must be an object
 
 		expect(() =>
 		{
-			const constraints = {};
+			const schemaObject = {};
 			const input = null;
 
-			adjuster.adjust(input, constraints);
-		}).toThrow(adjuster.CAUSE.TYPE); // input must be an object; typeof null === "object"
+			vs.fit(input, schemaObject);
+		}).toThrow(vs.CAUSE.TYPE); // input must be an object; typeof null === "object"
 
 		expect(() =>
 		{
-			const constraints = {};
+			const schemaObject = {};
 			const input = [];
 
-			adjuster.adjust(input, constraints);
-		}).toThrow(adjuster.CAUSE.TYPE); // input must be an object; typeof [] === "object"
+			vs.fit(input, schemaObject);
+		}).toThrow(vs.CAUSE.TYPE); // input must be an object; typeof [] === "object"
 
 		expect(() =>
 		{
-			const constraints = {
-				id: adjuster.number().minValue(1),
-				name: adjuster.string().maxLength(16, true),
-				email: adjuster.email(),
+			const schemaObject = {
+				id: vs.number().minValue(1),
+				name: vs.string().maxLength(16, true),
+				email: vs.email(),
 			};
 			const input = {
 				id: 0, // error! (>= 1)
@@ -138,7 +138,7 @@ function testError()
 				email: "john@example.com", // OK
 			};
 
-			adjuster.adjust(input, constraints, generateErrorHandler());
+			vs.fit(input, schemaObject, generateErrorHandler());
 
 			/**
 			 * error handler generator
@@ -151,7 +151,7 @@ function testError()
 				{
 					if(err === null)
 					{
-						// adjustment finished; join key name as message
+						// fitting finished; join key name as message
 						throw new Error(messages.join(","));
 					}
 
@@ -167,10 +167,10 @@ function testError()
 
 		expect(() =>
 		{
-			const constraints = {
-				id: adjuster.number().minValue(1),
-				name: adjuster.string().maxLength(16, true),
-				email: adjuster.email(),
+			const schemaObject = {
+				id: vs.number().minValue(1),
+				name: vs.string().maxLength(16, true),
+				email: vs.email(),
 			};
 			const input = {
 				id: 0, // error! (>= 1)
@@ -178,55 +178,55 @@ function testError()
 				email: "john@example.com", // OK
 			};
 
-			adjuster.adjust(input, constraints);
+			vs.fit(input, schemaObject);
 		}).toThrow(); // throw a first error if error handler is omitted
 
 		try
 		{
-			const constraints = {
-				id: adjuster.number().minValue(1),
-				name: adjuster.string().maxLength(4, true),
+			const schemaObject = {
+				id: vs.number().minValue(1),
+				name: vs.string().maxLength(4, true),
 			};
 			const input = {
 				id: "0",
 				name: "John Doe",
 				dummy: true,
 			};
-			adjuster.object().constraints(constraints)
-				.adjust(input);
+			vs.object().schema(schemaObject)
+				.fit(input);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(adjuster.CAUSE.MIN_VALUE);
+			expect(err.cause).toEqual(vs.CAUSE.MIN_VALUE);
 			expect(err.keyStack).toEqual(["id"]);
 		}
 
 		try
 		{
-			const constraints = {
-				ids: adjuster.array().each(adjuster.number().minValue(1)),
+			const schemaObject = {
+				ids: vs.array().each(vs.number().minValue(1)),
 			};
 			const input = {
 				ids: [true, "2", "+3", "four", 5],
 			};
-			adjuster.object().constraints(constraints)
-				.adjust(input);
+			vs.object().schema(schemaObject)
+				.fit(input);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(adjuster.CAUSE.TYPE);
+			expect(err.cause).toEqual(vs.CAUSE.TYPE);
 			expect(err.keyStack).toEqual(["ids", 3]);
 		}
 
 		try
 		{
-			// complex constraints
-			const constraints = {
-				infoList: adjuster.array().each(adjuster.object().constraints({
-					id: adjuster.number(),
-					name: adjuster.string().maxLength(8),
+			// complex schema
+			const schemaObject = {
+				infoList: vs.array().each(vs.object().schema({
+					id: vs.number(),
+					name: vs.string().maxLength(8),
 				})),
 			};
 			const input = {
@@ -245,13 +245,13 @@ function testError()
 					},
 				],
 			};
-			adjuster.object().constraints(constraints)
-				.adjust(input);
+			vs.object().schema(schemaObject)
+				.fit(input);
 			expect(true).toEqual(false);
 		}
 		catch(err)
 		{
-			expect(err.cause).toEqual(adjuster.CAUSE.TYPE);
+			expect(err.cause).toEqual(vs.CAUSE.TYPE);
 			expect(err.keyStack).toEqual(["infoList", 1, "id"]);
 		}
 	});

@@ -1,37 +1,83 @@
-export = adjuster
-export as namespace adjuster
+export = vs;
+export as namespace vs;
 
-declare namespace adjuster
+declare namespace vs
 {
 	/**
-	 * adjust multiple variables (as object)
-	 * @param data data to be adjusted
-	 * @param constraints adjuster objects
+	 * fit data to schemaObject
+	 * @param data data to fit
+	 * @param schemaObject schema definitions
 	 * @param [onError] error handler
-	 * @returns adjusted data
+	 * @returns fitted data
 	 */
-	function adjust<T = any>(data: Input, constraints: Constraints, onError?: ErrorHandler): T
+	function fit<T = any>(data: Input, schemaObject: SchemaObject, onError?: ErrorHandler): T
 
-	function boolean(): BooleanAdjuster
-	function number(): NumberAdjuster
-	function string(): StringAdjuster
-	function numericString(): NumericStringAdjuster
-	function email(): EmailAdjuster
-	function array<T = any>(): ArrayAdjuster<T>
-	function object<T = any>(): ObjectAdjuster<T>
+	function boolean(): BooleanSchema
+	function number(): NumberSchema
+	function string(): StringSchema
+	function numericString(): NumericStringSchema
+	function email(): EmailSchema
+	function array<T = any>(): ArraySchema<T>
+	function object<T = any>(): ObjectSchema<T>
 
-	const CAUSE: ConstantsCause;
-	const STRING: ConstantsStringOptions;
-	const NUMERIC_STRING: ConstantsNumericStringOptions;
+	const CAUSE: Cause;
+	const STRING: StringOptions;
+	const NUMERIC_STRING: NumericStringOptions;
 
-	interface Constraints
+	interface SchemaObject
 	{
-		[name: string]: AdjusterBase<any>
+		[name: string]: BaseSchema<any>
 	}
 }
 
+// type definitions
+type CollectionArray = any[]
+type CollectionObject = { [name: string]: any }
+type Input = null | boolean | number | string | CollectionArray | CollectionObject
+type ErrorHandler<T = any> = (err: ValueSchemaError | null) => T | void
+type Key = string | number
+type Separator = RegExp | string
+
+type Cause = {
+	TYPE: string,
+	REQUIRED: string,
+	NULL: string,
+	EMPTY: string,
+	ONLY: string,
+	CONVERT: string,
+
+	MIN_VALUE: string,
+	MAX_VALUE: string,
+
+	MIN_LENGTH: string,
+	MAX_LENGTH: string,
+	PATTERN: string,
+
+	CHECKSUM: string,
+}
+type StringOptions = {
+	PATTERN: {
+		EMAIL: RegExp,
+		HTTP: RegExp,
+		IPV4: RegExp,
+		IPV6: RegExp,
+		URI: RegExp,
+	},
+}
+type NumericStringOptions = {
+	CHECKSUM_ALGORITHM: {
+		LUHN: string,
+		CREDIT_CARD: string,
+
+		MODULUS10_WEIGHT3_1: string,
+		ISBN13: string,
+		EAN: string,
+		JAN: string,
+	},
+}
+
 // interface definitions
-interface AdjusterError extends Error
+interface ValueSchemaError extends Error
 {
 	name: string
 	cause: string
@@ -39,18 +85,18 @@ interface AdjusterError extends Error
 	keyStack: Key[]
 }
 
-interface AdjusterBase<T>
+interface BaseSchema<T>
 {
 	/**
-	 * do adjust
-	 * @param value to be checked
+	 * fit value to schema
+	 * @param value value to fit
 	 * @param [onError=null] callback function on error
-	 * @returns adjusted value
+	 * @returns fitted value
 	 */
-	adjust(value: Input, onError?: ErrorHandler<T>): T
+	fit(value: Input, onError?: ErrorHandler<T>): T
 }
 
-interface BooleanAdjuster extends AdjusterBase<boolean>
+interface BooleanSchema extends BaseSchema<boolean>
 {
 	/**
 	 * enable strict type check
@@ -86,7 +132,7 @@ interface BooleanAdjuster extends AdjusterBase<boolean>
 	acceptEmptyString(value?: boolean | null): this
 }
 
-interface NumberAdjuster extends AdjusterBase<number>
+interface NumberSchema extends BaseSchema<number>
 {
 	/**
 	 * enable strict type check
@@ -129,10 +175,10 @@ interface NumberAdjuster extends AdjusterBase<number>
 
 	/**
 	 * limit value to integer chain
-	 * @param [adjust=false] adjust to integer value is not an integer; default is ERROR
+	 * @param [fits=false] fit input to integer if not; false throws ValueSchemaError
 	 * @returns chainable instance
 	 */
-	integer(adjust?: boolean): this
+	integer(fits?: boolean): this
 
 	/**
 	 * accept only specified values
@@ -144,18 +190,18 @@ interface NumberAdjuster extends AdjusterBase<number>
 	/**
 	 * set min-value
 	 * @param value min-value
-	 * @param [adjust=false] adjust to min-value if value < min-value; default is ERROR
+	 * @param [fits=false] fit input to value if input < value; false throws ValueSchemaError
 	 * @returns chainable instance
 	 */
-	minValue(value: number, adjust?: boolean): this
+	minValue(value: number, fits?: boolean): this
 
 	/**
 	 * set max-value
 	 * @param value max-value
-	 * @param [adjust=false] adjust to max-value if value > max-value; default is ERROR
+	 * @param [fits=false] fit input to value if input > value; false throws ValueSchemaError
 	 * @returns chainable instance
 	 */
-	maxValue(value: number, adjust?: boolean): this
+	maxValue(value: number, fits?: boolean): this
 
 	/**
 	 * conversion
@@ -163,17 +209,9 @@ interface NumberAdjuster extends AdjusterBase<number>
 	 * @returns chainable instance
 	 */
 	convert(converter: (value: number, fail: () => never) => number): this
-
-	/**
-	 * mapping
-	 * @param mapper mapping function
-	 * @returns chainable instance
-	 * @deprecated use convert()
-	 */
-	map(mapper: (value: number, fail: () => never) => number): this
 }
 
-interface StringAdjuster extends AdjusterBase<string>
+interface StringSchema extends BaseSchema<string>
 {
 	/**
 	 * enable strict type check
@@ -225,10 +263,10 @@ interface StringAdjuster extends AdjusterBase<string>
 	/**
 	 * set max-length
 	 * @param length max-length; error if longer
-	 * @param [adjust=false] truncate if longer; default is ERROR
+	 * @param [fits=false] truncate if longer; false throws ValueSchemaError
 	 * @returns chainable instance
 	 */
-	maxLength(length: number, adjust?: boolean): this
+	maxLength(length: number, fits?: boolean): this
 
 	/**
 	 * specify acceptable pattern by regular expression
@@ -243,17 +281,9 @@ interface StringAdjuster extends AdjusterBase<string>
 	 * @returns chainable instance
 	 */
 	convert(converter: (value: string, fail: () => never) => string): this
-
-	/**
-	 * mapping
-	 * @param mapper mapping function
-	 * @returns chainable instance
-	 * @deprecated use convert()
-	 */
-	map(mapper: (value: string, fail: () => never) => string): this
 }
 
-interface NumericStringAdjuster extends AdjusterBase<string>
+interface NumericStringSchema extends BaseSchema<string>
 {
 	/**
 	 * set default value
@@ -305,10 +335,10 @@ interface NumericStringAdjuster extends AdjusterBase<string>
 	/**
 	 * set max-length
 	 * @param length max-length; error if longer
-	 * @param [adjust=false] truncate if longer; default is ERROR
+	 * @param [fits=false] truncate if longer; false throws ValueSchemaError
 	 * @returns chainable instance
 	 */
-	maxLength(length: number, adjust?: boolean): this
+	maxLength(length: number, fits?: boolean): this
 
 	/**
 	 * validate by checksum
@@ -323,17 +353,9 @@ interface NumericStringAdjuster extends AdjusterBase<string>
 	 * @returns chainable instance
 	 */
 	convert(converter: (value: string, fail: () => never) => string): this
-
-	/**
-	 * mapping
-	 * @param mapper mapping function
-	 * @returns chainable instance
-	 * @deprecated use convert()
-	 */
-	map(mapper: (value: string, fail: () => never) => string): this
 }
 
-interface EmailAdjuster extends AdjusterBase<string>
+interface EmailSchema extends BaseSchema<string>
 {
 	/**
 	 * set default value
@@ -370,7 +392,7 @@ interface EmailAdjuster extends AdjusterBase<string>
 	pattern(pattern: RegExp): this
 }
 
-interface ArrayAdjuster<T> extends AdjusterBase<T[]>
+interface ArraySchema<T> extends BaseSchema<T[]>
 {
 	/**
 	 * set default value; enable to omit
@@ -416,21 +438,21 @@ interface ArrayAdjuster<T> extends AdjusterBase<T[]>
 	/**
 	 * set max-length of array elements
 	 * @param length max-length
-	 * @param [adjust=false] truncate if longer; default is ERROR
+	 * @param [fits=false] truncate if longer; false throws ValueSchemaError
 	 * @returns chainable instance
 	 */
-	maxLength(length: number, adjust?: boolean): this
+	maxLength(length: number, fits?: boolean): this
 
 	/**
-	 * apply constraints for each elements
-	 * @param adjusterInstance adjuster to apply
+	 * apply schema to each elements
+	 * @param schemaInstance schema to apply
 	 * @param [ignoreEachErrors=false] ignore errors of each elements
 	 * @returns chainable instance
 	 */
-	each(adjusterInstance: AdjusterBase<any>, ignoreEachErrors?: boolean): this
+	each(schemaInstance: BaseSchema<any>, ignoreEachErrors?: boolean): this
 }
 
-interface ObjectAdjuster<T> extends AdjusterBase<T>
+interface ObjectSchema<T> extends BaseSchema<T>
 {
 	/**
 	 * set default value; enable to omit
@@ -454,56 +476,9 @@ interface ObjectAdjuster<T> extends AdjusterBase<T>
 	acceptEmptyString(value?: CollectionObject | null): this
 
 	/**
-	 * apply constraints
-	 * @param constraints constraints to apply
+	 * define schema
+	 * @param schemaObject schema definitions
 	 * @returns chainable instance
 	 */
-	constraints(constraints: adjuster.Constraints): this
-}
-
-// type definitions
-type CollectionArray = any[]
-type CollectionObject = { [name: string]: any }
-type Input = null | boolean | number | string | CollectionArray | CollectionObject
-type ErrorHandler<T = any> = (err: AdjusterError | null) => T | void
-type Key = string | number
-type Separator = RegExp | string
-
-type ConstantsCause = {
-	TYPE: string,
-	REQUIRED: string,
-	NULL: string,
-	EMPTY: string,
-	ONLY: string,
-	MAP: string, // deprecated; use CONVERT
-	CONVERT: string,
-
-	MIN_VALUE: string,
-	MAX_VALUE: string,
-
-	MIN_LENGTH: string,
-	MAX_LENGTH: string,
-	PATTERN: string,
-
-	CHECKSUM: string,
-}
-type ConstantsStringOptions = {
-	PATTERN: {
-		EMAIL: RegExp,
-		HTTP: RegExp,
-		IPV4: RegExp,
-		IPV6: RegExp,
-		URI: RegExp,
-	},
-}
-type ConstantsNumericStringOptions = {
-	CHECKSUM_ALGORITHM: {
-		LUHN: string,
-		CREDIT_CARD: string,
-
-		MODULUS10_WEIGHT3_1: string,
-		ISBN13: string,
-		EAN: string,
-		JAN: string,
-	},
+	schema(schemaObject: vs.SchemaObject): this
 }

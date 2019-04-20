@@ -5,7 +5,8 @@
 
 BASE_BRANCH="develop"
 
-URL_PRODUCT="https://github.com/shimataro/node-adjuster"
+PACKAGE_NAME="value-schema"
+URL_PRODUCT="https://github.com/shimataro/${PACKAGE_NAME}"
 URL_REPOSITORY="${URL_PRODUCT}.git"
 URL_COMPARE="${URL_PRODUCT}/compare"
 URL_RELEASE="${URL_PRODUCT}/releases/new"
@@ -162,7 +163,7 @@ Remaining processes are...
 	${URL_RELEASE}
 	Tag version: ${COLOR_INPUT}${TAG}${COLOR_RESET}
 	Target: ${COLOR_INPUT}master${COLOR_RESET}
-	Release title: ${COLOR_INPUT}node-adjuster ${VERSION} released${COLOR_RESET}
+	Release title: ${COLOR_INPUT}${PACKAGE_NAME} ${VERSION} released${COLOR_RESET}
 	Description this release: (copy and paste CHANGELOG.md)
 6. Post processing
 	${COLOR_COMMAND}git checkout ${BASE_BRANCH}${COLOR_RESET}

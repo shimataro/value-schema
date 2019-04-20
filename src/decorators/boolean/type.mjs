@@ -1,12 +1,12 @@
 import {CAUSE} from "../../libs/constants";
 import {isBoolean, isNumber, isString} from "../../libs/types";
-import AdjusterBase from "../../libs/AdjusterBase";
-import AdjusterError from "../../libs/AdjusterError";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
 const REGEXP_TRUE = /^\s*(true|yes|on)\s*$/i;
 const REGEXP_FALSE = /^\s*(false|no|off)\s*$/i;
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		strict: _strict,
@@ -53,18 +53,18 @@ function _acceptAllNumbers(params)
 }
 
 /**
- * adjust
+ * fit
  * @param {Params-Boolean-Type} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
- * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @returns {boolean} ends fitting
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values, keyStack)
+function _fit(params, values, keyStack)
 {
-	let {adjusted} = values;
+	let {fitted} = values;
 
-	if(isBoolean(adjusted))
+	if(isBoolean(fitted))
 	{
 		// already boolean
 		return false;
@@ -72,35 +72,35 @@ function _adjust(params, values, keyStack)
 	if(params.flagStrict)
 	{
 		// strict check mode
-		AdjusterError.raise(CAUSE.TYPE, values, keyStack);
+		ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 	}
 
-	if(isString(adjusted))
+	if(isString(fitted))
 	{
 		// "true" is true, "false" is false
-		if(REGEXP_TRUE.test(adjusted))
+		if(REGEXP_TRUE.test(fitted))
 		{
-			values.adjusted = true;
+			values.fitted = true;
 			return false;
 		}
-		if(REGEXP_FALSE.test(adjusted))
+		if(REGEXP_FALSE.test(fitted))
 		{
-			values.adjusted = false;
+			values.fitted = false;
 			return false;
 		}
 
 		// convert to number
-		adjusted = Number(adjusted);
+		fitted = Number(fitted);
 	}
 
-	if(isNumber(adjusted))
+	if(isNumber(fitted))
 	{
-		if(adjusted === 0 || adjusted === 1 || params.flagAcceptAllNumbers)
+		if(fitted === 0 || fitted === 1 || params.flagAcceptAllNumbers)
 		{
-			values.adjusted = Boolean(adjusted);
+			values.fitted = Boolean(fitted);
 			return false;
 		}
 	}
 
-	AdjusterError.raise(CAUSE.TYPE, values, keyStack);
+	ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 }

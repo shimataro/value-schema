@@ -1,4 +1,4 @@
-# node-adjuster
+# value-schema
 
 [![Build Status (Windows)][image-build-windows]][link-build-windows]
 [![Build Status (macOS)][image-build-macos]][link-build-macos]
@@ -8,7 +8,7 @@
 [![Node.js version][image-engine]][link-engine]
 [![License][image-license]][link-license]
 
-validate and adjust input values
+Fit input values to schema.
 
 ## Table of Contents
 
@@ -43,27 +43,27 @@ All of web applications need handling input parameters, consists of following st
     * e.g., `1 <= limit && limit <= 100`
     * revise them if needed; `0` to `1`
 
-`node-adjuster` does all of them, by compact and highly readable code!
+`value-schema` does all of them, by compact and highly readable code!
 
 ### example
 
 ```javascript
-import adjuster from "adjuster";
+import vs from "value-schema";
 import assert from "assert";
 
-const constraints = { // constraints for input
-    id: adjuster.number().minValue(1), // number, >=1
-    name: adjuster.string().maxLength(16, true), // string, max 16 characters (trims if over)
-    age: adjuster.number().integer(true).minValue(0), // number, integer (trims if decimal), >=0
-    email: adjuster.email(), // email
-    state: adjuster.string().only("active", "inactive"), // string, accepts only "active" and "inactive"
-    classes: adjuster.array().separatedBy(",").each(adjuster.number(), true), // array of number, separated by ",", ignores errors
-    skills: adjuster.array().separatedBy(",").each(adjuster.string(), true), // array of string, separated by ",", ignores errors
-    credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD), // numeric string, separated by "-", checks by Luhn algorithm
-    remote_addr: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4), // IPv4
-    remote_addr_ipv6: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6), // IPv6
-    limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true), // number, integer, omittable (sets 10 if omitted), >=1 (sets 1 if less), <=100 (sets 100 if greater)
-    offset: adjuster.number().integer().default(0).minValue(0, true), // number, integer, omittable (sets 0 if omitted), >=0 (sets 0 if less)
+const schemaObject = { // schema for input
+    id: vs.number().minValue(1), // number, >=1
+    name: vs.string().maxLength(16, true), // string, max 16 characters (trims if over)
+    age: vs.number().integer(true).minValue(0), // number, integer (trims if decimal), >=0
+    email: vs.email(), // email
+    state: vs.string().only("active", "inactive"), // string, accepts only "active" and "inactive"
+    classes: vs.array().separatedBy(",").each(vs.number(), true), // array of number, separated by ",", ignores errors
+    skills: vs.array().separatedBy(",").each(vs.string(), true), // array of string, separated by ",", ignores errors
+    credit_card: vs.numericString().separatedBy("-").checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD), // numeric string, separated by "-", checks by Luhn algorithm
+    remote_addr: vs.string().pattern(vs.STRING.PATTERN.IPV4), // IPv4
+    remote_addr_ipv6: vs.string().pattern(vs.STRING.PATTERN.IPV6), // IPv6
+    limit: vs.number().integer().default(10).minValue(1, true).maxValue(100, true), // number, integer, omittable (sets 10 if omitted), >=1 (sets 1 if less), <=100 (sets 100 if greater)
+    offset: vs.number().integer().default(0).minValue(0, true), // number, integer, omittable (sets 0 if omitted), >=0 (sets 0 if less)
 };
 const input = { // input values
     id: "1",
@@ -78,7 +78,7 @@ const input = { // input values
     remote_addr_ipv6: "::1",
     limit: "0",
 };
-const expected = { // should be adjusted to this
+const expected = { // should be fitted to this
     id: 1,
     name: "Pablo Diego José",
     age: 20,
@@ -93,11 +93,11 @@ const expected = { // should be adjusted to this
     offset: 0,
 };
 
-// Let's adjust!
-const adjusted = adjuster.adjust(input, constraints);
+// Let's fit!
+const fitted = vs.fit(input, schemaObject);
 
 // verification
-assert.deepStrictEqual(adjusted, expected);
+assert.deepStrictEqual(fitted, expected);
 ```
 
 That's all! No control flows! Isn't it cool?
@@ -106,13 +106,11 @@ For details, see [basic usage](#basic-usage).
 
 ## Install
 
-install from [npm registry](https://www.npmjs.com/package/adjuster).
+install from [npm registry](https://www.npmjs.com/package/value-schema).
 
 ```bash
-npm install -S adjuster
+npm install -S value-schema
 ```
-
-NOTE: package name is `adjuster`, NOT `node-adjuster`!
 
 ## Loading
 
@@ -120,42 +118,42 @@ NOTE: package name is `adjuster`, NOT `node-adjuster`!
 
 ```javascript
 // foo.js
-var adjuster = require("adjuster");
+var vs = require("value-schema");
 ```
 
 ### ES Modules
 
 ```javascript
 // foo.mjs
-import adjuster from "adjuster";
+import vs from "value-schema";
 ```
 
 ### TypeScript
 
 ```typescript
 // foo.ts
-import * as adjuster from "adjuster";
+import * as vs from "value-schema";
 ```
 
 ### ES6 Modules with [Babel](https://babeljs.io/)
 
 ```javascript
 // same as ES Modules!
-import adjuster from "adjuster";
+import vs from "value-schema";
 ```
 
 ## Reference
 
 ### types and constants
 
-#### `AdjusterError`
+#### `ValueSchemaError`
 
-The `AdjusterError` object represents an error when trying to adjust invalid value.
+The `ValueSchemaError` object represents an error.
 
 ##### ambient declaration
 
 ```typescript
-interface AdjusterError extends Error
+interface ValueSchemaError extends Error
 {
     name: string
     message: string
@@ -169,24 +167,24 @@ interface AdjusterError extends Error
 
 |name|description|
 |----|-----------|
-|`name`|`"AdjusterError"`|
+|`name`|`"ValueSchemaError"`|
 |`message`|human-readable description of the error, including a string `cause`|
-|`cause`|cause of adjustment error; see `adjuster.CAUSE`|
-|`value`|value to adjust|
+|`cause`|cause of fitting error; see `vs.CAUSE`|
+|`value`|value to fit|
 |`keyStack`|array consists of path to key name(for object) or index(for array) that caused error; for nested object or array|
 
 See below example.
-For detail about constraints / `adjuster`, see [basic usage](#basic-usage)
+For detail about schema / `value-schema`, see [basic usage](#basic-usage)
 
 ```javascript
-import adjuster from "adjuster";
+import vs from "value-schema";
 import assert from "assert";
 
 // {foo: Array<{bar: {baz: number}}>}
-const constraints = {
-    foo: adjuster.array().each(adjuster.object().constraints({
-        bar: adjuster.object().constraints({
-            baz: adjuster.number(),
+const schemaObject = {
+    foo: vs.array().each(vs.object().schema({
+        bar: vs.object().schema({
+            baz: vs.number(),
         }),
     })),
 };
@@ -216,31 +214,31 @@ const input = {
 };
 assert.throws(
     () => {
-        adjuster.adjust(input, constraints);
+        vs.fit(input, schemaObject);
     },
     (err) => {
-        assert.strictEqual(err.name, "AdjusterError");
-        assert.strictEqual(err.cause, adjuster.CAUSE.TYPE),
+        assert.strictEqual(err.name, "ValueSchemaError");
+        assert.strictEqual(err.cause, vs.CAUSE.TYPE),
         assert.deepStrictEqual(err.keyStack, ["foo", 2, "bar", "baz"]); // route to error key/index: object(key="foo") -> array(index=2) -> object(key="bar") -> object(key="baz")
         return true;
     });
 ```
 
-#### `adjuster.CAUSE`
+#### `vs.CAUSE`
 
-The cause of adjustment error.
+The cause of fitting error.
 
 For more information, see below examples.
 
-#### `adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM`
+#### `vs.NUMERIC_STRING.CHECKSUM_ALGORITHM`
 
-Checksum algorithms for `adjuster.numericString().checksum()`.
+Checksum algorithms for `vs.numericString().checksum()`.
 
 For more information, see [numeric string](#numeric-string).
 
-#### `adjuster.STRING.PATTERN`
+#### `vs.STRING.PATTERN`
 
-Regular expressions for `adjuster.string().pattern()`.
+Regular expressions for `vs.string().pattern()`.
 
 For more information, see [string](#string).
 
@@ -249,71 +247,71 @@ For more information, see [string](#string).
 #### ambient declarations
 
 ```typescript
-namespace adjuster {
-    export declare function adjust<T = any>(data: any, constraints: Object, onError?: (err: AdjusterError | null) => any): T;
+namespace value-schema {
+    export declare function fit<T = any>(data: any, schemaObject: object, onError?: (err: ValueSchemaError | null) => any): T;
 }
 ```
 
-#### `adjuster.adjust(data, constraints[, onError])`
+#### `vs.fit(data, schemaObject[, onError])`
 
-Validate and adjust a input value.
+Fit `data` to `schemaObject`.
 
 ##### `data`
 
-An object to adjust; e.g., `req.query`, `req.body` (in [Express](http://expressjs.com/))
+An object to fit; e.g., `req.query`, `req.body` (in [Express](http://expressjs.com/))
 
 `data` will not be overwritten.
 
-##### `constraints`
+##### `schemaObject`
 
-Constraints object for adjustment.
+Schema object.
 
-* key: the name of `data` to adjust value
-* value: the adjustment object; see below examples
+* key: property name of `data` to fit
+* value: schema instance; see below examples
 
 ##### `onError(err)`
 
 Callback function for each errors.
 If no errors, this function will not be called.
 
-If this parameter is omitted, `adjuster.adjust()` throws `AdjusterError` on first error and remaining adjustment process will be cancelled.
+If this parameter is omitted, `vs.fit()` throws `ValueSchemaError` on first error and remaining fitting process will be cancelled.
 
 * `err`
-    * an instance of `AdjusterError` or `null`
+    * an instance of `ValueSchemaError` or `null`
     * `err.keyStack` indicates path to key name that caused error: `(string | number)[]`
-    * `err` will be `null` after all adjustment has finished and errors has occurred
+    * `err` will be `null` after all fitting process has finished and errors has occurred
         * `onError()` will no longer be called after `null` passed
 * returns
     * an adjuted value
-    * `undefined` means this key will not be included in returned object from `adjuster.adjust()`
+    * `undefined` means this key will not be included in returned object from `vs.fit()`
     * return value of `onError(null)` is ignored
 * throws
-    * an exception that will thrown from `adjuster.adjust()`
-    * remaining adjustment processes will be cancelled
+    * an exception that will thrown from `vs.fit()`
+    * remaining fitting processes will be cancelled
 
 ##### examples
 
 ###### successful
 
-For more information, see below references about [`adjuster.number()`](#number), [`adjuster.string()`](#string), and so on.
+For more information, see below references about [`vs.number()`](#number), [`vs.string()`](#string), and so on.
 
 ```javascript
-import adjuster from "adjuster";
+import vs from "value-schema";
 import assert from "assert";
 
-const constraints = {
-    id: adjuster.number().minValue(1),
-    name: adjuster.string().maxLength(16, true),
-    age: adjuster.number().integer(true).minValue(0),
-    email: adjuster.email(),
-    state: adjuster.string().only("active", "inactive"),
-    classes: adjuster.array().separatedBy(",").each(adjuster.number(), true), // "true" means to ignore each errors
-    skills: adjuster.array().separatedBy(",").each(adjuster.string(), true),
-    credit_card: adjuster.numericString().separatedBy("-").checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD),
-    remote_addr: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV4),
-    remote_addr_ipv6: adjuster.string().pattern(adjuster.STRING.PATTERN.IPV6),
-    limit: adjuster.number().integer().default(10).minValue(1, true).maxValue(100, true),
-    offset: adjuster.number().integer().default(0).minValue(0, true),
+const schemaObject = {
+    id: vs.number().minValue(1),
+    name: vs.string().maxLength(16, true),
+    age: vs.number().integer(true).minValue(0),
+    email: vs.email(),
+    state: vs.string().only("active", "inactive"),
+    classes: vs.array().separatedBy(",").each(vs.number(), true), // "true" means to ignore each errors
+    skills: vs.array().separatedBy(",").each(vs.string(), true),
+    credit_card: vs.numericString().separatedBy("-").checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD),
+    remote_addr: vs.string().pattern(vs.STRING.PATTERN.IPV4),
+    remote_addr_ipv6: vs.string().pattern(vs.STRING.PATTERN.IPV6),
+    limit: vs.number().integer().default(10).minValue(1, true).maxValue(100, true),
+    offset: vs.number().integer().default(0).minValue(0, true),
 };
 const input = {
     id: "1",
@@ -343,8 +341,8 @@ const expected = {
     offset: 0,
 };
 
-const adjusted = adjuster.adjust(input, constraints);
-assert.deepStrictEqual(adjusted, expected);
+const fitted = vs.fit(input, schemaObject);
+assert.deepStrictEqual(fitted, expected);
 ```
 
 In TypeScript, use Generics for type-safe.
@@ -355,30 +353,30 @@ interface Parameters {
     bar: string
 }
 
-const constraints = {
-    foo: adjuster.number(),
-    bar: adjuster.string(),
+const schemaObject = {
+    foo: vs.number(),
+    bar: vs.string(),
 };
 const input = {
     foo: "12345",
     bar: "abcde",
 };
 
-const adjusted = adjuster.adjust<Parameters>(input, constraints);
+const fitted = vs.fit<Parameters>(input, schemaObject);
 ```
 
 ###### error handling 1
 
-adjust errors
+fix errors
 
 ```javascript
-import adjuster from "adjuster";
+import vs from "value-schema";
 import assert from "assert";
 
-const constraints = {
-    id: adjuster.number().minValue(1),
-    name: adjuster.string().maxLength(16, true),
-    email: adjuster.email(),
+const schemaObject = {
+    id: vs.number().minValue(1),
+    name: vs.string().maxLength(16, true),
+    email: vs.email(),
 };
 const input = {
     id: 0, // error! (>= 1)
@@ -390,19 +388,19 @@ const expected = {
     email: "john@example.com",
 };
 
-const adjusted = adjuster.adjust(input, constraints, generateErrorHandler());
-assert.deepStrictEqual(adjusted, expected);
+const fitted = vs.fit(input, schemaObject, generateErrorHandler());
+assert.deepStrictEqual(fitted, expected);
 
 function generateErrorHandler() {
     return (err) => {
         if (err === null) {
-            // adjustment finished
+            // fitting finished
             return;
         }
 
         const key = err.keyStacks.shift(); // ["id"]
         if (key === "id") {
-            // adjust to 100 on `id` error
+            // change to 100 on `id` error
             return 100;
         }
         // remove otherwise
@@ -415,13 +413,13 @@ function generateErrorHandler() {
 throw exception after finished
 
 ```javascript
-import adjuster from "adjuster";
+import vs from "value-schema";
 import assert from "assert";
 
-const constraints = {
-    id: adjuster.number().minValue(1),
-    name: adjuster.string().maxLength(16, true),
-    email: adjuster.email(),
+const schemaObject = {
+    id: vs.number().minValue(1),
+    name: vs.string().maxLength(16, true),
+    email: vs.email(),
 };
 const input = {
     id: 0, // error! (>= 1)
@@ -430,7 +428,7 @@ const input = {
 };
 
 try {
-    adjuster.adjust(input, constraints, generateErrorHandler());
+    vs.fit(input, schemaObject, generateErrorHandler());
 }
 catch (err) {
     // do something
@@ -441,7 +439,7 @@ function generateErrorHandler() {
     const messages = [];
     return (err) => {
         if (err === null) {
-            // adjustment finished; join key name as message
+            // fitting finished; join key name as message
             throw new Error(messages.join(","));
         }
 
@@ -457,13 +455,13 @@ function generateErrorHandler() {
 catch a first error by omitting error handler
 
 ```javascript
-import adjuster from "adjuster";
+import vs from "value-schema";
 import assert from "assert";
 
-const constraints = {
-    id: adjuster.number().minValue(1),
-    name: adjuster.string().maxLength(16, true),
-    email: adjuster.email(),
+const schemaObject = {
+    id: vs.number().minValue(1),
+    name: vs.string().maxLength(16, true),
+    email: vs.email(),
 };
 const input = {
     id: 0, // error! (>= 1)
@@ -472,7 +470,7 @@ const input = {
 };
 
 try {
-    const adjusted = adjuster.adjust(input, constraints);
+    const fitted = vs.fit(input, schemaObject);
 }
 catch (err) {
     // catch a first error
@@ -484,22 +482,22 @@ catch (err) {
 
 when input value is not an object
 
-NOTE: `constraint` won't be checked because it's predictable; should be generated by programmer, not an external input
+NOTE: `schemaObject` won't be checked because it's predictable; generated by programmer, not an external input
 
 ```javascript
-import adjuster from "adjuster";
+import vs from "value-schema";
 import assert from "assert";
 
-const constraints = {};
+const schemaObject = {};
 const input = 123;
 
 try {
     // `input` must be an object
-    const adjusted = adjuster.adjust(input, constraints);
+    const fitted = vs.fit(input, schemaObject);
 }
 catch (err) {
     assert.deepStrictEqual(err.keyStack, []);
-    assert.strictEqual(err.cause, adjuster.CAUSE.TYPE);
+    assert.strictEqual(err.cause, vs.CAUSE.TYPE);
 }
 ```
 
@@ -508,13 +506,13 @@ catch (err) {
 #### ambient declarations
 
 ```typescript
-namespace adjuster {
-    export declare function boolean(): BooleanAdjuster;
+namespace vs {
+    export declare function boolean(): BooleanSchema;
 }
 
-interface BooleanAdjuster {
-    // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => boolean | void): number;
+interface BooleanSchema {
+    // fitting method
+    fit(value: any, onError?: (err: ValueSchemaError) => boolean | void): number;
 
     // feature methods (chainable)
     strict(): this;
@@ -525,86 +523,86 @@ interface BooleanAdjuster {
 }
 ```
 
-#### `adjust(value[, onError])`
+#### `fit(value[, onError])`
 
-Validate and adjust a input value.
+Fit `value` to schema.
 
-If an error occurs, call `onError` (if specified) or throw `AdjusterError` (otherwise)
+If an error occurs, call `onError` (if specified) or throw `ValueSchemaError` (otherwise)
 
 ##### examples
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.boolean().adjust(true),
+    vs.boolean().fit(true),
     true);
 assert.strictEqual(
-    adjuster.boolean().adjust(false),
+    vs.boolean().fit(false),
     false);
 
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.boolean().adjust(1),
+    vs.boolean().fit(1),
     true);
 assert.strictEqual(
-    adjuster.boolean().adjust(0),
+    vs.boolean().fit(0),
     false);
 assert.strictEqual(
-    adjuster.boolean().adjust("1"),
+    vs.boolean().fit("1"),
     true);
 assert.strictEqual(
-    adjuster.boolean().adjust("0"), // "0" is truthy in JavaScript, but node-adjuster adjusts to false!
+    vs.boolean().fit("0"), // "0" is truthy in JavaScript, but value-schema treats as false!
     false);
 assert.strictEqual(
-    adjuster.boolean().adjust("true"), // "true" / "yes" / "on" are true, "false" / "no" / "off" are false!
+    vs.boolean().fit("true"), // "true" / "yes" / "on" are true, "false" / "no" / "off" are false!
     true);
 assert.strictEqual(
-    adjuster.boolean().adjust("TRUE"),
+    vs.boolean().fit("TRUE"),
     true);
 assert.strictEqual(
-    adjuster.boolean().adjust("yes"),
+    vs.boolean().fit("yes"),
     true);
 assert.strictEqual(
-    adjuster.boolean().adjust("YES"),
+    vs.boolean().fit("YES"),
     true);
 assert.strictEqual(
-    adjuster.boolean().adjust("on"),
+    vs.boolean().fit("on"),
     true);
 assert.strictEqual(
-    adjuster.boolean().adjust("ON"),
+    vs.boolean().fit("ON"),
     true);
 assert.strictEqual(
-    adjuster.boolean().adjust("false"),
+    vs.boolean().fit("false"),
     false);
 assert.strictEqual(
-    adjuster.boolean().adjust("FALSE"),
+    vs.boolean().fit("FALSE"),
     false);
 assert.strictEqual(
-    adjuster.boolean().adjust("no"),
+    vs.boolean().fit("no"),
     false);
 assert.strictEqual(
-    adjuster.boolean().adjust("NO"),
+    vs.boolean().fit("NO"),
     false);
 assert.strictEqual(
-    adjuster.boolean().adjust("off"),
+    vs.boolean().fit("off"),
     false);
 assert.strictEqual(
-    adjuster.boolean().adjust("OFF"),
+    vs.boolean().fit("OFF"),
     false);
 
 // should cause error
 assert.throws(
-    () => adjuster.boolean().adjust(-1), // accepts only 0,1
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.boolean().fit(-1), // accepts only 0,1
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 assert.throws(
-    () => adjuster.boolean().adjust("abc"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.boolean().fit("abc"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 assert.throws(
-    () => adjuster.boolean().adjust([]),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.boolean().fit([]),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 assert.throws(
-    () => adjuster.boolean().adjust({}),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.boolean().fit({}),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 ```
 
 #### `strict()`
@@ -620,14 +618,14 @@ Use this method when your system accepts **ONLY** JSON encoding (`application/js
 ```javascript
 // should cause error
 assert.throws(
-    () => adjuster.boolean().strict().adjust(1),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.boolean().strict().fit(1),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 assert.throws(
-    () => adjuster.boolean().strict().adjust("1"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.boolean().strict().fit("1"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 assert.throws(
-    () => adjuster.boolean().strict().adjust("true"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.boolean().strict().fit("true"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 ```
 
 #### `acceptAllNumbers()`
@@ -637,73 +635,73 @@ Accept all numbers, other than 0 / 1.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.boolean().acceptAllNumbers().adjust(-1),
+    vs.boolean().acceptAllNumbers().fit(-1),
     true);
 assert.strictEqual(
-    adjuster.boolean().acceptAllNumbers().adjust("100"),
+    vs.boolean().acceptAllNumbers().fit("100"),
     true);
 ```
 
 #### `default(value)`
 
-Accept `undefined` for input, and adjust to `value`.
+Accept `undefined` for input, and convert to `value`.
 
-If this method is not called, `adjust(undefined)` causes `AdjusterError`.
+If this method is not called, `fit(undefined)` causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.boolean().default(true).adjust(undefined),
+    vs.boolean().default(true).fit(undefined),
     true);
 
 // should cause error
 assert.throws(
-    () => adjuster.boolean().adjust(undefined),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+    () => vs.boolean().fit(undefined),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.REQUIRED));
 ```
 
 #### `acceptNull([value])`
 
-Accept a `null` for input, and adjust to `value`.
+Accept a `null` for input, and convert to `value`.
 
-If this method is not called, `adjust(null)` causes `AdjusterError`.
+If this method is not called, `fit(null)` causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.boolean().acceptNull(true).adjust(null),
+    vs.boolean().acceptNull(true).fit(null),
     true);
 
 // should cause error
 assert.throws(
-    () => adjuster.boolean().adjust(null),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
+    () => vs.boolean().fit(null),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.NULL));
 ```
 
 #### `acceptEmptyString([value])`
 
-Accept an empty string(`""`) for input, and adjust to `value`.
+Accept an empty string(`""`) for input, and convert to `value`.
 
-If this method is not called, `adjust("")` causes `AdjusterError`.
+If this method is not called, `fit("")` causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.boolean().acceptEmptyString(true).adjust(""),
+    vs.boolean().acceptEmptyString(true).fit(""),
     true);
 
 // should cause error
 assert.throws(
-    () => adjuster.boolean().adjust(""),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+    () => vs.boolean().fit(""),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
 ```
 
 ### number
@@ -711,13 +709,13 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-namespace adjuster {
-    export declare function number(): NumberAdjuster;
+namespace vs {
+    export declare function number(): NumberSchema;
 }
 
-interface NumberAdjuster {
-    // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => number | void): number;
+interface NumberSchema {
+    // fitting method
+    fit(value: any, onError?: (err: ValueSchemaError) => number | void): number;
 
     // feature methods (chainable)
     strict(): this;
@@ -726,53 +724,51 @@ interface NumberAdjuster {
     acceptEmptyString(value?: number | null /* = null */): this;
     acceptSpecialFormats(): this;
     acceptFullWidth(): this;
-    integer(adjust?: boolean /* = false */): this;
+    integer(fits?: boolean /* = false */): this;
     only(...values: number[]): this;
-    minValue(value: number, adjust?: boolean /* = false */): this;
-    maxValue(value: number, adjust?: boolean /* = false */): this;
+    minValue(value: number, fits?: boolean /* = false */): this;
+    maxValue(value: number, fits?: boolean /* = false */): this;
     convert(converter: (value: number, fail: () => never) => number): this;
-    // deprecated; use convert()
-    map(mapper: (value: number, fail: () => never) => number): this;
 }
 ```
 
-#### `adjust(value[, onError])`
+#### `fit(value[, onError])`
 
-Validate and adjust a input value.
+Fit `value` to schema.
 
-If an error occurs, call `onError` (if specified) or throw `AdjusterError` (otherwise)
+If an error occurs, call `onError` (if specified) or throw `ValueSchemaError` (otherwise)
 
 ##### examples
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.number().adjust(-123),
+    vs.number().fit(-123),
     -123);
 
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.number().adjust("-123"),
+    vs.number().fit("-123"),
     -123);
 assert.strictEqual(
-    adjuster.number().adjust(true),
+    vs.number().fit(true),
     1);
 assert.strictEqual(
-    adjuster.number().adjust(false),
+    vs.number().fit(false),
     0);
 
 // should cause error
-assert.strictEqual( // catch error by callback function (that returns a value from adjust() method)
-    adjuster.number().adjust(
+assert.strictEqual( // catch error by callback function (that returns a value from fit() method)
+    vs.number().fit(
         "abc",
         (err) => 10),
     10);
 assert.throws( // ... or try-catch syntax
-    () => adjuster.number().adjust("abc"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.number().fit("abc"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 assert.throws(
-    () => adjuster.number().adjust("true"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.number().fit("true"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 ```
 
 #### `strict()`
@@ -786,192 +782,192 @@ Use this method when your system accepts **ONLY** JSON encoding (`application/js
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.number().adjust("123"),
+    vs.number().fit("123"),
     123);
 assert.strictEqual(
-    adjuster.number().adjust(true),
+    vs.number().fit(true),
     1);
 
 // should cause error
 assert.throws(
-    () => adjuster.number().strict().adjust("123"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.number().strict().fit("123"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 assert.throws(
-    () => adjuster.number().strict().adjust(true),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.number().strict().fit(true),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 ```
 
 #### `default(value)`
 
-Accept `undefined` for input, and adjust to `value`.
+Accept `undefined` for input, and convert to `value`.
 
-If this method is not called, `adjust(undefined)` causes `AdjusterError`.
+If this method is not called, `fit(undefined)` causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.number().default(1).adjust(undefined),
+    vs.number().default(1).fit(undefined),
     1);
 
 // should cause error
 assert.throws(
-    () => adjuster.number().adjust(undefined),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+    () => vs.number().fit(undefined),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.REQUIRED));
 ```
 
 #### `acceptNull([value])`
 
-Accept a `null` for input, and adjust to `value`.
+Accept a `null` for input, and convert to `value`.
 
-If this method is not called, `adjust(null)` causes `AdjusterError`.
+If this method is not called, `fit(null)` causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.number().acceptNull(1).adjust(null),
+    vs.number().acceptNull(1).fit(null),
     1);
 
 // should cause error
 assert.throws(
-    () => adjuster.number().adjust(null),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
+    () => vs.number().fit(null),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.NULL));
 ```
 
 #### `acceptEmptyString([value])`
 
-Accept an empty string(`""`) for input, and adjust to `value`.
+Accept an empty string(`""`) for input, and convert to `value`.
 
-If this method is not called, `adjust("")` causes `AdjusterError`.
+If this method is not called, `fit("")` causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.number().acceptEmptyString(1).adjust(""),
+    vs.number().acceptEmptyString(1).fit(""),
     1);
 
 // should cause error
 assert.throws(
-    () => adjuster.number().adjust(""),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+    () => vs.number().fit(""),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
 ```
 
 #### `acceptSpecialFormats()`
 
 Accept all special number formats; e.g., `"1e+2"`, `"0x100"`, `"0o100"`, `"0b100"`.
 
-If this method is not called, the above examples causes `AdjusterError`.
+If this method is not called, the above examples causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.number().acceptSpecialFormats().adjust("1e+2"),
+    vs.number().acceptSpecialFormats().fit("1e+2"),
     100);
 assert.strictEqual(
-    adjuster.number().acceptSpecialFormats().adjust("0x100"),
+    vs.number().acceptSpecialFormats().fit("0x100"),
     256);
 assert.strictEqual(
-    adjuster.number().acceptSpecialFormats().adjust("0o100"),
+    vs.number().acceptSpecialFormats().fit("0o100"),
     64);
 assert.strictEqual(
-    adjuster.number().acceptSpecialFormats().adjust("0b100"),
+    vs.number().acceptSpecialFormats().fit("0b100"),
     4);
 
 // should cause error
 assert.throws(
-    () => adjuster.number().adjust("1e+2"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.number().fit("1e+2"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 ```
 
 #### `acceptFullWidth()`
 
 Accept full-width string; e.g., `"１２３４．５"`, `"1２3４.５"`.
 
-If this method is not called, the above examples causes `AdjusterError`.
+If this method is not called, the above examples causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.number().acceptFullWidth().adjust("１２３４．５"),
+    vs.number().acceptFullWidth().fit("１２３４．５"),
     1234.5);
 
 // should cause error
 assert.throws(
-    () => adjuster.number().adjust("１２３４．５"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.number().fit("１２３４．５"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 ```
 
-#### `integer([adjust])`
+#### `integer([fits])`
 
 Limit an input value to integer.
 
-If `adjust` is true, value will be adjusted to an integer.
+If `fits` is true, value will be converted to an integer.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.number().integer(true).adjust(3.14),
+    vs.number().integer(true).fit(3.14),
     3);
 assert.strictEqual(
-    adjuster.number().integer(true).adjust("3.14"),
+    vs.number().integer(true).fit("3.14"),
     3);
 assert.strictEqual(
-    adjuster.number().integer(true).adjust(-3.14),
+    vs.number().integer(true).fit(-3.14),
     -3);
 assert.strictEqual(
-    adjuster.number().integer(true).adjust("-3.14"),
+    vs.number().integer(true).fit("-3.14"),
     -3);
 
 // should cause error
 assert.throws(
-    () => adjuster.number().integer().adjust(3.14),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.number().integer().fit(3.14),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 assert.throws(
-    () => adjuster.number().integer().adjust("3.14"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.number().integer().fit("3.14"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 assert.throws(
-    () => adjuster.number().integer().adjust("3."),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.number().integer().fit("3."),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 ```
 
 #### `only(...values)`
 
 Accept only `values`.
 
-If input value is not in `values`, `adjust()` method causes `AdjusterError`.
+If input value is not in `values`, `fit()` method causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.number().only(1, 3, 5).adjust(1),
+    vs.number().only(1, 3, 5).fit(1),
     1);
 
 // should cause error
 assert.throws(
-    () => adjuster.number().only(1, 3, 5).adjust(2),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.ONLY));
+    () => vs.number().only(1, 3, 5).fit(2),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.ONLY));
 ```
 
-#### `minValue(value[, adjust])`
+#### `minValue(value[, fits])`
 
 Limit minimum value to `value`.
 
-If input value is less than `value`, `adjust()` method returns `value` (if `adjust` is truthy) or causes `AdjusterError` (falsy; default).
+If input value is less than `value`, `fit()` method returns `value` (if `fits` is truthy) or causes `ValueSchemaError` (falsy; default).
 
 By default, `value` equals `Number.MIN_SAFE_INTEGER`.
 
@@ -980,31 +976,31 @@ By default, `value` equals `Number.MIN_SAFE_INTEGER`.
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.number().adjust(Number.MIN_SAFE_INTEGER),
+    vs.number().fit(Number.MIN_SAFE_INTEGER),
     Number.MIN_SAFE_INTEGER);
 assert.strictEqual(
-    adjuster.number().minValue(1).adjust(1),
+    vs.number().minValue(1).fit(1),
     1);
 
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.number().minValue(1, true).adjust(0),
+    vs.number().minValue(1, true).fit(0),
     1);
 
 // should cause errors
 assert.throws(
-    () => adjuster.number().adjust(Number.MIN_SAFE_INTEGER - 1),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_VALUE));
+    () => vs.number().fit(Number.MIN_SAFE_INTEGER - 1),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MIN_VALUE));
 assert.throws(
-    () => adjuster.number().minValue(1).adjust(0),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_VALUE));
+    () => vs.number().minValue(1).fit(0),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MIN_VALUE));
 ```
 
-#### `maxValue(value[, adjust])`
+#### `maxValue(value[, fits])`
 
 Limit maximum value to `value`.
 
-If input value is greater than `value`, `adjust()` method returns `value` (if `adjust` is truthy) or causes `AdjusterError` (falsy; default).
+If input value is greater than `value`, `fit()` method returns `value` (if `fits` is truthy) or causes `ValueSchemaError` (falsy; default).
 
 By default, `value` equals `Number.MAX_SAFE_INTEGER`.
 
@@ -1013,44 +1009,42 @@ By default, `value` equals `Number.MAX_SAFE_INTEGER`.
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.number().adjust(Number.MAX_SAFE_INTEGER),
+    vs.number().fit(Number.MAX_SAFE_INTEGER),
     Number.MAX_SAFE_INTEGER);
 assert.strictEqual(
-    adjuster.number().maxValue(1).adjust(1),
+    vs.number().maxValue(1).fit(1),
     1);
 
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.number().maxValue(100, true).adjust(101),
+    vs.number().maxValue(100, true).fit(101),
     100);
 
 // should cause errors
 assert.throws(
-    () => adjuster.number().adjust(Number.MAX_SAFE_INTEGER + 1),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_VALUE));
+    () => vs.number().fit(Number.MAX_SAFE_INTEGER + 1),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MAX_VALUE));
 assert.throws(
-    () => adjuster.number().maxValue(100).adjust(101),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_VALUE));
+    () => vs.number().maxValue(100).fit(101),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MAX_VALUE));
 ```
 
-#### `convert(converter)` / `map(mapper)`
+#### `convert(converter)`
 
 Convert input value into another value.
-
-WARNING; `map()` is deprecated. use `convert()`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.number().convert(value => value + 1).adjust(100)
+    vs.number().convert(value => value + 1).fit(100)
     101);
 
 // should cause errors
 assert.throws(
-    () => adjuster.number().convert((value, fail) => fail()).adjust(100),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.CONVERT));
+    () => vs.number().convert((value, fail) => fail()).fit(100),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.CONVERT));
 ```
 
 ### string
@@ -1058,13 +1052,13 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-namespace adjuster {
-    export declare function string(): StringAdjuster;
+namespace vs {
+    export declare function string(): StringSchema;
 }
 
-interface StringAdjuster {
-    // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => string | void): string;
+interface StringSchema {
+    // fitting method
+    fit(value: any, onError?: (err: ValueSchemaError) => string | void): string;
 
     // feature methods (chainable)
     strict(): this;
@@ -1074,29 +1068,27 @@ interface StringAdjuster {
     trim(): this;
     only(...values: string[]): this;
     minLength(length: number): this;
-    maxLength(length: number, adjust?: boolean /* = false */): this;
+    maxLength(length: number, fits?: boolean /* = false */): this;
     pattern(pattern: RegExp): this;
     convert(converter: (value: string, fail: () => never) => string): this;
-    // deprecated; use convert()
-    map(mapper: (value: string, fail: () => never) => string): this;
 }
 ```
 
-#### `adjust(value[, onError])`
+#### `fit(value[, onError])`
 
-Validate and adjust a input value.
+Fit `value` to schema.
 
 ##### examples
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.string().adjust("123"),
+    vs.string().fit("123"),
     "123");
 
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.string().adjust(123),
+    vs.string().fit(123),
     "123");
 ```
 
@@ -1107,77 +1099,77 @@ Enable strict type check.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.string().adjust(123),
+    vs.string().fit(123),
     "123");
 assert.strictEqual(
-    adjuster.string().adjust(true),
+    vs.string().fit(true),
     "true");
 
 // should cause error
 assert.throws(
-    () => adjuster.string().strict().adjust(123),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.string().strict().fit(123),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 assert.throws(
-    () => adjuster.string().strict().adjust(true),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.string().strict().fit(true),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 ```
 
 #### `default(value)`
 
-Accept `undefined` for input, and adjust to `value`.
+Accept `undefined` for input, and convert to `value`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.string().default("xyz").adjust(undefined),
+    vs.string().default("xyz").fit(undefined),
     "xyz");
 
 // should cause error
 assert.throws(
-    () => adjuster.string().adjust(undefined),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+    () => vs.string().fit(undefined),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.REQUIRED));
 ```
 
 #### `acceptNull([value])`
 
-Accept a `null` for input, and adjust to `value`.
+Accept a `null` for input, and convert to `value`.
 
-If this method is not called, `adjust(null)` causes `AdjusterError`.
+If this method is not called, `fit(null)` causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.string().acceptNull("x").adjust(null),
+    vs.string().acceptNull("x").fit(null),
     "x");
 
 // should cause error
 assert.throws(
-    () => adjuster.string().adjust(null),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
+    () => vs.string().fit(null),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.NULL));
 ```
 
 #### `acceptEmptyString([value])`
 
-Accept an empty string(`""`) for input, and adjust to `value`.
+Accept an empty string(`""`) for input, and convert to `value`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.string().acceptEmptyString("xyz").adjust(""),
+    vs.string().acceptEmptyString("xyz").fit(""),
     "xyz");
 
 // should cause error
 assert.throws(
-    () => adjuster.string().adjust(""),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+    () => vs.string().fit(""),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
 ```
 
 #### `trim()`
@@ -1187,15 +1179,15 @@ Remove whitespace from both ends of input.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.string().trim().adjust("\r\n hell, word \t "),
+    vs.string().trim().fit("\r\n hell, word \t "),
     "hell, word");
 
 // should cause error
 assert.throws(
-    () => adjuster.string().trim().adjust(" \t\r\n "),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+    () => vs.string().trim().fit(" \t\r\n "),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
 ```
 
 #### `only(...values)`
@@ -1207,16 +1199,16 @@ Accept only `values`.
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.string().only("eat", "sleep", "play").adjust("sleep"),
+    vs.string().only("eat", "sleep", "play").fit("sleep"),
     "sleep");
 assert.strictEqual(
-    adjuster.string().only("").adjust(""),
+    vs.string().only("").fit(""),
     "");
 
 // should cause error
 assert.throws(
-    () => adjuster.string().only("eat", "sleep", "play").adjust("study"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.ONLY));
+    () => vs.string().only("eat", "sleep", "play").fit("study"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.ONLY));
 ```
 
 #### `minLength(length)`
@@ -1228,93 +1220,91 @@ Limit minimum length of input string to `length`.
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.string().minLength(5).adjust("abcde"),
+    vs.string().minLength(5).fit("abcde"),
     "abcde");
 
 // should cause error
 assert.throws(
-    () => adjuster.string().minLength(5).adjust("a"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
+    () => vs.string().minLength(5).fit("a"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MIN_LENGTH));
 ```
 
-#### `maxLength(length[, adjust])`
+#### `maxLength(length[, fits])`
 
 Limit maximum length of an input string to `length`.
 
-If string length is greater than `length`, `adjust()` method truncates the length to `length` (if `adjust` is truthy) or causes `AdjusterError` (falsy; default).
+If string length is greater than `length`, `fit()` method truncates the length to `length` (if `fits` is truthy) or causes `ValueSchemaError` (falsy; default).
 
 ##### examples
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.string().maxLength(5).adjust("abcde"),
+    vs.string().maxLength(5).fit("abcde"),
     "abcde");
 
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.string().maxLength(5, true).adjust("abcdefg"),
+    vs.string().maxLength(5, true).fit("abcdefg"),
     "abcde");
 
 // should cause error
 assert.throws(
-    () => adjuster.string().maxLength(5).adjust("abcdefg"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
+    () => vs.string().maxLength(5).fit("abcdefg"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MAX_LENGTH));
 ```
 
 #### `pattern(pattern)`
 
 Specify acceptable pattern by regular expression.
 
-You can also use `adjuster.STRING.PATTERN` constants
+You can also use `vs.STRING.PATTERN` constants
 
 |constant|explanation|
 |--------|-----------|
-|`adjuster.STRING.PATTERN.EMAIL`|email address that follows [RFC5321](https://tools.ietf.org/html/rfc5321) / [RFC5322](https://tools.ietf.org/html/rfc5322)|
-|`adjuster.STRING.PATTERN.HTTP`|HTTP/HTTPS URL|
-|`adjuster.STRING.PATTERN.IPV4`|IPv4 address|
-|`adjuster.STRING.PATTERN.IPV6`|IPv6 address|
-|`adjuster.STRING.PATTERN.URI`|URI that follows [RFC3986](https://tools.ietf.org/html/rfc3986)|
+|`vs.STRING.PATTERN.EMAIL`|email address that follows [RFC5321](https://tools.ietf.org/html/rfc5321) / [RFC5322](https://tools.ietf.org/html/rfc5322)|
+|`vs.STRING.PATTERN.HTTP`|HTTP/HTTPS URL|
+|`vs.STRING.PATTERN.IPV4`|IPv4 address|
+|`vs.STRING.PATTERN.IPV6`|IPv6 address|
+|`vs.STRING.PATTERN.URI`|URI that follows [RFC3986](https://tools.ietf.org/html/rfc3986)|
 
 ##### examples
 
 ```javascript
 // should be OK
 assert.deepStrictEqual(
-    adjuster.string().pattern(/^Go+gle$/).adjust("Gogle"),
+    vs.string().pattern(/^Go+gle$/).fit("Gogle"),
     "Gogle");
 assert.deepStrictEqual(
-    adjuster.string().pattern(adjuster.STRING.PATTERN.URI).adjust("https://example.com/path/to/resource?name=value#hash"),
+    vs.string().pattern(vs.STRING.PATTERN.URI).fit("https://example.com/path/to/resource?name=value#hash"),
     "https://example.com/path/to/resource?name=value#hash");
 
 
 // should cause error
 assert.throws(
-    () => adjuster.string().pattern(/^Go+gle$/).adjust("Ggle"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    () => vs.string().pattern(/^Go+gle$/).fit("Ggle"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
 assert.throws(
-    () => adjuster.string().pattern(adjuster.STRING.PATTERN.URI).adjust("https://例.com/"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    () => vs.string().pattern(vs.STRING.PATTERN.URI).fit("https://例.com/"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
 ```
 
-#### `convert(converter)` / `map(mapper)`
+#### `convert(converter)`
 
 Convert input value into another value.
-
-WARNING; `map()` is deprecated. use `convert()`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.string().convert(value => value + value).adjust("abc")
+    vs.string().convert(value => value + value).fit("abc")
     "abcabc");
 
 // should cause errors
 assert.throws(
-    () => adjuster.string().convert((value, fail) => fail()).adjust("abc"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.CONVERT));
+    () => vs.string().convert((value, fail) => fail()).fit("abc"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.CONVERT));
 ```
 
 ### numeric string
@@ -1322,13 +1312,13 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-namespace adjuster {
-    export declare function numericString(): NumericStringAdjuster;
+namespace vs {
+    export declare function numericString(): NumericStringSchema;
 }
 
-interface NumericStringAdjuster {
-    // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => string | void): string;
+interface NumericStringSchema {
+    // fitting method
+    fit(value: any, onError?: (err: ValueSchemaError) => string | void): string;
 
     // feature methods (chainable)
     default(value: string): this;
@@ -1338,84 +1328,82 @@ interface NumericStringAdjuster {
     joinArray(): this;
     separatedBy(separator: string | RegExp): this;
     minLength(length: number): this;
-    maxLength(length: number, adjust?: boolean /* = false */): this;
+    maxLength(length: number, fits?: boolean /* = false */): this;
     checksum(algorithm: string): this;
     convert(converter: (value: string, fail: () => never) => string): this;
-    // deprecated; use convert()
-    map(mapper: (value: string, fail: () => never) => string): this;
 }
 ```
 
-#### `adjust(value[, onError])`
+#### `fit(value[, onError])`
 
-Validate and adjust input values.
+Fit `value` to schema.
 
 ##### examples
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.numericString().adjust("123"),
+    vs.numericString().fit("123"),
     "123");
 
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.numericString().adjust(123),
+    vs.numericString().fit(123),
     "123");
 ```
 
 #### `default(value)`
 
-Accpet `undefined` for input, and adjust to `value`.
+Accpet `undefined` for input, and convert to `value`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.numericString().default("123").adjust(undefined),
+    vs.numericString().default("123").fit(undefined),
     "123");
 
 // should cause error
 assert.throws(
-    () => adjuster.numericString().adjust(undefined),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+    () => vs.numericString().fit(undefined),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.REQUIRED));
 ```
 
 #### `acceptNull([value])`
 
-Accept a `null` for input, and adjust to `value`.
+Accept a `null` for input, and convert to `value`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.numericString().acceptNull("456").adjust(null),
+    vs.numericString().acceptNull("456").fit(null),
     "456");
 
 // should cause error
 assert.throws(
-    () => adjuster.numericString().adjust(null),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
+    () => vs.numericString().fit(null),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.NULL));
 ```
 
 #### `acceptEmptyString([value])`
 
-Accept an empty string(`""`) for input, and adjust to `value`.
+Accept an empty string(`""`) for input, and convert to `value`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.numericString().acceptEmptyString("456").adjust(""),
+    vs.numericString().acceptEmptyString("456").fit(""),
     "456");
 
 // should cause error
 assert.throws(
-    () => adjuster.numericString().adjust(""),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+    () => vs.numericString().fit(""),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
 ```
 
 #### `separatedBy(separator)`
@@ -1425,35 +1413,35 @@ Assume an input value is separated by `separator`, and ignore them.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.numericString().separatedBy("-").adjust("4111-1111-1111-1111"),
+    vs.numericString().separatedBy("-").fit("4111-1111-1111-1111"),
     "4111111111111111");
 
 // should cause error
 assert.throws(
-    () => adjuster.numericString().adjust("4111-1111-1111-1111"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    () => vs.numericString().fit("4111-1111-1111-1111"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
 ```
 
 #### `fullWidthToHalf()`
 
 Convert full-width string to half-width; e.g., `"１２３４"`.
 
-If this method is not called, the above examples causes `AdjusterError`.
+If this method is not called, the above examples causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.numericString().fullWidthToHalf().adjust("１２３４"),
+    vs.numericString().fullWidthToHalf().fit("１２３４"),
     "1234");
 
 // should cause error
 assert.throws(
-    () => adjuster.numericString().adjust("１２３４"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    () => vs.numericString().fit("１２３４"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
 ```
 
 #### `joinArray()`
@@ -1479,15 +1467,15 @@ This method is useful for following form.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.numericString().joinArray().adjust(["1234", "5678"]),
+    vs.numericString().joinArray().fit(["1234", "5678"]),
     "12345678");
 
 // should cause error
 assert.throws(
-    () => adjuster.numericString().adjust(["1234", "5678"]),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.numericString().fit(["1234", "5678"]),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 ```
 
 #### `minLength(length)`
@@ -1499,16 +1487,16 @@ Limit minimum length of input string to `length`.
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.numericString().minLength(4).adjust("1234"),
+    vs.numericString().minLength(4).fit("1234"),
     "1234");
 
 // should cause error
 assert.throws(
-    () => adjuster.numericString().minLength(5).adjust("1234"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
+    () => vs.numericString().minLength(5).fit("1234"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MIN_LENGTH));
 ```
 
-#### `maxLength(length[, adjust])`
+#### `maxLength(length[, fits])`
 
 Limit maximum length of an input string to `length`.
 
@@ -1517,18 +1505,18 @@ Limit maximum length of an input string to `length`.
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.numericString().maxLength(4).adjust("1234"),
+    vs.numericString().maxLength(4).fit("1234"),
     "1234");
 
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.numericString().separatedBy("-").maxLength(5, true).adjust("1234-5678"),
+    vs.numericString().separatedBy("-").maxLength(5, true).fit("1234-5678"),
     "12345");
 
 // should cause error
 assert.throws(
-    () => adjuster.numericString().maxLength(5).adjust("123456"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
+    () => vs.numericString().maxLength(5).fit("123456"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MAX_LENGTH));
 ```
 
 #### `checksum(algorithm)`
@@ -1537,56 +1525,54 @@ Check an input value by specified algorithm.
 
 |algorithm name|explanation|used by|constant|aliases|
 |--------------|-----------|-------|--------|-------|
-|`"luhn"`|[Luhn algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm)|credit card|`adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN`|`adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD`|
-|`"modulus10/weight3:1"`|[Modulus 10 / Weight 3:1](https://en.wikipedia.org/wiki/International_Standard_Book_Number#ISBN-13_check_digit_calculation)|ISBN-13, EAN, JAN|`adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1`|`adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13` / `adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.EAN` / `adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.JAN`|
+|`"luhn"`|[Luhn algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm)|credit card|`vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN`|`vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD`|
+|`"modulus10/weight3:1"`|[Modulus 10 / Weight 3:1](https://en.wikipedia.org/wiki/International_Standard_Book_Number#ISBN-13_check_digit_calculation)|ISBN-13, EAN, JAN|`vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1`|`vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13` / `vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.EAN` / `vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.JAN`|
 
 ##### examples
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111111"),
+    vs.numericString().checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN).fit("4111111111111111"),
     "4111111111111111");
 assert.strictEqual(
-    adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD).adjust("4111111111111111"), // alias of LUHN
+    vs.numericString().checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD).fit("4111111111111111"), // alias of LUHN
     "4111111111111111");
 assert.strictEqual(
-    adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1).adjust("9784101092058"),
+    vs.numericString().checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1).fit("9784101092058"),
     "9784101092058");
 assert.strictEqual(
-    adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
+    vs.numericString().checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13).fit("9784101092058"), // alias of MODULUS10_WEIGHT3_1
     "9784101092058");
 assert.strictEqual(
-    adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.EAN).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
+    vs.numericString().checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.EAN).fit("9784101092058"), // alias of MODULUS10_WEIGHT3_1
     "9784101092058");
 assert.strictEqual(
-    adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.JAN).adjust("9784101092058"), // alias of MODULUS10_WEIGHT3_1
+    vs.numericString().checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.JAN).fit("9784101092058"), // alias of MODULUS10_WEIGHT3_1
     "9784101092058");
 
 // should cause error
 assert.throws(
-    () => adjuster.numericString().checksum(adjuster.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN).adjust("4111111111111112"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.CHECKSUM));
+    () => vs.numericString().checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN).fit("4111111111111112"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.CHECKSUM));
 ```
 
-#### `convert(converter)` / `map(mapper)`
+#### `convert(converter)`
 
 Convert input value into another value.
-
-WARNING; `map()` is deprecated. use `convert()`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.numericString().convert(value => value.substr(0, 4) + "-" + value.substr(4)).adjust("12345678")
+    vs.numericString().convert(value => value.substr(0, 4) + "-" + value.substr(4)).fit("12345678")
     "1234-5678");
 
 // should cause errors
 assert.throws(
-    () => adjuster.numericString().convert((value, fail) => fail()).adjust("abc"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.CONVERT));
+    () => vs.numericString().convert((value, fail) => fail()).fit("abc"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.CONVERT));
 ```
 
 ### email
@@ -1594,13 +1580,13 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-namespace adjuster {
-    export declare function email(): EmailAdjuster;
+namespace vs {
+    export declare function email(): EmailSchema;
 }
 
-interface EmailAdjuster {
-    // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => string | void): string;
+interface EmailSchema {
+    // fitting method
+    fit(value: any, onError?: (err: ValueSchemaError) => string | void): string;
 
     // feature methods (chainable)
     default(value: string): this;
@@ -1611,112 +1597,112 @@ interface EmailAdjuster {
 }
 ```
 
-#### `adjust(value[, onError])`
+#### `fit(value[, onError])`
 
-Validate and adjust a input value.
+Fit `value` to schema.
 
 ##### examples
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.email().adjust("user+mailbox/department=shipping@example.com"),
+    vs.email().fit("user+mailbox/department=shipping@example.com"),
     "user+mailbox/department=shipping@example.com"); // dot-string
 assert.strictEqual(
-    adjuster.email().adjust("!#$%&'*+-/=?^_`.{|}~@example.com"),
+    vs.email().fit("!#$%&'*+-/=?^_`.{|}~@example.com"),
     "!#$%&'*+-/=?^_`.{|}~@example.com"); // dot-string
 assert.strictEqual(
-    adjuster.email().adjust("\"Fred\\\"Bloggs\"@example.com"),
+    vs.email().fit("\"Fred\\\"Bloggs\"@example.com"),
     "\"Fred\\\"Bloggs\"@example.com"); // quoted-string
 assert.strictEqual(
-    adjuster.email().adjust("\"Joe.\\\\Blow\"@example.com"),
+    vs.email().fit("\"Joe.\\\\Blow\"@example.com"),
     "\"Joe.\\\\Blow\"@example.com"); // quoted-string
 assert.strictEqual(
-    adjuster.email().adjust("user@example-domain.com"),
+    vs.email().fit("user@example-domain.com"),
     "user@example-domain.com");
 assert.strictEqual(
-    adjuster.email().adjust("user@example2.com"),
+    vs.email().fit("user@example2.com"),
     "user@example2.com");
 
 // should cause error
 assert.throws(
-    () => adjuster.email().adjust("@example.com"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    () => vs.email().fit("@example.com"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
 assert.throws(
-    () => adjuster.email().adjust(".a@example.com"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    () => vs.email().fit(".a@example.com"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
 assert.throws(
-    () => adjuster.email().adjust("a.@example.com"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    () => vs.email().fit("a.@example.com"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
 assert.throws(
-    () => adjuster.email().adjust("a..a@example.com"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    () => vs.email().fit("a..a@example.com"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
 assert.throws(
-    () => adjuster.email().adjust("user@example@com"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    () => vs.email().fit("user@example@com"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
 assert.throws(
-    () => adjuster.email().adjust("user-example-com"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    () => vs.email().fit("user-example-com"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
 assert.throws(
-    () => adjuster.email().adjust("user@example_domain.com"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    () => vs.email().fit("user@example_domain.com"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
 assert.throws(
-    () => adjuster.email().adjust("user@example.com2"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    () => vs.email().fit("user@example.com2"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
 ```
 
 #### `default(value)`
 
-Accept `undefined` for input, and adjust to `value`.
+Accept `undefined` for input, and convert to `value`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.email().default("user@example.com").adjust(undefined),
+    vs.email().default("user@example.com").fit(undefined),
     "user@example.com");
 
 // should cause error
 assert.throws(
-    () => adjuster.email().adjust(undefined),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+    () => vs.email().fit(undefined),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.REQUIRED));
 ```
 
 #### `acceptNull([value])`
 
-Accept a `null` for input, and adjust to `value`.
+Accept a `null` for input, and convert to `value`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.email().acceptNull("user@example.com").adjust(null),
+    vs.email().acceptNull("user@example.com").fit(null),
     "user@example.com");
 
 // should cause error
 assert.throws(
-    () => adjuster.email().adjust(null),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
+    () => vs.email().fit(null),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.NULL));
 ```
 
 #### `acceptEmptyString([value])`
 
-Accept an empty string(`""`) for input, and adjust to `value`.
+Accept an empty string(`""`) for input, and convert to `value`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.email().acceptEmptyString("user@example.com").adjust(""),
+    vs.email().acceptEmptyString("user@example.com").fit(""),
     "user@example.com");
 
 // should cause error
 assert.throws(
-    () => adjuster.email().adjust(""),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+    () => vs.email().fit(""),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
 ```
 
 #### `trim()`
@@ -1726,18 +1712,18 @@ Remove whitespace from both ends of input.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.strictEqual(
-    adjuster.email().trim().adjust("\r\n user@example.com \t "),
+    vs.email().trim().fit("\r\n user@example.com \t "),
     "user@example.com");
 
 // should cause error
 assert.throws(
-    () => adjuster.email().adjust("\r\n user@example.com1 \t "),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    () => vs.email().fit("\r\n user@example.com1 \t "),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
 assert.throws(
-    () => adjuster.email().trim().adjust(" \t\r\n "),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+    () => vs.email().trim().fit(" \t\r\n "),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
 ```
 
 #### `pattern(pattern)`
@@ -1749,13 +1735,13 @@ Specify acceptable pattern by regular expression.
 ```javascript
 // should be OK
 assert.strictEqual(
-    adjuster.email().pattern(/^[\w\.]+@([\w\-]+\.)+\w+$/).adjust("......@example.com"), // accept leading/trailing/consecutively dots
+    vs.email().pattern(/^[\w\.]+@([\w\-]+\.)+\w+$/).fit("......@example.com"), // accept leading/trailing/consecutively dots
     "user@example.com");
 
 // should cause errors
 assert.throws(
-    () => adjuster.email().adjust("......@example.com"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.PATTERN));
+    () => vs.email().fit("......@example.com"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
 ```
 
 ### array
@@ -1763,13 +1749,13 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-namespace adjuster {
-    export declare function array<T = any>(): ArrayAdjuster;
+namespace vs {
+    export declare function array<T = any>(): ArraySchema;
 }
 
-interface ArrayAdjuster<T> {
-    // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => Array | void): T[];
+interface ArraySchema<T> {
+    // fitting method
+    fit(value: any, onError?: (err: ValueSchemaError) => Array | void): T[];
 
     // feature methods (chainable)
     default(value: Array): this;
@@ -1778,90 +1764,90 @@ interface ArrayAdjuster<T> {
     separatedBy(separator: string | RegExp): this;
     toArray(): this;
     minLength(length: number): this;
-    maxLength(length: number, adjust?: boolean /* = false */): this;
-    each(adjusterInstance: AdjusterBase, ignoreEachErrors: boolean /* = false */): this;
+    maxLength(length: number, fits?: boolean /* = false */): this;
+    each(schema: BaseSchema, ignoreEachErrors: boolean /* = false */): this;
 }
 ```
 
-#### `adjust(value[, onError])`
+#### `fit(value[, onError])`
 
-Validate and adjust input values.
+Fit `value` to schema.
 
 ##### examples
 
 ```javascript
 // should be OK
 assert.deepStrictEqual(
-    adjuster.array().adjust([1, "a"]),
+    vs.array().fit([1, "a"]),
     [1, "a"]);
 
 // should cause error
 assert.throws(
-    () => adjuster.array().adjust("abc"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.array().fit("abc"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 assert.throws(
-    () => adjuster.array().adjust(0),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.array().fit(0),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 ```
 
 #### `default(value)`
 
-Accept `undefined` for input, and adjust to `value`.
+Accept `undefined` for input, and convert to `value`.
 
-If this method is not called, `adjust(undefined)` causes `AdjusterError`.
+If this method is not called, `fit(undefined)` causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
-    adjuster.array().default([1, "a"]).adjust(undefined),
+    vs.array().default([1, "a"]).fit(undefined),
     [1, "a"]);
 
 // should cause error
 assert.throws(
-    () => adjuster.array().adjust(undefined),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+    () => vs.array().fit(undefined),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.REQUIRED));
 ```
 
 #### `acceptNull([value])`
 
-Accept a `null` for input, and adjust to `value`.
+Accept a `null` for input, and convert to `value`.
 
-If this method is not called, `adjust(null)` causes `AdjusterError`.
+If this method is not called, `fit(null)` causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
-    adjuster.array().acceptNull([1, "a"]).adjust(null),
+    vs.array().acceptNull([1, "a"]).fit(null),
     [1, "a"]);
 
 // should cause error
 assert.throws(
-    () => adjuster.array().adjust(null),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
+    () => vs.array().fit(null),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.NULL));
 ```
 
 #### `acceptEmptyString([value])`
 
-Accept an empty string(`""`) for input, and adjust to `value`.
+Accept an empty string(`""`) for input, and convert to `value`.
 
-If this method is not called, `adjust("")` causes `AdjusterError`.
+If this method is not called, `fit("")` causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
-    adjuster.array().acceptEmptyString([1, "a"]).adjust(""),
+    vs.array().acceptEmptyString([1, "a"]).fit(""),
     [1, "a"]);
 
 // should cause error
 assert.throws(
-    () => adjuster.array().adjust(""),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+    () => vs.array().fit(""),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
 ```
 
 #### `separatedBy(separator)`
@@ -1875,18 +1861,18 @@ If an input type is array, this method does nothing.
 ```javascript
 // should be OK
 assert.deepStrictEqual(
-    adjuster.array().separatedBy(",").adjust([1, 2, 3]),
+    vs.array().separatedBy(",").fit([1, 2, 3]),
     [1, 2, 3]);
 
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
-    adjuster.array().separatedBy(",").adjust("1,2,3"),
+    vs.array().separatedBy(",").fit("1,2,3"),
     ["1", "2", "3"]);
 
 // should cause error
 assert.throws(
-    () => adjuster.array().adjust("1,2,3"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.array().fit("1,2,3"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 ```
 
 #### `toArray()`
@@ -1898,18 +1884,18 @@ Convert an input value to array if not.
 ```javascript
 // should be OK
 assert.deepStrictEqual(
-    adjuster.array().toArray().adjust([0]),
+    vs.array().toArray().fit([0]),
     [0]);
 
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
-    adjuster.array().toArray().adjust(0),
+    vs.array().toArray().fit(0),
     [0]);
 
 // should cause error
 assert.throws(
-    () => adjuster.array().adjust(0),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.array().fit(0),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 ```
 
 #### `minLength(length)`
@@ -1921,46 +1907,46 @@ Limit minimum length of input array to `length`.
 ```javascript
 // should be OK
 assert.deepStrictEqual(
-    adjuster.array().minLength(2).adjust([1, 2]),
+    vs.array().minLength(2).fit([1, 2]),
     [1, 2]);
 
 // should cause errors
 assert.throws(
-    () => adjuster.array().minLength(2).adjust([1]),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MIN_LENGTH));
+    () => vs.array().minLength(2).fit([1]),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MIN_LENGTH));
 ```
 
-#### `maxLength(length[, adjust])`
+#### `maxLength(length[, fits])`
 
 Limit maximum length of an input array to `length`.
 
-If array length is greater than `length`, `adjust()` method truncates the length to `length` (if `adjust` is truthy) or causes `AdjusterError` (falsy; default).
+If array length is greater than `length`, `fit()` method truncates the length to `length` (if `fits` is truthy) or causes `ValueSchemaError` (falsy; default).
 
 ##### examples
 
 ```javascript
 // should be OK
 assert.deepStrictEqual(
-    adjuster.array().maxLength(2).adjust([1, 2]),
+    vs.array().maxLength(2).fit([1, 2]),
     [1, 2]);
 
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
-    adjuster.array().maxLength(2, true).adjust([1, 2, 3]),
+    vs.array().maxLength(2, true).fit([1, 2, 3]),
     [1, 2]);
 
 // should cause error
 assert.throws(
-    () => adjuster.array().maxLength(2).adjust([1, 2, 3]),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.MAX_LENGTH));
+    () => vs.array().maxLength(2).fit([1, 2, 3]),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MAX_LENGTH));
 ```
 
-#### `each(adjusterInstance, [ignoreEachErrors])`
+#### `each(schema, [ignoreEachErrors])`
 
-Apply constraints for each elements.
+Apply schema for each elements.
 
-* `adjusterInstance`
-    * Any above adjuster instance, e.g., `adjuster.number()`, `adjuster.string()`... `adjuster.array()`!
+* `schema`
+    * Any above vs instance, e.g., `vs.number()`, `vs.string()`... `vs.array()`!
 * `ignoreEachErrors`
     * If `true`, ignore the errors of each element.
     * default is `false`
@@ -1968,15 +1954,15 @@ Apply constraints for each elements.
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
-    adjuster.array().each(adjuster.number(), true).adjust([true, "abc", 2]),
+    vs.array().each(vs.number(), true).fit([true, "abc", 2]),
     [1, 2]);
 
 // should cause error
 assert.throws(
-    () => adjuster.array().each(adjuster.number()).adjust([true, "abc", 2]),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EACH_TYPE));
+    () => vs.array().each(vs.number()).fit([true, "abc", 2]),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EACH_TYPE));
 ```
 
 ### object
@@ -1984,104 +1970,104 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-namespace adjuster {
-    export declare function object<T = any>(): ObjectAdjuster;
+namespace vs {
+    export declare function object<T = any>(): ObjectSchema;
 }
 
-interface ObjectAdjuster<T> {
-    // adjustment method
-    adjust(value: any, onError?: (err: AdjusterError) => Object | void): T;
+interface ObjectSchema<T> {
+    // fitting method
+    fit(value: any, onError?: (err: ValueSchemaError) => Object | void): T;
 
     // feature methods (chainable)
     default(value: Object): this;
     acceptNull(value?: Object | null /* = null */): this;
     acceptEmptyString(value: Object | null /* = null */): this;
-    constraints(constraints): ObjectAdjuster;
+    schema(schema): ObjectSchema;
 }
 ```
 
-#### `adjust(value[, onError])`
+#### `fit(value[, onError])`
 
-Validate and adjust input values.
+Fit `value` to schema.
 
 ##### examples
 
 ```javascript
 // should be OK
 assert.deepStrictEqual(
-    adjuster.object().adjust({a: 1, b: 2}),
+    vs.object().fit({a: 1, b: 2}),
     {a: 1, b: 2});
 
 // should cause error
 assert.throws(
-    () => adjuster.object().adjust("abc"),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.object().fit("abc"),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 assert.throws(
-    () => adjuster.object().adjust(0),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.object().fit(0),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 ```
 
 #### `default(value)`
 
-Accept `undefined` for input, and adjust to `value`.
+Accept `undefined` for input, and convert to `value`.
 
-If this method is not called, `adjust(undefined)` causes `AdjusterError`.
+If this method is not called, `fit(undefined)` causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
-    adjuster.object().default({a: 1, b: 2}).adjust(undefined),
+    vs.object().default({a: 1, b: 2}).fit(undefined),
     {a: 1, b: 2});
 
 // should cause error
 assert.throws(
-    () => adjuster.object().adjust(undefined),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.REQUIRED));
+    () => vs.object().fit(undefined),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.REQUIRED));
 ```
 
 #### `acceptNull([value])`
 
-Accept a `null` for input, and adjust to `value`.
+Accept a `null` for input, and convert to `value`.
 
-If this method is not called, `adjust(null)` causes `AdjusterError`.
+If this method is not called, `fit(null)` causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
-    adjuster.object().acceptNull({a: 1, b: 2}).adjust(null),
+    vs.object().acceptNull({a: 1, b: 2}).fit(null),
     {a: 1, b: 2});
 
 // should cause error
 assert.throws(
-    () => adjuster.object().adjust(null),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.NULL));
+    () => vs.object().fit(null),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.NULL));
 ```
 
 #### `acceptEmptyString([value])`
 
-Accept an empty string(`""`) for input, and adjust to `value`.
+Accept an empty string(`""`) for input, and convert to `value`.
 
-If this method is not called, `adjust("")` causes `AdjusterError`.
+If this method is not called, `fit("")` causes `ValueSchemaError`.
 
 ##### examples
 
 ```javascript
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
-    adjuster.object().acceptEmptyString({a: 1, b: 2}).adjust(""),
+    vs.object().acceptEmptyString({a: 1, b: 2}).fit(""),
     {a: 1, b: 2});
 
 // should cause error
 assert.throws(
-    () => adjuster.object().adjust(""),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.EMPTY));
+    () => vs.object().fit(""),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
 ```
 
-#### `constraints(constraints)`
+#### `schema(schema)`
 
 Assume an input value is string and separated by `separator`.
 
@@ -2091,37 +2077,37 @@ If an input type is array, this method does nothing.
 
 ```javascript
 // should be OK
-const constraints = {a: adjuster.number(), b: adjuster.string()};
+const schema = {a: vs.number(), b: vs.string()};
 assert.deepStrictEqual(
-    adjuster.object().constraints(constraints).adjust({a: 1, b: "2"}),
+    vs.object().schema(schema).fit({a: 1, b: "2"}),
     {a: 1, b: "2"});
 
-// should be adjusted
+// should be fitted
 assert.deepStrictEqual(
-    adjuster.object().constraints(constraints).adjust({a: 1, b: 2}),
+    vs.object().schema(schema).fit({a: 1, b: 2}),
     {a: 1, b: "2"});
 
 // should cause error
 assert.throws(
-    () => adjuster.object().constraints(constraints).adjust({a: "x", b: "2"}),
-    (err) => (err.name === "AdjusterError" && err.cause === adjuster.CAUSE.TYPE));
+    () => vs.object().schema(schema).fit({a: "x", b: "2"}),
+    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
 ```
 
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md).
 
-[image-build-windows]: https://img.shields.io/appveyor/ci/shimataro/node-adjuster/master.svg?label=Windows
-[link-build-windows]: https://ci.appveyor.com/project/shimataro/node-adjuster
-[image-build-macos]: https://img.shields.io/travis/shimataro/node-adjuster/master.svg?label=macOS
-[link-build-macos]: https://travis-ci.org/shimataro/node-adjuster
-[image-build-linux]: https://img.shields.io/travis/shimataro/node-adjuster/master.svg?label=Linux
-[link-build-linux]: https://travis-ci.org/shimataro/node-adjuster
-[image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/node-adjuster/master.svg
-[link-code-coverage]: https://codecov.io/gh/shimataro/node-adjuster
-[image-release]: https://img.shields.io/github/release/shimataro/node-adjuster.svg
-[link-release]: https://github.com/shimataro/node-adjuster/releases
-[image-engine]: https://img.shields.io/node/v/adjuster.svg
+[image-build-windows]: https://img.shields.io/appveyor/ci/shimataro/value-schema/master.svg?label=Windows
+[link-build-windows]: https://ci.appveyor.com/project/shimataro/value-schema
+[image-build-macos]: https://img.shields.io/travis/shimataro/value-schema/master.svg?label=macOS
+[link-build-macos]: https://travis-ci.org/shimataro/value-schema
+[image-build-linux]: https://img.shields.io/travis/shimataro/value-schema/master.svg?label=Linux
+[link-build-linux]: https://travis-ci.org/shimataro/value-schema
+[image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/value-schema/master.svg
+[link-code-coverage]: https://codecov.io/gh/shimataro/value-schema
+[image-release]: https://img.shields.io/github/release/shimataro/value-schema.svg
+[link-release]: https://github.com/shimataro/value-schema/releases
+[image-engine]: https://img.shields.io/node/v/value-schema.svg
 [link-engine]: https://nodejs.org/
-[image-license]: https://img.shields.io/github/license/shimataro/node-adjuster.svg
+[image-license]: https://img.shields.io/github/license/shimataro/value-schema.svg
 [link-license]: ./LICENSE

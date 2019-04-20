@@ -1,7 +1,7 @@
-import AdjusterBase from "../../libs/AdjusterBase";
+import BaseSchema from "../../libs/BaseSchema";
 import * as string from "../../libs/string";
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		acceptFullWidth: _featureAcceptFullWidth,
@@ -35,18 +35,18 @@ function _featureAcceptFullWidth(params)
 }
 
 /**
- * adjust
+ * fit
  * @param {Params-Number-AcceptFullWidth} params parameters
- * @param {Decorator-Values} values original / adjusted values
- * @returns {boolean} end adjustment
+ * @param {Decorator-Values} values original / fitted values
+ * @returns {boolean} ends fitting
  */
-function _adjust(params, values)
+function _fit(params, values)
 {
 	if(!params.flag)
 	{
 		return false;
 	}
 
-	values.adjusted = string.toHalfWidth(values.adjusted, /[０-９ａ-ｚＡ-Ｚ．＋－]+/g);
+	values.fitted = string.toHalfWidth(values.fitted, /[０-９ａ-ｚＡ-Ｚ．＋－]+/g);
 	return false;
 }

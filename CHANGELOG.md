@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* `.adjust()` to `.fit()`
+
+### Removed
+
+* `vs.number().map()`
+* `vs.string().map()`
+* `vs.numericString().map()`
+
+### Others
+
+* rename to `value-schema`
+
 ## [1.4.0] - 2019-04-15
 
 ### Added
