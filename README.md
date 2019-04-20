@@ -169,7 +169,7 @@ interface ValueSchemaError extends Error
 |----|-----------|
 |`name`|`"ValueSchemaError"`|
 |`message`|human-readable description of the error, including a string `cause`|
-|`cause`|cause of adjustment error; see `vs.CAUSE`|
+|`cause`|cause of fitting error; see `vs.CAUSE`|
 |`value`|value to check|
 |`keyStack`|array consists of path to key name(for object) or index(for array) that caused error; for nested object or array|
 
@@ -226,7 +226,7 @@ assert.throws(
 
 #### `vs.CAUSE`
 
-The cause of adjustment error.
+The cause of fitting error.
 
 For more information, see below examples.
 
@@ -262,24 +262,24 @@ An object to check; e.g., `req.query`, `req.body` (in [Express](http://expressjs
 
 `data` will not be overwritten.
 
-##### `schema`
+##### `schemaObject`
 
-Constraints object for adjustment.
+Schema object.
 
 * key: property name of `data` to check
-* value: the adjustment object; see below examples
+* value: schema instance; see below examples
 
 ##### `onError(err)`
 
 Callback function for each errors.
 If no errors, this function will not be called.
 
-If this parameter is omitted, `vs.fit()` throws `ValueSchemaError` on first error and remaining adjustment process will be cancelled.
+If this parameter is omitted, `vs.fit()` throws `ValueSchemaError` on first error and remaining fitting process will be cancelled.
 
 * `err`
     * an instance of `ValueSchemaError` or `null`
     * `err.keyStack` indicates path to key name that caused error: `(string | number)[]`
-    * `err` will be `null` after all adjustment has finished and errors has occurred
+    * `err` will be `null` after all fitting process has finished and errors has occurred
         * `onError()` will no longer be called after `null` passed
 * returns
     * an adjuted value
@@ -287,7 +287,7 @@ If this parameter is omitted, `vs.fit()` throws `ValueSchemaError` on first erro
     * return value of `onError(null)` is ignored
 * throws
     * an exception that will thrown from `vs.fit()`
-    * remaining adjustment processes will be cancelled
+    * remaining fitting processes will be cancelled
 
 ##### examples
 
@@ -394,7 +394,7 @@ assert.deepStrictEqual(result, expected);
 function generateErrorHandler() {
     return (err) => {
         if (err === null) {
-            // adjustment finished
+            // fitting finished
             return;
         }
 
@@ -439,7 +439,7 @@ function generateErrorHandler() {
     const messages = [];
     return (err) => {
         if (err === null) {
-            // adjustment finished; join key name as message
+            // fitting finished; join key name as message
             throw new Error(messages.join(","));
         }
 
@@ -511,7 +511,7 @@ namespace vs {
 }
 
 interface BooleanSchema {
-    // adjustment method
+    // fitting method
     fit(value: any, onError?: (err: ValueSchemaError) => boolean | void): number;
 
     // feature methods (chainable)
@@ -714,7 +714,7 @@ namespace vs {
 }
 
 interface NumberSchema {
-    // adjustment method
+    // fitting method
     fit(value: any, onError?: (err: ValueSchemaError) => number | void): number;
 
     // feature methods (chainable)
@@ -1061,7 +1061,7 @@ namespace vs {
 }
 
 interface StringSchema {
-    // adjustment method
+    // fitting method
     fit(value: any, onError?: (err: ValueSchemaError) => string | void): string;
 
     // feature methods (chainable)
@@ -1325,7 +1325,7 @@ namespace vs {
 }
 
 interface NumericStringSchema {
-    // adjustment method
+    // fitting method
     fit(value: any, onError?: (err: ValueSchemaError) => string | void): string;
 
     // feature methods (chainable)
@@ -1597,7 +1597,7 @@ namespace vs {
 }
 
 interface EmailSchema {
-    // adjustment method
+    // fitting method
     fit(value: any, onError?: (err: ValueSchemaError) => string | void): string;
 
     // feature methods (chainable)
@@ -1766,7 +1766,7 @@ namespace vs {
 }
 
 interface ArraySchema<T> {
-    // adjustment method
+    // fitting method
     fit(value: any, onError?: (err: ValueSchemaError) => Array | void): T[];
 
     // feature methods (chainable)
@@ -1987,7 +1987,7 @@ namespace vs {
 }
 
 interface ObjectSchema<T> {
-    // adjustment method
+    // fitting method
     fit(value: any, onError?: (err: ValueSchemaError) => Object | void): T;
 
     // feature methods (chainable)
