@@ -1,6 +1,6 @@
-import AdjusterBase from "../../libs/AdjusterBase";
+import BaseSchema from "../../libs/BaseSchema";
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		separatedBy: _featureSeparatedBy,
@@ -37,19 +37,19 @@ function _featureSeparatedBy(params, separator)
 }
 
 /**
- * adjust
+ * fit
  * @param {Params-NumericString-SeparatedBy} params parameters
- * @param {Decorator-Values} values original / adjusted values
- * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @param {Decorator-Values} values original / fitted values
+ * @returns {boolean} ends fitting
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values)
+function _fit(params, values)
 {
 	if(!params.flag)
 	{
 		return false;
 	}
 
-	values.adjusted = values.adjusted.split(params.separator).join("");
+	values.fitted = values.fitted.split(params.separator).join("");
 	return false;
 }

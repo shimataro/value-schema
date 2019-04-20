@@ -1,7 +1,7 @@
 import {isArray} from "../../libs/types";
-import AdjusterBase from "../../libs/AdjusterBase";
+import BaseSchema from "../../libs/BaseSchema";
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		joinArray: _featureJoinArray,
@@ -35,17 +35,17 @@ function _featureJoinArray(params)
 }
 
 /**
- * adjust
+ * fit
  * @param {Params-NumericString-JoinArray} params parameters
- * @param {Decorator-Values} values original / adjusted values
- * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @param {Decorator-Values} values original / fitted values
+ * @returns {boolean} ends fitting
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values)
+function _fit(params, values)
 {
-	if(isArray(values.adjusted) && params.flag)
+	if(isArray(values.fitted) && params.flag)
 	{
-		values.adjusted = values.adjusted.join("");
+		values.fitted = values.fitted.join("");
 	}
 
 	return false;

@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.0] - 2019-04-20
+
+### Changed
+
+* `.adjust()` to `.fit()`
+
+### Removed
+
+* `vs.number().map()`
+* `vs.string().map()`
+* `vs.numericString().map()`
+
+### Others
+
+* rename to `value-schema`
+
 ## [1.4.0] - 2019-04-15
 
 ### Added
@@ -354,36 +370,37 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/node-adjuster/compare/v1.4.0...HEAD
-[1.4.0]: https://github.com/shimataro/node-adjuster/compare/v1.3.1...v1.4.0
-[1.3.1]: https://github.com/shimataro/node-adjuster/compare/v1.3.0...v1.3.1
-[1.3.0]: https://github.com/shimataro/node-adjuster/compare/v1.2.0...v1.3.0
-[1.2.0]: https://github.com/shimataro/node-adjuster/compare/v1.1.0...v1.2.0
-[1.1.0]: https://github.com/shimataro/node-adjuster/compare/v1.0.1...v1.1.0
-[1.0.1]: https://github.com/shimataro/node-adjuster/compare/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.7...v1.0.0
-[1.0.0-rc.7]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.6...v1.0.0-rc.7
-[1.0.0-rc.6]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.5...v1.0.0-rc.6
-[1.0.0-rc.5]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.4...v1.0.0-rc.5
-[1.0.0-rc.4]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.3...v1.0.0-rc.4
-[1.0.0-rc.3]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.2...v1.0.0-rc.3
-[1.0.0-rc.2]: https://github.com/shimataro/node-adjuster/compare/v1.0.0-rc.1...v1.0.0-rc.2
-[1.0.0-rc.1]: https://github.com/shimataro/node-adjuster/compare/v0.16.0...v1.0.0-rc.1
-[0.16.0]: https://github.com/shimataro/node-adjuster/compare/v0.15.1...v0.16.0
-[0.15.1]: https://github.com/shimataro/node-adjuster/compare/v0.15.0...v0.15.1
-[0.15.0]: https://github.com/shimataro/node-adjuster/compare/v0.14.0...v0.15.0
-[0.14.0]: https://github.com/shimataro/node-adjuster/compare/v0.13.0...v0.14.0
-[0.13.0]: https://github.com/shimataro/node-adjuster/compare/v0.12.0...v0.13.0
-[0.12.0]: https://github.com/shimataro/node-adjuster/compare/v0.11.0...v0.12.0
-[0.11.0]: https://github.com/shimataro/node-adjuster/compare/v0.10.1...v0.11.0
-[0.10.1]: https://github.com/shimataro/node-adjuster/compare/v0.10.0...v0.10.1
-[0.10.0]: https://github.com/shimataro/node-adjuster/compare/v0.9.0...v0.10.0
-[0.9.0]: https://github.com/shimataro/node-adjuster/compare/v0.8.0...v0.9.0
-[0.8.0]: https://github.com/shimataro/node-adjuster/compare/v0.7.0...v0.8.0
-[0.7.0]: https://github.com/shimataro/node-adjuster/compare/v0.6.0...v0.7.0
-[0.6.0]: https://github.com/shimataro/node-adjuster/compare/v0.5.0...v0.6.0
-[0.5.0]: https://github.com/shimataro/node-adjuster/compare/v0.4.0...v0.5.0
-[0.4.0]: https://github.com/shimataro/node-adjuster/compare/v0.3.0...v0.4.0
-[0.3.0]: https://github.com/shimataro/node-adjuster/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/shimataro/node-adjuster/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/shimataro/node-adjuster/compare/1423ec95c5f2fa39f8f7bccd117f09cfadb8db3e...v0.1.0
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/shimataro/value-schema/compare/v1.4.0...v2.0.0
+[1.4.0]: https://github.com/shimataro/value-schema/compare/v1.3.1...v1.4.0
+[1.3.1]: https://github.com/shimataro/value-schema/compare/v1.3.0...v1.3.1
+[1.3.0]: https://github.com/shimataro/value-schema/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/shimataro/value-schema/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/shimataro/value-schema/compare/v1.0.1...v1.1.0
+[1.0.1]: https://github.com/shimataro/value-schema/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/shimataro/value-schema/compare/v1.0.0-rc.7...v1.0.0
+[1.0.0-rc.7]: https://github.com/shimataro/value-schema/compare/v1.0.0-rc.6...v1.0.0-rc.7
+[1.0.0-rc.6]: https://github.com/shimataro/value-schema/compare/v1.0.0-rc.5...v1.0.0-rc.6
+[1.0.0-rc.5]: https://github.com/shimataro/value-schema/compare/v1.0.0-rc.4...v1.0.0-rc.5
+[1.0.0-rc.4]: https://github.com/shimataro/value-schema/compare/v1.0.0-rc.3...v1.0.0-rc.4
+[1.0.0-rc.3]: https://github.com/shimataro/value-schema/compare/v1.0.0-rc.2...v1.0.0-rc.3
+[1.0.0-rc.2]: https://github.com/shimataro/value-schema/compare/v1.0.0-rc.1...v1.0.0-rc.2
+[1.0.0-rc.1]: https://github.com/shimataro/value-schema/compare/v0.16.0...v1.0.0-rc.1
+[0.16.0]: https://github.com/shimataro/value-schema/compare/v0.15.1...v0.16.0
+[0.15.1]: https://github.com/shimataro/value-schema/compare/v0.15.0...v0.15.1
+[0.15.0]: https://github.com/shimataro/value-schema/compare/v0.14.0...v0.15.0
+[0.14.0]: https://github.com/shimataro/value-schema/compare/v0.13.0...v0.14.0
+[0.13.0]: https://github.com/shimataro/value-schema/compare/v0.12.0...v0.13.0
+[0.12.0]: https://github.com/shimataro/value-schema/compare/v0.11.0...v0.12.0
+[0.11.0]: https://github.com/shimataro/value-schema/compare/v0.10.1...v0.11.0
+[0.10.1]: https://github.com/shimataro/value-schema/compare/v0.10.0...v0.10.1
+[0.10.0]: https://github.com/shimataro/value-schema/compare/v0.9.0...v0.10.0
+[0.9.0]: https://github.com/shimataro/value-schema/compare/v0.8.0...v0.9.0
+[0.8.0]: https://github.com/shimataro/value-schema/compare/v0.7.0...v0.8.0
+[0.7.0]: https://github.com/shimataro/value-schema/compare/v0.6.0...v0.7.0
+[0.6.0]: https://github.com/shimataro/value-schema/compare/v0.5.0...v0.6.0
+[0.5.0]: https://github.com/shimataro/value-schema/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/shimataro/value-schema/compare/v0.3.0...v0.4.0
+[0.3.0]: https://github.com/shimataro/value-schema/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/shimataro/value-schema/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/shimataro/value-schema/compare/1423ec95c5f2fa39f8f7bccd117f09cfadb8db3e...v0.1.0

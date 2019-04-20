@@ -1,8 +1,8 @@
 import {CAUSE} from "../libs/constants";
-import AdjusterBase from "../libs/AdjusterBase";
-import AdjusterError from "../libs/AdjusterError";
+import BaseSchema from "../libs/BaseSchema";
+import ValueSchemaError from "../libs/ValueSchemaError";
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		acceptNull: _featureAcceptNull,
@@ -39,25 +39,25 @@ function _featureAcceptNull(params, value = null)
 }
 
 /**
- * adjust
+ * fit
  * @param {Params-AcceptNull} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
- * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @returns {boolean} ends fitting
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values, keyStack)
+function _fit(params, values, keyStack)
 {
-	if(values.adjusted !== null)
+	if(values.fitted !== null)
 	{
 		return false;
 	}
 
 	if(params.flag)
 	{
-		values.adjusted = params.valueOnNull;
+		values.fitted = params.valueOnNull;
 		return true;
 	}
 
-	AdjusterError.raise(CAUSE.NULL, values, keyStack);
+	ValueSchemaError.raise(CAUSE.NULL, values, keyStack);
 }

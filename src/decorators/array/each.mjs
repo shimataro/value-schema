@@ -1,7 +1,7 @@
-import AdjusterBase from "../../libs/AdjusterBase";
-import AdjusterError from "../../libs/AdjusterError";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		each: _featureEach,
@@ -11,7 +11,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 /**
  * @package
  * @typedef {Params} Params-Array-Each
- * @property {AdjusterBase} objAdjuster
+ * @property {BaseSchema} schema
  * @property {boolean} ignoreEachErrors
  */
 
@@ -22,61 +22,61 @@ export default AdjusterBase.decoratorBuilder(_adjust)
  */
 function _init(params)
 {
-	params.objAdjuster = null;
+	params.schema = null;
 	params.ignoreEachErrors = false;
 }
 
 /**
- * apply constraints for each elements
+ * apply schema to each elements
  * @param {Params-Array-Each} params parameters
- * @param {AdjusterBase} objAdjuster adjuster to apply
+ * @param {BaseSchema} schema schema object to apply
  * @param {boolean} [ignoreEachErrors=false] ignore errors of each elements
  * @returns {void}
  */
-function _featureEach(params, objAdjuster, ignoreEachErrors = false)
+function _featureEach(params, schema, ignoreEachErrors = false)
 {
-	params.objAdjuster = objAdjuster;
+	params.schema = schema;
 	params.ignoreEachErrors = ignoreEachErrors;
 }
 
 /**
- * adjuster
+ * fitting function
  * @param {Params-Array-Each} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
- * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @returns {boolean} ends fitting
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values, keyStack)
+function _fit(params, values, keyStack)
 {
-	const {objAdjuster, ignoreEachErrors} = params;
-	if(objAdjuster === null)
+	const {schema, ignoreEachErrors} = params;
+	if(schema === null)
 	{
 		return false;
 	}
 
-	const adjusted = [];
-	for(let idx = 0; idx < values.adjusted.length; idx += 1)
+	const fitted = [];
+	for(let idx = 0; idx < values.fitted.length; idx += 1)
 	{
-		const element = values.adjusted[idx];
-		const adjustedElement = objAdjuster._adjust(element, (err) =>
+		const element = values.fitted[idx];
+		const fittedElement = schema._fit(element, (err) =>
 		{
 			if(ignoreEachErrors)
 			{
 				return;
 			}
 
-			AdjusterError.raise(err.cause, values, err.keyStack);
+			ValueSchemaError.raise(err.cause, values, err.keyStack);
 		}, [...keyStack, idx]);
 
-		if(adjustedElement === undefined)
+		if(fittedElement === undefined)
 		{
 			continue;
 		}
-		adjusted.push(adjustedElement);
+		fitted.push(fittedElement);
 	}
 
-	// replace adjusted value
-	values.adjusted = adjusted;
+	// replace fitted value
+	values.fitted = fitted;
 	return false;
 }

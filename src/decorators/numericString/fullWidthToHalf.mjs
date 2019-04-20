@@ -1,7 +1,7 @@
-import AdjusterBase from "../../libs/AdjusterBase";
+import BaseSchema from "../../libs/BaseSchema";
 import * as string from "../../libs/string";
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		fullWidthToHalf: _featureFullWidthToHalf,
@@ -40,20 +40,20 @@ function _featureFullWidthToHalf(params)
 }
 
 /**
- * adjust
+ * fit
  * @param {Params-NumericString-FullWidthToHalf} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
- * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @returns {boolean} ends fitting
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values /* , keyStack */)
+function _fit(params, values /* , keyStack */)
 {
 	if(!params.flag)
 	{
 		return false;
 	}
 
-	values.adjusted = string.toHalfWidth(values.adjusted, /[０-９]+/g);
+	values.fitted = string.toHalfWidth(values.fitted, /[０-９]+/g);
 	return false;
 }

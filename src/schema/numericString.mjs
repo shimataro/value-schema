@@ -1,4 +1,4 @@
-import AdjusterBase from "../libs/AdjusterBase";
+import BaseSchema from "../libs/BaseSchema";
 
 import Default from "../decorators/default";
 import AcceptNull from "../decorators/acceptNull";
@@ -15,15 +15,15 @@ import Checksum from "../decorators/numericString/checksum";
 
 /**
  * factory
- * @returns {NumericStringAdjuster} adjuster instance
+ * @returns {NumericStringSchema} schema instance
  */
 export default () =>
 {
-	return new NumericStringAdjuster();
+	return new NumericStringSchema();
 };
 
 /**
- * adjuster for numeric string
+ * for numeric string
  */
 @Convert
 @Checksum
@@ -37,6 +37,6 @@ export default () =>
 @AcceptEmptyString
 @AcceptNull
 @Default
-class NumericStringAdjuster extends AdjusterBase
+class NumericStringSchema extends BaseSchema
 {
 }

@@ -1,8 +1,8 @@
 import {CAUSE} from "../../libs/constants";
-import AdjusterBase from "../../libs/AdjusterBase";
-import AdjusterError from "../../libs/AdjusterError";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		minLength: _featureMinLength,
@@ -39,23 +39,23 @@ function _featureMinLength(params, length)
 }
 
 /**
- * adjust
+ * fit
  * @param {Params-String-MinLength} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
- * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @returns {boolean} ends fitting
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values, keyStack)
+function _fit(params, values, keyStack)
 {
 	if(!params.flag)
 	{
 		return false;
 	}
-	if(values.adjusted.length >= params.length)
+	if(values.fitted.length >= params.length)
 	{
 		return false;
 	}
 
-	AdjusterError.raise(CAUSE.MIN_LENGTH, values, keyStack);
+	ValueSchemaError.raise(CAUSE.MIN_LENGTH, values, keyStack);
 }

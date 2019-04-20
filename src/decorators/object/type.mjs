@@ -1,25 +1,25 @@
 import {CAUSE} from "../../libs/constants";
 import {isObject} from "../../libs/types";
-import AdjusterBase from "../../libs/AdjusterBase";
-import AdjusterError from "../../libs/AdjusterError";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.build();
 
 /**
- * adjuster
+ * fitting function
  * @param {{}} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
- * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @returns {boolean} ends fitting
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values, keyStack)
+function _fit(params, values, keyStack)
 {
-	if(isObject(values.adjusted))
+	if(isObject(values.fitted))
 	{
 		return false;
 	}
 
-	AdjusterError.raise(CAUSE.TYPE, values.original, keyStack);
+	ValueSchemaError.raise(CAUSE.TYPE, values.original, keyStack);
 }

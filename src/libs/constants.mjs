@@ -9,7 +9,6 @@ export const CAUSE = {
 	NULL: "null",
 	EMPTY: "empty",
 	ONLY: "only",
-	MAP: "convert", // deprecated; use CONVERT
 	CONVERT: "convert",
 
 	MIN_VALUE: "min-value",

@@ -1,28 +1,28 @@
-import AdjusterBase from "../libs/AdjusterBase";
+import BaseSchema from "../libs/BaseSchema";
 
 import Default from "../decorators/default";
 import AcceptNull from "../decorators/acceptNull";
 import AcceptEmptyString from "../decorators/acceptEmptyString";
 import Type from "../decorators/object/type";
-import Constraints from "../decorators/object/constraints";
+import Schema from "../decorators/object/schema";
 
 /**
  * factory
- * @returns {ObjectAdjuster} adjuster instance
+ * @returns {ObjectSchema} schema instance
  */
 export default () =>
 {
-	return new ObjectAdjuster();
+	return new ObjectSchema();
 };
 
 /**
- * adjuster for object
+ * for object
  */
-@Constraints
+@Schema
 @Type
 @AcceptEmptyString
 @AcceptNull
 @Default
-class ObjectAdjuster extends AdjusterBase
+class ObjectSchema extends BaseSchema
 {
 }

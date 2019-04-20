@@ -1,8 +1,8 @@
 import {CAUSE} from "../../libs/constants";
-import AdjusterBase from "../../libs/AdjusterBase";
-import AdjusterError from "../../libs/AdjusterError";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
-export default AdjusterBase.decoratorBuilder(_adjust)
+export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
 	.features({
 		maxValue: _featureMaxValue,
@@ -13,7 +13,7 @@ export default AdjusterBase.decoratorBuilder(_adjust)
  * @package
  * @typedef {Params} Params-Number-MaxValue
  * @property {number} value
- * @property {boolean} adjust
+ * @property {boolean} fits
  */
 
 /**
@@ -24,41 +24,41 @@ export default AdjusterBase.decoratorBuilder(_adjust)
 function _init(params)
 {
 	params.value = Number.MAX_SAFE_INTEGER;
-	params.adjust = false;
+	params.fits = false;
 }
 
 /**
  * set min-value
  * @param {Params-Number-MaxValue} params parameters
  * @param {number} value max-value
- * @param {boolean} [adjust=false] adjust to max-value if value > max-value; default is ERROR
+ * @param {boolean} [fits=false] fit to max-value if value > max-value; default is ERROR
  * @returns {void}
  */
-function _featureMaxValue(params, value, adjust = false)
+function _featureMaxValue(params, value, fits = false)
 {
 	params.value = value;
-	params.adjust = adjust;
+	params.fits = fits;
 }
 
 /**
- * adjust
+ * fit
  * @param {Params-Number-MaxValue} params parameters
- * @param {Decorator-Values} values original / adjusted values
+ * @param {Decorator-Values} values original / fitted values
  * @param {Key[]} keyStack path to key that caused error
- * @returns {boolean} end adjustment
- * @throws {AdjusterError}
+ * @returns {boolean} ends fitting
+ * @throws {ValueSchemaError}
  */
-function _adjust(params, values, keyStack)
+function _fit(params, values, keyStack)
 {
-	if(values.adjusted <= params.value)
+	if(values.fitted <= params.value)
 	{
 		return false;
 	}
-	if(params.adjust)
+	if(params.fits)
 	{
-		values.adjusted = params.value;
+		values.fitted = params.value;
 		return false;
 	}
 
-	AdjusterError.raise(CAUSE.MAX_VALUE, values, keyStack);
+	ValueSchemaError.raise(CAUSE.MAX_VALUE, values, keyStack);
 }

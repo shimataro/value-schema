@@ -1,4 +1,4 @@
-import AdjusterBase from "../libs/AdjusterBase";
+import BaseSchema from "../libs/BaseSchema";
 
 import Default from "../decorators/default";
 import AcceptNull from "../decorators/acceptNull";
@@ -7,20 +7,20 @@ import Type from "../decorators/boolean/type";
 
 /**
  * factory
- * @returns {BooleanAdjuster} adjuster instance
+ * @returns {BooleanSchema} schema instance
  */
 export default () =>
 {
-	return new BooleanAdjuster();
+	return new BooleanSchema();
 };
 
 /**
- * adjuster for boolean
+ * for boolean
  */
 @Type
 @AcceptEmptyString
 @AcceptNull
 @Default
-class BooleanAdjuster extends AdjusterBase
+class BooleanSchema extends BaseSchema
 {
 }

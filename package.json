@@ -1,17 +1,17 @@
 {
-  "name": "adjuster",
-  "description": "validate and adjust input values",
-  "version": "1.4.0",
+  "name": "value-schema",
+  "description": "fit input value to defined schema",
+  "version": "2.0.0",
   "author": "shimataro",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shimataro/node-adjuster.git"
+    "url": "git+https://github.com/shimataro/value-schema.git"
   },
   "bugs": {
-    "url": "https://github.com/shimataro/node-adjuster/issues"
+    "url": "https://github.com/shimataro/value-schema/issues"
   },
-  "homepage": "https://github.com/shimataro/node-adjuster#readme",
+  "homepage": "https://github.com/shimataro/value-schema#readme",
   "publishConfig": {
     "access": "public"
   },
@@ -25,7 +25,9 @@
     "ajust",
     "adjuster",
     "revise",
-    "revisor"
+    "revisor",
+    "schema",
+    "JSON schema"
   ],
   "main": "./dist/index",
   "types": "./src/index.d.ts",
@@ -48,14 +50,14 @@
     "lint:es": "eslint ./src ./test --ext .mjs",
     "lint:md": "markdownlint . --ignore ./node_modules",
     "lint:yaml": "yamllint .*.yml *.yml --ignore=node_modules/**/*.yml --ignore=node_modules/**/*.yaml",
-    "check-updates": "ncu"
+    "check-updates": "ncu -x npm-check-updates"
   },
   "dependencies": {
     "@babel/cli": "7.4.3",
     "@babel/core": "7.4.3",
     "@babel/plugin-proposal-decorators": "7.4.0",
     "@babel/preset-env": "7.4.3",
-    "babel-plugin-add-module-exports": "1.0.0",
+    "babel-plugin-add-module-exports": "1.0.2",
     "core-js": "3.0.1",
     "cross-env": "5.2.0",
     "npm-run-all": "4.1.5"
@@ -63,10 +65,10 @@
   "devDependencies": {
     "@types/core-js": "2.5.0",
     "@types/jest": "24.0.11",
-    "@types/node": "11.13.4",
+    "@types/node": "11.13.6",
     "babel-eslint": "10.0.1",
     "eslint": "5.16.0",
-    "eslint-plugin-import": "2.17.1",
+    "eslint-plugin-import": "2.17.2",
     "jest": "24.7.1",
     "markdownlint-cli": "0.15.0",
     "npm-check-updates": "^2",
@@ -79,7 +81,7 @@
       "mjs"
     ],
     "moduleNameMapper": {
-      "^adjuster$": "<rootDir>/src/index"
+      "^value-schema$": "<rootDir>/src/index"
     },
     "testEnvironment": "node",
     "testRegex": "\\.(test|spec)\\.mjs$",
