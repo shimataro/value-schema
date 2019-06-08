@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo "updating versions..."
+npm run check-updates -- -u
+
+echo "cleaning up..."
+rm -rf npm-shrinkwrap.json node_modules
+
+echo "installing dependencies..."
+npm i
+
+echo "shrinkwrapping..."
+npm shrinkwrap
+
+echo "verifying..."
+npm run verify
