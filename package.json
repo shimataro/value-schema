@@ -1,6 +1,6 @@
 {
   "name": "value-schema",
-  "description": "fit input value to defined schema",
+  "description": "simple, easy-to-use, and declarative schema validator",
   "version": "2.0.0",
   "author": "shimataro",
   "license": "MIT",
