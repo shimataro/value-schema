@@ -50,7 +50,7 @@
     "lint:es": "eslint ./src ./test --ext .mjs",
     "lint:md": "markdownlint . --ignore ./node_modules",
     "lint:yaml": "yamllint .*.yml *.yml --ignore=node_modules/**/*.yml --ignore=node_modules/**/*.yaml",
-    "check-updates": "ncu -x npm-check-updates,markdownlint-cli,cssstyle"
+    "check-updates": "ncu -x npm-check-updates,markdownlint-cli,eslint,cssstyle"
   },
   "dependencies": {
     "@babel/cli": "7.5.0",
@@ -68,7 +68,7 @@
     "@types/node": "12.6.1",
     "babel-eslint": "10.0.2",
     "cssstyle": "1.2.2",
-    "eslint": "6.0.1",
+    "eslint": "5.16.0",
     "eslint-plugin-import": "2.18.0",
     "jest": "24.8.0",
     "markdownlint-cli": "0.15.0",
