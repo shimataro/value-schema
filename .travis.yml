@@ -5,6 +5,7 @@ language: "node_js"
 node_js: # jest and eslint no longer support v4
 - "6"
 - "8"
+- "10"
 install:
 - "npm install -g codecov"
 - "npm install"
