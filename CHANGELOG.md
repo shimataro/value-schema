@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.1.0] - 2019-07-21
+
+### Others
+
+* update dependencies
+* Support Node.js v10/v12
+
 ## [2.0.0] - 2019-04-20
 
 ### Changed
@@ -370,7 +377,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/shimataro/value-schema/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/shimataro/value-schema/compare/v1.4.0...v2.0.0
 [1.4.0]: https://github.com/shimataro/value-schema/compare/v1.3.1...v1.4.0
 [1.3.1]: https://github.com/shimataro/value-schema/compare/v1.3.0...v1.3.1
