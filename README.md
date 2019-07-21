@@ -8,7 +8,7 @@
 [![Node.js version][image-engine]][link-engine]
 [![License][image-license]][link-license]
 
-Fit input values to schema.
+simple, easy-to-use, and declarative schema validator
 
 ## Table of Contents
 

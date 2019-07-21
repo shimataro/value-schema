@@ -5,6 +5,8 @@ environment:
   matrix: # jest and eslint no longer support v4
   - nodejs_version: "6"
   - nodejs_version: "8"
+  - nodejs_version: "10"
+  - nodejs_version: "12"
 branches:
   only:
   - "master"
