@@ -1,6 +1,6 @@
 {
   "name": "value-schema",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
@@ -1124,9 +1124,9 @@
       "dev": true
     },
     "acorn": {
-      "version": "6.2.0",
-      "resolved": "https://registry.npmjs.org/acorn/-/acorn-6.2.0.tgz",
-      "integrity": "sha512-8oe72N3WPMjA+2zVG71Ia0nXZ8DpQH+QyyHO+p06jT8eg8FGG3FbcUIi8KziHlAfheJQZeoqbvq1mQSQHXKYLw==",
+      "version": "6.2.1",
+      "resolved": "https://registry.npmjs.org/acorn/-/acorn-6.2.1.tgz",
+      "integrity": "sha512-JD0xT5FCRDNyjDda3Lrg/IxFscp9q4tiYtxE1/nOzlKCk7hIRuYjhq1kCNkbPjMRMZuFq20HNQn1I9k8Oj0E+Q==",
       "dev": true
     },
     "acorn-globals": {
@@ -1670,9 +1670,9 @@
       "dev": true
     },
     "caniuse-lite": {
-      "version": "1.0.30000984",
-      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30000984.tgz",
-      "integrity": "sha512-n5tKOjMaZ1fksIpQbjERuqCyfgec/m9pferkFQbLmWtqLUdmt12hNhjSwsmPdqeiG2NkITOQhr1VYIwWSAceiA=="
+      "version": "1.0.30000985",
+      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30000985.tgz",
+      "integrity": "sha512-1ngiwkgqAYPG0JSSUp3PUDGPKKY59EK7NrGGX+VOxaKCNzRbNc7uXMny+c3VJfZxtoK3wSImTvG9T9sXiTw2+w=="
     },
     "capture-exit": {
       "version": "2.0.0",
@@ -2166,9 +2166,9 @@
       }
     },
     "electron-to-chromium": {
-      "version": "1.3.196",
-      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.196.tgz",
-      "integrity": "sha512-NFGRHzY0x8yIUFnAthKxaOKe5q+c8jjvyQM2pMq2+59QORz8AN5+qXPJBwX05kz2uEtyraX2XxB0LPT+7EE6vw=="
+      "version": "1.3.197",
+      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.197.tgz",
+      "integrity": "sha512-SfD7WfmueKrtKeHUESLczuANgnpdnfrSz3ZzerLdtmZf2UBZmAB3z9Q525zI5p3n9I7ii/lllUlyKHm2pIG7QQ=="
     },
     "emoji-regex": {
       "version": "7.0.3",
