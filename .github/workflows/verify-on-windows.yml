@@ -19,14 +19,15 @@ jobs:
         - "10"
         - "12"
     steps:
+    - name: Turn off auto-crlf
+      run: git config --global core.autocrlf false
     - name: Checkout source codes
       uses: actions/checkout@v1
     - name: Install Node.js
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Clean install dependencies and verify
-      run: |
-        npm i -g node-gyp
-        npm ci
-        npm run verify
+    - name: Clean install dependencies
+      run: npm ci
+    - name: Verify
+      run: npm run verify
