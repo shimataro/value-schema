@@ -2098,11 +2098,11 @@ assert.throws(
 See [CHANGELOG.md](CHANGELOG.md).
 
 [image-build-windows]: https://github.com/shimataro/value-schema/workflows/Windows/badge.svg
-[link-build-windows]: https://launch-editor.github.com/actions?workflowID=Windows&nwo=shimataro%2Fvalue-schema
+[link-build-windows]: https://github.com/shimataro/value-schema/actions
 [image-build-macos]: https://github.com/shimataro/value-schema/workflows/macOS/badge.svg
-[link-build-macos]: https://launch-editor.github.com/actions?workflowID=macOS&nwo=shimataro%2Fvalue-schema
+[link-build-macos]: https://github.com/shimataro/value-schema/actionsj
 [image-build-linux]: https://github.com/shimataro/value-schema/workflows/Linux/badge.svg
-[link-build-linux]: https://launch-editor.github.com/actions?workflowID=Linux&nwo=shimataro%2Fvalue-schema
+[link-build-linux]: https://github.com/shimataro/value-schema/actions
 [image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/value-schema/master.svg
 [link-code-coverage]: https://codecov.io/gh/shimataro/value-schema
 [image-release]: https://img.shields.io/github/release/shimataro/value-schema.svg
