@@ -19,6 +19,8 @@ jobs:
         - "10"
         - "12"
     steps:
+    - name: Turn off auto-crlf
+      run: git config core.autocrlf false
     - name: Checkout source codes
       uses: actions/checkout@v1
     - name: Install Node.js
