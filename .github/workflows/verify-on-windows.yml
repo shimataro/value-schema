@@ -28,5 +28,4 @@ jobs:
     - name: Clean install dependencies and verify
       run: |
         npm i -g node-gyp
-        npm ci
         npm run verify
