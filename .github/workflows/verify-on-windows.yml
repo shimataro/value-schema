@@ -9,15 +9,15 @@ on:
 name: Windows
 jobs:
   verify:
-    name: Verify source codes
+    name: Verify source codes on Node.js ${{ matrix.nodejs }}
     runs-on: windows-latest
     strategy:
       matrix:
         nodejs:
-        - '6'
-        - '8'
-        - '10'
-        - '12'
+        - "6"
+        - "8"
+        - "10"
+        - "12"
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v1
