@@ -27,5 +27,6 @@ jobs:
         node-version: ${{ matrix.nodejs }}
     - name: Clean install dependencies and verify
       run: |
+        npm i -g node-gyp
         npm ci
         npm run verify
