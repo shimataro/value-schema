@@ -29,6 +29,6 @@ jobs:
         npm ci
         npm run verify
     - name: Gather code coverage
-      run: |
-        npm i -g codecov
-        codecov
+      uses: codecov/codecov-action@v1.0.2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
