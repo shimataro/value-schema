@@ -2097,12 +2097,12 @@ assert.throws(
 
 See [CHANGELOG.md](CHANGELOG.md).
 
-[image-build-windows]: https://img.shields.io/appveyor/ci/shimataro/value-schema/master.svg?label=Windows
-[link-build-windows]: https://ci.appveyor.com/project/shimataro/value-schema
-[image-build-macos]: https://img.shields.io/travis/shimataro/value-schema/master.svg?label=macOS
-[link-build-macos]: https://travis-ci.org/shimataro/value-schema
-[image-build-linux]: https://img.shields.io/travis/shimataro/value-schema/master.svg?label=Linux
-[link-build-linux]: https://travis-ci.org/shimataro/value-schema
+[image-build-windows]: https://github.com/shimataro/value-schema/workflows/Windows/badge.svg
+[link-build-windows]: https://launch-editor.github.com/actions?workflowID=Windows&nwo=shimataro%2Fvalue-schema
+[image-build-macos]: https://github.com/shimataro/value-schema/workflows/macOS/badge.svg
+[link-build-macos]: https://launch-editor.github.com/actions?workflowID=macOS&nwo=shimataro%2Fvalue-schema
+[image-build-linux]: https://github.com/shimataro/value-schema/workflows/Linux/badge.svg
+[link-build-linux]: https://launch-editor.github.com/actions?workflowID=Linux&nwo=shimataro%2Fvalue-schema
 [image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/value-schema/master.svg
 [link-code-coverage]: https://codecov.io/gh/shimataro/value-schema
 [image-release]: https://img.shields.io/github/release/shimataro/value-schema.svg
