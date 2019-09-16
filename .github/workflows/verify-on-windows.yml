@@ -9,7 +9,7 @@ on:
 name: Windows
 jobs:
   verify:
-    name: Verify source codes on Node.js ${{ matrix.nodejs }}
+    name: Verify on Node.js v${{ matrix.nodejs }}
     runs-on: windows-latest
     strategy:
       matrix:
