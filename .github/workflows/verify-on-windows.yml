@@ -1,8 +1,11 @@
 # https://help.github.com/ja/articles/workflow-syntax-for-github-actions
 
 on:
-- push
-- pull_request
+  push:
+    branches:
+    - master
+    - develop
+  pull_request:
 name: Windows
 jobs:
   verify:
