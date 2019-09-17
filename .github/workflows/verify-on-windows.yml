@@ -14,7 +14,6 @@ jobs:
     strategy:
       matrix:
         nodejs:
-        - "6"
         - "8"
         - "10"
         - "12"
