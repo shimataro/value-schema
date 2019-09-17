@@ -14,10 +14,9 @@ jobs:
     strategy:
       matrix:
         nodejs:
-        - "6"
-        - "8"
-        - "10"
-        - "12"
+        - 8
+        - 10
+        - 12
     steps:
     - name: Turn off auto-crlf
       run: git config --global core.autocrlf false
@@ -27,6 +26,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
+    - name: Update npm
+      run: npm install -g npm
     - name: Clean install dependencies
       run: npm ci
     - name: Verify
