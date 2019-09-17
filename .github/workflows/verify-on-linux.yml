@@ -10,7 +10,7 @@ name: Linux
 jobs:
   verify:
     name: Verify on Node.js v${{ matrix.nodejs }}
-    runs-on: ubuntu-latest
+    runs-on: Ubuntu-latest
     strategy:
       matrix:
         nodejs:

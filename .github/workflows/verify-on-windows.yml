@@ -10,7 +10,7 @@ name: Windows
 jobs:
   verify:
     name: Verify on Node.js v${{ matrix.nodejs }}
-    runs-on: windows-latest
+    runs-on: Windows-latest
     strategy:
       matrix:
         nodejs:
