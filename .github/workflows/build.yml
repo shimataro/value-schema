@@ -14,9 +14,9 @@ jobs:
     strategy:
       matrix:
         platform:
-        - "windows-latest"
+        - "Windows-latest"
         - "macOS-latest"
-        - "ubuntu-latest"
+        - "Ubuntu-latest"
         nodejs:
         - 6
     steps:
