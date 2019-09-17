@@ -26,8 +26,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Configure npm
-      run: npm config set engine-strict true
     - name: Update npm
       run: npm install -g npm
     - name: Clean install dependencies
