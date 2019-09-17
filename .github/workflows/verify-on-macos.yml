@@ -14,6 +14,7 @@ jobs:
     strategy:
       matrix:
         nodejs:
+        - "6.14.0"
         - 8
         - 10
         - 12
@@ -24,10 +25,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Configure npm
-      run: npm config set engine-strict true
-    - name: Update npm
-      run: npm install -g npm
+    - name: Update global packages
+      run: npm i -g npm node-gyp
     - name: Clean install dependencies
       run: npm ci
     - name: Verify
