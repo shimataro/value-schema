@@ -14,12 +14,12 @@ jobs:
     strategy:
       matrix:
         nodejs:
-        - 8
-        - 10
-        - 12
+        - "8"
+        - "10"
+        - "12"
         include:
-        - nodejs: 8
-          npm: 5.7
+        - nodejs: "8"
+          npm: "5.7"
     steps:
     - name: Turn off auto-crlf
       run: git config --global core.autocrlf false
