@@ -32,7 +32,7 @@
   "main": "./dist/index",
   "types": "./src/index.d.ts",
   "engines": {
-    "node": ">= 4.0.0",
+    "node": ">= 6.0.0",
     "npm": ">=2.0.0"
   },
   "scripts": {
@@ -50,7 +50,7 @@
     "lint:es": "eslint ./src ./test --ext .mjs",
     "lint:md": "markdownlint . --ignore ./node_modules",
     "lint:yaml": "yamllint .*.yml *.yml --ignore=node_modules/**/*.yml --ignore=node_modules/**/*.yaml",
-    "check-updates": "ncu -x npm-check-updates,markdownlint-cli,eslint,cssstyle"
+    "check-updates": "ncu"
   },
   "dependencies": {
     "@babel/cli": "7.6.0",
@@ -67,12 +67,11 @@
     "@types/jest": "24.0.18",
     "@types/node": "12.7.5",
     "babel-eslint": "10.0.3",
-    "cssstyle": "1.2.2",
-    "eslint": "5.16.0",
+    "eslint": "6.4.0",
     "eslint-plugin-import": "2.18.2",
     "jest": "24.9.0",
-    "markdownlint-cli": "0.15.0",
-    "npm-check-updates": "^2",
+    "markdownlint-cli": "0.18.0",
+    "npm-check-updates": "3.1.23",
     "yaml-lint": "1.2.4"
   },
   "jest": {
