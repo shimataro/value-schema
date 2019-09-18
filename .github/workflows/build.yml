@@ -6,17 +6,19 @@ on:
     - master
     - develop
   pull_request:
-name: Windows
+name: Build check
 jobs:
   verify:
-    name: Verify on Node.js v${{ matrix.nodejs }}
-    runs-on: Windows-latest
+    name: Build on ${{ matrix.platform }} / Node.js v${{ matrix.nodejs }}
+    runs-on: ${{ matrix.platform }}
     strategy:
       matrix:
+        platform:
+        - "Windows-latest"
+        - "macOS-latest"
+        - "Ubuntu-latest"
         nodejs:
-        - 8
-        - 10
-        - 12
+        - "6.0.0"
     steps:
     - name: Turn off auto-crlf
       run: git config --global core.autocrlf false
@@ -26,9 +28,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Update global packages
+    - name: Install node-gyp
       run: npm i -g node-gyp
     - name: Install dependencies
       run: npm i
-    - name: Verify
-      run: npm run verify
+    - name: Build
+      run: npm run build
