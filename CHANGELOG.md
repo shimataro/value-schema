@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Others
 
 * use [GitHub Actions](https://github.com/features/actions) for CI
-* distdibute only built files
+* distribute only built files
 
 ## [2.1.0] - 2019-07-21
 
