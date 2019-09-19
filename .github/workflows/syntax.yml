@@ -1,15 +1,13 @@
-# https://help.github.com/ja/articles/workflow-syntax-for-github-actions
-
 on:
   push:
     branches:
     - master
     - develop
   pull_request:
-name: Build check
+name: Syntax check
 jobs:
   verify:
-    name: Build on ${{ matrix.platform }} / Node.js v${{ matrix.nodejs }}
+    name: Syntax check on ${{ matrix.platform }} / Node.js v${{ matrix.nodejs }}
     runs-on: ${{ matrix.platform }}
     strategy:
       matrix:
@@ -18,7 +16,7 @@ jobs:
         - "macOS-latest"
         - "Ubuntu-latest"
         nodejs:
-        - "6.0.0"
+        - "4.0.0"
     steps:
     - name: Turn off auto-crlf
       run: git config --global core.autocrlf false
@@ -28,9 +26,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Install node-gyp
+    - name: Install npm packages
       run: npm i -g node-gyp
     - name: Install dependencies
       run: npm i
-    - name: Build
-      run: npm run build
+    - name: Check syntax
+      run: node ./dist/index.js
