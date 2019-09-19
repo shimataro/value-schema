@@ -33,11 +33,15 @@ jobs:
       run: npm ci
     - name: Build
       run: npm run build
+    - name: Install dependencies (only production)
+      run: npm ci --only=production
     - name: Reinstall Node.js
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
     - name: Print Node.js version
       run: node -v
+    - name: Reinstall dependencies (only production)
+      run: npm i --only=production
     - name: Check syntax
       run: node ./dist/index.js
