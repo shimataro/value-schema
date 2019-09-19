@@ -1,0 +1,33 @@
+/.github/
+/coverage/
+/node_modules/
+/scripts/
+/src/
+/test/
+.babelrc
+.editorconfig
+.eslintrc.yml
+.markdownlint.json
+
+# temporary files
+*~
+*.bak
+*.tmp
+*.swp
+*.log
+
+# image caches
+.DS_Store
+Thumbs.db
+
+# patch/merge
+*.orig
+*.rej
+
+# IDE files
+/.idea/
+/*.iml
+/nbproject/
+/.project
+/.vscode/
+*.code-workspace
