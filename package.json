@@ -43,6 +43,8 @@
     "watch": "run-p watch:**",
     "watch:cjs": "npm run build-core -- --watch",
     "watch:esm": "cross-env BABEL_ENV=esm npm run build-core -- --keep-file-extension --watch",
+    "presyntax": "npm run build",
+    "syntax": "node ./dist/index.js",
     "test": "cross-env NODE_PATH=./src jest",
     "verify": "run-p test lint",
     "prepublishOnly": "run-p verify build",

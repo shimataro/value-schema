@@ -6,8 +6,8 @@ on:
   pull_request:
 name: Syntax check
 jobs:
-  verify:
-    name: Syntax check on ${{ matrix.platform }} / Node.js v${{ matrix.nodejs }}
+  syntax:
+    name: Check on ${{ matrix.platform }} / Node.js v${{ matrix.nodejs }}
     runs-on: ${{ matrix.platform }}
     strategy:
       matrix:
@@ -17,6 +17,7 @@ jobs:
         - "Ubuntu-latest"
         nodejs:
         - "4.0.0"
+        - "6.0.0"
     steps:
     - name: Turn off auto-crlf
       run: git config --global core.autocrlf false
@@ -31,4 +32,4 @@ jobs:
     - name: Install dependencies
       run: npm i
     - name: Check syntax
-      run: node ./dist/index.js
+      run: npm run syntax
