@@ -37,5 +37,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
+    - name: Print Node.js version
+      run: node -v
     - name: Check syntax
       run: node ./dist/index.js
