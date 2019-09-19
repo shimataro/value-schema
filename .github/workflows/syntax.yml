@@ -23,13 +23,19 @@ jobs:
       run: git config --global core.autocrlf false
     - name: Checkout source codes
       uses: actions/checkout@v1
-    - name: Install Node.js
+    - name: Install Node.js v12
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.nodejs }}
+        node-version: 12
     - name: Install npm packages
       run: npm i -g node-gyp
     - name: Install dependencies
-      run: npm i
+      run: npm ci
+    - name: Build
+      run: npm run build
+    - name: Reinstall Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.nodejs }}
     - name: Check syntax
-      run: npm run syntax
+      run: node ./dist/index.js
