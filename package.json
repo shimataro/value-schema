@@ -37,6 +37,7 @@
   },
   "scripts": {
     "build": "run-p build:**",
+    "build:dts": "copyfiles --up=1 'src/**/*.d.ts' dist",
     "build:cjs": "npm run build-core",
     "build:esm": "cross-env BABEL_ENV=esm npm run build-core -- --keep-file-extension",
     "build-core": "babel ./src --out-dir ./dist --source-maps",
@@ -64,6 +65,7 @@
     "@types/node": "12.7.5",
     "babel-eslint": "10.0.3",
     "babel-plugin-add-module-exports": "1.0.2",
+    "copyfiles": "2.1.1",
     "cross-env": "5.2.1",
     "eslint": "6.4.0",
     "eslint-plugin-import": "2.18.2",
