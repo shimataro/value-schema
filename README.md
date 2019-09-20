@@ -3,6 +3,7 @@
 [![Build Status (Windows)][image-build-windows]][link-build-windows]
 [![Build Status (macOS)][image-build-macos]][link-build-macos]
 [![Build Status (Linux)][image-build-linux]][link-build-linux]
+[![Syntax check][image-syntax-check]][link-syntax-check]
 [![Code Coverage][image-code-coverage]][link-code-coverage]
 [![Release][image-release]][link-release]
 [![Node.js version][image-engine]][link-engine]
@@ -2103,6 +2104,8 @@ See [CHANGELOG.md](CHANGELOG.md).
 [link-build-macos]: https://github.com/shimataro/value-schema
 [image-build-linux]: https://github.com/shimataro/value-schema/workflows/Linux/badge.svg
 [link-build-linux]: https://github.com/shimataro/value-schema
+[image-syntax-check]: https://github.com/shimataro/value-schema/workflows/Syntax%20check/badge.svg
+[link-syntax-check]: https://github.com/shimataro/value-schema
 [image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/value-schema/master.svg
 [link-code-coverage]: https://codecov.io/gh/shimataro/value-schema
 [image-release]: https://img.shields.io/github/release/shimataro/value-schema.svg
