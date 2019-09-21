@@ -17,6 +17,7 @@ jobs:
         - 8
         - 10
         - 12
+      fail-fast: false
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v1
