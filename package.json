@@ -65,7 +65,6 @@
     "@types/node": "12.7.5",
     "babel-eslint": "10.0.3",
     "babel-plugin-add-module-exports": "1.0.2",
-    "babel-plugin-extension-resolver": "1.0.3",
     "copyfiles": "2.1.1",
     "cross-env": "6.0.0",
     "eslint": "6.4.0",
