@@ -39,8 +39,6 @@ jobs:
         node-version: ${{ matrix.nodejs }}
     - name: Confirm Node.js version
       run: node -v
-    - name: Reinstall dependencies (only production)
-      run: npm i --only=production
     - name: Check syntax
       run: node ./dist/index.js
   syntax-mjs:
@@ -76,12 +74,10 @@ jobs:
         node-version: ${{ matrix.nodejs }}
     - name: Confirm Node.js version
       run: node -v
-    - name: Reinstall dependencies (only production)
-      run: npm i --only=production
     - name: Check .mjs syntax
       run: node --experimental-modules ./dist/index.mjs
   syntax-mjs-v12:
-    name: Check .mjs on ${{ matrix.platform }} / Node.js v${{ matrix.nodejs }}
+    name: Check .mjs on ${{ matrix.platform }} / Node.js v${{ matrix.nodejs }} (new ES Modules)
     runs-on: ${{ matrix.platform }}
     strategy:
       matrix:
