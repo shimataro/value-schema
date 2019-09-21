@@ -7,7 +7,7 @@ on:
 name: Syntax check
 jobs:
   syntax:
-    name: Check on ${{ matrix.platform }} / Node.js v${{ matrix.nodejs }}
+    name: Check CommonJS
     runs-on: ${{ matrix.platform }}
     strategy:
       matrix:
@@ -43,7 +43,7 @@ jobs:
     - name: Check syntax
       run: node ./dist/index.js
   syntax-mjs:
-    name: Check .mjs on ${{ matrix.platform }} / Node.js v${{ matrix.nodejs }}
+    name: Check ES Modules
     runs-on: ${{ matrix.platform }}
     strategy:
       matrix:
@@ -81,8 +81,8 @@ jobs:
       run: node -v
     - name: Check .mjs syntax
       run: node --experimental-modules ./dist/index.mjs
-  syntax-mjs-windows-node860:
-    name: Check .mjs on Windows-latest / Node.js v8.6.0
+  syntax-mjs-windows:
+    name: Check ES Modules on ${{ matrix.platform }} / Node.js v${{ matrix.nodejs }}
     runs-on: ${{ matrix.platform }}
     strategy:
       matrix:
@@ -114,8 +114,8 @@ jobs:
       run: node -v
     - name: Check .mjs syntax
       run: node --experimental-modules ./dist/index.mjs
-  syntax-mjs-v12:
-    name: Check .mjs on ${{ matrix.platform }} / Node.js v${{ matrix.nodejs }} (new ES Modules)
+  syntax-mjs-new:
+    name: Check new ES Modules
     runs-on: ${{ matrix.platform }}
     strategy:
       matrix:
