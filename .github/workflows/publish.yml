@@ -10,8 +10,6 @@ jobs:
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v1
-    - name: Install dependencies
-      run: npm ci
     - name: Publish package
       uses: actions/npm@v2
       env:
