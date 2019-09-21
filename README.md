@@ -124,10 +124,24 @@ var vs = require("value-schema");
 
 ### ES Modules
 
+As of Node.js v8.5.0, ES Modules has been supported.
+In Windows, Node.js v8.6.0 is recommended due to [`ERR_INVALID_PROTOCOL`](https://github.com/nodejs/node/issues/15374).
+
 ```javascript
 // foo.mjs
 import vs from "value-schema";
 ```
+
+To execute, `--experimental-modules` flag is required.
+
+```bash
+$ node --experimental-modules foo.mjs
+
+# As of Node.js v12, --es-module-specifier-resolution=node flag is also required.
+$ node --experimental-modules --es-module-specifier-resolution=node foo.mjs
+```
+
+See [Announcing a new --experimental-modules - Node.js Foundation - Medium](https://medium.com/@nodejs/announcing-a-new-experimental-modules-1be8d2d6c2ff) for details.
 
 ### TypeScript
 
