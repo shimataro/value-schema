@@ -51,7 +51,7 @@ jobs:
         - "macOS-latest"
         - "Ubuntu-latest"
         nodejs:
-        - "8.5.0"
+        - "8.5.1"
         - "10.0.0"
     steps:
     - name: Checkout source codes
