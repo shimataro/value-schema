@@ -30,7 +30,7 @@
     "JSON schema"
   ],
   "main": "./dist/index",
-  "types": "./src/index.d.ts",
+  "types": "./dist/index.d.ts",
   "engines": {
     "node": ">= 4.0.0",
     "npm": ">=2.0.0"
