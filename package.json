@@ -1,7 +1,7 @@
 {
   "name": "value-schema",
   "description": "simple, easy-to-use, and declarative schema validator",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "author": "shimataro",
   "license": "MIT",
   "repository": {
@@ -30,7 +30,7 @@
     "JSON schema"
   ],
   "main": "./dist/index",
-  "types": "./src/index.d.ts",
+  "types": "./dist/index.d.ts",
   "engines": {
     "node": ">= 4.0.0",
     "npm": ">=2.0.0"
