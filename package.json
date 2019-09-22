@@ -1,7 +1,7 @@
 {
   "name": "value-schema",
   "description": "simple, easy-to-use, and declarative schema validator",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "author": "shimataro",
   "license": "MIT",
   "repository": {
@@ -46,7 +46,6 @@
     "watch:esm": "cross-env BABEL_ENV=esm npm run build-core -- --keep-file-extension --watch",
     "test": "cross-env NODE_PATH=./src jest",
     "verify": "run-p test lint",
-    "prepublishOnly": "run-p verify build",
     "lint": "run-p lint:*",
     "lint:es": "eslint ./src ./test --ext .mjs",
     "lint:md": "markdownlint . --ignore ./node_modules",
