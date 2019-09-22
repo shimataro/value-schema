@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.2.1] - 2019-09-22
+
+### Fixed
+
+* [`actions/npm`](https://github.com/actions/npm) version
+
 ## [2.2.0] - 2019-09-22
 
 ### Fixed
@@ -389,7 +395,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v2.2.1...HEAD
+[2.2.1]: https://github.com/shimataro/value-schema/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/shimataro/value-schema/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/shimataro/value-schema/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/shimataro/value-schema/compare/v1.4.0...v2.0.0
