@@ -1,8 +1,11 @@
+# https://help.github.com/en/articles/workflow-syntax-for-github-actions
+
 on:
   push:
     branches:
     - master
     - develop
+    - "v*"
   pull_request:
 name: Syntax check
 jobs:
