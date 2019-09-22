@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+* [`actions/npm`](https://github.com/actions/npm) version
+
 ## [2.2.0] - 2019-09-22
 
 ### Fixed
