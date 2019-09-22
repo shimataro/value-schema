@@ -3,6 +3,7 @@
 [![Build Status (Windows)][image-build-windows]][link-build-windows]
 [![Build Status (macOS)][image-build-macos]][link-build-macos]
 [![Build Status (Linux)][image-build-linux]][link-build-linux]
+[![Syntax check][image-syntax-check]][link-syntax-check]
 [![Code Coverage][image-code-coverage]][link-code-coverage]
 [![Release][image-release]][link-release]
 [![Node.js version][image-engine]][link-engine]
@@ -123,10 +124,24 @@ var vs = require("value-schema");
 
 ### ES Modules
 
+As of Node.js v8.5.0, ES Modules has been supported.
+In Windows, Node.js v8.6.0 is recommended due to [`ERR_INVALID_PROTOCOL`](https://github.com/nodejs/node/issues/15374).
+
 ```javascript
 // foo.mjs
 import vs from "value-schema";
 ```
+
+To execute, `--experimental-modules` flag is required.
+
+```bash
+$ node --experimental-modules foo.mjs
+
+# As of Node.js v12, --es-module-specifier-resolution=node flag is also required.
+$ node --experimental-modules --es-module-specifier-resolution=node foo.mjs
+```
+
+See [Announcing a new --experimental-modules - Node.js Foundation - Medium](https://medium.com/@nodejs/announcing-a-new-experimental-modules-1be8d2d6c2ff) for details.
 
 ### TypeScript
 
@@ -2097,12 +2112,14 @@ assert.throws(
 
 See [CHANGELOG.md](CHANGELOG.md).
 
-[image-build-windows]: https://img.shields.io/appveyor/ci/shimataro/value-schema/master.svg?label=Windows
-[link-build-windows]: https://ci.appveyor.com/project/shimataro/value-schema
-[image-build-macos]: https://img.shields.io/travis/shimataro/value-schema/master.svg?label=macOS
-[link-build-macos]: https://travis-ci.org/shimataro/value-schema
-[image-build-linux]: https://img.shields.io/travis/shimataro/value-schema/master.svg?label=Linux
-[link-build-linux]: https://travis-ci.org/shimataro/value-schema
+[image-build-windows]: https://github.com/shimataro/value-schema/workflows/Windows/badge.svg
+[link-build-windows]: https://github.com/shimataro/value-schema
+[image-build-macos]: https://github.com/shimataro/value-schema/workflows/macOS/badge.svg
+[link-build-macos]: https://github.com/shimataro/value-schema
+[image-build-linux]: https://github.com/shimataro/value-schema/workflows/Linux/badge.svg
+[link-build-linux]: https://github.com/shimataro/value-schema
+[image-syntax-check]: https://github.com/shimataro/value-schema/workflows/Syntax%20check/badge.svg
+[link-syntax-check]: https://github.com/shimataro/value-schema
 [image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/value-schema/master.svg
 [link-code-coverage]: https://codecov.io/gh/shimataro/value-schema
 [image-release]: https://img.shields.io/github/release/shimataro/value-schema.svg

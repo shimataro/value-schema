@@ -23,7 +23,7 @@ COLOR_SELECT="\e[1;32m"
 COLOR_RESET="\e[m"
 
 function main() {
-	cd `dirname ${0}`
+	cd $(dirname ${0})/..
 
 	if [ $# -lt 1 ]; then
 		usage
@@ -144,6 +144,7 @@ function finish() {
 	local VERSION=$1
 	local BRANCH=$2
 	local TAG=$3
+	local TARGET_BRANCH="v${VERSION%%[!0-9]*}"
 
 	echo -e "
 Branch ${COLOR_BRANCH}${BRANCH}${COLOR_RESET} has been created.
@@ -156,13 +157,13 @@ Remaining processes are...
 3. Create a pull-request: ${COLOR_BRANCH}${BRANCH}${COLOR_RESET} to ${COLOR_BRANCH}${BASE_BRANCH}${COLOR_RESET}
 	${URL_COMPARE}/${BASE_BRANCH}...${BRANCH}
 	select ${COLOR_SELECT}Squash and merge${COLOR_RESET}
-4. Create a pull-request: ${COLOR_BRANCH}${BASE_BRANCH}${COLOR_RESET} to ${COLOR_BRANCH}master${COLOR_RESET}
-	${URL_COMPARE}/master...${BASE_BRANCH}
+4. Create a pull-request: ${COLOR_BRANCH}${BASE_BRANCH}${COLOR_RESET} to ${COLOR_BRANCH}${TARGET_BRANCH}${COLOR_RESET}
+	${URL_COMPARE}/${TARGET_BRANCH}...${BASE_BRANCH}
 	select ${COLOR_SELECT}Create a merge commit${COLOR_RESET}
 5. Create a new release
 	${URL_RELEASE}
 	Tag version: ${COLOR_INPUT}${TAG}${COLOR_RESET}
-	Target: ${COLOR_INPUT}master${COLOR_RESET}
+	Target: ${COLOR_INPUT}${TARGET_BRANCH}${COLOR_RESET}
 	Release title: ${COLOR_INPUT}${PACKAGE_NAME} ${VERSION} released${COLOR_RESET}
 	Description this release: (copy and paste CHANGELOG.md)
 6. Post processing

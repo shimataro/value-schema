@@ -1,0 +1,33 @@
+# https://help.github.com/ja/articles/workflow-syntax-for-github-actions
+
+on:
+  push:
+    branches:
+    - master
+    - develop
+  pull_request:
+name: macOS
+jobs:
+  verify:
+    name: Verify on Node.js v${{ matrix.nodejs }}
+    runs-on: macOS-latest
+    strategy:
+      matrix:
+        nodejs:
+        - 8
+        - 10
+        - 12
+      fail-fast: false
+    steps:
+    - name: Checkout source codes
+      uses: actions/checkout@v1
+    - name: Install Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.nodejs }}
+    - name: Update global packages
+      run: npm i -g node-gyp
+    - name: Install dependencies
+      run: npm i
+    - name: Verify
+      run: npm run verify
