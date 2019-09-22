@@ -23,7 +23,7 @@ COLOR_SELECT="\e[1;32m"
 COLOR_RESET="\e[m"
 
 function main() {
-	cd `dirname ${0}`
+	cd $(dirname ${0})/..
 
 	if [ $# -lt 1 ]; then
 		usage

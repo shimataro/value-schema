@@ -6,6 +6,8 @@ BRANCH=feature/update-dependencies-${DATE}
 COLOR_SUCCESS="\e[1;32m"
 COLOR_RESET="\e[m"
 
+cd $(dirname ${0})/..
+
 # create branch
 git checkout develop || exit 1
 git checkout -b ${BRANCH} || exit 1
