@@ -136,9 +136,11 @@ To execute, `--experimental-modules` flag is required.
 
 ```bash
 $ node --experimental-modules foo.mjs
+(node:25508) ExperimentalWarning: The ESM module loader is experimental.
 
 # As of Node.js v12, --es-module-specifier-resolution=node flag is also required.
 $ node --experimental-modules --es-module-specifier-resolution=node foo.mjs
+(node:25508) ExperimentalWarning: The ESM module loader is experimental.
 ```
 
 See [Announcing a new --experimental-modules - Node.js Foundation - Medium](https://medium.com/@nodejs/announcing-a-new-experimental-modules-1be8d2d6c2ff) for details.

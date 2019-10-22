@@ -53,15 +53,15 @@
     "check-updates": "ncu"
   },
   "dependencies": {
-    "core-js": "3.2.1"
+    "core-js": "3.3.3"
   },
   "devDependencies": {
     "@babel/cli": "7.6.4",
     "@babel/core": "7.6.4",
     "@babel/plugin-proposal-decorators": "7.6.0",
     "@babel/preset-env": "7.6.3",
-    "@types/jest": "24.0.18",
-    "@types/node": "12.7.12",
+    "@types/jest": "24.0.19",
+    "@types/node": "12.11.2",
     "babel-eslint": "10.0.3",
     "babel-plugin-add-module-exports": "1.0.2",
     "copyfiles": "2.1.1",
@@ -69,8 +69,8 @@
     "eslint": "6.5.1",
     "eslint-plugin-import": "2.18.2",
     "jest": "24.9.0",
-    "markdownlint-cli": "0.18.0",
-    "npm-check-updates": "3.1.24",
+    "markdownlint-cli": "0.19.0",
+    "npm-check-updates": "3.1.25",
     "npm-run-all": "4.1.5",
     "yaml-lint": "1.2.4"
   },
