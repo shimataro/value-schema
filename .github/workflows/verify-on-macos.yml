@@ -20,8 +20,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Update global packages
-      run: npm i -g node-gyp
     - name: Install dependencies
       run: npm ci
     - name: Verify
