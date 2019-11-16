@@ -1,17 +1,11 @@
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions
 
-on:
-  push:
-    branches:
-    - master
-    - develop
-    - "v*"
-  pull_request:
+on: push
 name: Windows
 jobs:
   verify:
     name: Verify on Node.js v${{ matrix.nodejs }}
-    runs-on: Windows-latest
+    runs-on: windows-latest
     strategy:
       matrix:
         nodejs:
