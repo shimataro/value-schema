@@ -25,6 +25,6 @@ jobs:
     - name: Update global packages
       run: npm i -g node-gyp
     - name: Install dependencies
-      run: try { npm ci } catch { npm i }
+      run: npm i
     - name: Verify
       run: npm run verify
