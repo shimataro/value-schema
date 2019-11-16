@@ -23,8 +23,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12
-    - name: Install npm packages
-      run: npm i -g node-gyp
     - name: Install dependencies
       run: npm ci
     - name: Build
@@ -62,8 +60,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12
-    - name: Install npm packages
-      run: npm i -g node-gyp
     - name: Install dependencies
       run: npm ci
     - name: Build
@@ -95,8 +91,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12
-    - name: Install npm packages
-      run: npm i -g node-gyp
     - name: Install dependencies
       run: npm ci
     - name: Build
@@ -130,8 +124,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Install npm packages
-      run: npm i -g node-gyp
     - name: Install dependencies
       run: npm ci
     - name: Build
