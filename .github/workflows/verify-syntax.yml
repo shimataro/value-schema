@@ -1,23 +1,17 @@
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions
 
-on:
-  push:
-    branches:
-    - master
-    - develop
-    - "v*"
-  pull_request:
+on: push
 name: Syntax check
 jobs:
   syntax:
     name: Check CommonJS
-    runs-on: ${{ matrix.platform }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        platform:
-        - "Windows-latest"
-        - "macOS-latest"
-        - "Ubuntu-latest"
+        os:
+        - "windows-latest"
+        - "macos-latest"
+        - "ubuntu-latest"
         nodejs:
         - "4.0.0"
         - "6.0.0"
@@ -47,18 +41,18 @@ jobs:
       run: node ./dist/index.js
   syntax-mjs:
     name: Check ES Modules
-    runs-on: ${{ matrix.platform }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        platform:
-        - "Windows-latest"
-        - "macOS-latest"
-        - "Ubuntu-latest"
+        os:
+        - "windows-latest"
+        - "macos-latest"
+        - "ubuntu-latest"
         nodejs:
         - "8.5.0"
         - "10.0.0"
         exclude:
-        - platform: "Windows-latest" # In Windows, v8.5.0 causes ERR_INVALID_PROTOCOL; https://github.com/nodejs/node/issues/15374
+        - os: "windows-latest" # In Windows, v8.5.0 causes ERR_INVALID_PROTOCOL; https://github.com/nodejs/node/issues/15374
           nodejs: "8.5.0"
       fail-fast: false
     steps:
@@ -85,12 +79,12 @@ jobs:
     - name: Check .mjs syntax
       run: node --experimental-modules ./dist/index.mjs
   syntax-mjs-windows:
-    name: Check ES Modules on ${{ matrix.platform }} / Node.js v${{ matrix.nodejs }}
-    runs-on: ${{ matrix.platform }}
+    name: Check ES Modules on ${{ matrix.os }} / Node.js v${{ matrix.nodejs }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        platform:
-        - "Windows-latest"
+        os:
+        - "windows-latest"
         nodejs:
         - "8.6.0"
       fail-fast: false
@@ -119,13 +113,13 @@ jobs:
       run: node --experimental-modules ./dist/index.mjs
   syntax-mjs-new:
     name: Check new ES Modules
-    runs-on: ${{ matrix.platform }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        platform:
-        - "Windows-latest"
-        - "macOS-latest"
-        - "Ubuntu-latest"
+        os:
+        - "windows-latest"
+        - "macos-latest"
+        - "ubuntu-latest"
         nodejs:
         - "12.0.0"
       fail-fast: false
