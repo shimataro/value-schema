@@ -23,7 +23,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12
-    - name: Confirm version
+    - name: Output versions
       run: |
         node -v
         npm -v
@@ -64,7 +64,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12
-    - name: Confirm version
+    - name: Output versions
       run: |
         node -v
         npm -v
@@ -99,7 +99,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12
-    - name: Confirm version
+    - name: Output versions
       run: |
         node -v
         npm -v
@@ -136,7 +136,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Confirm version
+    - name: Output versions
       run: |
         node -v
         npm -v

@@ -20,7 +20,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Confirm version
+    - name: Output versions
       run: |
         node -v
         npm -v

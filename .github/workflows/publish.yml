@@ -17,7 +17,7 @@ jobs:
       with:
         node-version: 12
         registry-url: https://registry.npmjs.org/
-    - name: Confirm version
+    - name: Output versions
       run: |
         node -v
         npm -v
