@@ -27,6 +27,10 @@ jobs:
         node -v
         npm -v
     - name: Install dependencies
-      run: npm i # as of nodejs>=10, "npm ci" is preferred
+      run: |
+        npm ci
+        if (!$?) {
+          npm i
+        }
     - name: Verify
       run: npm run verify
