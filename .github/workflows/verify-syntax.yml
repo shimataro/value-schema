@@ -37,8 +37,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Confirm Node.js version
-      run: node -v
+    - name: Output versions
+      run: |
+        node -v
+        npm -v
     - name: Check syntax
       run: node ./dist/index.js
   syntax-mjs:
@@ -78,8 +80,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Confirm Node.js version
-      run: node -v
+    - name: Output versions
+      run: |
+        node -v
+        npm -v
     - name: Check .mjs syntax
       run: node --experimental-modules ./dist/index.mjs
   syntax-mjs-windows:
@@ -113,8 +117,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Confirm Node.js version
-      run: node -v
+    - name: Output versions
+      run: |
+        node -v
+        npm -v
     - name: Check .mjs syntax
       run: node --experimental-modules ./dist/index.mjs
   syntax-mjs-new:
