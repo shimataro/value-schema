@@ -1,12 +1,12 @@
-import BaseSchema from "./../libs/BaseSchema";
+import BaseSchema from "../libs/BaseSchema";
 
-import Default from "./../decorators/default";
-import AcceptNull from "./../decorators/acceptNull";
-import AcceptEmptyString from "./../decorators/acceptEmptyString";
-import Type from "./../decorators/array/type";
-import MinLength from "./../decorators/array/minLength";
-import MaxLength from "./../decorators/array/maxLength";
-import Each from "./../decorators/array/each";
+import Default from "../decorators/default";
+import AcceptNull from "../decorators/acceptNull";
+import AcceptEmptyString from "../decorators/acceptEmptyString";
+import Type from "../decorators/array/type";
+import MinLength from "../decorators/array/minLength";
+import MaxLength from "../decorators/array/maxLength";
+import Each from "../decorators/array/each";
 
 /**
  * factory

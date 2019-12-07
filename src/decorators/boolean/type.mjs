@@ -1,7 +1,7 @@
-import {CAUSE} from "./../../libs/constants";
-import {isBoolean, isNumber, isString} from "./../../libs/types";
-import BaseSchema from "./../../libs/BaseSchema";
-import ValueSchemaError from "./../../libs/ValueSchemaError";
+import {CAUSE} from "../../libs/constants";
+import {isBoolean, isNumber, isString} from "../../libs/types";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
 const REGEXP_TRUE = /^\s*(true|yes|on)\s*$/i;
 const REGEXP_FALSE = /^\s*(false|no|off)\s*$/i;

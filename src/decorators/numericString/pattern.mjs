@@ -1,6 +1,6 @@
-import {CAUSE} from "./../../libs/constants";
-import BaseSchema from "./../../libs/BaseSchema";
-import ValueSchemaError from "./../../libs/ValueSchemaError";
+import {CAUSE} from "../../libs/constants";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
 const REGEXP = /^\d+$/;
 

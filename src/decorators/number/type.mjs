@@ -1,7 +1,7 @@
-import {CAUSE} from "./../../libs/constants";
-import {isScalar, isNumber, isInteger, isString} from "./../../libs/types";
-import BaseSchema from "./../../libs/BaseSchema";
-import ValueSchemaError from "./../../libs/ValueSchemaError";
+import {CAUSE} from "../../libs/constants";
+import {isScalar, isNumber, isInteger, isString} from "../../libs/types";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
 const REGEXP_NUMBER = /^\s*[+-]?(\d+(\.\d*)?|\.\d+)\s*$/;
 const REGEXP_INTEGER = /^\s*[+-]?\d+\s*$/;

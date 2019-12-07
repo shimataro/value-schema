@@ -1,6 +1,6 @@
-import {CAUSE} from "./../../libs/constants";
-import BaseSchema from "./../../libs/BaseSchema";
-import ValueSchemaError from "./../../libs/ValueSchemaError";
+import {CAUSE} from "../../libs/constants";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
 const MAX_LENGTH_LOCAL = 64;
 const MAX_LENGTH_DOMAIN = 255;

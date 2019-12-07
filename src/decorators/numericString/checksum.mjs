@@ -1,6 +1,6 @@
-import {CAUSE, NUMERIC_STRING} from "./../../libs/constants";
-import BaseSchema from "./../../libs/BaseSchema";
-import ValueSchemaError from "./../../libs/ValueSchemaError";
+import {CAUSE, NUMERIC_STRING} from "../../libs/constants";
+import BaseSchema from "../../libs/BaseSchema";
+import ValueSchemaError from "../../libs/ValueSchemaError";
 
 export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
