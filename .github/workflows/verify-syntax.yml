@@ -91,6 +91,6 @@ jobs:
         node -v
         npm -v
     - name: print files (for debug)
-      run: ls ./dist/libs
+      run: cat ./dist/index.mjs
     - name: Check .mjs syntax
       run: node --experimental-modules ./dist/index.mjs
