@@ -1,5 +1,5 @@
-import fitToObject from "../../libs/fitToObject";
-import BaseSchema from "../../libs/BaseSchema";
+import fitToObject from "./../../libs/fitToObject";
+import BaseSchema from "./../../libs/BaseSchema";
 
 export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)

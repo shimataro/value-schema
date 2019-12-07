@@ -1,7 +1,7 @@
-import {CAUSE} from "../../libs/constants";
-import {isScalar, isString} from "../../libs/types";
-import BaseSchema from "../../libs/BaseSchema";
-import ValueSchemaError from "../../libs/ValueSchemaError";
+import {CAUSE} from "./../../libs/constants";
+import {isScalar, isString} from "./../../libs/types";
+import BaseSchema from "./../../libs/BaseSchema";
+import ValueSchemaError from "./../../libs/ValueSchemaError";
 
 export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)

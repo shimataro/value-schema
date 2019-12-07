@@ -1,5 +1,5 @@
-import {isArray} from "../../libs/types";
-import BaseSchema from "../../libs/BaseSchema";
+import {isArray} from "./../../libs/types";
+import BaseSchema from "./../../libs/BaseSchema";
 
 export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)

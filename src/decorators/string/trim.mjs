@@ -1,4 +1,4 @@
-import BaseSchema from "../../libs/BaseSchema";
+import BaseSchema from "./../../libs/BaseSchema";
 
 export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)

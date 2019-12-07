@@ -1,5 +1,5 @@
-import BaseSchema from "../../libs/BaseSchema";
-import * as string from "../../libs/string";
+import BaseSchema from "./../../libs/BaseSchema";
+import * as string from "./../../libs/string";
 
 export default BaseSchema.decoratorBuilder(_fit)
 	.init(_init)
