@@ -53,7 +53,7 @@
     "check-updates": "ncu"
   },
   "dependencies": {
-    "core-js": "3.4.7"
+    "core-js": "3.5.0"
   },
   "devDependencies": {
     "@babel/cli": "7.7.7",
