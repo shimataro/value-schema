@@ -50,7 +50,7 @@
     "lint:es": "eslint ./src ./test --ext .mjs",
     "lint:md": "markdownlint . --ignore ./node_modules",
     "lint:yaml": "yamllint .*.yml *.yml --ignore=node_modules/**/*.yml --ignore=node_modules/**/*.yaml",
-    "check-updates": "ncu"
+    "check-updates": "ncu -x @babel/preset-env,core-js"
   },
   "dependencies": {
     "core-js": "3.5.0"
@@ -59,11 +59,12 @@
     "@babel/cli": "7.7.7",
     "@babel/core": "7.7.7",
     "@babel/plugin-proposal-decorators": "7.7.4",
-    "@babel/preset-env": "7.7.7",
-    "@types/jest": "24.0.24",
-    "@types/node": "13.1.0",
+    "@babel/preset-env": "7.7.5",
+    "@types/jest": "24.0.25",
+    "@types/node": "13.1.2",
     "babel-eslint": "10.0.3",
     "babel-plugin-add-module-exports": "1.0.2",
+    "babel-plugin-module-extension-resolver": "0.1.1",
     "copyfiles": "2.1.1",
     "cross-env": "6.0.3",
     "eslint": "6.8.0",

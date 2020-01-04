@@ -56,6 +56,7 @@ jobs:
         - "8.5.0"
         - "8.6.0"
         - "10.0.0"
+        - "12.0.0"
         exclude:
         - os: windows-latest # On Windows, v8.5.0 causes ERR_INVALID_PROTOCOL; https://github.com/nodejs/node/issues/15374
           nodejs: "8.5.0"
@@ -91,34 +92,3 @@ jobs:
         npm -v
     - name: Check .mjs syntax
       run: node --experimental-modules ./dist/index.mjs
-  syntax-mjs-new:
-    name: Check new ES Modules
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os:
-        - windows-latest
-        - macos-latest
-        - ubuntu-latest
-        nodejs:
-        - "12.0.0"
-      fail-fast: false
-    steps:
-    - name: Checkout source codes
-      uses: actions/checkout@v1
-    - name: Reinstall Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.nodejs }}
-    - name: Output versions
-      run: |
-        node -v
-        npm -v
-    - name: Install dependencies
-      run: npm ci
-    - name: Build
-      run: npm run build
-    - name: Install dependencies (only production)
-      run: npm ci --only=production
-    - name: Check .mjs syntax
-      run: node --experimental-modules --es-module-specifier-resolution=node ./dist/index.mjs

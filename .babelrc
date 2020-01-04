@@ -11,6 +11,9 @@
     "esm": {
       "presets": [
         ["@babel/preset-env", {"targets": {"node": "8.5.0"}, "useBuiltIns": "usage", "corejs": 3, "modules": false}]
+      ],
+      "plugins": [
+        ["module-extension-resolver"]
       ]
     }
   }
