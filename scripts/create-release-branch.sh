@@ -3,6 +3,8 @@
 # - git; I believe you have already installed.
 # - sed; GNU sed is preferred. POSIX sed may not work.
 
+set -e
+
 BASE_BRANCH="develop"
 
 PACKAGE_NAME="value-schema"
@@ -36,14 +38,14 @@ function main() {
 	check_version_format ${VERSION}
 	check_current_branch
 
-	run create_branch ${BRANCH}
-	run update_changelog ${VERSION}
-	run update_package_version ${VERSION}
-	run update_dependencies_version
-	run regenerate_npm_shrinkwrap
-	run verify_package
-	run commit_changes ${VERSION}
-	run finish ${VERSION} ${BRANCH} ${TAG}
+	create_branch ${BRANCH}
+	update_changelog ${VERSION}
+	update_package_version ${VERSION}
+	update_dependencies_version
+	regenerate_npm_shrinkwrap
+	verify_package
+	commit_changes ${VERSION}
+	finish ${VERSION} ${BRANCH} ${TAG}
 }
 
 function usage() {
@@ -91,10 +93,6 @@ function check_current_branch() {
 	exit 2
 }
 
-function run() {
-	"$@" || exit 1
-}
-
 function create_branch() {
 	local BRANCH=$1
 
@@ -125,8 +123,9 @@ function update_dependencies_version() {
 }
 
 function regenerate_npm_shrinkwrap() {
-	rm -rf npm-shrinkwrap.json node_modules &&
-	npm install && npm shrinkwrap
+	rm -rf npm-shrinkwrap.json node_modules
+	npm install
+	npm shrinkwrap
 }
 
 function verify_package() {
@@ -136,7 +135,7 @@ function verify_package() {
 function commit_changes() {
 	local VERSION=$1
 
-	git add CHANGELOG.md package.json npm-shrinkwrap.json &&
+	git add CHANGELOG.md package.json npm-shrinkwrap.json
 	git commit -m "version ${VERSION}"
 }
 
