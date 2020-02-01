@@ -2114,13 +2114,13 @@ assert.throws(
 
 See [CHANGELOG.md](CHANGELOG.md).
 
-[image-build-windows]: https://github.com/shimataro/value-schema/workflows/Windows/badge.svg
+[image-build-windows]: https://github.com/shimataro/value-schema/workflows/Windows/badge.svg?event=push&branch=v2
 [link-build-windows]: https://github.com/shimataro/value-schema
-[image-build-macos]: https://github.com/shimataro/value-schema/workflows/macOS/badge.svg
+[image-build-macos]: https://github.com/shimataro/value-schema/workflows/macOS/badge.svg?event=push&branch=v2
 [link-build-macos]: https://github.com/shimataro/value-schema
-[image-build-linux]: https://github.com/shimataro/value-schema/workflows/Linux/badge.svg
+[image-build-linux]: https://github.com/shimataro/value-schema/workflows/Linux/badge.svg?event=push&branch=v2
 [link-build-linux]: https://github.com/shimataro/value-schema
-[image-syntax-check]: https://github.com/shimataro/value-schema/workflows/Syntax%20check/badge.svg
+[image-syntax-check]: https://github.com/shimataro/value-schema/workflows/Syntax%20check/badge.svg?event=push&branch=v2
 [link-syntax-check]: https://github.com/shimataro/value-schema
 [image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/value-schema/master.svg
 [link-code-coverage]: https://codecov.io/gh/shimataro/value-schema
