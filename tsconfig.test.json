@@ -1,13 +1,4 @@
 {
   "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "rootDir": ".",
-    "baseUrl": ".",
-    "paths": {
-      "value-schema": [
-        "./src/index"
-      ]
-    }
-  },
   "include": ["test/**/*.ts"]
 }
