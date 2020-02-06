@@ -1,5 +1,5 @@
 import {Key, Values} from "../../libs/types";
-import {SchemaObject, applyToObject} from "../../libs/applyToObject";
+import {SchemaObject, applySchemaCore} from "../../libs/applySchemaCore";
 import {onErrorDefault, onFinishedDefault} from "../../libs/BaseSchema";
 
 export interface Options
@@ -22,6 +22,6 @@ export function applyTo<T>(values: Values, options: Options, keyStack: Key[]): v
 		return false;
 	}
 
-	values.output = applyToObject(values.output, options.schema, onErrorDefault, onFinishedDefault, keyStack);
+	values.output = applySchemaCore(values.output, options.schema, onErrorDefault, onFinishedDefault, keyStack);
 	return false;
 }

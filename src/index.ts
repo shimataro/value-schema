@@ -1,4 +1,4 @@
-export * from "./libs/applyTo";
+export * from "./libs/applySchema";
 export * from "./libs/constants";
 export * from "./schema/array";
 export * from "./schema/boolean";

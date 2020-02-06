@@ -25,16 +25,16 @@ export class ValueSchemaError extends Error
 	/**
 	 * constructor
 	 * @param cause cause of error
-	 * @param inputValue input value
+	 * @param value input value
 	 * @param keyStack path to key that caused error
 	 */
-	constructor(cause: CAUSE, inputValue: unknown, keyStack: Key[])
+	constructor(cause: CAUSE, value: unknown, keyStack: Key[])
 	{
-		super(`${cause}; ${inputValue}; ${keyStack}`);
+		super(`${cause}; ${value}; ${keyStack}`);
 
 		this.name = "ValueSchemaError";
 		this.cause = cause;
-		this.value = inputValue;
+		this.value = value;
 		this.keyStack = [...keyStack];
 	}
 }

@@ -16,7 +16,7 @@ export type SchemaObject = {
  * @param keyStack path to key that caused error
  * @returns applied data
  */
-export function applyToObject(data: unknown, schemaObject: SchemaObject, onError: ErrorHandler, onFinished: FinishHandler, keyStack: Key[]): object
+export function applySchemaCore<T extends object>(data: unknown, schemaObject: SchemaObject, onError: ErrorHandler, onFinished: FinishHandler, keyStack: Key[]): T
 {
 	if(!isObject(data))
 	{
@@ -27,7 +27,7 @@ export function applyToObject(data: unknown, schemaObject: SchemaObject, onError
 			throw err;
 		}
 
-		return result;
+		return result as T;
 	}
 
 	const appliedObject: {[key: string]: unknown} = {};
@@ -42,7 +42,7 @@ export function applyToObject(data: unknown, schemaObject: SchemaObject, onError
 	{
 		onFinished();
 	}
-	return appliedObject;
+	return appliedObject as T;
 
 	/**
 	 * error handler (to avoid "no-loop-fun" error on eslint)

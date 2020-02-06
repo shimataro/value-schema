@@ -28,20 +28,20 @@ export class BaseSchema<T = unknown>
 
 	/**
 	 * apply schema
-	 * @param inputValue input value
+	 * @param value value to apply
 	 * @param onError error handler
 	 * @returns applied value
 	 */
-	applyTo(inputValue: unknown, onError: ErrorHandler<T> = onErrorDefault): T | null
+	applyTo(value: unknown, onError: ErrorHandler<T> = onErrorDefault): T | null
 	{
-		return this._applyTo(inputValue, onError, []);
+		return this._applyTo(value, onError, []);
 	}
 
-	private _applyTo(inputValue: unknown, onError: ErrorHandler<T>, keyStack: Key[]): T | null
+	private _applyTo(value: unknown, onError: ErrorHandler<T>, keyStack: Key[]): T | null
 	{
 		try
 		{
-			const values = makeValues(inputValue);
+			const values = makeValues(value);
 			for(const applyTo of this.applies)
 			{
 				if(applyTo(values, this.options, keyStack))
