@@ -145,7 +145,7 @@ function testSchema(): void
 		};
 		expect(
 			vs.object({
-				schema: schemaObject,
+				schemaObject: schemaObject,
 			}).applyTo(input)
 		).toEqual(expected);
 	});

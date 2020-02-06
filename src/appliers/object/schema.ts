@@ -4,7 +4,7 @@ import {onErrorDefault, onFinishedDefault} from "../../libs/BaseSchema";
 
 export interface Options
 {
-	schema?: SchemaObject;
+	schemaObject?: SchemaObject;
 }
 
 /**
@@ -17,11 +17,11 @@ export interface Options
  */
 export function applyTo<T>(values: Values, options: Options, keyStack: Key[]): values is Values<T>
 {
-	if(options.schema === undefined)
+	if(options.schemaObject === undefined)
 	{
 		return false;
 	}
 
-	values.output = applySchemaCore(values.output, options.schema, onErrorDefault, onFinishedDefault, keyStack);
+	values.output = applySchemaCore(values.output, options.schemaObject, onErrorDefault, onFinishedDefault, keyStack);
 	return false;
 }

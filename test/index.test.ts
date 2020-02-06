@@ -274,7 +274,7 @@ function testError(): void
 				dummy: true,
 			};
 			vs.object({
-				schema: schemaObject,
+				schemaObject: schemaObject,
 			}).applyTo(input);
 			expect(true).toEqual(false);
 		}
@@ -297,7 +297,7 @@ function testError(): void
 				ids: [true, "2", "+3", "four", 5],
 			};
 			vs.object({
-				schema: schemaObject,
+				schemaObject: schemaObject,
 			}).applyTo(input);
 			expect(true).toEqual(false);
 		}
@@ -313,7 +313,7 @@ function testError(): void
 			const schemaObject: vs.SchemaObject = {
 				infoList: vs.array({
 					each: vs.object({
-						schema: {
+						schemaObject: {
 							id: vs.number(),
 							name: vs.string({
 								maxLength: 8,
@@ -339,7 +339,7 @@ function testError(): void
 				],
 			};
 			vs.object({
-				schema: schemaObject,
+				schemaObject: schemaObject,
 			}).applyTo(input);
 			expect(true).toEqual(false);
 		}
