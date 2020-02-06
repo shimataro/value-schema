@@ -216,7 +216,7 @@ function testError(): void
 				email: "john@example.com", // OK
 			};
 
-			const messages: (string | number)[] = [];
+			const keys: (string | number)[] = [];
 			vs.applySchema(input, schemaObject, (err) =>
 			{
 				if(err.keyStack.length === 0)
@@ -224,11 +224,11 @@ function testError(): void
 					return;
 				}
 				// append key name
-				messages.push(err.keyStack[0]);
+				keys.push(err.keyStack[0]);
 			}, () =>
 			{
 				// finished; join key name as message
-				throw new Error(messages.join(","));
+				throw new Error(keys.join(","));
 			});
 		}).toThrow("id,name");
 
