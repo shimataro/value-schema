@@ -5,7 +5,7 @@ export type ErrorHandler<T = unknown> = (err: ValueSchemaError) => T | null | ne
 export type FinishHandler = () => void;
 
 type Options = {};
-type Apply<T> = (values: Values, options: Options, keyStack: Key[]) => values is Values<T>;
+type ApplyTo<T> = (values: Values, options: Options, keyStack: Key[]) => values is Values<T>;
 
 /**
  * Base Schema Class
@@ -13,17 +13,17 @@ type Apply<T> = (values: Values, options: Options, keyStack: Key[]) => values is
 export class BaseSchema<T = unknown>
 {
 	private readonly options: Options;
-	private readonly applies: Apply<T>[];
+	private readonly applyToList: ApplyTo<T>[];
 
 	/**
 	 * constructor
 	 * @param options options
-	 * @param applies appliers
+	 * @param applyToList list of applyTo
 	 */
-	constructor(options: Options, applies: Apply<T>[])
+	constructor(options: Options, applyToList: ApplyTo<T>[])
 	{
 		this.options = options;
-		this.applies = applies;
+		this.applyToList = applyToList;
 	}
 
 	/**
@@ -42,7 +42,7 @@ export class BaseSchema<T = unknown>
 		try
 		{
 			const values = makeValues(value);
-			for(const applyTo of this.applies)
+			for(const applyTo of this.applyToList)
 			{
 				if(applyTo(values, this.options, keyStack))
 				{
