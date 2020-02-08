@@ -45,7 +45,7 @@ jobs:
       run: |
         cd ./examples
         npm i
-        node example.mjs
+        node example.js
   syntax-mjs:
     name: Check ES Modules
     runs-on: ${{ matrix.os }}
