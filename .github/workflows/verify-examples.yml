@@ -13,8 +13,8 @@ jobs:
         - macos-latest
         - ubuntu-latest
         nodejs:
-        - "4.0.0"
         - "6.0.0"
+        - "8.0.0"
       fail-fast: false
     steps:
     - name: Checkout source codes
