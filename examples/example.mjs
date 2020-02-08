@@ -1,5 +1,5 @@
 import assert from "assert";
-import * as vs from "value-schema";
+import * as vs from "value-schema/esm";
 
 const schemaObject = { // schema for input
 	id: vs.number({ // number, >=1
