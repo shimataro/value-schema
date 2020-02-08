@@ -42,6 +42,8 @@ jobs:
       run: |
         node -v
         npm -v
+    - name: Check syntax
+      run: node ./dist/index.js
     - name: Run example
       run: |
         cd ./examples
@@ -93,6 +95,8 @@ jobs:
       run: |
         node -v
         npm -v
+    - name: Check .mjs syntax
+      run: node --experimental-modules ./dist/index.mjs
     - name: Run example
       run: |
         cd ./examples
