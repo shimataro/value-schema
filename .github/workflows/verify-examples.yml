@@ -60,6 +60,7 @@ jobs:
         - "8.5.0"
         - "8.6.0"
         - "10.0.0"
+        - "13.2.0"
         exclude:
         - os: windows-latest # On Windows, v8.5.0 causes ERR_INVALID_PROTOCOL; https://github.com/nodejs/node/issues/15374
           nodejs: "8.5.0"
