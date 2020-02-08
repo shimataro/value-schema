@@ -1,9 +1,3 @@
-export * from "./libs/applySchema";
-export * from "./libs/constants";
-export * from "./schema/array";
-export * from "./schema/boolean";
-export * from "./schema/email";
-export * from "./schema/number";
-export * from "./schema/numericString";
-export * from "./schema/object";
-export * from "./schema/string";
+import * as e from "./exporter";
+
+export default e;

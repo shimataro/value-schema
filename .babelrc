@@ -1,7 +1,16 @@
 {
-  "plugins": [
-    ["module-extension-resolver", {
-      "dstExtension": ".mjs"
-    }]
-  ]
+  "env": {
+    "cjs": {
+      "plugins": [
+        ["add-module-exports"]
+      ]
+    },
+    "esm": {
+      "plugins": [
+        ["module-extension-resolver", {
+          "dstExtension": ".mjs"
+        }]
+      ]
+    }
+  }
 }

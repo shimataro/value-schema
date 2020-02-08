@@ -1,4 +1,4 @@
-import * as vs from "value-schema";
+import vs from "value-schema";
 
 {
 	describe("isUndefined", testIfUndefined);
