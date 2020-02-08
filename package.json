@@ -30,11 +30,6 @@
     "JSON schema"
   ],
   "main": "./dist/index",
-  "exports": {
-    "require": "./dist/index.js",
-    "import": "./dist/index.mjs",
-    "default": "./dist/index.mjs"
-  },
   "types": "./dist/index.d.ts",
   "engines": {
     "node": ">= 4.0.0",
