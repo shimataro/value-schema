@@ -140,5 +140,5 @@ jobs:
       run: |
         cd ./examples
         npm i --only=production
-        node --experimental-conditional-exports example.mjs
         node --experimental-conditional-exports example.js
+        node --experimental-conditional-exports example.mjs
