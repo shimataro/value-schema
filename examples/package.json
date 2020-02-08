@@ -1,0 +1,13 @@
+{
+  "name": "value-schema-example",
+  "version": "0.0.0",
+  "author": "shimataro",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "dependencies": {
+    "value-schema": "file:.."
+  }
+}
