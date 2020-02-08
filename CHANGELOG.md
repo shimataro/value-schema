@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Others
+
+* update version of [Checkout](https://github.com/marketplace/actions/checkout) action
+
 ## [2.2.5] - 2019-09-22
 
 ### Fixed

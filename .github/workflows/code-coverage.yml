@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
     steps:
     - name: Checkout source codes
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
     - name: Install Node.js
       uses: actions/setup-node@v1
       with:
