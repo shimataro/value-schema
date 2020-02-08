@@ -32,6 +32,7 @@
   "main": "./dist/index",
   "exports": {
     ".": {
+      "require": "./dist/index.js",
       "default": "./dist/index.mjs"
     }
   },
