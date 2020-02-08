@@ -98,8 +98,8 @@ jobs:
         cd ./examples
         npm i --only=production
         node --experimental-modules example.mjs
-  esm-conditional-exports:
-    name: ES Modules with conditional exports
+  conditional-exports:
+    name: Conditional exports
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
