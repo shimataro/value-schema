@@ -234,11 +234,17 @@ import assert from "assert";
 
 // {foo: Array<{bar: {baz: number}}>}
 const schemaObject = {
-    foo: vs.array().each(vs.object().schema({
-        bar: vs.object().schema({
-            baz: vs.number(),
+    foo: vs.array({
+        each: vs.object({
+            schemaObject: {
+                bar: vs.object({
+                    schemaObject: {
+                        baz: vs.number(),
+                    },
+                }),
+            },
         }),
-    })),
+    }),
 };
 const input = {
     foo: [
@@ -266,11 +272,11 @@ const input = {
 };
 assert.throws(
     () => {
-        vs.fit(input, schemaObject);
+        vs.applySchema(input, schemaObject);
     },
     (err) => {
         assert.strictEqual(err.name, "ValueSchemaError");
-        assert.strictEqual(err.cause, vs.CAUSE.TYPE),
+        assert.strictEqual(err.cause, vs.CAUSE.TYPE);
         assert.deepStrictEqual(err.keyStack, ["foo", 2, "bar", "baz"]); // route to error key/index: object(key="foo") -> array(index=2) -> object(key="bar") -> object(key="baz")
         return true;
     });
