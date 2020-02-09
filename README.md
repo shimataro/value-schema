@@ -308,29 +308,21 @@ For more information, see [string](#string).
 
 ### basic usage
 
-#### ambient declarations
+#### `vs.applySchema(data, schemaObject[, onError[, onFinished]])`
 
-```typescript
-namespace value-schema {
-    export declare function fit<T = any>(data: any, schemaObject: object, onError?: (err: ValueSchemaError | null) => any): T;
-}
-```
-
-#### `vs.fit(data, schemaObject[, onError])`
-
-Fit `data` to `schemaObject`.
+apply `schemaObject` to `data`.
 
 ##### `data`
 
 An object to fit; e.g., `req.query`, `req.body` (in [Express](http://expressjs.com/))
 
-`data` will not be overwritten.
+`data` will **NOT** be overwritten.
 
 ##### `schemaObject`
 
 Schema object.
 
-* key: property name of `data` to fit
+* key: property name of `data`
 * value: schema instance; see below examples
 
 ##### `onError(err)`
@@ -338,20 +330,21 @@ Schema object.
 Callback function for each errors.
 If no errors, this function will not be called.
 
-If this parameter is omitted, `vs.fit()` throws `ValueSchemaError` on first error and remaining fitting process will be cancelled.
+If this parameter is omitted, `vs.applySchema()` throws `ValueSchemaError` on first error and remaining fitting process will be cancelled.
 
 * `err`
-    * an instance of `ValueSchemaError` or `null`
+    * an instance of `ValueSchemaError`
     * `err.keyStack` indicates path to key name that caused error: `(string | number)[]`
-    * `err` will be `null` after all fitting process has finished and errors has occurred
-        * `onError()` will no longer be called after `null` passed
 * returns
     * an adjuted value
-    * `undefined` means this key will not be included in returned object from `vs.fit()`
-    * return value of `onError(null)` is ignored
 * throws
-    * an exception that will thrown from `vs.fit()`
-    * remaining fitting processes will be cancelled
+    * an exception that will thrown from `vs.applySchema()`
+    * remaining processes will be cancelled
+
+##### `onFinished()`
+
+Called after finished all error handlings.
+Will **NOT** called if no errors.
 
 ##### examples
 
