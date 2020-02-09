@@ -36,7 +36,7 @@ All of web applications need handling input parameters, consists of following st
 
 1. existence check
     * all required parameters exist?
-    * fill omittable parameters by default values
+    * fill omittable parameters with default values
 1. type check
     * e.g., `typeof age === "number"`
     * cast them if needed; `"20"`(string) to `20`(number)
@@ -49,22 +49,68 @@ All of web applications need handling input parameters, consists of following st
 ### example
 
 ```javascript
-import vs from "value-schema";
-import assert from "assert";
-
 const schemaObject = { // schema for input
-    id: vs.number().minValue(1), // number, >=1
-    name: vs.string().maxLength(16, true), // string, max 16 characters (trims if over)
-    age: vs.number().integer(true).minValue(0), // number, integer (trims if decimal), >=0
+    id: vs.number({ // number, >=1
+        minValue: 1,
+    }),
+    name: vs.string({ // string, max 16 characters (trims if over)
+        maxLength: {
+            length: 16,
+            trims: true,
+        },
+    }),
+    age: vs.number({ // number, integer (trims if decimal), >=0
+        integer: vs.NUMBER.INTEGER.FLOOR_RZ,
+        minValue: 0,
+    }),
     email: vs.email(), // email
-    state: vs.string().only("active", "inactive"), // string, accepts only "active" and "inactive"
-    classes: vs.array().separatedBy(",").each(vs.number(), true), // array of number, separated by ",", ignores errors
-    skills: vs.array().separatedBy(",").each(vs.string(), true), // array of string, separated by ",", ignores errors
-    credit_card: vs.numericString().separatedBy("-").checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD), // numeric string, separated by "-", checks by Luhn algorithm
-    remote_addr: vs.string().pattern(vs.STRING.PATTERN.IPV4), // IPv4
-    remote_addr_ipv6: vs.string().pattern(vs.STRING.PATTERN.IPV6), // IPv6
-    limit: vs.number().integer().default(10).minValue(1, true).maxValue(100, true), // number, integer, omittable (sets 10 if omitted), >=1 (sets 1 if less), <=100 (sets 100 if greater)
-    offset: vs.number().integer().default(0).minValue(0, true), // number, integer, omittable (sets 0 if omitted), >=0 (sets 0 if less)
+    state: vs.string({ // string, accepts only "active" and "inactive"
+        only: ["active", "inactive"],
+    }),
+    classes: vs.array({ // array of number, separated by ",", ignores errors
+        separatedBy: ",",
+        each: {
+            schema: vs.number(),
+            ignoresErrors: true,
+        },
+    }),
+    skills: vs.array({ // array of string, separated by ",", ignores errors
+        separatedBy: ",",
+        each: {
+            schema: vs.string(),
+            ignoresErrors: true,
+        },
+    }),
+    creditCard: vs.numericString({ // numeric string, separated by "-", checks by Luhn algorithm
+        separatedBy: "-",
+        checksum: vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD,
+    }),
+    remoteAddr: vs.string({ // IPv4
+        pattern: vs.STRING.PATTERN.IPV4,
+    }),
+    remoteAddrIpv6: vs.string({ // IPv6
+        pattern: vs.STRING.PATTERN.IPV6,
+    }),
+    limit: vs.number({ // number, integer, omittable (sets 10 if omitted), >=1 (sets 1 if less), <=100 (sets 100 if greater)
+        ifUndefined: 10,
+        integer: true,
+        minValue: {
+            value: 1,
+            adjusts: true,
+        },
+        maxValue: {
+            value: 100,
+            adjusts: true,
+        },
+    }),
+    offset: vs.number({ // number, integer, omittable (sets 0 if omitted), >=0 (sets 0 if less)
+        ifUndefined: 0,
+        integer: true,
+        minValue: {
+            value: 0,
+            adjusts: true,
+        },
+    }),
 };
 const input = { // input values
     id: "1",
@@ -74,12 +120,12 @@ const input = { // input values
     state: "active",
     classes: "1,3,abc,4",
     skills: "c,c++,javascript,python,,swift,kotlin",
-    credit_card: "4111-1111-1111-1111",
-    remote_addr: "127.0.0.1",
-    remote_addr_ipv6: "::1",
+    creditCard: "4111-1111-1111-1111",
+    remoteAddr: "127.0.0.1",
+    remoteAddrIpv6: "::1",
     limit: "0",
 };
-const expected = { // should be fitted to this
+const expected = { // should be converted to this
     id: 1,
     name: "Pablo Diego José",
     age: 20,
@@ -87,18 +133,18 @@ const expected = { // should be fitted to this
     state: "active",
     classes: [1, 3, 4],
     skills: ["c", "c++", "javascript", "python", "swift", "kotlin"],
-    credit_card: "4111111111111111",
-    remote_addr: "127.0.0.1",
-    remote_addr_ipv6: "::1",
+    creditCard: "4111111111111111",
+    remoteAddr: "127.0.0.1",
+    remoteAddrIpv6: "::1",
     limit: 1,
     offset: 0,
 };
 
-// Let's fit!
-const fitted = vs.fit(input, schemaObject);
+// Let's apply!
+const actual = vs.applySchema(input, schemaObject);
 
 // verification
-assert.deepStrictEqual(fitted, expected);
+assert.deepStrictEqual(actual, expected);
 ```
 
 That's all! No control flows! Isn't it cool?
@@ -137,24 +183,13 @@ To execute, `--experimental-modules` flag is required.
 ```bash
 $ node --experimental-modules foo.mjs
 (node:25508) ExperimentalWarning: The ESM module loader is experimental.
-
-# As of Node.js v12, --es-module-specifier-resolution=node flag is also required.
-$ node --experimental-modules --es-module-specifier-resolution=node foo.mjs
-(node:25508) ExperimentalWarning: The ESM module loader is experimental.
 ```
 
-See [Announcing a new --experimental-modules - Node.js Foundation - Medium](https://medium.com/@nodejs/announcing-a-new-experimental-modules-1be8d2d6c2ff) for details.
+### TypeScript / ES6 Modules with [Babel](https://babeljs.io/)
 
-### TypeScript
+Auto-completion works perfectly on [Visual Studio Code](https://code.visualstudio.com/) and [IntelliJ IDEA](https://www.jetbrains.com/idea/)!
 
 ```typescript
-// foo.ts
-import * as vs from "value-schema";
-```
-
-### ES6 Modules with [Babel](https://babeljs.io/)
-
-```javascript
 // same as ES Modules!
 import vs from "value-schema";
 ```
