@@ -9,7 +9,7 @@ const schemaObject = { // schema for input
 	state: vs.string().only("active", "inactive"), // string, accepts only "active" and "inactive"
 	classes: vs.array().separatedBy(",").each(vs.number(), true), // array of number, separated by ",", ignores errors
 	skills: vs.array().separatedBy(",").each(vs.string(), true), // array of string, separated by ",", ignores errors
-	creditCard: vs.numericString().separatedBy("-").checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD,), // numeric string, separated by "-", checks by Luhn algorithm
+	creditCard: vs.numericString().separatedBy("-").checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD), // numeric string, separated by "-", checks by Luhn algorithm
 	remoteAddr: vs.string().pattern(vs.STRING.PATTERN.IPV4), // IPv4
 	remoteAddrIpv6: vs.string().pattern(vs.STRING.PATTERN.IPV6), // IPv6
 	limit: vs.number().integer().default(10).minValue(1, true).maxValue(100, true), // number, integer, omittable (sets 10 if omitted), >=1 (sets 1 if less), <=100 (sets 100 if greater)
