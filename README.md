@@ -296,13 +296,13 @@ For more information, see [number](#number).
 
 #### `vs.NUMERIC_STRING.CHECKSUM_ALGORITHM`
 
-Checksum algorithms for `vs.numericString().checksum()`.
+Checksum algorithms for numeric string.
 
 For more information, see [numeric string](#numeric-string).
 
 #### `vs.STRING.PATTERN`
 
-Regular expressions for `vs.string().pattern()`.
+Regular expressions for string.
 
 For more information, see [string](#string).
 
