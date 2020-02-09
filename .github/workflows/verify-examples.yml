@@ -97,7 +97,7 @@ jobs:
       run: |
         node -v
         npm -v
-    - name: Check .mjs syntax
+    - name: Check syntax
       run: node --experimental-modules ./dist/index.mjs
     - name: Run example
       run: |
