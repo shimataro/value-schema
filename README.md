@@ -288,6 +288,12 @@ The cause of fitting error.
 
 For more information, see below examples.
 
+#### `vs.NUMBER.INTEGER`
+
+Rounding mode.
+
+For more information, see [number](#number).
+
 #### `vs.NUMERIC_STRING.CHECKSUM_ALGORITHM`
 
 Checksum algorithms for `vs.numericString().checksum()`.
