@@ -187,7 +187,7 @@ $ node --experimental-modules foo.mjs
 
 ### TypeScript / ES6 Modules with [Babel](https://babeljs.io/)
 
-Auto-completion works perfectly on [Visual Studio Code](https://code.visualstudio.com/) and [IntelliJ IDEA](https://www.jetbrains.com/idea/)!
+TypeScript auto-completion works perfectly on [Visual Studio Code](https://code.visualstudio.com/) and [IntelliJ IDEA](https://www.jetbrains.com/idea/)!
 
 ```typescript
 // same as ES Modules!
@@ -221,8 +221,8 @@ interface ValueSchemaError extends Error
 |----|-----------|
 |`name`|`"ValueSchemaError"`|
 |`message`|human-readable description of the error, including a string `cause`|
-|`cause`|cause of fitting error; see `vs.CAUSE`|
-|`value`|value to fit|
+|`cause`|cause of error; see `vs.CAUSE`|
+|`value`|value to apply|
 |`keyStack`|array consists of path to key name(for object) or index(for array) that caused error; for nested object or array|
 
 See below example.
