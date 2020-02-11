@@ -353,24 +353,70 @@ Will **NOT** called if no errors.
 For more information, see below references about [`vs.number()`](#number), [`vs.string()`](#string), and so on.
 
 ```javascript
-import vs from "value-schema";
-import assert from "assert";
-
-const schemaObject = {
-    id: vs.number().minValue(1),
-    name: vs.string().maxLength(16, true),
-    age: vs.number().integer(true).minValue(0),
-    email: vs.email(),
-    state: vs.string().only("active", "inactive"),
-    classes: vs.array().separatedBy(",").each(vs.number(), true), // "true" means to ignore each errors
-    skills: vs.array().separatedBy(",").each(vs.string(), true),
-    credit_card: vs.numericString().separatedBy("-").checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD),
-    remote_addr: vs.string().pattern(vs.STRING.PATTERN.IPV4),
-    remote_addr_ipv6: vs.string().pattern(vs.STRING.PATTERN.IPV6),
-    limit: vs.number().integer().default(10).minValue(1, true).maxValue(100, true),
-    offset: vs.number().integer().default(0).minValue(0, true),
+const schemaObject = { // schema for input
+    id: vs.number({ // number, >=1
+        minValue: 1,
+    }),
+    name: vs.string({ // string, max 16 characters (trims if over)
+        maxLength: {
+            length: 16,
+            trims: true,
+        },
+    }),
+    age: vs.number({ // number, integer (trims if decimal), >=0
+        integer: vs.NUMBER.INTEGER.FLOOR_RZ,
+        minValue: 0,
+    }),
+    email: vs.email(), // email
+    state: vs.string({ // string, accepts only "active" and "inactive"
+        only: ["active", "inactive"],
+    }),
+    classes: vs.array({ // array of number, separated by ",", ignores errors
+        separatedBy: ",",
+        each: {
+            schema: vs.number(),
+            ignoresErrors: true,
+        },
+    }),
+    skills: vs.array({ // array of string, separated by ",", ignores errors
+        separatedBy: ",",
+        each: {
+            schema: vs.string(),
+            ignoresErrors: true,
+        },
+    }),
+    creditCard: vs.numericString({ // numeric string, separated by "-", checks by Luhn algorithm
+        separatedBy: "-",
+        checksum: vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD,
+    }),
+    remoteAddr: vs.string({ // IPv4
+        pattern: vs.STRING.PATTERN.IPV4,
+    }),
+    remoteAddrIpv6: vs.string({ // IPv6
+        pattern: vs.STRING.PATTERN.IPV6,
+    }),
+    limit: vs.number({ // number, integer, omittable (sets 10 if omitted), >=1 (sets 1 if less), <=100 (sets 100 if greater)
+        ifUndefined: 10,
+        integer: true,
+        minValue: {
+            value: 1,
+            adjusts: true,
+        },
+        maxValue: {
+            value: 100,
+            adjusts: true,
+        },
+    }),
+    offset: vs.number({ // number, integer, omittable (sets 0 if omitted), >=0 (sets 0 if less)
+        ifUndefined: 0,
+        integer: true,
+        minValue: {
+            value: 0,
+            adjusts: true,
+        },
+    }),
 };
-const input = {
+const input = { // input values
     id: "1",
     name: "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Ciprin Cipriano de la Santísima Trinidad Ruiz y Picasso",
     age: 20.5,
@@ -378,12 +424,12 @@ const input = {
     state: "active",
     classes: "1,3,abc,4",
     skills: "c,c++,javascript,python,,swift,kotlin",
-    credit_card: "4111-1111-1111-1111",
-    remote_addr: "127.0.0.1",
-    remote_addr_ipv6: "::1",
+    creditCard: "4111-1111-1111-1111",
+    remoteAddr: "127.0.0.1",
+    remoteAddrIpv6: "::1",
     limit: "0",
 };
-const expected = {
+const expected = { // should be converted to this
     id: 1,
     name: "Pablo Diego José",
     age: 20,
@@ -391,18 +437,21 @@ const expected = {
     state: "active",
     classes: [1, 3, 4],
     skills: ["c", "c++", "javascript", "python", "swift", "kotlin"],
-    credit_card: "4111111111111111",
-    remote_addr: "127.0.0.1",
-    remote_addr_ipv6: "::1",
+    creditCard: "4111111111111111",
+    remoteAddr: "127.0.0.1",
+    remoteAddrIpv6: "::1",
     limit: 1,
     offset: 0,
 };
 
-const fitted = vs.fit(input, schemaObject);
-assert.deepStrictEqual(fitted, expected);
+// Let's apply!
+const actual = vs.applySchema(input, schemaObject);
+
+// verification
+assert.deepStrictEqual(actual, expected);
 ```
 
-In TypeScript, use Generics for type-safe.
+In TypeScript, use "Generics" for type-safe.
 
 ```typescript
 interface Parameters {
@@ -410,7 +459,7 @@ interface Parameters {
     bar: string
 }
 
-const schemaObject = {
+const schemaObject: vs.SchemaObject = {
     foo: vs.number(),
     bar: vs.string(),
 };
@@ -419,7 +468,7 @@ const input = {
     bar: "abcde",
 };
 
-const fitted = vs.fit<Parameters>(input, schemaObject);
+const actual = vs.applySchema<Parameters>(input, schemaObject);
 ```
 
 ###### error handling 1
