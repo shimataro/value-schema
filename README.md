@@ -630,9 +630,9 @@ type OptionsForBoolean = {
     strict?: boolean;
     acceptsAllNumbers?: boolean;
 
-    ifUndefined?: boolean;
-    ifEmptyString?: boolean;
-    ifNull?: boolean;
+    ifUndefined?: boolean | null;
+    ifEmptyString?: boolean | null;
+    ifNull?: boolean | null;
 }
 function boolean(options?: OptionsForBoolean): BooleanSchema;
 
