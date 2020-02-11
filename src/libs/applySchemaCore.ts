@@ -3,9 +3,7 @@ import {Key, isObject} from "./types";
 import {ValueSchemaError} from "./ValueSchemaError";
 import {BaseSchema, ErrorHandler, FinishHandler} from "./BaseSchema";
 
-export type SchemaObject = {
-	[key: string]: BaseSchema;
-}
+export type SchemaObject = Record<string, BaseSchema>
 
 /**
  * apply schema to data object
@@ -30,7 +28,7 @@ export function applySchemaCore<T extends object>(data: unknown, schemaObject: S
 		return result as T;
 	}
 
-	const appliedObject: {[key: string]: unknown} = {};
+	const appliedObject: Record<string, unknown> = {};
 	let hasError = false;
 	for(const key of Object.keys(schemaObject))
 	{

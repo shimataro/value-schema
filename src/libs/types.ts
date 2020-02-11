@@ -96,7 +96,7 @@ export function isArray(value: unknown): value is unknown[]
  * @param value value to check
  * @returns Yes/No
  */
-export function isObject(value: unknown): value is {[key: string]: unknown}
+export function isObject(value: unknown): value is Record<string, unknown>
 {
 	if(value === null)
 	{
