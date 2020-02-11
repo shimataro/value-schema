@@ -6,16 +6,16 @@ import * as type from "../appliers/object/type";
 
 import {BaseSchema} from "../libs/BaseSchema";
 
-type OptionsForObject<T> =
-	ifUndefined.Options<T> |
-	ifEmptyString.Options<T> |
-	ifNull.Options<T> |
+type OptionsForObject =
+	ifUndefined.Options<object> |
+	ifEmptyString.Options<object> |
+	ifNull.Options<object> |
 	schema.Options |
 	type.Options;
 
-class ObjectSchema<T> extends BaseSchema<T>
+class ObjectSchema extends BaseSchema<object>
 {
-	constructor(options: OptionsForObject<T>)
+	constructor(options: OptionsForObject)
 	{
 		super(options, [
 			ifUndefined.applyTo,
@@ -32,7 +32,7 @@ class ObjectSchema<T> extends BaseSchema<T>
  * @param options Options
  * @returns schema
  */
-export function object<T>(options: OptionsForObject<T> = {}): ObjectSchema<T>
+export function object(options: OptionsForObject = {}): ObjectSchema
 {
-	return new ObjectSchema<T>(options);
+	return new ObjectSchema(options);
 }
