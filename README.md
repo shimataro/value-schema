@@ -626,202 +626,169 @@ assert.throws(() => {
 #### ambient declarations
 
 ```typescript
-namespace vs {
-    export declare function boolean(): BooleanSchema;
+type OptionsForBoolean = {
+    strict?: boolean;
+    acceptsAllNumbers?: boolean;
+    ifUndefined?: boolean;
+    ifEmptyString?: boolean;
+    ifNull?: boolean;
 }
+function number(options?: OptionsForBoolean): BooleanSchema;
 
+type ErrorHandler = (err: ValueSchemaError) => boolean | null | never;
 interface BooleanSchema {
-    // fitting method
-    fit(value: any, onError?: (err: ValueSchemaError) => boolean | void): number;
-
-    // feature methods (chainable)
-    strict(): this;
-    acceptAllNumbers(): this;
-    default(value: boolean): this;
-    acceptNull(value?: boolean | null /* = null */): this;
-    acceptEmptyString(value?: boolean | null /* = null */): this;
+    applyTo(value: unknown, onError?: ErrorHandler): boolean | null
 }
 ```
 
-#### `fit(value[, onError])`
+#### `applyTo(value[, onError])`
 
-Fit `value` to schema.
+apply schema to `value`.
 
-If an error occurs, call `onError` (if specified) or throw `ValueSchemaError` (otherwise)
-
-##### examples
+If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    vs.boolean().fit(true),
+    vs.boolean().applyTo(true),
     true);
 assert.strictEqual(
-    vs.boolean().fit(false),
+    vs.boolean().applyTo(false),
     false);
 
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.boolean().fit(1),
+    vs.boolean().applyTo(1),
     true);
 assert.strictEqual(
-    vs.boolean().fit(0),
+    vs.boolean().applyTo(0),
     false);
 assert.strictEqual(
-    vs.boolean().fit("1"),
+    vs.boolean().applyTo("1"),
     true);
 assert.strictEqual(
-    vs.boolean().fit("0"), // "0" is truthy in JavaScript, but value-schema treats as false!
+    vs.boolean().applyTo("0"), // "0" is truthy in JavaScript, but value-schema treats as false!
     false);
-assert.strictEqual(
-    vs.boolean().fit("true"), // "true" / "yes" / "on" are true, "false" / "no" / "off" are false!
-    true);
-assert.strictEqual(
-    vs.boolean().fit("TRUE"),
-    true);
-assert.strictEqual(
-    vs.boolean().fit("yes"),
-    true);
-assert.strictEqual(
-    vs.boolean().fit("YES"),
-    true);
-assert.strictEqual(
-    vs.boolean().fit("on"),
-    true);
-assert.strictEqual(
-    vs.boolean().fit("ON"),
-    true);
-assert.strictEqual(
-    vs.boolean().fit("false"),
-    false);
-assert.strictEqual(
-    vs.boolean().fit("FALSE"),
-    false);
-assert.strictEqual(
-    vs.boolean().fit("no"),
-    false);
-assert.strictEqual(
-    vs.boolean().fit("NO"),
-    false);
-assert.strictEqual(
-    vs.boolean().fit("off"),
-    false);
-assert.strictEqual(
-    vs.boolean().fit("OFF"),
-    false);
+
+// other truthy values
+for (const truthy of ["true", "TRUE", "yes", "YES", "on", "ON"]) {
+    assert.strictEqual(
+        vs.boolean().applyTo(truthy),
+        true);
+}
+// other falsy values
+for (const falsy of ["false", "FALSE", "no", "NO", "off", "OFF"]) {
+    assert.strictEqual(
+        vs.boolean().applyTo(falsy),
+        false);
+}
 
 // should cause error
 assert.throws(
-    () => vs.boolean().fit(-1), // accepts only 0,1
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.boolean().applyTo(-1), // accepts only 0,1
+    {cause: vs.CAUSE.TYPE});
 assert.throws(
-    () => vs.boolean().fit("abc"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.boolean().applyTo("abc"),
+    {cause: vs.CAUSE.TYPE});
 assert.throws(
-    () => vs.boolean().fit([]),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.boolean().applyTo([]),
+    {cause: vs.CAUSE.TYPE});
 assert.throws(
-    () => vs.boolean().fit({}),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.boolean().applyTo({}),
+    {cause: vs.CAUSE.TYPE});
 ```
 
-#### `strict()`
+#### options
+
+##### `strict`
 
 Enable strict type check.
+**defaults: false**
 
 **HANDLE WITH CARE!**
 In URL encoding, all values will be treated as string.
 Use this method when your system accepts **ONLY** JSON encoding (`application/json`)
 
-##### examples
-
 ```javascript
 // should cause error
 assert.throws(
-    () => vs.boolean().strict().fit(1),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.boolean({strict: true}).applyTo(1),
+    {cause: vs.CAUSE.TYPE});
 assert.throws(
-    () => vs.boolean().strict().fit("1"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.boolean({strict: true}).applyTo("1"),
+    {cause: vs.CAUSE.TYPE});
 assert.throws(
-    () => vs.boolean().strict().fit("true"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.boolean({strict: true}).applyTo("true"),
+    {cause: vs.CAUSE.TYPE});
 ```
 
-#### `acceptAllNumbers()`
+##### `acceptsAllNumbers`
 
-Accept all numbers, other than 0 / 1.
-
-##### examples
+Accepts all numbers or not, other than 0 / 1.
+**defaults: false**
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.boolean().acceptAllNumbers().fit(-1),
+    vs.boolean({acceptsAllNumbers: true}).applyTo(-1),
     true);
 assert.strictEqual(
-    vs.boolean().acceptAllNumbers().fit("100"),
+    vs.boolean({acceptsAllNumbers: true}).applyTo("100"),
     true);
 ```
 
-#### `default(value)`
+##### `ifUndefined`
 
-Accept `undefined` for input, and convert to `value`.
+If input value is `undefined`, `ifUndefined` is returned.
 
-If this method is not called, `fit(undefined)` causes `ValueSchemaError`.
-
-##### examples
+If this option is omitted, `applyTo(undefined)` causes `ValueSchemaError`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.boolean().default(true).fit(undefined),
+    vs.boolean({ifUndefined: true}).applyTo(undefined),
     true);
 
 // should cause error
 assert.throws(
-    () => vs.boolean().fit(undefined),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.REQUIRED));
+    () => vs.boolean().applyTo(undefined),
+    {cause: vs.CAUSE.UNDEFINED});
 ```
 
-#### `acceptNull([value])`
+##### `ifNull`
 
-Accept a `null` for input, and convert to `value`.
+If input value is `null`, `ifNull` is returned.
 
-If this method is not called, `fit(null)` causes `ValueSchemaError`.
-
-##### examples
+If this option is omitted, `applyTo(null)` causes `ValueSchemaError`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.boolean().acceptNull(true).fit(null),
+    vs.boolean({ifNull: true}).applyTo(null),
     true);
 
 // should cause error
 assert.throws(
-    () => vs.boolean().fit(null),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.NULL));
+    () => vs.boolean().applyTo(null),
+    {cause: vs.CAUSE.NULL});
 ```
 
-#### `acceptEmptyString([value])`
+##### `ifEmptyString`
 
-Accept an empty string(`""`) for input, and convert to `value`.
+If input value is `""`, `ifEmptyString` is returned.
 
-If this method is not called, `fit("")` causes `ValueSchemaError`.
-
-##### examples
+If this option is omitted, `applyTo("")` causes `ValueSchemaError`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.boolean().acceptEmptyString(true).fit(""),
+    vs.boolean({ifEmptyString: true}).applyTo(""),
     true);
 
 // should cause error
 assert.throws(
-    () => vs.boolean().fit(""),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
+    () => vs.boolean().applyTo(""),
+    {cause: vs.CAUSE.EMPTY_STRING});
 ```
 
 ### number
