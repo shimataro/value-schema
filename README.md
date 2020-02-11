@@ -633,7 +633,7 @@ type OptionsForBoolean = {
     ifEmptyString?: boolean;
     ifNull?: boolean;
 }
-function number(options?: OptionsForBoolean): BooleanSchema;
+function boolean(options?: OptionsForBoolean): BooleanSchema;
 
 type ErrorHandler = (err: ValueSchemaError) => boolean | null | never;
 interface BooleanSchema {
