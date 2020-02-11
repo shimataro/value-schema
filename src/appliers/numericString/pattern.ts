@@ -6,6 +6,7 @@ const REGEXP = /^\d+$/;
 
 export interface Options
 {
+	ifUndefined?: null; // instead of empty object...
 }
 
 /**
