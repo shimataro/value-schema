@@ -629,6 +629,7 @@ assert.throws(() => {
 type OptionsForBoolean = {
     strict?: boolean;
     acceptsAllNumbers?: boolean;
+
     ifUndefined?: boolean;
     ifEmptyString?: boolean;
     ifNull?: boolean;
@@ -643,7 +644,7 @@ interface BooleanSchema {
 
 #### `applyTo(value[, onError])`
 
-apply schema to `value`.
+Apply schema to `value`.
 
 If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
 
