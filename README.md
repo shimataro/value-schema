@@ -554,7 +554,10 @@ assert.throws(() => {
         // finished; join key name as message
         throw Error(messages.sort().join(","));
     });
-}, /^Error: id,name$/);
+}, {
+    name: "Error",
+    message: "id,name",
+});
 ```
 
 ###### error handling 3
@@ -586,12 +589,11 @@ const input = {
 assert.throws(() => {
     // throws first error
     vs.applySchema(input, schemaObject);
-}, (err) => {
-    assert.strictEqual(err.name, "ValueSchemaError");
-    assert.strictEqual(err.cause, vs.CAUSE.MIN_VALUE);
-    assert.strictEqual(err.value, 0);
-    assert.deepStrictEqual(err.keyStack, ["id"]);
-    return true;
+}, {
+    name: "ValueSchemaError",
+    cause: vs.CAUSE.MIN_VALUE,
+    value: 0,
+    keyStack: ["id"],
 });
 ```
 
@@ -611,10 +613,11 @@ const input = 123;
 assert.throws(() => {
     // `input` must be an object
     vs.applySchema(input, schemaObject);
-}, (err) => {
-    assert.strictEqual(err.cause, vs.CAUSE.TYPE);
-    assert.deepStrictEqual(err.keyStack, []);
-    return true;
+}, {
+    name: "ValueSchemaError",
+    cause: vs.CAUSE.TYPE,
+    value: 123,
+    keyStack: [],
 });
 ```
 
