@@ -797,66 +797,63 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-namespace vs {
-    export declare function number(): NumberSchema;
+type OptionsForNumber = {
+    strict?: boolean;
+    acceptsSpecialFormats?: boolean;
+    acceptsFullWidth?: boolean;
+
+    ifUndefined?: number | null;
+    ifEmptyString?: number | null;
+    ifNull?: number | null;
+
+    integer?: boolean | vs.NUMBER.INTEGER;
+    only?: number[];
+    minValue?: number | {value: number, adjusts: boolean};
+    maxValue?: number | {value: number, adjusts: boolean};
 }
+function number(options?: OptionsForNumber): NumberSchema;
 
+type ErrorHandler = (err: ValueSchemaError) => number | null | never;
 interface NumberSchema {
-    // fitting method
-    fit(value: any, onError?: (err: ValueSchemaError) => number | void): number;
-
-    // feature methods (chainable)
-    strict(): this;
-    default(value: number): this;
-    acceptNull(value?: number | null /* = null */): this;
-    acceptEmptyString(value?: number | null /* = null */): this;
-    acceptSpecialFormats(): this;
-    acceptFullWidth(): this;
-    integer(fits?: boolean /* = false */): this;
-    only(...values: number[]): this;
-    minValue(value: number, fits?: boolean /* = false */): this;
-    maxValue(value: number, fits?: boolean /* = false */): this;
-    convert(converter: (value: number, fail: () => never) => number): this;
+    applyTo(value: unknown, onError?: ErrorHandler): number | null
 }
 ```
 
-#### `fit(value[, onError])`
+#### `applyTo(value[, onError])`
 
-Fit `value` to schema.
+Apply schema to `value`.
 
-If an error occurs, call `onError` (if specified) or throw `ValueSchemaError` (otherwise)
-
-##### examples
+If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    vs.number().fit(-123),
+    vs.number().applyTo(-123),
     -123);
 
 // should be fitted
 assert.strictEqual(
-    vs.number().fit("-123"),
+    vs.number().applyTo("-123"),
     -123);
 assert.strictEqual(
-    vs.number().fit(true),
+    vs.number().applyTo(true),
     1);
 assert.strictEqual(
-    vs.number().fit(false),
+    vs.number().applyTo(false),
     0);
 
 // should cause error
 assert.strictEqual( // catch error by callback function (that returns a value from fit() method)
-    vs.number().fit(
+    vs.number().applyTo(
         "abc",
         (err) => 10),
     10);
 assert.throws( // ... or try-catch syntax
-    () => vs.number().fit("abc"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.number().applyTo("abc"),
+    {cause: vs.CAUSE.TYPE});
 assert.throws(
-    () => vs.number().fit("true"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.number().applyTo("true"),
+    {cause: vs.CAUSE.TYPE});
 ```
 
 #### `strict()`
