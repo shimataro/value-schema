@@ -480,8 +480,15 @@ import vs from "value-schema";
 import assert from "assert";
 
 const schemaObject = {
-    id: vs.number().minValue(1),
-    name: vs.string().maxLength(16, true),
+    id: vs.number({
+        minValue: 1,
+    }),
+    name: vs.string({
+        maxLength: {
+            length: 16,
+            trims: true,
+        },
+    }),
     email: vs.email(),
 };
 const input = {
@@ -491,27 +498,22 @@ const input = {
 };
 const expected = {
     id: 100,
+    name: "John Doe",
     email: "john@example.com",
 };
 
-const fitted = vs.fit(input, schemaObject, generateErrorHandler());
-assert.deepStrictEqual(fitted, expected);
-
-function generateErrorHandler() {
-    return (err) => {
-        if (err === null) {
-            // fitting finished
-            return;
-        }
-
-        const key = err.keyStacks.shift(); // ["id"]
-        if (key === "id") {
-            // change to 100 on `id` error
-            return 100;
-        }
-        // remove otherwise
-    };
-}
+const actual = vs.applySchema(input, schemaObject, (err) => {
+    const key = err.keyStack.shift();
+    switch(key) {
+    case "id":
+        return 100;
+    case "name":
+        return "John Doe";
+    default:
+        return null;
+    }
+});
+assert.deepStrictEqual(actual, expected);
 ```
 
 ###### error handling 2
@@ -523,8 +525,15 @@ import vs from "value-schema";
 import assert from "assert";
 
 const schemaObject = {
-    id: vs.number().minValue(1),
-    name: vs.string().maxLength(16, true),
+    id: vs.number({
+        minValue: 1,
+    }),
+    name: vs.string({
+        maxLength: {
+            length: 16,
+            trims: true,
+        },
+    }),
     email: vs.email(),
 };
 const input = {
@@ -533,27 +542,19 @@ const input = {
     email: "john@example.com", // OK
 };
 
-try {
-    vs.fit(input, schemaObject, generateErrorHandler());
-}
-catch (err) {
-    // do something
-    assert.strictEqual(err.message, "id,name");
-}
-
-function generateErrorHandler() {
+assert.throws(() => {
     const messages = [];
-    return (err) => {
-        if (err === null) {
-            // fitting finished; join key name as message
-            throw new Error(messages.join(","));
-        }
-
+    vs.applySchema(input, schemaObject, (err) => {
         // append key name
-        const key = err.keyStacks.shift(); // ["id"]
-        messages.push(key);
-    };
-}
+        const key = err.keyStack.shift();
+        if(key !== undefined) {
+            messages.push(key);
+        }
+    }, () => {
+        // finished; join key name as message
+        throw Error(messages.sort().join(","));
+    });
+}, /^Error: id,name$/);
 ```
 
 ###### error handling 3
@@ -565,8 +566,15 @@ import vs from "value-schema";
 import assert from "assert";
 
 const schemaObject = {
-    id: vs.number().minValue(1),
-    name: vs.string().maxLength(16, true),
+    id: vs.number({
+        minValue: 1,
+    }),
+    name: vs.string({
+        maxLength: {
+            length: 16,
+            trims: true,
+        },
+    }),
     email: vs.email(),
 };
 const input = {
@@ -575,13 +583,16 @@ const input = {
     email: "john@example.com", // OK
 };
 
-try {
-    const fitted = vs.fit(input, schemaObject);
-}
-catch (err) {
-    // catch a first error
+assert.throws(() => {
+    // throws first error
+    vs.applySchema(input, schemaObject);
+}, (err) => {
+    assert.strictEqual(err.name, "ValueSchemaError");
+    assert.strictEqual(err.cause, vs.CAUSE.MIN_VALUE);
+    assert.strictEqual(err.value, 0);
     assert.deepStrictEqual(err.keyStack, ["id"]);
-}
+    return true;
+});
 ```
 
 ###### error handling 4
@@ -597,14 +608,14 @@ import assert from "assert";
 const schemaObject = {};
 const input = 123;
 
-try {
+assert.throws(() => {
     // `input` must be an object
-    const fitted = vs.fit(input, schemaObject);
-}
-catch (err) {
-    assert.deepStrictEqual(err.keyStack, []);
+    vs.applySchema(input, schemaObject);
+}, (err) => {
     assert.strictEqual(err.cause, vs.CAUSE.TYPE);
-}
+    assert.deepStrictEqual(err.keyStack, []);
+    return true;
+});
 ```
 
 ### boolean
