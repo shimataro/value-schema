@@ -856,280 +856,262 @@ assert.throws(
     {cause: vs.CAUSE.TYPE});
 ```
 
-#### `strict()`
+#### options
+
+##### `strict`
 
 Enable strict type check.
+**defaults: false**
 
 **HANDLE WITH CARE!**
 In URL encoding, all values will be treated as string.
 Use this method when your system accepts **ONLY** JSON encoding (`application/json`)
 
-##### examples
-
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.number().fit("123"),
+    vs.number().applyTo("123"),
     123);
 assert.strictEqual(
-    vs.number().fit(true),
+    vs.number().applyTo(true),
     1);
 
 // should cause error
 assert.throws(
-    () => vs.number().strict().fit("123"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.number({strict: true}).applyTo("123"),
+    {cause: vs.CAUSE.TYPE});
 assert.throws(
-    () => vs.number().strict().fit(true),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.number({strict: true}).applyTo(true),
+    {cause: vs.CAUSE.TYPE});
 ```
 
-#### `default(value)`
+##### `ifUndefined`
 
-Accept `undefined` for input, and convert to `value`.
+If input value is `undefined`, `ifUndefined` is returned.
 
-If this method is not called, `fit(undefined)` causes `ValueSchemaError`.
-
-##### examples
+If this option is omitted, `applyTo(undefined)` causes `ValueSchemaError`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.number().default(1).fit(undefined),
+    vs.number({ifUndefined: 1}).applyTo(undefined),
     1);
 
 // should cause error
 assert.throws(
-    () => vs.number().fit(undefined),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.REQUIRED));
+    () => vs.number().applyTo(undefined),
+    {cause: vs.CAUSE.UNDEFINED});
 ```
 
-#### `acceptNull([value])`
+##### `ifNull`
 
-Accept a `null` for input, and convert to `value`.
+If input value is `null`, `ifNull` is returned.
 
-If this method is not called, `fit(null)` causes `ValueSchemaError`.
-
-##### examples
+If this option is omitted, `applyTo(null)` causes `ValueSchemaError`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.number().acceptNull(1).fit(null),
+    vs.number({ifNull: 1}).applyTo(null),
     1);
 
 // should cause error
 assert.throws(
-    () => vs.number().fit(null),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.NULL));
+    () => vs.number().applyTo(null),
+    {cause: vs.CAUSE.NULL});
 ```
 
-#### `acceptEmptyString([value])`
+##### `ifEmptyString`
 
-Accept an empty string(`""`) for input, and convert to `value`.
+If input value is `""`, `ifEmptyString` is returned.
 
-If this method is not called, `fit("")` causes `ValueSchemaError`.
-
-##### examples
+If this option is omitted, `applyTo("")` causes `ValueSchemaError`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.number().acceptEmptyString(1).fit(""),
+    vs.number({ifEmptyString: 1}).applyTo(""),
     1);
 
 // should cause error
 assert.throws(
-    () => vs.number().fit(""),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
+    () => vs.number().applyTo(""),
+    {cause: vs.CAUSE.EMPTY_STRING});
 ```
 
-#### `acceptSpecialFormats()`
+##### `acceptsSpecialFormats`
 
-Accept all special number formats; e.g., `"1e+2"`, `"0x100"`, `"0o100"`, `"0b100"`.
-
-If this method is not called, the above examples causes `ValueSchemaError`.
-
-##### examples
+Accepts all special number formats; e.g., `"1e+2"`, `"0x100"`, `"0o100"`, `"0b100"`.
+**defaults: false**
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.number().acceptSpecialFormats().fit("1e+2"),
+    vs.number({acceptsSpecialFormats: true}).applyTo("1e+2"),
     100);
 assert.strictEqual(
-    vs.number().acceptSpecialFormats().fit("0x100"),
+    vs.number({acceptsSpecialFormats: true}).applyTo("0x100"),
     256);
 assert.strictEqual(
-    vs.number().acceptSpecialFormats().fit("0o100"),
+    vs.number({acceptsSpecialFormats: true}).applyTo("0o100"),
     64);
 assert.strictEqual(
-    vs.number().acceptSpecialFormats().fit("0b100"),
+    vs.number({acceptsSpecialFormats: true}).applyTo("0b100"),
     4);
 
 // should cause error
 assert.throws(
-    () => vs.number().fit("1e+2"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.number().applyTo("1e+2"),
+    {cause: vs.CAUSE.TYPE});
 ```
 
-#### `acceptFullWidth()`
+##### `acceptsFullWidth`
 
-Accept full-width string; e.g., `"１２３４．５"`, `"1２3４.５"`.
-
-If this method is not called, the above examples causes `ValueSchemaError`.
-
-##### examples
+Accepts full-width string; e.g., `"１２３４．５"`, `"1２3４.５"`.
+**defaults: false**
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.number().acceptFullWidth().fit("１２３４．５"),
+    vs.number({acceptsFullWidth: true}).applyTo("１２３４．５"),
     1234.5);
 
 // should cause error
 assert.throws(
-    () => vs.number().fit("１２３４．５"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.number().applyTo("１２３４．５"),
+    {cause: vs.CAUSE.TYPE});
 ```
 
-#### `integer([fits])`
+##### `integer`
 
-Limit an input value to integer.
+Limits an input value to integer.
 
-If `fits` is true, value will be converted to an integer.
-
-##### examples
+|value|description|
+|-----|-----------|
+|`NUMBER.INTEGER.NO` (`0`) / `false`|does not limit to integer|
+|`NUMBER.INTEGER.YES` (`1`) / `true`|limits to integer, but does not round|
+|`NUMBER.INTEGER.FLOOR` (`2`)|rounds down toward infinity|
+|`NUMBER.INTEGER.FLOOR_RZ` (`3`)|rounds down toward zero|
+|`NUMBER.INTEGER.CEIL` (`4`)|rounds up toward infinity|
+|`NUMBER.INTEGER.CEIL_RZ` (`5`)|rounds up toward zero|
+|`NUMBER.INTEGER.HALF_UP` (`6`)|rounds half up toward infinity|
+|`NUMBER.INTEGER.HALF_UP_RZ` (`7`)|rounds half up toward zero|
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.number().integer(true).fit(3.14),
+    vs.number({integer: vs.NUMBER.INTEGER.FLOOR}).applyTo(3.14),
     3);
 assert.strictEqual(
-    vs.number().integer(true).fit("3.14"),
+    vs.number({integer: vs.NUMBER.INTEGER.FLOOR}).applyTo("3.14"),
     3);
 assert.strictEqual(
-    vs.number().integer(true).fit(-3.14),
+    vs.number({integer: vs.NUMBER.INTEGER.FLOOR}).applyTo(-3.14),
+    -4);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.FLOOR_RZ}).applyTo(3.14),
+    3);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.FLOOR_RZ}).applyTo(-3.14),
     -3);
 assert.strictEqual(
-    vs.number().integer(true).fit("-3.14"),
+    vs.number({integer: vs.NUMBER.INTEGER.CEIL}).applyTo(3.14),
+    4);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.CEIL}).applyTo(-3.14),
     -3);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.CEIL_RZ}).applyTo(3.14),
+    4);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.CEIL_RZ}).applyTo(-3.14),
+    -4);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.HALF_UP}).applyTo(3.49),
+    3);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.HALF_UP}).applyTo(3.5),
+    4);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.HALF_UP}).applyTo(-3.5),
+    -3);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.HALF_UP}).applyTo(-3.51),
+    -4);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.HALF_UP_RZ}).applyTo(3.49),
+    3);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.HALF_UP_RZ}).applyTo(3.5),
+    4);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.HALF_UP_RZ}).applyTo(-3.49),
+    -3);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.HALF_UP_RZ}).applyTo(-3.5),
+    -4);
 
 // should cause error
 assert.throws(
-    () => vs.number().integer().fit(3.14),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.number({integer: true}).applyTo(3.14),
+    {cause: vs.CAUSE.TYPE});
 assert.throws(
-    () => vs.number().integer().fit("3.14"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
-assert.throws(
-    () => vs.number().integer().fit("3."),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.number({integer: vs.NUMBER.INTEGER.YES}).applyTo(3.14), // equivalent to "true"
+    {cause: vs.CAUSE.TYPE});
 ```
 
-#### `only(...values)`
+##### `only`
 
-Accept only `values`.
-
-If input value is not in `values`, `fit()` method causes `ValueSchemaError`.
-
-##### examples
+Accepts only particular values.
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    vs.number().only(1, 3, 5).fit(1),
+    vs.number({only: [1, 3, 5]}).applyTo(1),
     1);
 
 // should cause error
 assert.throws(
-    () => vs.number().only(1, 3, 5).fit(2),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.ONLY));
+    () => vs.number({only: [1, 3, 5]}).applyTo(2),
+    {cause: vs.CAUSE.ONLY});
 ```
 
-#### `minValue(value[, fits])`
+##### `minValue`
 
-Limit minimum value to `value`.
-
-If input value is less than `value`, `fit()` method returns `value` (if `fits` is truthy) or causes `ValueSchemaError` (falsy; default).
-
-By default, `value` equals `Number.MIN_SAFE_INTEGER`.
-
-##### examples
+Limits minimum value.
 
 ```javascript
-// should be OK
+// should be adjusted
 assert.strictEqual(
-    vs.number().fit(Number.MIN_SAFE_INTEGER),
-    Number.MIN_SAFE_INTEGER);
-assert.strictEqual(
-    vs.number().minValue(1).fit(1),
-    1);
-
-// should be fitted
-assert.strictEqual(
-    vs.number().minValue(1, true).fit(0),
+    vs.number({minValue: {value: 1, adjusts: true}}).applyTo(0),
     1);
 
 // should cause errors
 assert.throws(
-    () => vs.number().fit(Number.MIN_SAFE_INTEGER - 1),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MIN_VALUE));
+    () => vs.number({minValue: {value: 1, adjusts: false}}).applyTo(0),
+    {cause: vs.CAUSE.MIN_VALUE});
 assert.throws(
-    () => vs.number().minValue(1).fit(0),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MIN_VALUE));
+    () => vs.number({minValue: 1}).applyTo(0), // shorthand of {value: 1, adjusts: false}
+    {cause: vs.CAUSE.MIN_VALUE});
 ```
 
-#### `maxValue(value[, fits])`
+##### `maxValue(value[, fits])`
 
-Limit maximum value to `value`.
-
-If input value is greater than `value`, `fit()` method returns `value` (if `fits` is truthy) or causes `ValueSchemaError` (falsy; default).
-
-By default, `value` equals `Number.MAX_SAFE_INTEGER`.
-
-##### examples
+Limits maximum value.
 
 ```javascript
-// should be OK
+// should be adjusted
 assert.strictEqual(
-    vs.number().fit(Number.MAX_SAFE_INTEGER),
-    Number.MAX_SAFE_INTEGER);
-assert.strictEqual(
-    vs.number().maxValue(1).fit(1),
-    1);
-
-// should be fitted
-assert.strictEqual(
-    vs.number().maxValue(100, true).fit(101),
+    vs.number({maxValue: {value: 100, adjusts: true}}).applyTo(101),
     100);
 
 // should cause errors
 assert.throws(
-    () => vs.number().fit(Number.MAX_SAFE_INTEGER + 1),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MAX_VALUE));
+    () => vs.number({maxValue: {value: 100, adjusts: false}}).applyTo(101),
+    {cause: vs.CAUSE.MAX_VALUE});
 assert.throws(
-    () => vs.number().maxValue(100).fit(101),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MAX_VALUE));
-```
-
-#### `convert(converter)`
-
-Convert input value into another value.
-
-##### examples
-
-```javascript
-// should be fitted
-assert.strictEqual(
-    vs.number().convert(value => value + 1).fit(100)
-    101);
-
-// should cause errors
-assert.throws(
-    () => vs.number().convert((value, fail) => fail()).fit(100),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.CONVERT));
+    () => vs.number({maxValue: 100}).applyTo(101), // shorthand of {value: 100, adjusts: false}
+    {cause: vs.CAUSE.MAX_VALUE});
 ```
 
 ### string
