@@ -23,12 +23,12 @@ function testType(): void
 
 		expect(
 			vs.boolean({
-				strict: true,
+				strictType: true,
 			}).applyTo(true)
 		).toEqual(true);
 		expect(
 			vs.boolean({
-				strict: true,
+				strictType: true,
 			}).applyTo(false)
 		).toEqual(false);
 	});
@@ -157,21 +157,21 @@ function testType(): void
 		expect(() =>
 		{
 			vs.boolean({
-				strict: true,
+				strictType: true,
 			}).applyTo(0);
 		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
 			vs.boolean({
-				strict: true,
+				strictType: true,
 			}).applyTo("0");
 		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
 			vs.boolean({
-				strict: true,
+				strictType: true,
 			}).applyTo("true");
 		}).toThrow(vs.CAUSE.TYPE);
 	});
@@ -193,7 +193,7 @@ function testIfUndefined(): void
 		expect(
 			vs.boolean({
 				ifUndefined: true,
-				strict: true,
+				strictType: true,
 			}).applyTo(undefined)
 		).toEqual(true);
 	});
@@ -222,7 +222,7 @@ function testIfNull(): void
 		expect(
 			vs.boolean({
 				ifNull: false,
-				strict: true,
+				strictType: true,
 			}).applyTo(null)
 		).toEqual(false);
 	});
@@ -251,7 +251,7 @@ function testIfEmptyString(): void
 		expect(
 			vs.boolean({
 				ifEmptyString: false,
-				strict: true,
+				strictType: true,
 			}).applyTo("")
 		).toEqual(false);
 	});

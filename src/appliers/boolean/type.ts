@@ -7,7 +7,7 @@ const REGEXP_FALSE = /^\s*(false|no|off)\s*$/i;
 
 export interface Options
 {
-	strict?: boolean;
+	strictType?: boolean;
 	acceptsAllNumbers?: boolean;
 }
 
@@ -21,7 +21,7 @@ export interface Options
 export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<boolean>
 {
 	const normalizedOptions: Required<Options> = {
-		strict: false,
+		strictType: false,
 		acceptsAllNumbers: false,
 		...options,
 	};
@@ -33,9 +33,9 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 	}
 
 	// not boolean
-	if(normalizedOptions.strict)
+	if(normalizedOptions.strictType)
 	{
-		// strict check mode
+		// strict type check
 		ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 	}
 

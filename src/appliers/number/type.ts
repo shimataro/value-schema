@@ -9,7 +9,7 @@ type IntegerLike = boolean | INTEGER;
 
 export interface Options
 {
-	strict?: boolean;
+	strictType?: boolean;
 	acceptsSpecialFormats?: boolean;
 	integer?: IntegerLike;
 }
@@ -24,7 +24,7 @@ export interface Options
 export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<number>
 {
 	const normalizedOptions: Required<Options> = {
-		strict: false,
+		strictType: false,
 		acceptsSpecialFormats: false,
 		integer: false,
 		...options,
@@ -93,8 +93,8 @@ function getRegExpForNumber(options: Required<Options>): RegExp | null
  */
 function toNumber(options: Required<Options>, value: unknown): number | false
 {
-	// strict check
-	if(!isNumber(value) && options.strict)
+	// strict type check
+	if(!isNumber(value) && options.strictType)
 	{
 		return false;
 	}

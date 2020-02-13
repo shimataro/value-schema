@@ -28,13 +28,13 @@ function testType(): void
 
 		expect(
 			vs.number({
-				strict: true,
+				strictType: true,
 			}).applyTo(0)
 		).toEqual(0);
 
 		expect(
 			vs.number({
-				strict: true,
+				strictType: true,
 			}).applyTo(3.14)
 		).toEqual(3.14);
 	});
@@ -153,14 +153,14 @@ function testType(): void
 		expect(() =>
 		{
 			vs.number({
-				strict: true,
+				strictType: true,
 			}).applyTo("1");
 		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
 			vs.number({
-				strict: true,
+				strictType: true,
 			}).applyTo(true);
 		}).toThrow(vs.CAUSE.TYPE);
 	});

@@ -626,7 +626,7 @@ assert.throws(() => {
 
 ```typescript
 type OptionsForBoolean = {
-    strict?: boolean;
+    strictType?: boolean;
     acceptsAllNumbers?: boolean;
 
     ifUndefined?: boolean | null;
@@ -700,7 +700,7 @@ assert.throws(
 
 #### options
 
-##### `strict`
+##### `strictType`
 
 Enable strict type check.
 **defaults: false**
@@ -712,13 +712,13 @@ Use this method when your system accepts **ONLY** JSON encoding (`application/js
 ```javascript
 // should cause error
 assert.throws(
-    () => vs.boolean({strict: true}).applyTo(1),
+    () => vs.boolean({strictType: true}).applyTo(1),
     {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 assert.throws(
-    () => vs.boolean({strict: true}).applyTo("1"),
+    () => vs.boolean({strictType: true}).applyTo("1"),
     {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 assert.throws(
-    () => vs.boolean({strict: true}).applyTo("true"),
+    () => vs.boolean({strictType: true}).applyTo("true"),
     {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
@@ -791,7 +791,7 @@ assert.throws(
 
 ```typescript
 type OptionsForNumber = {
-    strict?: boolean;
+    strictType?: boolean;
     acceptsSpecialFormats?: boolean;
     acceptsFullWidth?: boolean;
 
@@ -851,7 +851,7 @@ assert.throws(
 
 #### options
 
-##### `strict`
+##### `strictType`
 
 Enable strict type check.
 **defaults: false**
@@ -871,10 +871,10 @@ assert.strictEqual(
 
 // should cause error
 assert.throws(
-    () => vs.number({strict: true}).applyTo("123"),
+    () => vs.number({strictType: true}).applyTo("123"),
     {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 assert.throws(
-    () => vs.number({strict: true}).applyTo(true),
+    () => vs.number({strictType: true}).applyTo(true),
     {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
@@ -1107,7 +1107,7 @@ assert.throws(
 
 ```typescript
 type OptionsForString = {
-    strict?: boolean;
+    strictType?: boolean;
 
     ifUndefined?: string | null;
     ifEmptyString?: string | null;
@@ -1153,7 +1153,7 @@ assert.throws(
 
 #### options
 
-##### `strict`
+##### `strictType`
 
 Enable strict type check.
 **defaults: false**
@@ -1169,10 +1169,10 @@ assert.strictEqual(
 
 // should cause error
 assert.throws(
-    () => vs.string({strict: true}).applyTo(123),
+    () => vs.string({strictType: true}).applyTo(123),
     {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 assert.throws(
-    () => vs.string({strict: true}).applyTo(true),
+    () => vs.string({strictType: true}).applyTo(true),
     {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 

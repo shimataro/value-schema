@@ -25,7 +25,7 @@ function testType(): void
 
 		expect(
 			vs.string({
-				strict: true,
+				strictType: true,
 			}).applyTo("abc")
 		).toEqual("abc");
 	});
@@ -62,14 +62,14 @@ function testType(): void
 		expect(() =>
 		{
 			vs.string({
-				strict: true,
+				strictType: true,
 			}).applyTo(0);
 		}).toThrow(vs.CAUSE.TYPE);
 
 		expect(() =>
 		{
 			vs.string({
-				strict: true,
+				strictType: true,
 			}).applyTo(true);
 		}).toThrow(vs.CAUSE.TYPE);
 	});
