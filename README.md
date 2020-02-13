@@ -1625,7 +1625,6 @@ interface EmailSchema {
 Apply schema to `value`.
 
 If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
-``
 
 ```javascript
 // should be OK
