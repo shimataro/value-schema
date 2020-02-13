@@ -741,8 +741,6 @@ assert.strictEqual(
 
 Specifies return value when input value is `undefined`.
 
-If this option is omitted, `applyTo(undefined)` causes `ValueSchemaError`.
-
 ```javascript
 // should be adjusted
 assert.strictEqual(
@@ -759,8 +757,6 @@ assert.throws(
 
 Specifies return value when input value is `null`.
 
-If this option is omitted, `applyTo(null)` causes `ValueSchemaError`.
-
 ```javascript
 // should be adjusted
 assert.strictEqual(
@@ -776,8 +772,6 @@ assert.throws(
 ##### `ifEmptyString`
 
 Specifies return value when input value is `""`.
-
-If this option is omitted, `applyTo("")` causes `ValueSchemaError`.
 
 ```javascript
 // should be adjusted
@@ -888,8 +882,6 @@ assert.throws(
 
 Specifies return value when input value is `undefined`.
 
-If this option is omitted, `applyTo(undefined)` causes `ValueSchemaError`.
-
 ```javascript
 // should be adjusted
 assert.strictEqual(
@@ -906,8 +898,6 @@ assert.throws(
 
 Specifies return value when input value is `null`.
 
-If this option is omitted, `applyTo(null)` causes `ValueSchemaError`.
-
 ```javascript
 // should be adjusted
 assert.strictEqual(
@@ -923,8 +913,6 @@ assert.throws(
 ##### `ifEmptyString`
 
 Specifies return value when input value is `""`.
-
-If this option is omitted, `applyTo("")` causes `ValueSchemaError`.
 
 ```javascript
 // should be adjusted
@@ -1192,8 +1180,6 @@ assert.throws(
 
 Specifies return value when input value is `undefined`.
 
-If this option is omitted, `applyTo(undefined)` causes `ValueSchemaError`.
-
 ```javascript
 // should be adjusted
 assert.strictEqual(
@@ -1227,8 +1213,6 @@ assert.throws(
 ##### `ifEmptyString`
 
 Specifies return value when input value is `undefined`.
-
-If this option is omitted, `applyTo("")` causes `ValueSchemaError`.
 
 ```javascript
 // should be adjusted
@@ -1407,8 +1391,6 @@ assert.throws(
 
 Specifies return value when input value is `undefined`.
 
-If this option is omitted, `applyTo(undefined)` causes `ValueSchemaError`.
-
 ```javascript
 // should be adjusted
 assert.strictEqual(
@@ -1425,8 +1407,6 @@ assert.throws(
 
 Specifies return value when input value is `null`.
 
-If this option is omitted, `applyTo(null)` causes `ValueSchemaError`.
-
 ```javascript
 // should be adjusted
 assert.strictEqual(
@@ -1442,8 +1422,6 @@ assert.throws(
 ##### `ifEmptyString`
 
 Specifies return value when input value is `""`.
-
-If this option is omitted, `applyTo("")` causes `ValueSchemaError`.
 
 ```javascript
 // should be adjusted
@@ -1680,8 +1658,6 @@ assert.throws(
 
 Specifies return value when input value is `undefined`.
 
-If this option is omitted, `applyTo(undefined)` causes `ValueSchemaError`.
-
 ```javascript
 // should be adjusted
 assert.strictEqual(
@@ -1698,8 +1674,6 @@ assert.throws(
 
 Specifies return value when input value is `null`.
 
-If this option is omitted, `applyTo(null)` causes `ValueSchemaError`.
-
 ```javascript
 // should be adjusted
 assert.strictEqual(
@@ -1715,8 +1689,6 @@ assert.throws(
 ##### `ifEmptyString`
 
 Specifies return value when input value is `""`.
-
-If this option is omitted, `applyTo(null)` causes `ValueSchemaError`.
 
 ```javascript
 // should be adjusted
