@@ -168,31 +168,24 @@ npm install -S value-schema
 var vs = require("value-schema");
 ```
 
-### ES Modules
-
-As of Node.js v8.5.0, ES Modules has been supported.
-In Windows, Node.js v8.6.0 is recommended due to [`ERR_INVALID_PROTOCOL`](https://github.com/nodejs/node/issues/15374).
+### ES Modules / [Babel](https://babeljs.io/) / [TypeScript](https://www.typescriptlang.org/)
 
 ```javascript
-// foo.mjs
+// foo.mjs / foo.js / foo.ts
 import vs from "value-schema";
 ```
 
-To execute, `--experimental-modules` flag is required.
+**ES Modules**: As of Node.js v8.5.0, ES Modules has been supported.
+In Windows, Node.js v8.6.0 is recommended due to [`ERR_INVALID_PROTOCOL`](https://github.com/nodejs/node/issues/15374).
+
+To execute "foo.mjs", `--experimental-modules` flag is required.
 
 ```bash
 $ node --experimental-modules foo.mjs
 (node:25508) ExperimentalWarning: The ESM module loader is experimental.
 ```
 
-### TypeScript / ES6 Modules with [Babel](https://babeljs.io/)
-
-TypeScript auto-completion works perfectly on [Visual Studio Code](https://code.visualstudio.com/) and [IntelliJ IDEA](https://www.jetbrains.com/idea/)!
-
-```typescript
-// same as ES Modules!
-import vs from "value-schema";
-```
+**TypeScript**: Auto-completion and type-checking works perfectly on [Visual Studio Code](https://code.visualstudio.com/) and [IntelliJ IDEA](https://www.jetbrains.com/idea/)!
 
 ## Reference
 
