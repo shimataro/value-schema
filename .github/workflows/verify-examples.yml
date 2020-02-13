@@ -40,6 +40,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
+    - name: Update npm
+      run: npm install -g npm
     - name: Output versions
       run: |
         node -v
@@ -49,7 +51,7 @@ jobs:
     - name: Run example
       run: |
         cd ./examples
-        npm i --production
+        npm i --only=production
         node example.js
   esm:
     name: ES Modules
