@@ -42,7 +42,7 @@ jobs:
         node-version: ${{ matrix.nodejs }}
     - name: Update npm
       run: npm install -g npm@3.1.0
-      if: matrix.nodejs == "4.0.0"
+      if: matrix.nodejs == '4.0.0'
     - name: Check syntax
       run: node ./dist/index.js
     - name: Run example
