@@ -171,7 +171,7 @@ var vs = require("value-schema");
 ### ES Modules / [Babel](https://babeljs.io/) / [TypeScript](https://www.typescriptlang.org/)
 
 ```javascript
-// foo.mjs / foo.js / foo.ts
+// foo.mjs (ES Modules) / foo.js (Babel) / foo.ts (TypeScript)
 import vs from "value-schema";
 ```
 
