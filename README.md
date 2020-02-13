@@ -1604,168 +1604,167 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-namespace vs {
-    export declare function email(): EmailSchema;
+type OptionsForEmail = {
+    ifUndefined?: string | null;
+    ifEmptyString?: string | null;
+    ifNull?: string | null;
+
+    trims?: boolean;
+    pattern?: RegExp;
 }
+function email(options?: OptionsForEmail): EmailSchema;
 
+type ErrorHandler = (err: ValueSchemaError) => string | null | never;
 interface EmailSchema {
-    // fitting method
-    fit(value: any, onError?: (err: ValueSchemaError) => string | void): string;
-
-    // feature methods (chainable)
-    default(value: string): this;
-    acceptNull(value?: string | null /* = null */): this;
-    acceptEmptyString(value?: string | null /* = null */): this;
-    trim(): this;
-    pattern(pattern: RegExp): this;
+    applyTo(value: unknown, onError?: ErrorHandler): string | null
 }
 ```
 
-#### `fit(value[, onError])`
+#### `applyTo(value[, onError])`
 
-Fit `value` to schema.
+Apply schema to `value`.
 
-##### examples
+If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
+``
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    vs.email().fit("user+mailbox/department=shipping@example.com"),
+    vs.email().applyTo("user+mailbox/department=shipping@example.com"),
     "user+mailbox/department=shipping@example.com"); // dot-string
 assert.strictEqual(
-    vs.email().fit("!#$%&'*+-/=?^_`.{|}~@example.com"),
+    vs.email().applyTo("!#$%&'*+-/=?^_`.{|}~@example.com"),
     "!#$%&'*+-/=?^_`.{|}~@example.com"); // dot-string
 assert.strictEqual(
-    vs.email().fit("\"Fred\\\"Bloggs\"@example.com"),
+    vs.email().applyTo("\"Fred\\\"Bloggs\"@example.com"),
     "\"Fred\\\"Bloggs\"@example.com"); // quoted-string
 assert.strictEqual(
-    vs.email().fit("\"Joe.\\\\Blow\"@example.com"),
+    vs.email().applyTo("\"Joe.\\\\Blow\"@example.com"),
     "\"Joe.\\\\Blow\"@example.com"); // quoted-string
 assert.strictEqual(
-    vs.email().fit("user@example-domain.com"),
+    vs.email().applyTo("user@example-domain.com"),
     "user@example-domain.com");
 assert.strictEqual(
-    vs.email().fit("user@example2.com"),
+    vs.email().applyTo("user@example2.com"),
     "user@example2.com");
 
 // should cause error
 assert.throws(
-    () => vs.email().fit("@example.com"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
+    () => vs.email().applyTo("@example.com"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 assert.throws(
-    () => vs.email().fit(".a@example.com"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
+    () => vs.email().applyTo(".a@example.com"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 assert.throws(
-    () => vs.email().fit("a.@example.com"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
+    () => vs.email().applyTo("a.@example.com"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 assert.throws(
-    () => vs.email().fit("a..a@example.com"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
+    () => vs.email().applyTo("a..a@example.com"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 assert.throws(
-    () => vs.email().fit("user@example@com"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
+    () => vs.email().applyTo("user@example@com"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 assert.throws(
-    () => vs.email().fit("user-example-com"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
+    () => vs.email().applyTo("user-example-com"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 assert.throws(
-    () => vs.email().fit("user@example_domain.com"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
+    () => vs.email().applyTo("user@example_domain.com"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 assert.throws(
-    () => vs.email().fit("user@example.com2"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
+    () => vs.email().applyTo("user@example.com2"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 ```
 
-#### `default(value)`
+#### options
 
-Accept `undefined` for input, and convert to `value`.
+##### `ifUndefined`
 
-##### examples
+Specifies return value when input value is `undefined`.
+
+If this option is omitted, `applyTo(undefined)` causes `ValueSchemaError`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.email().default("user@example.com").fit(undefined),
+    vs.email({ifUndefined: "user@example.com"}).applyTo(undefined),
     "user@example.com");
 
 // should cause error
 assert.throws(
-    () => vs.email().fit(undefined),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.REQUIRED));
+    () => vs.email().applyTo(undefined),
+    {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
 ```
 
-#### `acceptNull([value])`
+##### `ifNull`
 
-Accept a `null` for input, and convert to `value`.
+Specifies return value when input value is `null`.
 
-##### examples
+If this option is omitted, `applyTo(null)` causes `ValueSchemaError`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.email().acceptNull("user@example.com").fit(null),
+    vs.email({ifNull: "user@example.com"}).applyTo(null),
     "user@example.com");
 
 // should cause error
 assert.throws(
-    () => vs.email().fit(null),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.NULL));
+    () => vs.email().applyTo(null),
+    {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
 ```
 
-#### `acceptEmptyString([value])`
+##### `ifEmptyString`
 
-Accept an empty string(`""`) for input, and convert to `value`.
+Specifies return value when input value is `""`.
 
-##### examples
+If this option is omitted, `applyTo(null)` causes `ValueSchemaError`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.email().acceptEmptyString("user@example.com").fit(""),
+    vs.email({ifEmptyString: "user@example.com"}).applyTo(""),
     "user@example.com");
 
 // should cause error
 assert.throws(
-    () => vs.email().fit(""),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
+    () => vs.email().applyTo(""),
+    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
 ```
 
-#### `trim()`
+##### `trims`
 
-Remove whitespace from both ends of input.
-
-##### examples
+Removes whitespace from both ends of input.
+**defaults: false**
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.email().trim().fit("\r\n user@example.com \t "),
+    vs.email({trims: true}).applyTo("\r\n user@example.com \t "),
     "user@example.com");
 
 // should cause error
 assert.throws(
-    () => vs.email().fit("\r\n user@example.com1 \t "),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
+    () => vs.email().applyTo("\r\n user@example.com1 \t "),
+    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 assert.throws(
-    () => vs.email().trim().fit(" \t\r\n "),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
+    () => vs.email({trims: true}).applyTo(" \t\r\n "),
+    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
 ```
 
-#### `pattern(pattern)`
+##### `pattern`
 
-Specify acceptable pattern by regular expression.
-
-##### examples
+Specifies acceptable pattern by regular expression.
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    vs.email().pattern(/^[\w\.]+@([\w\-]+\.)+\w+$/).fit("......@example.com"), // accept leading/trailing/consecutively dots
-    "user@example.com");
+    vs.email({pattern: /^[\w\.]+@([\w\-]+\.)+\w+$/}).applyTo("......@example.com"), // accept leading/trailing/consecutively dots
+    "......@example.com");
 
 // should cause errors
 assert.throws(
-    () => vs.email().fit("......@example.com"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
+    () => vs.email().applyTo("......@example.com"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 ```
 
 ### array
