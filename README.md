@@ -175,7 +175,7 @@ var vs = require("value-schema");
 import vs from "value-schema";
 ```
 
-**ES Modules**: As of Node.js v8.5.0, ES Modules has been supported.
+**ES Modules**: has been supported as of Node.js v8.5.0.
 In Windows, Node.js v8.6.0 is recommended due to [`ERR_INVALID_PROTOCOL`](https://github.com/nodejs/node/issues/15374).
 
 To execute "foo.mjs", `--experimental-modules` flag is required.
@@ -186,7 +186,7 @@ $ node --experimental-modules foo.mjs
 (node:25508) ExperimentalWarning: The ESM module loader is experimental.
 ```
 
-**TypeScript**: Auto-completion and type-checking works perfectly on [Visual Studio Code](https://code.visualstudio.com/) and [IntelliJ IDEA](https://www.jetbrains.com/idea/)!
+**TypeScript** auto-completion and type-checking works perfectly on [Visual Studio Code](https://code.visualstudio.com/) and [IntelliJ IDEA](https://www.jetbrains.com/idea/)!
 
 ## Reference
 
