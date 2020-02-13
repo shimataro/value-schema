@@ -1942,127 +1942,110 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-namespace vs {
-    export declare function object<T = any>(): ObjectSchema;
+type OptionsForObject = {
+    ifUndefined?: object | null;
+    ifEmptyString?: object | null;
+    ifNull?: object | null;
+
+    schemaObject?: SchemaObject;
 }
+function object(options?: OptionsForObject): ObjectSchema;
 
-interface ObjectSchema<T> {
-    // fitting method
-    fit(value: any, onError?: (err: ValueSchemaError) => Object | void): T;
-
-    // feature methods (chainable)
-    default(value: Object): this;
-    acceptNull(value?: Object | null /* = null */): this;
-    acceptEmptyString(value: Object | null /* = null */): this;
-    schema(schema): ObjectSchema;
+type ErrorHandler = (err: ValueSchemaError) => object | null | never;
+interface ObjectSchema {
+    applyTo(value: unknown, onError?: ErrorHandler): object | null
 }
 ```
 
-#### `fit(value[, onError])`
+#### `applyTo(value[, onError])`
 
-Fit `value` to schema.
+Apply schema to `value`.
 
-##### examples
+If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
 
 ```javascript
 // should be OK
 assert.deepStrictEqual(
-    vs.object().fit({a: 1, b: 2}),
+    vs.object().applyTo({a: 1, b: 2}),
     {a: 1, b: 2});
 
 // should cause error
 assert.throws(
-    () => vs.object().fit("abc"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.object().applyTo("abc"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 assert.throws(
-    () => vs.object().fit(0),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.object().applyTo(0),
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
-#### `default(value)`
+##### `ifUndefined`
 
-Accept `undefined` for input, and convert to `value`.
-
-If this method is not called, `fit(undefined)` causes `ValueSchemaError`.
-
-##### examples
+Specifies return value when input value is `undefined`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.deepStrictEqual(
-    vs.object().default({a: 1, b: 2}).fit(undefined),
+    vs.object({ifUndefined: {a: 1, b: 2}}).applyTo(undefined),
     {a: 1, b: 2});
 
 // should cause error
 assert.throws(
-    () => vs.object().fit(undefined),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.REQUIRED));
+    () => vs.object().applyTo(undefined),
+    {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
 ```
 
-#### `acceptNull([value])`
+##### `ifNull`
 
-Accept a `null` for input, and convert to `value`.
-
-If this method is not called, `fit(null)` causes `ValueSchemaError`.
-
-##### examples
+Specifies return value when input value is `null`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.deepStrictEqual(
-    vs.object().acceptNull({a: 1, b: 2}).fit(null),
+    vs.object({ifNull: {a: 1, b: 2}}).applyTo(null),
     {a: 1, b: 2});
 
 // should cause error
 assert.throws(
-    () => vs.object().fit(null),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.NULL));
+    () => vs.object().applyTo(null),
+    {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
 ```
 
-#### `acceptEmptyString([value])`
+##### `ifEmptyString`
 
-Accept an empty string(`""`) for input, and convert to `value`.
-
-If this method is not called, `fit("")` causes `ValueSchemaError`.
-
-##### examples
+Specifies return value when input value is `""`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.deepStrictEqual(
-    vs.object().acceptEmptyString({a: 1, b: 2}).fit(""),
+    vs.object({ifEmptyString: {a: 1, b: 2}}).applyTo(""),
     {a: 1, b: 2});
 
 // should cause error
 assert.throws(
-    () => vs.object().fit(""),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
+    () => vs.object().applyTo(""),
+    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
 ```
 
-#### `schema(schema)`
+##### `schemaObject`
 
-Assume an input value is string and separated by `separator`.
-
-If an input type is array, this method does nothing.
-
-##### examples
+Applies `schemaObject` to input value.
 
 ```javascript
 // should be OK
-const schema = {a: vs.number(), b: vs.string()};
+const schemaObject = {a: vs.number(), b: vs.string()};
 assert.deepStrictEqual(
-    vs.object().schema(schema).fit({a: 1, b: "2"}),
+    vs.object({schemaObject}).applyTo({a: 1, b: "2"}),
     {a: 1, b: "2"});
 
-// should be fitted
+// should be adjusted
 assert.deepStrictEqual(
-    vs.object().schema(schema).fit({a: 1, b: 2}),
+    vs.object({schemaObject}).applyTo({a: 1, b: 2}),
     {a: 1, b: "2"});
 
 // should cause error
 assert.throws(
-    () => vs.object().schema(schema).fit({a: "x", b: "2"}),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.object({schemaObject}).applyTo({a: "x", b: "2"}),
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
 ## Changelog
