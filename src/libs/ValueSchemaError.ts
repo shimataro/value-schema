@@ -38,3 +38,13 @@ export class ValueSchemaError extends Error
 		this.keyStack = [...keyStack];
 	}
 }
+
+/**
+ * check whether error is ValueSchemaError or not
+ * @param err error to check
+ * @returns Yes/No
+ */
+export function isValueSchemaError(err: unknown): err is ValueSchemaError
+{
+	return err instanceof ValueSchemaError;
+}

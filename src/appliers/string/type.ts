@@ -4,7 +4,7 @@ import {ValueSchemaError} from "../../libs/ValueSchemaError";
 
 export interface Options
 {
-	strict?: boolean;
+	strictType?: boolean;
 }
 
 /**
@@ -17,7 +17,7 @@ export interface Options
 export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<string>
 {
 	const normalizedOptions: Required<Options> = {
-		strict: false,
+		strictType: false,
 		...options,
 	};
 
@@ -26,8 +26,8 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	// strict check
-	if(normalizedOptions.strict)
+	// strict type check
+	if(normalizedOptions.strictType)
 	{
 		ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 	}
