@@ -43,6 +43,10 @@ jobs:
     - name: Update npm
       run: npm install -g npm@3.8.0
       if: matrix.nodejs == '4.0.0'
+    - name: Output versions
+      run: |
+        node -v
+        npm -v
     - name: Check syntax
       run: node ./dist/index.js
     - name: Run example
