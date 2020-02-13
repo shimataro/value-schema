@@ -280,6 +280,11 @@ function testError(): void
 		}
 		catch(err)
 		{
+			expect(vs.isValueSchemaError(err)).toBeTruthy();
+			if(!vs.isValueSchemaError(err))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.MIN_VALUE);
 			expect(err.keyStack).toEqual(["id"]);
 		}
@@ -303,6 +308,11 @@ function testError(): void
 		}
 		catch(err)
 		{
+			expect(vs.isValueSchemaError(err)).toBeTruthy();
+			if(!vs.isValueSchemaError(err))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.TYPE);
 			expect(err.keyStack).toEqual(["ids", 3]);
 		}
@@ -345,6 +355,11 @@ function testError(): void
 		}
 		catch(err)
 		{
+			expect(vs.isValueSchemaError(err)).toBeTruthy();
+			if(!vs.isValueSchemaError(err))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.TYPE);
 			expect(err.keyStack).toEqual(["infoList", 1, "id"]);
 		}
