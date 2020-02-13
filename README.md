@@ -643,7 +643,7 @@ interface BooleanSchema {
 
 #### `applyTo(value[, onError])`
 
-Apply schema to `value`.
+Applies schema to `value`.
 
 If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
 
@@ -814,7 +814,7 @@ interface NumberSchema {
 
 #### `applyTo(value[, onError])`
 
-Apply schema to `value`.
+Applies schema to `value`.
 
 If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
 
@@ -1130,7 +1130,7 @@ interface StringSchema {
 
 #### `applyTo(value[, onError])`
 
-Apply schema to `value`.
+Applies schema to `value`.
 
 If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
 
@@ -1364,7 +1364,7 @@ interface NumericStringSchema {
 
 #### `applyTo(value[, onError])`
 
-Apply schema to `value`.
+Applies schema to `value`.
 
 If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
 
@@ -1600,7 +1600,7 @@ interface EmailSchema {
 
 #### `applyTo(value[, onError])`
 
-Apply schema to `value`.
+Applies schema to `value`.
 
 If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
 
@@ -1764,7 +1764,7 @@ interface ArraySchema<T> {
 
 #### `applyTo(value[, onError])`
 
-Apply schema to `value`.
+Applies schema to `value`.
 
 If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
 
@@ -1959,7 +1959,7 @@ interface ObjectSchema {
 
 #### `applyTo(value[, onError])`
 
-Apply schema to `value`.
+Applies schema to `value`.
 
 If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
 
