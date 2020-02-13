@@ -805,7 +805,7 @@ type OptionsForNumber = {
     ifEmptyString?: number | null;
     ifNull?: number | null;
 
-    integer?: boolean | vs.NUMBER.INTEGER;
+    integer?: boolean | NUMBER.INTEGER;
     only?: number[];
     minValue?: number | {value: number, adjusts: boolean};
     maxValue?: number | {value: number, adjusts: boolean};
