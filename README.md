@@ -215,7 +215,7 @@ interface ValueSchemaError extends Error
 |----|-----------|
 |`name`|`"ValueSchemaError"`|
 |`message`|human-readable description of the error, including a string `cause`|
-|`cause`|cause of error; see `vs.CAUSE`|
+|`cause`|cause of error; see [`CAUSE`](#cause)|
 |`value`|value to apply|
 |`keyStack`|array consists of path to key name(for object) or index(for array) that caused error; for nested object or array|
 
@@ -323,7 +323,7 @@ Schema object.
 Callback function for each errors.
 If no errors, this function will not be called.
 
-If this parameter is omitted, `vs.applySchema()` throws `ValueSchemaError` on first error and remaining fitting process will be cancelled.
+If this parameter is omitted, `applySchema()` throws `ValueSchemaError` on first error and remaining fitting process will be cancelled.
 
 * `err`
     * an instance of `ValueSchemaError`
@@ -331,7 +331,7 @@ If this parameter is omitted, `vs.applySchema()` throws `ValueSchemaError` on fi
 * returns
     * an adjuted value
 * throws
-    * an exception that will thrown from `vs.applySchema()`
+    * an exception that will thrown from `applySchema()`
     * remaining processes will be cancelled
 
 ##### `onFinished()`
@@ -343,7 +343,7 @@ Will **NOT** called if no errors.
 
 ###### successful
 
-For more information, see below references about [`vs.number()`](#number), [`vs.string()`](#string), and so on.
+For more information, see below references about [`number()`](#number), [`string()`](#string), and so on.
 
 ```javascript
 const schemaObject = { // schema for input
