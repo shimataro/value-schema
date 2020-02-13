@@ -274,11 +274,10 @@ assert.throws(
     () => {
         vs.applySchema(input, schemaObject);
     },
-    (err) => {
-        assert.strictEqual(err.name, "ValueSchemaError");
-        assert.strictEqual(err.cause, vs.CAUSE.TYPE);
-        assert.deepStrictEqual(err.keyStack, ["foo", 2, "bar", "baz"]); // route to error key/index: object(key="foo") -> array(index=2) -> object(key="bar") -> object(key="baz")
-        return true;
+    {
+        name: "ValueSchemaError",
+        cause: vs.CAUSE.TYPE,
+        keyStack: ["foo", 2, "bar", "baz"], // route to error key/index: object(key="foo") -> array(index=2) -> object(key="bar") -> object(key="baz")
     });
 ```
 
@@ -687,16 +686,16 @@ for (const falsy of ["false", "FALSE", "no", "NO", "off", "OFF"]) {
 // should cause error
 assert.throws(
     () => vs.boolean().applyTo(-1), // accepts only 0,1
-    {cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 assert.throws(
     () => vs.boolean().applyTo("abc"),
-    {cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 assert.throws(
     () => vs.boolean().applyTo([]),
-    {cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 assert.throws(
     () => vs.boolean().applyTo({}),
-    {cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
 #### options
@@ -714,13 +713,13 @@ Use this method when your system accepts **ONLY** JSON encoding (`application/js
 // should cause error
 assert.throws(
     () => vs.boolean({strict: true}).applyTo(1),
-    {cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 assert.throws(
     () => vs.boolean({strict: true}).applyTo("1"),
-    {cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 assert.throws(
     () => vs.boolean({strict: true}).applyTo("true"),
-    {cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
 ##### `acceptsAllNumbers`
@@ -753,7 +752,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.boolean().applyTo(undefined),
-    {cause: vs.CAUSE.UNDEFINED});
+    {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
 ```
 
 ##### `ifNull`
@@ -771,7 +770,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.boolean().applyTo(null),
-    {cause: vs.CAUSE.NULL});
+    {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
 ```
 
 ##### `ifEmptyString`
@@ -789,7 +788,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.boolean().applyTo(""),
-    {cause: vs.CAUSE.EMPTY_STRING});
+    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
 ```
 
 ### number
@@ -850,10 +849,10 @@ assert.strictEqual( // catch error by callback function (that returns a value fr
     10);
 assert.throws( // ... or try-catch syntax
     () => vs.number().applyTo("abc"),
-    {cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 assert.throws(
     () => vs.number().applyTo("true"),
-    {cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
 #### options
@@ -879,10 +878,10 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.number({strict: true}).applyTo("123"),
-    {cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 assert.throws(
     () => vs.number({strict: true}).applyTo(true),
-    {cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
 ##### `ifUndefined`
@@ -900,7 +899,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.number().applyTo(undefined),
-    {cause: vs.CAUSE.UNDEFINED});
+    {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
 ```
 
 ##### `ifNull`
@@ -918,7 +917,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.number().applyTo(null),
-    {cause: vs.CAUSE.NULL});
+    {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
 ```
 
 ##### `ifEmptyString`
@@ -936,7 +935,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.number().applyTo(""),
-    {cause: vs.CAUSE.EMPTY_STRING});
+    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
 ```
 
 ##### `acceptsSpecialFormats`
@@ -962,7 +961,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.number().applyTo("1e+2"),
-    {cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
 ##### `acceptsFullWidth`
@@ -979,7 +978,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.number().applyTo("１２３４．５"),
-    {cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
 ##### `integer`
@@ -1054,10 +1053,10 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.number({integer: true}).applyTo(3.14),
-    {cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 assert.throws(
     () => vs.number({integer: vs.NUMBER.INTEGER.YES}).applyTo(3.14), // equivalent to "true"
-    {cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
 ##### `only`
@@ -1073,7 +1072,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.number({only: [1, 3, 5]}).applyTo(2),
-    {cause: vs.CAUSE.ONLY});
+    {name: "ValueSchemaError", cause: vs.CAUSE.ONLY});
 ```
 
 ##### `minValue`
@@ -1089,10 +1088,10 @@ assert.strictEqual(
 // should cause errors
 assert.throws(
     () => vs.number({minValue: {value: 1, adjusts: false}}).applyTo(0),
-    {cause: vs.CAUSE.MIN_VALUE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.MIN_VALUE});
 assert.throws(
     () => vs.number({minValue: 1}).applyTo(0), // shorthand of {value: 1, adjusts: false}
-    {cause: vs.CAUSE.MIN_VALUE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.MIN_VALUE});
 ```
 
 ##### `maxValue(value[, fits])`
@@ -1108,10 +1107,10 @@ assert.strictEqual(
 // should cause errors
 assert.throws(
     () => vs.number({maxValue: {value: 100, adjusts: false}}).applyTo(101),
-    {cause: vs.CAUSE.MAX_VALUE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.MAX_VALUE});
 assert.throws(
     () => vs.number({maxValue: 100}).applyTo(101), // shorthand of {value: 100, adjusts: false}
-    {cause: vs.CAUSE.MAX_VALUE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.MAX_VALUE});
 ```
 
 ### string
