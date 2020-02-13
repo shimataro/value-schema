@@ -9,8 +9,6 @@ jobs:
     strategy:
       matrix:
         nodejs:
-        - 8
-        - 10
         - 12
       fail-fast: false
     steps:
@@ -25,6 +23,6 @@ jobs:
         node -v
         npm -v
     - name: Install dependencies
-      run: npm ci || npm i
+      run: npm ci
     - name: Verify
       run: npm run verify
