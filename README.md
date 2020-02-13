@@ -179,6 +179,7 @@ import vs from "value-schema";
 In Windows, Node.js v8.6.0 is recommended due to [`ERR_INVALID_PROTOCOL`](https://github.com/nodejs/node/issues/15374).
 
 To execute "foo.mjs", `--experimental-modules` flag is required.
+(the flag is dropped as of Node.js v13.2.0)
 
 ```bash
 $ node --experimental-modules foo.mjs
