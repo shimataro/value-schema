@@ -41,7 +41,7 @@ jobs:
       with:
         node-version: ${{ matrix.nodejs }}
     - name: Update npm
-      run: npm install -g npm@3.8
+      run: npm install -g npm@3.8.0
     - name: Output versions
       run: |
         node -v
