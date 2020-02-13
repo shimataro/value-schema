@@ -313,7 +313,7 @@ apply `schemaObject` to `data`.
 
 ##### `data`
 
-An object to fit; e.g., `req.query`, `req.body` (in [Express](http://expressjs.com/))
+An object to be applied schema; e.g., `req.query`, `req.body` (in [Express](http://expressjs.com/))
 
 `data` will **NOT** be overwritten.
 
@@ -830,7 +830,7 @@ assert.strictEqual(
     vs.number().applyTo(-123),
     -123);
 
-// should be fitted
+// should be adjusted
 assert.strictEqual(
     vs.number().applyTo("-123"),
     -123);
@@ -842,7 +842,7 @@ assert.strictEqual(
     0);
 
 // should cause error
-assert.strictEqual( // catch error by callback function (that returns a value from fit() method)
+assert.strictEqual( // catch error by callback function (that returns a value from applyTo() method)
     vs.number().applyTo(
         "abc",
         (err) => 10),
