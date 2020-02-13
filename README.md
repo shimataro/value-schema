@@ -1743,220 +1743,198 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-namespace vs {
-    export declare function array<T = any>(): ArraySchema;
-}
+type OptionsForArray<T> = {
+    ifUndefined?: T[] | null;
+    ifEmptyString?: T[] | null;
+    ifNull?: T[] | null;
 
+    separatedBy?: string | RegExp;
+    toArray?: boolean;
+    minLength?: number;
+    maxLength?: number | {length: number, trims: boolean};
+    each?: BaseSchema<T> | {schema: BaseSchema<T>, ignoresErrors: boolean};
+}
+function array<T>(options?: OptionsForArray<T>): ArraySchema;
+
+type ErrorHandler<T> = (err: ValueSchemaError) => T[] | null | never;
 interface ArraySchema<T> {
-    // fitting method
-    fit(value: any, onError?: (err: ValueSchemaError) => Array | void): T[];
-
-    // feature methods (chainable)
-    default(value: Array): this;
-    acceptNull(value?: Array | null /* = null */): this;
-    acceptEmptyString(value: Array | null /* = null */): this;
-    separatedBy(separator: string | RegExp): this;
-    toArray(): this;
-    minLength(length: number): this;
-    maxLength(length: number, fits?: boolean /* = false */): this;
-    each(schema: BaseSchema, ignoreEachErrors: boolean /* = false */): this;
+    applyTo(value: unknown, onError?: ErrorHandler): T[] | null
 }
 ```
 
-#### `fit(value[, onError])`
+#### `applyTo(value[, onError])`
 
-Fit `value` to schema.
+Apply schema to `value`.
 
-##### examples
-
-```javascript
-// should be OK
-assert.deepStrictEqual(
-    vs.array().fit([1, "a"]),
-    [1, "a"]);
-
-// should cause error
-assert.throws(
-    () => vs.array().fit("abc"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
-assert.throws(
-    () => vs.array().fit(0),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
-```
-
-#### `default(value)`
-
-Accept `undefined` for input, and convert to `value`.
-
-If this method is not called, `fit(undefined)` causes `ValueSchemaError`.
-
-##### examples
-
-```javascript
-// should be fitted
-assert.deepStrictEqual(
-    vs.array().default([1, "a"]).fit(undefined),
-    [1, "a"]);
-
-// should cause error
-assert.throws(
-    () => vs.array().fit(undefined),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.REQUIRED));
-```
-
-#### `acceptNull([value])`
-
-Accept a `null` for input, and convert to `value`.
-
-If this method is not called, `fit(null)` causes `ValueSchemaError`.
-
-##### examples
-
-```javascript
-// should be fitted
-assert.deepStrictEqual(
-    vs.array().acceptNull([1, "a"]).fit(null),
-    [1, "a"]);
-
-// should cause error
-assert.throws(
-    () => vs.array().fit(null),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.NULL));
-```
-
-#### `acceptEmptyString([value])`
-
-Accept an empty string(`""`) for input, and convert to `value`.
-
-If this method is not called, `fit("")` causes `ValueSchemaError`.
-
-##### examples
-
-```javascript
-// should be fitted
-assert.deepStrictEqual(
-    vs.array().acceptEmptyString([1, "a"]).fit(""),
-    [1, "a"]);
-
-// should cause error
-assert.throws(
-    () => vs.array().fit(""),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
-```
-
-#### `separatedBy(separator)`
-
-Assume an input value is string and separated by `separator`.
-
-If an input type is array, this method does nothing.
-
-##### examples
+If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
 
 ```javascript
 // should be OK
 assert.deepStrictEqual(
-    vs.array().separatedBy(",").fit([1, 2, 3]),
+    vs.array().applyTo([1, "a"]),
+    [1, "a"]);
+
+// should cause error
+assert.throws(
+    () => vs.array().applyTo("abc"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+assert.throws(
+    () => vs.array().applyTo(0),
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+```
+
+#### options
+
+##### `ifUndefined`
+
+Specifies return value when input value is `undefined`.
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    vs.array({ifUndefined: [1, "a"]}).applyTo(undefined),
+    [1, "a"]);
+
+// should cause error
+assert.throws(
+    () => vs.array().applyTo(undefined),
+    {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+```
+
+##### `ifNull`
+
+Specifies return value when input value is `null`.
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    vs.array({ifNull: [1, "a"]}).applyTo(null),
+    [1, "a"]);
+
+// should cause error
+assert.throws(
+    () => vs.array().applyTo(null),
+    {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
+```
+
+##### `ifEmptyString`
+
+Specifies return value when input value is `""`.
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    vs.array({ifEmptyString: [1, "a"]}).applyTo(""),
+    [1, "a"]);
+
+// should cause error
+assert.throws(
+    () => vs.array().applyTo(""),
+    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
+```
+
+##### `separatedBy`
+
+Assumes an input value is string and separated by delimiter.
+
+If an input type is array, this option will be ignored.
+
+```javascript
+// should be OK
+assert.deepStrictEqual(
+    vs.array({separatedBy: ","}).applyTo([1, 2, 3]),
     [1, 2, 3]);
 
-// should be fitted
+// should be adjusted
 assert.deepStrictEqual(
-    vs.array().separatedBy(",").fit("1,2,3"),
+    vs.array({separatedBy: ","}).applyTo("1,2,3"),
     ["1", "2", "3"]);
 
 // should cause error
 assert.throws(
-    () => vs.array().fit("1,2,3"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.array().applyTo("1,2,3"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
-#### `toArray()`
+##### `toArray`
 
-Convert an input value to array if not.
-
-##### examples
+Converts an input value to array if not.
+**defaults: false**
 
 ```javascript
 // should be OK
 assert.deepStrictEqual(
-    vs.array().toArray().fit([0]),
+    vs.array({toArray: true}).applyTo([0]),
     [0]);
 
-// should be fitted
+// should be adjusted
 assert.deepStrictEqual(
-    vs.array().toArray().fit(0),
+    vs.array({toArray: true}).applyTo(0),
     [0]);
 
 // should cause error
 assert.throws(
-    () => vs.array().fit(0),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.array().applyTo(0),
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
-#### `minLength(length)`
+##### `minLength`
 
-Limit minimum length of input array to `length`.
-
-##### examples
+Limits minimum length of input array.
 
 ```javascript
 // should be OK
 assert.deepStrictEqual(
-    vs.array().minLength(2).fit([1, 2]),
+    vs.array({minLength: 2}).applyTo([1, 2]),
     [1, 2]);
 
 // should cause errors
 assert.throws(
-    () => vs.array().minLength(2).fit([1]),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MIN_LENGTH));
+    () => vs.array({minLength: 2}).applyTo([1]),
+    {name: "ValueSchemaError", cause: vs.CAUSE.MIN_LENGTH});
 ```
 
-#### `maxLength(length[, fits])`
+##### `maxLength`
 
-Limit maximum length of an input array to `length`.
-
-If array length is greater than `length`, `fit()` method truncates the length to `length` (if `fits` is truthy) or causes `ValueSchemaError` (falsy; default).
-
-##### examples
+Limits maximum length of an input array.
 
 ```javascript
 // should be OK
 assert.deepStrictEqual(
-    vs.array().maxLength(2).fit([1, 2]),
+    vs.array({maxLength: {length: 2, trims: false}}).applyTo([1, 2]),
     [1, 2]);
 
-// should be fitted
+// should be adjusted
 assert.deepStrictEqual(
-    vs.array().maxLength(2, true).fit([1, 2, 3]),
+    vs.array({maxLength: {length: 2, trims: true}}).applyTo([1, 2, 3]),
     [1, 2]);
 
 // should cause error
 assert.throws(
-    () => vs.array().maxLength(2).fit([1, 2, 3]),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MAX_LENGTH));
+    () => vs.array({maxLength: {length: 2, trims: false}}).applyTo([1, 2, 3]),
+    {name: "ValueSchemaError", cause: vs.CAUSE.MAX_LENGTH});
+assert.throws(
+    () => vs.array({maxLength: 2}).applyTo([1, 2, 3]), // shorthand of {length: 1, trims: false}
+    {name: "ValueSchemaError", cause: vs.CAUSE.MAX_LENGTH});
 ```
 
-#### `each(schema, [ignoreEachErrors])`
+##### `each`
 
 Apply schema for each elements.
 
-* `schema`
-    * Any above vs instance, e.g., `vs.number()`, `vs.string()`... `vs.array()`!
-* `ignoreEachErrors`
-    * If `true`, ignore the errors of each element.
-    * default is `false`
-
-##### examples
-
 ```javascript
-// should be fitted
+// should be adjusted
 assert.deepStrictEqual(
-    vs.array().each(vs.number(), true).fit([true, "abc", 2]),
+    vs.array({each: {schema: vs.number(), ignoresErrors: true}}).applyTo([true, "abc", 2]),
     [1, 2]);
 
 // should cause error
 assert.throws(
-    () => vs.array().each(vs.number()).fit([true, "abc", 2]),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EACH_TYPE));
+    () => vs.array({each: {schema: vs.number(), ignoresErrors: false}}).applyTo([true, "abc", 2]),
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+assert.throws(
+    () => vs.array({each: vs.number()}).applyTo([true, "abc", 2]), // shorthand of {schema: vs.number(), ignoresErrors: false}
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
 ### object
