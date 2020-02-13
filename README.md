@@ -281,25 +281,25 @@ assert.throws(
     });
 ```
 
-#### `vs.CAUSE`
+#### `CAUSE`
 
 The cause of fitting error.
 
 For more information, see below examples.
 
-#### `vs.NUMBER.INTEGER`
+#### `NUMBER.INTEGER`
 
 Rounding mode.
 
 For more information, see [number](#number).
 
-#### `vs.NUMERIC_STRING.CHECKSUM_ALGORITHM`
+#### `NUMERIC_STRING.CHECKSUM_ALGORITHM`
 
 Checksum algorithms for numeric string.
 
 For more information, see [numeric string](#numeric-string).
 
-#### `vs.STRING.PATTERN`
+#### `STRING.PATTERN`
 
 Regular expressions for string.
 
@@ -307,7 +307,7 @@ For more information, see [string](#string).
 
 ### basic usage
 
-#### `vs.applySchema(data, schemaObject[, onError[, onFinished]])`
+#### `applySchema(data, schemaObject[, onError[, onFinished]])`
 
 apply `schemaObject` to `data`.
 
