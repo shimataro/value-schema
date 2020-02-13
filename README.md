@@ -1356,143 +1356,146 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-namespace vs {
-    export declare function numericString(): NumericStringSchema;
+type OptionsForNumericString = {
+    ifUndefined?: string | null;
+    ifEmptyString?: string | null;
+    ifNull?: string | null;
+
+    fullWidthToHalf?: boolean;
+    joinsArray?: boolean;
+
+    minLength?: number;
+    maxLength?: number | {length: number, trims: boolean};
+    separatedBy?: string | RegExp;
+    pattern?: RegExp;
+    checksum?: NUMERIC_STRING.CHECKSUM_ALGORITHM;
 }
+function numericString(options?: OptionsForNumericString): NumericStringSchema;
 
+type ErrorHandler = (err: ValueSchemaError) => string | null | never;
 interface NumericStringSchema {
-    // fitting method
-    fit(value: any, onError?: (err: ValueSchemaError) => string | void): string;
-
-    // feature methods (chainable)
-    default(value: string): this;
-    acceptNull(value?: string | null /* = null */): this;
-    acceptEmptyString(value?: string | null /* = null */): this;
-    fullWidthToHalf(): this;
-    joinArray(): this;
-    separatedBy(separator: string | RegExp): this;
-    minLength(length: number): this;
-    maxLength(length: number, fits?: boolean /* = false */): this;
-    checksum(algorithm: string): this;
-    convert(converter: (value: string, fail: () => never) => string): this;
+    applyTo(value: unknown, onError?: ErrorHandler): string | null
 }
 ```
 
-#### `fit(value[, onError])`
+#### `applyTo(value[, onError])`
 
-Fit `value` to schema.
+Apply schema to `value`.
 
-##### examples
+If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    vs.numericString().fit("123"),
+    vs.numericString().applyTo("123"),
     "123");
 
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.numericString().fit(123),
-    "123");
-```
-
-#### `default(value)`
-
-Accpet `undefined` for input, and convert to `value`.
-
-##### examples
-
-```javascript
-// should be fitted
-assert.strictEqual(
-    vs.numericString().default("123").fit(undefined),
+    vs.numericString().applyTo(123),
     "123");
 
 // should cause error
 assert.throws(
-    () => vs.numericString().fit(undefined),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.REQUIRED));
+    () => vs.numericString().applyTo("abc"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 ```
 
-#### `acceptNull([value])`
+#### options
 
-Accept a `null` for input, and convert to `value`.
+##### `ifUndefined`
 
-##### examples
+Specifies return value when input value is `undefined`.
+
+If this option is omitted, `applyTo(undefined)` causes `ValueSchemaError`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.numericString().acceptNull("456").fit(null),
+    vs.numericString({ifUndefined: "123"}).applyTo(undefined),
+    "123");
+
+// should cause error
+assert.throws(
+    () => vs.numericString().applyTo(undefined),
+    {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+```
+
+##### `ifNull`
+
+Specifies return value when input value is `null`.
+
+If this option is omitted, `applyTo(null)` causes `ValueSchemaError`.
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    vs.numericString({ifNull: "456"}).applyTo(null),
     "456");
 
 // should cause error
 assert.throws(
-    () => vs.numericString().fit(null),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.NULL));
+    () => vs.numericString().applyTo(null),
+    {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
 ```
 
-#### `acceptEmptyString([value])`
+##### `ifEmptyString`
 
-Accept an empty string(`""`) for input, and convert to `value`.
+Specifies return value when input value is `""`.
 
-##### examples
+If this option is omitted, `applyTo("")` causes `ValueSchemaError`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.numericString().acceptEmptyString("456").fit(""),
+    vs.numericString({ifEmptyString: "456"}).applyTo(""),
     "456");
 
 // should cause error
 assert.throws(
-    () => vs.numericString().fit(""),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
+    () => vs.numericString().applyTo(""),
+    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
 ```
 
-#### `separatedBy(separator)`
+##### `separatedBy`
 
-Assume an input value is separated by `separator`, and ignore them.
-
-##### examples
+Assumes an input value is separated by delimiter, and ignore them.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.numericString().separatedBy("-").fit("4111-1111-1111-1111"),
+    vs.numericString({separatedBy: "-"}).applyTo("4111-1111-1111-1111"),
     "4111111111111111");
 
 // should cause error
 assert.throws(
-    () => vs.numericString().fit("4111-1111-1111-1111"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
+    () => vs.numericString().applyTo("4111-1111-1111-1111"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 ```
 
-#### `fullWidthToHalf()`
+##### `fullWidthToHalf`
 
-Convert full-width string to half-width; e.g., `"１２３４"`.
-
-If this method is not called, the above examples causes `ValueSchemaError`.
-
-##### examples
+Converts full-width string to half-width; e.g., `"１２３４"`.
+**defaults: false**
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.numericString().fullWidthToHalf().fit("１２３４"),
+    vs.numericString({fullWidthToHalf: true}).applyTo("１２３４"),
     "1234");
 
 // should cause error
 assert.throws(
-    () => vs.numericString().fit("１２３４"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
+    () => vs.numericString().applyTo("１２３４"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 ```
 
-#### `joinArray()`
+##### `joinsArray`
 
-Assume an input value is array, and join them.
+Assumes an input value is array, and join them.
+**defaults: false**
 
-This method is useful for following form.
+This method is useful for the following form.
 
 ```html
 <!-- "cc_number" will be passed in array -->
@@ -1508,115 +1511,92 @@ This method is useful for following form.
 </form>
 ```
 
-##### examples
-
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.numericString().joinArray().fit(["1234", "5678"]),
+    vs.numericString({joinsArray: true}).applyTo(["1234", "5678"]),
     "12345678");
 
 // should cause error
 assert.throws(
-    () => vs.numericString().fit(["1234", "5678"]),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.numericString().applyTo(["1234", "5678"]),
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
-#### `minLength(length)`
+##### `minLength`
 
-Limit minimum length of input string to `length`.
-
-##### examples
+Limits minimum length of input string.
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    vs.numericString().minLength(4).fit("1234"),
+    vs.numericString({minLength: 4}).applyTo("1234"),
     "1234");
 
 // should cause error
 assert.throws(
-    () => vs.numericString().minLength(5).fit("1234"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MIN_LENGTH));
+    () => vs.numericString({minLength: 5}).applyTo("1234"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.MIN_LENGTH});
 ```
 
-#### `maxLength(length[, fits])`
+##### `maxLength`
 
-Limit maximum length of an input string to `length`.
-
-##### examples
+Limits maximum length of an input string.
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    vs.numericString().maxLength(4).fit("1234"),
+    vs.numericString({maxLength: {length: 4, trims: false}}).applyTo("1234"),
     "1234");
 
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.numericString().separatedBy("-").maxLength(5, true).fit("1234-5678"),
+    vs.numericString({maxLength: {length: 5, trims: true}, separatedBy: "-"}).applyTo("1234-5678"),
     "12345");
 
 // should cause error
 assert.throws(
-    () => vs.numericString().maxLength(5).fit("123456"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MAX_LENGTH));
+    () => vs.numericString({maxLength: {length: 5, trims: false}}).applyTo("123456"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.MAX_LENGTH});
+assert.throws(
+    () => vs.numericString({maxLength: 5}).applyTo("123456"), // shorthand of {length: 5, trims: false}
+    {name: "ValueSchemaError", cause: vs.CAUSE.MAX_LENGTH});
 ```
 
-#### `checksum(algorithm)`
+##### `checksum`
 
-Check an input value by specified algorithm.
+Checks input value by specified algorithm.
 
 |algorithm name|explanation|used by|constant|aliases|
 |--------------|-----------|-------|--------|-------|
-|`"luhn"`|[Luhn algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm)|credit card|`vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN`|`vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD`|
-|`"modulus10/weight3:1"`|[Modulus 10 / Weight 3:1](https://en.wikipedia.org/wiki/International_Standard_Book_Number#ISBN-13_check_digit_calculation)|ISBN-13, EAN, JAN|`vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1`|`vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13` / `vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.EAN` / `vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.JAN`|
-
-##### examples
+|`"luhn"`|[Luhn algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm)|credit card|`NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN`|`NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD`|
+|`"modulus10/weight3:1"`|[Modulus 10 / Weight 3:1](https://en.wikipedia.org/wiki/International_Standard_Book_Number#ISBN-13_check_digit_calculation)|ISBN-13, EAN, JAN|`NUMERIC_STRING.CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1`|`NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13` / `NUMERIC_STRING.CHECKSUM_ALGORITHM.EAN` / `NUMERIC_STRING.CHECKSUM_ALGORITHM.JAN`|
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    vs.numericString().checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN).fit("4111111111111111"),
+    vs.numericString({checksum: vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN}).applyTo("4111111111111111"),
     "4111111111111111");
 assert.strictEqual(
-    vs.numericString().checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD).fit("4111111111111111"), // alias of LUHN
+    vs.numericString({checksum: vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD}).applyTo("4111111111111111"), // alias of LUHN
     "4111111111111111");
 assert.strictEqual(
-    vs.numericString().checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1).fit("9784101092058"),
+    vs.numericString({checksum: vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.MODULUS10_WEIGHT3_1}).applyTo("9784101092058"),
     "9784101092058");
 assert.strictEqual(
-    vs.numericString().checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13).fit("9784101092058"), // alias of MODULUS10_WEIGHT3_1
+    vs.numericString({checksum: vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13}).applyTo("9784101092058"), // alias of MODULUS10_WEIGHT3_1
     "9784101092058");
 assert.strictEqual(
-    vs.numericString().checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.EAN).fit("9784101092058"), // alias of MODULUS10_WEIGHT3_1
+    vs.numericString({checksum: vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.EAN}).applyTo("9784101092058"), // alias of MODULUS10_WEIGHT3_1
     "9784101092058");
 assert.strictEqual(
-    vs.numericString().checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.JAN).fit("9784101092058"), // alias of MODULUS10_WEIGHT3_1
+    vs.numericString({checksum: vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.JAN}).applyTo("9784101092058"), // alias of MODULUS10_WEIGHT3_1
     "9784101092058");
 
 // should cause error
 assert.throws(
-    () => vs.numericString().checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN).fit("4111111111111112"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.CHECKSUM));
-```
-
-#### `convert(converter)`
-
-Convert input value into another value.
-
-##### examples
-
-```javascript
-// should be fitted
-assert.strictEqual(
-    vs.numericString().convert(value => value.substr(0, 4) + "-" + value.substr(4)).fit("12345678")
-    "1234-5678");
-
-// should cause errors
-assert.throws(
-    () => vs.numericString().convert((value, fail) => fail()).fit("abc"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.CONVERT));
+    () => vs.numericString({checksum: vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN}).applyTo("4111111111111112"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.CHECKSUM});
 ```
 
 ### email
