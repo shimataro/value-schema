@@ -740,7 +740,7 @@ assert.strictEqual(
 
 ##### `ifUndefined`
 
-If input value is `undefined`, `ifUndefined` is returned.
+Specifies return value when input value is `undefined`.
 
 If this option is omitted, `applyTo(undefined)` causes `ValueSchemaError`.
 
@@ -758,7 +758,7 @@ assert.throws(
 
 ##### `ifNull`
 
-If input value is `null`, `ifNull` is returned.
+Specifies return value when input value is `null`.
 
 If this option is omitted, `applyTo(null)` causes `ValueSchemaError`.
 
@@ -776,7 +776,7 @@ assert.throws(
 
 ##### `ifEmptyString`
 
-If input value is `""`, `ifEmptyString` is returned.
+Specifies return value when input value is `""`.
 
 If this option is omitted, `applyTo("")` causes `ValueSchemaError`.
 
@@ -887,7 +887,7 @@ assert.throws(
 
 ##### `ifUndefined`
 
-If input value is `undefined`, `ifUndefined` is returned.
+Specifies return value when input value is `undefined`.
 
 If this option is omitted, `applyTo(undefined)` causes `ValueSchemaError`.
 
@@ -905,7 +905,7 @@ assert.throws(
 
 ##### `ifNull`
 
-If input value is `null`, `ifNull` is returned.
+Specifies return value when input value is `null`.
 
 If this option is omitted, `applyTo(null)` causes `ValueSchemaError`.
 
@@ -923,7 +923,7 @@ assert.throws(
 
 ##### `ifEmptyString`
 
-If input value is `""`, `ifEmptyString` is returned.
+Specifies return value when input value is `""`.
 
 If this option is omitted, `applyTo("")` causes `ValueSchemaError`.
 
