@@ -33,7 +33,7 @@
   "types": "./dist/index.d.ts",
   "engines": {
     "node": ">=4.0.0",
-    "npm": ">=2.0.0"
+    "npm": ">=3.8.0"
   },
   "scripts": {
     "build": "run-s build:*",
