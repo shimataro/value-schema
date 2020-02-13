@@ -25,9 +25,14 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
 	{
 		return false;
 	}
-	if(normalizedOptions.only.includes(values.output as T))
+
+	// Array.prototype.include() might not exist in old version
+	for(const value of normalizedOptions.only)
 	{
-		return true;
+		if(values.output === value)
+		{
+			return true;
+		}
 	}
 
 	ValueSchemaError.raise(CAUSE.ONLY, values, keyStack);
