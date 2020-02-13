@@ -1118,259 +1118,237 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-namespace vs {
-    export declare function string(): StringSchema;
+type OptionsForString = {
+    strict?: boolean;
+
+    ifUndefined?: string | null;
+    ifEmptyString?: string | null;
+    ifNull?: string | null;
+
+    trims?: boolean;
+
+    only?: string[];
+    minLength?: number;
+    maxLength?: number | {length: number, trims: boolean};
+    pattern?: RegExp;
 }
+function string(options?: OptionsForString): StringSchema;
 
+type ErrorHandler = (err: ValueSchemaError) => string | null | never;
 interface StringSchema {
-    // fitting method
-    fit(value: any, onError?: (err: ValueSchemaError) => string | void): string;
-
-    // feature methods (chainable)
-    strict(): this;
-    default(value: string): this;
-    acceptNull(value?: string | null /* = null */): this;
-    acceptEmptyString(value?: string | null /* = null */): this;
-    trim(): this;
-    only(...values: string[]): this;
-    minLength(length: number): this;
-    maxLength(length: number, fits?: boolean /* = false */): this;
-    pattern(pattern: RegExp): this;
-    convert(converter: (value: string, fail: () => never) => string): this;
+    applyTo(value: unknown, onError?: ErrorHandler): string | null
 }
 ```
 
-#### `fit(value[, onError])`
+#### `applyTo(value[, onError])`
 
-Fit `value` to schema.
+Apply schema to `value`.
 
-##### examples
+If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    vs.string().fit("123"),
+    vs.string().applyTo("123"),
     "123");
 
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.string().fit(123),
+    vs.string().applyTo(123),
     "123");
+
+// should cause error
+assert.throws(
+    () => vs.string().applyTo({}),
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
-#### `strict()`
+#### options
+
+##### `strict`
 
 Enable strict type check.
-
-##### examples
+**defaults: false**
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.string().fit(123),
+    vs.string().applyTo(123),
     "123");
 assert.strictEqual(
-    vs.string().fit(true),
+    vs.string().applyTo(true),
     "true");
 
 // should cause error
 assert.throws(
-    () => vs.string().strict().fit(123),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.string({strict: true}).applyTo(123),
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 assert.throws(
-    () => vs.string().strict().fit(true),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.TYPE));
+    () => vs.string({strict: true}).applyTo(true),
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
-#### `default(value)`
+##### `ifUndefined`
 
-Accept `undefined` for input, and convert to `value`.
+Specifies return value when input value is `undefined`.
 
-##### examples
+If this option is omitted, `applyTo(undefined)` causes `ValueSchemaError`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.string().default("xyz").fit(undefined),
+    vs.string({ifUndefined: "xyz"}).applyTo(undefined),
     "xyz");
 
 // should cause error
 assert.throws(
-    () => vs.string().fit(undefined),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.REQUIRED));
+    () => vs.string().applyTo(undefined),
+    {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
 ```
 
-#### `acceptNull([value])`
+##### `ifNull`
 
-Accept a `null` for input, and convert to `value`.
+Specifies return value when input value is `null`.
 
-If this method is not called, `fit(null)` causes `ValueSchemaError`.
-
-##### examples
+If this method is not called, `applyTo(null)` causes `ValueSchemaError`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.string().acceptNull("x").fit(null),
+    vs.string({ifNull: "x"}).applyTo(null),
     "x");
 
 // should cause error
 assert.throws(
-    () => vs.string().fit(null),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.NULL));
+    () => vs.string().applyTo(null),
+    {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
 ```
 
-#### `acceptEmptyString([value])`
+##### `ifEmptyString`
 
-Accept an empty string(`""`) for input, and convert to `value`.
+Specifies return value when input value is `undefined`.
 
-##### examples
+If this option is omitted, `applyTo("")` causes `ValueSchemaError`.
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.string().acceptEmptyString("xyz").fit(""),
+    vs.string({ifEmptyString: "xyz"}).applyTo(""),
     "xyz");
 
 // should cause error
 assert.throws(
-    () => vs.string().fit(""),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
+    () => vs.string().applyTo(""),
+    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
 ```
 
-#### `trim()`
+##### `trims`
 
-Remove whitespace from both ends of input.
-
-##### examples
+Removes whitespace from both ends of input.
+**defaults: false**
 
 ```javascript
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.string().trim().fit("\r\n hell, word \t "),
+    vs.string({trims: true}).applyTo("\r\n hell, word \t "),
     "hell, word");
 
 // should cause error
 assert.throws(
-    () => vs.string().trim().fit(" \t\r\n "),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.EMPTY));
+    () => vs.string({trims: true}).applyTo(" \t\r\n "),
+    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
 ```
 
-#### `only(...values)`
+##### `only`
 
-Accept only `values`.
-
-##### examples
+Accepts only particular values.
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    vs.string().only("eat", "sleep", "play").fit("sleep"),
+    vs.string({only: ["eat", "sleep", "play"]}).applyTo("sleep"),
     "sleep");
 assert.strictEqual(
-    vs.string().only("").fit(""),
+    vs.string({only: [""]}).applyTo(""),
     "");
 
 // should cause error
 assert.throws(
-    () => vs.string().only("eat", "sleep", "play").fit("study"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.ONLY));
+    () => vs.string({only: ["eat", "sleep", "play"]}).applyTo("study"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.ONLY});
 ```
 
-#### `minLength(length)`
+##### `minLength`
 
-Limit minimum length of input string to `length`.
-
-##### examples
+Limits minimum length of input string.
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    vs.string().minLength(5).fit("abcde"),
+    vs.string({minLength: 5}).applyTo("abcde"),
     "abcde");
 
 // should cause error
 assert.throws(
-    () => vs.string().minLength(5).fit("a"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MIN_LENGTH));
+    () => vs.string({minLength: 5}).applyTo("a"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.MIN_LENGTH});
 ```
 
-#### `maxLength(length[, fits])`
+##### `maxLength`
 
-Limit maximum length of an input string to `length`.
-
-If string length is greater than `length`, `fit()` method truncates the length to `length` (if `fits` is truthy) or causes `ValueSchemaError` (falsy; default).
-
-##### examples
+Limits maximum length of an input string.
 
 ```javascript
 // should be OK
 assert.strictEqual(
-    vs.string().maxLength(5).fit("abcde"),
+    vs.string({maxLength: {length: 5, trims: false}}).applyTo("abcde"),
     "abcde");
 
-// should be fitted
+// should be adjusted
 assert.strictEqual(
-    vs.string().maxLength(5, true).fit("abcdefg"),
+    vs.string({maxLength: {length: 5, trims: true}}).applyTo("abcdefg"),
     "abcde");
 
 // should cause error
 assert.throws(
-    () => vs.string().maxLength(5).fit("abcdefg"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.MAX_LENGTH));
+    () => vs.string({maxLength: {length: 5, trims: false}}).applyTo("abcdefg"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.MAX_LENGTH});
+assert.throws(
+    () => vs.string({maxLength: 5}).applyTo("abcdefg"), // shorthand of {length: 5, trims: false}
+    {name: "ValueSchemaError", cause: vs.CAUSE.MAX_LENGTH});
 ```
 
-#### `pattern(pattern)`
+##### `pattern`
 
-Specify acceptable pattern by regular expression.
+Specifies acceptable pattern by regular expression.
 
-You can also use `vs.STRING.PATTERN` constants
+You can also use `STRING.PATTERN` constants
 
 |constant|explanation|
 |--------|-----------|
-|`vs.STRING.PATTERN.EMAIL`|email address that follows [RFC5321](https://tools.ietf.org/html/rfc5321) / [RFC5322](https://tools.ietf.org/html/rfc5322)|
-|`vs.STRING.PATTERN.HTTP`|HTTP/HTTPS URL|
-|`vs.STRING.PATTERN.IPV4`|IPv4 address|
-|`vs.STRING.PATTERN.IPV6`|IPv6 address|
-|`vs.STRING.PATTERN.URI`|URI that follows [RFC3986](https://tools.ietf.org/html/rfc3986)|
-
-##### examples
+|`STRING.PATTERN.EMAIL`|email address that follows [RFC5321](https://tools.ietf.org/html/rfc5321) / [RFC5322](https://tools.ietf.org/html/rfc5322)|
+|`STRING.PATTERN.HTTP`|HTTP/HTTPS URL|
+|`STRING.PATTERN.IPV4`|IPv4 address|
+|`STRING.PATTERN.IPV6`|IPv6 address|
+|`STRING.PATTERN.URI`|URI that follows [RFC3986](https://tools.ietf.org/html/rfc3986)|
 
 ```javascript
 // should be OK
 assert.deepStrictEqual(
-    vs.string().pattern(/^Go+gle$/).fit("Gogle"),
-    "Gogle");
+    vs.string({pattern: /^Node.js$/}).applyTo("NodeXjs"),
+    "NodeXjs");
 assert.deepStrictEqual(
-    vs.string().pattern(vs.STRING.PATTERN.URI).fit("https://example.com/path/to/resource?name=value#hash"),
+    vs.string({pattern: vs.STRING.PATTERN.URI}).applyTo("https://example.com/path/to/resource?name=value#hash"),
     "https://example.com/path/to/resource?name=value#hash");
 
 
 // should cause error
 assert.throws(
-    () => vs.string().pattern(/^Go+gle$/).fit("Ggle"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
+    () => vs.string({pattern: /^Node.js$/}).applyTo("NODE.JS"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 assert.throws(
-    () => vs.string().pattern(vs.STRING.PATTERN.URI).fit("https://例.com/"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.PATTERN));
-```
-
-#### `convert(converter)`
-
-Convert input value into another value.
-
-##### examples
-
-```javascript
-// should be fitted
-assert.strictEqual(
-    vs.string().convert(value => value + value).fit("abc")
-    "abcabc");
-
-// should cause errors
-assert.throws(
-    () => vs.string().convert((value, fail) => fail()).fit("abc"),
-    (err) => (err.name === "ValueSchemaError" && err.cause === vs.CAUSE.CONVERT));
+    () => vs.string({pattern: vs.STRING.PATTERN.URI}).applyTo("https://例.com/"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 ```
 
 ### numeric string
