@@ -105,9 +105,12 @@ jobs:
         node -v
         npm -v
     - name: Check syntax
-      run: node --experimental-modules ./dist/index.mjs
+      run: |
+        node --experimental-modules ./dist/index.js
+        node --experimental-modules ./dist/index.mjs
     - name: Run example
       run: |
         cd ./examples
         npm i --only=production
+        node --experimental-modules example.js
         node --experimental-modules example.mjs
