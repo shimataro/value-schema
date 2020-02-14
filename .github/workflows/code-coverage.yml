@@ -1,19 +1,19 @@
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions
 
-on: push
-name: Windows
+on: pull_request
+name: Code Coverage
 jobs:
-  verify:
-    name: Verify
-    runs-on: windows-latest
+  code-coverage:
+    name: Report Code Coverage
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os:
+        - ubuntu-latest
         nodejs:
         - 12
       fail-fast: false
     steps:
-    - name: Turn off auto-crlf
-      run: git config --global core.autocrlf false
     - name: Checkout source codes
       uses: actions/checkout@v2
     - name: Install Node.js
@@ -26,5 +26,9 @@ jobs:
         npm -v
     - name: Install dependencies
       run: npm ci
-    - name: Verify
-      run: npm run verify
+    - name: Test
+      run: npm test
+    - name: Report code coverage
+      uses: codecov/codecov-action@v1.0.2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}

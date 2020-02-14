@@ -3,7 +3,7 @@
 [![Build Status (Windows)][image-build-windows]][link-build-windows]
 [![Build Status (macOS)][image-build-macos]][link-build-macos]
 [![Build Status (Linux)][image-build-linux]][link-build-linux]
-[![Syntax check][image-syntax-check]][link-syntax-check]
+[![Examples][image-examples]][link-examples]
 [![Code Coverage][image-code-coverage]][link-code-coverage]
 [![Release][image-release]][link-release]
 [![Node.js version][image-engine]][link-engine]
@@ -136,9 +136,11 @@ To execute, `--experimental-modules` flag is required.
 
 ```bash
 $ node --experimental-modules foo.mjs
+(node:25508) ExperimentalWarning: The ESM module loader is experimental.
 
 # As of Node.js v12, --es-module-specifier-resolution=node flag is also required.
 $ node --experimental-modules --es-module-specifier-resolution=node foo.mjs
+(node:25508) ExperimentalWarning: The ESM module loader is experimental.
 ```
 
 See [Announcing a new --experimental-modules - Node.js Foundation - Medium](https://medium.com/@nodejs/announcing-a-new-experimental-modules-1be8d2d6c2ff) for details.
@@ -2112,14 +2114,14 @@ assert.throws(
 
 See [CHANGELOG.md](CHANGELOG.md).
 
-[image-build-windows]: https://github.com/shimataro/value-schema/workflows/Windows/badge.svg
-[link-build-windows]: https://github.com/shimataro/value-schema
-[image-build-macos]: https://github.com/shimataro/value-schema/workflows/macOS/badge.svg
-[link-build-macos]: https://github.com/shimataro/value-schema
-[image-build-linux]: https://github.com/shimataro/value-schema/workflows/Linux/badge.svg
-[link-build-linux]: https://github.com/shimataro/value-schema
-[image-syntax-check]: https://github.com/shimataro/value-schema/workflows/Syntax%20check/badge.svg
-[link-syntax-check]: https://github.com/shimataro/value-schema
+[image-build-windows]: https://github.com/shimataro/value-schema/workflows/Windows/badge.svg?event=push&branch=v2
+[link-build-windows]: https://github.com/shimataro/value-schema/actions?query=workflow%3AWindows
+[image-build-macos]: https://github.com/shimataro/value-schema/workflows/macOS/badge.svg?event=push&branch=v2
+[link-build-macos]: https://github.com/shimataro/value-schema/actions?query=workflow%3AmacOS
+[image-build-linux]: https://github.com/shimataro/value-schema/workflows/Linux/badge.svg?event=push&branch=v2
+[link-build-linux]: https://github.com/shimataro/value-schema/actions?query=workflow%3ALinux
+[image-examples]: https://github.com/shimataro/value-schema/workflows/Examples/badge.svg?event=push&branch=v2
+[link-examples]: https://github.com/shimataro/value-schema/actions?query=workflow%3AExamples
 [image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/value-schema/master.svg
 [link-code-coverage]: https://codecov.io/gh/shimataro/value-schema
 [image-release]: https://img.shields.io/github/release/shimataro/value-schema.svg
