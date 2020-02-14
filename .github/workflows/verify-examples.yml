@@ -52,11 +52,10 @@ jobs:
         npm -v
     - name: Check syntax
       run: node ./dist/index.js
+    - name: Install dependencies (example)
+      run: npm --prefix ./examples i --only=production
     - name: Run example
-      run: |
-        cd ./examples
-        npm i --only=production
-        node example.js
+      run: node ./examples/example.js
   esm:
     name: ES Modules
     runs-on: ${{ matrix.os }}
@@ -104,10 +103,13 @@ jobs:
       run: |
         node -v
         npm -v
-    - name: Check syntax
+    - name: Check syntax (CJS)
+      run: node --experimental-modules ./dist/index.js
+    - name: Check syntax (ESM)
       run: node --experimental-modules ./dist/index.mjs
-    - name: Run example
-      run: |
-        cd ./examples
-        npm i --only=production
-        node --experimental-modules example.mjs
+    - name: Install dependencies (example)
+      run: npm --prefix ./examples i --only=production
+    - name: Run example (CJS)
+      run: node --experimental-modules ./examples/example.js
+    - name: Run example (ESM)
+      run: node --experimental-modules ./examples/example.mjs
