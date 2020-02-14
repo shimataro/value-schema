@@ -53,9 +53,7 @@ jobs:
     - name: Check syntax
       run: node ./dist/index.js
     - name: Install dependencies (example)
-      run: |
-        cd ./examples
-        npm i --only=production
+      run: npm --prefix ./examples i --only=production
     - name: Run example
       run: node ./examples/example.js
   esm:
@@ -110,9 +108,7 @@ jobs:
     - name: Check syntax (ESM)
       run: node --experimental-modules ./dist/index.mjs
     - name: Install dependencies (example)
-      run: |
-        cd ./examples
-        npm i --only=production
+      run: npm --prefix ./examples i --only=production
     - name: Run example (CJS)
       run: node --experimental-modules ./examples/example.js
     - name: Run example (ESM)
