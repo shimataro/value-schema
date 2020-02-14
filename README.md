@@ -2046,13 +2046,13 @@ assert.throws(
 
 See [CHANGELOG.md](CHANGELOG.md).
 
-[image-build-windows]: https://github.com/shimataro/value-schema/workflows/Windows/badge.svg?event=push&branch=v2
+[image-build-windows]: https://github.com/shimataro/value-schema/workflows/Windows/badge.svg?event=push&branch=v3
 [link-build-windows]: https://github.com/shimataro/value-schema/actions?query=workflow%3AWindows
-[image-build-macos]: https://github.com/shimataro/value-schema/workflows/macOS/badge.svg?event=push&branch=v2
+[image-build-macos]: https://github.com/shimataro/value-schema/workflows/macOS/badge.svg?event=push&branch=v3
 [link-build-macos]: https://github.com/shimataro/value-schema/actions?query=workflow%3AmacOS
-[image-build-linux]: https://github.com/shimataro/value-schema/workflows/Linux/badge.svg?event=push&branch=v2
+[image-build-linux]: https://github.com/shimataro/value-schema/workflows/Linux/badge.svg?event=push&branch=v3
 [link-build-linux]: https://github.com/shimataro/value-schema/actions?query=workflow%3ALinux
-[image-examples]: https://github.com/shimataro/value-schema/workflows/Examples/badge.svg?event=push&branch=v2
+[image-examples]: https://github.com/shimataro/value-schema/workflows/Examples/badge.svg?event=push&branch=v3
 [link-examples]: https://github.com/shimataro/value-schema/actions?query=workflow%3AExamples
 [image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/value-schema/master.svg
 [link-code-coverage]: https://codecov.io/gh/shimataro/value-schema
