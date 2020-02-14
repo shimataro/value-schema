@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.2.6] - 2020-02-14
+
 ### Others
 
 * update version of [Checkout](https://github.com/marketplace/actions/checkout) action
@@ -424,7 +426,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v2.2.5...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v2.2.6...HEAD
+[2.2.6]: https://github.com/shimataro/value-schema/compare/v2.2.5...v2.2.6
 [2.2.5]: https://github.com/shimataro/value-schema/compare/v2.2.4...v2.2.5
 [2.2.4]: https://github.com/shimataro/value-schema/compare/v2.2.3...v2.2.4
 [2.2.3]: https://github.com/shimataro/value-schema/compare/v2.2.2...v2.2.3
