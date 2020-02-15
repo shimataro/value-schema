@@ -200,7 +200,7 @@ The `ValueSchemaError` object represents an error.
 ##### ambient declaration
 
 ```typescript
-interface ValueSchemaError extends Error
+export interface ValueSchemaError extends Error
 {
     name: string
     message: string
@@ -620,6 +620,8 @@ assert.throws(() => {
 #### ambient declarations
 
 ```typescript
+export function boolean(options?: OptionsForBoolean): BooleanSchema;
+
 type OptionsForBoolean = {
     strictType?: boolean;
     acceptsAllNumbers?: boolean;
@@ -628,8 +630,6 @@ type OptionsForBoolean = {
     ifEmptyString?: boolean | null;
     ifNull?: boolean | null;
 }
-function boolean(options?: OptionsForBoolean): BooleanSchema;
-
 type ErrorHandler = (err: ValueSchemaError) => boolean | null | never;
 interface BooleanSchema {
     applyTo(value: unknown, onError?: ErrorHandler): boolean | null
@@ -785,6 +785,8 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
+export function number(options?: OptionsForNumber): NumberSchema;
+
 type OptionsForNumber = {
     strictType?: boolean;
     acceptsSpecialFormats?: boolean;
@@ -799,8 +801,6 @@ type OptionsForNumber = {
     minValue?: number | {value: number, adjusts: boolean};
     maxValue?: number | {value: number, adjusts: boolean};
 }
-function number(options?: OptionsForNumber): NumberSchema;
-
 type ErrorHandler = (err: ValueSchemaError) => number | null | never;
 interface NumberSchema {
     applyTo(value: unknown, onError?: ErrorHandler): number | null
@@ -1101,6 +1101,8 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
+export function string(options?: OptionsForString): StringSchema;
+
 type OptionsForString = {
     strictType?: boolean;
 
@@ -1115,8 +1117,6 @@ type OptionsForString = {
     maxLength?: number | {length: number, trims: boolean};
     pattern?: RegExp;
 }
-function string(options?: OptionsForString): StringSchema;
-
 type ErrorHandler = (err: ValueSchemaError) => string | null | never;
 interface StringSchema {
     applyTo(value: unknown, onError?: ErrorHandler): string | null
@@ -1333,6 +1333,8 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
+export function numericString(options?: OptionsForNumericString): NumericStringSchema;
+
 type OptionsForNumericString = {
     ifUndefined?: string | null;
     ifEmptyString?: string | null;
@@ -1347,8 +1349,6 @@ type OptionsForNumericString = {
     pattern?: RegExp;
     checksum?: NUMERIC_STRING.CHECKSUM_ALGORITHM;
 }
-function numericString(options?: OptionsForNumericString): NumericStringSchema;
-
 type ErrorHandler = (err: ValueSchemaError) => string | null | never;
 interface NumericStringSchema {
     applyTo(value: unknown, onError?: ErrorHandler): string | null
@@ -1575,6 +1575,8 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
+export function email(options?: OptionsForEmail): EmailSchema;
+
 type OptionsForEmail = {
     ifUndefined?: string | null;
     ifEmptyString?: string | null;
@@ -1583,8 +1585,6 @@ type OptionsForEmail = {
     trims?: boolean;
     pattern?: RegExp;
 }
-function email(options?: OptionsForEmail): EmailSchema;
-
 type ErrorHandler = (err: ValueSchemaError) => string | null | never;
 interface EmailSchema {
     applyTo(value: unknown, onError?: ErrorHandler): string | null
@@ -1736,6 +1736,8 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
+export function array<T>(options?: OptionsForArray<T>): ArraySchema;
+
 type OptionsForArray<T> = {
     ifUndefined?: T[] | null;
     ifEmptyString?: T[] | null;
@@ -1747,8 +1749,6 @@ type OptionsForArray<T> = {
     maxLength?: number | {length: number, trims: boolean};
     each?: BaseSchema<T> | {schema: BaseSchema<T>, ignoresErrors: boolean};
 }
-function array<T>(options?: OptionsForArray<T>): ArraySchema;
-
 type ErrorHandler<T> = (err: ValueSchemaError) => T[] | null | never;
 interface ArraySchema<T> {
     applyTo(value: unknown, onError?: ErrorHandler): T[] | null
@@ -1935,6 +1935,8 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
+export function object(options?: OptionsForObject): ObjectSchema;
+
 type OptionsForObject = {
     ifUndefined?: object | null;
     ifEmptyString?: object | null;
@@ -1942,8 +1944,6 @@ type OptionsForObject = {
 
     schemaObject?: SchemaObject;
 }
-function object(options?: OptionsForObject): ObjectSchema;
-
 type ErrorHandler = (err: ValueSchemaError) => object | null | never;
 interface ObjectSchema {
     applyTo(value: unknown, onError?: ErrorHandler): object | null
