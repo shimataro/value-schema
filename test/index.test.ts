@@ -1,14 +1,14 @@
 import vs from "value-schema";
 
 {
-	describe("applySchemaTo", testApplySchemaTo);
+	describe("applySchemaObject", testApplySchemaObject);
 	describe("error", testError);
 }
 
 /**
- * test applySchemaTo()
+ * test applySchemaObject()
  */
-function testApplySchemaTo(): void
+function testApplySchemaObject(): void
 {
 	it("should be adjusted", () =>
 	{
@@ -103,7 +103,7 @@ function testApplySchemaTo(): void
 			offset: 0,
 		};
 
-		const actual = vs.applySchemaTo(input, schemaObject);
+		const actual = vs.applySchemaObject(input, schemaObject);
 		expect(actual).toEqual(expected);
 	});
 }
@@ -138,7 +138,7 @@ function testError(): void
 			email: "john@example.com",
 		};
 
-		const actual = vs.applySchemaTo(input, schemaObject, (err) =>
+		const actual = vs.applySchemaObject(input, schemaObject, (err) =>
 		{
 			switch(err.keyStack.shift())
 			{
@@ -156,7 +156,7 @@ function testError(): void
 		expect(() =>
 		{
 			// input must be an object
-			vs.applySchemaTo(null, {}, (err) =>
+			vs.applySchemaObject(null, {}, (err) =>
 			{
 				expect(err.cause).toEqual(vs.CAUSE.TYPE);
 				return null;
@@ -165,7 +165,7 @@ function testError(): void
 
 		expect(
 			// input must be an object
-			vs.applySchemaTo(null, {}, (err) =>
+			vs.applySchemaObject(null, {}, (err) =>
 			{
 				expect(err.cause).toEqual(vs.CAUSE.TYPE);
 				return {};
@@ -177,7 +177,7 @@ function testError(): void
 			const schemaObject: vs.SchemaObject = {};
 			const input = 0;
 
-			vs.applySchemaTo(input, schemaObject);
+			vs.applySchemaObject(input, schemaObject);
 		}).toThrow(vs.CAUSE.TYPE); // input must be an object
 
 		expect(() =>
@@ -185,7 +185,7 @@ function testError(): void
 			const schemaObject: vs.SchemaObject = {};
 			const input = null;
 
-			vs.applySchemaTo(input, schemaObject);
+			vs.applySchemaObject(input, schemaObject);
 		}).toThrow(vs.CAUSE.TYPE); // input must be an object; typeof null === "object"
 
 		expect(() =>
@@ -193,7 +193,7 @@ function testError(): void
 			const schemaObject: vs.SchemaObject = {};
 			const input: number[] = [];
 
-			vs.applySchemaTo(input, schemaObject);
+			vs.applySchemaObject(input, schemaObject);
 		}).toThrow(vs.CAUSE.TYPE); // input must be an object; typeof [] === "object"
 
 		expect(() =>
@@ -217,7 +217,7 @@ function testError(): void
 			};
 
 			const keys: (string | number)[] = [];
-			vs.applySchemaTo(input, schemaObject, (err) =>
+			vs.applySchemaObject(input, schemaObject, (err) =>
 			{
 				if(err.keyStack.length === 0)
 				{
@@ -252,7 +252,7 @@ function testError(): void
 				email: "john@example.com", // OK
 			};
 
-			vs.applySchemaTo(input, schemaObject);
+			vs.applySchemaObject(input, schemaObject);
 		}).toThrow(); // throw a first error if error handler is omitted
 
 		try

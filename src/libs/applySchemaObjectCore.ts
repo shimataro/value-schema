@@ -6,15 +6,15 @@ import {BaseSchema, ErrorHandler, FinishHandler} from "./BaseSchema";
 export type SchemaObject = Record<string, BaseSchema>
 
 /**
- * apply schema to data object
- * @param data object to apply
- * @param schemaObject schema objects
+ * apply schema object to data
+ * @param data data to apply
+ * @param schemaObject schema object
  * @param onError error handler
  * @param onFinished finish handler
  * @param keyStack path to key that caused error
  * @returns applied data
  */
-export function applySchemaToCore<T extends object>(data: unknown, schemaObject: SchemaObject, onError: ErrorHandler, onFinished: FinishHandler, keyStack: Key[]): T
+export function applySchemaObjectCore<T extends object>(data: unknown, schemaObject: SchemaObject, onError: ErrorHandler, onFinished: FinishHandler, keyStack: Key[]): T
 {
 	if(!isObject(data))
 	{
