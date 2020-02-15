@@ -1190,8 +1190,6 @@ assert.throws(
 
 Specifies return value when input value is `null`.
 
-If this method is not called, `applyTo(null)` causes `ValueSchemaError`.
-
 ```javascript
 // should be adjusted
 assert.strictEqual(
