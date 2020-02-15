@@ -191,115 +191,187 @@ function testInteger(): void
 			}).applyTo(0)
 		).toEqual(0);
 	});
-	it("should be adjusted", () =>
+	describe("rounding", () =>
 	{
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.FLOOR,
-			}).applyTo(3.14)
-		).toEqual(3);
+		it("floor", () =>
+		{
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.FLOOR,
+				}).applyTo(3.14)
+			).toEqual(3);
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.FLOOR,
-			}).applyTo(-3.14)
-		).toEqual(-4);
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.FLOOR,
+				}).applyTo("3.14")
+			).toEqual(3);
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.FLOOR_RZ,
-			}).applyTo(3.14)
-		).toEqual(3);
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.FLOOR,
+				}).applyTo(-3.14)
+			).toEqual(-4);
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.FLOOR_RZ,
-			}).applyTo("3.14")
-		).toEqual(3);
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.FLOOR,
+				}).applyTo("-3.14")
+			).toEqual(-4);
+		});
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.FLOOR_RZ,
-			}).applyTo(-3.14)
-		).toEqual(-3);
+		it("floor (toward zero)", () =>
+		{
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.FLOOR_RZ,
+				}).applyTo(3.14)
+			).toEqual(3);
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.FLOOR_RZ,
-			}).applyTo("-3.14")
-		).toEqual(-3);
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.FLOOR_RZ,
+				}).applyTo(-3.14)
+			).toEqual(-3);
+		});
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.CEIL,
-			}).applyTo(3.14)
-		).toEqual(4);
+		it("ceil", () =>
+		{
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.CEIL,
+				}).applyTo(3.14)
+			).toEqual(4);
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.CEIL,
-			}).applyTo(-3.14)
-		).toEqual(-3);
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.CEIL,
+				}).applyTo(-3.14)
+			).toEqual(-3);
+		});
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.CEIL_RZ,
-			}).applyTo(3.14)
-		).toEqual(4);
+		it("ceil (toward zero)", () =>
+		{
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.CEIL_RZ,
+				}).applyTo(3.14)
+			).toEqual(4);
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.CEIL_RZ,
-			}).applyTo(-3.14)
-		).toEqual(-4);
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.CEIL_RZ,
+				}).applyTo(-3.14)
+			).toEqual(-4);
+		});
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.HALF_UP,
-			}).applyTo(3.4)
-		).toEqual(3);
+		it("half up", () =>
+		{
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.HALF_UP,
+				}).applyTo(3.49)
+			).toEqual(3);
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.HALF_UP,
-			}).applyTo(3.5)
-		).toEqual(4);
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.HALF_UP,
+				}).applyTo(3.5)
+			).toEqual(4);
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.HALF_UP,
-			}).applyTo(-3.4)
-		).toEqual(-3);
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.HALF_UP,
+				}).applyTo(-3.49)
+			).toEqual(-3);
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.HALF_UP,
-			}).applyTo(-3.5)
-		).toEqual(-3);
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.HALF_UP,
+				}).applyTo(-3.5)
+			).toEqual(-3);
+		});
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.HALF_UP_RZ,
-			}).applyTo(3.4)
-		).toEqual(3);
+		it("half up (toward zero)", () =>
+		{
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.HALF_UP_RZ,
+				}).applyTo(3.49)
+			).toEqual(3);
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.HALF_UP_RZ,
-			}).applyTo(3.5)
-		).toEqual(4);
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.HALF_UP_RZ,
+				}).applyTo(3.5)
+			).toEqual(4);
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.HALF_UP_RZ,
-			}).applyTo(-3.4)
-		).toEqual(-3);
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.HALF_UP_RZ,
+				}).applyTo(-3.49)
+			).toEqual(-3);
 
-		expect(
-			vs.number({
-				integer: vs.NUMBER.INTEGER.HALF_UP_RZ,
-			}).applyTo(-3.5)
-		).toEqual(-4);
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.HALF_UP_RZ,
+				}).applyTo(-3.5)
+			).toEqual(-4);
+		});
+
+		it("half down", () =>
+		{
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.HALF_DOWN,
+				}).applyTo(3.5)
+			).toEqual(3);
+
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.HALF_DOWN,
+				}).applyTo(3.51)
+			).toEqual(4);
+
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.HALF_DOWN,
+				}).applyTo(-3.5)
+			).toEqual(-4);
+
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.HALF_DOWN,
+				}).applyTo(-3.49)
+			).toEqual(-3);
+		});
+
+		it("half down (toward zero", () =>
+		{
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.HALF_DOWN_RZ,
+				}).applyTo(3.5)
+			).toEqual(3);
+
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.HALF_DOWN_RZ,
+				}).applyTo(3.51)
+			).toEqual(4);
+
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.HALF_DOWN_RZ,
+				}).applyTo(-3.5)
+			).toEqual(-3);
+
+			expect(
+				vs.number({
+					integer: vs.NUMBER.INTEGER.HALF_DOWN_RZ,
+				}).applyTo(-3.51)
+			).toEqual(-4);
+		});
 	});
 	it("should cause error(s)", () =>
 	{
