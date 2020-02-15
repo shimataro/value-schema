@@ -1,14 +1,14 @@
 import vs from "value-schema";
 
 {
-	describe("applySchemaTo", testApplySchema);
+	describe("applySchemaTo", testApplySchemaTo);
 	describe("error", testError);
 }
 
 /**
  * test applySchemaTo()
  */
-function testApplySchema(): void
+function testApplySchemaTo(): void
 {
 	it("should be adjusted", () =>
 	{
