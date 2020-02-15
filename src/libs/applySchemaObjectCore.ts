@@ -43,7 +43,7 @@ export function applySchemaObjectCore<T extends object>(data: unknown, schemaObj
 	return appliedObject as T;
 
 	/**
-	 * error handler (to avoid "no-loop-fun" error on eslint)
+	 * error handler (to avoid "no-loop-func" error on eslint)
 	 * @param err error object
 	 * @returns error handler
 	 */
