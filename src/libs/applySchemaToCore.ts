@@ -14,7 +14,7 @@ export type SchemaObject = Record<string, BaseSchema>
  * @param keyStack path to key that caused error
  * @returns applied data
  */
-export function applySchemaCore<T extends object>(data: unknown, schemaObject: SchemaObject, onError: ErrorHandler, onFinished: FinishHandler, keyStack: Key[]): T
+export function applySchemaToCore<T extends object>(data: unknown, schemaObject: SchemaObject, onError: ErrorHandler, onFinished: FinishHandler, keyStack: Key[]): T
 {
 	if(!isObject(data))
 	{

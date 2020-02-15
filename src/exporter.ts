@@ -1,4 +1,4 @@
-export * from "./libs/applySchema";
+export * from "./libs/applySchemaTo";
 export * from "./libs/constants";
 export * from "./libs/ValueSchemaError";
 export * from "./schema/array";

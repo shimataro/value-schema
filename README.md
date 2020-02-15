@@ -142,7 +142,7 @@ const expected = { // should be converted to this
 };
 
 // Let's apply!
-const actual = vs.applySchema(input, schemaObject);
+const actual = vs.applySchemaTo(input, schemaObject);
 
 // verification
 assert.deepStrictEqual(actual, expected);
@@ -267,7 +267,7 @@ const input = {
 };
 assert.throws(
     () => {
-        vs.applySchema(input, schemaObject);
+        vs.applySchemaTo(input, schemaObject);
     },
     {
         name: "ValueSchemaError",
@@ -302,7 +302,7 @@ For more information, see [string](#string).
 
 ### basic usage
 
-#### `applySchema(data, schemaObject[, onError[, onFinished]])`
+#### `applySchemaTo(data, schemaObject[, onError[, onFinished]])`
 
 apply `schemaObject` to `data`.
 
@@ -324,7 +324,7 @@ Schema object.
 Callback function for each errors.
 If no errors, this function will not be called.
 
-If this parameter is omitted, `applySchema()` throws `ValueSchemaError` on first error and remaining adjusting process will be cancelled.
+If this parameter is omitted, `applySchemaTo()` throws `ValueSchemaError` on first error and remaining adjusting process will be cancelled.
 
 * `err`
     * an instance of `ValueSchemaError`
@@ -332,7 +332,7 @@ If this parameter is omitted, `applySchema()` throws `ValueSchemaError` on first
 * returns
     * an adjuted value
 * throws
-    * an exception that will thrown from `applySchema()`
+    * an exception that will thrown from `applySchemaTo()`
     * remaining processes will be cancelled
 
 ##### `onFinished()`
@@ -439,7 +439,7 @@ const expected = { // should be converted to this
 };
 
 // Let's apply!
-const actual = vs.applySchema(input, schemaObject);
+const actual = vs.applySchemaTo(input, schemaObject);
 
 // verification
 assert.deepStrictEqual(actual, expected);
@@ -462,7 +462,7 @@ const input = {
     bar: "abcde",
 };
 
-const actual = vs.applySchema<Parameters>(input, schemaObject);
+const actual = vs.applySchemaTo<Parameters>(input, schemaObject);
 ```
 
 ###### error handling 1
@@ -496,7 +496,7 @@ const expected = {
     email: "john@example.com",
 };
 
-const actual = vs.applySchema(input, schemaObject, (err) => {
+const actual = vs.applySchemaTo(input, schemaObject, (err) => {
     const key = err.keyStack.shift();
     switch(key) {
     case "id":
@@ -538,7 +538,7 @@ const input = {
 
 assert.throws(() => {
     const messages = [];
-    vs.applySchema(input, schemaObject, (err) => {
+    vs.applySchemaTo(input, schemaObject, (err) => {
         // append key name
         const key = err.keyStack.shift();
         if(key !== undefined) {
@@ -582,7 +582,7 @@ const input = {
 
 assert.throws(() => {
     // throws first error
-    vs.applySchema(input, schemaObject);
+    vs.applySchemaTo(input, schemaObject);
 }, {
     name: "ValueSchemaError",
     cause: vs.CAUSE.MIN_VALUE,
@@ -606,7 +606,7 @@ const input = 123;
 
 assert.throws(() => {
     // `input` must be an object
-    vs.applySchema(input, schemaObject);
+    vs.applySchemaTo(input, schemaObject);
 }, {
     name: "ValueSchemaError",
     cause: vs.CAUSE.TYPE,
