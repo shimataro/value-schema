@@ -50,6 +50,8 @@ All of web applications need handling input parameters, consists of following st
 ### example
 
 ```javascript
+import vs from "value-schema";
+
 const schemaObject = { // schema for input
     id: vs.number({ // number, >=1
         minValue: 1,
@@ -176,7 +178,7 @@ var vs = require("value-schema");
 import vs from "value-schema";
 ```
 
-**ES Modules**: has been supported as of Node.js v8.5.0.
+**ES Modules** has been supported as of Node.js v8.5.0.
 In Windows, Node.js v8.6.0 is recommended due to [`ERR_INVALID_PROTOCOL`](https://github.com/nodejs/node/issues/15374).
 
 To execute "foo.mjs", `--experimental-modules` flag is required.
