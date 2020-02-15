@@ -980,6 +980,8 @@ Limits an input value to integer.
 |`NUMBER.INTEGER.CEIL_RZ` (`5`)|rounds up toward zero|
 |`NUMBER.INTEGER.HALF_UP` (`6`)|rounds half up toward infinity|
 |`NUMBER.INTEGER.HALF_UP_RZ` (`7`)|rounds half up toward zero|
+|`NUMBER.INTEGER.HALF_DOWN` (`8`)|rounds half down toward infinity|
+|`NUMBER.INTEGER.HALF_DOWN_RZ` (`9`)|rounds half down toward zero|
 
 ```javascript
 // should be adjusted
@@ -1033,6 +1035,30 @@ assert.strictEqual(
     -3);
 assert.strictEqual(
     vs.number({integer: vs.NUMBER.INTEGER.HALF_UP_RZ}).applyTo(-3.5),
+    -4);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.HALF_DOWN}).applyTo(3.5),
+    3);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.HALF_DOWN}).applyTo(3.51),
+    4);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.HALF_DOWN}).applyTo(-3.49),
+    -3);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.HALF_DOWN}).applyTo(-3.5),
+    -4);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.HALF_DOWN_RZ}).applyTo(3.5),
+    3);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.HALF_DOWN_RZ}).applyTo(3.51),
+    4);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.HALF_DOWN_RZ}).applyTo(-3.5),
+    -3);
+assert.strictEqual(
+    vs.number({integer: vs.NUMBER.INTEGER.HALF_DOWN_RZ}).applyTo(-3.51),
     -4);
 
 // should cause error
