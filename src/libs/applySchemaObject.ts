@@ -6,13 +6,13 @@ export {ErrorHandler} from "./BaseSchema";
 
 /**
  * apply schema object to data
- * @param data data to apply
  * @param schemaObject schema object
+ * @param data data to apply
  * @param onError error handler
  * @param onFinished finish handler
  * @returns applied data
  */
-export function applySchemaObject<T extends object>(data: unknown, schemaObject: SchemaObject, onError: ErrorHandler = onErrorDefault, onFinished: FinishHandler = onFinishedDefault): T
+export function applySchemaObject<T extends object>(schemaObject: SchemaObject, data: unknown, onError: ErrorHandler = onErrorDefault, onFinished: FinishHandler = onFinishedDefault): T
 {
-	return applySchemaObjectCore(data, schemaObject, onError, onFinished, []);
+	return applySchemaObjectCore(schemaObject, data, onError, onFinished, []);
 }

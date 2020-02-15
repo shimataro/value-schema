@@ -22,6 +22,6 @@ export function applyTo<T>(values: Values, options: Options, keyStack: Key[]): v
 		return false;
 	}
 
-	values.output = applySchemaObjectCore(values.output, options.schemaObject, onErrorDefault, onFinishedDefault, keyStack);
+	values.output = applySchemaObjectCore(options.schemaObject, values.output, onErrorDefault, onFinishedDefault, keyStack);
 	return false;
 }
