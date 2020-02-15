@@ -277,7 +277,7 @@ assert.throws(
 
 #### `CAUSE`
 
-The cause of fitting error.
+The cause of error.
 
 For more information, see below examples.
 
@@ -323,7 +323,7 @@ Schema object.
 Callback function for each errors.
 If no errors, this function will not be called.
 
-If this parameter is omitted, `applySchema()` throws `ValueSchemaError` on first error and remaining fitting process will be cancelled.
+If this parameter is omitted, `applySchema()` throws `ValueSchemaError` on first error and remaining adjusting process will be cancelled.
 
 * `err`
     * an instance of `ValueSchemaError`
@@ -1076,7 +1076,7 @@ assert.throws(
     {name: "ValueSchemaError", cause: vs.CAUSE.MIN_VALUE});
 ```
 
-##### `maxValue(value[, fits])`
+##### `maxValue`
 
 Limits maximum value.
 
@@ -1189,8 +1189,6 @@ assert.throws(
 ##### `ifNull`
 
 Specifies return value when input value is `null`.
-
-If this method is not called, `applyTo(null)` causes `ValueSchemaError`.
 
 ```javascript
 // should be adjusted
