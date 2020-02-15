@@ -1076,7 +1076,7 @@ assert.throws(
     {name: "ValueSchemaError", cause: vs.CAUSE.MIN_VALUE});
 ```
 
-##### `maxValue(value[, fits])`
+##### `maxValue`
 
 Limits maximum value.
 
