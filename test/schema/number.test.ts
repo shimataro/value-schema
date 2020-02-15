@@ -256,7 +256,7 @@ function testInteger(): void
 		expect(
 			vs.number({
 				integer: vs.NUMBER.INTEGER.HALF_UP,
-			}).applyTo(3.4)
+			}).applyTo(3.49)
 		).toEqual(3);
 
 		expect(
@@ -268,7 +268,7 @@ function testInteger(): void
 		expect(
 			vs.number({
 				integer: vs.NUMBER.INTEGER.HALF_UP,
-			}).applyTo(-3.4)
+			}).applyTo(-3.49)
 		).toEqual(-3);
 
 		expect(
@@ -280,7 +280,7 @@ function testInteger(): void
 		expect(
 			vs.number({
 				integer: vs.NUMBER.INTEGER.HALF_UP_RZ,
-			}).applyTo(3.4)
+			}).applyTo(3.49)
 		).toEqual(3);
 
 		expect(
@@ -292,13 +292,61 @@ function testInteger(): void
 		expect(
 			vs.number({
 				integer: vs.NUMBER.INTEGER.HALF_UP_RZ,
-			}).applyTo(-3.4)
+			}).applyTo(-3.49)
 		).toEqual(-3);
 
 		expect(
 			vs.number({
 				integer: vs.NUMBER.INTEGER.HALF_UP_RZ,
 			}).applyTo(-3.5)
+		).toEqual(-4);
+
+		expect(
+			vs.number({
+				integer: vs.NUMBER.INTEGER.HALF_DOWN,
+			}).applyTo(3.5)
+		).toEqual(3);
+
+		expect(
+			vs.number({
+				integer: vs.NUMBER.INTEGER.HALF_DOWN,
+			}).applyTo(3.51)
+		).toEqual(4);
+
+		expect(
+			vs.number({
+				integer: vs.NUMBER.INTEGER.HALF_DOWN,
+			}).applyTo(-3.5)
+		).toEqual(-4);
+
+		expect(
+			vs.number({
+				integer: vs.NUMBER.INTEGER.HALF_DOWN,
+			}).applyTo(-3.49)
+		).toEqual(-3);
+
+		expect(
+			vs.number({
+				integer: vs.NUMBER.INTEGER.HALF_DOWN_RZ,
+			}).applyTo(3.5)
+		).toEqual(3);
+
+		expect(
+			vs.number({
+				integer: vs.NUMBER.INTEGER.HALF_DOWN_RZ,
+			}).applyTo(3.51)
+		).toEqual(4);
+
+		expect(
+			vs.number({
+				integer: vs.NUMBER.INTEGER.HALF_DOWN_RZ,
+			}).applyTo(-3.5)
+		).toEqual(-3);
+
+		expect(
+			vs.number({
+				integer: vs.NUMBER.INTEGER.HALF_DOWN_RZ,
+			}).applyTo(-3.51)
 		).toEqual(-4);
 	});
 	it("should cause error(s)", () =>

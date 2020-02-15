@@ -154,6 +154,10 @@ function round(value: number, method: INTEGER): number | false
 		case INTEGER.HALF_UP:
 		case INTEGER.HALF_UP_RZ:
 			return Math.floor(value + 0.5);
+
+		case INTEGER.HALF_DOWN:
+		case INTEGER.HALF_DOWN_RZ:
+			return Math.ceil(value - 0.5);
 		}
 	}
 	else
@@ -169,9 +173,11 @@ function round(value: number, method: INTEGER): number | false
 			return Math.ceil(value);
 
 		case INTEGER.HALF_UP:
+		case INTEGER.HALF_DOWN_RZ:
 			return Math.floor(value + 0.5);
 
 		case INTEGER.HALF_UP_RZ:
+		case INTEGER.HALF_DOWN:
 			return Math.ceil(value - 0.5);
 		}
 	}

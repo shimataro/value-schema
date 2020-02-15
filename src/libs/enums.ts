@@ -26,6 +26,8 @@ export enum INTEGER
 	CEIL_RZ,
 	HALF_UP,
 	HALF_UP_RZ,
+	HALF_DOWN,
+	HALF_DOWN_RZ,
 }
 
 export enum CHECKSUM_ALGORITHM
