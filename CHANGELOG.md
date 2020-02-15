@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* use object for option
+* `.fit()` to `.applySchema()` / `.applyTo()`
+
 ## [2.2.6] - 2020-02-14
 
 ### Others
