@@ -277,7 +277,7 @@ assert.throws(
 
 #### `CAUSE`
 
-The cause of fitting error.
+The cause of error.
 
 For more information, see below examples.
 
