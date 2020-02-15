@@ -7,6 +7,7 @@
 [![Code Coverage][image-code-coverage]][link-code-coverage]
 [![Release][image-release]][link-release]
 [![Node.js version][image-engine]][link-engine]
+[![Types][image-types]][link-types]
 [![License][image-license]][link-license]
 
 simple, easy-to-use, and declarative schema validator
@@ -2058,5 +2059,7 @@ See [CHANGELOG.md](CHANGELOG.md).
 [link-release]: https://github.com/shimataro/value-schema/releases
 [image-engine]: https://img.shields.io/node/v/value-schema.svg
 [link-engine]: https://nodejs.org/
+[image-types]: https://img.shields.io/npm/types/value-schema.svg
+[link-types]: https://github.com/shimataro/value-schema
 [image-license]: https://img.shields.io/github/license/shimataro/value-schema.svg
 [link-license]: ./LICENSE
