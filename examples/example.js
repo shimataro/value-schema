@@ -95,7 +95,7 @@ const expected = { // should be converted to this
 };
 
 // Let's apply!
-const actual = vs.applySchema(input, schemaObject);
+const actual = vs.applySchemaTo(input, schemaObject);
 
 // verification
 assert.deepStrictEqual(actual, expected);
