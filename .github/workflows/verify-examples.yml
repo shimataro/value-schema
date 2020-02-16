@@ -117,3 +117,52 @@ jobs:
       run: node --experimental-modules ./examples/example-default.js
     - name: Run example (ESM)
       run: node --experimental-modules ./examples/example.mjs
+  conditional-exports:
+    name: Conditional Exports
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+        - windows-latest
+        - macos-latest
+        - ubuntu-latest
+        nodejs:
+        - "13.2.0"
+      fail-fast: false
+    steps:
+    - name: Checkout source codes
+      uses: actions/checkout@v2
+    - name: Install Node.js v12
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: Output versions
+      run: |
+        node -v
+        npm -v
+    - name: Install dependencies
+      run: npm ci
+    - name: Build
+      run: npm run build
+    - name: Install dependencies (only production)
+      run: npm ci --only=production
+    - name: Reinstall Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.nodejs }}
+    - name: Output versions
+      run: |
+        node -v
+        npm -v
+    - name: Check syntax (CJS)
+      run: node --experimental-conditional-exports ./dist/index.js
+    - name: Check syntax (ESM)
+      run: node --experimental-conditional-exports ./dist/index.mjs
+    - name: Install dependencies (example)
+      run: npm --prefix ./examples i --only=production
+    - name: Run example (CJS)
+      run: node --experimental-conditional-exports ./examples/example.js
+    - name: Run example (CJS; TypeScript/Babel compatible)
+      run: node --experimental-conditional-exports ./examples/example-default.js
+    - name: Run example (ESM)
+      run: node --experimental-conditional-exports ./examples/example.mjs
