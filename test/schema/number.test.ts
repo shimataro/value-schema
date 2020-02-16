@@ -346,7 +346,7 @@ function testInteger(): void
 			).toEqual(-3);
 		});
 
-		it("half down (toward zero", () =>
+		it("half down (toward zero)", () =>
 		{
 			expect(
 				vs.number({
