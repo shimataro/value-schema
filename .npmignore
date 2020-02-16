@@ -13,6 +13,8 @@
 jest.config.json
 tsconfig.*
 
+_rewriteExportsDefault.*
+
 # temporary files
 *~
 *.bak
