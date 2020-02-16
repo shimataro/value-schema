@@ -144,7 +144,7 @@ const expected = { // should be converted to this
 };
 
 // Let's apply!
-const actual = vs.applySchemaObject(input, schemaObject);
+const actual = vs.applySchemaObject(schemaObject, input);
 
 // verification
 assert.deepStrictEqual(actual, expected);
@@ -269,7 +269,7 @@ const input = {
 };
 assert.throws(
     () => {
-        vs.applySchemaObject(input, schemaObject);
+        vs.applySchemaObject(schemaObject, input);
     },
     {
         name: "ValueSchemaError",
@@ -304,7 +304,7 @@ For more information, see [string](#string).
 
 ### basic usage
 
-#### `applySchemaObject(data, schemaObject[, onError[, onFinished]])`
+#### `applySchemaObject(schemaObject, input[, onError[, onFinished]])`
 
 apply `schemaObject` to `data`.
 
@@ -441,7 +441,7 @@ const expected = { // should be converted to this
 };
 
 // Let's apply!
-const actual = vs.applySchemaObject(input, schemaObject);
+const actual = vs.applySchemaObject(schemaObject, input);
 
 // verification
 assert.deepStrictEqual(actual, expected);
@@ -464,7 +464,7 @@ const input = {
     bar: "abcde",
 };
 
-const actual = vs.applySchemaObject<Parameters>(input, schemaObject);
+const actual = vs.applySchemaObject<Parameters>(schemaObject, input);
 ```
 
 ###### error handling 1
@@ -498,7 +498,7 @@ const expected = {
     email: "john@example.com",
 };
 
-const actual = vs.applySchemaObject(input, schemaObject, (err) => {
+const actual = vs.applySchemaObject(schemaObject, input, (err) => {
     const key = err.keyStack.shift();
     switch(key) {
     case "id":
@@ -540,7 +540,7 @@ const input = {
 
 assert.throws(() => {
     const messages = [];
-    vs.applySchemaObject(input, schemaObject, (err) => {
+    vs.applySchemaObject(schemaObject, input, (err) => {
         // append key name
         const key = err.keyStack.shift();
         if(key !== undefined) {
@@ -584,7 +584,7 @@ const input = {
 
 assert.throws(() => {
     // throws first error
-    vs.applySchemaObject(input, schemaObject);
+    vs.applySchemaObject(schemaObject, input);
 }, {
     name: "ValueSchemaError",
     cause: vs.CAUSE.MIN_VALUE,
@@ -608,7 +608,7 @@ const input = 123;
 
 assert.throws(() => {
     // `input` must be an object
-    vs.applySchemaObject(input, schemaObject);
+    vs.applySchemaObject(schemaObject, input);
 }, {
     name: "ValueSchemaError",
     cause: vs.CAUSE.TYPE,
