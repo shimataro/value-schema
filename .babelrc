@@ -2,7 +2,9 @@
   "env": {
     "cjs": {
       "plugins": [
-        ["add-module-exports"]
+        ["add-module-exports", {
+          "addDefaultProperty": true
+        }]
       ]
     },
     "esm": {
