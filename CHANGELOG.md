@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+* error with transpiled code by tsc/babel
+
 ## [3.0.0-rc.1] - 2020-02-16
 
 ### Changed
