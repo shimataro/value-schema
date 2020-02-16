@@ -1,7 +1,7 @@
 {
   "name": "value-schema",
   "description": "simple, easy-to-use, and declarative schema validator",
-  "version": "2.2.6",
+  "version": "3.0.0-rc.1",
   "author": "shimataro",
   "license": "MIT",
   "repository": {
@@ -33,63 +33,41 @@
   "types": "./dist/index.d.ts",
   "engines": {
     "node": ">=4.0.0",
-    "npm": ">=2.0.0"
+    "npm": ">=3.8.0"
   },
   "scripts": {
-    "build": "run-p build:**",
-    "build:dts": "copyfiles --up=1 'src/**/*.d.ts' dist",
-    "build:cjs": "npm run build-core",
-    "build:esm": "cross-env BABEL_ENV=esm npm run build-core -- --keep-file-extension",
-    "build-core": "babel ./src --out-dir ./dist --source-maps",
-    "watch": "run-p watch:**",
-    "watch:cjs": "npm run build-core -- --watch",
-    "watch:esm": "cross-env BABEL_ENV=esm npm run build-core -- --keep-file-extension --watch",
-    "test": "cross-env NODE_PATH=./src jest",
+    "build": "run-s build:*",
+    "build:1-esm": "run-s build:1-esm:*",
+    "build:1-esm:1-tsc": "tsc -p tsconfig.esm.json",
+    "build:1-esm:2-babel": "cross-env BABEL_ENV=esm babel ./dist --out-dir ./dist --out-file-extension .mjs",
+    "build:2-cjs": "run-s build:2-cjs:*",
+    "build:2-cjs:1-tsc": "tsc -p tsconfig.cjs.json",
+    "build:2-cjs:2-babel": "cross-env BABEL_ENV=cjs babel ./dist --out-dir ./dist --extensions .js",
+    "test": "jest --config jest.config.json",
     "verify": "run-p test lint",
     "lint": "run-p lint:*",
-    "lint:es": "eslint ./src ./test --ext .mjs",
+    "lint:ts": "eslint ./src ./test --ext .ts",
     "lint:md": "markdownlint . --ignore ./node_modules",
     "lint:yaml": "yamllint .*.yml *.yml --ignore=node_modules/**/*.yml --ignore=node_modules/**/*.yaml",
-    "check-updates": "ncu -x @babel/preset-env,core-js"
-  },
-  "dependencies": {
-    "core-js": "3.5.0"
+    "check-updates": "ncu"
   },
   "devDependencies": {
     "@babel/cli": "7.8.4",
     "@babel/core": "7.8.4",
-    "@babel/plugin-proposal-decorators": "7.8.3",
-    "@babel/preset-env": "7.7.5",
     "@types/jest": "25.1.2",
     "@types/node": "13.7.1",
-    "babel-eslint": "10.0.3",
+    "@typescript-eslint/eslint-plugin": "2.19.2",
+    "@typescript-eslint/parser": "2.19.2",
     "babel-plugin-add-module-exports": "1.0.2",
     "babel-plugin-module-extension-resolver": "0.3.0",
-    "copyfiles": "2.2.0",
     "cross-env": "7.0.0",
     "eslint": "6.8.0",
-    "eslint-plugin-import": "2.20.1",
     "jest": "25.1.0",
     "markdownlint-cli": "0.22.0",
     "npm-check-updates": "4.0.1",
     "npm-run-all": "4.1.5",
+    "ts-jest": "25.2.0",
+    "typescript": "3.7.5",
     "yaml-lint": "1.2.4"
-  },
-  "jest": {
-    "verbose": false,
-    "moduleFileExtensions": [
-      "js",
-      "mjs"
-    ],
-    "moduleNameMapper": {
-      "^value-schema$": "<rootDir>/src/index"
-    },
-    "testEnvironment": "node",
-    "testRegex": "\\.(test|spec)\\.mjs$",
-    "transform": {
-      "\\.mjs$": "babel-jest"
-    },
-    "collectCoverage": true,
-    "coverageDirectory": "./coverage/"
   }
 }

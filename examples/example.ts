@@ -1,19 +1,68 @@
 import assert from "assert";
 import vs from "value-schema";
 
-const schemaObject = { // schema for input
-	id: vs.number().minValue(1), // number, >=1
-	name: vs.string().maxLength(16, true), // string, max 16 characters (trims if over)
-	age: vs.number().integer(true).minValue(1), // number, integer (trims if decimal), >=0
+const schemaObject: vs.SchemaObject = { // schema for input
+	id: vs.number({ // number, >=1
+		minValue: 1,
+	}),
+	name: vs.string({ // string, max 16 characters (trims if over)
+		maxLength: {
+			length: 16,
+			trims: true,
+		},
+	}),
+	age: vs.number({ // number, integer (trims if decimal), >=0
+		integer: vs.NUMBER.INTEGER.FLOOR_RZ,
+		minValue: 0,
+	}),
 	email: vs.email(), // email
-	state: vs.string().only("active", "inactive"), // string, accepts only "active" and "inactive"
-	classes: vs.array().separatedBy(",").each(vs.number(), true), // array of number, separated by ",", ignores errors
-	skills: vs.array().separatedBy(",").each(vs.string(), true), // array of string, separated by ",", ignores errors
-	creditCard: vs.numericString().separatedBy("-").checksum(vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD), // numeric string, separated by "-", checks by Luhn algorithm
-	remoteAddr: vs.string().pattern(vs.STRING.PATTERN.IPV4), // IPv4
-	remoteAddrIpv6: vs.string().pattern(vs.STRING.PATTERN.IPV6), // IPv6
-	limit: vs.number().integer().default(10).minValue(1, true).maxValue(100, true), // number, integer, omittable (sets 10 if omitted), >=1 (sets 1 if less), <=100 (sets 100 if greater)
-	offset: vs.number().integer().default(0).minValue(0, true), // number, integer, omittable (sets 0 if omitted), >=0 (sets 0 if less)
+	state: vs.string({ // string, accepts only "active" and "inactive"
+		only: ["active", "inactive"],
+	}),
+	classes: vs.array({ // array of number, separated by ",", ignores errors
+		separatedBy: ",",
+		each: {
+			schema: vs.number(),
+			ignoresErrors: true,
+		},
+	}),
+	skills: vs.array({ // array of string, separated by ",", ignores errors
+		separatedBy: ",",
+		each: {
+			schema: vs.string(),
+			ignoresErrors: true,
+		},
+	}),
+	creditCard: vs.numericString({ // numeric string, separated by "-", checks by Luhn algorithm
+		separatedBy: "-",
+		checksum: vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD,
+	}),
+	remoteAddr: vs.string({ // IPv4
+		pattern: vs.STRING.PATTERN.IPV4,
+	}),
+	remoteAddrIpv6: vs.string({ // IPv6
+		pattern: vs.STRING.PATTERN.IPV6,
+	}),
+	limit: vs.number({ // number, integer, omittable (sets 10 if omitted), >=1 (sets 1 if less), <=100 (sets 100 if greater)
+		ifUndefined: 10,
+		integer: true,
+		minValue: {
+			value: 1,
+			adjusts: true,
+		},
+		maxValue: {
+			value: 100,
+			adjusts: true,
+		},
+	}),
+	offset: vs.number({ // number, integer, omittable (sets 0 if omitted), >=0 (sets 0 if less)
+		ifUndefined: 0,
+		integer: true,
+		minValue: {
+			value: 0,
+			adjusts: true,
+		},
+	}),
 };
 const input = { // input values
 	id: "1",
@@ -44,7 +93,7 @@ const expected = { // should be converted to this
 };
 
 // Let's apply!
-const actual = vs.fit(input, schemaObject);
+const actual = vs.applySchemaObject(schemaObject, input);
 
 // verification
 assert.deepStrictEqual(actual, expected);

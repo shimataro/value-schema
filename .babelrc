@@ -1,17 +1,11 @@
 {
-  "comments": false,
-  "presets": [
-    ["@babel/preset-env", {"targets": {"node": "4.0.0"}, "useBuiltIns": "usage", "corejs": 3}]
-  ],
-  "plugins": [
-    ["@babel/plugin-proposal-decorators", {"legacy": true}],
-    ["add-module-exports"]
-  ],
   "env": {
+    "cjs": {
+      "plugins": [
+        ["add-module-exports"]
+      ]
+    },
     "esm": {
-      "presets": [
-        ["@babel/preset-env", {"targets": {"node": "8.5.0"}, "useBuiltIns": "usage", "corejs": 3, "modules": false}]
-      ],
       "plugins": [
         ["module-extension-resolver", {
           "dstExtension": ".mjs"

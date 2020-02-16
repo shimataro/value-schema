@@ -1,5 +1,6 @@
 /.github/
 /coverage/
+/examples/
 /node_modules/
 /scripts/
 /src/
@@ -7,7 +8,10 @@
 .babelrc
 .editorconfig
 .eslintrc.yml
-.markdownlint.json
+.gitignore
+.markdownlint.yml
+jest.config.json
+tsconfig.*
 
 # temporary files
 *~
