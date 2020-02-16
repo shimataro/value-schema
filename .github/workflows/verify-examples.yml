@@ -118,7 +118,7 @@ jobs:
     - name: Run example (ESM)
       run: node --experimental-modules ./examples/example.mjs
   conditional-exports:
-    name: ES Modules with Conditional exports
+    name: Conditional Exports
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
