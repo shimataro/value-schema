@@ -113,7 +113,7 @@ jobs:
       run: npm --prefix ./examples i --only=production
     - name: Run example (CJS)
       run: node --experimental-modules ./examples/example.js
-    - name: Run example (TypeScript/Babel compatible CJS)
+    - name: Run example (CJS; TypeScript/Babel compatible)
       run: node --experimental-modules ./examples/example-default.js
     - name: Run example (ESM)
       run: node --experimental-modules ./examples/example.mjs
