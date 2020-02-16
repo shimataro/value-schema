@@ -1,0 +1,29 @@
+# temporary files
+*~
+*.bak
+*.tmp
+*.swp
+*.log
+
+# image caches
+.DS_Store
+Thumbs.db
+
+# patch/merge
+*.orig
+*.rej
+
+# Node.js module files
+node_modules/
+
+# auto-generated files
+/dist/
+/coverage/
+
+# IDE files
+/.idea/
+/*.iml
+/nbproject/
+/.project
+/.vscode/**
+!/.vscode/tasks.json

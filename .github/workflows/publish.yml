@@ -1,0 +1,31 @@
+# https://help.github.com/en/articles/workflow-syntax-for-github-actions
+
+on:
+  release:
+    types:
+    - published
+name: publish
+jobs:
+  publish:
+    name: publish to npmjs.com
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout source codes
+      uses: actions/checkout@v2
+    - name: Install Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+        registry-url: https://registry.npmjs.org/
+    - name: Output versions
+      run: |
+        node -v
+        npm -v
+    - name: Install dependencies
+      run: npm ci
+    - name: Build package
+      run: npm run build
+    - name: Publish package
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

@@ -1,0 +1,73 @@
+{
+  "name": "value-schema",
+  "description": "simple, easy-to-use, and declarative schema validator",
+  "version": "3.0.0-rc.1",
+  "author": "shimataro",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shimataro/value-schema.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shimataro/value-schema/issues"
+  },
+  "homepage": "https://github.com/shimataro/value-schema#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "param",
+    "params",
+    "parameter",
+    "parameters",
+    "validate",
+    "validator",
+    "ajust",
+    "adjuster",
+    "revise",
+    "revisor",
+    "schema",
+    "JSON schema"
+  ],
+  "main": "./dist/index",
+  "types": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=4.0.0",
+    "npm": ">=3.8.0"
+  },
+  "scripts": {
+    "build": "run-s build:*",
+    "build:1-esm": "run-s build:1-esm:*",
+    "build:1-esm:1-tsc": "tsc -p tsconfig.esm.json",
+    "build:1-esm:2-babel": "cross-env BABEL_ENV=esm babel ./dist --out-dir ./dist --out-file-extension .mjs",
+    "build:2-cjs": "run-s build:2-cjs:*",
+    "build:2-cjs:1-tsc": "tsc -p tsconfig.cjs.json",
+    "build:2-cjs:2-babel": "cross-env BABEL_ENV=cjs babel ./dist --out-dir ./dist --extensions .js",
+    "test": "jest --config jest.config.json",
+    "verify": "run-p test lint",
+    "lint": "run-p lint:*",
+    "lint:ts": "eslint ./src ./test --ext .ts",
+    "lint:md": "markdownlint . --ignore ./node_modules",
+    "lint:yaml": "yamllint .*.yml *.yml --ignore=node_modules/**/*.yml --ignore=node_modules/**/*.yaml",
+    "check-updates": "ncu"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.8.4",
+    "@babel/core": "7.8.4",
+    "@types/jest": "25.1.2",
+    "@types/node": "13.7.1",
+    "@typescript-eslint/eslint-plugin": "2.19.2",
+    "@typescript-eslint/parser": "2.19.2",
+    "babel-plugin-add-module-exports": "1.0.2",
+    "babel-plugin-module-extension-resolver": "0.3.0",
+    "cross-env": "7.0.0",
+    "eslint": "6.8.0",
+    "jest": "25.1.0",
+    "markdownlint-cli": "0.22.0",
+    "npm-check-updates": "4.0.1",
+    "npm-run-all": "4.1.5",
+    "ts-jest": "25.2.0",
+    "typescript": "3.7.5",
+    "yaml-lint": "1.2.4"
+  }
+}
