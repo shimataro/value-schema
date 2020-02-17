@@ -211,7 +211,7 @@ export interface ValueSchemaError extends Error
     keyStack: (string | number)[]
 
     /**
-     * check whether error is ValueSchemaError or not
+     * check whether error is instance of ValueSchemaError or not
      * @param err error to check
      * @returns Yes/No
      */
