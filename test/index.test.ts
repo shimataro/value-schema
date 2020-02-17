@@ -280,8 +280,8 @@ function testError(): void
 		}
 		catch(err)
 		{
-			expect(vs.isValueSchemaError(err)).toBeTruthy();
-			if(!vs.isValueSchemaError(err))
+			expect(vs.ValueSchemaError.underlies(err)).toBeTruthy();
+			if(!vs.ValueSchemaError.underlies(err))
 			{
 				return;
 			}
@@ -308,8 +308,8 @@ function testError(): void
 		}
 		catch(err)
 		{
-			expect(vs.isValueSchemaError(err)).toBeTruthy();
-			if(!vs.isValueSchemaError(err))
+			expect(vs.ValueSchemaError.underlies(err)).toBeTruthy();
+			if(!vs.ValueSchemaError.underlies(err))
 			{
 				return;
 			}
@@ -355,8 +355,8 @@ function testError(): void
 		}
 		catch(err)
 		{
-			expect(vs.isValueSchemaError(err)).toBeTruthy();
-			if(!vs.isValueSchemaError(err))
+			expect(vs.ValueSchemaError.underlies(err)).toBeTruthy();
+			if(!vs.ValueSchemaError.underlies(err))
 			{
 				return;
 			}
