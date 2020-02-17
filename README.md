@@ -215,7 +215,7 @@ export interface ValueSchemaError extends Error
      * @param err error to check
      * @returns Yes/No
      */
-    static underlies(err: unknown): err is ValueSchemaError;
+    static instances(err: unknown): err is ValueSchemaError;
 }
 ```
 

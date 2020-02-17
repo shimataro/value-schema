@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-* `isValueSchemaError(err)` to `ValueSchemaError.underlies(err)`
+* `isValueSchemaError(err)` to `ValueSchemaError.instances(err)`
 
 ## [3.0.0-rc.2] - 2020-02-16
 
