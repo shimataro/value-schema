@@ -23,6 +23,16 @@ export class ValueSchemaError extends Error
 	}
 
 	/**
+     * check whether error is instance of ValueSchemaError or not
+	 * @param err error to check
+	 * @returns Yes/No
+	 */
+	static is(err: unknown): err is ValueSchemaError
+	{
+		return err instanceof ValueSchemaError;
+	}
+
+	/**
 	 * constructor
 	 * @param cause cause of error
 	 * @param value input value
@@ -37,14 +47,4 @@ export class ValueSchemaError extends Error
 		this.value = value;
 		this.keyStack = [...keyStack];
 	}
-}
-
-/**
- * check whether error is ValueSchemaError or not
- * @param err error to check
- * @returns Yes/No
- */
-export function isValueSchemaError(err: unknown): err is ValueSchemaError
-{
-	return err instanceof ValueSchemaError;
 }

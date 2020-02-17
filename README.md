@@ -209,6 +209,13 @@ export interface ValueSchemaError extends Error
     cause: string
     value: any
     keyStack: (string | number)[]
+
+    /**
+     * check whether error is instance of ValueSchemaError or not
+     * @param err error to check
+     * @returns Yes/No
+     */
+    static is(err: unknown): err is ValueSchemaError;
 }
 ```
 
