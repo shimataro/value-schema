@@ -62,7 +62,7 @@ const schemaObject = { // schema for input
             trims: true,
         },
     }),
-    age: vs.number({ // number, integer (trims if decimal), >=0
+    age: vs.number({ // number, integer (rounds down toward zero), >=0
         integer: vs.NUMBER.INTEGER.FLOOR_RZ,
         minValue: 0,
     }),
@@ -366,7 +366,7 @@ const schemaObject = { // schema for input
             trims: true,
         },
     }),
-    age: vs.number({ // number, integer (trims if decimal), >=0
+    age: vs.number({ // number, integer (rounds down toward zero), >=0
         integer: vs.NUMBER.INTEGER.FLOOR_RZ,
         minValue: 0,
     }),
