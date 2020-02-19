@@ -27,6 +27,7 @@ simple, easy-to-use, and declarative schema validator
     * [email](#email)
     * [array](#array)
     * [object](#object)
+    * [union](#union)
 * [Changelog](#changelog)
 
 ---
@@ -2073,6 +2074,45 @@ assert.deepStrictEqual(
 // should cause error
 assert.throws(
     () => vs.object({schemaObject}).applyTo({a: "x", b: "2"}),
+    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+```
+
+### union
+
+#### ambient declarations
+
+```typescript
+export function object<T>(...schemas: BaseSchema): UnionSchema<T>;
+
+type ErrorHandler<T> = (err: ValueSchemaError) => T | null | never;
+interface UnionSchema<T> {
+    applyTo(value: unknown, onError?: ErrorHandler<T>): T | null
+}
+```
+
+#### `applyTo(value[, onError])`
+
+Applies schema to `value`.
+
+If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
+
+```javascript
+// should be OK
+assert.deepStrictEqual(
+    vs.union(vs.number(), vs.string()).applyTo(1),
+    1);
+assert.deepStrictEqual(
+    vs.union(vs.number(), vs.string()).applyTo("a"),
+    "a");
+
+// should be adjusted
+assert.deepStrictEqual(
+    vs.union(vs.number(), vs.string()).applyTo("1"),
+    1);
+
+// should cause error
+assert.throws(
+    () => vs.union(vs.number(), vs.string()).applyTo({}),
     {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
