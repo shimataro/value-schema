@@ -8,3 +8,4 @@ export * from "./schema/number";
 export * from "./schema/numericString";
 export * from "./schema/object";
 export * from "./schema/string";
+export * from "./schema/union";
