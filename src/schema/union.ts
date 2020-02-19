@@ -1,11 +1,9 @@
 import * as type from "../appliers/union/type";
 import {BaseSchema} from "../libs/BaseSchema";
 
-export type OptionsForUnion<T> = type.Options<T>;
-
 class UnionSchema<T> extends BaseSchema<T>
 {
-	constructor(options: OptionsForUnion<T>)
+	constructor(options: type.Options<T>)
 	{
 		super(options, [type.applyTo]);
 	}
