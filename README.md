@@ -2079,7 +2079,8 @@ assert.throws(
 
 ### union
 
-**NOTE:** this schema is experimental.
+This schema creates a new schema **from other schemas**.
+The new schema matches any one of old schemas.
 
 #### ambient declarations
 
