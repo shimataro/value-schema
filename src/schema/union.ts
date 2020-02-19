@@ -1,7 +1,7 @@
 import * as type from "../appliers/union/type";
 import {BaseSchema} from "../libs/BaseSchema";
 
-type TupleToUnion<T extends any[]> = T[number]; // eslint-disable-line @typescript-eslint/no-explicit-any
+type TupleToUnion<T extends unknown[]> = T[number];
 
 type Unwrap<S> = {[P in keyof S]: SchemaType<S[P]>};
 type SchemaType<S> = S extends BaseSchema<infer T> ? T : never;
