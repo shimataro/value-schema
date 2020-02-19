@@ -2079,6 +2079,8 @@ assert.throws(
 
 ### union
 
+**NOTE:** this schema is experimental.
+
 #### ambient declarations
 
 ```typescript
@@ -2098,15 +2100,15 @@ If an error occurs, this method calls `onError` (if specified) or throw `ValueSc
 
 ```javascript
 // should be OK
-assert.deepStrictEqual(
+assert.strictEqual(
     vs.union(vs.number(), vs.string()).applyTo(1),
     1);
-assert.deepStrictEqual(
+assert.strictEqual(
     vs.union(vs.number(), vs.string()).applyTo("a"),
     "a");
 
 // should be adjusted
-assert.deepStrictEqual(
+assert.strictEqual(
     vs.union(vs.number(), vs.string()).applyTo("1"),
     1);
 
@@ -2114,6 +2116,13 @@ assert.deepStrictEqual(
 assert.throws(
     () => vs.union(vs.number(), vs.string()).applyTo({}),
     {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+```
+
+```typescript
+// in TypeScript
+assert.strictEqual(
+    vs.union<number | string>(vs.number(), vs.string()).applyTo(1),
+    1);
 ```
 
 ## Changelog
