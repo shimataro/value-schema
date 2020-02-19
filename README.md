@@ -2118,13 +2118,6 @@ assert.throws(
     {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
-```typescript
-// in TypeScript
-assert.strictEqual(
-    vs.union<number | string>(vs.number(), vs.string()).applyTo(1),
-    1);
-```
-
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md).
