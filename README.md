@@ -2107,6 +2107,9 @@ assert.strictEqual(
 assert.strictEqual(
     vs.union(vs.number(), vs.string()).applyTo("a"),
     "a");
+assert.strictEqual(
+    vs.union(vs.boolean(), vs.number(), vs.string()).applyTo(true),
+    true);
 
 // should be adjusted
 assert.strictEqual(
