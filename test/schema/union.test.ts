@@ -11,21 +11,28 @@ function testType(): void
 {
 	it("should be OK", () =>
 	{
-		const schema = vs.union(vs.number(), vs.string());
-		expect(schema.applyTo(1)).toEqual(1);
-		expect(schema.applyTo("a")).toEqual("a");
+		// two schemas
+		expect(vs.union(vs.number(), vs.string()).applyTo(1)).toEqual(1);
+		expect(vs.union(vs.number(), vs.string()).applyTo("a")).toEqual("a");
+
+		// three schemas
+		expect(vs.union(vs.boolean(), vs.number(), vs.string()).applyTo(true)).toEqual(true);
+		expect(vs.union(vs.boolean(), vs.number(), vs.string()).applyTo(1)).toEqual(true);
 	});
 	it("should be adjusted", () =>
 	{
-		const schema = vs.union(vs.number(), vs.string());
-		expect(schema.applyTo("1")).toEqual(1);
+		// two schemas
+		expect(vs.union(vs.number(), vs.string()).applyTo("1")).toEqual(1);
+		expect(vs.union(vs.string(), vs.number()).applyTo(1)).toEqual("1");
+
+		// three schemas
+		expect(vs.union(vs.number(), vs.boolean(), vs.string()).applyTo(true)).toEqual(1);
 	});
 	it("should cause error(s)", () =>
 	{
-		const schema = vs.union(vs.number(), vs.string());
 		expect(() =>
 		{
-			schema.applyTo({});
+			vs.union(vs.number(), vs.string()).applyTo({});
 		}).toThrow(vs.CAUSE.TYPE);
 	});
 }
