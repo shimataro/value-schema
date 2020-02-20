@@ -2112,6 +2112,9 @@ assert.strictEqual(
 assert.strictEqual(
     vs.union(vs.number(), vs.string()).applyTo("1"),
     1);
+assert.strictEqual(
+    vs.union(vs.string(), vs.number()).applyTo("1"), // this won't be adjusted. be careful of schemas order!
+    "1");
 
 // should cause error
 assert.throws(
