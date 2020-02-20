@@ -2082,6 +2082,8 @@ assert.throws(
 This schema creates a new schema **from other schemas**.
 The new schema matches any one of old schemas.
 
+It might be useful for login form, such as "Input email or username".
+
 #### ambient declarations
 
 ```typescript
@@ -2110,6 +2112,9 @@ assert.strictEqual(
 assert.strictEqual(
     vs.union(vs.boolean(), vs.number(), vs.string()).applyTo(true),
     true);
+assert.strictEqual(
+    vs.union(vs.email(), vs.string({pattern: /^\w+$/})).applyTo("user@example.com"),
+    "user@example.com");
 
 // should be adjusted
 assert.strictEqual(

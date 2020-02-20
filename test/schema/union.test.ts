@@ -18,6 +18,10 @@ function testType(): void
 		// three schemas
 		expect(vs.union(vs.boolean(), vs.number(), vs.string()).applyTo(true)).toEqual(true);
 		expect(vs.union(vs.boolean(), vs.number(), vs.string()).applyTo(1)).toEqual(true);
+
+		// email or username
+		expect(vs.union(vs.email(), vs.string({pattern: /^\w+$/})).applyTo("user@example.com")).toEqual("user@example.com");
+		expect(vs.union(vs.email(), vs.string({pattern: /^\w+$/})).applyTo("username")).toEqual("username");
 	});
 	it("should be adjusted", () =>
 	{
@@ -33,6 +37,12 @@ function testType(): void
 		expect(() =>
 		{
 			vs.union(vs.number(), vs.string()).applyTo({});
+		}).toThrow(vs.CAUSE.TYPE);
+
+		// email or username
+		expect(() =>
+		{
+			vs.union(vs.email(), vs.string({pattern: /^\w+$/})).applyTo("!abcxyz");
 		}).toThrow(vs.CAUSE.TYPE);
 	});
 }
