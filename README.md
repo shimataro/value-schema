@@ -2085,7 +2085,7 @@ The new schema matches any one of old schemas.
 #### ambient declarations
 
 ```typescript
-export function object<T>(...schemas: BaseSchema): UnionSchema<T>;
+export function object<T>(...schemas: BaseSchema<T>): UnionSchema<T>;
 
 type ErrorHandler<T> = (err: ValueSchemaError) => T | null | never;
 interface UnionSchema<T> {
