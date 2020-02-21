@@ -1,9 +1,9 @@
 import * as type from "../appliers/union/type";
 import {BaseSchema} from "../libs/BaseSchema";
 
-type Union<T extends BaseSchema[]> = Unwrap<T>[number];
-type Unwrap<S> = {[P in keyof S]: SchemaType<S[P]>};
-type SchemaType<S> = S extends BaseSchema<infer T> ? T : never;
+type Union<T extends BaseSchema[]> = Tuple<T>[number];
+type Tuple<T extends BaseSchema[]> = {[U in keyof T]: Inferred<T[U]>};
+type Inferred<T> = T extends BaseSchema<infer U> ? U : never;
 
 class UnionSchema<T> extends BaseSchema<T>
 {
