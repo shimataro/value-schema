@@ -58,7 +58,9 @@ rules: # https://eslint.org/docs/rules/
   dot-location:
   - error
   - property
-  dot-notation: 'off'
+  dot-notation:
+  - error
+  - allowPattern: "^_"
   eol-last: error
   eqeqeq: error
   for-direction: error
