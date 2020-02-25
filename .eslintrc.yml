@@ -277,7 +277,11 @@ rules: # https://eslint.org/docs/rules/
   valid-jsdoc:
   - error
   - prefer:
+      arg: param
+      argument: param
       return: returns
+      yield: yields
+      exception: throws
     requireReturn: false
     requireParamType: false
     requireReturnType: false
