@@ -9,7 +9,7 @@ import vs from "value-schema";
 	describe("only", testOnly);
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
-	describe("convertCase", testConvertCase);
+	describe("caseConverter", testCaseConverter);
 	describe("pattern", testPattern);
 }
 
@@ -286,21 +286,21 @@ function testMaxLength(): void
 }
 
 /**
- * convert case
+ * case converter
  */
-function testConvertCase(): void
+function testCaseConverter(): void
 {
 	describe("should be adjusted", () =>
 	{
 		expect(
 			vs.string({
-				convertCase: vs.STRING.CONVERT_CASE.LOWER,
+				caseConverter: vs.STRING.CASE_CONVERTER.LOWER,
 			}).applyTo("123ABCxyz")
 		).toEqual("123abcxyz");
 
 		expect(
 			vs.string({
-				convertCase: vs.STRING.CONVERT_CASE.UPPER,
+				caseConverter: vs.STRING.CASE_CONVERTER.UPPER,
 			}).applyTo("123ABCxyz")
 		).toEqual("123ABCXYZ");
 	});
@@ -309,9 +309,9 @@ function testConvertCase(): void
 		expect(() =>
 		{
 			vs.string({
-				convertCase: "" as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+				caseConverter: "" as any, // eslint-disable-line @typescript-eslint/no-explicit-any
 			}).applyTo("123ABCxyz");
-		}).toThrow(vs.CAUSE.CONVERT_CASE);
+		}).toThrow(vs.CAUSE.CASE_CONVERTER);
 	});
 }
 

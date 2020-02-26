@@ -1,7 +1,7 @@
 import {Key, Values, isString} from "../../libs/types";
 import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
-export enum CONVERT_CASE
+export enum CASE_CONVERTER
 {
 	LOWER = "lower",
 	UPPER = "UPPER",
@@ -9,7 +9,7 @@ export enum CONVERT_CASE
 
 export interface Options
 {
-	convertCase?: CONVERT_CASE;
+	caseConverter?: CASE_CONVERTER;
 }
 
 /**
@@ -21,7 +21,7 @@ export interface Options
  */
 export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<string>
 {
-	if(options.convertCase === undefined)
+	if(options.caseConverter === undefined)
 	{
 		return false;
 	}
@@ -32,16 +32,16 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	switch(options.convertCase)
+	switch(options.caseConverter)
 	{
-	case CONVERT_CASE.LOWER:
+	case CASE_CONVERTER.LOWER:
 		values.output = values.output.toLowerCase();
 		return false;
 
-	case CONVERT_CASE.UPPER:
+	case CASE_CONVERTER.UPPER:
 		values.output = values.output.toUpperCase();
 		return false;
 	}
 
-	ValueSchemaError.raise(CAUSE.CONVERT_CASE, values, keyStack);
+	ValueSchemaError.raise(CAUSE.CASE_CONVERTER, values, keyStack);
 }
