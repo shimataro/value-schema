@@ -9,6 +9,7 @@ import vs from "value-schema";
 	describe("toArray", testToArray);
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
+	describe("converter", testConverter);
 	describe("number", testNumber);
 	describe("string", testString);
 }
@@ -218,6 +219,26 @@ function testMaxLength(): void
 				maxLength: 1,
 			}).applyTo([1, 2]);
 		}).toThrow(vs.CAUSE.MAX_LENGTH);
+	});
+}
+
+/**
+ * converter
+ */
+function testConverter(): void
+{
+	it("should be adjusted", () =>
+	{
+		expect(
+			vs.array({
+				each: vs.number(),
+				separatedBy: ",",
+				converter: (value) =>
+				{
+					return value.sort();
+				},
+			}).applyTo("4,1,5,2")
+		).toEqual([1, 2, 4, 5]);
 	});
 }
 
