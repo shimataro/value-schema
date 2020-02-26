@@ -11,10 +11,6 @@ export const NUMBER = {
 	INTEGER,
 };
 
-export const NUMERIC_STRING = {
-	CHECKSUM_ALGORITHM,
-};
-
 export const STRING = {
 	CONVERT_CASE,
 	PATTERN: {
@@ -24,4 +20,8 @@ export const STRING = {
 		IPV6: REGEXP_IPV6,
 		URI: REGEXP_URI,
 	},
+};
+
+export const NUMERIC_STRING = {
+	CHECKSUM_ALGORITHM,
 };
