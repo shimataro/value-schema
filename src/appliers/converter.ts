@@ -1,8 +1,9 @@
 import {Key, Values} from "../libs/types";
+import {CAUSE, ValueSchemaError} from "../libs/ValueSchemaError";
 
 export interface Options<T>
 {
-	converter?: (value: T) => T | null;
+	converter?: (value: T, fail: () => never) => T | null;
 }
 
 /**
@@ -12,13 +13,16 @@ export interface Options<T>
  * @param keyStack key stack for error handling
  * @returns applied value
  */
-export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[]): values is Values<T> // eslint-disable-line @typescript-eslint/no-unused-vars
+export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[]): values is Values<T>
 {
 	if(options.converter === undefined)
 	{
 		return false;
 	}
 
-	values.output = options.converter(values.output as T);
+	values.output = options.converter(values.output as T, () =>
+	{
+		ValueSchemaError.raise(CAUSE.CONVERTER, values, keyStack);
+	});
 	return true;
 }

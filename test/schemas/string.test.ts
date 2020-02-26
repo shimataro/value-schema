@@ -693,11 +693,31 @@ function testConverter(): void
 
 		expect(
 			vs.string({
-				converter: (value) =>
+				converter: (value, fail) =>
 				{
-					return value.toUpperCase();
+					if(value.length >= 9)
+					{
+						fail();
+					}
+					return value.padStart(8, " ");
 				},
-			}).applyTo("123ABCxyz")
-		).toEqual("123ABCXYZ");
+			}).applyTo("test")
+		).toEqual("    test");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			vs.string({
+				converter: (value, fail) =>
+				{
+					if(value.length >= 9)
+					{
+						fail();
+					}
+					return value.padStart(8, " ");
+				},
+			}).applyTo("123ABCxyz");
+		}).toThrow(vs.CAUSE.CONVERTER);
 	});
 }
