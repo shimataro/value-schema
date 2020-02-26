@@ -9,6 +9,10 @@ import * as type from "../appliers/number/type";
 
 import {BaseSchema} from "../libs/BaseSchema";
 
+export const NUMBER = {
+	INTEGER: type.INTEGER,
+};
+
 type OptionsForNumber =
 	ifUndefined.Options<number> |
 	ifEmptyString.Options<number> |
