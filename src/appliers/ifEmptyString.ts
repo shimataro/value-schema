@@ -1,6 +1,5 @@
-import {CAUSE} from "../libs/enums";
-import {ValueSchemaError} from "../libs/ValueSchemaError";
 import {Key, Values} from "../libs/types";
+import {CAUSE, ValueSchemaError} from "../libs/ValueSchemaError";
 
 export interface Options<T>
 {

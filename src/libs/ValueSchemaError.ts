@@ -1,5 +1,23 @@
-import {CAUSE} from "./constants";
 import {Key, Values} from "./types";
+
+export enum CAUSE
+{
+	TYPE = "type",
+	UNDEFINED = "undefined",
+	NULL = "null",
+	EMPTY_STRING = "empty-string",
+	ONLY = "only",
+
+	MIN_VALUE = "min-value",
+	MAX_VALUE = "max-value",
+
+	MIN_LENGTH = "min-length",
+	MAX_LENGTH = "max-length",
+	PATTERN = "pattern",
+	CONVERT_CASE = "convert-case",
+
+	CHECKSUM = "checksum",
+}
 
 /**
  * Value-Schema Error

@@ -1,6 +1,16 @@
-import {CAUSE, CHECKSUM_ALGORITHM} from "../../libs/enums";
 import {Key, Values, isString} from "../../libs/types";
-import {ValueSchemaError} from "../../libs/ValueSchemaError";
+import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
+
+export enum CHECKSUM_ALGORITHM
+{
+	LUHN = "luhn",
+	CREDIT_CARD = LUHN,
+
+	MODULUS10_WEIGHT3_1 = "modulus10/weight3:1",
+	ISBN13 = MODULUS10_WEIGHT3_1,
+	EAN = MODULUS10_WEIGHT3_1,
+	JAN = MODULUS10_WEIGHT3_1,
+}
 
 export interface Options
 {

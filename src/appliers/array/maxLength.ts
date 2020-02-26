@@ -1,6 +1,5 @@
-import {CAUSE} from "../../libs/enums";
 import {Key, Values, isArray, isNumber} from "../../libs/types";
-import {ValueSchemaError} from "../../libs/ValueSchemaError";
+import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 type MaxLength = {
 	length: number;

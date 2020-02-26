@@ -1,6 +1,5 @@
-import {CAUSE} from "../../libs/enums";
 import {Key, Values, isBoolean, isNumber, isString} from "../../libs/types";
-import {ValueSchemaError} from "../../libs/ValueSchemaError";
+import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 const REGEXP_TRUE = /^\s*(true|yes|on)\s*$/i;
 const REGEXP_FALSE = /^\s*(false|no|off)\s*$/i;
