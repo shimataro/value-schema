@@ -1,6 +1,5 @@
-import {CAUSE} from "../../libs/enums";
 import {Key, Values, isString} from "../../libs/types";
-import {ValueSchemaError} from "../../libs/ValueSchemaError";
+import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 const MAX_LENGTH_LOCAL = 64;
 const MAX_LENGTH_DOMAIN = 255;

@@ -304,6 +304,12 @@ Checksum algorithms for numeric string.
 
 For more information, see [numeric string](#numeric-string).
 
+#### `STRING.CONVERT_CASE`
+
+Converting case methods for string.
+
+For more information, see [string](#string).
+
 #### `STRING.PATTERN`
 
 Regular expressions for string.
@@ -1151,6 +1157,7 @@ type OptionsForString = {
     only?: string[];
     minLength?: number;
     maxLength?: number | {length: number, trims: boolean};
+    convertCase?: STRING.CONVERT_CASE;
     pattern?: RegExp;
 }
 type ErrorHandler = (err: ValueSchemaError) => string | null | never;
@@ -1329,6 +1336,20 @@ assert.throws(
 assert.throws(
     () => vs.string({maxLength: 5}).applyTo("abcdefg"), // shorthand of {length: 5, trims: false}
     {name: "ValueSchemaError", cause: vs.CAUSE.MAX_LENGTH});
+```
+
+##### `convertCase`
+
+Converts alphabetic characters.
+
+```javascript
+// should be OK
+assert.deepStrictEqual(
+    vs.string({convertCase: vs.STRING.CONVERT_CASE.LOWER}).applyTo("123ABCxyz"),
+    "123abcxyz");
+assert.deepStrictEqual(
+    vs.string({convertCase: vs.STRING.CONVERT_CASE.UPPER}).applyTo("123ABCxyz"),
+    "123ABCXYZ");
 ```
 
 ##### `pattern`

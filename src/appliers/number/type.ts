@@ -1,9 +1,22 @@
-import {CAUSE, INTEGER} from "../../libs/enums";
 import {Key, Values, isInteger, isNumber, isScalar, isString} from "../../libs/types";
-import {ValueSchemaError} from "../../libs/ValueSchemaError";
+import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 const REGEXP_NUMBER = /^\s*[+-]?(\d+(\.\d*)?|\.\d+)\s*$/;
 const REGEXP_INTEGER = /^\s*[+-]?\d+\s*$/;
+
+export enum INTEGER
+{
+	NO,
+	YES,
+	FLOOR,
+	FLOOR_RZ,
+	CEIL,
+	CEIL_RZ,
+	HALF_UP,
+	HALF_UP_RZ,
+	HALF_DOWN,
+	HALF_DOWN_RZ,
+}
 
 type IntegerLike = boolean | INTEGER;
 

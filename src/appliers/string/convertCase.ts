@@ -1,9 +1,15 @@
 import {Key, Values, isString} from "../../libs/types";
 import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
+export enum CONVERT_CASE
+{
+	LOWER = "lower",
+	UPPER = "UPPER",
+}
+
 export interface Options
 {
-	minLength?: number;
+	convertCase?: CONVERT_CASE;
 }
 
 /**
@@ -15,10 +21,10 @@ export interface Options
  */
 export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<string>
 {
-	const normalizedOptions: Required<Options> = {
-		minLength: 0,
-		...options,
-	};
+	if(options.convertCase === undefined)
+	{
+		return false;
+	}
 
 	// istanbul ignore next
 	if(!isString(values.output))
@@ -26,10 +32,16 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	if(values.output.length >= normalizedOptions.minLength)
+	switch(options.convertCase)
 	{
+	case CONVERT_CASE.LOWER:
+		values.output = values.output.toLowerCase();
+		return false;
+
+	case CONVERT_CASE.UPPER:
+		values.output = values.output.toUpperCase();
 		return false;
 	}
 
-	ValueSchemaError.raise(CAUSE.MIN_LENGTH, values, keyStack);
+	ValueSchemaError.raise(CAUSE.CONVERT_CASE, values, keyStack);
 }
