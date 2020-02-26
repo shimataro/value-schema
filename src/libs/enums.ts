@@ -12,6 +12,7 @@ export enum CAUSE
 	MIN_LENGTH = "min-length",
 	MAX_LENGTH = "max-length",
 	PATTERN = "pattern",
+	CONVERT_CASE = "convert-case",
 
 	CHECKSUM = "checksum",
 }
@@ -39,4 +40,11 @@ export enum CHECKSUM_ALGORITHM
 	ISBN13 = MODULUS10_WEIGHT3_1,
 	EAN = MODULUS10_WEIGHT3_1,
 	JAN = MODULUS10_WEIGHT3_1,
+}
+
+export enum CASE
+{
+	NONE = "",
+	LOWER = "lower",
+	UPPER = "UPPER",
 }
