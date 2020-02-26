@@ -13,6 +13,10 @@ import * as type from "../appliers/string/type";
 
 import {BaseSchema} from "../libs/BaseSchema";
 
+export const NUMERIC_STRING = {
+	CHECKSUM_ALGORITHM: checksum.CHECKSUM_ALGORITHM,
+};
+
 type OptionsForNumericString =
 	ifEmptyString.Options<string> |
 	ifNull.Options<string> |
