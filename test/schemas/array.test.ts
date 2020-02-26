@@ -233,9 +233,9 @@ function testConverter(): void
 			vs.array({
 				each: vs.number(),
 				separatedBy: ",",
-				converter: (value) =>
+				converter: (values) =>
 				{
-					return value.sort();
+					return values.sort();
 				},
 			}).applyTo("4,1,5,2")
 		).toEqual([1, 2, 4, 5]);
