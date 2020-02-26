@@ -9,7 +9,6 @@ import vs from "value-schema";
 	describe("only", testOnly);
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
-	describe("caseConverter", testCaseConverter);
 	describe("pattern", testPattern);
 	describe("converter", testConverter);
 }
@@ -283,36 +282,6 @@ function testMaxLength(): void
 				maxLength: 8,
 			}).applyTo("123456789");
 		}).toThrow(vs.CAUSE.MAX_LENGTH);
-	});
-}
-
-/**
- * case converter
- */
-function testCaseConverter(): void
-{
-	describe("should be adjusted", () =>
-	{
-		expect(
-			vs.string({
-				caseConverter: vs.STRING.CASE_CONVERTER.LOWER,
-			}).applyTo("123ABCxyz")
-		).toEqual("123abcxyz");
-
-		expect(
-			vs.string({
-				caseConverter: vs.STRING.CASE_CONVERTER.UPPER,
-			}).applyTo("123ABCxyz")
-		).toEqual("123ABCXYZ");
-	});
-	it("should cause error(s)", () =>
-	{
-		expect(() =>
-		{
-			vs.string({
-				caseConverter: "" as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-			}).applyTo("123ABCxyz");
-		}).toThrow(vs.CAUSE.CASE_CONVERTER);
 	});
 }
 

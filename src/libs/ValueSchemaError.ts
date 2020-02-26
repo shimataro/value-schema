@@ -14,7 +14,6 @@ export enum CAUSE
 	MIN_LENGTH = "min-length",
 	MAX_LENGTH = "max-length",
 	PATTERN = "pattern",
-	CASE_CONVERTER = "convert-case",
 
 	CHECKSUM = "checksum",
 }
