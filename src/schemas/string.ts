@@ -11,6 +11,11 @@ import * as type from "../appliers/string/type";
 
 import {BaseSchema} from "../libs/BaseSchema";
 
+export const STRING = {
+	CONVERT_CASE: convertCase.CONVERT_CASE,
+	PATTERN: pattern.PATTERN,
+};
+
 type OptionsForString =
 	ifEmptyString.Options<string> |
 	ifNull.Options<string> |
