@@ -11,6 +11,7 @@ import vs from "value-schema";
 	describe("maxLength", testMaxLength);
 	describe("caseConverter", testCaseConverter);
 	describe("pattern", testPattern);
+	describe("converter", testConverter);
 }
 
 /**
@@ -702,5 +703,32 @@ function testPatternOthers(): void
 				pattern: vs.STRING.PATTERN.EMAIL,
 			}).applyTo("john..doe@example.com");
 		}).toThrow(vs.CAUSE.PATTERN);
+	});
+}
+
+/**
+ * converter
+ */
+function testConverter(): void
+{
+	it("should be adjusted", () =>
+	{
+		expect(
+			vs.string({
+				converter: (value) =>
+				{
+					return value.toLowerCase();
+				},
+			}).applyTo("123ABCxyz")
+		).toEqual("123abcxyz");
+
+		expect(
+			vs.string({
+				converter: (value) =>
+				{
+					return value.toUpperCase();
+				},
+			}).applyTo("123ABCxyz")
+		).toEqual("123ABCXYZ");
 	});
 }
