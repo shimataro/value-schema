@@ -2,6 +2,7 @@ import * as ifEmptyString from "../appliers/ifEmptyString";
 import * as ifNull from "../appliers/ifNull";
 import * as ifUndefined from "../appliers/ifUndefined";
 import * as only from "../appliers/only";
+import * as convertCase from "../appliers/string/convertCase";
 import * as maxLength from "../appliers/string/maxLength";
 import * as minLength from "../appliers/string/minLength";
 import * as pattern from "../appliers/string/pattern";
@@ -17,6 +18,7 @@ type OptionsForString =
 	only.Options<string> |
 	type.Options |
 	trims.Options |
+	convertCase.Options |
 	minLength.Options |
 	maxLength.Options |
 	pattern.Options;
@@ -34,6 +36,7 @@ class StringSchema extends BaseSchema<string>
 			ifEmptyString.applyTo,
 			minLength.applyTo,
 			maxLength.applyTo,
+			convertCase.applyTo,
 			pattern.applyTo,
 		]);
 	}
