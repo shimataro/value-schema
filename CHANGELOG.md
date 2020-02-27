@@ -10,11 +10,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 * `union()`
-* `caseConverter` option to `string()`
+* `converter` option
 
 ### Changed
 
 * `isValueSchemaError(err)` to `ValueSchemaError.is(err)`
+
+### Fixed
+
+* generic in `array({each})`
 
 ## [3.0.0-rc.2] - 2020-02-16
 

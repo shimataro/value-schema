@@ -304,12 +304,6 @@ Checksum algorithms for numeric string.
 
 For more information, see [numeric string](#numeric-string).
 
-#### `STRING.CASE_CONVERTER`
-
-Converting case methods for string.
-
-For more information, see [string](#string).
-
 #### `STRING.PATTERN`
 
 Regular expressions for string.
@@ -816,6 +810,8 @@ type OptionsForNumber = {
     only?: number[];
     minValue?: number | {value: number, adjusts: boolean};
     maxValue?: number | {value: number, adjusts: boolean};
+
+    converter?: (value: number, fail: () => never) => number | null;
 }
 type ErrorHandler = (err: ValueSchemaError) => number | null | never;
 interface NumberSchema {
@@ -1138,6 +1134,24 @@ assert.throws(
     {name: "ValueSchemaError", cause: vs.CAUSE.MAX_VALUE});
 ```
 
+##### `converter`
+
+Converts input value to another.
+
+`fail()` causes `ValueSchemaError`.
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    vs.number({converter: value => value * 2}).applyTo("1"),
+    2);
+
+// should cause errors
+assert.throws(
+    () => vs.number({converter: (value, fail) => fail()}).applyTo(0),
+    {name: "ValueSchemaError", cause: vs.CAUSE.CONVERTER});
+```
+
 ### string
 
 #### ambient declarations
@@ -1157,8 +1171,9 @@ type OptionsForString = {
     only?: string[];
     minLength?: number;
     maxLength?: number | {length: number, trims: boolean};
-    caseConverter?: STRING.CASE_CONVERTER;
     pattern?: RegExp;
+
+    converter?: (value: string, fail: () => never) => string | null;
 }
 type ErrorHandler = (err: ValueSchemaError) => string | null | never;
 interface StringSchema {
@@ -1338,20 +1353,6 @@ assert.throws(
     {name: "ValueSchemaError", cause: vs.CAUSE.MAX_LENGTH});
 ```
 
-##### `caseConverter`
-
-Converts alphabetic characters.
-
-```javascript
-// should be adjusted
-assert.deepStrictEqual(
-    vs.string({caseConverter: vs.STRING.CASE_CONVERTER.LOWER}).applyTo("123ABCxyz"),
-    "123abcxyz");
-assert.deepStrictEqual(
-    vs.string({caseConverter: vs.STRING.CASE_CONVERTER.UPPER}).applyTo("123ABCxyz"),
-    "123ABCXYZ");
-```
-
 ##### `pattern`
 
 Specifies acceptable pattern by regular expression.
@@ -1385,6 +1386,24 @@ assert.throws(
     {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 ```
 
+##### `converter`
+
+Converts input value to another.
+
+`fail()` causes `ValueSchemaError`.
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    vs.string({converter: value => value.toLowerCase()}).applyTo("123ABCxyz"),
+    "123abcxyz");
+
+// should cause errors
+assert.throws(
+    () => vs.string({converter: (value, fail) => fail()}).applyTo("foo"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.CONVERTER});
+```
+
 ### numeric string
 
 #### ambient declarations
@@ -1405,6 +1424,8 @@ type OptionsForNumericString = {
     separatedBy?: string | RegExp;
     pattern?: RegExp;
     checksum?: NUMERIC_STRING.CHECKSUM_ALGORITHM;
+
+    converter?: (value: string, fail: () => never) => string | null;
 }
 type ErrorHandler = (err: ValueSchemaError) => string | null | never;
 interface NumericStringSchema {
@@ -1627,6 +1648,24 @@ assert.throws(
     {name: "ValueSchemaError", cause: vs.CAUSE.CHECKSUM});
 ```
 
+##### `converter`
+
+Converts input value to another.
+
+`fail()` causes `ValueSchemaError`.
+
+```javascript
+// should be adjusted
+assert.strictEqual(
+    vs.numericString({converter: value => value.padStart(8, "0")}).applyTo("1234"),
+    "00001234");
+
+// should cause errors
+assert.throws(
+    () => vs.numericString({converter: (value, fail) => fail()}).applyTo("1234"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.CONVERTER});
+```
+
 ### email
 
 #### ambient declarations
@@ -1805,6 +1844,8 @@ type OptionsForArray<T> = {
     minLength?: number;
     maxLength?: number | {length: number, trims: boolean};
     each?: BaseSchema<T> | {schema: BaseSchema<T>, ignoresErrors: boolean};
+
+    converter?: (values: T[], fail: () => never) => T[] | null;
 }
 type ErrorHandler<T> = (err: ValueSchemaError) => T[] | null | never;
 interface ArraySchema<T> {
@@ -1987,6 +2028,24 @@ assert.throws(
     {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
+##### `converter`
+
+Converts input value to another.
+
+`fail()` causes `ValueSchemaError`.
+
+```javascript
+// should be adjusted
+assert.deepStrictEqual(
+    vs.array({each: vs.number(), separatedBy: ",", converter: values => values.sort()}).applyTo("4,1,5,2"),
+    [1, 2, 4, 5]);
+
+// should cause errors
+assert.throws(
+    () => vs.array({converter: (value, fail) => fail()}).applyTo([]),
+    {name: "ValueSchemaError", cause: vs.CAUSE.CONVERTER});
+```
+
 ### object
 
 #### ambient declarations
@@ -2000,6 +2059,8 @@ type OptionsForObject = {
     ifNull?: object | null;
 
     schemaObject?: SchemaObject;
+
+    converter?: (values: object, fail: () => never) => object | null;
 }
 type ErrorHandler = (err: ValueSchemaError) => object | null | never;
 interface ObjectSchema {
@@ -2096,6 +2157,27 @@ assert.deepStrictEqual(
 assert.throws(
     () => vs.object({schemaObject}).applyTo({a: "x", b: "2"}),
     {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+```
+
+##### `converter`
+
+Converts input value to another.
+
+`fail()` causes `ValueSchemaError`.
+
+Below example is using [case](https://www.npmjs.com/package/case) package.
+
+```javascript
+assert.deepStrictEqual(
+    vs.object({converter: values => Object.entries(values).reduce((prev, [key, value]) => {
+        return {...prev, [camel(key)]: value}; // converts case of keys to camelCase
+    }, {})}).applyTo({"first name": "John", "last-name": "Doe", "credit_card": "4111111111111111"}),
+    {firstName: "John", lastName: "Doe", creditCard: "4111111111111111"});
+
+// should cause errors
+assert.throws(
+    () => vs.object({converter: (value, fail) => fail()}).applyTo({}),
+    {name: "ValueSchemaError", cause: vs.CAUSE.CONVERTER});
 ```
 
 ### union

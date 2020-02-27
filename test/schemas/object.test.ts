@@ -1,4 +1,5 @@
 import vs from "value-schema";
+import {camel} from "case";
 
 {
 	describe("type", testType);
@@ -6,6 +7,7 @@ import vs from "value-schema";
 	describe("ifNull", testIfNull);
 	describe("ifEmptyString", testIfEmptyString);
 	describe("schema", testSchema);
+	describe("converter", testConverter);
 }
 
 /**
@@ -148,5 +150,38 @@ function testSchema(): void
 				schemaObject: schemaObject,
 			}).applyTo(input)
 		).toEqual(expected);
+	});
+}
+
+/**
+ * converter
+ */
+function testConverter(): void
+{
+	it("should be adjusted", () =>
+	{
+		expect(
+			vs.object({
+				converter: (values) =>
+				{
+					// converts case of keys to camelCase
+					return Object.entries(values).reduce((prev, [key, value]) =>
+					{
+						return {
+							...prev,
+							[camel(key)]: value,
+						};
+					}, {});
+				},
+			}).applyTo({
+				"first name": "John",
+				"last-name": "Doe",
+				"credit_card": "4111111111111111",
+			})
+		).toEqual({
+			firstName: "John",
+			lastName: "Doe",
+			creditCard: "4111111111111111",
+		});
 	});
 }

@@ -9,6 +9,7 @@ import vs from "value-schema";
 	describe("only", testOnly);
 	describe("minValue", testMinValue);
 	describe("maxValue", testMaxValue);
+	describe("converter", testConverter);
 }
 
 /**
@@ -602,5 +603,23 @@ function testMaxValue(): void
 				maxValue: 100,
 			}).applyTo(101);
 		}).toThrow(vs.CAUSE.MAX_VALUE);
+	});
+}
+
+/**
+ * converter
+ */
+function testConverter(): void
+{
+	it("should be adjusted", () =>
+	{
+		expect(
+			vs.number({
+				converter: (value) =>
+				{
+					return value * 2;
+				},
+			}).applyTo("1")
+		).toEqual(2);
 	});
 }

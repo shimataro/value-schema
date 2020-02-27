@@ -11,6 +11,7 @@ import vs from "value-schema";
 	describe("checksum (Luhn)", testChecksumLuhn);
 	describe("checksum (Modulus 10 / Weight 3:1)", testChecksumModulus10Weight31);
 	describe("checksum (Others)", testChecksumOthers);
+	describe("converter", testConverter);
 }
 
 /**
@@ -296,5 +297,43 @@ function testChecksumOthers(): void
 				checksum: "" as any, // eslint-disable-line @typescript-eslint/no-explicit-any
 			}).applyTo("0123456789");
 		}).toThrow(vs.CAUSE.CHECKSUM);
+	});
+}
+
+/**
+ * converter
+ */
+function testConverter(): void
+{
+	it("should be adjusted", () =>
+	{
+		expect(
+			vs.numericString({
+				converter: (value, fail) =>
+				{
+					if(value.length >= 9)
+					{
+						fail();
+					}
+					return value.padStart(8, "0");
+				},
+			}).applyTo("1234")
+		).toEqual("00001234");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			vs.string({
+				converter: (value, fail) =>
+				{
+					if(value.length >= 9)
+					{
+						fail();
+					}
+					return value.padStart(8, "0");
+				},
+			}).applyTo("123456789");
+		}).toThrow(vs.CAUSE.CONVERTER);
 	});
 }

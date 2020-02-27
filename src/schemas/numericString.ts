@@ -1,3 +1,4 @@
+import * as converter from "../appliers/converter";
 import * as ifEmptyString from "../appliers/ifEmptyString";
 import * as ifNull from "../appliers/ifNull";
 import * as ifUndefined from "../appliers/ifUndefined";
@@ -18,6 +19,7 @@ export const NUMERIC_STRING = {
 };
 
 type OptionsForNumericString =
+	converter.Options<string> |
 	ifEmptyString.Options<string> |
 	ifNull.Options<string> |
 	ifUndefined.Options<string> |
@@ -47,6 +49,7 @@ class NumericStringSchema extends BaseSchema<string>
 			minLength.applyTo,
 			maxLength.applyTo,
 			checksum.applyTo,
+			converter.applyTo,
 		]);
 	}
 }
