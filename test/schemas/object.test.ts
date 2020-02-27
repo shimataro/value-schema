@@ -164,7 +164,7 @@ function testConverter(): void
 			vs.object({
 				converter: (values) =>
 				{
-					// converts case of key to camelCase
+					// converts case of keys to camelCase
 					return Object.entries(values).reduce((prev, [key, value]) =>
 					{
 						return {
