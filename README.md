@@ -2164,14 +2164,31 @@ Converts input value to another.
 
 `fail()` causes `ValueSchemaError`.
 
-Below example is using [case](https://www.npmjs.com/package/case) package.
+Below example uses [case](https://www.npmjs.com/package/case) package.
 
 ```javascript
+// should be adjusted
+function keysToCamel(values) {
+    return Object.entries(values).reduce((prev, [key, value]) => {
+        return {
+            ...prev,
+            [Case.camel(key)]: value,
+        };
+    }, {});
+}
+const input = {
+    "first name": "John",
+    "last-name": "Doe",
+    "credit_card": "4111111111111111",
+};
+const output = {
+    firstName: "John",
+    lastName: "Doe",
+    creditCard: "4111111111111111",
+}
 assert.deepStrictEqual(
-    vs.object({converter: values => Object.entries(values).reduce((prev, [key, value]) => {
-        return {...prev, [camel(key)]: value}; // converts case of keys to camelCase
-    }, {})}).applyTo({"first name": "John", "last-name": "Doe", "credit_card": "4111111111111111"}),
-    {firstName: "John", lastName: "Doe", creditCard: "4111111111111111"});
+    vs.object({converter: keysToCamel}).applyTo(input),
+    output);
 
 // should cause errors
 assert.throws(
