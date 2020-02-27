@@ -1,3 +1,4 @@
+import * as converter from "../appliers/converter";
 import * as ifEmptyString from "../appliers/ifEmptyString";
 import * as ifNull from "../appliers/ifNull";
 import * as ifUndefined from "../appliers/ifUndefined";
@@ -9,6 +10,7 @@ import * as type from "../appliers/array/type";
 import {BaseSchema} from "../libs/BaseSchema";
 
 type OptionsForArray<T> =
+	converter.Options<T[]> |
 	ifUndefined.Options<T[]> |
 	ifEmptyString.Options<T[]> |
 	ifNull.Options<T[]> |
@@ -29,6 +31,7 @@ class ArraySchema<T> extends BaseSchema<T[]>
 			each.applyTo,
 			minLength.applyTo,
 			maxLength.applyTo,
+			converter.applyTo,
 		]);
 	}
 }

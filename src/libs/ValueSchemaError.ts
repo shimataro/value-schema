@@ -7,6 +7,7 @@ export enum CAUSE
 	NULL = "null",
 	EMPTY_STRING = "empty-string",
 	ONLY = "only",
+	CONVERTER = "converter",
 
 	MIN_VALUE = "min-value",
 	MAX_VALUE = "max-value",
@@ -14,7 +15,6 @@ export enum CAUSE
 	MIN_LENGTH = "min-length",
 	MAX_LENGTH = "max-length",
 	PATTERN = "pattern",
-	CASE_CONVERTER = "convert-case",
 
 	CHECKSUM = "checksum",
 }
