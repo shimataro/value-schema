@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0-rc.3] - 2020-02-28
+
 ### Added
 
 * `union()`
@@ -452,7 +454,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.2...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.3...HEAD
+[3.0.0-rc.3]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.2...v3.0.0-rc.3
 [3.0.0-rc.2]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.1...v3.0.0-rc.2
 [3.0.0-rc.1]: https://github.com/shimataro/value-schema/compare/v2.2.6...v3.0.0-rc.1
 [2.2.6]: https://github.com/shimataro/value-schema/compare/v2.2.5...v2.2.6
