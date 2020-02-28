@@ -24,9 +24,9 @@ export enum CAUSE
  */
 export class ValueSchemaError extends Error
 {
-	public cause: CAUSE;
-	public value: unknown;
-	public keyStack: Key[];
+	public readonly cause: CAUSE;
+	public readonly value: unknown;
+	public readonly keyStack: Key[];
 
 	/**
 	 * throw an error
