@@ -1,3 +1,4 @@
+import * as converter from "../appliers/converter";
 import * as ifEmptyString from "../appliers/ifEmptyString";
 import * as ifNull from "../appliers/ifNull";
 import * as ifUndefined from "../appliers/ifUndefined";
@@ -10,7 +11,12 @@ import * as type from "../appliers/string/type";
 
 import {BaseSchema} from "../libs/BaseSchema";
 
+export const STRING = {
+	PATTERN: pattern.PATTERN,
+};
+
 type OptionsForString =
+	converter.Options<string> |
 	ifEmptyString.Options<string> |
 	ifNull.Options<string> |
 	ifUndefined.Options<string> |
@@ -35,6 +41,7 @@ class StringSchema extends BaseSchema<string>
 			minLength.applyTo,
 			maxLength.applyTo,
 			pattern.applyTo,
+			converter.applyTo,
 		]);
 	}
 }

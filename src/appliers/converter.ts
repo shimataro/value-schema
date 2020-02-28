@@ -3,7 +3,7 @@ import {CAUSE, ValueSchemaError} from "../libs/ValueSchemaError";
 
 export interface Options<T>
 {
-	ifUndefined?: T | null;
+	converter?: (value: T, fail: () => never) => T | null;
 }
 
 /**
@@ -15,16 +15,14 @@ export interface Options<T>
  */
 export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[]): values is Values<T>
 {
-	if(values.output !== undefined)
+	if(options.converter === undefined)
 	{
 		return false;
 	}
 
-	if(options.ifUndefined !== undefined)
+	values.output = options.converter(values.output as T, () =>
 	{
-		values.output = options.ifUndefined;
-		return true;
-	}
-
-	ValueSchemaError.raise(CAUSE.UNDEFINED, values, keyStack);
+		ValueSchemaError.raise(CAUSE.CONVERTER, values, keyStack);
+	});
+	return true;
 }

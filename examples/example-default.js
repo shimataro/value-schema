@@ -100,4 +100,4 @@ const actual = vs.applySchemaObject(schemaObject, input);
 // verification
 assert.deepStrictEqual(actual, expected);
 
-console.log("CJS: OK!🎉");
+console.log("CJS(TypeScript/Babel compatible): OK!🎉");

@@ -1,3 +1,4 @@
+import * as converter from "../appliers/converter";
 import * as ifEmptyString from "../appliers/ifEmptyString";
 import * as ifNull from "../appliers/ifNull";
 import * as ifUndefined from "../appliers/ifUndefined";
@@ -9,7 +10,12 @@ import * as type from "../appliers/number/type";
 
 import {BaseSchema} from "../libs/BaseSchema";
 
+export const NUMBER = {
+	INTEGER: type.INTEGER,
+};
+
 type OptionsForNumber =
+	converter.Options<number> |
 	ifUndefined.Options<number> |
 	ifEmptyString.Options<number> |
 	ifNull.Options<number> |
@@ -32,6 +38,7 @@ class NumberSchema extends BaseSchema<number>
 			only.applyTo,
 			minValue.applyTo,
 			maxValue.applyTo,
+			converter.applyTo,
 		]);
 	}
 }

@@ -1,7 +1,6 @@
-import {CAUSE} from "./constants";
 import {Key, isObject} from "./types";
-import {ValueSchemaError} from "./ValueSchemaError";
 import {BaseSchema, ErrorHandler, FinishHandler} from "./BaseSchema";
+import {CAUSE, ValueSchemaError} from "./ValueSchemaError";
 
 export type SchemaObject = Record<string, BaseSchema>
 

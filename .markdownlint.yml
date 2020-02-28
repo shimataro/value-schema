@@ -1,6 +1,14 @@
-MD007:
+MD004: # ul-style
+  style: asterisk
+MD007: # ul-indent
   indent: 4
-MD013:
+MD013: # line-length
   line_length: 255
-MD024:
+MD024: # no-duplicate-heading
   siblings_only: true
+MD029: # ol-prefix
+  style: one
+MD035: # hr-style
+  style: "---"
+MD048: # code-fence-style
+  style: backtick

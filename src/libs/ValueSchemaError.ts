@@ -1,5 +1,23 @@
-import {CAUSE} from "./constants";
 import {Key, Values} from "./types";
+
+export enum CAUSE
+{
+	TYPE = "type",
+	UNDEFINED = "undefined",
+	NULL = "null",
+	EMPTY_STRING = "empty-string",
+	ONLY = "only",
+	CONVERTER = "converter",
+
+	MIN_VALUE = "min-value",
+	MAX_VALUE = "max-value",
+
+	MIN_LENGTH = "min-length",
+	MAX_LENGTH = "max-length",
+	PATTERN = "pattern",
+
+	CHECKSUM = "checksum",
+}
 
 /**
  * Value-Schema Error
@@ -23,6 +41,16 @@ export class ValueSchemaError extends Error
 	}
 
 	/**
+     * check whether error is instance of ValueSchemaError or not
+	 * @param err error to check
+	 * @returns Yes/No
+	 */
+	static is(err: unknown): err is ValueSchemaError
+	{
+		return err instanceof ValueSchemaError;
+	}
+
+	/**
 	 * constructor
 	 * @param cause cause of error
 	 * @param value input value
@@ -37,14 +65,4 @@ export class ValueSchemaError extends Error
 		this.value = value;
 		this.keyStack = [...keyStack];
 	}
-}
-
-/**
- * check whether error is ValueSchemaError or not
- * @param err error to check
- * @returns Yes/No
- */
-export function isValueSchemaError(err: unknown): err is ValueSchemaError
-{
-	return err instanceof ValueSchemaError;
 }

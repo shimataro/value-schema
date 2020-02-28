@@ -2,7 +2,6 @@
 env: # https://eslint.org/docs/user-guide/configuring#specifying-environments
   es6: true
   node: true
-  jest: true
 extends:
 - eslint:recommended
 - plugin:@typescript-eslint/eslint-recommended
@@ -58,7 +57,9 @@ rules: # https://eslint.org/docs/rules/
   dot-location:
   - error
   - property
-  dot-notation: 'off'
+  dot-notation:
+  - error
+  - allowPattern: "^_"
   eol-last: error
   eqeqeq: error
   for-direction: error
@@ -91,7 +92,21 @@ rules: # https://eslint.org/docs/rules/
   init-declarations: error
   jsx-quotes: error
   key-spacing: error
-  keyword-spacing: 'off'
+  keyword-spacing:
+  - error
+  - overrides:
+      catch:
+        after: false
+      for:
+        after: false
+      if:
+        after: false
+      switch:
+        after: false
+      while:
+        after: false
+      with:
+        after: false
   line-comment-position: 'off'
   linebreak-style:
   - error
@@ -275,7 +290,11 @@ rules: # https://eslint.org/docs/rules/
   valid-jsdoc:
   - error
   - prefer:
+      arg: param
+      argument: param
       return: returns
+      yield: yields
+      exception: throws
     requireReturn: false
     requireParamType: false
     requireReturnType: false
@@ -289,7 +308,6 @@ rules: # https://eslint.org/docs/rules/
 
   # @typescript-eslint plugin
   "@typescript-eslint/ban-ts-ignore": 'off'
-  "@typescript-eslint/explicit-function-return-type": 'off'
   "@typescript-eslint/no-empty-interface": 'off'
   "@typescript-eslint/no-use-before-define":
   - error

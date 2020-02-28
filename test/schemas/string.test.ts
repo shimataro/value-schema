@@ -10,6 +10,7 @@ import vs from "value-schema";
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
 	describe("pattern", testPattern);
+	describe("converter", testConverter);
 }
 
 /**
@@ -671,5 +672,52 @@ function testPatternOthers(): void
 				pattern: vs.STRING.PATTERN.EMAIL,
 			}).applyTo("john..doe@example.com");
 		}).toThrow(vs.CAUSE.PATTERN);
+	});
+}
+
+/**
+ * converter
+ */
+function testConverter(): void
+{
+	it("should be adjusted", () =>
+	{
+		expect(
+			vs.string({
+				converter: (value) =>
+				{
+					return value.toLowerCase();
+				},
+			}).applyTo("123ABCxyz")
+		).toEqual("123abcxyz");
+
+		expect(
+			vs.string({
+				converter: (value, fail) =>
+				{
+					if(value.length >= 9)
+					{
+						fail();
+					}
+					return value.padStart(8, " ");
+				},
+			}).applyTo("test")
+		).toEqual("    test");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			vs.string({
+				converter: (value, fail) =>
+				{
+					if(value.length >= 9)
+					{
+						fail();
+					}
+					return value.padStart(8, " ");
+				},
+			}).applyTo("123ABCxyz");
+		}).toThrow(vs.CAUSE.CONVERTER);
 	});
 }
