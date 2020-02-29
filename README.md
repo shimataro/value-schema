@@ -205,12 +205,10 @@ The `ValueSchemaError` object represents an error.
 ```typescript
 export interface ValueSchemaError extends Error
 {
-    name: string
-    message: string
-    cause: string
-    value: any
-    keyStack: (string | number)[]
-    unionErrors: ValueSchemaError[]
+    readonly cause: string;
+    readonly value: unknown;
+    readonly keyStack: (string | number)[];
+    readonly unionErrors: ValueSchemaError[];
 
     /**
      * check whether error is instance of ValueSchemaError or not
