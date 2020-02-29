@@ -210,6 +210,7 @@ export interface ValueSchemaError extends Error
     cause: string
     value: any
     keyStack: (string | number)[]
+    unionErrors: ValueSchemaError[]
 
     /**
      * check whether error is instance of ValueSchemaError or not
@@ -229,6 +230,7 @@ export interface ValueSchemaError extends Error
 |`cause`|cause of error; see [`CAUSE`](#cause)|
 |`value`|value to apply|
 |`keyStack`|array consists of path to key name(for object) or index(for array) that caused error; for nested object or array|
+|`unionErrors`|array of `ValueSchemaError` instances from `union()`; used only in `union()` error|
 
 See below example.
 For detail about schema / `value-schema`, see [basic usage](#basic-usage)
@@ -2247,7 +2249,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.union(vs.number(), vs.string()).applyTo({}),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", cause: vs.CAUSE.UNION});
 ```
 
 ## Changelog
