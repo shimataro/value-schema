@@ -7,11 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* `union()`
+
 ## [3.0.0-rc.3] - 2020-02-28
 
 ### Added
 
-* `union()`
 * `converter` option
 
 ### Changed
