@@ -37,12 +37,12 @@ function testType(): void
 		expect(() =>
 		{
 			vs.union(vs.number(), vs.string()).applyTo({});
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.UNION);
 
 		// email or username
 		expect(() =>
 		{
 			vs.union(vs.email(), vs.string({pattern: /^\w+$/})).applyTo("!abcxyz");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.CAUSE.UNION);
 	});
 }

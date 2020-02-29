@@ -21,6 +21,7 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
 		...options,
 	};
 
+	const err = new ValueSchemaError(CAUSE.UNION, values.input, keyStack);
 	for(const schema of normalizedOptions.schemas)
 	{
 		try
@@ -28,11 +29,11 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
 			values.output = schema.applyTo(values.output);
 			return true;
 		}
-		catch(err)
+		catch(unionError)
 		{
-			// do nothing
+			err.unionErrors.push(unionError);
 		}
 	}
 
-	ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+	throw err;
 }
