@@ -31,7 +31,11 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
 		}
 		catch(unionError)
 		{
-			err.unionErrors.push(unionError);
+			// istanbul ignore next
+			if(ValueSchemaError.is(unionError))
+			{
+				err.unionErrors.push(unionError);
+			}
 		}
 	}
 
