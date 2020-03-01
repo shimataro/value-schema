@@ -29,13 +29,15 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
 			values.output = schema.applyTo(values.output);
 			return true;
 		}
-		catch(unionError)
+		catch(thrownError)
 		{
 			// istanbul ignore next
-			if(ValueSchemaError.is(unionError))
+			if(!ValueSchemaError.is(thrownError))
 			{
-				err.unionErrors.push(unionError);
+				throw thrownError;
 			}
+
+			err.unionErrors.push(thrownError);
 		}
 	}
 
