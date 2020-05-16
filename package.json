@@ -1,7 +1,7 @@
 {
   "name": "value-schema",
   "description": "simple, easy-to-use, and declarative schema validator",
-  "version": "3.0.0-rc.3",
+  "version": "3.0.0-rc.4",
   "author": "shimataro",
   "license": "MIT",
   "repository": {
@@ -55,10 +55,10 @@
   "devDependencies": {
     "@babel/cli": "7.8.4",
     "@babel/core": "7.9.6",
-    "@types/jest": "25.2.1",
-    "@types/node": "13.13.5",
-    "@typescript-eslint/eslint-plugin": "2.31.0",
-    "@typescript-eslint/parser": "2.31.0",
+    "@types/jest": "25.2.2",
+    "@types/node": "14.0.1",
+    "@typescript-eslint/eslint-plugin": "2.33.0",
+    "@typescript-eslint/parser": "2.33.0",
     "babel-plugin-add-module-exports": "1.0.2",
     "babel-plugin-module-extension-resolver": "1.0.0-rc.1",
     "case": "1.6.3",
@@ -67,10 +67,10 @@
     "eslint": "7.0.0",
     "jest": "26.0.1",
     "markdownlint-cli": "0.23.0",
-    "npm-check-updates": "5.0.0",
+    "npm-check-updates": "6.0.1",
     "npm-run-all": "4.1.5",
-    "ts-jest": "25.5.1",
-    "typescript": "3.8.3",
+    "ts-jest": "26.0.0",
+    "typescript": "3.9.2",
     "yaml-lint": "1.2.4"
   }
 }
