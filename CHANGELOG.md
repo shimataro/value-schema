@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0-rc.5] - 2020-05-17
+
 ### Fixed
 
 * Deno module name
@@ -463,7 +465,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.4...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.5...HEAD
+[3.0.0-rc.5]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.4...v3.0.0-rc.5
 [3.0.0-rc.4]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.3...v3.0.0-rc.4
 [3.0.0-rc.3]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.2...v3.0.0-rc.3
 [3.0.0-rc.2]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.1...v3.0.0-rc.2
