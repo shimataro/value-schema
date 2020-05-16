@@ -1,7 +1,8 @@
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions
 
-on: push
 name: Examples
+on: push
+
 jobs:
   cjs:
     name: CommonJS
@@ -58,6 +59,7 @@ jobs:
       run: node ./examples/example.js
     - name: Run example (TypeScript/Babel compatible)
       run: node ./examples/example-default.js
+
   esm:
     name: ES Modules
     runs-on: ${{ matrix.os }}
@@ -117,6 +119,7 @@ jobs:
       run: node --experimental-modules ./examples/example-default.js
     - name: Run example (ESM)
       run: node --experimental-modules ./examples/example.mjs
+
   conditional-exports:
     name: Conditional Exports
     runs-on: ${{ matrix.os }}
@@ -166,3 +169,41 @@ jobs:
       run: node --experimental-conditional-exports ./examples/example-default.js
     - name: Run example (ESM)
       run: node --experimental-conditional-exports ./examples/example.mjs
+
+  deno:
+    name: Deno
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+        - windows-latest
+        - macos-latest
+        - ubuntu-latest
+        deno:
+        - "1.0.0"
+      fail-fast: false
+    steps:
+    - name: Checkout source codes
+      uses: actions/checkout@v2
+    - name: Install Node.js v12
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: Output versions
+      run: |
+        node -v
+        npm -v
+    - name: Install dependencies
+      run: npm ci
+    - name: Build
+      run: npm run build
+    - name: Install dependencies (only production)
+      run: npm ci --only=production
+    - name: Install Deno
+      uses: denolib/setup-deno@v1.3.0
+      with:
+        deno-version: ${{ matrix.deno }}
+    - name: Check syntax
+      run: deno run ./mod.ts
+    - name: Run example
+      run: deno run ./examples/example-deno.ts
