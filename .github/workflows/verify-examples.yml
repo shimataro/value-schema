@@ -171,7 +171,7 @@ jobs:
       run: node --experimental-conditional-exports ./examples/example.mjs
 
   deno:
-    name: TypeScript on Deno
+    name: Deno
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:

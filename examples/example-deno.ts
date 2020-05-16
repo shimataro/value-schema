@@ -98,4 +98,4 @@ const actual = vs.applySchemaObject(schemaObject, input);
 // verification
 assert.assertEquals(actual, expected);
 
-console.log("TS: OK!🎉");
+console.log("Deno: OK!🎉");
