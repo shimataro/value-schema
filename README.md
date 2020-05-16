@@ -12,6 +12,8 @@
 
 simple, easy-to-use, and declarative schema validator
 
+supports [Node.js](https://nodejs.org/) and [Deno](https://deno.land/)
+
 ## Table of Contents
 
 * [Introduction](#introduction)
@@ -29,7 +31,7 @@ simple, easy-to-use, and declarative schema validator
     * [object](#object)
 * [Changelog](#changelog)
 
----
+===
 
 ## Introduction
 
@@ -190,6 +192,14 @@ $ node --experimental-modules foo.mjs
 ```
 
 **TypeScript** auto-completion and type-checking works perfectly on [Visual Studio Code](https://code.visualstudio.com/) and [IntelliJ IDEA](https://www.jetbrains.com/idea/)!
+
+### TypeScript on [Deno](https://deno.land/)
+
+Deno has been supported as of v3.0.0-rc.4.
+
+```typescript
+import vs from "https://deno.land/x/value-schema/mod.ts";
+```
 
 ## Reference
 
