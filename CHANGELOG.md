@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+* Deno module name
+
 ## [3.0.0-rc.4] - 2020-05-16
 
 ### Added
