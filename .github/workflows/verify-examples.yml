@@ -10,9 +10,11 @@ jobs:
     strategy:
       matrix:
         os:
-        - windows-latest
-        - macos-latest
-        - ubuntu-latest
+        - windows-2019
+        - macos-10.15
+        - ubuntu-16.04
+        - ubuntu-18.04
+        - ubuntu-20.04
         nodejs:
         - "4.0.0"
         - "6.0.0"
@@ -66,21 +68,19 @@ jobs:
     strategy:
       matrix:
         os:
-        - windows-latest
-        - macos-latest
-        - ubuntu-latest
+        - windows-2019
+        - macos-10.15
+        - ubuntu-16.04
+        - ubuntu-18.04
+        - ubuntu-20.04
         nodejs:
         - "8.5.0"
         - "8.6.0"
         - "10.0.0"
         - "12.0.0" # loads CommonJS
         exclude:
-        - os: windows-latest # On Windows, v8.5.0 causes ERR_INVALID_PROTOCOL; https://github.com/nodejs/node/issues/15374
+        - os: windows-2019 # On Windows, v8.5.0 causes ERR_INVALID_PROTOCOL; https://github.com/nodejs/node/issues/15374
           nodejs: "8.5.0"
-        - os: macos-latest
-          nodejs: "8.6.0"
-        - os: ubuntu-latest
-          nodejs: "8.6.0"
       fail-fast: false
     steps:
     - name: Checkout source codes
@@ -126,9 +126,11 @@ jobs:
     strategy:
       matrix:
         os:
-        - windows-latest
-        - macos-latest
-        - ubuntu-latest
+        - windows-2019
+        - macos-10.15
+        - ubuntu-16.04
+        - ubuntu-18.04
+        - ubuntu-20.04
         nodejs:
         - "13.2.0"
       fail-fast: false
@@ -176,9 +178,11 @@ jobs:
     strategy:
       matrix:
         os:
-        - windows-latest
-        - macos-latest
-        - ubuntu-latest
+        - windows-2019
+        - macos-10.15
+        - ubuntu-16.04
+        - ubuntu-18.04
+        - ubuntu-20.04
         deno:
         - "1.0.0"
       fail-fast: false
