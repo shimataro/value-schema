@@ -10,7 +10,6 @@ jobs:
       matrix:
         nodejs:
         - 12
-        - 14
       fail-fast: false
     steps:
     - name: Checkout source codes
