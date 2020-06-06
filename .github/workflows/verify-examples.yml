@@ -26,7 +26,7 @@ jobs:
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v2
-    - name: Install Node.js v12
+    - name: Install Node.js for build
       uses: actions/setup-node@v1
       with:
         node-version: 12
@@ -87,7 +87,7 @@ jobs:
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v2
-    - name: Install Node.js v12
+    - name: Install Node.js for build
       uses: actions/setup-node@v1
       with:
         node-version: 12
@@ -139,7 +139,7 @@ jobs:
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v2
-    - name: Install Node.js v12
+    - name: Install Node.js for build
       uses: actions/setup-node@v1
       with:
         node-version: 12
@@ -191,7 +191,7 @@ jobs:
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v2
-    - name: Install Node.js v12
+    - name: Install Node.js for build
       uses: actions/setup-node@v1
       with:
         node-version: 12
