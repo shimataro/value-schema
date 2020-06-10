@@ -255,13 +255,13 @@ function testInteger(): void
 		{
 			expect(
 				vs.number({
-					integer: vs.NUMBER.INTEGER.CEIL_RZ,
+					integer: vs.NUMBER.INTEGER.CEIL_RI,
 				}).applyTo(3.14)
 			).toEqual(4);
 
 			expect(
 				vs.number({
-					integer: vs.NUMBER.INTEGER.CEIL_RZ,
+					integer: vs.NUMBER.INTEGER.CEIL_RI,
 				}).applyTo(-3.14)
 			).toEqual(-4);
 		});
