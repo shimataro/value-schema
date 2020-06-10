@@ -6,16 +6,17 @@ import * as schema from "../appliers/object/schema";
 import * as type from "../appliers/object/type";
 
 import {BaseSchema} from "../libs/BaseSchema";
+import {AnyObject} from "../libs/types";
 
 type OptionsForObject =
-	converter.Options<object> |
-	ifUndefined.Options<object> |
-	ifEmptyString.Options<object> |
-	ifNull.Options<object> |
+	converter.Options<AnyObject> |
+	ifUndefined.Options<AnyObject> |
+	ifEmptyString.Options<AnyObject> |
+	ifNull.Options<AnyObject> |
 	schema.Options |
 	type.Options;
 
-class ObjectSchema extends BaseSchema<object>
+class ObjectSchema extends BaseSchema<AnyObject>
 {
 	constructor(options: OptionsForObject)
 	{
