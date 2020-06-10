@@ -27,7 +27,7 @@ export function applySchemaObjectCore<T extends AnyObject>(schemaObject: SchemaO
 		return result as T;
 	}
 
-	const appliedObject: Record<string, unknown> = {};
+	const appliedObject: AnyObject = {};
 	let hasError = false;
 	for(const key of Object.keys(schemaObject))
 	{
