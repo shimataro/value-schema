@@ -1,4 +1,4 @@
-import {Key, isObject} from "./types";
+import {AnyObject, Key, isObject} from "./types";
 import {BaseSchema, ErrorHandler, FinishHandler} from "./BaseSchema";
 import {CAUSE, ValueSchemaError} from "./ValueSchemaError";
 
@@ -13,7 +13,7 @@ export type SchemaObject = Record<string, BaseSchema>
  * @param keyStack path to key that caused error
  * @returns applied data
  */
-export function applySchemaObjectCore<T extends object>(schemaObject: SchemaObject, data: unknown, onError: ErrorHandler, onFinished: FinishHandler, keyStack: Key[]): T
+export function applySchemaObjectCore<T extends AnyObject>(schemaObject: SchemaObject, data: unknown, onError: ErrorHandler, onFinished: FinishHandler, keyStack: Key[]): T
 {
 	if(!isObject(data))
 	{
