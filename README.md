@@ -31,7 +31,7 @@ supports [Node.js](https://nodejs.org/) and [Deno](https://deno.land/)
     * [object](#object)
 * [Changelog](#changelog)
 
-===
+- - -
 
 ## Introduction
 
