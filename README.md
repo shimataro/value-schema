@@ -31,7 +31,7 @@ supports [Node.js](https://nodejs.org/) and [Deno](https://deno.land/)
     * [object](#object)
 * [Changelog](#changelog)
 
-===
+- - -
 
 ## Introduction
 
@@ -995,14 +995,14 @@ Limits an input value to integer.
 |-----|-----------|
 |`NUMBER.INTEGER.NO` (`0`) / `false`|does not limit to integer|
 |`NUMBER.INTEGER.YES` (`1`) / `true`|limits to integer, but does not round|
-|`NUMBER.INTEGER.FLOOR` (`2`)|rounds down toward infinity|
-|`NUMBER.INTEGER.FLOOR_RZ` (`3`)|rounds down toward zero|
-|`NUMBER.INTEGER.CEIL` (`4`)|rounds up toward infinity|
-|`NUMBER.INTEGER.CEIL_RZ` (`5`)|rounds up toward zero|
-|`NUMBER.INTEGER.HALF_UP` (`6`)|rounds half up toward infinity|
-|`NUMBER.INTEGER.HALF_UP_RZ` (`7`)|rounds half up toward zero|
-|`NUMBER.INTEGER.HALF_DOWN` (`8`)|rounds half down toward infinity|
-|`NUMBER.INTEGER.HALF_DOWN_RZ` (`9`)|rounds half down toward zero|
+|`NUMBER.INTEGER.FLOOR` (`2`)|rounds towards −∞|
+|`NUMBER.INTEGER.FLOOR_RZ` (`3`)|rounds towards 0|
+|`NUMBER.INTEGER.CEIL` (`4`)|rounds towards +∞|
+|`NUMBER.INTEGER.CEIL_RI` (`5`)|rounds towards ∞|
+|`NUMBER.INTEGER.HALF_UP` (`6`)|rounds half towards +∞|
+|`NUMBER.INTEGER.HALF_UP_RZ` (`7`)|rounds half towards 0|
+|`NUMBER.INTEGER.HALF_DOWN` (`8`)|rounds half towards −∞|
+|`NUMBER.INTEGER.HALF_DOWN_RZ` (`9`)|rounds half towards 0|
 
 ```javascript
 // should be adjusted
@@ -1028,10 +1028,10 @@ assert.strictEqual(
     vs.number({integer: vs.NUMBER.INTEGER.CEIL}).applyTo(-3.14),
     -3);
 assert.strictEqual(
-    vs.number({integer: vs.NUMBER.INTEGER.CEIL_RZ}).applyTo(3.14),
+    vs.number({integer: vs.NUMBER.INTEGER.CEIL_RI}).applyTo(3.14),
     4);
 assert.strictEqual(
-    vs.number({integer: vs.NUMBER.INTEGER.CEIL_RZ}).applyTo(-3.14),
+    vs.number({integer: vs.NUMBER.INTEGER.CEIL_RI}).applyTo(-3.14),
     -4);
 assert.strictEqual(
     vs.number({integer: vs.NUMBER.INTEGER.HALF_UP}).applyTo(3.49),

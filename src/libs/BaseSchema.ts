@@ -4,7 +4,9 @@ import {ValueSchemaError} from "./ValueSchemaError";
 export type ErrorHandler<T = unknown> = (err: ValueSchemaError) => T | null | never;
 export type FinishHandler = () => void;
 
-type Options = {};
+interface Options
+{
+}
 type ApplyTo<T> = (values: Values, options: Options, keyStack: Key[]) => values is Values<T>;
 
 /**
