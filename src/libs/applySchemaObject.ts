@@ -1,7 +1,7 @@
 import {SchemaObject, applySchemaObjectCore} from "./applySchemaObjectCore";
 import {ErrorHandler, FinishHandler, onErrorDefault, onFinishedDefault} from "./BaseSchema";
 
-import {AnyObject} from "../libs/types";
+import {Empty} from "../libs/types";
 
 export {SchemaObject} from "./applySchemaObjectCore";
 export {ErrorHandler} from "./BaseSchema";
@@ -14,7 +14,7 @@ export {ErrorHandler} from "./BaseSchema";
  * @param onFinished finish handler
  * @returns applied data
  */
-export function applySchemaObject<T extends AnyObject>(schemaObject: SchemaObject, data: unknown, onError: ErrorHandler = onErrorDefault, onFinished: FinishHandler = onFinishedDefault): T
+export function applySchemaObject<T extends Empty>(schemaObject: SchemaObject, data: unknown, onError: ErrorHandler = onErrorDefault, onFinished: FinishHandler = onFinishedDefault): T
 {
 	return applySchemaObjectCore(schemaObject, data, onError, onFinished, []);
 }

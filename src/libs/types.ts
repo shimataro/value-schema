@@ -2,6 +2,10 @@ type Scalar = boolean | number | string;
 
 export type AnyObject = Record<string, unknown>;
 
+export interface Empty
+{
+}
+
 export type Key = string | number;
 
 export interface Values<T = unknown>
