@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0-rc.6] - 2020-06-11
+
 ### Fixed
 
 * ❌CEIL_RZ ⭕CEIL_RI (Round towards Infinity)
@@ -469,7 +471,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.5...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.6...HEAD
+[3.0.0-rc.6]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.5...v3.0.0-rc.6
 [3.0.0-rc.5]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.4...v3.0.0-rc.5
 [3.0.0-rc.4]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.3...v3.0.0-rc.4
 [3.0.0-rc.3]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.2...v3.0.0-rc.3
