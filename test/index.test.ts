@@ -118,12 +118,16 @@ function testApplySchemaObject(): void
 			arrayOfBoolean: vs.array({each: vs.boolean()}),
 			arrayOfNumber: vs.array({each: vs.number()}),
 			arrayOfString: vs.array({each: vs.string()}),
-			arrayOfArray: vs.array({each: vs.array({
-				each: vs.number(),
-			})}),
-			arrayOfObject: vs.array({each: vs.object({
-				schemaObject: {foo: vs.number()},
-			})}),
+			arrayOfArray: vs.array({
+				each: vs.array({
+					each: vs.number(),
+				}),
+			}),
+			arrayOfObject: vs.array({
+				each: vs.object({
+					schemaObject: {foo: vs.number()},
+				}),
+			}),
 
 			object: vs.object({
 				schemaObject: {
@@ -135,9 +139,11 @@ function testApplySchemaObject(): void
 
 					arrayOfBoolean: vs.array({each: vs.boolean()}),
 					arrayOfNumber: vs.array({each: vs.number()}),
-					arrayOfArray: vs.array({each: vs.array({
-						each: vs.number(),
-					})}),
+					arrayOfArray: vs.array({
+						each: vs.array({
+							each: vs.number(),
+						}),
+					}),
 					arrayOfString: vs.array({each: vs.string()}),
 				},
 			}),
