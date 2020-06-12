@@ -1,10 +1,10 @@
-import {Key, Values} from "../../libs/types";
-import {SchemaObject, applySchemaObjectCore} from "../../libs/applySchemaObjectCore";
+import {Key, ObjectTypeOf, SchemaObject, Values} from "../../libs/types";
+import {applySchemaObjectCore} from "../../libs/applySchemaObjectCore";
 import {onErrorDefault, onFinishedDefault} from "../../libs/BaseSchema";
 
-export interface Options
+export interface Options<S>
 {
-	schemaObject?: SchemaObject;
+	schemaObject?: S;
 }
 
 /**
@@ -15,7 +15,7 @@ export interface Options
  * @returns ends applying
  * @throws {ValueSchemaError}
  */
-export function applyTo<T>(values: Values, options: Options, keyStack: Key[]): values is Values<T>
+export function applyTo<S extends SchemaObject>(values: Values, options: Options<S>, keyStack: Key[]): values is Values<ObjectTypeOf<S>>
 {
 	if(options.schemaObject === undefined)
 	{

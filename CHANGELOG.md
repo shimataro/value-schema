@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* enabled property completion and type inference, without explicit type specification
+
 ## [3.0.0-rc.7] - 2020-06-11
 
 ### Fixed

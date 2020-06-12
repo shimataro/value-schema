@@ -1,8 +1,6 @@
-import {AnyObject, Empty, Key, isObject} from "./types";
-import {BaseSchema, ErrorHandler, FinishHandler} from "./BaseSchema";
+import {AnyObject, Key, ObjectTypeOf, SchemaObject, isObject} from "./types";
+import {ErrorHandler, FinishHandler} from "./BaseSchema";
 import {CAUSE, ValueSchemaError} from "./ValueSchemaError";
-
-export type SchemaObject = Record<string, BaseSchema>
 
 /**
  * apply schema object to data
@@ -13,7 +11,7 @@ export type SchemaObject = Record<string, BaseSchema>
  * @param keyStack path to key that caused error
  * @returns applied data
  */
-export function applySchemaObjectCore<T extends Empty>(schemaObject: SchemaObject, data: unknown, onError: ErrorHandler, onFinished: FinishHandler, keyStack: Key[]): T
+export function applySchemaObjectCore<S extends SchemaObject>(schemaObject: S, data: unknown, onError: ErrorHandler, onFinished: FinishHandler, keyStack: Key[]): ObjectTypeOf<S>
 {
 	if(!isObject(data))
 	{
@@ -24,7 +22,7 @@ export function applySchemaObjectCore<T extends Empty>(schemaObject: SchemaObjec
 			throw err;
 		}
 
-		return result as T;
+		return result as ObjectTypeOf<S>;
 	}
 
 	const appliedObject: AnyObject = {};
@@ -39,7 +37,7 @@ export function applySchemaObjectCore<T extends Empty>(schemaObject: SchemaObjec
 	{
 		onFinished();
 	}
-	return appliedObject as T;
+	return appliedObject as ObjectTypeOf<S>;
 
 	/**
 	 * error handler (to avoid "no-loop-func" error on eslint)

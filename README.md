@@ -474,7 +474,7 @@ interface Parameters {
     bar: string
 }
 
-const schemaObject: vs.SchemaObject = {
+const schemaObject = {
     foo: vs.number(),
     bar: vs.string(),
 };
@@ -2069,7 +2069,7 @@ type OptionsForObject = {
     ifEmptyString?: object | null;
     ifNull?: object | null;
 
-    schemaObject?: SchemaObject;
+    schemaObject?: Record<string, BaseSchema>;
 
     converter?: (values: object, fail: () => never) => object | null;
 }
