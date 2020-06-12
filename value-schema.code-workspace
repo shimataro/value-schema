@@ -24,7 +24,8 @@
     "typescript.format.placeOpenBraceOnNewLineForFunctions": true,
     "typescript.format.placeOpenBraceOnNewLineForControlBlocks": true,
     "typescript.format.semicolons": "insert",
-    "typescript.validate.enable": true
+    "typescript.validate.enable": true,
+    "deno.enable": false
   },
   "extensions": {
     "recommendations": [
