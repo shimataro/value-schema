@@ -1,10 +1,23 @@
+import {BaseSchema} from "./BaseSchema";
+
+class AS<T> extends BaseSchema<T[]>
+{}
+class OS<S extends SchemaObject> extends BaseSchema<ObjectTypeOf<S>>
+{}
+export type ObjectTypeOf<S extends SchemaObject> = {
+	[K in keyof S]:
+		S[K] extends AS<infer T> ? T[] :
+		S[K] extends OS<infer S2> ? ObjectTypeOf<S2> :
+		S[K] extends BaseSchema<boolean> ? boolean :
+		S[K] extends BaseSchema<number> ? number :
+		S[K] extends BaseSchema<string> ? string :
+		never
+}
+
 type Scalar = boolean | number | string;
 
 export type AnyObject = Record<string, unknown>;
-
-export interface Empty
-{
-}
+export type SchemaObject = Record<string, BaseSchema>
 
 export type Key = string | number;
 
@@ -102,7 +115,7 @@ export function isArray(value: unknown): value is unknown[]
  * @param value value to check
  * @returns Yes/No
  */
-export function isObject(value: unknown): value is Record<string, unknown>
+export function isObject(value: unknown): value is AnyObject
 {
 	if(value === null)
 	{
