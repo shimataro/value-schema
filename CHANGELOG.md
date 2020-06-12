@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0-rc.8] - 2020-06-13
+
+### Changed
+
+* enabled property completion and type inference, without explicit type specification
+
 ## [3.0.0-rc.7] - 2020-06-11
 
 ### Fixed
@@ -477,7 +483,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.7...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.8...HEAD
+[3.0.0-rc.8]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.7...v3.0.0-rc.8
 [3.0.0-rc.7]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.6...v3.0.0-rc.7
 [3.0.0-rc.6]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.5...v3.0.0-rc.6
 [3.0.0-rc.5]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.4...v3.0.0-rc.5

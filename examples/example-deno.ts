@@ -1,22 +1,7 @@
 import * as assert from "https://deno.land/std/testing/asserts.ts";
 import vs from "../mod.ts";
 
-interface Input {
-	id: number;
-	name: string;
-	age: number;
-	email: string;
-	state: string;
-	classes: number[];
-	skills: string[];
-	creditCard: string;
-	remoteAddr: string;
-	remoteAddrIpv6: string;
-	limit: number,
-	offset: number,
-};
-
-const schemaObject: vs.SchemaObject = { // schema for input
+const schemaObject = { // schema for input
 	id: vs.number({ // number, >=1
 		minValue: 1,
 	}),
@@ -108,7 +93,7 @@ const expected = { // should be converted to this
 };
 
 // Let's apply!
-const actual = vs.applySchemaObject<Input>(schemaObject, input);
+const actual = vs.applySchemaObject(schemaObject, input);
 
 // verification
 assert.assertEquals(actual, expected);
