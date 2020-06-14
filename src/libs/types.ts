@@ -1,6 +1,7 @@
 import {ArraySchema} from "../schemaClasses/ArraySchema";
 import {BaseSchema} from "../schemaClasses/BaseSchema";
 import {BooleanSchema} from "../schemaClasses/BooleanSchema";
+import {EmailSchema} from "../schemaClasses/EmailSchema";
 import {NumberSchema} from "../schemaClasses/NumberSchema";
 import {ObjectSchema} from "../schemaClasses/ObjectSchema";
 import {StringSchema} from "../schemaClasses/StringSchema";
@@ -17,6 +18,8 @@ export type ObjectTypeOf<S extends SchemaObject> = {
 		S[K] extends NumberSchema<null> ? number | null :
 		S[K] extends StringSchema ? string :
 		S[K] extends StringSchema<null> ? string | null :
+		S[K] extends EmailSchema ? string :
+		S[K] extends EmailSchema<null> ? string | null :
 		never
 }
 
