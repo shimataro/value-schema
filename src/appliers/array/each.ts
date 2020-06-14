@@ -1,6 +1,6 @@
 import {Key, Values, isArray} from "../../libs/types";
-import {BaseSchema} from "../../libs/BaseSchema";
 import {ValueSchemaError} from "../../libs/ValueSchemaError";
+import {BaseSchema} from "../../schemaClasses/BaseSchema";
 
 type Each<T> = {
 	schema: BaseSchema<T>;
@@ -34,29 +34,34 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
 		return false;
 	}
 
-	const adjustedValues: (T | null)[] = [];
+	const adjustedValues: T[] = [];
 	for(let idx = 0; idx < values.output.length; idx++)
 	{
-		let ignored = false;
 		const element = values.output[idx];
 
 		// A trick in order to call _applyTo() private method from the outside (like "friend")
-		const adjustedValue = each.schema["_applyTo"](element, (err) =>
+		try
 		{
-			if(each.ignoresErrors)
+			const adjustedValue = each.schema["_applyTo"](element, (err) =>
 			{
-				ignored = true;
-				return null;
-			}
+				if(each.ignoresErrors)
+				{
+					throw Error("!IGNORE!");
+				}
 
-			ValueSchemaError.raise(err.cause, values, err.keyStack);
-		}, [...keyStack, idx]);
-
-		if(ignored)
-		{
-			continue;
+				ValueSchemaError.raise(err.cause, values, err.keyStack);
+			}, [...keyStack, idx]);
+			adjustedValues.push(adjustedValue);
 		}
-		adjustedValues.push(adjustedValue);
+		catch(err)
+		{
+			if(err.message === "!IGNORE!")
+			{
+				// ignore
+				continue;
+			}
+			throw err;
+		}
 	}
 
 	// replace with adjusted values

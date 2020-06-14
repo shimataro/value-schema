@@ -1,9 +1,9 @@
 import {applySchemaObjectCore} from "./applySchemaObjectCore";
-import {ErrorHandler, FinishHandler, onErrorDefault, onFinishedDefault} from "./BaseSchema";
-
 import {ObjectTypeOf, SchemaObject} from "./types";
 
-export {ErrorHandler} from "./BaseSchema";
+import {ErrorHandler, FinishHandler, onErrorDefault, onFinishedDefault} from "../schemaClasses/BaseSchema";
+
+export {ErrorHandler} from "../schemaClasses/BaseSchema";
 
 /**
  * apply schema object to data

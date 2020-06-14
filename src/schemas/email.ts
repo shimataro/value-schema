@@ -6,7 +6,7 @@ import * as pattern from "../appliers/email/pattern";
 import * as trims from "../appliers/string/trims";
 import * as type from "../appliers/string/type";
 
-import {BaseSchema} from "../libs/BaseSchema";
+import {BaseSchema} from "../schemaClasses/BaseSchema";
 
 type OptionsForEmail =
 	ifEmptyString.Options<string> |

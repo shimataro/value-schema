@@ -12,7 +12,7 @@ import * as maxLength from "../appliers/string/maxLength";
 import * as minLength from "../appliers/string/minLength";
 import * as type from "../appliers/string/type";
 
-import {BaseSchema} from "../libs/BaseSchema";
+import {BaseSchema} from "../schemaClasses/BaseSchema";
 
 export const NUMERIC_STRING = {
 	CHECKSUM_ALGORITHM: checksum.CHECKSUM_ALGORITHM,
