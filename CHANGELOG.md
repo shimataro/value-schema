@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* make `converter` non-nullable
+
+### Fixed
+
+* support nullable cases
+    * `{ifUndefined: null}`
+    * `{ifNull: null}`
+    * `{ifEmptyString: null}`
+
 ## [3.0.0-rc.8] - 2020-06-13
 
 ### Changed

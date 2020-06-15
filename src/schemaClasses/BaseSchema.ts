@@ -1,13 +1,15 @@
-import {Key, Values, makeValues} from "./types";
-import {ValueSchemaError} from "./ValueSchemaError";
+import {Key, Values, makeValues} from "../libs/types";
+import {ValueSchemaError} from "../libs/ValueSchemaError";
 
-export type ErrorHandler<T = unknown> = (err: ValueSchemaError) => T | null | never;
+export type ErrorHandler<T = unknown> = (err: ValueSchemaError) => T | never;
 export type FinishHandler = () => void;
 
 interface Options
 {
 }
 type ApplyTo<T> = (values: Values, options: Options, keyStack: Key[]) => values is Values<T>;
+
+export type NullableOptions = {ifNull: null} | {ifUndefined: null} | {ifEmptyString: null}
 
 /**
  * Base Schema Class
@@ -34,12 +36,12 @@ export class BaseSchema<T = unknown>
 	 * @param onError error handler
 	 * @returns applied value
 	 */
-	applyTo(value: unknown, onError: ErrorHandler<T> = onErrorDefault): T | null
+	applyTo(value: unknown, onError: ErrorHandler<T> = onErrorDefault): T
 	{
 		return this._applyTo(value, onError, []);
 	}
 
-	private _applyTo(value: unknown, onError: ErrorHandler<T>, keyStack: Key[]): T | null
+	private _applyTo(value: unknown, onError: ErrorHandler<T>, keyStack: Key[]): T
 	{
 		try
 		{
@@ -52,7 +54,7 @@ export class BaseSchema<T = unknown>
 				}
 			}
 
-			return values.output as T | null;
+			return values.output as T;
 		}
 		catch(err)
 		{

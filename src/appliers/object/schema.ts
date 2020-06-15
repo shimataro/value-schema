@@ -1,6 +1,6 @@
 import {Key, ObjectTypeOf, SchemaObject, Values} from "../../libs/types";
 import {applySchemaObjectCore} from "../../libs/applySchemaObjectCore";
-import {onErrorDefault, onFinishedDefault} from "../../libs/BaseSchema";
+import {onErrorDefault, onFinishedDefault} from "../../schemaClasses/BaseSchema";
 
 export interface Options<S>
 {

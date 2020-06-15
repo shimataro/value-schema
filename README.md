@@ -822,7 +822,7 @@ type OptionsForNumber = {
     minValue?: number | {value: number, adjusts: boolean};
     maxValue?: number | {value: number, adjusts: boolean};
 
-    converter?: (value: number, fail: () => never) => number | null;
+    converter?: (value: number, fail: () => never) => number;
 }
 type ErrorHandler = (err: ValueSchemaError) => number | null | never;
 interface NumberSchema {
@@ -1184,7 +1184,7 @@ type OptionsForString = {
     maxLength?: number | {length: number, trims: boolean};
     pattern?: RegExp;
 
-    converter?: (value: string, fail: () => never) => string | null;
+    converter?: (value: string, fail: () => never) => string;
 }
 type ErrorHandler = (err: ValueSchemaError) => string | null | never;
 interface StringSchema {
@@ -1436,7 +1436,7 @@ type OptionsForNumericString = {
     pattern?: RegExp;
     checksum?: NUMERIC_STRING.CHECKSUM_ALGORITHM;
 
-    converter?: (value: string, fail: () => never) => string | null;
+    converter?: (value: string, fail: () => never) => string;
 }
 type ErrorHandler = (err: ValueSchemaError) => string | null | never;
 interface NumericStringSchema {
@@ -1856,7 +1856,7 @@ type OptionsForArray<T> = {
     maxLength?: number | {length: number, trims: boolean};
     each?: BaseSchema<T> | {schema: BaseSchema<T>, ignoresErrors: boolean};
 
-    converter?: (values: T[], fail: () => never) => T[] | null;
+    converter?: (values: T[], fail: () => never) => T[];
 }
 type ErrorHandler<T> = (err: ValueSchemaError) => T[] | null | never;
 interface ArraySchema<T> {
@@ -2071,7 +2071,7 @@ type OptionsForObject = {
 
     schemaObject?: Record<string, BaseSchema>;
 
-    converter?: (values: object, fail: () => never) => object | null;
+    converter?: (values: object, fail: () => never) => object;
 }
 type ErrorHandler = (err: ValueSchemaError) => object | null | never;
 interface ObjectSchema {
