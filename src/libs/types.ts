@@ -1,12 +1,7 @@
 import {BaseSchema} from "../schemaClasses/BaseSchema";
 
 import {ArraySchema} from "../schemaClasses/ArraySchema";
-import {BooleanSchema} from "../schemaClasses/BooleanSchema";
-import {EmailSchema} from "../schemaClasses/EmailSchema";
-import {NumberSchema} from "../schemaClasses/NumberSchema";
-import {NumericStringSchema} from "../schemaClasses/NumericStringSchema";
 import {ObjectSchema} from "../schemaClasses/ObjectSchema";
-import {StringSchema} from "../schemaClasses/StringSchema";
 
 export type ObjectTypeOf<S extends SchemaObject> = {
 	[K in keyof S]:
@@ -14,16 +9,12 @@ export type ObjectTypeOf<S extends SchemaObject> = {
 		S[K] extends ArraySchema<infer T, null> ? T[] | null :
 		S[K] extends ObjectSchema<infer S2> ? ObjectTypeOf<S2> :
 		S[K] extends ObjectSchema<infer S2, null> ? ObjectTypeOf<S2> | null :
-		S[K] extends BooleanSchema ? boolean :
-		S[K] extends BooleanSchema<null> ? boolean | null :
-		S[K] extends NumberSchema ? number :
-		S[K] extends NumberSchema<null> ? number | null :
-		S[K] extends StringSchema ? string :
-		S[K] extends StringSchema<null> ? string | null :
-		S[K] extends EmailSchema ? string :
-		S[K] extends EmailSchema<null> ? string | null :
-		S[K] extends NumericStringSchema ? string :
-		S[K] extends NumericStringSchema<null> ? string | null :
+		S[K] extends BaseSchema<boolean> ? boolean :
+		S[K] extends BaseSchema<boolean | null> ? boolean | null :
+		S[K] extends BaseSchema<number> ? number :
+		S[K] extends BaseSchema<number | null> ? number | null :
+		S[K] extends BaseSchema<string> ? string :
+		S[K] extends BaseSchema<string | null> ? string | null :
 		never
 }
 
