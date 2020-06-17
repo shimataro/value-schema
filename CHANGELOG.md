@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0-rc.9] - 2020-06-18
+
 ### Changed
 
 * make `converter` non-nullable
@@ -494,7 +496,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.8...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.9...HEAD
+[3.0.0-rc.9]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.8...v3.0.0-rc.9
 [3.0.0-rc.8]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.7...v3.0.0-rc.8
 [3.0.0-rc.7]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.6...v3.0.0-rc.7
 [3.0.0-rc.6]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.5...v3.0.0-rc.6
