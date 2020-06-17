@@ -1,7 +1,7 @@
 {
   "name": "value-schema",
   "description": "simple, easy-to-use, and declarative schema validator",
-  "version": "3.0.0-rc.8",
+  "version": "3.0.0-rc.9",
   "author": "shimataro",
   "license": "MIT",
   "repository": {
@@ -57,8 +57,8 @@
     "@babel/core": "7.10.2",
     "@types/jest": "26.0.0",
     "@types/node": "14.0.13",
-    "@typescript-eslint/eslint-plugin": "3.2.0",
-    "@typescript-eslint/parser": "3.2.0",
+    "@typescript-eslint/eslint-plugin": "3.3.0",
+    "@typescript-eslint/parser": "3.3.0",
     "babel-plugin-add-module-exports": "1.0.2",
     "babel-plugin-module-extension-resolver": "1.0.0-rc.1",
     "case": "1.6.3",

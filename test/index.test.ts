@@ -118,7 +118,7 @@ function testApplySchemaObject(): void
 			arrayOfBoolean: vs.array({each: vs.boolean()}),
 			arrayOfNumber: vs.array({each: vs.number()}),
 			arrayOfString: vs.array({each: vs.string()}),
-			arrayOfArray: vs.array({
+			arrayOfArrayOfNumber: vs.array({
 				each: vs.array({
 					each: vs.number(),
 				}),
@@ -139,9 +139,9 @@ function testApplySchemaObject(): void
 
 					arrayOfBoolean: vs.array({each: vs.boolean()}),
 					arrayOfNumber: vs.array({each: vs.number()}),
-					arrayOfArray: vs.array({
+					arrayOfArrayOfString: vs.array({
 						each: vs.array({
-							each: vs.number(),
+							each: vs.string(),
 						}),
 					}),
 					arrayOfString: vs.array({each: vs.string()}),
@@ -158,7 +158,7 @@ function testApplySchemaObject(): void
 			arrayOfBoolean: [true, false],
 			arrayOfNumber: [0, 1, 2, 3],
 			arrayOfString: ["a", "b", "c"],
-			arrayOfArray: [[0, 1], [2], [3, 4, 5]],
+			arrayOfArrayOfNumber: [[0, 1], [2], [3, 4, 5]],
 			arrayOfObject: [{foo: 1}, {foo: 2}, {foo: 3}],
 
 			object: {
@@ -171,53 +171,32 @@ function testApplySchemaObject(): void
 				arrayOfBoolean: [true, false],
 				arrayOfNumber: [0, 1, 2, 3],
 				arrayOfString: ["a", "b", "c"],
-				arrayOfArray: [[0, 1], [2], [3, 4, 5]],
+				arrayOfArrayOfString: [["A", "B"], ["C"], ["X", "Y", "Z"]],
 			},
 		};
 
-		// property check
+		// property / type-inference check
 		const actual = vs.applySchemaObject(schemaObject, input);
-		expect(actual.number).toEqual(0);
-		expect(actual.string).toEqual("X");
-		expect(actual.email).toEqual("user@example.com");
-		expect(actual.numericString).toEqual("1234");
+		expect(actual.number.toExponential()).toEqual("0e+0");
+		expect(actual.string.toLowerCase()).toEqual("x");
+		expect(actual.email.toUpperCase()).toEqual("USER@EXAMPLE.COM");
+		expect(actual.numericString.padStart(8, "0")).toEqual("00001234");
 
-		expect(actual.arrayOfBoolean).toEqual([true, false]);
-		expect(actual.arrayOfNumber).toEqual([0, 1, 2, 3]);
-		expect(actual.arrayOfString).toEqual(["a", "b", "c"]);
-		expect(actual.arrayOfArray).toEqual([[0, 1], [2], [3, 4, 5]]);
-		expect(actual.arrayOfObject).toEqual([{foo: 1}, {foo: 2}, {foo: 3}]);
+		expect(actual.arrayOfBoolean.slice()).toEqual([true, false]);
+		expect(actual.arrayOfNumber.slice()[0].toFixed()).toEqual("0");
+		expect(actual.arrayOfString.slice()[0].toUpperCase()).toEqual("A");
+		expect(actual.arrayOfArrayOfNumber.slice()[0].slice()[0].toFixed()).toEqual("0");
+		expect(actual.arrayOfObject.slice()[0].foo.toExponential()).toEqual("1e+0");
 
 		expect(actual.object.boolean).toEqual(false);
-		expect(actual.object.number).toEqual(0);
-		expect(actual.object.string).toEqual("X");
-		expect(actual.object.email).toEqual("user@example.com");
-		expect(actual.object.numericString).toEqual("1234");
-		expect(actual.object.arrayOfBoolean).toEqual([true, false]);
-		expect(actual.object.arrayOfNumber).toEqual([0, 1, 2, 3]);
-		expect(actual.object.arrayOfString).toEqual(["a", "b", "c"]);
-		expect(actual.object.arrayOfArray).toEqual([[0, 1], [2], [3, 4, 5]]);
-
-		// type-inference check
-		actual.number.toExponential();
-		actual.string.toUpperCase();
-		actual.email.toUpperCase();
-		actual.numericString.toUpperCase();
-
-		actual.arrayOfBoolean.slice();
-		actual.arrayOfNumber.slice()[0].toExponential();
-		actual.arrayOfString.slice()[0].toUpperCase();
-		actual.arrayOfArray.slice()[0].slice()[0].toExponential();
-		actual.arrayOfObject.slice()[0].foo.toExponential();
-
-		actual.object.number.toExponential();
-		actual.object.string.toUpperCase();
-		actual.object.email.toUpperCase();
-		actual.object.numericString.toUpperCase();
-		actual.object.arrayOfBoolean.slice();
-		actual.object.arrayOfNumber.slice()[0].toExponential();
-		actual.object.arrayOfString.slice()[0].toUpperCase();
-		actual.object.arrayOfArray.slice()[0].slice()[0].toExponential();
+		expect(actual.object.number.toExponential()).toEqual("0e+0");
+		expect(actual.object.string.toLowerCase()).toEqual("x");
+		expect(actual.object.email.toUpperCase()).toEqual("USER@EXAMPLE.COM");
+		expect(actual.object.numericString.padEnd(8, "0")).toEqual("12340000");
+		expect(actual.object.arrayOfBoolean.slice()[0]).toEqual(true);
+		expect(actual.object.arrayOfNumber.slice()[0].toFixed()).toEqual("0");
+		expect(actual.object.arrayOfString.slice()[0].toUpperCase()).toEqual("A");
+		expect(actual.object.arrayOfArrayOfString.slice()[0].slice()[1].toLowerCase()).toEqual("b");
 	});
 }
 

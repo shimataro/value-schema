@@ -1,16 +1,20 @@
-import {BaseSchema} from "./BaseSchema";
+import {BaseSchema} from "../schemaClasses/BaseSchema";
 
-class AS<T> extends BaseSchema<T[]>
-{}
-class OS<S extends SchemaObject> extends BaseSchema<ObjectTypeOf<S>>
-{}
+import {ArraySchema} from "../schemaClasses/ArraySchema";
+import {ObjectSchema} from "../schemaClasses/ObjectSchema";
+
 export type ObjectTypeOf<S extends SchemaObject> = {
 	[K in keyof S]:
-		S[K] extends AS<infer T> ? T[] :
-		S[K] extends OS<infer S2> ? ObjectTypeOf<S2> :
+		S[K] extends ArraySchema<infer T> ? T[] :
+		S[K] extends ArraySchema<infer T, null> ? T[] | null :
+		S[K] extends ObjectSchema<infer S2> ? ObjectTypeOf<S2> :
+		S[K] extends ObjectSchema<infer S2, null> ? ObjectTypeOf<S2> | null :
 		S[K] extends BaseSchema<boolean> ? boolean :
+		S[K] extends BaseSchema<boolean | null> ? boolean | null :
 		S[K] extends BaseSchema<number> ? number :
+		S[K] extends BaseSchema<number | null> ? number | null :
 		S[K] extends BaseSchema<string> ? string :
+		S[K] extends BaseSchema<string | null> ? string | null :
 		never
 }
 
@@ -24,7 +28,7 @@ export type Key = string | number;
 export interface Values<T = unknown>
 {
 	input: unknown;
-	output: T | null;
+	output: T;
 }
 
 /**
