@@ -177,6 +177,7 @@ function testApplySchemaObject(): void
 
 		// property / type-inference check
 		const actual = vs.applySchemaObject(schemaObject, input);
+		expect(actual.boolean).toEqual(false);
 		expect(actual.number.toExponential()).toEqual("0e+0");
 		expect(actual.string.toLowerCase()).toEqual("x");
 		expect(actual.email.toUpperCase()).toEqual("USER@EXAMPLE.COM");
