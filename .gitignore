@@ -18,6 +18,7 @@ node_modules/
 
 # auto-generated files
 /dist/
+/dist-deno/
 /coverage/
 
 # IDE files
