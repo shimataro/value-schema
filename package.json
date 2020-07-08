@@ -43,7 +43,7 @@
     "build:2-cjs": "run-s build:2-cjs:*",
     "build:2-cjs:1-tsc": "tsc -p tsconfig.cjs.json",
     "build:2-cjs:2-babel": "cross-env BABEL_ENV=cjs babel ./dist --out-dir ./dist --extensions .js",
-    "build:3-deno": "deno-module-extension-resolver ./src ./dist",
+    "build:3-deno": "deno-module-extension-resolver ./src ./dist-deno",
     "test": "jest --config jest.config.json",
     "verify": "run-p test lint",
     "lint": "run-p lint:*",
