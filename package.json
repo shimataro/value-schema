@@ -1,7 +1,7 @@
 {
   "name": "value-schema",
   "description": "simple, easy-to-use, and declarative schema validator",
-  "version": "3.0.0-rc.9",
+  "version": "3.0.0-rc.10",
   "author": "shimataro",
   "license": "MIT",
   "repository": {
