@@ -7,12 +7,13 @@
 [![Code Coverage][image-code-coverage]][link-code-coverage]
 [![Release][image-release]][link-release]
 [![Node.js version][image-engine]][link-engine]
-[![Types][image-types]][link-types]
+[![TypeScript version][image-typescript]][link-typescript]
+[![Deno version][image-deno]][link-deno]
 [![License][image-license]][link-license]
 
 simple, easy-to-use, and declarative schema validator
 
-supports [Node.js](https://nodejs.org/) and [Deno](https://deno.land/)
+supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang.org/), and [Deno](https://deno.land/)
 
 ## Table of Contents
 
@@ -2226,7 +2227,9 @@ See [CHANGELOG.md](CHANGELOG.md).
 [link-release]: https://github.com/shimataro/value-schema/releases
 [image-engine]: https://img.shields.io/node/v/value-schema.svg
 [link-engine]: https://nodejs.org/
-[image-types]: https://img.shields.io/npm/types/value-schema.svg
-[link-types]: https://github.com/shimataro/value-schema
+[image-typescript]: https://img.shields.io/badge/TypeScript-%3E%3D3.4.1-brightgreen.svg
+[link-typescript]: https://www.typescriptlang.org/
+[image-deno]: https://img.shields.io/badge/%F0%9F%A6%95%20Deno-%3E%3D1.0.0-brightgreen.svg
+[link-deno]: https://deno.land/
 [image-license]: https://img.shields.io/github/license/shimataro/value-schema.svg
 [link-license]: ./LICENSE
