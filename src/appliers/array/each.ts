@@ -49,7 +49,7 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
 					throw Error("!IGNORE!");
 				}
 
-				ValueSchemaError.raise(err.cause, values, err.keyStack);
+				return ValueSchemaError.raise(err.cause, values, err.keyStack);
 			}, [...keyStack, idx]);
 			adjustedValues.push(adjustedValue);
 		}

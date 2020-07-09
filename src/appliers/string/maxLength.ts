@@ -39,7 +39,7 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	ValueSchemaError.raise(CAUSE.MAX_LENGTH, values, keyStack);
+	return ValueSchemaError.raise(CAUSE.MAX_LENGTH, values, keyStack);
 }
 
 /**

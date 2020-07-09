@@ -3,7 +3,6 @@ import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 export interface Options
 {
-	ifUndefined?: null; // instead of empty object...
 }
 
 /**
@@ -21,5 +20,5 @@ export function applyTo<T>(values: Values, options: Options, keyStack: Key[]): v
 		return false;
 	}
 
-	ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+	return ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 }

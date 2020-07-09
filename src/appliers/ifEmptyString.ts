@@ -26,5 +26,5 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
 		return true;
 	}
 
-	ValueSchemaError.raise(CAUSE.EMPTY_STRING, values, keyStack);
+	return ValueSchemaError.raise(CAUSE.EMPTY_STRING, values, keyStack);
 }

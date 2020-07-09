@@ -7,7 +7,6 @@ const MAX_LENGTH = MAX_LENGTH_LOCAL + 1 + MAX_LENGTH_DOMAIN; // local-part + "@"
 
 export interface Options
 {
-	ifUndefined?: null; // instead of empty object...
 }
 
 /**

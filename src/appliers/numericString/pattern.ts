@@ -5,7 +5,6 @@ const REGEXP = /^\d+$/;
 
 export interface Options
 {
-	ifUndefined?: null; // instead of empty object...
 }
 
 /**
@@ -28,5 +27,5 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	ValueSchemaError.raise(CAUSE.PATTERN, values, keyStack);
+	return ValueSchemaError.raise(CAUSE.PATTERN, values, keyStack);
 }
