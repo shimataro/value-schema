@@ -31,5 +31,5 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	ValueSchemaError.raise(CAUSE.MIN_LENGTH, values, keyStack);
+	return ValueSchemaError.raise(CAUSE.MIN_LENGTH, values, keyStack);
 }

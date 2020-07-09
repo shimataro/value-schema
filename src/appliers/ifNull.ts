@@ -26,5 +26,5 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
 		return true;
 	}
 
-	ValueSchemaError.raise(CAUSE.NULL, values, keyStack);
+	return ValueSchemaError.raise(CAUSE.NULL, values, keyStack);
 }

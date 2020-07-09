@@ -34,5 +34,5 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
 		}
 	}
 
-	ValueSchemaError.raise(CAUSE.ONLY, values, keyStack);
+	return ValueSchemaError.raise(CAUSE.ONLY, values, keyStack);
 }
