@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+* type error of `ifUndefined`, such as `email({ifUndefined: "", ifNull: ""})`
+
 ### Others
 
 * support TypeScript>=3.4.1
@@ -15,7 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
-* fix type errors in TypeScript
+* type errors in TypeScript
 
 ## [3.0.0-rc.9] - 2020-06-18
 
