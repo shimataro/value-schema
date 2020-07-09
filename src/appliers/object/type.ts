@@ -3,7 +3,6 @@ import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 export interface Options
 {
-	ifUndefined?: null; // instead of empty object...
 }
 
 /**
