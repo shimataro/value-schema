@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0-rc.12] - 2020-07-11
+
 ### Others
 
 * host [Deno modules](https://deno.land/x) on GitHub: <https://github.com/denoland/deno_website2/pull/1302>
@@ -516,7 +518,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.11...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.12...HEAD
+[3.0.0-rc.12]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.11...v3.0.0-rc.12
 [3.0.0-rc.11]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.10...v3.0.0-rc.11
 [3.0.0-rc.10]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.9...v3.0.0-rc.10
 [3.0.0-rc.9]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.8...v3.0.0-rc.9
