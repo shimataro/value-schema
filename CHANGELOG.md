@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Others
+
+* host [Deno modules](https://deno.land/x) on GitHub: <https://github.com/denoland/deno_website2/pull/1302>
+
 ## [3.0.0-rc.11] - 2020-07-09
 
 ### Fixed
