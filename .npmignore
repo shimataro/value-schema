@@ -1,6 +1,5 @@
 /.github/
 /coverage/
-/dist-deno/
 /examples/
 /node_modules/
 /scripts/
