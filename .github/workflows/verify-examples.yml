@@ -191,20 +191,6 @@ jobs:
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v2
-    - name: Install Node.js for build
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12
-    - name: Output versions
-      run: |
-        node -v
-        npm -v
-    - name: Install dependencies
-      run: npm ci
-    - name: Build
-      run: npm run build
-    - name: Install dependencies (only production)
-      run: npm ci --only=production
     - name: Install Deno
       uses: denolib/setup-deno@v1.3.0
       with:
