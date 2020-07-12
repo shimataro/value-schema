@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0-rc.13] - 2020-07-12
+
+### Fixed
+
+* revive NPM hosting
+
 ## [3.0.0-rc.12] - 2020-07-11
 
 ### Others
@@ -518,7 +524,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.12...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.13...HEAD
+[3.0.0-rc.13]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.12...v3.0.0-rc.13
 [3.0.0-rc.12]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.11...v3.0.0-rc.12
 [3.0.0-rc.11]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.10...v3.0.0-rc.11
 [3.0.0-rc.10]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.9...v3.0.0-rc.10
