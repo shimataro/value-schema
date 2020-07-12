@@ -1,4 +1,4 @@
-import * as assert from "https://deno.land/std/testing/asserts.ts";
+import * as assert from "https://deno.land/std@0.60.0/testing/asserts.ts";
 import vs from "../mod.ts";
 
 const schemaObject = { // schema for input
