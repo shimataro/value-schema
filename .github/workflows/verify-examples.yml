@@ -187,6 +187,8 @@ jobs:
         - ubuntu-20.04
         deno:
         - "1.0.0"
+        - "1.1.0"
+        - "1.2.0"
       fail-fast: false
     steps:
     - name: Checkout source codes
