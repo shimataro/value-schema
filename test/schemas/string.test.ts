@@ -306,6 +306,10 @@ function testPattern(): void
 	{
 		testPatternUri();
 	});
+	describe("uuid", () =>
+	{
+		testPatternUuid();
+	});
 	describe("others", () =>
 	{
 		testPatternOthers();
@@ -615,6 +619,50 @@ function testPatternUri(): void
 			vs.string({
 				pattern: vs.STRING.PATTERN.URI,
 			}).applyTo("https://例.com/");
+		}).toThrow(vs.CAUSE.PATTERN);
+	});
+}
+
+/**
+ * pattern; UUID
+ */
+function testPatternUuid(): void
+{
+	it("should be OK", () =>
+	{
+		expect(
+			vs.string({
+				pattern: vs.STRING.PATTERN.UUID,
+			}).applyTo("966a073b-b26e-4f88-888d-1f3a4ccfcd31")
+		).toEqual("966a073b-b26e-4f88-888d-1f3a4ccfcd31");
+
+		expect(
+			vs.string({
+				pattern: vs.STRING.PATTERN.UUID,
+			}).applyTo("966A073B-B26E-4F88-888D-1F3A4CCFCD31")
+		).toEqual("966A073B-B26E-4F88-888D-1F3A4CCFCD31");
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			vs.string({
+				pattern: vs.STRING.PATTERN.UUID,
+			}).applyTo("X966a073b-b26e-4f88-888d-1f3a4ccfcd31X")
+		}).toThrow(vs.CAUSE.PATTERN);
+
+		expect(() =>
+		{
+			vs.string({
+				pattern: vs.STRING.PATTERN.UUID,
+			}).applyTo("966a073bb26e4f88888d1f3a4ccfcd31")
+		}).toThrow(vs.CAUSE.PATTERN);
+
+		expect(() =>
+		{
+			vs.string({
+				pattern: vs.STRING.PATTERN.UUID,
+			}).applyTo("this-is-not-a-UUID-pattern");
 		}).toThrow(vs.CAUSE.PATTERN);
 	});
 }
