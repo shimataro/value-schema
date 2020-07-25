@@ -648,14 +648,14 @@ function testPatternUuid(): void
 		{
 			vs.string({
 				pattern: vs.STRING.PATTERN.UUID,
-			}).applyTo("X966a073b-b26e-4f88-888d-1f3a4ccfcd31X")
+			}).applyTo("X966a073b-b26e-4f88-888d-1f3a4ccfcd31X");
 		}).toThrow(vs.CAUSE.PATTERN);
 
 		expect(() =>
 		{
 			vs.string({
 				pattern: vs.STRING.PATTERN.UUID,
-			}).applyTo("966a073bb26e4f88888d1f3a4ccfcd31")
+			}).applyTo("966a073bb26e4f88888d1f3a4ccfcd31");
 		}).toThrow(vs.CAUSE.PATTERN);
 
 		expect(() =>
