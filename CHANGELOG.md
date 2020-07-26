@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* UUID pattern; `vs.STRING.PATTERN.UUID`
+
 ## [3.0.0-rc.13] - 2020-07-12
 
 ### Fixed

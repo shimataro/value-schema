@@ -9,7 +9,8 @@ export const PATTERN = {
     HTTP: REGEXP_HTTP,
     IPV4: REGEXP_IPV4,
     IPV6: REGEXP_IPV6,
-    URI: REGEXP_URI
+    URI: REGEXP_URI,
+    UUID: /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/i
 };
 export interface Options {
     pattern?: RegExp;
