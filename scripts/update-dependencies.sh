@@ -1,7 +1,6 @@
 #!/bin/bash
 # update dependencies
-
-set -e
+set -eu
 
 DATE=$(date +"%Y%m%d")
 BRANCH=feature/update-dependencies-${DATE}

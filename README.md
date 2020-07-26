@@ -1378,6 +1378,7 @@ You can also use `STRING.PATTERN` constants
 |`STRING.PATTERN.IPV4`|IPv4 address|
 |`STRING.PATTERN.IPV6`|IPv6 address|
 |`STRING.PATTERN.URI`|URI that follows [RFC3986](https://tools.ietf.org/html/rfc3986)|
+|`STRING.PATTERN.UUID`|UUID|
 
 ```javascript
 // should be OK
