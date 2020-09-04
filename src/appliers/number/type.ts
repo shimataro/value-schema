@@ -11,7 +11,7 @@ export enum INTEGER
 	FLOOR,
 	FLOOR_RZ,
 	CEIL,
-	CEIL_RZ,
+	CEIL_RI,
 	HALF_UP,
 	HALF_UP_RZ,
 	HALF_DOWN,
@@ -161,7 +161,7 @@ function round(value: number, method: INTEGER): number | false
 			return Math.floor(value);
 
 		case INTEGER.CEIL:
-		case INTEGER.CEIL_RZ:
+		case INTEGER.CEIL_RI:
 			return Math.ceil(value);
 
 		case INTEGER.HALF_UP:
@@ -178,7 +178,7 @@ function round(value: number, method: INTEGER): number | false
 		switch(method)
 		{
 		case INTEGER.FLOOR:
-		case INTEGER.CEIL_RZ:
+		case INTEGER.CEIL_RI:
 			return Math.floor(value);
 
 		case INTEGER.FLOOR_RZ:

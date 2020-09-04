@@ -65,5 +65,5 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		}
 	}
 
-	ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+	return ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
 }

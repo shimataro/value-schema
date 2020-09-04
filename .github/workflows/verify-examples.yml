@@ -1,7 +1,8 @@
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions
 
-on: push
 name: Examples
+on: push
+
 jobs:
   cjs:
     name: CommonJS
@@ -9,20 +10,23 @@ jobs:
     strategy:
       matrix:
         os:
-        - windows-latest
-        - macos-latest
-        - ubuntu-latest
+        - windows-2019
+        - macos-10.15
+        - ubuntu-16.04
+        - ubuntu-18.04
+        - ubuntu-20.04
         nodejs:
         - "4.0.0"
         - "6.0.0"
         - "8.0.0"
         - "10.0.0"
         - "12.0.0"
+        - "14.0.0"
       fail-fast: false
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v2
-    - name: Install Node.js v12
+    - name: Install Node.js for build
       uses: actions/setup-node@v1
       with:
         node-version: 12
@@ -58,32 +62,32 @@ jobs:
       run: node ./examples/example.js
     - name: Run example (TypeScript/Babel compatible)
       run: node ./examples/example-default.js
+
   esm:
     name: ES Modules
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
-        - windows-latest
-        - macos-latest
-        - ubuntu-latest
+        - windows-2019
+        - macos-10.15
+        - ubuntu-16.04
+        - ubuntu-18.04
+        - ubuntu-20.04
         nodejs:
         - "8.5.0"
         - "8.6.0"
         - "10.0.0"
         - "12.0.0" # loads CommonJS
+        - "14.0.0" # loads CommonJS
         exclude:
-        - os: windows-latest # On Windows, v8.5.0 causes ERR_INVALID_PROTOCOL; https://github.com/nodejs/node/issues/15374
+        - os: windows-2019 # On Windows, v8.5.0 causes ERR_INVALID_PROTOCOL; https://github.com/nodejs/node/issues/15374
           nodejs: "8.5.0"
-        - os: macos-latest
-          nodejs: "8.6.0"
-        - os: ubuntu-latest
-          nodejs: "8.6.0"
       fail-fast: false
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v2
-    - name: Install Node.js v12
+    - name: Install Node.js for build
       uses: actions/setup-node@v1
       with:
         node-version: 12
@@ -117,22 +121,25 @@ jobs:
       run: node --experimental-modules ./examples/example-default.js
     - name: Run example (ESM)
       run: node --experimental-modules ./examples/example.mjs
+
   conditional-exports:
     name: Conditional Exports
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
-        - windows-latest
-        - macos-latest
-        - ubuntu-latest
+        - windows-2019
+        - macos-10.15
+        - ubuntu-16.04
+        - ubuntu-18.04
+        - ubuntu-20.04
         nodejs:
         - "13.2.0"
       fail-fast: false
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v2
-    - name: Install Node.js v12
+    - name: Install Node.js for build
       uses: actions/setup-node@v1
       with:
         node-version: 12
@@ -166,3 +173,32 @@ jobs:
       run: node --experimental-conditional-exports ./examples/example-default.js
     - name: Run example (ESM)
       run: node --experimental-conditional-exports ./examples/example.mjs
+
+  deno:
+    name: Deno
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+        - windows-2019
+        - macos-10.15
+        - ubuntu-16.04
+        - ubuntu-18.04
+        - ubuntu-20.04
+        deno:
+        - "1.0.0"
+        - "1.1.0"
+        - "1.2.0"
+        - "1.3.0"
+      fail-fast: false
+    steps:
+    - name: Checkout source codes
+      uses: actions/checkout@v2
+    - name: Install Deno
+      uses: denolib/setup-deno@v1.3.0
+      with:
+        deno-version: ${{ matrix.deno }}
+    - name: Check syntax
+      run: deno run ./mod.ts
+    - name: Run example
+      run: deno run ./examples/example-deno.ts

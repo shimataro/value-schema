@@ -7,10 +7,13 @@
 [![Code Coverage][image-code-coverage]][link-code-coverage]
 [![Release][image-release]][link-release]
 [![Node.js version][image-engine]][link-engine]
-[![Types][image-types]][link-types]
+[![TypeScript version][image-typescript]][link-typescript]
+[![Deno version][image-deno]][link-deno]
 [![License][image-license]][link-license]
 
 simple, easy-to-use, and declarative schema validator
+
+supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang.org/), and [Deno](https://deno.land/)
 
 ## Table of Contents
 
@@ -30,7 +33,7 @@ simple, easy-to-use, and declarative schema validator
     * [union](#union)
 * [Changelog](#changelog)
 
----
+- - -
 
 ## Introduction
 
@@ -191,6 +194,16 @@ $ node --experimental-modules foo.mjs
 ```
 
 **TypeScript** auto-completion and type-checking works perfectly on [Visual Studio Code](https://code.visualstudio.com/) and [IntelliJ IDEA](https://www.jetbrains.com/idea/)!
+
+### [Deno](https://deno.land/)
+
+Deno has been supported as of v3.0.0-rc.4.
+
+```typescript
+import vs from "https://deno.land/x/value_schema/mod.ts";
+```
+
+**CAUTION**: specify `value_schema` (underscore) NOT `value-schema` (hyphen) because [deno.land](https://deno.land/) module database does not support name with hyphen!
 
 ## Reference
 
@@ -463,7 +476,7 @@ interface Parameters {
     bar: string
 }
 
-const schemaObject: vs.SchemaObject = {
+const schemaObject = {
     foo: vs.number(),
     bar: vs.string(),
 };
@@ -811,7 +824,7 @@ type OptionsForNumber = {
     minValue?: number | {value: number, adjusts: boolean};
     maxValue?: number | {value: number, adjusts: boolean};
 
-    converter?: (value: number, fail: () => never) => number | null;
+    converter?: (value: number, fail: () => never) => number;
 }
 type ErrorHandler = (err: ValueSchemaError) => number | null | never;
 interface NumberSchema {
@@ -984,14 +997,14 @@ Limits an input value to integer.
 |-----|-----------|
 |`NUMBER.INTEGER.NO` (`0`) / `false`|does not limit to integer|
 |`NUMBER.INTEGER.YES` (`1`) / `true`|limits to integer, but does not round|
-|`NUMBER.INTEGER.FLOOR` (`2`)|rounds down toward infinity|
-|`NUMBER.INTEGER.FLOOR_RZ` (`3`)|rounds down toward zero|
-|`NUMBER.INTEGER.CEIL` (`4`)|rounds up toward infinity|
-|`NUMBER.INTEGER.CEIL_RZ` (`5`)|rounds up toward zero|
-|`NUMBER.INTEGER.HALF_UP` (`6`)|rounds half up toward infinity|
-|`NUMBER.INTEGER.HALF_UP_RZ` (`7`)|rounds half up toward zero|
-|`NUMBER.INTEGER.HALF_DOWN` (`8`)|rounds half down toward infinity|
-|`NUMBER.INTEGER.HALF_DOWN_RZ` (`9`)|rounds half down toward zero|
+|`NUMBER.INTEGER.FLOOR` (`2`)|rounds towards −∞|
+|`NUMBER.INTEGER.FLOOR_RZ` (`3`)|rounds towards 0|
+|`NUMBER.INTEGER.CEIL` (`4`)|rounds towards +∞|
+|`NUMBER.INTEGER.CEIL_RI` (`5`)|rounds towards ∞|
+|`NUMBER.INTEGER.HALF_UP` (`6`)|rounds half towards +∞|
+|`NUMBER.INTEGER.HALF_UP_RZ` (`7`)|rounds half towards 0|
+|`NUMBER.INTEGER.HALF_DOWN` (`8`)|rounds half towards −∞|
+|`NUMBER.INTEGER.HALF_DOWN_RZ` (`9`)|rounds half towards 0|
 
 ```javascript
 // should be adjusted
@@ -1017,10 +1030,10 @@ assert.strictEqual(
     vs.number({integer: vs.NUMBER.INTEGER.CEIL}).applyTo(-3.14),
     -3);
 assert.strictEqual(
-    vs.number({integer: vs.NUMBER.INTEGER.CEIL_RZ}).applyTo(3.14),
+    vs.number({integer: vs.NUMBER.INTEGER.CEIL_RI}).applyTo(3.14),
     4);
 assert.strictEqual(
-    vs.number({integer: vs.NUMBER.INTEGER.CEIL_RZ}).applyTo(-3.14),
+    vs.number({integer: vs.NUMBER.INTEGER.CEIL_RI}).applyTo(-3.14),
     -4);
 assert.strictEqual(
     vs.number({integer: vs.NUMBER.INTEGER.HALF_UP}).applyTo(3.49),
@@ -1173,7 +1186,7 @@ type OptionsForString = {
     maxLength?: number | {length: number, trims: boolean};
     pattern?: RegExp;
 
-    converter?: (value: string, fail: () => never) => string | null;
+    converter?: (value: string, fail: () => never) => string;
 }
 type ErrorHandler = (err: ValueSchemaError) => string | null | never;
 interface StringSchema {
@@ -1366,6 +1379,7 @@ You can also use `STRING.PATTERN` constants
 |`STRING.PATTERN.IPV4`|IPv4 address|
 |`STRING.PATTERN.IPV6`|IPv6 address|
 |`STRING.PATTERN.URI`|URI that follows [RFC3986](https://tools.ietf.org/html/rfc3986)|
+|`STRING.PATTERN.UUID`|UUID|
 
 ```javascript
 // should be OK
@@ -1425,7 +1439,7 @@ type OptionsForNumericString = {
     pattern?: RegExp;
     checksum?: NUMERIC_STRING.CHECKSUM_ALGORITHM;
 
-    converter?: (value: string, fail: () => never) => string | null;
+    converter?: (value: string, fail: () => never) => string;
 }
 type ErrorHandler = (err: ValueSchemaError) => string | null | never;
 interface NumericStringSchema {
@@ -1845,7 +1859,7 @@ type OptionsForArray<T> = {
     maxLength?: number | {length: number, trims: boolean};
     each?: BaseSchema<T> | {schema: BaseSchema<T>, ignoresErrors: boolean};
 
-    converter?: (values: T[], fail: () => never) => T[] | null;
+    converter?: (values: T[], fail: () => never) => T[];
 }
 type ErrorHandler<T> = (err: ValueSchemaError) => T[] | null | never;
 interface ArraySchema<T> {
@@ -2058,9 +2072,9 @@ type OptionsForObject = {
     ifEmptyString?: object | null;
     ifNull?: object | null;
 
-    schemaObject?: SchemaObject;
+    schemaObject?: Record<string, BaseSchema>;
 
-    converter?: (values: object, fail: () => never) => object | null;
+    converter?: (values: object, fail: () => never) => object;
 }
 type ErrorHandler = (err: ValueSchemaError) => object | null | never;
 interface ObjectSchema {
@@ -2268,7 +2282,9 @@ See [CHANGELOG.md](CHANGELOG.md).
 [link-release]: https://github.com/shimataro/value-schema/releases
 [image-engine]: https://img.shields.io/node/v/value-schema.svg
 [link-engine]: https://nodejs.org/
-[image-types]: https://img.shields.io/npm/types/value-schema.svg
-[link-types]: https://github.com/shimataro/value-schema
+[image-typescript]: https://img.shields.io/badge/TypeScript-%3E%3D3.4.1-brightgreen.svg
+[link-typescript]: https://www.typescriptlang.org/
+[image-deno]: https://img.shields.io/badge/%F0%9F%A6%95%20Deno-%3E%3D1.0.0-brightgreen.svg
+[link-deno]: https://deno.land/
 [image-license]: https://img.shields.io/github/license/shimataro/value-schema.svg
 [link-license]: ./LICENSE

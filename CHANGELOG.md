@@ -11,6 +11,88 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * `union()`
 
+### Others
+
+* support TypeScript 4.0
+* support Deno 1.3
+
+## [3.0.0-rc.14] - 2020-07-26
+
+### Added
+
+* UUID pattern; `vs.STRING.PATTERN.UUID`
+
+## [3.0.0-rc.13] - 2020-07-12
+
+### Fixed
+
+* revive NPM hosting
+
+## [3.0.0-rc.12] - 2020-07-11
+
+### Others
+
+* host [Deno modules](https://deno.land/x) on GitHub: <https://github.com/denoland/deno_website2/pull/1302>
+
+## [3.0.0-rc.11] - 2020-07-09
+
+### Fixed
+
+* type error of `ifUndefined`, such as `email({ifUndefined: "", ifNull: ""})`
+
+### Others
+
+* support TypeScript>=3.4.1
+
+## [3.0.0-rc.10] - 2020-07-08
+
+### Fixed
+
+* type errors in TypeScript
+
+## [3.0.0-rc.9] - 2020-06-18
+
+### Changed
+
+* make `converter` non-nullable
+
+### Fixed
+
+* support nullable cases
+    * `{ifUndefined: null}`
+    * `{ifNull: null}`
+    * `{ifEmptyString: null}`
+
+## [3.0.0-rc.8] - 2020-06-13
+
+### Changed
+
+* enabled property completion and type inference, without explicit type specification
+
+## [3.0.0-rc.7] - 2020-06-11
+
+### Fixed
+
+* TypeScript Generics
+
+## [3.0.0-rc.6] - 2020-06-11
+
+### Fixed
+
+* ❌CEIL_RZ ⭕CEIL_RI (Round towards Infinity)
+
+## [3.0.0-rc.5] - 2020-05-17
+
+### Fixed
+
+* Deno module name
+
+## [3.0.0-rc.4] - 2020-05-16
+
+### Added
+
+* supports [Deno](https://deno.land/)
+
 ## [3.0.0-rc.3] - 2020-02-28
 
 ### Added
@@ -457,7 +539,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.3...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.14...HEAD
+[3.0.0-rc.14]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.13...v3.0.0-rc.14
+[3.0.0-rc.13]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.12...v3.0.0-rc.13
+[3.0.0-rc.12]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.11...v3.0.0-rc.12
+[3.0.0-rc.11]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.10...v3.0.0-rc.11
+[3.0.0-rc.10]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.9...v3.0.0-rc.10
+[3.0.0-rc.9]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.8...v3.0.0-rc.9
+[3.0.0-rc.8]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.7...v3.0.0-rc.8
+[3.0.0-rc.7]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.6...v3.0.0-rc.7
+[3.0.0-rc.6]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.5...v3.0.0-rc.6
+[3.0.0-rc.5]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.4...v3.0.0-rc.5
+[3.0.0-rc.4]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.3...v3.0.0-rc.4
 [3.0.0-rc.3]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.2...v3.0.0-rc.3
 [3.0.0-rc.2]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.1...v3.0.0-rc.2
 [3.0.0-rc.1]: https://github.com/shimataro/value-schema/compare/v2.2.6...v3.0.0-rc.1

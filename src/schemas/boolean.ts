@@ -1,28 +1,8 @@
-import * as ifEmptyString from "../appliers/ifEmptyString";
-import * as ifNull from "../appliers/ifNull";
-import * as ifUndefined from "../appliers/ifUndefined";
-import * as type from "../appliers/boolean/type";
+import {BooleanSchema, NullableOptions, OptionsForBoolean} from "../schemaClasses/BooleanSchema";
 
-import {BaseSchema} from "../libs/BaseSchema";
-
-type OptionsForBoolean =
-	ifUndefined.Options<boolean> |
-	ifEmptyString.Options<boolean> |
-	ifNull.Options<boolean> |
-	type.Options;
-
-class BooleanSchema extends BaseSchema<boolean>
-{
-	constructor(options: OptionsForBoolean)
-	{
-		super(options, [
-			ifUndefined.applyTo,
-			ifEmptyString.applyTo,
-			ifNull.applyTo,
-			type.applyTo,
-		]);
-	}
-}
+export function boolean(options: OptionsForBoolean & NullableOptions): BooleanSchema<null>
+export function boolean(options: OptionsForBoolean): BooleanSchema
+export function boolean(): BooleanSchema
 
 /**
  * create schema

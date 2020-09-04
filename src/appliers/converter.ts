@@ -3,7 +3,7 @@ import {CAUSE, ValueSchemaError} from "../libs/ValueSchemaError";
 
 export interface Options<T>
 {
-	converter?: (value: T, fail: () => never) => T | null;
+	converter?: (value: T, fail: () => never) => T;
 }
 
 /**
@@ -22,7 +22,7 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
 
 	values.output = options.converter(values.output as T, () =>
 	{
-		ValueSchemaError.raise(CAUSE.CONVERTER, values, keyStack);
+		return ValueSchemaError.raise(CAUSE.CONVERTER, values, keyStack);
 	});
 	return true;
 }

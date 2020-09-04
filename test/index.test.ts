@@ -12,7 +12,7 @@ function testApplySchemaObject(): void
 {
 	it("should be adjusted", () =>
 	{
-		const schemaObject: vs.SchemaObject = {
+		const schemaObject = {
 			id: vs.number({
 				minValue: 1,
 			}),
@@ -106,6 +106,99 @@ function testApplySchemaObject(): void
 		const actual = vs.applySchemaObject(schemaObject, input);
 		expect(actual).toEqual(expected);
 	});
+	it("property / type-inference test", () =>
+	{
+		const schemaObject = {
+			boolean: vs.boolean(),
+			number: vs.number(),
+			string: vs.string(),
+			email: vs.email(),
+			numericString: vs.numericString(),
+
+			arrayOfBoolean: vs.array({each: vs.boolean()}),
+			arrayOfNumber: vs.array({each: vs.number()}),
+			arrayOfString: vs.array({each: vs.string()}),
+			arrayOfArrayOfNumber: vs.array({
+				each: vs.array({
+					each: vs.number(),
+				}),
+			}),
+			arrayOfObject: vs.array({
+				each: vs.object({
+					schemaObject: {foo: vs.number()},
+				}),
+			}),
+
+			object: vs.object({
+				schemaObject: {
+					boolean: vs.boolean(),
+					number: vs.number(),
+					string: vs.string(),
+					email: vs.email(),
+					numericString: vs.numericString(),
+
+					arrayOfBoolean: vs.array({each: vs.boolean()}),
+					arrayOfNumber: vs.array({each: vs.number()}),
+					arrayOfArrayOfString: vs.array({
+						each: vs.array({
+							each: vs.string(),
+						}),
+					}),
+					arrayOfString: vs.array({each: vs.string()}),
+				},
+			}),
+		};
+		const input = {
+			boolean: false,
+			number: 0,
+			string: "X",
+			email: "user@example.com",
+			numericString: "1234",
+
+			arrayOfBoolean: [true, false],
+			arrayOfNumber: [0, 1, 2, 3],
+			arrayOfString: ["a", "b", "c"],
+			arrayOfArrayOfNumber: [[0, 1], [2], [3, 4, 5]],
+			arrayOfObject: [{foo: 1}, {foo: 2}, {foo: 3}],
+
+			object: {
+				boolean: false,
+				number: 0,
+				string: "X",
+				email: "user@example.com",
+				numericString: "1234",
+
+				arrayOfBoolean: [true, false],
+				arrayOfNumber: [0, 1, 2, 3],
+				arrayOfString: ["a", "b", "c"],
+				arrayOfArrayOfString: [["A", "B"], ["C"], ["X", "Y", "Z"]],
+			},
+		};
+
+		// property / type-inference check
+		const actual = vs.applySchemaObject(schemaObject, input);
+		expect(actual.boolean).toEqual(false);
+		expect(actual.number.toExponential()).toEqual("0e+0");
+		expect(actual.string.toLowerCase()).toEqual("x");
+		expect(actual.email.toUpperCase()).toEqual("USER@EXAMPLE.COM");
+		expect(actual.numericString.padStart(8, "0")).toEqual("00001234");
+
+		expect(actual.arrayOfBoolean.slice()).toEqual([true, false]);
+		expect(actual.arrayOfNumber.slice()[0].toFixed()).toEqual("0");
+		expect(actual.arrayOfString.slice()[0].toUpperCase()).toEqual("A");
+		expect(actual.arrayOfArrayOfNumber.slice()[0].slice()[0].toFixed()).toEqual("0");
+		expect(actual.arrayOfObject.slice()[0].foo.toExponential()).toEqual("1e+0");
+
+		expect(actual.object.boolean).toEqual(false);
+		expect(actual.object.number.toExponential()).toEqual("0e+0");
+		expect(actual.object.string.toLowerCase()).toEqual("x");
+		expect(actual.object.email.toUpperCase()).toEqual("USER@EXAMPLE.COM");
+		expect(actual.object.numericString.padEnd(8, "0")).toEqual("12340000");
+		expect(actual.object.arrayOfBoolean.slice()[0]).toEqual(true);
+		expect(actual.object.arrayOfNumber.slice()[0].toFixed()).toEqual("0");
+		expect(actual.object.arrayOfString.slice()[0].toUpperCase()).toEqual("A");
+		expect(actual.object.arrayOfArrayOfString.slice()[0].slice()[1].toLowerCase()).toEqual("b");
+	});
 }
 
 /**
@@ -115,7 +208,7 @@ function testError(): void
 {
 	it("should be adjusted", () =>
 	{
-		const schemaObject: vs.SchemaObject = {
+		const schemaObject = {
 			id: vs.number({
 				minValue: 1,
 			}),
@@ -174,7 +267,7 @@ function testError(): void
 
 		expect(() =>
 		{
-			const schemaObject: vs.SchemaObject = {};
+			const schemaObject = {};
 			const input = 0;
 
 			vs.applySchemaObject(schemaObject, input);
@@ -182,7 +275,7 @@ function testError(): void
 
 		expect(() =>
 		{
-			const schemaObject: vs.SchemaObject = {};
+			const schemaObject = {};
 			const input = null;
 
 			vs.applySchemaObject(schemaObject, input);
@@ -190,7 +283,7 @@ function testError(): void
 
 		expect(() =>
 		{
-			const schemaObject: vs.SchemaObject = {};
+			const schemaObject = {};
 			const input: number[] = [];
 
 			vs.applySchemaObject(schemaObject, input);
@@ -198,7 +291,7 @@ function testError(): void
 
 		expect(() =>
 		{
-			const schemaObject: vs.SchemaObject = {
+			const schemaObject = {
 				id: vs.number({
 					minValue: 1,
 				}),
@@ -234,7 +327,7 @@ function testError(): void
 
 		expect(() =>
 		{
-			const schemaObject: vs.SchemaObject = {
+			const schemaObject = {
 				id: vs.number({
 					minValue: 1,
 				}),
@@ -257,7 +350,7 @@ function testError(): void
 
 		try
 		{
-			const schemaObject: vs.SchemaObject = {
+			const schemaObject = {
 				id: vs.number({
 					minValue: 1,
 				}),
@@ -291,7 +384,7 @@ function testError(): void
 
 		try
 		{
-			const schemaObject: vs.SchemaObject = {
+			const schemaObject = {
 				ids: vs.array({
 					each: vs.number({
 						minValue: 1,
@@ -320,7 +413,7 @@ function testError(): void
 		try
 		{
 			// complex schema
-			const schemaObject: vs.SchemaObject = {
+			const schemaObject = {
 				infoList: vs.array({
 					each: vs.object({
 						schemaObject: {

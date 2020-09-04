@@ -1,41 +1,16 @@
-import * as converter from "../appliers/converter";
-import * as ifUndefined from "../appliers/ifUndefined";
-import * as ifEmptyString from "../appliers/ifEmptyString";
-import * as ifNull from "../appliers/ifNull";
-import * as schema from "../appliers/object/schema";
-import * as type from "../appliers/object/type";
+import {NullableOptions, ObjectSchema, OptionsForObject} from "../schemaClasses/ObjectSchema";
+import {SchemaObject} from "../libs/types";
 
-import {BaseSchema} from "../libs/BaseSchema";
-
-type OptionsForObject =
-	converter.Options<object> |
-	ifUndefined.Options<object> |
-	ifEmptyString.Options<object> |
-	ifNull.Options<object> |
-	schema.Options |
-	type.Options;
-
-class ObjectSchema extends BaseSchema<object>
-{
-	constructor(options: OptionsForObject)
-	{
-		super(options, [
-			ifUndefined.applyTo,
-			ifNull.applyTo,
-			ifEmptyString.applyTo,
-			schema.applyTo,
-			type.applyTo,
-			converter.applyTo,
-		]);
-	}
-}
+export function object<S extends SchemaObject>(options: OptionsForObject<S> & NullableOptions): ObjectSchema<S, null>
+export function object<S extends SchemaObject>(options: OptionsForObject<S>): ObjectSchema<S>
+export function object(): ObjectSchema<SchemaObject>
 
 /**
  * create schema
  * @param options Options
  * @returns schema
  */
-export function object(options: OptionsForObject = {}): ObjectSchema
+export function object<S extends SchemaObject>(options: OptionsForObject<S> = {}): ObjectSchema<S>
 {
 	return new ObjectSchema(options);
 }

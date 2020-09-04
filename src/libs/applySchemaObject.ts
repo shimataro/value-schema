@@ -1,8 +1,9 @@
-import {SchemaObject, applySchemaObjectCore} from "./applySchemaObjectCore";
-import {ErrorHandler, FinishHandler, onErrorDefault, onFinishedDefault} from "./BaseSchema";
+import {applySchemaObjectCore} from "./applySchemaObjectCore";
+import {ObjectTypeOf, SchemaObject} from "./types";
 
-export {SchemaObject} from "./applySchemaObjectCore";
-export {ErrorHandler} from "./BaseSchema";
+import {ErrorHandler, FinishHandler, onErrorDefault, onFinishedDefault} from "../schemaClasses/BaseSchema";
+
+export {ErrorHandler} from "../schemaClasses/BaseSchema";
 
 /**
  * apply schema object to data
@@ -12,7 +13,7 @@ export {ErrorHandler} from "./BaseSchema";
  * @param onFinished finish handler
  * @returns applied data
  */
-export function applySchemaObject<T extends object>(schemaObject: SchemaObject, data: unknown, onError: ErrorHandler = onErrorDefault, onFinished: FinishHandler = onFinishedDefault): T
+export function applySchemaObject<S extends SchemaObject>(schemaObject: S, data: unknown, onError: ErrorHandler = onErrorDefault, onFinished: FinishHandler = onFinishedDefault): ObjectTypeOf<S>
 {
 	return applySchemaObjectCore(schemaObject, data, onError, onFinished, []);
 }

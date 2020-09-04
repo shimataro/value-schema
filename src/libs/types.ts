@@ -1,11 +1,34 @@
+import {BaseSchema} from "../schemaClasses/BaseSchema";
+
+import {ArraySchema} from "../schemaClasses/ArraySchema";
+import {ObjectSchema} from "../schemaClasses/ObjectSchema";
+
+export type ObjectTypeOf<S extends SchemaObject> = {
+	[K in keyof S]:
+		S[K] extends ArraySchema<infer T> ? T[] :
+		S[K] extends ArraySchema<infer T, null> ? T[] | null :
+		S[K] extends ObjectSchema<infer S2> ? ObjectTypeOf<S2> :
+		S[K] extends ObjectSchema<infer S2, null> ? ObjectTypeOf<S2> | null :
+		S[K] extends BaseSchema<boolean> ? boolean :
+		S[K] extends BaseSchema<boolean | null> ? boolean | null :
+		S[K] extends BaseSchema<number> ? number :
+		S[K] extends BaseSchema<number | null> ? number | null :
+		S[K] extends BaseSchema<string> ? string :
+		S[K] extends BaseSchema<string | null> ? string | null :
+		never
+}
+
 type Scalar = boolean | number | string;
+
+export type AnyObject = Record<string, unknown>;
+export type SchemaObject = Record<string, BaseSchema>
 
 export type Key = string | number;
 
 export interface Values<T = unknown>
 {
 	input: unknown;
-	output: T | null;
+	output: T;
 }
 
 /**
@@ -96,7 +119,7 @@ export function isArray(value: unknown): value is unknown[]
  * @param value value to check
  * @returns Yes/No
  */
-export function isObject(value: unknown): value is Record<string, unknown>
+export function isObject(value: unknown): value is AnyObject
 {
 	if(value === null)
 	{

@@ -1,7 +1,7 @@
 import assert from "assert";
 import vs from "value-schema";
 
-const schemaObject: vs.SchemaObject = { // schema for input
+const schemaObject = { // schema for input
 	id: vs.number({ // number, >=1
 		minValue: 1,
 	}),

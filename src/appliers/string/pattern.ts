@@ -12,6 +12,7 @@ export const PATTERN = {
 	IPV4: REGEXP_IPV4,
 	IPV6: REGEXP_IPV6,
 	URI: REGEXP_URI,
+	UUID: /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/i,
 };
 
 export interface Options
@@ -44,5 +45,5 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	ValueSchemaError.raise(CAUSE.PATTERN, values, keyStack);
+	return ValueSchemaError.raise(CAUSE.PATTERN, values, keyStack);
 }
