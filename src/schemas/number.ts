@@ -1,4 +1,4 @@
-import {NullableOptions} from "../schemaClasses/BaseSchema";
+import {NullableOptions} from "../libs/publicTypes";
 import {NumberSchema, OptionsForNumber} from "../schemaClasses/NumberSchema";
 
 export {NUMBER} from "../schemaClasses/NumberSchema";

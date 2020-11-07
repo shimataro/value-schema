@@ -1,7 +1,6 @@
+import {ErrorHandler, FinishHandler} from "./publicTypes";
 import {AnyObject, Key, ObjectTypeOf, SchemaObject, isObject} from "./types";
 import {CAUSE, ValueSchemaError} from "./ValueSchemaError";
-
-import {ErrorHandler, FinishHandler} from "../schemaClasses/BaseSchema";
 
 /**
  * apply schema object to data

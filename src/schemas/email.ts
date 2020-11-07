@@ -1,4 +1,4 @@
-import {NullableOptions} from "../schemaClasses/BaseSchema";
+import {NullableOptions} from "../libs/publicTypes";
 import {EmailSchema, OptionsForEmail} from "../schemaClasses/EmailSchema";
 
 export function email(options: OptionsForEmail & NullableOptions): EmailSchema<null>

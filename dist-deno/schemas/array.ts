@@ -1,4 +1,4 @@
-import { NullableOptions } from "../schemaClasses/BaseSchema.ts";
+import { NullableOptions } from "../libs/publicTypes.ts";
 import { ArraySchema, OptionsForArray } from "../schemaClasses/ArraySchema.ts";
 export function array<T>(options: OptionsForArray<T> & NullableOptions): ArraySchema<T, null>;
 export function array<T>(options: OptionsForArray<T>): ArraySchema<T>;

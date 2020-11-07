@@ -1,4 +1,4 @@
-import { NullableOptions } from "../schemaClasses/BaseSchema.ts";
+import { NullableOptions } from "../libs/publicTypes.ts";
 import { NumericStringSchema, OptionsForNumericString } from "../schemaClasses/NumericStringSchema.ts";
 export { NUMERIC_STRING } from "../schemaClasses/NumericStringSchema.ts";
 export function numericString(options: OptionsForNumericString & NullableOptions): NumericStringSchema<null>;
