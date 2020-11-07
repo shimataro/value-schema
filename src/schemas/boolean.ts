@@ -1,4 +1,5 @@
-import {BooleanSchema, NullableOptions, OptionsForBoolean} from "../schemaClasses/BooleanSchema";
+import {NullableOptions} from "../schemaClasses/BaseSchema";
+import {BooleanSchema, OptionsForBoolean} from "../schemaClasses/BooleanSchema";
 
 export function boolean(options: OptionsForBoolean & NullableOptions): BooleanSchema<null>
 export function boolean(options: OptionsForBoolean): BooleanSchema

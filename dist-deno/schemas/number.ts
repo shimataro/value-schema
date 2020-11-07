@@ -1,4 +1,5 @@
-import { NullableOptions, NumberSchema, OptionsForNumber } from "../schemaClasses/NumberSchema.ts";
+import { NullableOptions } from "../schemaClasses/BaseSchema.ts";
+import { NumberSchema, OptionsForNumber } from "../schemaClasses/NumberSchema.ts";
 export { NUMBER } from "../schemaClasses/NumberSchema.ts";
 export function number(options: OptionsForNumber & NullableOptions): NumberSchema<null>;
 export function number(options: OptionsForNumber): NumberSchema;

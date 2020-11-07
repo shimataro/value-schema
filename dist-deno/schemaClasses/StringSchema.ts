@@ -9,7 +9,6 @@ import * as pattern from "../appliers/string/pattern.ts";
 import * as trims from "../appliers/string/trims.ts";
 import * as type from "../appliers/string/type.ts";
 import { BaseSchema } from "./BaseSchema.ts";
-export { NullableOptions } from "./BaseSchema.ts";
 export const STRING = {
     PATTERN: pattern.PATTERN
 };

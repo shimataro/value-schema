@@ -1,4 +1,5 @@
-import {NullableOptions, ObjectSchema, OptionsForObject} from "../schemaClasses/ObjectSchema";
+import {NullableOptions} from "../schemaClasses/BaseSchema";
+import {ObjectSchema, OptionsForObject} from "../schemaClasses/ObjectSchema";
 import {SchemaObject} from "../libs/types";
 
 export function object<S extends SchemaObject>(options: OptionsForObject<S> & NullableOptions): ObjectSchema<S, null>

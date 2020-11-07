@@ -9,8 +9,6 @@ import {AnyObject, ObjectTypeOf, SchemaObject} from "../libs/types";
 
 import {BaseSchema} from "./BaseSchema";
 
-export {NullableOptions} from "./BaseSchema";
-
 export type OptionsForObject<S> =
 	converter.Options<AnyObject> |
 	ifUndefined.Options<AnyObject> |

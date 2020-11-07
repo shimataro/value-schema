@@ -1,4 +1,5 @@
-import {NullableOptions, NumericStringSchema, OptionsForNumericString} from "../schemaClasses/NumericStringSchema";
+import {NullableOptions} from "../schemaClasses/BaseSchema";
+import {NumericStringSchema, OptionsForNumericString} from "../schemaClasses/NumericStringSchema";
 
 export {NUMERIC_STRING} from "../schemaClasses/NumericStringSchema";
 

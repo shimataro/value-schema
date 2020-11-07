@@ -1,4 +1,5 @@
-import {NullableOptions, OptionsForString, StringSchema} from "../schemaClasses/StringSchema";
+import {NullableOptions} from "../schemaClasses/BaseSchema";
+import {OptionsForString, StringSchema} from "../schemaClasses/StringSchema";
 
 export {STRING} from "../schemaClasses/StringSchema";
 
