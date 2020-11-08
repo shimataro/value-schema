@@ -10,8 +10,6 @@ import * as type from "../appliers/number/type";
 
 import {BaseSchema} from "./BaseSchema";
 
-export {NullableOptions} from "./BaseSchema";
-
 export const NUMBER = {
 	INTEGER: type.INTEGER,
 };
