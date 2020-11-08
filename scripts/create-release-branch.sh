@@ -124,6 +124,7 @@ function regenerate_npm_shrinkwrap() {
 	rm -rf npm-shrinkwrap.json node_modules
 	npm install
 	npm shrinkwrap
+	npm dedupe
 }
 
 function verify_package() {
