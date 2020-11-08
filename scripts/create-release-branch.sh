@@ -99,6 +99,12 @@ function create_branch() {
 	git checkout -b ${BRANCH} ${BASE_BRANCH}
 }
 
+function update_package_version() {
+	local VERSION=$1
+
+	npm version --no-git-tag-version ${VERSION}
+}
+
 function update_changelog() {
 	local VERSION=$1
 	local DATE=`date "+%Y-%m-%d"`
@@ -108,12 +114,6 @@ function update_changelog() {
 		-e "s/^((##\s+)\[${KEYWORD}\])$/\1\n\n\2[${VERSION}] - ${DATE}/" \
 		-e "s/^(\[${KEYWORD}\](.*))(v.*)\.\.\.HEAD$/\1v${VERSION}...HEAD\n[${VERSION}]\2\3...v${VERSION}/" \
 		CHANGELOG.md
-}
-
-function update_package_version() {
-	local VERSION=$1
-
-	npm version --no-git-tag-version ${VERSION}
 }
 
 function update_dependencies_version() {
