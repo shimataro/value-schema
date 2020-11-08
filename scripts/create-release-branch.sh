@@ -39,8 +39,8 @@ function main() {
 	check_current_branch
 
 	create_branch ${BRANCH}
-	update_changelog ${VERSION}
 	update_package_version ${VERSION}
+	update_changelog ${VERSION}
 	update_dependencies_version
 	regenerate_npm_shrinkwrap
 	verify_package
@@ -113,9 +113,7 @@ function update_changelog() {
 function update_package_version() {
 	local VERSION=$1
 
-	sed -i".bak" -r \
-		-e "s/(\"version\"\s*:\s*)\".*?\"/\1\"${VERSION}\"/" \
-		package.json
+	npm version --no-git-tag-version ${VERSION}
 }
 
 function update_dependencies_version() {
