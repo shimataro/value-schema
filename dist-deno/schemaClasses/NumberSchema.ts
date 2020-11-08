@@ -8,7 +8,6 @@ import * as maxValue from "../appliers/number/maxValue.ts";
 import * as minValue from "../appliers/number/minValue.ts";
 import * as type from "../appliers/number/type.ts";
 import { BaseSchema } from "./BaseSchema.ts";
-export { NullableOptions } from "./BaseSchema.ts";
 export const NUMBER = {
     INTEGER: type.INTEGER
 };

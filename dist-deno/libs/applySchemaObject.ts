@@ -1,7 +1,7 @@
 import { applySchemaObjectCore } from "./applySchemaObjectCore.ts";
+import { ErrorHandler, FinishHandler } from "./publicTypes.ts";
 import { ObjectTypeOf, SchemaObject } from "./types.ts";
-import { ErrorHandler, FinishHandler, onErrorDefault, onFinishedDefault } from "../schemaClasses/BaseSchema.ts";
-export { ErrorHandler } from "../schemaClasses/BaseSchema.ts";
+import { onErrorDefault, onFinishedDefault } from "../schemaClasses/BaseSchema.ts";
 /**
  * apply schema object to data
  * @param schemaObject schema object

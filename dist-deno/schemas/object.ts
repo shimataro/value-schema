@@ -1,5 +1,6 @@
-import { NullableOptions, ObjectSchema, OptionsForObject } from "../schemaClasses/ObjectSchema.ts";
+import { NullableOptions } from "../libs/publicTypes.ts";
 import { SchemaObject } from "../libs/types.ts";
+import { ObjectSchema, OptionsForObject } from "../schemaClasses/ObjectSchema.ts";
 export function object<S extends SchemaObject>(options: OptionsForObject<S> & NullableOptions): ObjectSchema<S, null>;
 export function object<S extends SchemaObject>(options: OptionsForObject<S>): ObjectSchema<S>;
 export function object(): ObjectSchema<SchemaObject>;

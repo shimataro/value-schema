@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0-rc.15] - 2020-11-08
+
+### Others
+
+* support TypeScript 4.0
+* support Deno 1.3, 1.4, 1.5
+
 ## [3.0.0-rc.14] - 2020-07-26
 
 ### Added
@@ -530,7 +537,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.14...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.15...HEAD
+[3.0.0-rc.15]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.14...v3.0.0-rc.15
 [3.0.0-rc.14]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.13...v3.0.0-rc.14
 [3.0.0-rc.13]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.12...v3.0.0-rc.13
 [3.0.0-rc.12]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.11...v3.0.0-rc.12

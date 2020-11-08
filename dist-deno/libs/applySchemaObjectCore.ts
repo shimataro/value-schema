@@ -1,6 +1,6 @@
+import { ErrorHandler, FinishHandler } from "./publicTypes.ts";
 import { AnyObject, Key, ObjectTypeOf, SchemaObject, isObject } from "./types.ts";
 import { CAUSE, ValueSchemaError } from "./ValueSchemaError.ts";
-import { ErrorHandler, FinishHandler } from "../schemaClasses/BaseSchema.ts";
 /**
  * apply schema object to data
  * @param schemaObject schema object

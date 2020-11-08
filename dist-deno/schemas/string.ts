@@ -1,4 +1,5 @@
-import { NullableOptions, OptionsForString, StringSchema } from "../schemaClasses/StringSchema.ts";
+import { NullableOptions } from "../libs/publicTypes.ts";
+import { OptionsForString, StringSchema } from "../schemaClasses/StringSchema.ts";
 export { STRING } from "../schemaClasses/StringSchema.ts";
 export function string(options: OptionsForString & NullableOptions): StringSchema<null>;
 export function string(options: OptionsForString): StringSchema;

@@ -1,15 +1,11 @@
 import {Key, Values, makeValues} from "../libs/types";
+import {ErrorHandler} from "../libs/publicTypes";
 import {ValueSchemaError} from "../libs/ValueSchemaError";
-
-export type ErrorHandler<T = unknown> = (err: ValueSchemaError) => T | never;
-export type FinishHandler = () => void;
 
 interface Options
 {
 }
 type ApplyTo<T> = (values: Values, options: Options, keyStack: Key[]) => values is Values<T>;
-
-export type NullableOptions = {ifNull: null} | {ifUndefined: null} | {ifEmptyString: null}
 
 /**
  * Base Schema Class
