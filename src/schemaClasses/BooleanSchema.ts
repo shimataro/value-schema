@@ -5,8 +5,6 @@ import * as type from "../appliers/boolean/type";
 
 import {BaseSchema} from "./BaseSchema";
 
-export {NullableOptions} from "./BaseSchema";
-
 export type OptionsForBoolean =
 	ifUndefined.Options<boolean> |
 	ifEmptyString.Options<boolean> |
