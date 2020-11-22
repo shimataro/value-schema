@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Others
+
+* support TypeScript 4.1
+
 ## [3.0.0-rc.15] - 2020-11-08
 
 ### Others
