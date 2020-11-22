@@ -200,6 +200,8 @@ jobs:
       uses: denolib/setup-deno@v1.3.0
       with:
         deno-version: ${{ matrix.deno }}
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     - name: Check syntax
       run: deno run ./mod.ts
     - name: Run example
