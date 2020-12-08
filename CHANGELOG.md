@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0] - 2020-12-09
+
 ### Others
 
 * support TypeScript 4.1
@@ -542,7 +544,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.15...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.15...v3.0.0
 [3.0.0-rc.15]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.14...v3.0.0-rc.15
 [3.0.0-rc.14]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.13...v3.0.0-rc.14
 [3.0.0-rc.13]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.12...v3.0.0-rc.13
