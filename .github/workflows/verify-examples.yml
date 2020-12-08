@@ -198,11 +198,11 @@ jobs:
     - name: Checkout source codes
       uses: actions/checkout@v2
     - name: Install Deno
-      uses: denolib/setup-deno@v1.3.0
+      uses: denolib/setup-deno@v2
       with:
         deno-version: ${{ matrix.deno }}
-      env:
-        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+    - name: Output versions
+      run: deno --version
     - name: Check syntax
       run: deno run ./mod.ts
     - name: Run example
