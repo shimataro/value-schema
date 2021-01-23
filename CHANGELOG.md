@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * TypeScript example in README
 
+### Others
+
+* support Deno 1.7
+
 ## [3.0.0] - 2020-12-09
 
 ### Others
