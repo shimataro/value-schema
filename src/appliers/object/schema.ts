@@ -4,6 +4,7 @@ import {onErrorDefault, onFinishedDefault} from "../../schemaClasses/BaseSchema"
 
 export interface Options<S>
 {
+	/** schema object */
 	schemaObject?: S;
 }
 

@@ -3,6 +3,7 @@ import {Key, Values, isString} from "../../libs/types";
 
 export interface Options
 {
+	/** accepts full width string; e.g., "１２３４５" */
 	acceptsFullWidth?: boolean;
 }
 

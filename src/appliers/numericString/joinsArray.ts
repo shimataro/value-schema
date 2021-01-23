@@ -2,6 +2,7 @@ import {Key, Values, isArray} from "../../libs/types";
 
 export interface Options
 {
+	/** joins array and makes string */
 	joinsArray?: boolean;
 }
 

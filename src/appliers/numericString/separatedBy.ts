@@ -2,6 +2,7 @@ import {Key, Values, isString} from "../../libs/types";
 
 export interface Options
 {
+	/** assumes input value is separated by pattern, and ignores them. */
 	separatedBy?: string | RegExp;
 }
 

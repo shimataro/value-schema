@@ -6,15 +6,25 @@ const REGEXP_INTEGER = /^\s*[+-]?\d+\s*$/;
 
 export enum INTEGER
 {
+	/** does not care */
 	NO,
+	/** must be integer; causes error if otherwise */
 	YES,
+	/** rounds down (towards minus infinity) */
 	FLOOR,
+	/** rounds towards 0 (away from infinity) */
 	FLOOR_RZ,
+	/** rounds up (towards plus infinity) */
 	CEIL,
+	/** rounds away from 0 (towards infinity) */
 	CEIL_RI,
+	/** rounds half up (towards positive infinity) */
 	HALF_UP,
+	/** rounds half towards zero (away from infinity) */
 	HALF_UP_RZ,
+	/** rounds half down (towards negative infinity) */
 	HALF_DOWN,
+	/** rounds half away from zero (towards infinity) */
 	HALF_DOWN_RZ,
 }
 
@@ -22,8 +32,11 @@ type IntegerLike = boolean | INTEGER;
 
 export interface Options
 {
+	/** does not convert type; causes error if type does not match */
 	strictType?: boolean;
+	/** accepts string with special format; e.g., "1e+2", "0x100" */
 	acceptsSpecialFormats?: boolean;
+	/** needs integer */
 	integer?: IntegerLike;
 }
 

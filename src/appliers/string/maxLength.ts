@@ -2,13 +2,16 @@ import {Key, Values, isNumber, isString} from "../../libs/types";
 import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 type MaxLength = {
+	/** maximum length of string */
 	length: number;
+	/** removes trailing characters if too long */
 	trims: boolean;
 }
 type MaxLengthLike = number | MaxLength;
 
 export interface Options
 {
+	/** maximum length of string */
 	maxLength?: MaxLengthLike;
 }
 
