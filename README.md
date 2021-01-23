@@ -196,10 +196,12 @@ $ node --experimental-modules foo.mjs
 
 ### [Deno](https://deno.land/)
 
-Deno has been supported as of v3.0.0-rc.4.
+Deno has been supported as of v3.
 
 ```typescript
-import vs from "https://deno.land/x/value_schema/mod.ts";
+import vs from "https://deno.land/x/value_schema/mod.ts";       // latest version
+import vs from "https://deno.land/x/value_schema@3/mod.ts";     // latest version of v3
+import vs from "https://deno.land/x/value_schema@3.0.0/mod.ts"; // v3.0.0
 ```
 
 **CAUTION**: specify `value_schema` (underscore) NOT `value-schema` (hyphen) because [deno.land](https://deno.land/) module database does not support name with hyphen!
