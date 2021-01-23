@@ -1,4 +1,5 @@
-import { EmailSchema, NullableOptions, OptionsForEmail } from "../schemaClasses/EmailSchema.ts";
+import { NullableOptions } from "../libs/publicTypes.ts";
+import { EmailSchema, OptionsForEmail } from "../schemaClasses/EmailSchema.ts";
 export function email(options: OptionsForEmail & NullableOptions): EmailSchema<null>;
 export function email(options: OptionsForEmail): EmailSchema;
 export function email(): EmailSchema;

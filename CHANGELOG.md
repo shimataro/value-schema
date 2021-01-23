@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+* TypeScript example in README
+
+## [3.0.0] - 2020-12-09
+
+### Others
+
+* support TypeScript 4.1
+* support Deno 1.6
+
+## [3.0.0-rc.15] - 2020-11-08
+
+### Others
+
+* support TypeScript 4.0
+* support Deno 1.3, 1.4, 1.5
+
+## [3.0.0-rc.14] - 2020-07-26
+
+### Added
+
+* UUID pattern; `vs.STRING.PATTERN.UUID`
+
+## [3.0.0-rc.13] - 2020-07-12
+
+### Fixed
+
+* revive NPM hosting
+
 ## [3.0.0-rc.12] - 2020-07-11
 
 ### Others
@@ -518,7 +548,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.12...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.15...v3.0.0
+[3.0.0-rc.15]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.14...v3.0.0-rc.15
+[3.0.0-rc.14]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.13...v3.0.0-rc.14
+[3.0.0-rc.13]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.12...v3.0.0-rc.13
 [3.0.0-rc.12]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.11...v3.0.0-rc.12
 [3.0.0-rc.11]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.10...v3.0.0-rc.11
 [3.0.0-rc.10]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.9...v3.0.0-rc.10

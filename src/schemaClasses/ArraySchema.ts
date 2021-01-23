@@ -9,8 +9,6 @@ import * as type from "../appliers/array/type";
 
 import {BaseSchema} from "./BaseSchema";
 
-export {NullableOptions} from "./BaseSchema";
-
 export type OptionsForArray<T> =
 	converter.Options<T[]> |
 	ifUndefined.Options<T[]> |

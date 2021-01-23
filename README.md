@@ -469,25 +469,7 @@ const actual = vs.applySchemaObject(schemaObject, input);
 assert.deepStrictEqual(actual, expected);
 ```
 
-In TypeScript, use "Generics" for type-safe.
-
-```typescript
-interface Parameters {
-    foo: number
-    bar: string
-}
-
-const schemaObject = {
-    foo: vs.number(),
-    bar: vs.string(),
-};
-const input = {
-    foo: "12345",
-    bar: "abcde",
-};
-
-const actual = vs.applySchemaObject<Parameters>(schemaObject, input);
-```
+In TypeScript, type inference and auto-completion work perfectly!
 
 ###### error handling 1
 
@@ -1380,6 +1362,7 @@ You can also use `STRING.PATTERN` constants
 |`STRING.PATTERN.IPV4`|IPv4 address|
 |`STRING.PATTERN.IPV6`|IPv6 address|
 |`STRING.PATTERN.URI`|URI that follows [RFC3986](https://tools.ietf.org/html/rfc3986)|
+|`STRING.PATTERN.UUID`|UUID|
 
 ```javascript
 // should be OK

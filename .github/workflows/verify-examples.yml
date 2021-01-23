@@ -187,14 +187,22 @@ jobs:
         - ubuntu-20.04
         deno:
         - "1.0.0"
+        - "1.1.0"
+        - "1.2.0"
+        - "1.3.0"
+        - "1.4.0"
+        - "1.5.0"
+        - "1.6.0"
       fail-fast: false
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v2
     - name: Install Deno
-      uses: denolib/setup-deno@v1.3.0
+      uses: denolib/setup-deno@v2
       with:
         deno-version: ${{ matrix.deno }}
+    - name: Output versions
+      run: deno --version
     - name: Check syntax
       run: deno run ./mod.ts
     - name: Run example
