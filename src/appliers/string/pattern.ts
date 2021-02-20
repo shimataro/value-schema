@@ -23,7 +23,7 @@ export const PATTERN = {
 
 export interface Options
 {
-	/** string pattern by RegExp */
+	/** acceptable pattern (regular expression) */
 	pattern?: RegExp;
 }
 

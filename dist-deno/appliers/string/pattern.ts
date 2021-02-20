@@ -19,7 +19,7 @@ export const PATTERN = {
     UUID: /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/i
 };
 export interface Options {
-    /** string pattern by RegExp */
+    /** acceptable pattern (regular expression) */
     pattern?: RegExp;
 }
 /**
