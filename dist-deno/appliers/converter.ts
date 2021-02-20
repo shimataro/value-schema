@@ -1,6 +1,7 @@
 import { Key, Values } from "../libs/types.ts";
 import { CAUSE, ValueSchemaError } from "../libs/ValueSchemaError.ts";
 export interface Options<T> {
+    /** converter function */
     converter?: (value: T, fail: () => never) => T;
 }
 /**

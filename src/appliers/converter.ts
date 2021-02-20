@@ -3,6 +3,7 @@ import {CAUSE, ValueSchemaError} from "../libs/ValueSchemaError";
 
 export interface Options<T>
 {
+	/** converter function */
 	converter?: (value: T, fail: () => never) => T;
 }
 

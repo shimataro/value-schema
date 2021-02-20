@@ -3,6 +3,7 @@ import {CAUSE, ValueSchemaError} from "../libs/ValueSchemaError";
 
 export interface Options<T>
 {
+	/** value if empty string (defaults: error) */
 	ifEmptyString?: T | null;
 }
 

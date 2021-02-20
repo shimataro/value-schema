@@ -1,6 +1,7 @@
 import { Key, Values, isScalar, isString } from "../../libs/types.ts";
 import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 export interface Options {
+    /** does not convert type; causes error if type does not match */
     strictType?: boolean;
 }
 /**

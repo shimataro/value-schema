@@ -2,6 +2,7 @@ import { Key, ObjectTypeOf, SchemaObject, Values } from "../../libs/types.ts";
 import { applySchemaObjectCore } from "../../libs/applySchemaObjectCore.ts";
 import { onErrorDefault, onFinishedDefault } from "../../schemaClasses/BaseSchema.ts";
 export interface Options<S> {
+    /** schema object */
     schemaObject?: S;
 }
 /**

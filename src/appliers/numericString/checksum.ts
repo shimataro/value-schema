@@ -3,17 +3,24 @@ import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 export enum CHECKSUM_ALGORITHM
 {
+	/** Luhn algorithm; used in credit card and IMEI (also known as MOD-10 algorithm) */
 	LUHN = "luhn",
+	/** checksum as credit card; equivalent to LUHN */
 	CREDIT_CARD = LUHN,
 
+	/** modulus10/weight3:1 algorithm; used in ISBN13, EAN and JAN */
 	MODULUS10_WEIGHT3_1 = "modulus10/weight3:1",
+	/** ISBN-13; equivalent to MODULUS10_WEIGHT3_1 */
 	ISBN13 = MODULUS10_WEIGHT3_1,
+	/** EAN code; equivalent to MODULUS10_WEIGHT3_1 */
 	EAN = MODULUS10_WEIGHT3_1,
+	/** JAN code; equivalent to MODULUS10_WEIGHT3_1 */
 	JAN = MODULUS10_WEIGHT3_1,
 }
 
 export interface Options
 {
+	/** uses checksum */
 	checksum?: CHECKSUM_ALGORITHM;
 }
 

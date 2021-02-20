@@ -179,6 +179,11 @@ function testInteger(): void
 				integer: false,
 			}).applyTo(0)
 		).toEqual(0);
+		expect(
+			vs.number({
+				integer: vs.NUMBER.INTEGER.NO,
+			}).applyTo(0)
+		).toEqual(0);
 
 		expect(
 			vs.number({

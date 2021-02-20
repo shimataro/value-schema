@@ -1,11 +1,14 @@
 import { Key, Values, isNumber } from "../../libs/types.ts";
 import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 type MaxValue = {
+    /** maximum value */
     value: number;
+    /** true to adjust if input is greater than "value" / false to error */
     adjusts: boolean;
 };
 type MaxValueLike = number | MaxValue;
 export interface Options {
+    /** maximum value (value or object) */
     maxValue?: MaxValueLike;
 }
 /**

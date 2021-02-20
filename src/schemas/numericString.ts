@@ -3,8 +3,11 @@ import {NumericStringSchema, OptionsForNumericString} from "../schemaClasses/Num
 
 export {NUMERIC_STRING} from "../schemaClasses/NumericStringSchema";
 
+/** schema for numeric string or null */
 export function numericString(options: OptionsForNumericString & NullableOptions): NumericStringSchema<null>
+/** schema for numeric string */
 export function numericString(options: OptionsForNumericString): NumericStringSchema
+/** schema for numeric string */
 export function numericString(): NumericStringSchema
 
 /**
