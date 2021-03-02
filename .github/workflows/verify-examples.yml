@@ -115,7 +115,7 @@ jobs:
     - name: Check syntax (ESM)
       run: node --experimental-modules ./dist/index.mjs
     - name: Install dependencies (example)
-      run: npm ./examples i --only=production
+      run: npm i --only=production
       working-directory: ./examples
     - name: Run example (CJS)
       run: node --experimental-modules ./examples/example.js
