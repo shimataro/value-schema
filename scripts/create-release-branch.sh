@@ -39,8 +39,8 @@ function main() {
 	check_current_branch
 
 	create_branch ${BRANCH}
-	update_changelog ${VERSION}
 	update_package_version ${VERSION}
+	update_changelog ${VERSION}
 	update_dependencies_version
 	regenerate_npm_shrinkwrap
 	verify_package
@@ -99,6 +99,12 @@ function create_branch() {
 	git checkout -b ${BRANCH} ${BASE_BRANCH}
 }
 
+function update_package_version() {
+	local VERSION=$1
+
+	npm version --no-git-tag-version ${VERSION}
+}
+
 function update_changelog() {
 	local VERSION=$1
 	local DATE=`date "+%Y-%m-%d"`
@@ -110,14 +116,6 @@ function update_changelog() {
 		CHANGELOG.md
 }
 
-function update_package_version() {
-	local VERSION=$1
-
-	sed -i".bak" -r \
-		-e "s/(\"version\"\s*:\s*)\".*?\"/\1\"${VERSION}\"/" \
-		package.json
-}
-
 function update_dependencies_version() {
 	npm run check-updates -- -u
 }
@@ -126,6 +124,7 @@ function regenerate_npm_shrinkwrap() {
 	rm -rf npm-shrinkwrap.json node_modules
 	npm install
 	npm shrinkwrap
+	npm dedupe
 }
 
 function verify_package() {

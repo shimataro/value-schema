@@ -3,6 +3,7 @@ import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 export interface Options
 {
+	/** minimum length of string */
 	minLength?: number;
 }
 

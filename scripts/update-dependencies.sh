@@ -19,6 +19,7 @@ npm run check-updates -- -u
 # re-install packages
 rm -rf npm-shrinkwrap.json node_modules
 npm i
+npm dedupe
 
 # test
 npm run build

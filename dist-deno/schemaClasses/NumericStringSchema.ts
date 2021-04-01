@@ -12,7 +12,6 @@ import * as maxLength from "../appliers/string/maxLength.ts";
 import * as minLength from "../appliers/string/minLength.ts";
 import * as type from "../appliers/string/type.ts";
 import { BaseSchema } from "../schemaClasses/BaseSchema.ts";
-export { NullableOptions } from "../schemaClasses/BaseSchema.ts";
 export const NUMERIC_STRING = {
     CHECKSUM_ALGORITHM: checksum.CHECKSUM_ALGORITHM
 };

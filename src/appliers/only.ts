@@ -3,6 +3,7 @@ import {CAUSE, ValueSchemaError} from "../libs/ValueSchemaError";
 
 export interface Options<T>
 {
+	/** accepts only specified values */
 	only?: T[];
 }
 

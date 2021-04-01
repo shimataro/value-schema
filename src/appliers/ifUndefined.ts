@@ -3,6 +3,7 @@ import {CAUSE, ValueSchemaError} from "../libs/ValueSchemaError";
 
 export interface Options<T>
 {
+	/** value if undefined (defaults: error) */
 	ifUndefined?: T | null;
 }
 

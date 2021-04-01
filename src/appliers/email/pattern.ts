@@ -4,6 +4,7 @@ import * as pattern from "../string/pattern";
 
 export interface Options
 {
+	/** overwrites email pattern */
 	pattern?: RegExp;
 }
 

@@ -2,11 +2,14 @@ import { Key, Values, isArray } from "../../libs/types.ts";
 import { ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 import { BaseSchema } from "../../schemaClasses/BaseSchema.ts";
 type Each<T> = {
+    /** specifies schema of each elements */
     schema: BaseSchema<T>;
+    /** ignores even if some elements cause error */
     ignoresErrors: boolean;
 };
 type EachLike<T> = BaseSchema<T> | Each<T>;
 export interface Options<T> {
+    /** specifies schema of each elements */
     each?: EachLike<T>;
 }
 /**

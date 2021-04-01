@@ -1,17 +1,9 @@
-import * as type from "../appliers/union/type";
-import {BaseSchema} from "../libs/BaseSchema";
+import {BaseSchema} from "../schemaClasses/BaseSchema";
+import {UnionSchema} from "../schemaClasses/UnionSchema";
 
 type Union<T extends BaseSchema[]> = Tuple<T>[number];
 type Tuple<T extends BaseSchema[]> = {[U in keyof T]: Inferred<T[U]>};
 type Inferred<T> = T extends BaseSchema<infer U> ? U : never;
-
-class UnionSchema<T> extends BaseSchema<T>
-{
-	constructor(options: type.Options<T>)
-	{
-		super(options, [type.applyTo]);
-	}
-}
 
 /**
  * create schema

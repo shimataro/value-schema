@@ -1,5 +1,6 @@
 import { Key, Values, isArray } from "../../libs/types.ts";
 export interface Options {
+    /** joins array and makes string */
     joinsArray?: boolean;
 }
 /**

@@ -1,9 +1,13 @@
-import {NullableOptions, OptionsForString, StringSchema} from "../schemaClasses/StringSchema";
+import {NullableOptions} from "../libs/publicTypes";
+import {OptionsForString, StringSchema} from "../schemaClasses/StringSchema";
 
 export {STRING} from "../schemaClasses/StringSchema";
 
+/** schema for string or null */
 export function string(options: OptionsForString & NullableOptions): StringSchema<null>
+/** schema for string */
 export function string(options: OptionsForString): StringSchema
+/** schema for string */
 export function string(): StringSchema
 
 /**

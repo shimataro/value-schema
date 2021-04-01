@@ -3,7 +3,9 @@ import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 const REGEXP_TRUE = /^\s*(true|yes|on)\s*$/i;
 const REGEXP_FALSE = /^\s*(false|no|off)\s*$/i;
 export interface Options {
+    /** does not convert type; causes error if type does not match */
     strictType?: boolean;
+    /** accepts all number value not only 0 and 1 (0 means false, others true) */
     acceptsAllNumbers?: boolean;
 }
 /**

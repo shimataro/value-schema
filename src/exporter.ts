@@ -1,4 +1,5 @@
 export * from "./libs/applySchemaObject";
+export * from "./libs/publicTypes";
 export * from "./libs/ValueSchemaError";
 export * from "./schemas/array";
 export * from "./schemas/boolean";

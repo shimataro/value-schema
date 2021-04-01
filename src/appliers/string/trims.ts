@@ -2,6 +2,7 @@ import {Key, Values, isString} from "../../libs/types";
 
 export interface Options
 {
+	/** removes whitespace from both ends of a string */
 	trims?: boolean;
 }
 

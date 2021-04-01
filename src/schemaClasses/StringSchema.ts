@@ -11,8 +11,6 @@ import * as type from "../appliers/string/type";
 
 import {BaseSchema} from "./BaseSchema";
 
-export {NullableOptions} from "./BaseSchema";
-
 export const STRING = {
 	PATTERN: pattern.PATTERN,
 };

@@ -1,7 +1,11 @@
-import {BooleanSchema, NullableOptions, OptionsForBoolean} from "../schemaClasses/BooleanSchema";
+import {NullableOptions} from "../libs/publicTypes";
+import {BooleanSchema, OptionsForBoolean} from "../schemaClasses/BooleanSchema";
 
+/** schema for boolean or null */
 export function boolean(options: OptionsForBoolean & NullableOptions): BooleanSchema<null>
+/** schema for boolean */
 export function boolean(options: OptionsForBoolean): BooleanSchema
+/** schema for boolean */
 export function boolean(): BooleanSchema
 
 /**

@@ -1,6 +1,7 @@
 import { Key, Values } from "../libs/types.ts";
 import { CAUSE, ValueSchemaError } from "../libs/ValueSchemaError.ts";
 export interface Options<T> {
+    /** value if empty string (defaults: error) */
     ifEmptyString?: T | null;
 }
 /**
