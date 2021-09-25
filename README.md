@@ -700,7 +700,7 @@ assert.throws(
     {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
-#### options
+#### parameters
 
 ##### `strictType`
 
@@ -853,7 +853,7 @@ assert.throws(
     {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
-#### options
+#### parameters
 
 ##### `strictType`
 
@@ -1201,7 +1201,7 @@ assert.throws(
     {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
-#### options
+#### parameters
 
 ##### `strictType`
 
@@ -1454,7 +1454,7 @@ assert.throws(
     {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 ```
 
-#### options
+#### parameters
 
 ##### `ifUndefined`
 
@@ -1739,7 +1739,7 @@ assert.throws(
     {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 ```
 
-#### options
+#### parameters
 
 ##### `ifUndefined`
 
@@ -2022,7 +2022,7 @@ assert.throws(
     {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
 ```
 
-#### options
+#### parameters
 
 ##### `ifUndefined`
 
