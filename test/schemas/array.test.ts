@@ -373,6 +373,7 @@ function testNumber(): void
 			}).applyTo([9, 10, 11])
 		).toEqual([9, 10, 10]);
 	});
+
 	it("should cause error(s)", () =>
 	{
 		try
@@ -385,10 +386,17 @@ function testNumber(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.TYPE);
 			expect(err.keyStack).toEqual([1]);
 		}
-
+	});
+	it("should cause error(s)", () =>
+	{
 		try
 		{
 			vs.array({
@@ -398,6 +406,11 @@ function testNumber(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.UNDEFINED);
 			expect(err.keyStack).toEqual([1]);
 		}
@@ -411,6 +424,11 @@ function testNumber(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.NULL);
 			expect(err.keyStack).toEqual([1]);
 		}
@@ -424,6 +442,11 @@ function testNumber(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.EMPTY_STRING);
 			expect(err.keyStack).toEqual([1]);
 		}
@@ -439,6 +462,11 @@ function testNumber(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.NULL);
 			expect(err.keyStack).toEqual([1]);
 		}
@@ -454,6 +482,11 @@ function testNumber(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.EMPTY_STRING);
 			expect(err.keyStack).toEqual([1]);
 		}
@@ -469,10 +502,17 @@ function testNumber(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.UNDEFINED);
 			expect(err.keyStack).toEqual([1]);
 		}
-
+	});
+	it("should cause error(s)", () =>
+	{
 		try
 		{
 			vs.array({
@@ -484,6 +524,11 @@ function testNumber(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.EMPTY_STRING);
 			expect(err.keyStack).toEqual([1]);
 		}
@@ -499,6 +544,11 @@ function testNumber(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.UNDEFINED);
 			expect(err.keyStack).toEqual([1]);
 		}
@@ -514,6 +564,11 @@ function testNumber(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.NULL);
 			expect(err.keyStack).toEqual([1]);
 		}
@@ -527,6 +582,11 @@ function testNumber(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.TYPE);
 			expect(err.keyStack).toEqual([0]);
 		}
@@ -542,6 +602,11 @@ function testNumber(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.TYPE);
 			expect(err.keyStack).toEqual([0]);
 		}
@@ -557,10 +622,17 @@ function testNumber(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.ONLY);
 			expect(err.keyStack).toEqual([0]);
 		}
-
+	});
+	it("should cause error(s)", () =>
+	{
 		try
 		{
 			vs.array({
@@ -572,6 +644,11 @@ function testNumber(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.MIN_VALUE);
 			expect(err.keyStack).toEqual([0]);
 		}
@@ -587,6 +664,11 @@ function testNumber(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.MAX_VALUE);
 			expect(err.keyStack).toEqual([2]);
 		}
@@ -691,6 +773,11 @@ function testString(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.ONLY);
 			expect(err.keyStack).toEqual([2]);
 		}
@@ -706,6 +793,11 @@ function testString(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.MIN_LENGTH);
 			expect(err.keyStack).toEqual([0]);
 		}
@@ -721,6 +813,11 @@ function testString(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.MAX_LENGTH);
 			expect(err.keyStack).toEqual([1]);
 		}
@@ -736,6 +833,11 @@ function testString(): void
 		}
 		catch(err)
 		{
+			expect(err instanceof vs.ValueSchemaError).toBeTruthy();
+			if(!(err instanceof vs.ValueSchemaError))
+			{
+				return;
+			}
 			expect(err.cause).toEqual(vs.CAUSE.PATTERN);
 			expect(err.keyStack).toEqual([0]);
 		}
