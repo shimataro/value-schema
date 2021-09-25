@@ -6,12 +6,12 @@ import * as only from "../appliers/only";
 import {BaseSchema} from "./BaseSchema";
 
 export type OptionsForEnumerate<E> =
-	ifUndefined.Options<E> |
-	ifEmptyString.Options<E> |
-	ifNull.Options<E> |
+	ifUndefined.Options<E> &
+	ifEmptyString.Options<E> &
+	ifNull.Options<E> &
 	Required<only.Options<E>>;
 
-export class EnumerateSchema<E = never, Tx = never> extends BaseSchema<E | Tx>
+export class EnumerateSchema<E, Tx = never> extends BaseSchema<E | Tx>
 {
 	constructor(options: OptionsForEnumerate<E>)
 	{
