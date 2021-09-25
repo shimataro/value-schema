@@ -12,7 +12,6 @@ jobs:
         os:
         - windows-2019
         - macos-10.15
-        - ubuntu-16.04
         - ubuntu-18.04
         - ubuntu-20.04
         nodejs:
@@ -72,7 +71,6 @@ jobs:
         os:
         - windows-2019
         - macos-10.15
-        - ubuntu-16.04
         - ubuntu-18.04
         - ubuntu-20.04
         nodejs:
@@ -132,7 +130,6 @@ jobs:
         os:
         - windows-2019
         - macos-10.15
-        - ubuntu-16.04
         - ubuntu-18.04
         - ubuntu-20.04
         nodejs:
@@ -185,7 +182,6 @@ jobs:
         os:
         - windows-2019
         - macos-10.15
-        - ubuntu-16.04
         - ubuntu-18.04
         - ubuntu-20.04
         deno:
