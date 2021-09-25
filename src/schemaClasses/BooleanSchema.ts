@@ -6,9 +6,9 @@ import * as type from "../appliers/boolean/type";
 import {BaseSchema} from "./BaseSchema";
 
 export type OptionsForBoolean =
-	ifUndefined.Options<boolean> |
-	ifEmptyString.Options<boolean> |
-	ifNull.Options<boolean> |
+	ifUndefined.Options<boolean> &
+	ifEmptyString.Options<boolean> &
+	ifNull.Options<boolean> &
 	type.Options;
 
 export class BooleanSchema<Tx = never> extends BaseSchema<boolean | Tx>

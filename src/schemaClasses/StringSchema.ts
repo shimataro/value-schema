@@ -16,15 +16,15 @@ export const STRING = {
 };
 
 export type OptionsForString =
-	converter.Options<string> |
-	ifEmptyString.Options<string> |
-	ifNull.Options<string> |
-	ifUndefined.Options<string> |
-	only.Options<string> |
-	type.Options |
-	trims.Options |
-	minLength.Options |
-	maxLength.Options |
+	converter.Options<string> &
+	ifEmptyString.Options<string> &
+	ifNull.Options<string> &
+	ifUndefined.Options<string> &
+	only.Options<string> &
+	type.Options &
+	trims.Options &
+	minLength.Options &
+	maxLength.Options &
 	pattern.Options;
 
 export class StringSchema<Tx = never> extends BaseSchema<string | Tx>

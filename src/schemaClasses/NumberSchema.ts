@@ -15,14 +15,14 @@ export const NUMBER = {
 };
 
 export type OptionsForNumber =
-	converter.Options<number> |
-	ifUndefined.Options<number> |
-	ifEmptyString.Options<number> |
-	ifNull.Options<number> |
-	only.Options<number> |
-	acceptsFullWidth.Options |
-	type.Options |
-	minValue.Options |
+	converter.Options<number> &
+	ifUndefined.Options<number> &
+	ifEmptyString.Options<number> &
+	ifNull.Options<number> &
+	only.Options<number> &
+	acceptsFullWidth.Options &
+	type.Options &
+	minValue.Options &
 	maxValue.Options;
 
 export class NumberSchema<Tx = never> extends BaseSchema<number | Tx>
