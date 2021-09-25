@@ -42,7 +42,7 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
             adjustedValues.push(adjustedValue);
         }
         catch (err) {
-            if (err.message === "!IGNORE!") {
+            if (err instanceof Error && err.message === "!IGNORE!") {
                 // ignore
                 continue;
             }

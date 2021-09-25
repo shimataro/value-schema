@@ -39,7 +39,7 @@ export class BaseSchema<T = unknown> {
             return values.output as T;
         }
         catch (err) {
-            return onError(err);
+            return onError(err as ValueSchemaError);
         }
     }
 }

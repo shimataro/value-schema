@@ -54,7 +54,7 @@ export class BaseSchema<T = unknown>
 		}
 		catch(err)
 		{
-			return onError(err);
+			return onError(err as ValueSchemaError);
 		}
 	}
 }
