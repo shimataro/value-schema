@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Others
 
 * add JSDoc comments for parameters
-* support TypeScript 4.2
+* support TypeScript 4.2 - 4.4
 * support Deno 1.7 - 1.14
 
 ## [3.0.0] - 2020-12-09
