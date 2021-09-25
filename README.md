@@ -28,6 +28,7 @@ supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang
     * [string](#string)
     * [numeric string](#numeric-string)
     * [email](#email)
+    * [enumerate](#enumerate)
     * [array](#array)
     * [object](#object)
 * [Changelog](#changelog)
@@ -1822,6 +1823,156 @@ assert.strictEqual(
 assert.throws(
     () => vs.email().applyTo("......@example.com"),
     {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
+```
+
+### enumerate
+
+Return type of `applyTo()` can be limited to enum-like type; `enum` and union.
+**This is useful for TypeScript**.
+
+#### ambient declarations
+
+```typescript
+export function enumerate<E = never>(options: OptionsForEnumerate): EnumerateSchema<E>;
+
+type OptionsForEmail = {
+    ifUndefined?: string | null;
+    ifEmptyString?: string | null;
+    ifNull?: string | null;
+
+    only: E[]; // this is NOT an optional.
+}
+type ErrorHandler = (err: ValueSchemaError) => E | null | never;
+interface EnumerateSchema {
+    applyTo(value: unknown, onError?: ErrorHandler): E | null
+}
+```
+
+#### `applyTo(value[, onError])`
+
+Applies schema to `value`.
+
+If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
+
+See example of `only`.
+
+#### parameters
+
+##### `only`
+
+Accepts only particular values.
+This is NOT an optional.
+
+```typescript
+// enum version
+enum NumberEnum
+{
+    zero,
+    one,
+}
+enum StringEnum
+{
+    a = "a",
+    b = "b",
+}
+
+// should be OK
+assert.strictEqual(
+    vs.enumerate({only: [NumberEnum.zero, NumberEnum.one]}).applyTo(1), // return type is "NumberEnum"
+    1);
+assert.strictEqual(
+    vs.enumerate({only: Object.values(StringEnum)}).applyTo("a"), // return type is "StringEnum"
+    "a");
+
+// should cause error
+assert.throws(
+    () => vs.enumerate({only: Object.values(StringEnum)}).applyTo("c"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.ONLY});
+```
+
+```typescript
+// union version
+type NumberUnion = 0 | 1;
+type StringUnion = "a" | "b";
+
+// should be OK
+assert.strictEqual(
+    vs.enumerate<NumberUnion>({only: [0, 1]}).applyTo(1), // return type is "NumberUnion"
+    1);
+assert.strictEqual(
+    vs.enumerate<StringUnion>({only: ["a", "b"]}).applyTo("a"), // return type is "StringUnion"
+    "a");
+
+// should cause error
+assert.throws(
+    () => vs.enumerate<StringUnion>({only: ["a", "b"]}).applyTo("c"),
+    {name: "ValueSchemaError", cause: vs.CAUSE.ONLY});
+```
+
+##### `ifUndefined`
+
+Specifies return value when input value is `undefined`.
+
+```typescript
+enum StringEnum
+{
+    a = "a",
+    b = "b",
+}
+
+// should be adjusted
+assert.strictEqual(
+    vs.enumerate({ifUndefined: StringEnum.a, only: Object.values(StringEnum)}).applyTo(undefined),
+    "a");
+
+// should cause error
+assert.throws(
+    () => vs.enumerate({only: Object.values(StringEnum)}).applyTo(undefined),
+    {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+```
+
+##### `ifNull`
+
+Specifies return value when input value is `null`.
+
+```typescript
+enum StringEnum
+{
+    a = "a",
+    b = "b",
+}
+
+// should be adjusted
+assert.strictEqual(
+    vs.enumerate({ifNull: StringEnum.a, only: Object.values(StringEnum)}).applyTo(null),
+    "a");
+
+// should cause error
+assert.throws(
+    () => vs.enumerate({only: Object.values(StringEnum)}).applyTo(null),
+    {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
+```
+
+##### `ifEmptyString`
+
+Specifies return value when input value is `""`.
+
+```typescript
+enum StringEnum
+{
+    a = "a",
+    b = "b",
+}
+
+// should be adjusted
+assert.strictEqual(
+    vs.enumerate({ifEmptyString: StringEnum.a, only: Object.values(StringEnum)}).applyTo(""),
+    "a");
+
+// should cause error
+assert.throws(
+    () => vs.enumerate({only: Object.values(StringEnum)}).applyTo(""),
+    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
 ```
 
 ### array
