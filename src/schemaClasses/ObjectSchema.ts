@@ -10,11 +10,11 @@ import {AnyObject, ObjectTypeOf, SchemaObject} from "../libs/types";
 import {BaseSchema} from "./BaseSchema";
 
 export type OptionsForObject<S> =
-	converter.Options<AnyObject> |
-	ifUndefined.Options<AnyObject> |
-	ifEmptyString.Options<AnyObject> |
-	ifNull.Options<AnyObject> |
-	schema.Options<S> |
+	converter.Options<AnyObject> &
+	ifUndefined.Options<AnyObject> &
+	ifEmptyString.Options<AnyObject> &
+	ifNull.Options<AnyObject> &
+	schema.Options<S> &
 	type.Options;
 
 export class ObjectSchema<S extends SchemaObject, Tx = never> extends BaseSchema<ObjectTypeOf<S> | Tx>
