@@ -12,7 +12,7 @@ import { BaseSchema } from "./BaseSchema.ts";
 export const STRING = {
     PATTERN: pattern.PATTERN
 };
-export type OptionsForString = converter.Options<string> | ifEmptyString.Options<string> | ifNull.Options<string> | ifUndefined.Options<string> | only.Options<string> | type.Options | trims.Options | minLength.Options | maxLength.Options | pattern.Options;
+export type OptionsForString = converter.Options<string> & ifEmptyString.Options<string> & ifNull.Options<string> & ifUndefined.Options<string> & only.Options<string> & type.Options & trims.Options & minLength.Options & maxLength.Options & pattern.Options;
 export class StringSchema<Tx = never> extends BaseSchema<string | Tx> {
     constructor(options: OptionsForString) {
         super(options, [

@@ -9,12 +9,12 @@ import * as type from "../appliers/string/type";
 import {BaseSchema} from "./BaseSchema";
 
 export type OptionsForEmail =
-	ifEmptyString.Options<string> |
-	ifNull.Options<string> |
-	ifUndefined.Options<string> |
-	pattern.Options |
-	maxLength.Options |
-	trims.Options |
+	ifEmptyString.Options<string> &
+	ifNull.Options<string> &
+	ifUndefined.Options<string> &
+	pattern.Options &
+	maxLength.Options &
+	trims.Options &
 	type.Options;
 
 export class EmailSchema<Tx = never> extends BaseSchema<string | Tx>

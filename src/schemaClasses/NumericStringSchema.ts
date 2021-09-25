@@ -19,18 +19,18 @@ export const NUMERIC_STRING = {
 };
 
 export type OptionsForNumericString =
-	converter.Options<string> |
-	ifEmptyString.Options<string> |
-	ifNull.Options<string> |
-	ifUndefined.Options<string> |
-	only.Options<string> |
-	checksum.Options |
-	fullWidthToHalf.Options |
-	joinsArray.Options |
-	pattern.Options |
-	separatedBy.Options |
-	type.Options |
-	minLength.Options |
+	converter.Options<string> &
+	ifEmptyString.Options<string> &
+	ifNull.Options<string> &
+	ifUndefined.Options<string> &
+	only.Options<string> &
+	checksum.Options &
+	fullWidthToHalf.Options &
+	joinsArray.Options &
+	pattern.Options &
+	separatedBy.Options &
+	type.Options &
+	minLength.Options &
 	maxLength.Options;
 
 export class NumericStringSchema<Tx = never> extends BaseSchema<string | Tx>
