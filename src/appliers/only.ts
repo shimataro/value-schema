@@ -7,9 +7,10 @@ export interface Options<T>
 	only?: T[];
 }
 
+/** read-only array */
 export interface OptionsReadonly<T>
 {
-	/** read-only array */
+	/** accepts only specified values */
 	only?: readonly T[];
 }
 
