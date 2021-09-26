@@ -1,5 +1,6 @@
 import vs from "value-schema";
 
+// enum
 enum NumberEnum
 {
 	zero,
@@ -17,6 +18,15 @@ enum NumberAndStringEnum
 	a = "a",
 	b = "b",
 }
+
+// const enum
+const enum ConstStringEnum
+{
+	a = "a",
+	b = "b",
+}
+
+// union
 type NumberUnion = 0 | 1;
 type StringUnion = "a" | "b";
 type NumberAndStringUnion = 0 | 1 | "a" | "b";
@@ -50,6 +60,13 @@ function testIfUndefined(): void
 			expect(val).toEqual("a");
 		}
 		{
+			const val: ConstStringEnum | null = vs.enumeration({
+				ifUndefined: null,
+				only: [ConstStringEnum.a, ConstStringEnum.b],
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
+		{
 			const val: NumberAndStringEnum | null = vs.enumeration({
 				ifUndefined: null,
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
@@ -115,6 +132,13 @@ function testIfUndefined(): void
 			expect(val).toEqual(null);
 		}
 		{
+			const val: ConstStringEnum | null = vs.enumeration({
+				ifUndefined: null,
+				only: [ConstStringEnum.a, ConstStringEnum.b],
+			}).applyTo(undefined);
+			expect(val).toEqual(null);
+		}
+		{
 			const val: NumberAndStringEnum | null = vs.enumeration({
 				ifUndefined: null,
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
@@ -151,64 +175,74 @@ function testIfUndefined(): void
 	{
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: NumberEnum = vs.enumeration({
 				only: [NumberEnum.zero, NumberEnum.one],
 			}).applyTo(undefined);
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.UNDEFINED);
 
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: StringEnum = vs.enumeration({
 				only: Object.values(StringEnum),
 			}).applyTo(undefined);
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.UNDEFINED);
 
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: ConstStringEnum = vs.enumeration({
+				only: [ConstStringEnum.a, ConstStringEnum.b],
+			}).applyTo(undefined);
+
+			// unreachable
+			expect(val).toBeNaN();
+		}).toThrow(vs.CAUSE.UNDEFINED);
+
+		expect(() =>
+		{
 			const val: NumberAndStringEnum = vs.enumeration({
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
 			}).applyTo(undefined);
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.UNDEFINED);
 	});
 	it("should cause error(s) (union)", () =>
 	{
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: NumberUnion = vs.enumeration({
 				only: [0, 1] as const,
 			}).applyTo(undefined);
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.UNDEFINED);
 
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: StringUnion = vs.enumeration({
 				only: ["a", "b"] as const,
 			}).applyTo(undefined);
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.UNDEFINED);
 
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: NumberAndStringUnion = vs.enumeration({
 				only: [0, 1, "a", "b"] as const,
 			}).applyTo(undefined);
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.UNDEFINED);
 	});
 }
@@ -235,6 +269,13 @@ function testIfNull(): void
 			expect(val).toEqual("a");
 		}
 		{
+			const val: ConstStringEnum | null = vs.enumeration({
+				ifNull: null,
+				only: [ConstStringEnum.a, ConstStringEnum.b],
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
+		{
 			const val: NumberAndStringEnum | null = vs.enumeration({
 				ifNull: null,
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
@@ -300,6 +341,13 @@ function testIfNull(): void
 			expect(val).toEqual(null);
 		}
 		{
+			const val: ConstStringEnum | null = vs.enumeration({
+				ifNull: null,
+				only: [ConstStringEnum.a, ConstStringEnum.b],
+			}).applyTo(null);
+			expect(val).toEqual(null);
+		}
+		{
 			const val: NumberAndStringEnum | null = vs.enumeration({
 				ifNull: null,
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
@@ -336,65 +384,75 @@ function testIfNull(): void
 	{
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: NumberEnum = vs.enumeration({
 				only: [NumberEnum.zero, NumberEnum.one],
 			}).applyTo(null);
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.NULL);
 
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: StringEnum = vs.enumeration({
 				only: Object.values(StringEnum),
 			}).applyTo(null);
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.NULL);
 
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: ConstStringEnum = vs.enumeration({
+				only: [ConstStringEnum.a, ConstStringEnum.b],
+			}).applyTo(null);
+
+			// unreachable
+			expect(val).toBeNaN();
+		}).toThrow(vs.CAUSE.NULL);
+
+		expect(() =>
+		{
 			const val: NumberAndStringEnum = vs.enumeration({
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
 			}).applyTo(null);
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.NULL);
 	});
 	it("should cause error(s) (union)", () =>
 	{
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: NumberUnion = vs.enumeration({
 				only: [0, 1] as const,
 			}).applyTo(null);
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.NULL);
 
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: StringUnion = vs.enumeration({
 				only: ["a", "b"] as const,
 			}).applyTo(null);
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.NULL);
 
 		expect(() =>
 		{
 			// generics version
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: NumberAndStringUnion = vs.enumeration<NumberAndStringUnion>({
 				only: [0, 1, "a", "b"],
 			}).applyTo(null);
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.NULL);
 	});
 }
@@ -421,6 +479,13 @@ function testIfEmptyString(): void
 			expect(val).toEqual("a");
 		}
 		{
+			const val: ConstStringEnum | null = vs.enumeration({
+				ifEmptyString: null,
+				only: [ConstStringEnum.a, ConstStringEnum.b],
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
+		{
 			const val: NumberAndStringEnum | null = vs.enumeration({
 				ifEmptyString: null,
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
@@ -486,6 +551,13 @@ function testIfEmptyString(): void
 			expect(val).toEqual(null);
 		}
 		{
+			const val: ConstStringEnum | null = vs.enumeration({
+				ifEmptyString: null,
+				only: [ConstStringEnum.a, ConstStringEnum.b],
+			}).applyTo("");
+			expect(val).toEqual(null);
+		}
+		{
 			const val: NumberAndStringEnum | null = vs.enumeration({
 				ifEmptyString: null,
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
@@ -522,64 +594,74 @@ function testIfEmptyString(): void
 	{
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: NumberEnum = vs.enumeration({
 				only: [NumberEnum.zero, NumberEnum.one],
 			}).applyTo("");
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.EMPTY_STRING);
 
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: StringEnum = vs.enumeration({
 				only: Object.values(StringEnum),
 			}).applyTo("");
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.EMPTY_STRING);
 
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: ConstStringEnum = vs.enumeration({
+				only: [ConstStringEnum.a, ConstStringEnum.b],
+			}).applyTo("");
+
+			// unreachable
+			expect(val).toBeNaN();
+		}).toThrow(vs.CAUSE.EMPTY_STRING);
+
+		expect(() =>
+		{
 			const val: NumberAndStringEnum = vs.enumeration({
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
 			}).applyTo("");
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.EMPTY_STRING);
 	});
 	it("should cause error(s) (union)", () =>
 	{
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: NumberUnion = vs.enumeration({
 				only: [0, 1] as const,
 			}).applyTo("");
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.EMPTY_STRING);
 
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: StringUnion = vs.enumeration({
 				only: ["a", "b"] as const,
 			}).applyTo("");
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.EMPTY_STRING);
 
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: NumberAndStringUnion = vs.enumeration({
 				only: [0, 1, "a", "b"] as const,
 			}).applyTo("");
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.EMPTY_STRING);
 	});
 }
@@ -613,6 +695,19 @@ function testOnly(): void
 		{
 			const val: StringEnum = vs.enumeration({
 				only: Object.values(StringEnum),
+			}).applyTo("b");
+			expect(val).toEqual("b");
+		}
+
+		{
+			const val: ConstStringEnum = vs.enumeration({
+				only: [ConstStringEnum.a, ConstStringEnum.b],
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
+		{
+			const val: ConstStringEnum = vs.enumeration({
+				only: [ConstStringEnum.a, ConstStringEnum.b],
 			}).applyTo("b");
 			expect(val).toEqual("b");
 		}
@@ -710,65 +805,74 @@ function testOnly(): void
 	{
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: NumberEnum = vs.enumeration({
 				only: [NumberEnum.zero, NumberEnum.one],
 			}).applyTo(2);
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.ONLY);
 
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: StringEnum = vs.enumeration({
 				only: Object.values(StringEnum),
 			}).applyTo("c");
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.ONLY);
 
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: ConstStringEnum = vs.enumeration({
+				only: [ConstStringEnum.a, ConstStringEnum.b],
+			}).applyTo("c");
+
+			// unreachable
+			expect(val).toBeNaN();
+		}).toThrow(vs.CAUSE.ONLY);
+
+		expect(() =>
+		{
 			const val: NumberAndStringEnum = vs.enumeration({
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
 			}).applyTo("x");
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.ONLY);
 	});
 	it("should cause error(s) (union)", () =>
 	{
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: NumberUnion = vs.enumeration({
 				only: [0, 1] as const,
 			}).applyTo(2);
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.ONLY);
 
 		expect(() =>
 		{
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: StringUnion = vs.enumeration({
 				only: ["a", "b"] as const,
 			}).applyTo("c");
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.ONLY);
 
 		expect(() =>
 		{
-			// generics version
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore TS6133: 'val' is declared but its value is never read.
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const val: NumberAndStringUnion = vs.enumeration<NumberAndStringUnion>({
 				only: [0, 1, "a", "b"],
 			}).applyTo("x");
+
+			// unreachable
+			expect(val).toBeNaN();
 		}).toThrow(vs.CAUSE.ONLY);
 	});
 }
