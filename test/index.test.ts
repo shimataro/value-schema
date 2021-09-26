@@ -22,7 +22,7 @@ function testApplySchemaObject(): void
 			id: number;
 			name: string;
 			age: number;
-			email: string;
+			email: string | null;
 			state: State;
 			classes: number[];
 			skills: string[];
@@ -86,7 +86,9 @@ function testApplySchemaObject(): void
 					integer: vs.NUMBER.INTEGER.FLOOR_RZ,
 					minValue: 0,
 				}),
-				email: vs.email(),
+				email: vs.email({
+					ifUndefined: null,
+				}),
 				state: vs.enumeration({
 					only: [State.ACTIVE, State.INACTIVE],
 				}),
