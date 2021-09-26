@@ -7,11 +7,10 @@ export interface Options<T>
 	only?: T[];
 }
 
-/** for "vs.enumeration()" */
-export interface OptionsForEnumeration<T>
+export interface OptionsReadonly<T>
 {
-	/** required and read-only array */
-	only: readonly T[];
+	/** read-only array */
+	only?: readonly T[];
 }
 
 /**
