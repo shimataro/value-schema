@@ -1917,17 +1917,22 @@ assert.throws(
     {name: "ValueSchemaError", cause: vs.CAUSE.ONLY});
 ```
 
-CAUTION: Union version must be specified "readonly-array" or "array literal with generics".
+CAUTION: In union version, `only` must be "array of literal union types", "const-asserted array", or "array literal with generics".
 
 ```typescript
 type NumberUnion = 0 | 1;
 
 // OK
 {
+    // array of literal union types
     const only: NumberUnion[] = [0, 1];
     const val: NumberUnion = vs.enumeration({only: only}).applyTo(1);
 }
 {
+    const val: NumberUnion = vs.enumeration({only: [0, 1] as NumberUnion[]}).applyTo(1);
+}
+{
+    // const-asserted array
     const only = [0, 1] as const;
     const val: NumberUnion = vs.enumeration({only: only}).applyTo(1);
 }
@@ -1935,10 +1940,11 @@ type NumberUnion = 0 | 1;
     const val: NumberUnion = vs.enumeration({only: [0, 1] as const}).applyTo(1);
 }
 {
+    // array literal with generics
     const val: NumberUnion = vs.enumeration<NumberUnion>({only: [0, 1]}).applyTo(1);
 }
 
-// NG (compile error)
+// NG (compile error), not NumberUnion[] but number[]
 {
     const only = [0, 1];
     const val: NumberUnion = vs.enumeration({only: only}).applyTo(1);
