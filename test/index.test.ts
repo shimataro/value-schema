@@ -12,69 +12,27 @@ function testApplySchemaObject(): void
 {
 	it("should be adjusted", () =>
 	{
-		const schemaObject = {
-			id: vs.number({
-				minValue: 1,
-			}),
-			name: vs.string({
-				maxLength: {
-					length: 16,
-					trims: true,
-				},
-			}),
-			age: vs.number({
-				integer: vs.NUMBER.INTEGER.FLOOR_RZ,
-				minValue: 0,
-			}),
-			email: vs.email(),
-			state: vs.string({
-				only: ["active", "inactive"],
-			}),
-			classes: vs.array({
-				separatedBy: ",",
-				each: {
-					schema: vs.number(),
-					ignoresErrors: true,
-				},
-			}),
-			skills: vs.array({
-				separatedBy: ",",
-				each: {
-					schema: vs.string(),
-					ignoresErrors: true,
-				},
-			}),
-			creditCard: vs.numericString({
-				separatedBy: "-",
-				checksum: vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD,
-			}),
-			remoteAddr: vs.string({
-				pattern: vs.STRING.PATTERN.IPV4,
-			}),
-			remoteAddrIpv6: vs.string({
-				pattern: vs.STRING.PATTERN.IPV6,
-			}),
-			limit: vs.number({
-				integer: true,
-				ifUndefined: 10,
-				minValue: {
-					value: 1,
-					adjusts: true,
-				},
-				maxValue: {
-					value: 100,
-					adjusts: true,
-				},
-			}),
-			offset: vs.number({
-				integer: true,
-				ifUndefined: 0,
-				minValue: {
-					value: 0,
-					adjusts: true,
-				},
-			}),
-		};
+		const enum State
+		{
+			ACTIVE = "active",
+			INACTIVE = "inactive",
+		}
+		interface SchemaType
+		{
+			id: number;
+			name: string;
+			age: number;
+			email: string;
+			state: State;
+			classes: number[];
+			skills: string[];
+			creditCard: string;
+			remoteAddr: string;
+			remoteAddrIpv6: string;
+			limit: number;
+			offset: number;
+		}
+
 		const input = {
 			id: "1",
 			name: "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Ciprin Cipriano de la Santísima Trinidad Ruiz y Picasso",
@@ -93,7 +51,7 @@ function testApplySchemaObject(): void
 			name: "Pablo Diego José",
 			age: 20,
 			email: "picasso@example.com",
-			state: "active",
+			state: State.ACTIVE,
 			classes: [1, 3, 4],
 			skills: ["c", "c++", "javascript", "python", "swift", "kotlin"],
 			creditCard: "4111111111111111",
@@ -103,8 +61,82 @@ function testApplySchemaObject(): void
 			offset: 0,
 		};
 
-		const actual = vs.applySchemaObject(schemaObject, input);
+		// type check
+		const actual = parse(input);
 		expect(actual).toEqual(expected);
+
+		/**
+		 * parse input value
+		 * @param input input value
+		 * @returns parsed result
+		 */
+		function parse(input: unknown): SchemaType
+		{
+			const schemaObject = {
+				id: vs.number({
+					minValue: 1,
+				}),
+				name: vs.string({
+					maxLength: {
+						length: 16,
+						trims: true,
+					},
+				}),
+				age: vs.number({
+					integer: vs.NUMBER.INTEGER.FLOOR_RZ,
+					minValue: 0,
+				}),
+				email: vs.email(),
+				state: vs.enumeration({
+					only: [State.ACTIVE, State.INACTIVE],
+				}),
+				classes: vs.array({
+					separatedBy: ",",
+					each: {
+						schema: vs.number(),
+						ignoresErrors: true,
+					},
+				}),
+				skills: vs.array({
+					separatedBy: ",",
+					each: {
+						schema: vs.string(),
+						ignoresErrors: true,
+					},
+				}),
+				creditCard: vs.numericString({
+					separatedBy: "-",
+					checksum: vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD,
+				}),
+				remoteAddr: vs.string({
+					pattern: vs.STRING.PATTERN.IPV4,
+				}),
+				remoteAddrIpv6: vs.string({
+					pattern: vs.STRING.PATTERN.IPV6,
+				}),
+				limit: vs.number({
+					integer: true,
+					ifUndefined: 10,
+					minValue: {
+						value: 1,
+						adjusts: true,
+					},
+					maxValue: {
+						value: 100,
+						adjusts: true,
+					},
+				}),
+				offset: vs.number({
+					integer: true,
+					ifUndefined: 0,
+					minValue: {
+						value: 0,
+						adjusts: true,
+					},
+				}),
+			};
+			return vs.applySchemaObject(schemaObject, input);
+		}
 	});
 	it("property / type-inference test", () =>
 	{
