@@ -1877,12 +1877,16 @@ enum StringEnum
 }
 
 // should be OK
-assert.strictEqual(
-    vs.enumerate({only: [NumberEnum.zero, NumberEnum.one]}).applyTo(1), // return type is "NumberEnum"
-    1);
-assert.strictEqual(
-    vs.enumerate({only: Object.values(StringEnum)}).applyTo("a"), // return type is "StringEnum"
-    "a");
+{
+    // pattern 1: enum that contains number elements
+    const val: NumberEnum = vs.enumerate({only: [NumberEnum.zero, NumberEnum.one]}).applyTo(1);
+    assert.strictEqual(val, 1);
+}
+{
+    // pattern 2: enum that contains only string elements
+    const val: StringEnum = vs.enumerate({only: Object.values(StringEnum)}).applyTo("a");
+    assert.strictEqual(val, "a");
+}
 
 // should cause error
 assert.throws(
@@ -1896,17 +1900,56 @@ type NumberUnion = 0 | 1;
 type StringUnion = "a" | "b";
 
 // should be OK
-assert.strictEqual(
-    vs.enumerate<NumberUnion>({only: [0, 1]}).applyTo(1), // return type is "NumberUnion"
-    1);
-assert.strictEqual(
-    vs.enumerate<StringUnion>({only: ["a", "b"]}).applyTo("a"), // return type is "StringUnion"
-    "a");
+{
+    // you can use "as const" for union type
+    const val: NumberUnion = vs.enumerate({only: [0, 1] as const}).applyTo(1);
+    assert.strictEqual(val, 1);
+}
+{
+    // you can also use "<Type>"
+    const val: StringEnum = vs.enumerate<StringUnion>({only: ["a", "b"]}).applyTo("a");
+    assert.strictEqual(val, "a");
+}
 
 // should cause error
 assert.throws(
-    () => vs.enumerate<StringUnion>({only: ["a", "b"]}).applyTo("c"),
+    () => vs.enumerate({only: ["a", "b"] as const}).applyTo("c"),
     {name: "ValueSchemaError", cause: vs.CAUSE.ONLY});
+```
+
+CAUTION: Union version must be specified "readonly-array" or "array literal with generics".
+
+```typescript
+type NumberUnion = 0 | 1;
+
+// OK
+{
+    const only: NumberUnion[] = [0, 1];
+    const val: NumberUnion = vs.enumerate({only: only}).applyTo(1);
+}
+{
+    const only = [0, 1] as const;
+    const val: NumberUnion = vs.enumerate({only: only}).applyTo(1);
+}
+{
+    const val: NumberUnion = vs.enumerate({only: [0, 1] as const}).applyTo(1);
+}
+{
+    const val: NumberUnion = vs.enumerate<NumberUnion>({only: [0, 1]}).applyTo(1);
+}
+
+// NG (compile error)
+{
+    const only = [0, 1];
+    const val: NumberUnion = vs.enumerate({only: only}).applyTo(1);
+}
+{
+    const only = [0, 1];
+    const val: NumberUnion = vs.enumerate<NumberUnion>({only: only}).applyTo(1);
+}
+{
+    const val: NumberUnion = vs.enumerate({only: [0, 1]}).applyTo(1);
+}
 ```
 
 ##### `ifUndefined`
