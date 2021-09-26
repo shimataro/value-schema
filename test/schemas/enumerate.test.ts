@@ -35,129 +35,146 @@ function testIfUndefined(): void
 {
 	it("should be OK (enum)", () =>
 	{
-		expect(
-			vs.enumerate({
+		{
+			const val: NumberEnum | null = vs.enumerate({
 				ifUndefined: null,
 				only: [NumberEnum.zero, NumberEnum.one],
-			}).applyTo(0)
-		).toEqual(0);
-
-		expect(
-			vs.enumerate({
+			}).applyTo(0);
+			expect(val).toEqual(0);
+		}
+		{
+			const val: StringEnum | null = vs.enumerate({
 				ifUndefined: null,
 				only: Object.values(StringEnum), // string elements can be extracted by "Object.values()"
-			}).applyTo("a")
-		).toEqual("a");
-
-		expect(
-			vs.enumerate({
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
+		{
+			const val: NumberAndStringEnum | null = vs.enumerate({
 				ifUndefined: null,
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
-			}).applyTo(0)
-		).toEqual(0);
-		expect(
-			vs.enumerate({
+			}).applyTo(0);
+			expect(val).toEqual(0);
+		}
+		{
+			// "as const" version
+			const val: NumberAndStringEnum | null = vs.enumerate({
 				ifUndefined: null,
-				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
-			}).applyTo("a")
-		).toEqual("a");
+				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b] as const,
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
 	});
 	it("should be OK (union)", () =>
 	{
-		expect(
-			vs.enumerate<NumberUnion>({
+		{
+			const val: NumberUnion | null = vs.enumerate({
 				ifUndefined: null,
-				only: [0, 1],
-			}).applyTo(0)
-		).toEqual(0);
-
-		expect(
-			vs.enumerate<StringUnion>({
+				only: [0, 1] as const,
+			}).applyTo(0);
+			expect(val).toEqual(0);
+		}
+		{
+			const val: StringUnion | null = vs.enumerate({
 				ifUndefined: null,
-				only: ["a", "b"],
-			}).applyTo("a")
-		).toEqual("a");
-
-		expect(
-			vs.enumerate<NumberAndStringUnion>({
+				only: ["a", "b"] as const,
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
+		{
+			const val: NumberAndStringUnion | null = vs.enumerate({
+				ifUndefined: null,
+				only: [0, 1, "a", "b"] as const,
+			}).applyTo(0);
+			expect(val).toEqual(0);
+		}
+		{
+			// generics version
+			const val: NumberAndStringUnion | null = vs.enumerate<NumberAndStringUnion>({
 				ifUndefined: null,
 				only: [0, 1, "a", "b"],
-			}).applyTo(0)
-		).toEqual(0);
-		expect(
-			vs.enumerate<NumberAndStringUnion>({
-				ifUndefined: null,
-				only: [0, 1, "a", "b"],
-			}).applyTo("a")
-		).toEqual("a");
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
 	});
 
 	it("should be adjusted (enum)", () =>
 	{
-		expect(
-			vs.enumerate({
+		{
+			const val: NumberEnum | null = vs.enumerate({
 				ifUndefined: null,
 				only: [NumberEnum.zero, NumberEnum.one],
-			}).applyTo(undefined)
-		).toEqual(null);
-
-		expect(
-			vs.enumerate({
+			}).applyTo(undefined);
+			expect(val).toEqual(null);
+		}
+		{
+			const val: StringEnum | null = vs.enumerate({
 				ifUndefined: null,
 				only: Object.values(StringEnum),
-			}).applyTo(undefined)
-		).toEqual(null);
-
-		expect(
-			vs.enumerate({
+			}).applyTo(undefined);
+			expect(val).toEqual(null);
+		}
+		{
+			const val: NumberAndStringEnum | null = vs.enumerate({
 				ifUndefined: null,
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
-			}).applyTo(undefined)
-		).toEqual(null);
+			}).applyTo(undefined);
+			expect(val).toEqual(null);
+		}
 	});
 	it("should be adjusted (union)", () =>
 	{
-		expect(
-			vs.enumerate<NumberUnion>({
+		{
+			const val: NumberUnion | null = vs.enumerate({
 				ifUndefined: null,
-				only: [0, 1],
-			}).applyTo(undefined)
-		).toEqual(null);
-
-		expect(
-			vs.enumerate<StringUnion>({
+				only: [0, 1] as const,
+			}).applyTo(undefined);
+			expect(val).toEqual(null);
+		}
+		{
+			const val: StringUnion | null = vs.enumerate({
 				ifUndefined: null,
-				only: ["a", "b"],
-			}).applyTo(undefined)
-		).toEqual(null);
-
-		expect(
-			vs.enumerate<NumberAndStringUnion>({
+				only: ["a", "b"] as const,
+			}).applyTo(undefined);
+			expect(val).toEqual(null);
+		}
+		{
+			const val: NumberAndStringUnion | null = vs.enumerate({
 				ifUndefined: null,
-				only: [0, 1, "a", "b"],
-			}).applyTo(undefined)
-		).toEqual(null);
+				only: [0, 1, "a", "b"] as const,
+			}).applyTo(undefined);
+			expect(val).toEqual(null);
+		}
 	});
 
 	it("should cause error(s) (enum)", () =>
 	{
 		expect(() =>
 		{
-			vs.enumerate({
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: NumberEnum = vs.enumerate({
 				only: [NumberEnum.zero, NumberEnum.one],
 			}).applyTo(undefined);
 		}).toThrow(vs.CAUSE.UNDEFINED);
 
 		expect(() =>
 		{
-			vs.enumerate({
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: StringEnum = vs.enumerate({
 				only: Object.values(StringEnum),
 			}).applyTo(undefined);
 		}).toThrow(vs.CAUSE.UNDEFINED);
 
 		expect(() =>
 		{
-			vs.enumerate({
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: NumberAndStringEnum = vs.enumerate({
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
 			}).applyTo(undefined);
 		}).toThrow(vs.CAUSE.UNDEFINED);
@@ -166,22 +183,31 @@ function testIfUndefined(): void
 	{
 		expect(() =>
 		{
-			vs.enumerate<NumberUnion>({
-				only: [0, 1],
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: NumberUnion = vs.enumerate({
+				only: [0, 1] as const,
 			}).applyTo(undefined);
 		}).toThrow(vs.CAUSE.UNDEFINED);
 
 		expect(() =>
 		{
-			vs.enumerate<StringUnion>({
-				only: ["a", "b"],
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: StringUnion = vs.enumerate({
+				only: ["a", "b"] as const,
 			}).applyTo(undefined);
 		}).toThrow(vs.CAUSE.UNDEFINED);
 
 		expect(() =>
 		{
-			vs.enumerate<NumberAndStringUnion>({
-				only: [0, 1, "a", "b"],
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: NumberAndStringUnion = vs.enumerate({
+				only: [0, 1, "a", "b"] as const,
 			}).applyTo(undefined);
 		}).toThrow(vs.CAUSE.UNDEFINED);
 	});
@@ -194,129 +220,146 @@ function testIfNull(): void
 {
 	it("should be OK (enum)", () =>
 	{
-		expect(
-			vs.enumerate({
+		{
+			const val: NumberEnum | null = vs.enumerate({
 				ifNull: null,
 				only: [NumberEnum.zero, NumberEnum.one],
-			}).applyTo(0)
-		).toEqual(0);
-
-		expect(
-			vs.enumerate({
+			}).applyTo(0);
+			expect(val).toEqual(0);
+		}
+		{
+			const val: StringEnum | null = vs.enumerate({
 				ifNull: null,
 				only: Object.values(StringEnum),
-			}).applyTo("a")
-		).toEqual("a");
-
-		expect(
-			vs.enumerate({
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
+		{
+			const val: NumberAndStringEnum | null = vs.enumerate({
 				ifNull: null,
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
-			}).applyTo(0)
-		).toEqual(0);
-		expect(
-			vs.enumerate({
+			}).applyTo(0);
+			expect(val).toEqual(0);
+		}
+		{
+			// "as const" version
+			const val: NumberAndStringEnum | null = vs.enumerate({
 				ifNull: null,
-				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
-			}).applyTo("a")
-		).toEqual("a");
+				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b] as const,
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
 	});
 	it("should be OK (union)", () =>
 	{
-		expect(
-			vs.enumerate<NumberUnion>({
+		{
+			const val: NumberUnion | null = vs.enumerate({
 				ifNull: null,
-				only: [0, 1],
-			}).applyTo(0)
-		).toEqual(0);
-
-		expect(
-			vs.enumerate<StringUnion>({
+				only: [0, 1] as const,
+			}).applyTo(0);
+			expect(val).toEqual(0);
+		}
+		{
+			const val: StringUnion | null = vs.enumerate({
 				ifNull: null,
-				only: ["a", "b"],
-			}).applyTo("a")
-		).toEqual("a");
-
-		expect(
-			vs.enumerate<NumberAndStringUnion>({
+				only: ["a", "b"] as const,
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
+		{
+			const val: NumberAndStringUnion | null = vs.enumerate({
+				ifNull: null,
+				only: [0, 1, "a", "b"] as const,
+			}).applyTo(0);
+			expect(val).toEqual(0);
+		}
+		{
+			// generics version
+			const val: NumberAndStringUnion | null = vs.enumerate<NumberAndStringUnion>({
 				ifNull: null,
 				only: [0, 1, "a", "b"],
-			}).applyTo(0)
-		).toEqual(0);
-		expect(
-			vs.enumerate<NumberAndStringUnion>({
-				ifNull: null,
-				only: [0, 1, "a", "b"],
-			}).applyTo("a")
-		).toEqual("a");
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
 	});
 
 	it("should be adjusted (enum)", () =>
 	{
-		expect(
-			vs.enumerate({
+		{
+			const val: NumberEnum | null = vs.enumerate({
 				ifNull: null,
 				only: [NumberEnum.zero, NumberEnum.one],
-			}).applyTo(null)
-		).toEqual(null);
-
-		expect(
-			vs.enumerate({
+			}).applyTo(null);
+			expect(val).toEqual(null);
+		}
+		{
+			const val: StringEnum | null = vs.enumerate({
 				ifNull: null,
 				only: Object.values(StringEnum),
-			}).applyTo(null)
-		).toEqual(null);
-
-		expect(
-			vs.enumerate({
+			}).applyTo(null);
+			expect(val).toEqual(null);
+		}
+		{
+			const val: NumberAndStringEnum | null = vs.enumerate({
 				ifNull: null,
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
-			}).applyTo(null)
-		).toEqual(null);
+			}).applyTo(null);
+			expect(val).toEqual(null);
+		}
 	});
 	it("should be adjusted (union)", () =>
 	{
-		expect(
-			vs.enumerate<NumberUnion>({
+		{
+			const val: NumberUnion | null = vs.enumerate({
 				ifNull: null,
-				only: [0, 1],
-			}).applyTo(null)
-		).toEqual(null);
-
-		expect(
-			vs.enumerate<StringUnion>({
+				only: [0, 1] as const,
+			}).applyTo(null);
+			expect(val).toEqual(null);
+		}
+		{
+			const val: StringUnion | null = vs.enumerate({
 				ifNull: null,
-				only: ["a", "b"],
-			}).applyTo(null)
-		).toEqual(null);
-
-		expect(
-			vs.enumerate<NumberAndStringUnion>({
+				only: ["a", "b"] as const,
+			}).applyTo(null);
+			expect(val).toEqual(null);
+		}
+		{
+			const val: NumberAndStringUnion | null = vs.enumerate({
 				ifNull: null,
-				only: [0, 1, "a", "b"],
-			}).applyTo(null)
-		).toEqual(null);
+				only: [0, 1, "a", "b"] as const,
+			}).applyTo(null);
+			expect(val).toEqual(null);
+		}
 	});
 
 	it("should cause error(s) (enum)", () =>
 	{
 		expect(() =>
 		{
-			vs.enumerate({
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: NumberEnum = vs.enumerate({
 				only: [NumberEnum.zero, NumberEnum.one],
 			}).applyTo(null);
 		}).toThrow(vs.CAUSE.NULL);
 
 		expect(() =>
 		{
-			vs.enumerate({
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: StringEnum = vs.enumerate({
 				only: Object.values(StringEnum),
 			}).applyTo(null);
 		}).toThrow(vs.CAUSE.NULL);
 
 		expect(() =>
 		{
-			vs.enumerate({
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: NumberAndStringEnum = vs.enumerate({
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
 			}).applyTo(null);
 		}).toThrow(vs.CAUSE.NULL);
@@ -325,21 +368,31 @@ function testIfNull(): void
 	{
 		expect(() =>
 		{
-			vs.enumerate<NumberUnion>({
-				only: [0, 1],
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: NumberUnion = vs.enumerate({
+				only: [0, 1] as const,
 			}).applyTo(null);
 		}).toThrow(vs.CAUSE.NULL);
 
 		expect(() =>
 		{
-			vs.enumerate<StringUnion>({
-				only: ["a", "b"],
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: StringUnion = vs.enumerate({
+				only: ["a", "b"] as const,
 			}).applyTo(null);
 		}).toThrow(vs.CAUSE.NULL);
 
 		expect(() =>
 		{
-			vs.enumerate<NumberAndStringUnion>({
+			// generics version
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: NumberAndStringUnion = vs.enumerate<NumberAndStringUnion>({
 				only: [0, 1, "a", "b"],
 			}).applyTo(null);
 		}).toThrow(vs.CAUSE.NULL);
@@ -353,129 +406,146 @@ function testIfEmptyString(): void
 {
 	it("should be OK (enum)", () =>
 	{
-		expect(
-			vs.enumerate({
+		{
+			const val: NumberEnum | null = vs.enumerate({
 				ifEmptyString: null,
 				only: [NumberEnum.zero, NumberEnum.one],
-			}).applyTo(0)
-		).toEqual(0);
-
-		expect(
-			vs.enumerate({
+			}).applyTo(0);
+			expect(val).toEqual(0);
+		}
+		{
+			const val: StringEnum | null = vs.enumerate({
 				ifEmptyString: null,
-				only: Object.values(StringEnum),
-			}).applyTo("a")
-		).toEqual("a");
-
-		expect(
-			vs.enumerate({
-				ifEmptyString: null,
-				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
-			}).applyTo(0)
-		).toEqual(0);
-		expect(
-			vs.enumerate({
+				only: Object.values(StringEnum), // string elements can be extracted by "Object.values()"
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
+		{
+			const val: NumberAndStringEnum | null = vs.enumerate({
 				ifEmptyString: null,
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
-			}).applyTo("a")
-		).toEqual("a");
+			}).applyTo(0);
+			expect(val).toEqual(0);
+		}
+		{
+			// "as const" version
+			const val: NumberAndStringEnum | null = vs.enumerate({
+				ifEmptyString: null,
+				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b] as const,
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
 	});
 	it("should be OK (union)", () =>
 	{
-		expect(
-			vs.enumerate<NumberUnion>({
+		{
+			const val: NumberUnion | null = vs.enumerate({
 				ifEmptyString: null,
-				only: [0, 1],
-			}).applyTo(0)
-		).toEqual(0);
-
-		expect(
-			vs.enumerate<StringUnion>({
+				only: [0, 1] as const,
+			}).applyTo(0);
+			expect(val).toEqual(0);
+		}
+		{
+			const val: StringUnion | null = vs.enumerate({
 				ifEmptyString: null,
-				only: ["a", "b"],
-			}).applyTo("a")
-		).toEqual("a");
-
-		expect(
-			vs.enumerate<NumberAndStringUnion>({
+				only: ["a", "b"] as const,
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
+		{
+			const val: NumberAndStringUnion | null = vs.enumerate({
+				ifEmptyString: null,
+				only: [0, 1, "a", "b"] as const,
+			}).applyTo(0);
+			expect(val).toEqual(0);
+		}
+		{
+			// generics version
+			const val: NumberAndStringUnion | null = vs.enumerate<NumberAndStringUnion>({
 				ifEmptyString: null,
 				only: [0, 1, "a", "b"],
-			}).applyTo(0)
-		).toEqual(0);
-		expect(
-			vs.enumerate<NumberAndStringUnion>({
-				ifEmptyString: null,
-				only: [0, 1, "a", "b"],
-			}).applyTo("a")
-		).toEqual("a");
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
 	});
 
 	it("should be adjusted (enum)", () =>
 	{
-		expect(
-			vs.enumerate({
+		{
+			const val: NumberEnum | null = vs.enumerate({
 				ifEmptyString: null,
 				only: [NumberEnum.zero, NumberEnum.one],
-			}).applyTo("")
-		).toEqual(null);
-
-		expect(
-			vs.enumerate({
+			}).applyTo("");
+			expect(val).toEqual(null);
+		}
+		{
+			const val: StringEnum | null = vs.enumerate({
 				ifEmptyString: null,
 				only: Object.values(StringEnum),
-			}).applyTo("")
-		).toEqual(null);
-
-		expect(
-			vs.enumerate({
+			}).applyTo("");
+			expect(val).toEqual(null);
+		}
+		{
+			const val: NumberAndStringEnum | null = vs.enumerate({
 				ifEmptyString: null,
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
-			}).applyTo("")
-		).toEqual(null);
+			}).applyTo("");
+			expect(val).toEqual(null);
+		}
 	});
 	it("should be adjusted (union)", () =>
 	{
-		expect(
-			vs.enumerate<NumberUnion>({
+		{
+			const val: NumberUnion | null = vs.enumerate({
 				ifEmptyString: null,
-				only: [0, 1],
-			}).applyTo("")
-		).toEqual(null);
-
-		expect(
-			vs.enumerate<StringUnion>({
+				only: [0, 1] as const,
+			}).applyTo("");
+			expect(val).toEqual(null);
+		}
+		{
+			const val: StringUnion | null = vs.enumerate({
 				ifEmptyString: null,
-				only: ["a", "b"],
-			}).applyTo("")
-		).toEqual(null);
-
-		expect(
-			vs.enumerate<NumberAndStringUnion>({
+				only: ["a", "b"] as const,
+			}).applyTo("");
+			expect(val).toEqual(null);
+		}
+		{
+			const val: NumberAndStringUnion | null = vs.enumerate({
 				ifEmptyString: null,
-				only: [0, 1, "a", "b"],
-			}).applyTo("")
-		).toEqual(null);
+				only: [0, 1, "a", "b"] as const,
+			}).applyTo("");
+			expect(val).toEqual(null);
+		}
 	});
 
 	it("should cause error(s) (enum)", () =>
 	{
 		expect(() =>
 		{
-			vs.enumerate({
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: NumberEnum = vs.enumerate({
 				only: [NumberEnum.zero, NumberEnum.one],
 			}).applyTo("");
 		}).toThrow(vs.CAUSE.EMPTY_STRING);
 
 		expect(() =>
 		{
-			vs.enumerate({
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: StringEnum = vs.enumerate({
 				only: Object.values(StringEnum),
 			}).applyTo("");
 		}).toThrow(vs.CAUSE.EMPTY_STRING);
 
 		expect(() =>
 		{
-			vs.enumerate({
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: NumberAndStringEnum = vs.enumerate({
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
 			}).applyTo("");
 		}).toThrow(vs.CAUSE.EMPTY_STRING);
@@ -484,22 +554,31 @@ function testIfEmptyString(): void
 	{
 		expect(() =>
 		{
-			vs.enumerate<NumberUnion>({
-				only: [0, 1],
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: NumberUnion = vs.enumerate({
+				only: [0, 1] as const,
 			}).applyTo("");
 		}).toThrow(vs.CAUSE.EMPTY_STRING);
 
 		expect(() =>
 		{
-			vs.enumerate<StringUnion>({
-				only: ["a", "b"],
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: StringUnion = vs.enumerate({
+				only: ["a", "b"] as const,
 			}).applyTo("");
 		}).toThrow(vs.CAUSE.EMPTY_STRING);
 
 		expect(() =>
 		{
-			vs.enumerate<NumberAndStringUnion>({
-				only: [0, 1, "a", "b"],
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: NumberAndStringUnion = vs.enumerate({
+				only: [0, 1, "a", "b"] as const,
 			}).applyTo("");
 		}).toThrow(vs.CAUSE.EMPTY_STRING);
 	});
@@ -512,114 +591,149 @@ function testOnly(): void
 {
 	it("should be OK (enum)", () =>
 	{
-		expect(
-			vs.enumerate({
+		{
+			const val: NumberEnum = vs.enumerate({
 				only: [NumberEnum.zero, NumberEnum.one],
-			}).applyTo(0)
-		).toEqual(0);
-		expect(
-			vs.enumerate({
+			}).applyTo(0);
+			expect(val).toEqual(0);
+		}
+		{
+			const val: NumberEnum = vs.enumerate({
 				only: [NumberEnum.zero, NumberEnum.one],
-			}).applyTo(1)
-		).toEqual(1);
+			}).applyTo(1);
+			expect(val).toEqual(1);
+		}
 
-		expect(
-			vs.enumerate({
+		{
+			const val: StringEnum = vs.enumerate({
 				only: Object.values(StringEnum),
-			}).applyTo("a")
-		).toEqual("a");
-		expect(
-			vs.enumerate({
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
+		{
+			const val: StringEnum = vs.enumerate({
 				only: Object.values(StringEnum),
-			}).applyTo("b")
-		).toEqual("b");
+			}).applyTo("b");
+			expect(val).toEqual("b");
+		}
 
-		expect(
-			vs.enumerate({
+		{
+			const val: NumberAndStringEnum = vs.enumerate({
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
-			}).applyTo(0)
-		).toEqual(0);
-		expect(
-			vs.enumerate({
+			}).applyTo(0);
+			expect(val).toEqual(0);
+		}
+		{
+			const val: NumberAndStringEnum = vs.enumerate({
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
-			}).applyTo(1)
-		).toEqual(1);
-		expect(
-			vs.enumerate({
+			}).applyTo(1);
+			expect(val).toEqual(1);
+		}
+		{
+			const val: NumberAndStringEnum = vs.enumerate({
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
-			}).applyTo("a")
-		).toEqual("a");
-		expect(
-			vs.enumerate({
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
+		{
+			const val: NumberAndStringEnum = vs.enumerate({
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
-			}).applyTo("b")
-		).toEqual("b");
+			}).applyTo("b");
+			expect(val).toEqual("b");
+		}
 	});
 	it("should be OK (union)", () =>
 	{
-		expect(
-			vs.enumerate<NumberUnion>({
-				only: [0, 1],
-			}).applyTo(0)
-		).toEqual(0);
-		expect(
-			vs.enumerate<NumberUnion>({
-				only: [0, 1],
-			}).applyTo(1)
-		).toEqual(1);
+		{
+			const val: NumberUnion = vs.enumerate({
+				only: [0, 1] as const,
+			}).applyTo(0);
+			expect(val).toEqual(0);
+		}
+		{
+			const val: NumberUnion = vs.enumerate({
+				only: [0, 1] as const,
+			}).applyTo(1);
+			expect(val).toEqual(1);
+		}
 
-		expect(
-			vs.enumerate<StringUnion>({
-				only: ["a", "b"],
-			}).applyTo("a")
-		).toEqual("a");
-		expect(
-			vs.enumerate<StringUnion>({
-				only: ["a", "b"],
-			}).applyTo("b")
-		).toEqual("b");
+		{
+			const val: StringUnion = vs.enumerate({
+				only: ["a", "b"] as const,
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
+		{
+			const val: StringUnion = vs.enumerate({
+				only: ["a", "b"] as const,
+			}).applyTo("b");
+			expect(val).toEqual("b");
+		}
 
-		expect(
-			vs.enumerate<NumberAndStringUnion>({
+		{
+			const val: NumberAndStringUnion = vs.enumerate({
+				only: [0, 1, "a", "b"] as const,
+			}).applyTo(0);
+			expect(val).toEqual(0);
+		}
+		{
+			const val: NumberAndStringUnion = vs.enumerate({
+				only: [0, 1, "a", "b"] as const,
+			}).applyTo(1);
+			expect(val).toEqual(1);
+		}
+		{
+			// generics version
+			const val: NumberAndStringUnion = vs.enumerate<NumberAndStringUnion>({
 				only: [0, 1, "a", "b"],
-			}).applyTo(0)
-		).toEqual(0);
-		expect(
-			vs.enumerate<NumberAndStringUnion>({
+			}).applyTo("a");
+			expect(val).toEqual("a");
+		}
+		{
+			// generics version
+			const val: NumberAndStringUnion = vs.enumerate<NumberAndStringUnion>({
 				only: [0, 1, "a", "b"],
-			}).applyTo(1)
-		).toEqual(1);
-		expect(
-			vs.enumerate<NumberAndStringUnion>({
-				only: [0, 1, "a", "b"],
-			}).applyTo("a")
-		).toEqual("a");
-		expect(
-			vs.enumerate<NumberAndStringUnion>({
-				only: [0, 1, "a", "b"],
-			}).applyTo("b")
-		).toEqual("b");
+			}).applyTo("b");
+			expect(val).toEqual("b");
+		}
+
+		{
+			const only = [0, 1] as const;
+			const val: NumberUnion = vs.enumerate({
+				only: only,
+			}).applyTo(1);
+			expect(val).toEqual(1);
+		}
 	});
 
 	it("should cause error(s) (enum)", () =>
 	{
 		expect(() =>
 		{
-			vs.enumerate({
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: NumberEnum = vs.enumerate({
 				only: [NumberEnum.zero, NumberEnum.one],
 			}).applyTo(2);
 		}).toThrow(vs.CAUSE.ONLY);
 
 		expect(() =>
 		{
-			vs.enumerate({
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: StringEnum = vs.enumerate({
 				only: Object.values(StringEnum),
 			}).applyTo("c");
 		}).toThrow(vs.CAUSE.ONLY);
 
 		expect(() =>
 		{
-			vs.enumerate({
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: NumberAndStringEnum = vs.enumerate({
 				only: [NumberAndStringEnum.zero, NumberAndStringEnum.one, NumberAndStringEnum.a, NumberAndStringEnum.b],
 			}).applyTo("x");
 		}).toThrow(vs.CAUSE.ONLY);
@@ -628,21 +742,31 @@ function testOnly(): void
 	{
 		expect(() =>
 		{
-			vs.enumerate<NumberUnion>({
-				only: [0, 1],
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: NumberUnion = vs.enumerate({
+				only: [0, 1] as const,
 			}).applyTo(2);
 		}).toThrow(vs.CAUSE.ONLY);
 
 		expect(() =>
 		{
-			vs.enumerate<StringUnion>({
-				only: ["a", "b"],
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: StringUnion = vs.enumerate({
+				only: ["a", "b"] as const,
 			}).applyTo("c");
 		}).toThrow(vs.CAUSE.ONLY);
 
 		expect(() =>
 		{
-			vs.enumerate<NumberAndStringUnion>({
+			// generics version
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore TS6133: 'val' is declared but its value is never read.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const val: NumberAndStringUnion = vs.enumerate<NumberAndStringUnion>({
 				only: [0, 1, "a", "b"],
 			}).applyTo("x");
 		}).toThrow(vs.CAUSE.ONLY);

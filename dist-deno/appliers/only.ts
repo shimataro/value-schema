@@ -4,6 +4,11 @@ export interface Options<T> {
     /** accepts only specified values */
     only?: T[];
 }
+/** for "vs.enumerate()" */
+export interface OptionsForEnumerate<T> {
+    /** required and read-only array */
+    only: readonly T[];
+}
 /**
  * apply schema
  * @param values input/output values
