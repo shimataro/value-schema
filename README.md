@@ -1925,18 +1925,10 @@ type NumberUnion = 0 | 1;
 // OK
 {
     // array of literal union types
-    const only: NumberUnion[] = [0, 1];
-    const val: NumberUnion = vs.enumeration({only: only}).applyTo(1);
-}
-{
     const val: NumberUnion = vs.enumeration({only: [0, 1] as NumberUnion[]}).applyTo(1);
 }
 {
     // const-asserted array
-    const only = [0, 1] as const;
-    const val: NumberUnion = vs.enumeration({only: only}).applyTo(1);
-}
-{
     const val: NumberUnion = vs.enumeration({only: [0, 1] as const}).applyTo(1);
 }
 {
@@ -1944,17 +1936,18 @@ type NumberUnion = 0 | 1;
     const val: NumberUnion = vs.enumeration<NumberUnion>({only: [0, 1]}).applyTo(1);
 }
 
-// NG (compile error), not NumberUnion[] but number[]
+// NG (compile error)
 {
-    const only = [0, 1];
+    // TS2322: Type 'number' is not assignable to type 'NumberUnion'.
+    const val: NumberUnion = vs.enumeration({only: [0, 1]}).applyTo(1); // number
+}
+{
+    const only = [0, 1]; // number[]
     const val: NumberUnion = vs.enumeration({only: only}).applyTo(1);
 }
 {
-    const only = [0, 1];
+    const only = [0, 1]; // number[]
     const val: NumberUnion = vs.enumeration<NumberUnion>({only: only}).applyTo(1);
-}
-{
-    const val: NumberUnion = vs.enumeration({only: [0, 1]}).applyTo(1);
 }
 ```
 
