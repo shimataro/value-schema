@@ -4,8 +4,8 @@ export interface Options<T> {
     /** accepts only specified values */
     only?: T[];
 }
-/** for "vs.enumerate()" */
-export interface OptionsForEnumerate<T> {
+/** for "vs.enumeration()" */
+export interface OptionsForEnumeration<T> {
     /** required and read-only array */
     only: readonly T[];
 }

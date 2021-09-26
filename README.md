@@ -28,7 +28,7 @@ supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang
     * [string](#string)
     * [numeric string](#numeric-string)
     * [email](#email)
-    * [enumerate](#enumerate)
+    * [enumeration](#enumeration)
     * [array](#array)
     * [object](#object)
 * [Changelog](#changelog)
@@ -1825,7 +1825,7 @@ assert.throws(
     {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
 ```
 
-### enumerate
+### enumeration
 
 Return type of `applyTo()` can be limited to enum-like type; `enum` and union.
 **This is useful for TypeScript**.
@@ -1833,9 +1833,9 @@ Return type of `applyTo()` can be limited to enum-like type; `enum` and union.
 #### ambient declarations
 
 ```typescript
-export function enumerate<E = never>(options: OptionsForEnumerate): EnumerateSchema<E>;
+export function enumeration<E = never>(options: OptionsForEnumeration): EnumerationSchema<E>;
 
-type OptionsForEmail = {
+type OptionsForEnumeration = {
     ifUndefined?: string | null;
     ifEmptyString?: string | null;
     ifNull?: string | null;
@@ -1843,7 +1843,7 @@ type OptionsForEmail = {
     only: E[]; // this is NOT an optional.
 }
 type ErrorHandler = (err: ValueSchemaError) => E | null | never;
-interface EnumerateSchema {
+interface EnumerationSchema {
     applyTo(value: unknown, onError?: ErrorHandler): E | null
 }
 ```
@@ -1879,18 +1879,18 @@ enum StringEnum
 // should be OK
 {
     // pattern 1: enum that contains number elements
-    const val: NumberEnum = vs.enumerate({only: [NumberEnum.zero, NumberEnum.one]}).applyTo(1);
+    const val: NumberEnum = vs.enumeration({only: [NumberEnum.zero, NumberEnum.one]}).applyTo(1);
     assert.strictEqual(val, 1);
 }
 {
     // pattern 2: enum that contains only string elements
-    const val: StringEnum = vs.enumerate({only: Object.values(StringEnum)}).applyTo("a");
+    const val: StringEnum = vs.enumeration({only: Object.values(StringEnum)}).applyTo("a");
     assert.strictEqual(val, "a");
 }
 
 // should cause error
 assert.throws(
-    () => vs.enumerate({only: Object.values(StringEnum)}).applyTo("c"),
+    () => vs.enumeration({only: Object.values(StringEnum)}).applyTo("c"),
     {name: "ValueSchemaError", cause: vs.CAUSE.ONLY});
 ```
 
@@ -1902,18 +1902,18 @@ type StringUnion = "a" | "b";
 // should be OK
 {
     // you can use "as const" for union type
-    const val: NumberUnion = vs.enumerate({only: [0, 1] as const}).applyTo(1);
+    const val: NumberUnion = vs.enumeration({only: [0, 1] as const}).applyTo(1);
     assert.strictEqual(val, 1);
 }
 {
     // you can also use "<Type>"
-    const val: StringEnum = vs.enumerate<StringUnion>({only: ["a", "b"]}).applyTo("a");
+    const val: StringEnum = vs.enumeration<StringUnion>({only: ["a", "b"]}).applyTo("a");
     assert.strictEqual(val, "a");
 }
 
 // should cause error
 assert.throws(
-    () => vs.enumerate({only: ["a", "b"] as const}).applyTo("c"),
+    () => vs.enumeratino({only: ["a", "b"] as const}).applyTo("c"),
     {name: "ValueSchemaError", cause: vs.CAUSE.ONLY});
 ```
 
@@ -1925,30 +1925,30 @@ type NumberUnion = 0 | 1;
 // OK
 {
     const only: NumberUnion[] = [0, 1];
-    const val: NumberUnion = vs.enumerate({only: only}).applyTo(1);
+    const val: NumberUnion = vs.enumeration({only: only}).applyTo(1);
 }
 {
     const only = [0, 1] as const;
-    const val: NumberUnion = vs.enumerate({only: only}).applyTo(1);
+    const val: NumberUnion = vs.enumeration({only: only}).applyTo(1);
 }
 {
-    const val: NumberUnion = vs.enumerate({only: [0, 1] as const}).applyTo(1);
+    const val: NumberUnion = vs.enumeration({only: [0, 1] as const}).applyTo(1);
 }
 {
-    const val: NumberUnion = vs.enumerate<NumberUnion>({only: [0, 1]}).applyTo(1);
+    const val: NumberUnion = vs.enumeration<NumberUnion>({only: [0, 1]}).applyTo(1);
 }
 
 // NG (compile error)
 {
     const only = [0, 1];
-    const val: NumberUnion = vs.enumerate({only: only}).applyTo(1);
+    const val: NumberUnion = vs.enumeration({only: only}).applyTo(1);
 }
 {
     const only = [0, 1];
-    const val: NumberUnion = vs.enumerate<NumberUnion>({only: only}).applyTo(1);
+    const val: NumberUnion = vs.enumeration<NumberUnion>({only: only}).applyTo(1);
 }
 {
-    const val: NumberUnion = vs.enumerate({only: [0, 1]}).applyTo(1);
+    const val: NumberUnion = vs.enumeration({only: [0, 1]}).applyTo(1);
 }
 ```
 
@@ -1965,12 +1965,12 @@ enum StringEnum
 
 // should be adjusted
 assert.strictEqual(
-    vs.enumerate({ifUndefined: StringEnum.a, only: Object.values(StringEnum)}).applyTo(undefined),
+    vs.enumeration({ifUndefined: StringEnum.a, only: Object.values(StringEnum)}).applyTo(undefined),
     "a");
 
 // should cause error
 assert.throws(
-    () => vs.enumerate({only: Object.values(StringEnum)}).applyTo(undefined),
+    () => vs.enumeration({only: Object.values(StringEnum)}).applyTo(undefined),
     {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
 ```
 
@@ -1987,12 +1987,12 @@ enum StringEnum
 
 // should be adjusted
 assert.strictEqual(
-    vs.enumerate({ifNull: StringEnum.a, only: Object.values(StringEnum)}).applyTo(null),
+    vs.enumeration({ifNull: StringEnum.a, only: Object.values(StringEnum)}).applyTo(null),
     "a");
 
 // should cause error
 assert.throws(
-    () => vs.enumerate({only: Object.values(StringEnum)}).applyTo(null),
+    () => vs.enumeration({only: Object.values(StringEnum)}).applyTo(null),
     {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
 ```
 
@@ -2009,12 +2009,12 @@ enum StringEnum
 
 // should be adjusted
 assert.strictEqual(
-    vs.enumerate({ifEmptyString: StringEnum.a, only: Object.values(StringEnum)}).applyTo(""),
+    vs.enumeration({ifEmptyString: StringEnum.a, only: Object.values(StringEnum)}).applyTo(""),
     "a");
 
 // should cause error
 assert.throws(
-    () => vs.enumerate({only: Object.values(StringEnum)}).applyTo(""),
+    () => vs.enumeration({only: Object.values(StringEnum)}).applyTo(""),
     {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
 ```
 

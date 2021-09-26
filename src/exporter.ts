@@ -4,7 +4,7 @@ export * from "./libs/ValueSchemaError";
 export * from "./schemas/array";
 export * from "./schemas/boolean";
 export * from "./schemas/email";
-export * from "./schemas/enumerate";
+export * from "./schemas/enumeration";
 export * from "./schemas/number";
 export * from "./schemas/numericString";
 export * from "./schemas/object";

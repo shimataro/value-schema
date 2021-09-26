@@ -5,15 +5,15 @@ import * as only from "../appliers/only";
 
 import {BaseSchema} from "./BaseSchema";
 
-export type OptionsForEnumerate<E> =
+export type OptionsForEnumeration<E> =
 	ifUndefined.Options<E> &
 	ifEmptyString.Options<E> &
 	ifNull.Options<E> &
-	only.OptionsForEnumerate<E>;
+	only.OptionsForEnumeration<E>;
 
-export class EnumerateSchema<E, Tx = never> extends BaseSchema<E | Tx>
+export class EnumerationSchema<E, Tx = never> extends BaseSchema<E | Tx>
 {
-	constructor(options: OptionsForEnumerate<E>)
+	constructor(options: OptionsForEnumeration<E>)
 	{
 		super(options, [
 			ifUndefined.applyTo,
