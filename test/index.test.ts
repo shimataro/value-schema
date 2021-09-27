@@ -46,7 +46,7 @@ function testApplySchemaObject(): void
 			remoteAddrIpv6: "::1",
 			limit: "0",
 		};
-		const expected = {
+		const expected: SchemaType = {
 			id: 1,
 			name: "Pablo Diego José",
 			age: 20,
