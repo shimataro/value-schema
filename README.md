@@ -37,11 +37,11 @@ supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang
 
 ## Introduction
 
-All of web applications need handling input options, consists of following steps:
+All of web applications need handling input parameters, consists of following steps:
 
 1. existence check
-    * all required options exist?
-    * fill omittable options with default values
+    * all required parameters exist?
+    * fill omittable parameters with default values
 1. type check
     * e.g., `typeof age === "number"`
     * cast them if needed; `"20"`(string) to `20`(number)
