@@ -2,13 +2,16 @@ import {Key, Values, isArray, isNumber} from "../../libs/types";
 import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 type MaxLength = {
+	/** maximum size of array */
 	length: number;
+	/** removes trailing elements if too long */
 	trims: boolean;
 }
 type MaxLengthLike = number | MaxLength;
 
 export interface Options
 {
+	/** maximum size of array */
 	maxLength?: MaxLengthLike;
 }
 

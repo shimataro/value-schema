@@ -1,11 +1,14 @@
 import { Key, Values, isNumber } from "../../libs/types.ts";
 import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 type MinValue = {
+    /** minimum value */
     value: number;
+    /** true to adjust if input is less than "value" / false to error */
     adjusts: boolean;
 };
 type MinValueLike = number | MinValue;
 export interface Options {
+    /** minimum value (value or object) */
     minValue?: MinValueLike;
 }
 /**

@@ -1,7 +1,9 @@
 import { Key, Values, isArray, isString } from "../../libs/types.ts";
 import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 export interface Options {
+    /** assumes entire values are in one string separated by pattern */
     separatedBy?: string | RegExp;
+    /** makes array that has 1 element if input value is not an array */
     toArray?: boolean;
 }
 /**

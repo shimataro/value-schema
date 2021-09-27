@@ -2,6 +2,7 @@ import { REGEXP_EMAIL } from "../../libs/regexp/email.ts";
 import { Key, Values } from "../../libs/types.ts";
 import * as pattern from "../string/pattern.ts";
 export interface Options {
+    /** overwrites email pattern */
     pattern?: RegExp;
 }
 /**

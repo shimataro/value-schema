@@ -3,13 +3,16 @@ import {ValueSchemaError} from "../../libs/ValueSchemaError";
 import {BaseSchema} from "../../schemaClasses/BaseSchema";
 
 type Each<T> = {
+	/** specifies schema of each elements */
 	schema: BaseSchema<T>;
+	/** ignores even if some elements cause error */
 	ignoresErrors: boolean;
 }
 type EachLike<T> = BaseSchema<T> | Each<T>;
 
 export interface Options<T>
 {
+	/** specifies schema of each elements */
 	each?: EachLike<T>;
 }
 
@@ -55,7 +58,7 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
 		}
 		catch(err)
 		{
-			if(err.message === "!IGNORE!")
+			if(err instanceof Error && err.message === "!IGNORE!")
 			{
 				// ignore
 				continue;

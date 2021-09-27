@@ -1,6 +1,7 @@
 import { Key, Values, isString } from "../../libs/types.ts";
 import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 export interface Options {
+    /** minimum length of string */
     minLength?: number;
 }
 /**

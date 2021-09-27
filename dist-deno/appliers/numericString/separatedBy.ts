@@ -1,5 +1,6 @@
 import { Key, Values, isString } from "../../libs/types.ts";
 export interface Options {
+    /** assumes input value is separated by pattern and ignores it */
     separatedBy?: string | RegExp;
 }
 /**

@@ -1,6 +1,7 @@
 import { Key, Values, isArray } from "../../libs/types.ts";
 import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 export interface Options {
+    /** minimum size of array */
     minLength?: number;
 }
 /**

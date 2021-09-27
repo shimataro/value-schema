@@ -179,6 +179,11 @@ function testInteger(): void
 				integer: false,
 			}).applyTo(0)
 		).toEqual(0);
+		expect(
+			vs.number({
+				integer: vs.NUMBER.INTEGER.NO,
+			}).applyTo(0)
+		).toEqual(0);
 
 		expect(
 			vs.number({
@@ -400,7 +405,7 @@ function testInteger(): void
 		expect(() =>
 		{
 			vs.number({
-				integer: -1,
+				integer: "" as any, // eslint-disable-line @typescript-eslint/no-explicit-any
 			}).applyTo(0.1);
 		}).toThrow(vs.CAUSE.TYPE);
 	});

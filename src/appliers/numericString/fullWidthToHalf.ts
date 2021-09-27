@@ -3,6 +3,7 @@ import {Key, Values, isString} from "../../libs/types";
 
 export interface Options
 {
+	/** converts full width digit to half width */
 	fullWidthToHalf?: boolean;
 }
 

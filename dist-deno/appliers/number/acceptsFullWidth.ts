@@ -1,6 +1,7 @@
 import * as string from "../../libs/string.ts";
 import { Key, Values, isString } from "../../libs/types.ts";
 export interface Options {
+    /** accepts full width string; e.g., "１２３４５" */
     acceptsFullWidth?: boolean;
 }
 /**

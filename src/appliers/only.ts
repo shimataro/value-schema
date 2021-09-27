@@ -3,7 +3,15 @@ import {CAUSE, ValueSchemaError} from "../libs/ValueSchemaError";
 
 export interface Options<T>
 {
+	/** accepts only specified values */
 	only?: T[];
+}
+
+/** read-only array */
+export interface OptionsReadonly<T>
+{
+	/** accepts only specified values */
+	only?: readonly T[];
 }
 
 /**

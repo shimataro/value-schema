@@ -7,16 +7,23 @@ import {REGEXP_IPV6} from "../../libs/regexp/ipv6";
 import {REGEXP_HTTP, REGEXP_URI} from "../../libs/regexp/uri";
 
 export const PATTERN = {
+	/** email address; compliant with RFC-5321/5322 */
 	EMAIL: REGEXP_EMAIL,
+	/** HTTP URI; compliant with RFC-3986 */
 	HTTP: REGEXP_HTTP,
+	/** IPv4 format */
 	IPV4: REGEXP_IPV4,
+	/** IPv6 format */
 	IPV6: REGEXP_IPV6,
+	/** URI; compliant with RFC-3986 */
 	URI: REGEXP_URI,
+	/** UUID format */
 	UUID: /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/i,
 };
 
 export interface Options
 {
+	/** acceptable pattern (regular expression) */
 	pattern?: RegExp;
 }
 

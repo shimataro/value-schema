@@ -1,16 +1,16 @@
 import * as ifEmptyString from "../appliers/ifEmptyString.ts";
 import * as ifNull from "../appliers/ifNull.ts";
 import * as ifUndefined from "../appliers/ifUndefined.ts";
-import * as type from "../appliers/boolean/type.ts";
+import * as only from "../appliers/only.ts";
 import { BaseSchema } from "./BaseSchema.ts";
-export type OptionsForBoolean = ifUndefined.Options<boolean> & ifEmptyString.Options<boolean> & ifNull.Options<boolean> & type.Options;
-export class BooleanSchema<Tx = never> extends BaseSchema<boolean | Tx> {
-    constructor(options: OptionsForBoolean) {
+export type OptionsForEnumeration<E> = ifUndefined.Options<E> & ifEmptyString.Options<E> & ifNull.Options<E> & Required<only.OptionsReadonly<E>>;
+export class EnumerationSchema<E, Tx = never> extends BaseSchema<E | Tx> {
+    constructor(options: OptionsForEnumeration<E>) {
         super(options, [
             ifUndefined.applyTo,
             ifEmptyString.applyTo,
             ifNull.applyTo,
-            type.applyTo,
+            only.applyTo,
         ]);
     }
 }

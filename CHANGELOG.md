@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.1.0] - 2021-09-27
+
+### Added
+
+* `vs.enumeration()`
+
+### Fixed
+
+* TypeScript example in README
+* Option types
+
+### Others
+
+* add JSDoc comments for parameters
+* support TypeScript 4.2 - 4.4
+* support Deno 1.7 - 1.14
+
 ## [3.0.0] - 2020-12-09
 
 ### Others
@@ -544,7 +561,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.0.0...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.1.0...HEAD
+[3.1.0]: https://github.com/shimataro/value-schema/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.15...v3.0.0
 [3.0.0-rc.15]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.14...v3.0.0-rc.15
 [3.0.0-rc.14]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.13...v3.0.0-rc.14

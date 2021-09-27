@@ -12,7 +12,6 @@ jobs:
         os:
         - windows-2019
         - macos-10.15
-        - ubuntu-16.04
         - ubuntu-18.04
         - ubuntu-20.04
         nodejs:
@@ -57,7 +56,8 @@ jobs:
     - name: Check syntax
       run: node ./dist/index.js
     - name: Install dependencies (example)
-      run: npm --prefix ./examples i --only=production
+      run: npm i --only=production
+      working-directory: ./examples
     - name: Run example
       run: node ./examples/example.js
     - name: Run example (TypeScript/Babel compatible)
@@ -71,7 +71,6 @@ jobs:
         os:
         - windows-2019
         - macos-10.15
-        - ubuntu-16.04
         - ubuntu-18.04
         - ubuntu-20.04
         nodejs:
@@ -114,7 +113,8 @@ jobs:
     - name: Check syntax (ESM)
       run: node --experimental-modules ./dist/index.mjs
     - name: Install dependencies (example)
-      run: npm --prefix ./examples i --only=production
+      run: npm i --only=production
+      working-directory: ./examples
     - name: Run example (CJS)
       run: node --experimental-modules ./examples/example.js
     - name: Run example (CJS; TypeScript/Babel compatible)
@@ -130,7 +130,6 @@ jobs:
         os:
         - windows-2019
         - macos-10.15
-        - ubuntu-16.04
         - ubuntu-18.04
         - ubuntu-20.04
         nodejs:
@@ -166,7 +165,8 @@ jobs:
     - name: Check syntax (ESM)
       run: node --experimental-conditional-exports ./dist/index.mjs
     - name: Install dependencies (example)
-      run: npm --prefix ./examples i --only=production
+      run: npm i --only=production
+      working-directory: ./examples
     - name: Run example (CJS)
       run: node --experimental-conditional-exports ./examples/example.js
     - name: Run example (CJS; TypeScript/Babel compatible)
@@ -182,7 +182,6 @@ jobs:
         os:
         - windows-2019
         - macos-10.15
-        - ubuntu-16.04
         - ubuntu-18.04
         - ubuntu-20.04
         deno:
@@ -193,6 +192,14 @@ jobs:
         - "1.4.0"
         - "1.5.0"
         - "1.6.0"
+        - "1.7.0"
+        - "1.8.0"
+        - "1.9.0"
+        - "1.10.1"
+        - "1.11.0"
+        - "1.12.0"
+        - "1.13.0"
+        - "1.14.0"
       fail-fast: false
     steps:
     - name: Checkout source codes

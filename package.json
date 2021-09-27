@@ -1,7 +1,7 @@
 {
   "name": "value-schema",
   "description": "simple, easy-to-use, and declarative schema validator",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "author": "shimataro",
   "license": "MIT",
   "repository": {
@@ -50,27 +50,28 @@
     "lint:ts": "eslint ./src ./test --ext .ts",
     "lint:md": "markdownlint . --ignore ./node_modules",
     "lint:yaml": "yamllint .*.yml *.yml --ignore=node_modules/**/*.yml --ignore=node_modules/**/*.yaml",
-    "check-updates": "ncu -x @types/jest,jest"
+    "check-updates": "ncu -x @types/node,@types/jest,@types/prettier,jest,ts-jest"
   },
   "devDependencies": {
-    "@babel/cli": "7.12.8",
-    "@babel/core": "7.12.9",
+    "@babel/cli": "7.15.7",
+    "@babel/core": "7.15.5",
     "@types/jest": "26.0.14",
-    "@types/node": "14.14.11",
-    "@typescript-eslint/eslint-plugin": "4.9.1",
-    "@typescript-eslint/parser": "4.9.1",
+    "@types/node": "15.3.0",
+    "@types/prettier": "2.2.3",
+    "@typescript-eslint/eslint-plugin": "4.31.2",
+    "@typescript-eslint/parser": "4.31.2",
     "babel-plugin-add-module-exports": "1.0.4",
-    "babel-plugin-module-extension-resolver": "1.0.0-rc.1",
+    "babel-plugin-module-extension-resolver": "1.0.0-rc.2",
     "case": "1.6.3",
     "cross-env": "7.0.3",
-    "deno-module-extension-resolver": "0.2.0",
-    "eslint": "7.15.0",
+    "deno-module-extension-resolver": "0.3.0",
+    "eslint": "7.32.0",
     "jest": "26.5.3",
-    "markdownlint-cli": "0.25.0",
-    "npm-check-updates": "10.2.3",
+    "markdownlint-cli": "0.28.1",
+    "npm-check-updates": "11.8.5",
     "npm-run-all": "4.1.5",
-    "ts-jest": "26.4.4",
-    "typescript": "4.1.2",
+    "ts-jest": "26.5.6",
+    "typescript": "4.4.3",
     "yaml-lint": "1.2.4"
   }
 }
