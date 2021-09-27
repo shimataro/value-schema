@@ -11,7 +11,7 @@
 [![Deno version][image-deno]][link-deno]
 [![License][image-license]][link-license]
 
-simple, easy-to-use, and declarative schema validator
+simple, easy-to-use, and declarative input validator
 
 supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang.org/), and [Deno](https://deno.land/)
 
