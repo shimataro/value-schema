@@ -401,6 +401,13 @@ function testInteger(): void
 				integer: true,
 			}).applyTo("3.");
 		}).toThrow(vs.CAUSE.TYPE);
+
+		expect(() =>
+		{
+			vs.number({
+				integer: "" as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+			}).applyTo(0.1);
+		}).toThrow(vs.CAUSE.TYPE);
 	});
 }
 
