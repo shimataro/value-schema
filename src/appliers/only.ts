@@ -7,6 +7,13 @@ export interface Options<T>
 	only?: T[];
 }
 
+/** read-only array */
+export interface OptionsReadonly<T>
+{
+	/** accepts only specified values */
+	only?: readonly T[];
+}
+
 /**
  * apply schema
  * @param values input/output values

@@ -2,7 +2,7 @@ import { BaseSchema } from "../schemaClasses/BaseSchema.ts";
 import { ArraySchema } from "../schemaClasses/ArraySchema.ts";
 import { ObjectSchema } from "../schemaClasses/ObjectSchema.ts";
 export type ObjectTypeOf<S extends SchemaObject> = {
-    [K in keyof S]: S[K] extends ArraySchema<infer T> ? T[] : S[K] extends ArraySchema<infer T, null> ? T[] | null : S[K] extends ObjectSchema<infer S2> ? ObjectTypeOf<S2> : S[K] extends ObjectSchema<infer S2, null> ? ObjectTypeOf<S2> | null : S[K] extends BaseSchema<boolean> ? boolean : S[K] extends BaseSchema<boolean | null> ? boolean | null : S[K] extends BaseSchema<number> ? number : S[K] extends BaseSchema<number | null> ? number | null : S[K] extends BaseSchema<string> ? string : S[K] extends BaseSchema<string | null> ? string | null : never;
+    [K in keyof S]: S[K] extends ArraySchema<infer T> ? T[] : S[K] extends ArraySchema<infer T, null> ? T[] | null : S[K] extends ObjectSchema<infer S2> ? ObjectTypeOf<S2> : S[K] extends ObjectSchema<infer S2, null> ? ObjectTypeOf<S2> | null : S[K] extends BaseSchema<infer T> ? T : never;
 };
 type Scalar = boolean | number | string;
 export type AnyObject = Record<string, unknown>;

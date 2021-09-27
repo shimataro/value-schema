@@ -9,12 +9,7 @@ export type ObjectTypeOf<S extends SchemaObject> = {
 		S[K] extends ArraySchema<infer T, null> ? T[] | null :
 		S[K] extends ObjectSchema<infer S2> ? ObjectTypeOf<S2> :
 		S[K] extends ObjectSchema<infer S2, null> ? ObjectTypeOf<S2> | null :
-		S[K] extends BaseSchema<boolean> ? boolean :
-		S[K] extends BaseSchema<boolean | null> ? boolean | null :
-		S[K] extends BaseSchema<number> ? number :
-		S[K] extends BaseSchema<number | null> ? number | null :
-		S[K] extends BaseSchema<string> ? string :
-		S[K] extends BaseSchema<string | null> ? string | null :
+		S[K] extends BaseSchema<infer T> ? T :
 		never
 }
 
