@@ -405,7 +405,7 @@ function testInteger(): void
 		expect(() =>
 		{
 			vs.number({
-				integer: -1,
+				integer: "" as any, // eslint-disable-line @typescript-eslint/no-explicit-any
 			}).applyTo(0.1);
 		}).toThrow(vs.CAUSE.TYPE);
 	});
