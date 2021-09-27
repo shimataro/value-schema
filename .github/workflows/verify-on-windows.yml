@@ -1,7 +1,10 @@
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions
-
-on: push
 name: Windows
+on:
+  push:
+    tags-ignore:
+    - "*"
+
 jobs:
   verify:
     name: Verify
