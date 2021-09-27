@@ -401,13 +401,6 @@ function testInteger(): void
 				integer: true,
 			}).applyTo("3.");
 		}).toThrow(vs.CAUSE.TYPE);
-
-		expect(() =>
-		{
-			vs.number({
-				integer: -1,
-			}).applyTo(0.1);
-		}).toThrow(vs.CAUSE.TYPE);
 	});
 }
 
