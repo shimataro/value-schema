@@ -13,19 +13,19 @@ export enum INTEGER
 	/** rounds down (towards minus infinity) */
 	FLOOR = "floor",
 	/** rounds towards 0 (away from infinity) */
-	FLOOR_RZ = "floor-rounding-towards-zero",
+	FLOOR_RZ = "floor-rz",
 	/** rounds up (towards plus infinity) */
 	CEIL = "ceil",
 	/** rounds away from 0 (towards infinity) */
-	CEIL_RI = "ceil-rounding-towards-infinity",
+	CEIL_RI = "ceil-ri",
 	/** rounds half up (towards positive infinity) */
-	HALF_UP = "rounding-half-up",
+	HALF_UP = "half-up",
 	/** rounds half towards zero (away from infinity) */
-	HALF_UP_RZ = "rounding-half-up-towards-zero",
+	HALF_UP_RZ = "half-up-rz",
 	/** rounds half down (towards negative infinity) */
-	HALF_DOWN = "rounding-half-down",
+	HALF_DOWN = "half-down",
 	/** rounds half away from zero (towards infinity) */
-	HALF_DOWN_RZ = "rounding-half-down-towards-zero",
+	HALF_DOWN_RZ = "half-down-rz",
 }
 
 type IntegerLike = boolean | INTEGER;
