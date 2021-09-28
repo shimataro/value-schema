@@ -9,7 +9,7 @@ export type OptionsForEnumeration<E> =
 	ifUndefined.Options<E> &
 	ifEmptyString.Options<E> &
 	ifNull.Options<E> &
-	Required<only.OptionsReadonly<E>>;
+	Required<only.Options<E>>;
 
 export class EnumerationSchema<E, Tx = never> extends BaseSchema<E | Tx>
 {
