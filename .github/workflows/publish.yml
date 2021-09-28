@@ -1,10 +1,10 @@
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions
-
+name: publish
 on:
   release:
     types:
     - published
-name: publish
+
 jobs:
   publish:
     name: publish to npmjs.com
