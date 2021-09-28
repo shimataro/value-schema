@@ -2,9 +2,9 @@
 name: Windows
 on:
   push:
-    tags-ignore:
-    - "*"
     branches:
+    - "**"
+    tags-ignore:
     - "*"
 
 jobs:
