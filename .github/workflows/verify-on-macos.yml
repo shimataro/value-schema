@@ -2,9 +2,9 @@
 name: macOS
 on:
   push:
-    branches:
-    - "*"
     tags-ignore:
+    - "*"
+    branches:
     - "*"
 
 jobs:

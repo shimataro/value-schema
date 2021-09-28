@@ -2,9 +2,9 @@
 name: Linux
 on:
   push:
-    branches:
-    - "*"
     tags-ignore:
+    - "*"
+    branches:
     - "*"
 
 jobs:
