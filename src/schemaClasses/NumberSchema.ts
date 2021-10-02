@@ -12,7 +12,7 @@ import {BaseSchema} from "./BaseSchema";
 
 export const NUMBER = {
 	INTEGER: type.INTEGER,
-};
+} as const;
 
 export type OptionsForNumber =
 	converter.Options<number> &

@@ -1,22 +1,23 @@
 import {Key, Values, isString} from "../../libs/types";
 import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
-export enum CHECKSUM_ALGORITHM
+export const CHECKSUM_ALGORITHM =
 {
 	/** Luhn algorithm; used in credit card and IMEI (also known as MOD-10 algorithm) */
-	LUHN = "luhn",
+	LUHN: "luhn",
 	/** checksum as credit card; equivalent to LUHN */
-	CREDIT_CARD = LUHN,
+	CREDIT_CARD: "luhn",
 
 	/** modulus10/weight3:1 algorithm; used in ISBN13, EAN and JAN */
-	MODULUS10_WEIGHT3_1 = "modulus10/weight3:1",
+	MODULUS10_WEIGHT3_1: "modulus10/weight3:1",
 	/** ISBN-13; equivalent to MODULUS10_WEIGHT3_1 */
-	ISBN13 = MODULUS10_WEIGHT3_1,
+	ISBN13: "modulus10/weight3:1",
 	/** EAN code; equivalent to MODULUS10_WEIGHT3_1 */
-	EAN = MODULUS10_WEIGHT3_1,
+	EAN: "modulus10/weight3:1",
 	/** JAN code; equivalent to MODULUS10_WEIGHT3_1 */
-	JAN = MODULUS10_WEIGHT3_1,
-}
+	JAN: "modulus10/weight3:1",
+} as const;
+type CHECKSUM_ALGORITHM = typeof CHECKSUM_ALGORITHM[keyof typeof CHECKSUM_ALGORITHM];
 
 export interface Options
 {

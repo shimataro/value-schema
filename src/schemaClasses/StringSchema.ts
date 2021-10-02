@@ -13,7 +13,7 @@ import {BaseSchema} from "./BaseSchema";
 
 export const STRING = {
 	PATTERN: pattern.PATTERN,
-};
+} as const;
 
 export type OptionsForString =
 	converter.Options<string> &
