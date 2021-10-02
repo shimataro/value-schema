@@ -4,25 +4,25 @@ const REGEXP_NUMBER = /^\s*[+-]?(\d+(\.\d*)?|\.\d+)\s*$/;
 const REGEXP_INTEGER = /^\s*[+-]?\d+\s*$/;
 export const INTEGER = {
     /** does not care */
-    NO: "no",
+    NO: 0,
     /** must be integer; causes error if otherwise */
-    YES: "yes",
+    YES: 1,
     /** rounds down (towards minus infinity) */
-    FLOOR: "floor",
+    FLOOR: 2,
     /** rounds towards 0 (away from infinity) */
-    FLOOR_RZ: "floor-rz",
+    FLOOR_RZ: 3,
     /** rounds up (towards plus infinity) */
-    CEIL: "ceil",
+    CEIL: 4,
     /** rounds away from 0 (towards infinity) */
-    CEIL_RI: "ceil-ri",
+    CEIL_RI: 5,
     /** rounds half up (towards positive infinity) */
-    HALF_UP: "half-up",
+    HALF_UP: 6,
     /** rounds half towards zero (away from infinity) */
-    HALF_UP_RZ: "half-up-rz",
+    HALF_UP_RZ: 7,
     /** rounds half down (towards negative infinity) */
-    HALF_DOWN: "half-down",
+    HALF_DOWN: 8,
     /** rounds half away from zero (towards infinity) */
-    HALF_DOWN_RZ: "half-down-rz"
+    HALF_DOWN_RZ: 9
 } as const;
 type INTEGER = typeof INTEGER[keyof typeof INTEGER];
 type IntegerLike = boolean | INTEGER;
