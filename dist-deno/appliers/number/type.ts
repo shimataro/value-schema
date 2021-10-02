@@ -2,28 +2,29 @@ import { Key, Values, isInteger, isNumber, isScalar, isString } from "../../libs
 import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 const REGEXP_NUMBER = /^\s*[+-]?(\d+(\.\d*)?|\.\d+)\s*$/;
 const REGEXP_INTEGER = /^\s*[+-]?\d+\s*$/;
-export enum INTEGER {
+export const INTEGER = {
     /** does not care */
-    NO = "no",
+    NO: "no",
     /** must be integer; causes error if otherwise */
-    YES = "yes",
+    YES: "yes",
     /** rounds down (towards minus infinity) */
-    FLOOR = "floor",
+    FLOOR: "floor",
     /** rounds towards 0 (away from infinity) */
-    FLOOR_RZ = "floor-rz",
+    FLOOR_RZ: "floor-rz",
     /** rounds up (towards plus infinity) */
-    CEIL = "ceil",
+    CEIL: "ceil",
     /** rounds away from 0 (towards infinity) */
-    CEIL_RI = "ceil-ri",
+    CEIL_RI: "ceil-ri",
     /** rounds half up (towards positive infinity) */
-    HALF_UP = "half-up",
+    HALF_UP: "half-up",
     /** rounds half towards zero (away from infinity) */
-    HALF_UP_RZ = "half-up-rz",
+    HALF_UP_RZ: "half-up-rz",
     /** rounds half down (towards negative infinity) */
-    HALF_DOWN = "half-down",
+    HALF_DOWN: "half-down",
     /** rounds half away from zero (towards infinity) */
-    HALF_DOWN_RZ = "half-down-rz"
-}
+    HALF_DOWN_RZ: "half-down-rz"
+} as const;
+type INTEGER = typeof INTEGER[keyof typeof INTEGER];
 type IntegerLike = boolean | INTEGER;
 export interface Options {
     /** does not convert type; causes error if type does not match */

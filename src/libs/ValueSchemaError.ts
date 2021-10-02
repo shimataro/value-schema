@@ -1,23 +1,24 @@
 import {Key, Values} from "./types";
 
-export enum CAUSE
+export const CAUSE =
 {
-	TYPE = "type",
-	UNDEFINED = "undefined",
-	NULL = "null",
-	EMPTY_STRING = "empty-string",
-	ONLY = "only",
-	CONVERTER = "converter",
+	TYPE: "type",
+	UNDEFINED: "undefined",
+	NULL: "null",
+	EMPTY_STRING: "empty-string",
+	ONLY: "only",
+	CONVERTER: "converter",
 
-	MIN_VALUE = "min-value",
-	MAX_VALUE = "max-value",
+	MIN_VALUE: "min-value",
+	MAX_VALUE: "max-value",
 
-	MIN_LENGTH = "min-length",
-	MAX_LENGTH = "max-length",
-	PATTERN = "pattern",
+	MIN_LENGTH: "min-length",
+	MAX_LENGTH: "max-length",
+	PATTERN: "pattern",
 
-	CHECKSUM = "checksum",
-}
+	CHECKSUM: "checksum",
+} as const;
+type CAUSE = typeof CAUSE[keyof typeof CAUSE];
 
 /**
  * Value-Schema Error
