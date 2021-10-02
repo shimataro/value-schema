@@ -294,7 +294,7 @@ function testChecksumOthers(): void
 		expect(() =>
 		{
 			vs.numericString({
-				checksum: "" as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+				checksum: -1 as any, // eslint-disable-line @typescript-eslint/no-explicit-any
 			}).applyTo("0123456789");
 		}).toThrow(vs.CAUSE.CHECKSUM);
 	});
