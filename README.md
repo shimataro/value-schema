@@ -33,7 +33,7 @@ supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang
     * [object](#object)
 * [Changelog](#changelog)
 
-- - -
+***
 
 ## Introduction
 
