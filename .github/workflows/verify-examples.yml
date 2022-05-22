@@ -236,7 +236,7 @@ jobs:
     - name: Checkout source codes
       uses: actions/checkout@v2
     - name: Install Deno
-      uses: denolib/setup-deno@v2
+      uses: denoland/setup-deno@v1
       with:
         deno-version: ${{ matrix.deno }}
     - name: Output versions
