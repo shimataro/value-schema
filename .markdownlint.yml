@@ -9,6 +9,6 @@ MD024: # no-duplicate-heading
 MD029: # ol-prefix
   style: one
 MD035: # hr-style
-  style: "- - -"
+  style: "***"
 MD048: # code-fence-style
   style: backtick
