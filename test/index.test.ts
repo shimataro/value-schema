@@ -2,6 +2,7 @@ import vs from "value-schema";
 
 {
 	describe("applySchemaObject", testApplySchemaObject);
+	describe("ifUndefined", testIfUndefined);
 	describe("error", testError);
 }
 
@@ -31,6 +32,7 @@ function testApplySchemaObject(): void
 			remoteAddrIpv6: string;
 			limit: number;
 			offset: number;
+			others?: boolean;
 		}
 
 		const input = {
@@ -136,6 +138,9 @@ function testApplySchemaObject(): void
 						adjusts: true,
 					},
 				}),
+				others: vs.boolean({
+					ifUndefined: undefined,
+				}),
 			};
 			return vs.applySchemaObject(schemaObject, input);
 		}
@@ -232,6 +237,41 @@ function testApplySchemaObject(): void
 		expect(actual.object.arrayOfNumber.slice()[0].toFixed()).toEqual("0");
 		expect(actual.object.arrayOfString.slice()[0].toUpperCase()).toEqual("A");
 		expect(actual.object.arrayOfArrayOfString.slice()[0].slice()[1].toLowerCase()).toEqual("b");
+	});
+}
+
+/**
+ * test "ifUndefined"
+ */
+function testIfUndefined(): void
+{
+	it("should be OK", () =>
+	{
+		const schemaObject = {
+			value: vs.number({
+				ifUndefined: undefined,
+			}),
+		};
+		const input = {};
+		const expected = {};
+
+		const actual = vs.applySchemaObject(schemaObject, input);
+		expect(actual).toEqual(expected);
+	});
+	it("should cause error(s)", () =>
+	{
+		// "{isUndefined: undefined}" differs from "{}"!
+		const schemaObject = {
+			value: vs.number({
+				// ifUndefined: undefined,
+			}),
+		};
+		const input = {};
+
+		expect(() =>
+		{
+			vs.applySchemaObject(schemaObject, input);
+		}).toThrow();
 	});
 }
 

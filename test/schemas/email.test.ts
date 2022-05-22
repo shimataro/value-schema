@@ -23,6 +23,14 @@ function testIfUndefined(): void
 			}).applyTo(undefined)
 		).toEqual("default@example.com");
 	});
+	it("should be undefined", () =>
+	{
+		expect(
+			vs.email({
+				ifUndefined: undefined,
+			}).applyTo(undefined)
+		).toBeUndefined();
+	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>

@@ -171,6 +171,25 @@ function testIfUndefined(): void
 		}
 	});
 
+	it("should be undefined (enum)", () =>
+	{
+		expect(
+			vs.enumeration({
+				only: [NumberEnum.zero, NumberEnum.one],
+				ifUndefined: undefined,
+			}).applyTo(undefined)
+		).toBeUndefined();
+	});
+	it("should be undefined (union)", () =>
+	{
+		expect(
+			vs.enumeration({
+				only: [0, 1] as const,
+				ifUndefined: undefined,
+			}).applyTo(undefined)
+		).toBeUndefined();
+	});
+
 	it("should cause error(s) (enum)", () =>
 	{
 		expect(() =>

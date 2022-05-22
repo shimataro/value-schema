@@ -53,6 +53,14 @@ function testIfUndefined(): void
 			}).applyTo(undefined)
 		).toEqual({});
 	});
+	it("should be undefined", () =>
+	{
+		expect(
+			vs.object({
+				ifUndefined: undefined,
+			}).applyTo(undefined)
+		).toBeUndefined();
+	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>

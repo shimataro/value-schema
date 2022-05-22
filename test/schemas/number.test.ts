@@ -432,6 +432,14 @@ function testIfUndefined(): void
 			}).applyTo(undefined)
 		).toEqual(10);
 	});
+	it("should be undefined", () =>
+	{
+		expect(
+			vs.number({
+				ifUndefined: undefined,
+			}).applyTo(undefined)
+		).toBeUndefined();
+	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>

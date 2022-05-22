@@ -197,6 +197,14 @@ function testIfUndefined(): void
 			}).applyTo(undefined)
 		).toEqual(true);
 	});
+	it("should be undefined", () =>
+	{
+		expect(
+			vs.boolean({
+				ifUndefined: undefined,
+			}).applyTo(undefined)
+		).toBeUndefined();
+	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>

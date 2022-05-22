@@ -59,6 +59,14 @@ function testIfUndefined(): void
 			}).applyTo(undefined)
 		).toEqual("12345");
 	});
+	it("should be undefined", () =>
+	{
+		expect(
+			vs.numericString({
+				ifUndefined: undefined,
+			}).applyTo(undefined)
+		).toBeUndefined();
+	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>

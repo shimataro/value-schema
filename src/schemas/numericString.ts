@@ -1,8 +1,12 @@
-import {NullableOptions} from "../libs/publicTypes";
+import {NullableOptions, UndefinableOptions} from "../libs/publicTypes";
 import {NumericStringSchema, OptionsForNumericString} from "../schemaClasses/NumericStringSchema";
 
 export {NUMERIC_STRING} from "../schemaClasses/NumericStringSchema";
 
+/** schema for numeric string or null or undefined */
+export function numericString(options: OptionsForNumericString & NullableOptions & UndefinableOptions): NumericStringSchema<null | undefined>
+/** schema for numeric string or undefined */
+export function numericString(options: OptionsForNumericString & UndefinableOptions): NumericStringSchema<undefined>
 /** schema for numeric string or null */
 export function numericString(options: OptionsForNumericString & NullableOptions): NumericStringSchema<null>
 /** schema for numeric string */
