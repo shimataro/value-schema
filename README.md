@@ -222,7 +222,7 @@ export interface ValueSchemaError extends Error
 {
     name: string
     message: string
-    cause: string
+    rule: string
     value: any
     keyStack: (string | number)[]
 
@@ -240,8 +240,8 @@ export interface ValueSchemaError extends Error
 |name|description|
 |----|-----------|
 |`name`|`"ValueSchemaError"`|
-|`message`|human-readable description of the error, including a string `cause`|
-|`cause`|cause of error; see [`CAUSE`](#cause)|
+|`message`|human-readable description of the error, including a string `rule`|
+|`rule`|the rule that input value didn't satisfy; see [`RULE`](#rule)|
 |`value`|value to apply|
 |`keyStack`|array consists of path to key name(for object) or index(for array) that caused error; for nested object or array|
 
@@ -296,14 +296,14 @@ assert.throws(
     },
     {
         name: "ValueSchemaError",
-        cause: vs.CAUSE.TYPE,
+        rule: vs.RULE.TYPE,
         keyStack: ["foo", 2, "bar", "baz"], // route to error key/index: object(key="foo") -> array(index=2) -> object(key="bar") -> object(key="baz")
     });
 ```
 
-#### `CAUSE`
+#### `RULE`
 
-The cause of error.
+The rule that input value didn't satisfy.
 
 For more information, see below examples.
 
@@ -592,7 +592,7 @@ assert.throws(() => {
     vs.applySchemaObject(schemaObject, input);
 }, {
     name: "ValueSchemaError",
-    cause: vs.CAUSE.MIN_VALUE,
+    rule: vs.RULE.MIN_VALUE,
     value: 0,
     keyStack: ["id"],
 });
@@ -616,7 +616,7 @@ assert.throws(() => {
     vs.applySchemaObject(schemaObject, input);
 }, {
     name: "ValueSchemaError",
-    cause: vs.CAUSE.TYPE,
+    rule: vs.RULE.TYPE,
     value: 123,
     keyStack: [],
 });
@@ -688,16 +688,16 @@ for (const falsy of ["false", "FALSE", "no", "NO", "off", "OFF"]) {
 // should cause error
 assert.throws(
     () => vs.boolean().applyTo(-1), // accepts only 0,1
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 assert.throws(
     () => vs.boolean().applyTo("abc"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 assert.throws(
     () => vs.boolean().applyTo([]),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 assert.throws(
     () => vs.boolean().applyTo({}),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
 #### options
@@ -715,13 +715,13 @@ Use this method when your system accepts **ONLY** JSON encoding (`application/js
 // should cause error
 assert.throws(
     () => vs.boolean({strictType: true}).applyTo(1),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 assert.throws(
     () => vs.boolean({strictType: true}).applyTo("1"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 assert.throws(
     () => vs.boolean({strictType: true}).applyTo("true"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
 ##### `acceptsAllNumbers`
@@ -752,7 +752,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.boolean().applyTo(undefined),
-    {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+    {name: "ValueSchemaError", rule: vs.RULE.UNDEFINED});
 ```
 
 ##### `ifNull`
@@ -768,7 +768,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.boolean().applyTo(null),
-    {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
+    {name: "ValueSchemaError", rule: vs.RULE.NULL});
 ```
 
 ##### `ifEmptyString`
@@ -784,7 +784,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.boolean().applyTo(""),
-    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
+    {name: "ValueSchemaError", rule: vs.RULE.EMPTY_STRING});
 ```
 
 ### number
@@ -847,10 +847,10 @@ assert.strictEqual( // catch error by callback function (that returns a value fr
     10);
 assert.throws( // ... or try-catch syntax
     () => vs.number().applyTo("abc"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 assert.throws(
     () => vs.number().applyTo("true"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
 #### options
@@ -876,10 +876,10 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.number({strictType: true}).applyTo("123"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 assert.throws(
     () => vs.number({strictType: true}).applyTo(true),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
 ##### `ifUndefined`
@@ -895,7 +895,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.number().applyTo(undefined),
-    {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+    {name: "ValueSchemaError", rule: vs.RULE.UNDEFINED});
 ```
 
 ##### `ifNull`
@@ -911,7 +911,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.number().applyTo(null),
-    {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
+    {name: "ValueSchemaError", rule: vs.RULE.NULL});
 ```
 
 ##### `ifEmptyString`
@@ -927,7 +927,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.number().applyTo(""),
-    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
+    {name: "ValueSchemaError", rule: vs.RULE.EMPTY_STRING});
 ```
 
 ##### `acceptsSpecialFormats`
@@ -953,7 +953,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.number().applyTo("1e+2"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
 ##### `acceptsFullWidth`
@@ -970,7 +970,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.number().applyTo("１２３４．５"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
 ##### `integer`
@@ -1071,10 +1071,10 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.number({integer: true}).applyTo(3.14),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 assert.throws(
     () => vs.number({integer: vs.NUMBER.INTEGER.YES}).applyTo(3.14), // equivalent to "true"
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
 ##### `only`
@@ -1090,7 +1090,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.number({only: [1, 3, 5]}).applyTo(2),
-    {name: "ValueSchemaError", cause: vs.CAUSE.ONLY});
+    {name: "ValueSchemaError", rule: vs.RULE.ONLY});
 ```
 
 ##### `minValue`
@@ -1106,10 +1106,10 @@ assert.strictEqual(
 // should cause errors
 assert.throws(
     () => vs.number({minValue: {value: 1, adjusts: false}}).applyTo(0),
-    {name: "ValueSchemaError", cause: vs.CAUSE.MIN_VALUE});
+    {name: "ValueSchemaError", rule: vs.RULE.MIN_VALUE});
 assert.throws(
     () => vs.number({minValue: 1}).applyTo(0), // shorthand of {value: 1, adjusts: false}
-    {name: "ValueSchemaError", cause: vs.CAUSE.MIN_VALUE});
+    {name: "ValueSchemaError", rule: vs.RULE.MIN_VALUE});
 ```
 
 ##### `maxValue`
@@ -1125,10 +1125,10 @@ assert.strictEqual(
 // should cause errors
 assert.throws(
     () => vs.number({maxValue: {value: 100, adjusts: false}}).applyTo(101),
-    {name: "ValueSchemaError", cause: vs.CAUSE.MAX_VALUE});
+    {name: "ValueSchemaError", rule: vs.RULE.MAX_VALUE});
 assert.throws(
     () => vs.number({maxValue: 100}).applyTo(101), // shorthand of {value: 100, adjusts: false}
-    {name: "ValueSchemaError", cause: vs.CAUSE.MAX_VALUE});
+    {name: "ValueSchemaError", rule: vs.RULE.MAX_VALUE});
 ```
 
 ##### `converter`
@@ -1146,7 +1146,7 @@ assert.strictEqual(
 // should cause errors
 assert.throws(
     () => vs.number({converter: (value, fail) => fail()}).applyTo(0),
-    {name: "ValueSchemaError", cause: vs.CAUSE.CONVERTER});
+    {name: "ValueSchemaError", rule: vs.RULE.CONVERTER});
 ```
 
 ### string
@@ -1198,7 +1198,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.string().applyTo({}),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
 #### options
@@ -1220,10 +1220,10 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.string({strictType: true}).applyTo(123),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 assert.throws(
     () => vs.string({strictType: true}).applyTo(true),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
 ##### `ifUndefined`
@@ -1239,7 +1239,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.string().applyTo(undefined),
-    {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+    {name: "ValueSchemaError", rule: vs.RULE.UNDEFINED});
 ```
 
 ##### `ifNull`
@@ -1255,7 +1255,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.string().applyTo(null),
-    {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
+    {name: "ValueSchemaError", rule: vs.RULE.NULL});
 ```
 
 ##### `ifEmptyString`
@@ -1271,7 +1271,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.string().applyTo(""),
-    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
+    {name: "ValueSchemaError", rule: vs.RULE.EMPTY_STRING});
 ```
 
 ##### `trims`
@@ -1288,7 +1288,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.string({trims: true}).applyTo(" \t\r\n "),
-    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
+    {name: "ValueSchemaError", rule: vs.RULE.EMPTY_STRING});
 ```
 
 ##### `only`
@@ -1307,7 +1307,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.string({only: ["eat", "sleep", "play"]}).applyTo("study"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.ONLY});
+    {name: "ValueSchemaError", rule: vs.RULE.ONLY});
 ```
 
 ##### `minLength`
@@ -1323,7 +1323,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.string({minLength: 5}).applyTo("a"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.MIN_LENGTH});
+    {name: "ValueSchemaError", rule: vs.RULE.MIN_LENGTH});
 ```
 
 ##### `maxLength`
@@ -1344,10 +1344,10 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.string({maxLength: {length: 5, trims: false}}).applyTo("abcdefg"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.MAX_LENGTH});
+    {name: "ValueSchemaError", rule: vs.RULE.MAX_LENGTH});
 assert.throws(
     () => vs.string({maxLength: 5}).applyTo("abcdefg"), // shorthand of {length: 5, trims: false}
-    {name: "ValueSchemaError", cause: vs.CAUSE.MAX_LENGTH});
+    {name: "ValueSchemaError", rule: vs.RULE.MAX_LENGTH});
 ```
 
 ##### `pattern`
@@ -1378,10 +1378,10 @@ assert.deepStrictEqual(
 // should cause error
 assert.throws(
     () => vs.string({pattern: /^Node.js$/}).applyTo("NODE.JS"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
+    {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 assert.throws(
     () => vs.string({pattern: vs.STRING.PATTERN.URI}).applyTo("https://例.com/"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
+    {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 ```
 
 ##### `converter`
@@ -1399,7 +1399,7 @@ assert.strictEqual(
 // should cause errors
 assert.throws(
     () => vs.string({converter: (value, fail) => fail()}).applyTo("foo"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.CONVERTER});
+    {name: "ValueSchemaError", rule: vs.RULE.CONVERTER});
 ```
 
 ### numeric string
@@ -1451,7 +1451,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.numericString().applyTo("abc"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
+    {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 ```
 
 #### options
@@ -1469,7 +1469,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.numericString().applyTo(undefined),
-    {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+    {name: "ValueSchemaError", rule: vs.RULE.UNDEFINED});
 ```
 
 ##### `ifNull`
@@ -1485,7 +1485,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.numericString().applyTo(null),
-    {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
+    {name: "ValueSchemaError", rule: vs.RULE.NULL});
 ```
 
 ##### `ifEmptyString`
@@ -1501,7 +1501,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.numericString().applyTo(""),
-    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
+    {name: "ValueSchemaError", rule: vs.RULE.EMPTY_STRING});
 ```
 
 ##### `separatedBy`
@@ -1517,7 +1517,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.numericString().applyTo("4111-1111-1111-1111"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
+    {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 ```
 
 ##### `fullWidthToHalf`
@@ -1534,7 +1534,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.numericString().applyTo("１２３４"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
+    {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 ```
 
 ##### `joinsArray`
@@ -1567,7 +1567,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.numericString().applyTo(["1234", "5678"]),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
 ##### `minLength`
@@ -1583,7 +1583,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.numericString({minLength: 5}).applyTo("1234"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.MIN_LENGTH});
+    {name: "ValueSchemaError", rule: vs.RULE.MIN_LENGTH});
 ```
 
 ##### `maxLength`
@@ -1604,10 +1604,10 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.numericString({maxLength: {length: 5, trims: false}}).applyTo("123456"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.MAX_LENGTH});
+    {name: "ValueSchemaError", rule: vs.RULE.MAX_LENGTH});
 assert.throws(
     () => vs.numericString({maxLength: 5}).applyTo("123456"), // shorthand of {length: 5, trims: false}
-    {name: "ValueSchemaError", cause: vs.CAUSE.MAX_LENGTH});
+    {name: "ValueSchemaError", rule: vs.RULE.MAX_LENGTH});
 ```
 
 ##### `checksum`
@@ -1643,7 +1643,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.numericString({checksum: vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.LUHN}).applyTo("4111111111111112"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.CHECKSUM});
+    {name: "ValueSchemaError", rule: vs.RULE.CHECKSUM});
 ```
 
 ##### `converter`
@@ -1661,7 +1661,7 @@ assert.strictEqual(
 // should cause errors
 assert.throws(
     () => vs.numericString({converter: (value, fail) => fail()}).applyTo("1234"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.CONVERTER});
+    {name: "ValueSchemaError", rule: vs.RULE.CONVERTER});
 ```
 
 ### email
@@ -1715,28 +1715,28 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.email().applyTo("@example.com"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
+    {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 assert.throws(
     () => vs.email().applyTo(".a@example.com"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
+    {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 assert.throws(
     () => vs.email().applyTo("a.@example.com"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
+    {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 assert.throws(
     () => vs.email().applyTo("a..a@example.com"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
+    {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 assert.throws(
     () => vs.email().applyTo("user@example@com"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
+    {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 assert.throws(
     () => vs.email().applyTo("user-example-com"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
+    {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 assert.throws(
     () => vs.email().applyTo("user@example_domain.com"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
+    {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 assert.throws(
     () => vs.email().applyTo("user@example.com2"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
+    {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 ```
 
 #### options
@@ -1754,7 +1754,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.email().applyTo(undefined),
-    {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+    {name: "ValueSchemaError", rule: vs.RULE.UNDEFINED});
 ```
 
 ##### `ifNull`
@@ -1770,7 +1770,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.email().applyTo(null),
-    {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
+    {name: "ValueSchemaError", rule: vs.RULE.NULL});
 ```
 
 ##### `ifEmptyString`
@@ -1786,7 +1786,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.email().applyTo(""),
-    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
+    {name: "ValueSchemaError", rule: vs.RULE.EMPTY_STRING});
 ```
 
 ##### `trims`
@@ -1803,10 +1803,10 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.email().applyTo("\r\n user@example.com1 \t "),
-    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
+    {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 assert.throws(
     () => vs.email({trims: true}).applyTo(" \t\r\n "),
-    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
+    {name: "ValueSchemaError", rule: vs.RULE.EMPTY_STRING});
 ```
 
 ##### `pattern`
@@ -1822,7 +1822,7 @@ assert.strictEqual(
 // should cause errors
 assert.throws(
     () => vs.email().applyTo("......@example.com"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.PATTERN});
+    {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 ```
 
 ### enumeration
@@ -1891,7 +1891,7 @@ enum StringEnum
 // should cause error
 assert.throws(
     () => vs.enumeration({only: Object.values(StringEnum)}).applyTo("c"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.ONLY});
+    {name: "ValueSchemaError", rule: vs.RULE.ONLY});
 ```
 
 ```typescript
@@ -1914,7 +1914,7 @@ type StringUnion = "a" | "b";
 // should cause error
 assert.throws(
     () => vs.enumeratino({only: ["a", "b"] as const}).applyTo("c"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.ONLY});
+    {name: "ValueSchemaError", rule: vs.RULE.ONLY});
 ```
 
 CAUTION: In union version, `only` must be "array of literal union types", "const-asserted array", or "array literal with generics".
@@ -1970,7 +1970,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.enumeration({only: Object.values(StringEnum)}).applyTo(undefined),
-    {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+    {name: "ValueSchemaError", rule: vs.RULE.UNDEFINED});
 ```
 
 ##### `ifNull`
@@ -1992,7 +1992,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.enumeration({only: Object.values(StringEnum)}).applyTo(null),
-    {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
+    {name: "ValueSchemaError", rule: vs.RULE.NULL});
 ```
 
 ##### `ifEmptyString`
@@ -2014,7 +2014,7 @@ assert.strictEqual(
 // should cause error
 assert.throws(
     () => vs.enumeration({only: Object.values(StringEnum)}).applyTo(""),
-    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
+    {name: "ValueSchemaError", rule: vs.RULE.EMPTY_STRING});
 ```
 
 ### array
@@ -2058,10 +2058,10 @@ assert.deepStrictEqual(
 // should cause error
 assert.throws(
     () => vs.array().applyTo("abc"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 assert.throws(
     () => vs.array().applyTo(0),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
 #### options
@@ -2079,7 +2079,7 @@ assert.deepStrictEqual(
 // should cause error
 assert.throws(
     () => vs.array().applyTo(undefined),
-    {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+    {name: "ValueSchemaError", rule: vs.RULE.UNDEFINED});
 ```
 
 ##### `ifNull`
@@ -2095,7 +2095,7 @@ assert.deepStrictEqual(
 // should cause error
 assert.throws(
     () => vs.array().applyTo(null),
-    {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
+    {name: "ValueSchemaError", rule: vs.RULE.NULL});
 ```
 
 ##### `ifEmptyString`
@@ -2111,7 +2111,7 @@ assert.deepStrictEqual(
 // should cause error
 assert.throws(
     () => vs.array().applyTo(""),
-    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
+    {name: "ValueSchemaError", rule: vs.RULE.EMPTY_STRING});
 ```
 
 ##### `separatedBy`
@@ -2134,7 +2134,7 @@ assert.deepStrictEqual(
 // should cause error
 assert.throws(
     () => vs.array().applyTo("1,2,3"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
 ##### `toArray`
@@ -2156,7 +2156,7 @@ assert.deepStrictEqual(
 // should cause error
 assert.throws(
     () => vs.array().applyTo(0),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
 ##### `minLength`
@@ -2172,7 +2172,7 @@ assert.deepStrictEqual(
 // should cause errors
 assert.throws(
     () => vs.array({minLength: 2}).applyTo([1]),
-    {name: "ValueSchemaError", cause: vs.CAUSE.MIN_LENGTH});
+    {name: "ValueSchemaError", rule: vs.RULE.MIN_LENGTH});
 ```
 
 ##### `maxLength`
@@ -2193,10 +2193,10 @@ assert.deepStrictEqual(
 // should cause error
 assert.throws(
     () => vs.array({maxLength: {length: 2, trims: false}}).applyTo([1, 2, 3]),
-    {name: "ValueSchemaError", cause: vs.CAUSE.MAX_LENGTH});
+    {name: "ValueSchemaError", rule: vs.RULE.MAX_LENGTH});
 assert.throws(
     () => vs.array({maxLength: 2}).applyTo([1, 2, 3]), // shorthand of {length: 1, trims: false}
-    {name: "ValueSchemaError", cause: vs.CAUSE.MAX_LENGTH});
+    {name: "ValueSchemaError", rule: vs.RULE.MAX_LENGTH});
 ```
 
 ##### `each`
@@ -2212,10 +2212,10 @@ assert.deepStrictEqual(
 // should cause error
 assert.throws(
     () => vs.array({each: {schema: vs.number(), ignoresErrors: false}}).applyTo([true, "abc", 2]),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 assert.throws(
     () => vs.array({each: vs.number()}).applyTo([true, "abc", 2]), // shorthand of {schema: vs.number(), ignoresErrors: false}
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
 ##### `converter`
@@ -2233,7 +2233,7 @@ assert.deepStrictEqual(
 // should cause errors
 assert.throws(
     () => vs.array({converter: (value, fail) => fail()}).applyTo([]),
-    {name: "ValueSchemaError", cause: vs.CAUSE.CONVERTER});
+    {name: "ValueSchemaError", rule: vs.RULE.CONVERTER});
 ```
 
 ### object
@@ -2273,10 +2273,10 @@ assert.deepStrictEqual(
 // should cause error
 assert.throws(
     () => vs.object().applyTo("abc"),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 assert.throws(
     () => vs.object().applyTo(0),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
 ##### `ifUndefined`
@@ -2292,7 +2292,7 @@ assert.deepStrictEqual(
 // should cause error
 assert.throws(
     () => vs.object().applyTo(undefined),
-    {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+    {name: "ValueSchemaError", rule: vs.RULE.UNDEFINED});
 ```
 
 ##### `ifNull`
@@ -2308,7 +2308,7 @@ assert.deepStrictEqual(
 // should cause error
 assert.throws(
     () => vs.object().applyTo(null),
-    {name: "ValueSchemaError", cause: vs.CAUSE.NULL});
+    {name: "ValueSchemaError", rule: vs.RULE.NULL});
 ```
 
 ##### `ifEmptyString`
@@ -2324,7 +2324,7 @@ assert.deepStrictEqual(
 // should cause error
 assert.throws(
     () => vs.object().applyTo(""),
-    {name: "ValueSchemaError", cause: vs.CAUSE.EMPTY_STRING});
+    {name: "ValueSchemaError", rule: vs.RULE.EMPTY_STRING});
 ```
 
 ##### `schemaObject`
@@ -2346,7 +2346,7 @@ assert.deepStrictEqual(
 // should cause error
 assert.throws(
     () => vs.object({schemaObject}).applyTo({a: "x", b: "2"}),
-    {name: "ValueSchemaError", cause: vs.CAUSE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
 ##### `converter`
@@ -2384,7 +2384,7 @@ assert.deepStrictEqual(
 // should cause errors
 assert.throws(
     () => vs.object({converter: (value, fail) => fail()}).applyTo({}),
-    {name: "ValueSchemaError", cause: vs.CAUSE.CONVERTER});
+    {name: "ValueSchemaError", rule: vs.RULE.CONVERTER});
 ```
 
 ## Changelog
