@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* rename `ValueSchemaError.cause` to `ValueSchemaError.rule`
+    * ...because `Error.cause` is stage 4
+    * <https://github.com/tc39/proposal-error-cause>
+
 ## [3.1.0] - 2021-09-27
 
 ### Added
