@@ -26,7 +26,7 @@ export class ValueSchemaError extends Error {
      * @param cause cause of error
      * @param values input/output values
      * @param keyStack path to key that caused error
-     * @throws {ValueSchemaError}
+     * @throws error object
      */
     static raise(cause: CAUSE, values: Values, keyStack: Key[]): never {
         throw new ValueSchemaError(cause, values.input, keyStack);

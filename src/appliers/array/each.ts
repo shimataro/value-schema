@@ -21,7 +21,7 @@ export interface Options<T>
  * @param values input/output values
  * @param options options
  * @param keyStack key stack for error handling
- * @returns applied value
+ * @returns escapes from applyTo chain or not
  */
 export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[]): values is Values<T[]>
 {
