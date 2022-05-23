@@ -1,5 +1,5 @@
 import { Key, Values, isString } from "../../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 const REGEXP = /^\d+$/;
 export interface Options {
 }
@@ -19,5 +19,5 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
     if (REGEXP.test(values.output)) {
         return false;
     }
-    return ValueSchemaError.raise(CAUSE.PATTERN, values, keyStack);
+    return ValueSchemaError.raise(RULE.PATTERN, values, keyStack);
 }

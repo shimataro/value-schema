@@ -1,5 +1,5 @@
 import {Key, Values, isNumber, isString} from "../../libs/types";
-import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
+import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 type MaxLength = {
 	/** maximum length of string */
@@ -42,7 +42,7 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	return ValueSchemaError.raise(CAUSE.MAX_LENGTH, values, keyStack);
+	return ValueSchemaError.raise(RULE.MAX_LENGTH, values, keyStack);
 }
 
 /**

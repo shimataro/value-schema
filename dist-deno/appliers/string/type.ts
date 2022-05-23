@@ -1,5 +1,5 @@
 import { Key, Values, isScalar, isString } from "../../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 export interface Options {
     /** does not convert type; causes error if type does not match */
     strictType?: boolean;
@@ -21,11 +21,11 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
     }
     // strict type check
     if (normalizedOptions.strictType) {
-        ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+        ValueSchemaError.raise(RULE.TYPE, values, keyStack);
     }
     // non-scalar value cannot be converted to string
     if (!isScalar(values.output)) {
-        ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+        ValueSchemaError.raise(RULE.TYPE, values, keyStack);
     }
     values.output = String(values.output);
     return false;

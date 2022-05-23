@@ -1,5 +1,5 @@
 import { Key, Values } from "./types.ts";
-export const CAUSE = {
+export const RULE = {
     TYPE: "type",
     UNDEFINED: "undefined",
     NULL: "null",
@@ -13,23 +13,24 @@ export const CAUSE = {
     PATTERN: "pattern",
     CHECKSUM: "checksum"
 } as const;
-type CAUSE = typeof CAUSE[keyof typeof CAUSE];
+type RULE = typeof RULE[keyof typeof RULE];
 /**
  * Value-Schema Error
  */
 export class ValueSchemaError extends Error {
-    public readonly cause: CAUSE;
+    /** the rule that input value didn't satisfy */
+    public readonly rule: RULE;
     public readonly value: unknown;
     public readonly keyStack: Key[];
     /**
      * throw an error
-     * @param cause cause of error
+     * @param rule the rule that input value didn't satisfy
      * @param values input/output values
      * @param keyStack path to key that caused error
      * @throws {ValueSchemaError}
      */
-    static raise(cause: CAUSE, values: Values, keyStack: Key[]): never {
-        throw new ValueSchemaError(cause, values.input, keyStack);
+    static raise(rule: RULE, values: Values, keyStack: Key[]): never {
+        throw new ValueSchemaError(rule, values.input, keyStack);
     }
     /**
      * check whether error is instance of ValueSchemaError or not
@@ -41,14 +42,14 @@ export class ValueSchemaError extends Error {
     }
     /**
      * constructor
-     * @param cause cause of error
+     * @param rule the rule that input value didn't satisfy
      * @param value input value
      * @param keyStack path to key that caused error
      */
-    constructor(cause: CAUSE, value: unknown, keyStack: Key[]) {
-        super(`${cause}; ${value}; ${keyStack}`);
+    constructor(rule: RULE, value: unknown, keyStack: Key[]) {
+        super(`${rule}; ${value}; ${keyStack}`);
         this.name = "ValueSchemaError";
-        this.cause = cause;
+        this.rule = rule;
         this.value = value;
         this.keyStack = [...keyStack];
     }

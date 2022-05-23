@@ -1,5 +1,5 @@
 import { Key, Values } from "../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../libs/ValueSchemaError.ts";
 export interface Options<T> {
     /** accepts only specified values */
     only?: readonly T[];
@@ -25,5 +25,5 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
             return true;
         }
     }
-    return ValueSchemaError.raise(CAUSE.ONLY, values, keyStack);
+    return ValueSchemaError.raise(RULE.ONLY, values, keyStack);
 }

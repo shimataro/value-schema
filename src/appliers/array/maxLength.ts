@@ -1,5 +1,5 @@
 import {Key, Values, isArray, isNumber} from "../../libs/types";
-import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
+import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 type MaxLength = {
 	/** maximum size of array */
@@ -42,7 +42,7 @@ export function applyTo<T>(values: Values, options: Options, keyStack: Key[]): v
 		return false;
 	}
 
-	return ValueSchemaError.raise(CAUSE.MAX_LENGTH, values, keyStack);
+	return ValueSchemaError.raise(RULE.MAX_LENGTH, values, keyStack);
 }
 
 /**

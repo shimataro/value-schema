@@ -1,5 +1,5 @@
 import {Key, Values, isBoolean, isNumber, isString} from "../../libs/types";
-import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
+import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 const REGEXP_TRUE = /^\s*(true|yes|on)\s*$/i;
 const REGEXP_FALSE = /^\s*(false|no|off)\s*$/i;
@@ -37,7 +37,7 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 	if(normalizedOptions.strictType)
 	{
 		// strict type check
-		ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+		ValueSchemaError.raise(RULE.TYPE, values, keyStack);
 	}
 
 	if(isString(values.output))
@@ -67,5 +67,5 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		}
 	}
 
-	return ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+	return ValueSchemaError.raise(RULE.TYPE, values, keyStack);
 }

@@ -1,5 +1,5 @@
 import { Key, Values, isString } from "../../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 export const CHECKSUM_ALGORITHM = {
     /** Luhn algorithm; used in credit card and IMEI (also known as MOD-10 algorithm) */
     LUHN: 0,
@@ -37,7 +37,7 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
     if (check(values.output, options.checksum)) {
         return false;
     }
-    return ValueSchemaError.raise(CAUSE.CHECKSUM, values, keyStack);
+    return ValueSchemaError.raise(RULE.CHECKSUM, values, keyStack);
 }
 /**
  * check string

@@ -42,7 +42,7 @@ function testType(): void
 		expect(() =>
 		{
 			vs.numericString().applyTo("1111２２２２3333４４４４");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 	});
 }
 
@@ -64,7 +64,7 @@ function testIfUndefined(): void
 		expect(() =>
 		{
 			vs.numericString().applyTo(undefined);
-		}).toThrow(vs.CAUSE.UNDEFINED);
+		}).toThrow(vs.RULE.UNDEFINED);
 	});
 }
 
@@ -92,7 +92,7 @@ function testIfNull(): void
 		expect(() =>
 		{
 			vs.numericString().applyTo(null);
-		}).toThrow(vs.CAUSE.NULL);
+		}).toThrow(vs.RULE.NULL);
 	});
 }
 
@@ -114,7 +114,7 @@ function testJoinArray(): void
 		expect(() =>
 		{
 			vs.numericString().applyTo(["1111", "2222", "3333", "4444"]);
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 	});
 }
 
@@ -136,7 +136,7 @@ function testSeparatedBy(): void
 		expect(() =>
 		{
 			vs.numericString().applyTo("1111-2222-3333-4444");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 	});
 }
 
@@ -162,14 +162,14 @@ function testMinLength(): void
 				minLength: 4,
 				separatedBy: "-",
 			}).applyTo("111");
-		}).toThrow(vs.CAUSE.MIN_LENGTH);
+		}).toThrow(vs.RULE.MIN_LENGTH);
 		expect(() =>
 		{
 			vs.numericString({
 				minLength: 4,
 				separatedBy: "-",
 			}).applyTo("11-1");
-		}).toThrow(vs.CAUSE.MIN_LENGTH);
+		}).toThrow(vs.RULE.MIN_LENGTH);
 	});
 }
 
@@ -219,7 +219,7 @@ function testMaxLength(): void
 			vs.numericString({
 				maxLength: 4,
 			}).applyTo("11111");
-		}).toThrow(vs.CAUSE.MAX_LENGTH);
+		}).toThrow(vs.RULE.MAX_LENGTH);
 	});
 }
 
@@ -248,7 +248,7 @@ function testChecksumLuhn(): void
 			vs.numericString({
 				checksum: vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD,
 			}).applyTo("12345");
-		}).toThrow(vs.CAUSE.CHECKSUM);
+		}).toThrow(vs.RULE.CHECKSUM);
 	});
 }
 
@@ -280,7 +280,7 @@ function testChecksumModulus10Weight31(): void
 				separatedBy: "-",
 				checksum: vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.ISBN13,
 			}).applyTo("978-4-10-109205-1");
-		}).toThrow(vs.CAUSE.CHECKSUM);
+		}).toThrow(vs.RULE.CHECKSUM);
 	});
 }
 
@@ -296,7 +296,7 @@ function testChecksumOthers(): void
 			vs.numericString({
 				checksum: -1 as any, // eslint-disable-line @typescript-eslint/no-explicit-any
 			}).applyTo("0123456789");
-		}).toThrow(vs.CAUSE.CHECKSUM);
+		}).toThrow(vs.RULE.CHECKSUM);
 	});
 }
 
@@ -334,6 +334,6 @@ function testConverter(): void
 					return value.padStart(8, "0");
 				},
 			}).applyTo("123456789");
-		}).toThrow(vs.CAUSE.CONVERTER);
+		}).toThrow(vs.RULE.CONVERTER);
 	});
 }

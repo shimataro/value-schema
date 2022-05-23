@@ -1,5 +1,5 @@
 import { Key, Values, isInteger, isNumber, isScalar, isString } from "../../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 const REGEXP_NUMBER = /^\s*[+-]?(\d+(\.\d*)?|\.\d+)\s*$/;
 const REGEXP_INTEGER = /^\s*[+-]?\d+\s*$/;
 export const INTEGER = {
@@ -50,12 +50,12 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
     };
     if (isString(values.output)) {
         if (!checkNumberFormat(normalizedOptions, values.output)) {
-            ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+            ValueSchemaError.raise(RULE.TYPE, values, keyStack);
         }
     }
     const adjustedValue = toNumber(normalizedOptions, values.output);
     if (adjustedValue === false) {
-        ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+        ValueSchemaError.raise(RULE.TYPE, values, keyStack);
     }
     values.output = adjustedValue;
     return false;

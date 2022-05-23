@@ -1,5 +1,5 @@
 import { Key, Values, isObject } from "../../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 export interface Options {
 }
 /**
@@ -15,5 +15,5 @@ export function applyTo<T>(values: Values, options: Options, keyStack: Key[]): v
         // already object
         return false;
     }
-    return ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+    return ValueSchemaError.raise(RULE.TYPE, values, keyStack);
 }

@@ -1,5 +1,5 @@
 import {Key, Values, isString} from "../../libs/types";
-import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
+import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 export const CHECKSUM_ALGORITHM =
 {
@@ -50,7 +50,7 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	return ValueSchemaError.raise(CAUSE.CHECKSUM, values, keyStack);
+	return ValueSchemaError.raise(RULE.CHECKSUM, values, keyStack);
 }
 
 /**

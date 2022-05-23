@@ -1,5 +1,5 @@
 import { Key, Values } from "../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../libs/ValueSchemaError.ts";
 export interface Options<T> {
     /** value if empty string (defaults: error) */
     ifEmptyString?: T | null;
@@ -19,5 +19,5 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
         values.output = options.ifEmptyString;
         return true;
     }
-    return ValueSchemaError.raise(CAUSE.EMPTY_STRING, values, keyStack);
+    return ValueSchemaError.raise(RULE.EMPTY_STRING, values, keyStack);
 }

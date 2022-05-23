@@ -1,5 +1,5 @@
 import { Key, Values } from "../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../libs/ValueSchemaError.ts";
 export interface Options<T> {
     /** value if undefined (defaults: error) */
     ifUndefined?: T | null;
@@ -19,5 +19,5 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
         values.output = options.ifUndefined;
         return true;
     }
-    return ValueSchemaError.raise(CAUSE.UNDEFINED, values, keyStack);
+    return ValueSchemaError.raise(RULE.UNDEFINED, values, keyStack);
 }

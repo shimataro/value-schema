@@ -1,5 +1,5 @@
 import {Key, Values, isString} from "../../libs/types";
-import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
+import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 const MAX_LENGTH_LOCAL = 64;
 const MAX_LENGTH_DOMAIN = 255;
@@ -26,19 +26,19 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 
 	if(values.output.length > MAX_LENGTH)
 	{
-		ValueSchemaError.raise(CAUSE.MAX_LENGTH, values, keyStack);
+		ValueSchemaError.raise(RULE.MAX_LENGTH, values, keyStack);
 	}
 
 	const atPosition = values.output.lastIndexOf("@");
 	if(atPosition > MAX_LENGTH_LOCAL)
 	{
 		// local-part length error
-		ValueSchemaError.raise(CAUSE.MAX_LENGTH, values, keyStack);
+		ValueSchemaError.raise(RULE.MAX_LENGTH, values, keyStack);
 	}
 	if(values.output.length - atPosition - 1 > MAX_LENGTH_DOMAIN)
 	{
 		// domain-part length error
-		ValueSchemaError.raise(CAUSE.MAX_LENGTH, values, keyStack);
+		ValueSchemaError.raise(RULE.MAX_LENGTH, values, keyStack);
 	}
 
 	return false;

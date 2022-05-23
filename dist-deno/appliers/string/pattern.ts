@@ -1,5 +1,5 @@
 import { Key, Values, isString } from "../../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 import { REGEXP_EMAIL } from "../../libs/regexp/email.ts";
 import { REGEXP_IPV4 } from "../../libs/regexp/ipv4.ts";
 import { REGEXP_IPV6 } from "../../libs/regexp/ipv6.ts";
@@ -40,5 +40,5 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
     if (options.pattern.test(values.output)) {
         return false;
     }
-    return ValueSchemaError.raise(CAUSE.PATTERN, values, keyStack);
+    return ValueSchemaError.raise(RULE.PATTERN, values, keyStack);
 }

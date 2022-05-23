@@ -1,5 +1,5 @@
 import { Key, Values, isArray, isNumber } from "../../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 type MaxLength = {
     /** maximum size of array */
     length: number;
@@ -31,7 +31,7 @@ export function applyTo<T>(values: Values, options: Options, keyStack: Key[]): v
         values.output.splice(maxLength.length);
         return false;
     }
-    return ValueSchemaError.raise(CAUSE.MAX_LENGTH, values, keyStack);
+    return ValueSchemaError.raise(RULE.MAX_LENGTH, values, keyStack);
 }
 /**
  * normalize options

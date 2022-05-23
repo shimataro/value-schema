@@ -57,7 +57,7 @@ function testIfUndefined(): void
 		expect(() =>
 		{
 			vs.array().applyTo(undefined);
-		}).toThrow(vs.CAUSE.UNDEFINED);
+		}).toThrow(vs.RULE.UNDEFINED);
 	});
 }
 
@@ -85,7 +85,7 @@ function testIfNull(): void
 		expect(() =>
 		{
 			vs.array().applyTo(null);
-		}).toThrow(vs.CAUSE.NULL);
+		}).toThrow(vs.RULE.NULL);
 	});
 }
 
@@ -113,7 +113,7 @@ function testIfEmptyString(): void
 		expect(() =>
 		{
 			vs.array().applyTo("");
-		}).toThrow(vs.CAUSE.EMPTY_STRING);
+		}).toThrow(vs.RULE.EMPTY_STRING);
 	});
 }
 
@@ -150,7 +150,7 @@ function testToArray(): void
 		expect(() =>
 		{
 			vs.array().applyTo("abc");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 	});
 }
 
@@ -174,7 +174,7 @@ function testMinLength(): void
 			vs.array({
 				minLength: 1,
 			}).applyTo([]);
-		}).toThrow(vs.CAUSE.MIN_LENGTH);
+		}).toThrow(vs.RULE.MIN_LENGTH);
 	});
 }
 
@@ -218,7 +218,7 @@ function testMaxLength(): void
 			vs.array({
 				maxLength: 1,
 			}).applyTo([1, 2]);
-		}).toThrow(vs.CAUSE.MAX_LENGTH);
+		}).toThrow(vs.RULE.MAX_LENGTH);
 	});
 }
 
@@ -391,7 +391,7 @@ function testNumber(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.TYPE);
+			expect(err.rule).toEqual(vs.RULE.TYPE);
 			expect(err.keyStack).toEqual([1]);
 		}
 	});
@@ -411,7 +411,7 @@ function testNumber(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.UNDEFINED);
+			expect(err.rule).toEqual(vs.RULE.UNDEFINED);
 			expect(err.keyStack).toEqual([1]);
 		}
 
@@ -429,7 +429,7 @@ function testNumber(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.NULL);
+			expect(err.rule).toEqual(vs.RULE.NULL);
 			expect(err.keyStack).toEqual([1]);
 		}
 
@@ -447,7 +447,7 @@ function testNumber(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.EMPTY_STRING);
+			expect(err.rule).toEqual(vs.RULE.EMPTY_STRING);
 			expect(err.keyStack).toEqual([1]);
 		}
 
@@ -467,7 +467,7 @@ function testNumber(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.NULL);
+			expect(err.rule).toEqual(vs.RULE.NULL);
 			expect(err.keyStack).toEqual([1]);
 		}
 
@@ -487,7 +487,7 @@ function testNumber(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.EMPTY_STRING);
+			expect(err.rule).toEqual(vs.RULE.EMPTY_STRING);
 			expect(err.keyStack).toEqual([1]);
 		}
 
@@ -507,7 +507,7 @@ function testNumber(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.UNDEFINED);
+			expect(err.rule).toEqual(vs.RULE.UNDEFINED);
 			expect(err.keyStack).toEqual([1]);
 		}
 	});
@@ -529,7 +529,7 @@ function testNumber(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.EMPTY_STRING);
+			expect(err.rule).toEqual(vs.RULE.EMPTY_STRING);
 			expect(err.keyStack).toEqual([1]);
 		}
 
@@ -549,7 +549,7 @@ function testNumber(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.UNDEFINED);
+			expect(err.rule).toEqual(vs.RULE.UNDEFINED);
 			expect(err.keyStack).toEqual([1]);
 		}
 
@@ -569,7 +569,7 @@ function testNumber(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.NULL);
+			expect(err.rule).toEqual(vs.RULE.NULL);
 			expect(err.keyStack).toEqual([1]);
 		}
 
@@ -587,7 +587,7 @@ function testNumber(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.TYPE);
+			expect(err.rule).toEqual(vs.RULE.TYPE);
 			expect(err.keyStack).toEqual([0]);
 		}
 
@@ -607,7 +607,7 @@ function testNumber(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.TYPE);
+			expect(err.rule).toEqual(vs.RULE.TYPE);
 			expect(err.keyStack).toEqual([0]);
 		}
 
@@ -627,7 +627,7 @@ function testNumber(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.ONLY);
+			expect(err.rule).toEqual(vs.RULE.ONLY);
 			expect(err.keyStack).toEqual([0]);
 		}
 	});
@@ -649,7 +649,7 @@ function testNumber(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.MIN_VALUE);
+			expect(err.rule).toEqual(vs.RULE.MIN_VALUE);
 			expect(err.keyStack).toEqual([0]);
 		}
 
@@ -669,7 +669,7 @@ function testNumber(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.MAX_VALUE);
+			expect(err.rule).toEqual(vs.RULE.MAX_VALUE);
 			expect(err.keyStack).toEqual([2]);
 		}
 	});
@@ -778,7 +778,7 @@ function testString(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.ONLY);
+			expect(err.rule).toEqual(vs.RULE.ONLY);
 			expect(err.keyStack).toEqual([2]);
 		}
 
@@ -798,7 +798,7 @@ function testString(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.MIN_LENGTH);
+			expect(err.rule).toEqual(vs.RULE.MIN_LENGTH);
 			expect(err.keyStack).toEqual([0]);
 		}
 
@@ -818,7 +818,7 @@ function testString(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.MAX_LENGTH);
+			expect(err.rule).toEqual(vs.RULE.MAX_LENGTH);
 			expect(err.keyStack).toEqual([1]);
 		}
 
@@ -838,7 +838,7 @@ function testString(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.PATTERN);
+			expect(err.rule).toEqual(vs.RULE.PATTERN);
 			expect(err.keyStack).toEqual([0]);
 		}
 	});

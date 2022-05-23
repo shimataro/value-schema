@@ -181,7 +181,7 @@ function testIfUndefined(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.UNDEFINED);
+		}).toThrow(vs.RULE.UNDEFINED);
 
 		expect(() =>
 		{
@@ -191,7 +191,7 @@ function testIfUndefined(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.UNDEFINED);
+		}).toThrow(vs.RULE.UNDEFINED);
 
 		expect(() =>
 		{
@@ -201,7 +201,7 @@ function testIfUndefined(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.UNDEFINED);
+		}).toThrow(vs.RULE.UNDEFINED);
 
 		expect(() =>
 		{
@@ -211,7 +211,7 @@ function testIfUndefined(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.UNDEFINED);
+		}).toThrow(vs.RULE.UNDEFINED);
 	});
 	it("should cause error(s) (union)", () =>
 	{
@@ -223,7 +223,7 @@ function testIfUndefined(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.UNDEFINED);
+		}).toThrow(vs.RULE.UNDEFINED);
 
 		expect(() =>
 		{
@@ -233,7 +233,7 @@ function testIfUndefined(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.UNDEFINED);
+		}).toThrow(vs.RULE.UNDEFINED);
 
 		expect(() =>
 		{
@@ -243,7 +243,7 @@ function testIfUndefined(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.UNDEFINED);
+		}).toThrow(vs.RULE.UNDEFINED);
 	});
 }
 
@@ -390,7 +390,7 @@ function testIfNull(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.NULL);
+		}).toThrow(vs.RULE.NULL);
 
 		expect(() =>
 		{
@@ -400,7 +400,7 @@ function testIfNull(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.NULL);
+		}).toThrow(vs.RULE.NULL);
 
 		expect(() =>
 		{
@@ -410,7 +410,7 @@ function testIfNull(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.NULL);
+		}).toThrow(vs.RULE.NULL);
 
 		expect(() =>
 		{
@@ -420,7 +420,7 @@ function testIfNull(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.NULL);
+		}).toThrow(vs.RULE.NULL);
 	});
 	it("should cause error(s) (union)", () =>
 	{
@@ -432,7 +432,7 @@ function testIfNull(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.NULL);
+		}).toThrow(vs.RULE.NULL);
 
 		expect(() =>
 		{
@@ -442,7 +442,7 @@ function testIfNull(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.NULL);
+		}).toThrow(vs.RULE.NULL);
 
 		expect(() =>
 		{
@@ -453,7 +453,7 @@ function testIfNull(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.NULL);
+		}).toThrow(vs.RULE.NULL);
 	});
 }
 
@@ -600,7 +600,7 @@ function testIfEmptyString(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.EMPTY_STRING);
+		}).toThrow(vs.RULE.EMPTY_STRING);
 
 		expect(() =>
 		{
@@ -610,7 +610,7 @@ function testIfEmptyString(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.EMPTY_STRING);
+		}).toThrow(vs.RULE.EMPTY_STRING);
 
 		expect(() =>
 		{
@@ -620,7 +620,7 @@ function testIfEmptyString(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.EMPTY_STRING);
+		}).toThrow(vs.RULE.EMPTY_STRING);
 
 		expect(() =>
 		{
@@ -630,7 +630,7 @@ function testIfEmptyString(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.EMPTY_STRING);
+		}).toThrow(vs.RULE.EMPTY_STRING);
 	});
 	it("should cause error(s) (union)", () =>
 	{
@@ -642,7 +642,7 @@ function testIfEmptyString(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.EMPTY_STRING);
+		}).toThrow(vs.RULE.EMPTY_STRING);
 
 		expect(() =>
 		{
@@ -652,7 +652,7 @@ function testIfEmptyString(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.EMPTY_STRING);
+		}).toThrow(vs.RULE.EMPTY_STRING);
 
 		expect(() =>
 		{
@@ -662,7 +662,7 @@ function testIfEmptyString(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.EMPTY_STRING);
+		}).toThrow(vs.RULE.EMPTY_STRING);
 	});
 }
 
@@ -811,7 +811,7 @@ function testOnly(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.ONLY);
+		}).toThrow(vs.RULE.ONLY);
 
 		expect(() =>
 		{
@@ -821,7 +821,7 @@ function testOnly(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.ONLY);
+		}).toThrow(vs.RULE.ONLY);
 
 		expect(() =>
 		{
@@ -831,7 +831,7 @@ function testOnly(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.ONLY);
+		}).toThrow(vs.RULE.ONLY);
 
 		expect(() =>
 		{
@@ -841,7 +841,7 @@ function testOnly(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.ONLY);
+		}).toThrow(vs.RULE.ONLY);
 	});
 	it("should cause error(s) (union)", () =>
 	{
@@ -853,7 +853,7 @@ function testOnly(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.ONLY);
+		}).toThrow(vs.RULE.ONLY);
 
 		expect(() =>
 		{
@@ -863,7 +863,7 @@ function testOnly(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.ONLY);
+		}).toThrow(vs.RULE.ONLY);
 
 		expect(() =>
 		{
@@ -873,6 +873,6 @@ function testOnly(): void
 
 			// unreachable
 			expect(val).toBeNaN();
-		}).toThrow(vs.CAUSE.ONLY);
+		}).toThrow(vs.RULE.ONLY);
 	});
 }

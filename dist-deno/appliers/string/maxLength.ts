@@ -1,5 +1,5 @@
 import { Key, Values, isNumber, isString } from "../../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 type MaxLength = {
     /** maximum length of string */
     length: number;
@@ -31,7 +31,7 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
         values.output = values.output.substr(0, maxLength.length);
         return false;
     }
-    return ValueSchemaError.raise(CAUSE.MAX_LENGTH, values, keyStack);
+    return ValueSchemaError.raise(RULE.MAX_LENGTH, values, keyStack);
 }
 /**
  * normalize options

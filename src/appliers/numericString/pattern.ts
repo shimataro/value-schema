@@ -1,5 +1,5 @@
 import {Key, Values, isString} from "../../libs/types";
-import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
+import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 const REGEXP = /^\d+$/;
 
@@ -27,5 +27,5 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	return ValueSchemaError.raise(CAUSE.PATTERN, values, keyStack);
+	return ValueSchemaError.raise(RULE.PATTERN, values, keyStack);
 }

@@ -28,7 +28,7 @@ function testIfUndefined(): void
 		expect(() =>
 		{
 			vs.email().applyTo(undefined);
-		}).toThrow(vs.CAUSE.UNDEFINED);
+		}).toThrow(vs.RULE.UNDEFINED);
 	});
 }
 
@@ -56,7 +56,7 @@ function testIfNull(): void
 		expect(() =>
 		{
 			vs.email().applyTo(null);
-		}).toThrow(vs.CAUSE.NULL);
+		}).toThrow(vs.RULE.NULL);
 	});
 }
 
@@ -84,7 +84,7 @@ function testAcceptEmptyString(): void
 		expect(() =>
 		{
 			vs.email().applyTo("");
-		}).toThrow(vs.CAUSE.EMPTY_STRING);
+		}).toThrow(vs.RULE.EMPTY_STRING);
 	});
 }
 
@@ -108,7 +108,7 @@ function testTrims(): void
 			vs.email({
 				trims: true,
 			}).applyTo(" \t\r\n ");
-		}).toThrow(vs.CAUSE.EMPTY_STRING);
+		}).toThrow(vs.RULE.EMPTY_STRING);
 	});
 }
 
@@ -144,7 +144,7 @@ function testMaxLength(): void
 			expect(() =>
 			{
 				vs.email().applyTo(value);
-			}).toThrow(vs.CAUSE.MAX_LENGTH);
+			}).toThrow(vs.RULE.MAX_LENGTH);
 		}
 	});
 }
@@ -181,7 +181,7 @@ function testPattern(): void
 			vs.email({
 				pattern: /^\w+@([\w-]+\.)+\w+$/,
 			}).applyTo("john.doe@example.com");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 	});
 }
 
@@ -243,7 +243,7 @@ function testEmail(): void
 			expect(() =>
 			{
 				vs.email().applyTo(value);
-			}).toThrow(vs.CAUSE.PATTERN);
+			}).toThrow(vs.RULE.PATTERN);
 		}
 	});
 }

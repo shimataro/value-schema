@@ -1,6 +1,6 @@
 import {ErrorHandler, FinishHandler} from "./publicTypes";
 import {AnyObject, Key, ObjectTypeOf, SchemaObject, isObject} from "./types";
-import {CAUSE, ValueSchemaError} from "./ValueSchemaError";
+import {RULE, ValueSchemaError} from "./ValueSchemaError";
 
 /**
  * apply schema object to data
@@ -15,7 +15,7 @@ export function applySchemaObjectCore<S extends SchemaObject>(schemaObject: S, d
 {
 	if(!isObject(data))
 	{
-		const err = new ValueSchemaError(CAUSE.TYPE, data, keyStack);
+		const err = new ValueSchemaError(RULE.TYPE, data, keyStack);
 		const result = onError(err);
 		if(!isObject(result))
 		{

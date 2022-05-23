@@ -1,5 +1,5 @@
 import { Key, Values, isArray } from "../../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 export interface Options {
     /** minimum size of array */
     minLength?: number;
@@ -23,5 +23,5 @@ export function applyTo<T>(values: Values, options: Options, keyStack: Key[]): v
     if (values.output.length >= normalizedOptions.minLength) {
         return false;
     }
-    return ValueSchemaError.raise(CAUSE.MIN_LENGTH, values, keyStack);
+    return ValueSchemaError.raise(RULE.MIN_LENGTH, values, keyStack);
 }

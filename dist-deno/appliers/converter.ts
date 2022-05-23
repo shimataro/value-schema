@@ -1,5 +1,5 @@
 import { Key, Values } from "../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../libs/ValueSchemaError.ts";
 export interface Options<T> {
     /** converter function */
     converter?: (value: T, fail: () => never) => T;
@@ -16,7 +16,7 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
         return false;
     }
     values.output = options.converter(values.output as T, () => {
-        return ValueSchemaError.raise(CAUSE.CONVERTER, values, keyStack);
+        return ValueSchemaError.raise(RULE.CONVERTER, values, keyStack);
     });
     return true;
 }

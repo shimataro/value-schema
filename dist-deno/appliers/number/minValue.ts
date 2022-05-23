@@ -1,5 +1,5 @@
 import { Key, Values, isNumber } from "../../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 type MinValue = {
     /** minimum value */
     value: number;
@@ -31,7 +31,7 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
         values.output = minValue.value;
         return false;
     }
-    return ValueSchemaError.raise(CAUSE.MIN_VALUE, values, keyStack);
+    return ValueSchemaError.raise(RULE.MIN_VALUE, values, keyStack);
 }
 /**
  * normalize options

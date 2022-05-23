@@ -1,5 +1,5 @@
 import {Key, Values, isNumber} from "../../libs/types";
-import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
+import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 type MaxValue = {
 	/** maximum value */
@@ -43,7 +43,7 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	return ValueSchemaError.raise(CAUSE.MAX_VALUE, values, keyStack);
+	return ValueSchemaError.raise(RULE.MAX_VALUE, values, keyStack);
 }
 
 /**

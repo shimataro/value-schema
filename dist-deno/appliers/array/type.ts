@@ -1,5 +1,5 @@
 import { Key, Values, isArray, isString } from "../../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 export interface Options {
     /** assumes entire values are in one string separated by pattern */
     separatedBy?: string | RegExp;
@@ -26,5 +26,5 @@ export function applyTo<T>(values: Values, options: Options, keyStack: Key[]): v
         values.output = [values.output];
         return false;
     }
-    return ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+    return ValueSchemaError.raise(RULE.TYPE, values, keyStack);
 }

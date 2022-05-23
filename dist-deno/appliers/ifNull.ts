@@ -1,5 +1,5 @@
 import { Key, Values } from "../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../libs/ValueSchemaError.ts";
 export interface Options<T> {
     /** value if null (defaults: error) */
     ifNull?: T | null;
@@ -19,5 +19,5 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
         values.output = options.ifNull;
         return true;
     }
-    return ValueSchemaError.raise(CAUSE.NULL, values, keyStack);
+    return ValueSchemaError.raise(RULE.NULL, values, keyStack);
 }

@@ -1,5 +1,5 @@
 import {Key, Values, isString} from "../../libs/types";
-import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
+import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 import {REGEXP_EMAIL} from "../../libs/regexp/email";
 import {REGEXP_IPV4} from "../../libs/regexp/ipv4";
@@ -52,5 +52,5 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	return ValueSchemaError.raise(CAUSE.PATTERN, values, keyStack);
+	return ValueSchemaError.raise(RULE.PATTERN, values, keyStack);
 }

@@ -285,16 +285,16 @@ function testError(): void
 			// input must be an object
 			vs.applySchemaObject({}, null, (err) =>
 			{
-				expect(err.cause).toEqual(vs.CAUSE.TYPE);
+				expect(err.rule).toEqual(vs.RULE.TYPE);
 				return null;
 			});
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(
 			// input must be an object
 			vs.applySchemaObject({}, null, (err) =>
 			{
-				expect(err.cause).toEqual(vs.CAUSE.TYPE);
+				expect(err.rule).toEqual(vs.RULE.TYPE);
 				return {};
 			})
 		).toEqual({});
@@ -305,7 +305,7 @@ function testError(): void
 			const input = 0;
 
 			vs.applySchemaObject(schemaObject, input);
-		}).toThrow(vs.CAUSE.TYPE); // input must be an object
+		}).toThrow(vs.RULE.TYPE); // input must be an object
 
 		expect(() =>
 		{
@@ -313,7 +313,7 @@ function testError(): void
 			const input = null;
 
 			vs.applySchemaObject(schemaObject, input);
-		}).toThrow(vs.CAUSE.TYPE); // input must be an object; typeof null === "object"
+		}).toThrow(vs.RULE.TYPE); // input must be an object; typeof null === "object"
 
 		expect(() =>
 		{
@@ -321,7 +321,7 @@ function testError(): void
 			const input: number[] = [];
 
 			vs.applySchemaObject(schemaObject, input);
-		}).toThrow(vs.CAUSE.TYPE); // input must be an object; typeof [] === "object"
+		}).toThrow(vs.RULE.TYPE); // input must be an object; typeof [] === "object"
 
 		expect(() =>
 		{
@@ -412,7 +412,7 @@ function testError(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.MIN_VALUE);
+			expect(err.rule).toEqual(vs.RULE.MIN_VALUE);
 			expect(err.keyStack).toEqual(["id"]);
 		}
 
@@ -440,7 +440,7 @@ function testError(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.TYPE);
+			expect(err.rule).toEqual(vs.RULE.TYPE);
 			expect(err.keyStack).toEqual(["ids", 3]);
 		}
 
@@ -487,7 +487,7 @@ function testError(): void
 			{
 				return;
 			}
-			expect(err.cause).toEqual(vs.CAUSE.TYPE);
+			expect(err.rule).toEqual(vs.RULE.TYPE);
 			expect(err.keyStack).toEqual(["infoList", 1, "id"]);
 		}
 	});

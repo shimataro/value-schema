@@ -1,5 +1,5 @@
 import {Key, Values} from "../libs/types";
-import {CAUSE, ValueSchemaError} from "../libs/ValueSchemaError";
+import {RULE, ValueSchemaError} from "../libs/ValueSchemaError";
 
 export interface Options<T>
 {
@@ -27,5 +27,5 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
 		return true;
 	}
 
-	return ValueSchemaError.raise(CAUSE.UNDEFINED, values, keyStack);
+	return ValueSchemaError.raise(RULE.UNDEFINED, values, keyStack);
 }

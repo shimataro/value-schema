@@ -1,5 +1,5 @@
 import { Key, Values, isBoolean, isNumber, isString } from "../../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 const REGEXP_TRUE = /^\s*(true|yes|on)\s*$/i;
 const REGEXP_FALSE = /^\s*(false|no|off)\s*$/i;
 export interface Options {
@@ -28,7 +28,7 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
     // not boolean
     if (normalizedOptions.strictType) {
         // strict type check
-        ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+        ValueSchemaError.raise(RULE.TYPE, values, keyStack);
     }
     if (isString(values.output)) {
         // "true" is true, "false" is false
@@ -49,5 +49,5 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
             return true;
         }
     }
-    return ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+    return ValueSchemaError.raise(RULE.TYPE, values, keyStack);
 }
