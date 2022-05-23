@@ -46,7 +46,7 @@ export interface Options
  * @param values input/output values
  * @param options options
  * @param keyStack key stack for error handling
- * @returns applied value
+ * @returns escapes from applyTo chain or not
  */
 export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<number>
 {

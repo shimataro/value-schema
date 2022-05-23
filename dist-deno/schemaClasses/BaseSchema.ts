@@ -23,7 +23,7 @@ export class BaseSchema<T = unknown> {
      * apply schema
      * @param value value to apply
      * @param onError error handler
-     * @returns applied value
+     * @returns escapes from applyTo chain or not
      */
     applyTo(value: unknown, onError: ErrorHandler<T> = onErrorDefault): T {
         return this._applyTo(value, onError, []);
