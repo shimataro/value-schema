@@ -743,6 +743,8 @@ assert.strictEqual(
 
 Specifies return value when input value is `undefined`.
 
+**NOTE:** `{ifUndefined: undefined}` is NOT equivalent to `{}`. The former accepts `undefined` input value (and keeps it as-is), the latter doesn't.
+
 ```javascript
 // should be adjusted
 assert.strictEqual(
@@ -753,6 +755,11 @@ assert.strictEqual(
 assert.throws(
     () => vs.boolean().applyTo(undefined),
     {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+
+// this accepts `undefined` value
+assert.strictEqual(
+    vs.boolean({ifUndefined: undefined}).applyTo(undefined),
+    undefined);
 ```
 
 ##### `ifNull`
@@ -886,6 +893,8 @@ assert.throws(
 
 Specifies return value when input value is `undefined`.
 
+**NOTE:** `{ifUndefined: undefined}` is NOT equivalent to `{}`. The former accepts `undefined` input value (and keeps it as-is), the latter doesn't.
+
 ```javascript
 // should be adjusted
 assert.strictEqual(
@@ -896,6 +905,11 @@ assert.strictEqual(
 assert.throws(
     () => vs.number().applyTo(undefined),
     {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+
+// this accepts `undefined` value
+assert.strictEqual(
+    vs.number({ifUndefined: undefined}).applyTo(undefined),
+    undefined);
 ```
 
 ##### `ifNull`
@@ -1230,6 +1244,8 @@ assert.throws(
 
 Specifies return value when input value is `undefined`.
 
+**NOTE:** `{ifUndefined: undefined}` is NOT equivalent to `{}`. The former accepts `undefined` input value (and keeps it as-is), the latter doesn't.
+
 ```javascript
 // should be adjusted
 assert.strictEqual(
@@ -1240,6 +1256,11 @@ assert.strictEqual(
 assert.throws(
     () => vs.string().applyTo(undefined),
     {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+
+// this accepts `undefined` value
+assert.strictEqual(
+    vs.string({ifUndefined: undefined}).applyTo(undefined),
+    undefined);
 ```
 
 ##### `ifNull`
@@ -1460,6 +1481,8 @@ assert.throws(
 
 Specifies return value when input value is `undefined`.
 
+**NOTE:** `{ifUndefined: undefined}` is NOT equivalent to `{}`. The former accepts `undefined` input value (and keeps it as-is), the latter doesn't.
+
 ```javascript
 // should be adjusted
 assert.strictEqual(
@@ -1470,6 +1493,11 @@ assert.strictEqual(
 assert.throws(
     () => vs.numericString().applyTo(undefined),
     {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+
+// this accepts `undefined` value
+assert.strictEqual(
+    vs.numericString({ifUndefined: undefined}).applyTo(undefined),
+    undefined);
 ```
 
 ##### `ifNull`
@@ -1745,6 +1773,8 @@ assert.throws(
 
 Specifies return value when input value is `undefined`.
 
+**NOTE:** `{ifUndefined: undefined}` is NOT equivalent to `{}`. The former accepts `undefined` input value (and keeps it as-is), the latter doesn't.
+
 ```javascript
 // should be adjusted
 assert.strictEqual(
@@ -1755,6 +1785,11 @@ assert.strictEqual(
 assert.throws(
     () => vs.email().applyTo(undefined),
     {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+
+// this accepts `undefined` value
+assert.strictEqual(
+    vs.email({ifUndefined: undefined}).applyTo(undefined),
+    undefined);
 ```
 
 ##### `ifNull`
@@ -1955,6 +1990,8 @@ type NumberUnion = 0 | 1;
 
 Specifies return value when input value is `undefined`.
 
+**NOTE:** `{ifUndefined: undefined}` is NOT equivalent to `{}`. The former accepts `undefined` input value (and keeps it as-is), the latter doesn't.
+
 ```typescript
 enum StringEnum
 {
@@ -1971,6 +2008,11 @@ assert.strictEqual(
 assert.throws(
     () => vs.enumeration({only: Object.values(StringEnum)}).applyTo(undefined),
     {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+
+// this accepts `undefined` value
+assert.strictEqual(
+    vs.enumeration({ifUndefined: undefined, only: Object.values(StringEnum)}).applyTo(undefined),
+    undefined);
 ```
 
 ##### `ifNull`
@@ -2070,6 +2112,8 @@ assert.throws(
 
 Specifies return value when input value is `undefined`.
 
+**NOTE:** `{ifUndefined: undefined}` is NOT equivalent to `{}`. The former accepts `undefined` input value (and keeps it as-is), the latter doesn't.
+
 ```javascript
 // should be adjusted
 assert.deepStrictEqual(
@@ -2080,6 +2124,11 @@ assert.deepStrictEqual(
 assert.throws(
     () => vs.array().applyTo(undefined),
     {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+
+// this accepts `undefined` value
+assert.strictEqual(
+    vs.array({ifUndefined: undefined}).applyTo(undefined),
+    undefined);
 ```
 
 ##### `ifNull`
@@ -2283,6 +2332,8 @@ assert.throws(
 
 Specifies return value when input value is `undefined`.
 
+**NOTE:** `{ifUndefined: undefined}` is NOT equivalent to `{}`. The former accepts `undefined` input value (and keeps it as-is), the latter doesn't.
+
 ```javascript
 // should be adjusted
 assert.deepStrictEqual(
@@ -2293,6 +2344,11 @@ assert.deepStrictEqual(
 assert.throws(
     () => vs.object().applyTo(undefined),
     {name: "ValueSchemaError", cause: vs.CAUSE.UNDEFINED});
+
+// this accepts `undefined` value
+assert.strictEqual(
+    vs.object({ifUndefined: undefined}).applyTo(undefined),
+    undefined);
 ```
 
 ##### `ifNull`
