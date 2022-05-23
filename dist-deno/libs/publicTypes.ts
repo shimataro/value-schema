@@ -6,5 +6,8 @@ export type NullableOptions = {
 } | {
     ifEmptyString: null;
 };
+export type UndefinableOptions = {
+    ifUndefined: undefined;
+};
 export type ErrorHandler<T = unknown> = (err: ValueSchemaError) => T | never;
 export type FinishHandler = () => void;

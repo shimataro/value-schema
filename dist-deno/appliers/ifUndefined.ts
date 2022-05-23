@@ -2,7 +2,7 @@ import { Key, Values } from "../libs/types.ts";
 import { CAUSE, ValueSchemaError } from "../libs/ValueSchemaError.ts";
 export interface Options<T> {
     /** value if undefined (defaults: error) */
-    ifUndefined?: T | null;
+    ifUndefined?: T | null | undefined;
 }
 /**
  * apply schema
@@ -15,9 +15,9 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
     if (values.output !== undefined) {
         return false;
     }
-    if (options.ifUndefined !== undefined) {
-        values.output = options.ifUndefined;
-        return true;
+    if (!options.hasOwnProperty("ifUndefined")) {
+        return ValueSchemaError.raise(CAUSE.UNDEFINED, values, keyStack);
     }
-    return ValueSchemaError.raise(CAUSE.UNDEFINED, values, keyStack);
+    values.output = options.ifUndefined;
+    return true;
 }
