@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* `{ifUndefined: undefined}` accepts `undefined` input value, and keep it as-is.
+
 ## [3.1.0] - 2021-09-27
 
 ### Added
