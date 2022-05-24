@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Others
 
+* support Node.js 16
+* support TypeScript 4.5 - 4.6
+* support Windows Server 2022, macOS Big Sur 11, macOS Monterey 12, and Ubuntu 22.04
+* support Deno 1.15 - 1.19
 * support Deno 1.20 - 1.22
 
 ## [3.1.0] - 2021-09-27

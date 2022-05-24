@@ -15,6 +15,8 @@ simple, easy-to-use, and declarative input validator
 
 supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang.org/), and [Deno](https://deno.land/)
 
+**WARNING:** Deno>=1.20 is NOT supported in v3, and is going to be supported in v4!
+
 ## Table of Contents
 
 * [Introduction](#introduction)

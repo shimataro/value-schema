@@ -35,7 +35,7 @@ export class ValueSchemaError extends Error
 	 * @param rule the rule that input value didn't satisfy
 	 * @param values input/output values
 	 * @param keyStack path to key that caused error
-	 * @throws {ValueSchemaError}
+	 * @throws error object
 	 */
 	static raise(rule: RULE, values: Values, keyStack: Key[]): never
 	{
