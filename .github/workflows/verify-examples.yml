@@ -51,8 +51,12 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Update npm
-      run: npm i -g npm
+    - name: Update npm (Node.js v4.0.0)
+      run: npm install -g npm@3.8.0
+      if: matrix.nodejs == '4.0.0'
+    - name: Update npm (Node.js v8.0.0)
+      run: npm install -g npm@5.0.2 # npm v5.0.0 (Node.js v8.0.0) causes an error "finishInflating is not a function"
+      if: matrix.nodejs == '8.0.0'
     - name: Output versions
       run: |
         node -v
@@ -115,8 +119,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Update npm
-      run: npm i -g npm
     - name: Output versions
       run: |
         node -v
@@ -173,8 +175,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Update npm
-      run: npm i -g npm
     - name: Output versions
       run: |
         node -v
