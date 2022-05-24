@@ -39,7 +39,7 @@ jobs:
       run: npm ci
     # for prettier, see https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/60314
     - name: Reinstall typescript
-      run: npm i -D typescript@${{ matrix.typescript }} jest@25 @jest/globals@25 ts-jest@25 @types/prettier@2.4
+      run: npm i -D typescript@${{ matrix.typescript }} jest@25 @jest/globals@25 ts-jest@25 @types/prettier@2.4 @types/node@${{ matrix.nodejs }}
     - name: Build
       run: npm run build
     - name: Verify
@@ -74,7 +74,7 @@ jobs:
     - name: Install dependencies
       run: npm ci
     - name: Reinstall typescript
-      run: npm i -D typescript@${{ matrix.typescript }}
+      run: npm i -D typescript@${{ matrix.typescript }} @types/node${{ matrix.nodejs }}
     - name: Build
       run: npm run build
     - name: Verify
