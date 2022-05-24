@@ -78,7 +78,7 @@ jobs:
     - name: Install dependencies
       run: npm ci
     - name: Reinstall typescript
-      run: npm i -D typescript@${{ matrix.typescript }} @types/node${{ matrix.nodejs }}
+      run: npm i -D typescript@${{ matrix.typescript }} @types/node@${{ matrix.nodejs }}
     - name: Build
       run: npm run build
     - name: Verify
