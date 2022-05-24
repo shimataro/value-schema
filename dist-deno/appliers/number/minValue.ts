@@ -7,19 +7,19 @@ type MinValue = {
     adjusts: boolean;
 };
 type MinValueLike = number | MinValue;
-export interface Options {
+export interface Rules {
     /** minimum value (value or object) */
     minValue?: MinValueLike;
 }
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<number> {
-    const minValue = normalizeOptions(options.minValue);
+export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<number> {
+    const minValue = normalizeRules(rules.minValue);
     // istanbul ignore next
     if (!isNumber(values.output)) {
         return false;
@@ -34,26 +34,26 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
     return ValueSchemaError.raise(RULE.MIN_VALUE, values, keyStack);
 }
 /**
- * normalize options
- * @param minValue options
- * @returns normalized options
+ * normalize rules
+ * @param minValue minimum value
+ * @returns normalized rules
  */
-function normalizeOptions(minValue?: MinValueLike): MinValue {
-    const defaultOptions: MinValue = {
+function normalizeRules(minValue?: MinValueLike): MinValue {
+    const defaultRules: MinValue = {
         value: Number.MIN_SAFE_INTEGER,
         adjusts: false
     };
     if (minValue === undefined) {
-        return defaultOptions;
+        return defaultRules;
     }
     if (isNumber(minValue)) {
         return {
-            ...defaultOptions,
+            ...defaultRules,
             value: minValue
         };
     }
     return {
-        ...defaultOptions,
+        ...defaultRules,
         ...minValue
     };
 }

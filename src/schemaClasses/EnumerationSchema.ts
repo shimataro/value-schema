@@ -5,17 +5,17 @@ import * as only from "../appliers/only";
 
 import {BaseSchema} from "./BaseSchema";
 
-export type OptionsForEnumeration<E> =
-	ifUndefined.Options<E> &
-	ifEmptyString.Options<E> &
-	ifNull.Options<E> &
-	Required<only.Options<E>>;
+export type RulesForEnumeration<E> =
+	ifUndefined.Rules<E> &
+	ifEmptyString.Rules<E> &
+	ifNull.Rules<E> &
+	Required<only.Rules<E>>;
 
 export class EnumerationSchema<E, Tx = never> extends BaseSchema<E | Tx>
 {
-	constructor(options: OptionsForEnumeration<E>)
+	constructor(rules: RulesForEnumeration<E>)
 	{
-		super(options, [
+		super(rules, [
 			ifUndefined.applyTo,
 			ifEmptyString.applyTo,
 			ifNull.applyTo,

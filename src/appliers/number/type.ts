@@ -31,7 +31,7 @@ type INTEGER = typeof INTEGER[keyof typeof INTEGER];
 
 type IntegerLike = boolean | INTEGER;
 
-export interface Options
+export interface Rules
 {
 	/** does not convert type; causes error if type does not match */
 	strictType?: boolean;
@@ -44,28 +44,28 @@ export interface Options
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<number>
+export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<number>
 {
-	const normalizedOptions: Required<Options> = {
+	const normalizedRules: Required<Rules> = {
 		strictType: false,
 		acceptsSpecialFormats: false,
 		integer: false,
-		...options,
+		...rules,
 	};
 
 	if(isString(values.output))
 	{
-		if(!checkNumberFormat(normalizedOptions, values.output))
+		if(!checkNumberFormat(normalizedRules, values.output))
 		{
 			ValueSchemaError.raise(RULE.TYPE, values, keyStack);
 		}
 	}
 
-	const adjustedValue = toNumber(normalizedOptions, values.output);
+	const adjustedValue = toNumber(normalizedRules, values.output);
 	if(adjustedValue === false)
 	{
 		ValueSchemaError.raise(RULE.TYPE, values, keyStack);
@@ -77,13 +77,13 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 
 /**
  * check the format of value
- * @param options parameters
+ * @param rules rules
  * @param value value to check
  * @returns OK/NG
  */
-function checkNumberFormat(options: Required<Options>, value: string): boolean
+function checkNumberFormat(rules: Required<Rules>, value: string): boolean
 {
-	const re = getRegExpForNumber(options);
+	const re = getRegExpForNumber(rules);
 	if(re === null)
 	{
 		return true;
@@ -93,16 +93,16 @@ function checkNumberFormat(options: Required<Options>, value: string): boolean
 
 /**
  * get RegExp pattern for number
- * @param options parameters
+ * @param rules rules
  * @returns regular expression pattern
  */
-function getRegExpForNumber(options: Required<Options>): RegExp | null
+function getRegExpForNumber(rules: Required<Rules>): RegExp | null
 {
-	if(options.acceptsSpecialFormats)
+	if(rules.acceptsSpecialFormats)
 	{
 		return null;
 	}
-	if(options.integer === true || options.integer === INTEGER.YES)
+	if(rules.integer === true || rules.integer === INTEGER.YES)
 	{
 		// integer
 		return REGEXP_INTEGER;
@@ -114,14 +114,14 @@ function getRegExpForNumber(options: Required<Options>): RegExp | null
 
 /**
  * convert to number
- * @param options parameters
+ * @param rules rules
  * @param value value to convert
  * @returns converted value or false(if failed)
  */
-function toNumber(options: Required<Options>, value: unknown): number | false
+function toNumber(rules: Required<Rules>, value: unknown): number | false
 {
 	// strict type check
-	if(!isNumber(value) && options.strictType)
+	if(!isNumber(value) && rules.strictType)
 	{
 		return false;
 	}
@@ -139,7 +139,7 @@ function toNumber(options: Required<Options>, value: unknown): number | false
 		return false;
 	}
 
-	if(options.integer === false || options.integer === INTEGER.NO)
+	if(rules.integer === false || rules.integer === INTEGER.NO)
 	{
 		return convertedValue;
 	}
@@ -149,13 +149,13 @@ function toNumber(options: Required<Options>, value: unknown): number | false
 	{
 		return convertedValue;
 	}
-	if(options.integer === true || options.integer === INTEGER.YES)
+	if(rules.integer === true || rules.integer === INTEGER.YES)
 	{
 		// not an integer and no round-off
 		return false;
 	}
 
-	return round(convertedValue, options.integer);
+	return round(convertedValue, rules.integer);
 }
 
 /**

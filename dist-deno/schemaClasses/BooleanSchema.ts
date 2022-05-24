@@ -3,10 +3,10 @@ import * as ifNull from "../appliers/ifNull.ts";
 import * as ifUndefined from "../appliers/ifUndefined.ts";
 import * as type from "../appliers/boolean/type.ts";
 import { BaseSchema } from "./BaseSchema.ts";
-export type OptionsForBoolean = ifUndefined.Options<boolean> & ifEmptyString.Options<boolean> & ifNull.Options<boolean> & type.Options;
+export type RulesForBoolean = ifUndefined.Rules<boolean> & ifEmptyString.Rules<boolean> & ifNull.Rules<boolean> & type.Rules;
 export class BooleanSchema<Tx = never> extends BaseSchema<boolean | Tx> {
-    constructor(options: OptionsForBoolean) {
-        super(options, [
+    constructor(rules: RulesForBoolean) {
+        super(rules, [
             ifUndefined.applyTo,
             ifEmptyString.applyTo,
             ifNull.applyTo,

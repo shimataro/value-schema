@@ -5,17 +5,17 @@ import * as type from "../appliers/boolean/type";
 
 import {BaseSchema} from "./BaseSchema";
 
-export type OptionsForBoolean =
-	ifUndefined.Options<boolean> &
-	ifEmptyString.Options<boolean> &
-	ifNull.Options<boolean> &
-	type.Options;
+export type RulesForBoolean =
+	ifUndefined.Rules<boolean> &
+	ifEmptyString.Rules<boolean> &
+	ifNull.Rules<boolean> &
+	type.Rules;
 
 export class BooleanSchema<Tx = never> extends BaseSchema<boolean | Tx>
 {
-	constructor(options: OptionsForBoolean)
+	constructor(rules: RulesForBoolean)
 	{
-		super(options, [
+		super(rules, [
 			ifUndefined.applyTo,
 			ifEmptyString.applyTo,
 			ifNull.applyTo,

@@ -1,6 +1,6 @@
 import {Key, Values, isArray} from "../../libs/types";
 
-export interface Options
+export interface Rules
 {
 	/** joins array and makes string */
 	joinsArray?: boolean;
@@ -9,18 +9,18 @@ export interface Options
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<string> // eslint-disable-line @typescript-eslint/no-unused-vars
+export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<string> // eslint-disable-line @typescript-eslint/no-unused-vars
 {
-	const normalizedOptions: Required<Options> = {
+	const normalizedRules: Required<Rules> = {
 		joinsArray: false,
-		...options,
+		...rules,
 	};
 
-	if(!normalizedOptions.joinsArray)
+	if(!normalizedRules.joinsArray)
 	{
 		return false;
 	}

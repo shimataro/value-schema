@@ -8,20 +8,20 @@ import * as type from "../appliers/string/type";
 
 import {BaseSchema} from "./BaseSchema";
 
-export type OptionsForEmail =
-	ifEmptyString.Options<string> &
-	ifNull.Options<string> &
-	ifUndefined.Options<string> &
-	pattern.Options &
-	maxLength.Options &
-	trims.Options &
-	type.Options;
+export type RulesForEmail =
+	ifEmptyString.Rules<string> &
+	ifNull.Rules<string> &
+	ifUndefined.Rules<string> &
+	pattern.Rules &
+	maxLength.Rules &
+	trims.Rules &
+	type.Rules;
 
 export class EmailSchema<Tx = never> extends BaseSchema<string | Tx>
 {
-	constructor(options: OptionsForEmail)
+	constructor(rules: RulesForEmail)
 	{
-		super(options, [
+		super(rules, [
 			ifUndefined.applyTo,
 			ifNull.applyTo,
 			type.applyTo,

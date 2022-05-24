@@ -1,16 +1,16 @@
-import { NullableOptions } from "../libs/publicTypes.ts";
-import { BooleanSchema, OptionsForBoolean } from "../schemaClasses/BooleanSchema.ts";
+import { NullableRules } from "../libs/publicTypes.ts";
+import { BooleanSchema, RulesForBoolean } from "../schemaClasses/BooleanSchema.ts";
 /** schema for boolean or null */
-export function boolean(options: OptionsForBoolean & NullableOptions): BooleanSchema<null>;
+export function boolean(rules: RulesForBoolean & NullableRules): BooleanSchema<null>;
 /** schema for boolean */
-export function boolean(options: OptionsForBoolean): BooleanSchema;
+export function boolean(rules: RulesForBoolean): BooleanSchema;
 /** schema for boolean */
 export function boolean(): BooleanSchema;
 /**
  * create schema
- * @param options Options
+ * @param rules rules
  * @returns schema
  */
-export function boolean(options: OptionsForBoolean = {}): BooleanSchema {
-    return new BooleanSchema(options);
+export function boolean(rules: RulesForBoolean = {}): BooleanSchema {
+    return new BooleanSchema(rules);
 }

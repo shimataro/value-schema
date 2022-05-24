@@ -1,21 +1,21 @@
-import {NullableOptions} from "../libs/publicTypes";
-import {NumericStringSchema, OptionsForNumericString} from "../schemaClasses/NumericStringSchema";
+import {NullableRules} from "../libs/publicTypes";
+import {NumericStringSchema, RulesForNumericString} from "../schemaClasses/NumericStringSchema";
 
 export {NUMERIC_STRING} from "../schemaClasses/NumericStringSchema";
 
 /** schema for numeric string or null */
-export function numericString(options: OptionsForNumericString & NullableOptions): NumericStringSchema<null>
+export function numericString(rules: RulesForNumericString & NullableRules): NumericStringSchema<null>
 /** schema for numeric string */
-export function numericString(options: OptionsForNumericString): NumericStringSchema
+export function numericString(rules: RulesForNumericString): NumericStringSchema
 /** schema for numeric string */
 export function numericString(): NumericStringSchema
 
 /**
  * create schema
- * @param options Options
+ * @param rules rules
  * @returns schema
  */
-export function numericString(options: OptionsForNumericString = {}): NumericStringSchema
+export function numericString(rules: RulesForNumericString = {}): NumericStringSchema
 {
-	return new NumericStringSchema(options);
+	return new NumericStringSchema(rules);
 }

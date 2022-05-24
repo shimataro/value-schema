@@ -1,17 +1,17 @@
-import {NullableOptions} from "../libs/publicTypes";
-import {EnumerationSchema, OptionsForEnumeration} from "../schemaClasses/EnumerationSchema";
+import {NullableRules} from "../libs/publicTypes";
+import {EnumerationSchema, RulesForEnumeration} from "../schemaClasses/EnumerationSchema";
 
 /** schema for enum-like (enum / union) or null */
-export function enumeration<E = unknown>(options: OptionsForEnumeration<E> & NullableOptions): EnumerationSchema<E, null>
+export function enumeration<E = unknown>(rules: RulesForEnumeration<E> & NullableRules): EnumerationSchema<E, null>
 /** schema for enum-like (enum / union) */
-export function enumeration<E = unknown>(options: OptionsForEnumeration<E>): EnumerationSchema<E>
+export function enumeration<E = unknown>(rules: RulesForEnumeration<E>): EnumerationSchema<E>
 
 /**
  * create schema
- * @param options Options
+ * @param rules rules
  * @returns schema
  */
-export function enumeration<E = unknown>(options: OptionsForEnumeration<E>): EnumerationSchema<E, null>
+export function enumeration<E = unknown>(rules: RulesForEnumeration<E>): EnumerationSchema<E, null>
 {
-	return new EnumerationSchema<E>(options);
+	return new EnumerationSchema<E>(rules);
 }

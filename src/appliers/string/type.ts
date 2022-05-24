@@ -1,7 +1,7 @@
 import {Key, Values, isScalar, isString} from "../../libs/types";
 import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
-export interface Options
+export interface Rules
 {
 	/** does not convert type; causes error if type does not match */
 	strictType?: boolean;
@@ -10,15 +10,15 @@ export interface Options
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<string>
+export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<string>
 {
-	const normalizedOptions: Required<Options> = {
+	const normalizedRules: Required<Rules> = {
 		strictType: false,
-		...options,
+		...rules,
 	};
 
 	if(isString(values.output))
@@ -27,7 +27,7 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 	}
 
 	// strict type check
-	if(normalizedOptions.strictType)
+	if(normalizedRules.strictType)
 	{
 		ValueSchemaError.raise(RULE.TYPE, values, keyStack);
 	}

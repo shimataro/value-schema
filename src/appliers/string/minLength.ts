@@ -1,7 +1,7 @@
 import {Key, Values, isString} from "../../libs/types";
 import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
-export interface Options
+export interface Rules
 {
 	/** minimum length of string */
 	minLength?: number;
@@ -10,15 +10,15 @@ export interface Options
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<string>
+export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<string>
 {
-	const normalizedOptions: Required<Options> = {
+	const normalizedRules: Required<Rules> = {
 		minLength: 0,
-		...options,
+		...rules,
 	};
 
 	// istanbul ignore next
@@ -27,7 +27,7 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	if(values.output.length >= normalizedOptions.minLength)
+	if(values.output.length >= normalizedRules.minLength)
 	{
 		return false;
 	}

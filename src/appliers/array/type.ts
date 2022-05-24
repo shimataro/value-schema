@@ -1,7 +1,7 @@
 import {Key, Values, isArray, isString} from "../../libs/types";
 import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
-export interface Options
+export interface Rules
 {
 	/** assumes entire values are in one string separated by pattern */
 	separatedBy?: string | RegExp;
@@ -12,11 +12,11 @@ export interface Options
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo<T>(values: Values, options: Options, keyStack: Key[]): values is Values<T>
+export function applyTo<T>(values: Values, rules: Rules, keyStack: Key[]): values is Values<T>
 {
 	if(isArray(values.output))
 	{
@@ -24,13 +24,13 @@ export function applyTo<T>(values: Values, options: Options, keyStack: Key[]): v
 		return false;
 	}
 
-	if(isString(values.output) && options.separatedBy !== undefined)
+	if(isString(values.output) && rules.separatedBy !== undefined)
 	{
-		values.output = values.output.split(options.separatedBy);
+		values.output = values.output.split(rules.separatedBy);
 		return false;
 	}
 
-	if(options.toArray !== undefined && options.toArray)
+	if(rules.toArray !== undefined && rules.toArray)
 	{
 		values.output = [values.output];
 		return false;

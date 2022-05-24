@@ -629,9 +629,9 @@ assert.throws(() => {
 #### ambient declarations
 
 ```typescript
-export function boolean(options?: OptionsForBoolean): BooleanSchema;
+export function boolean(rules?: RulesForBoolean): BooleanSchema;
 
-type OptionsForBoolean = {
+type RulesForBoolean = {
     strictType?: boolean;
     acceptsAllNumbers?: boolean;
 
@@ -702,7 +702,7 @@ assert.throws(
     {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
-#### options
+#### rules
 
 ##### `strictType`
 
@@ -794,9 +794,9 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-export function number(options?: OptionsForNumber): NumberSchema;
+export function number(rules?: RulesForNumber): NumberSchema;
 
-type OptionsForNumber = {
+type RulesForNumber = {
     strictType?: boolean;
     acceptsSpecialFormats?: boolean;
     acceptsFullWidth?: boolean;
@@ -855,7 +855,7 @@ assert.throws(
     {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
-#### options
+#### rules
 
 ##### `strictType`
 
@@ -1156,9 +1156,9 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-export function string(options?: OptionsForString): StringSchema;
+export function string(rules?: RulesForString): StringSchema;
 
-type OptionsForString = {
+type RulesForString = {
     strictType?: boolean;
 
     ifUndefined?: string | null;
@@ -1203,7 +1203,7 @@ assert.throws(
     {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
-#### options
+#### rules
 
 ##### `strictType`
 
@@ -1409,9 +1409,9 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-export function numericString(options?: OptionsForNumericString): NumericStringSchema;
+export function numericString(rules?: RulesForNumericString): NumericStringSchema;
 
-type OptionsForNumericString = {
+type RulesForNumericString = {
     ifUndefined?: string | null;
     ifEmptyString?: string | null;
     ifNull?: string | null;
@@ -1456,7 +1456,7 @@ assert.throws(
     {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 ```
 
-#### options
+#### rules
 
 ##### `ifUndefined`
 
@@ -1671,9 +1671,9 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-export function email(options?: OptionsForEmail): EmailSchema;
+export function email(rules?: RulesForEmail): EmailSchema;
 
-type OptionsForEmail = {
+type RulesForEmail = {
     ifUndefined?: string | null;
     ifEmptyString?: string | null;
     ifNull?: string | null;
@@ -1741,7 +1741,7 @@ assert.throws(
     {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 ```
 
-#### options
+#### rules
 
 ##### `ifUndefined`
 
@@ -1835,9 +1835,9 @@ Return type of `applyTo()` can be limited to enum-like type; `enum` and union.
 #### ambient declarations
 
 ```typescript
-export function enumeration<E = never>(options: OptionsForEnumeration): EnumerationSchema<E>;
+export function enumeration<E = never>(rules: RulesForEnumeration): EnumerationSchema<E>;
 
-type OptionsForEnumeration = {
+type RulesForEnumeration = {
     ifUndefined?: string | null;
     ifEmptyString?: string | null;
     ifNull?: string | null;
@@ -1858,7 +1858,7 @@ If an error occurs, this method calls `onError` (if specified) or throw `ValueSc
 
 See example of `only`.
 
-#### options
+#### rules
 
 ##### `only`
 
@@ -2024,9 +2024,9 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-export function array<T>(options?: OptionsForArray<T>): ArraySchema;
+export function array<T>(rules?: RulesForArray<T>): ArraySchema;
 
-type OptionsForArray<T> = {
+type RulesForArray<T> = {
     ifUndefined?: T[] | null;
     ifEmptyString?: T[] | null;
     ifNull?: T[] | null;
@@ -2066,7 +2066,7 @@ assert.throws(
     {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
-#### options
+#### rules
 
 ##### `ifUndefined`
 
@@ -2243,9 +2243,9 @@ assert.throws(
 #### ambient declarations
 
 ```typescript
-export function object(options?: OptionsForObject): ObjectSchema;
+export function object(rules?: RulesForObject): ObjectSchema;
 
-type OptionsForObject = {
+type RulesForObject = {
     ifUndefined?: object | null;
     ifEmptyString?: object | null;
     ifNull?: object | null;

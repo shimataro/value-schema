@@ -15,10 +15,10 @@ import { BaseSchema } from "../schemaClasses/BaseSchema.ts";
 export const NUMERIC_STRING = {
     CHECKSUM_ALGORITHM: checksum.CHECKSUM_ALGORITHM
 };
-export type OptionsForNumericString = converter.Options<string> & ifEmptyString.Options<string> & ifNull.Options<string> & ifUndefined.Options<string> & only.Options<string> & checksum.Options & fullWidthToHalf.Options & joinsArray.Options & pattern.Options & separatedBy.Options & type.Options & minLength.Options & maxLength.Options;
+export type RulesForNumericString = converter.Rules<string> & ifEmptyString.Rules<string> & ifNull.Rules<string> & ifUndefined.Rules<string> & only.Rules<string> & checksum.Rules & fullWidthToHalf.Rules & joinsArray.Rules & pattern.Rules & separatedBy.Rules & type.Rules & minLength.Rules & maxLength.Rules;
 export class NumericStringSchema<Tx = never> extends BaseSchema<string | Tx> {
-    constructor(options: OptionsForNumericString) {
-        super(options, [
+    constructor(rules: RulesForNumericString) {
+        super(rules, [
             ifUndefined.applyTo,
             ifNull.applyTo,
             ifEmptyString.applyTo,

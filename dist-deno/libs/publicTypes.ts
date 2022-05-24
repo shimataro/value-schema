@@ -1,5 +1,5 @@
 import { ValueSchemaError } from "./ValueSchemaError.ts";
-export type NullableOptions = {
+export type NullableRules = {
     ifNull: null;
 } | {
     ifUndefined: null;

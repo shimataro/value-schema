@@ -1,17 +1,17 @@
-import { NullableOptions } from "../libs/publicTypes.ts";
-import { OptionsForString, StringSchema } from "../schemaClasses/StringSchema.ts";
+import { NullableRules } from "../libs/publicTypes.ts";
+import { RulesForString, StringSchema } from "../schemaClasses/StringSchema.ts";
 export { STRING } from "../schemaClasses/StringSchema.ts";
 /** schema for string or null */
-export function string(options: OptionsForString & NullableOptions): StringSchema<null>;
+export function string(rules: RulesForString & NullableRules): StringSchema<null>;
 /** schema for string */
-export function string(options: OptionsForString): StringSchema;
+export function string(rules: RulesForString): StringSchema;
 /** schema for string */
 export function string(): StringSchema;
 /**
  * create schema
- * @param options Options
+ * @param rules rules
  * @returns schema
  */
-export function string(options: OptionsForString = {}): StringSchema {
-    return new StringSchema(options);
+export function string(rules: RulesForString = {}): StringSchema {
+    return new StringSchema(rules);
 }
