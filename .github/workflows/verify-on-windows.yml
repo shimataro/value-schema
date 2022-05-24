@@ -43,7 +43,7 @@ jobs:
       run: npm i -D typescript@${{ matrix.typescript }}
     # https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/60314
     - name: Downgrade prettier
-      run: npm i -D @types/prettier@2.5
+      run: npm i -D @types/prettier@2.4
     - name: Build
       run: npm run build
     - name: Verify
