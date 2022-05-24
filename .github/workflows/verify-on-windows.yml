@@ -8,8 +8,8 @@ on:
     - "*"
 
 jobs:
-  verify-ts38:
-    name: Verify (TypeScript 3.8-4.0)
+  verify-ts34:
+    name: Verify (TypeScript 3.4 - 4.0)
     runs-on: windows-latest
     strategy:
       matrix:
