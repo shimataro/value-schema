@@ -8,8 +8,8 @@ on:
     - "*"
 
 jobs:
-  verify:
-    name: Verify
+  verify-ts38:
+    name: Verify (TypeScript 3.8-4.0)
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -23,6 +23,38 @@ jobs:
         - "3.8"
         - "3.9"
         - "4.0"
+      fail-fast: false
+    steps:
+    - name: Checkout source codes
+      uses: actions/checkout@v2
+    - name: Install Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.nodejs }}
+    - name: Output versions
+      run: |
+        node -v
+        npm -v
+    - name: Install dependencies
+      run: npm ci
+    - name: Reinstall typescript
+      run: npm i -D typescript@${{ matrix.typescript }}
+    # https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/60314
+    - name: Downgrade prettier
+      run: npm i -D @types/prettier@2.5
+    - name: Build
+      run: npm run build
+    - name: Verify
+      run: npm run verify
+
+  verify:
+    name: Verify
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        nodejs:
+        - 12
+        typescript:
         - "4.1"
         - "4.2"
         - "4.3"
