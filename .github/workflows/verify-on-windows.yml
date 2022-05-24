@@ -43,8 +43,8 @@ jobs:
       run: npm i -D @types/node@${{ matrix.nodejs }} typescript@${{ matrix.typescript }} jest@25 @jest/globals@25 ts-jest@25 @types/prettier@2.2
     - name: Build
       run: npm run build
-    - name: Verify
-      run: npm run verify
+    - name: Test (not verify)
+      run: npm test
 
   verify:
     name: Verify
