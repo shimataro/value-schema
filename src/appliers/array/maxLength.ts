@@ -6,7 +6,7 @@ type MaxLength = {
 	length: number;
 	/** removes trailing elements if too long */
 	trims: boolean;
-}
+};
 type MaxLengthLike = number | MaxLength;
 
 export interface Options
