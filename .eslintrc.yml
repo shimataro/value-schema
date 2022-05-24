@@ -313,4 +313,8 @@ rules: # https://eslint.org/docs/rules/
   - error
   - functions: false
   "@typescript-eslint/semi": error
-  "@typescript-eslint/strict-boolean-expressions": error
+  "@typescript-eslint/strict-boolean-expressions":
+  - error
+  - allowString: false
+    allowNumber: false
+    allowNullableObject: false
