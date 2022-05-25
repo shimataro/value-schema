@@ -15,6 +15,8 @@ simple, easy-to-use, and declarative input validator
 
 supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang.org/), and [Deno](https://deno.land/)
 
+**WARNING:** Deno>=1.20 is NOT supported in v3, and is going to be supported in v4!
+
 ## Table of Contents
 
 * [Introduction](#introduction)
@@ -33,7 +35,7 @@ supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang
     * [object](#object)
 * [Changelog](#changelog)
 
-- - -
+***
 
 ## Introduction
 
@@ -2399,7 +2401,7 @@ See [CHANGELOG.md](CHANGELOG.md).
 [link-build-linux]: https://github.com/shimataro/value-schema/actions?query=workflow%3ALinux
 [image-examples]: https://github.com/shimataro/value-schema/workflows/Examples/badge.svg?event=push&branch=v3
 [link-examples]: https://github.com/shimataro/value-schema/actions?query=workflow%3AExamples
-[image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/value-schema/master.svg
+[image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/value-schema/v3.svg
 [link-code-coverage]: https://codecov.io/gh/shimataro/value-schema
 [image-release]: https://img.shields.io/github/release/shimataro/value-schema.svg
 [link-release]: https://github.com/shimataro/value-schema/releases
@@ -2407,7 +2409,7 @@ See [CHANGELOG.md](CHANGELOG.md).
 [link-engine]: https://nodejs.org/
 [image-typescript]: https://img.shields.io/badge/TypeScript-%3E%3D3.4.1-brightgreen.svg
 [link-typescript]: https://www.typescriptlang.org/
-[image-deno]: https://img.shields.io/badge/%F0%9F%A6%95%20Deno-%3E%3D1.0.0-brightgreen.svg
+[image-deno]: https://img.shields.io/badge/%F0%9F%A6%95%20Deno-%3E%3D1.0.0%20%3C1.20.0-brightgreen
 [link-deno]: https://deno.land/
 [image-license]: https://img.shields.io/github/license/shimataro/value-schema.svg
 [link-license]: ./LICENSE

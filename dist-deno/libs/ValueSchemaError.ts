@@ -1,18 +1,19 @@
 import { Key, Values } from "./types.ts";
-export enum CAUSE {
-    TYPE = "type",
-    UNDEFINED = "undefined",
-    NULL = "null",
-    EMPTY_STRING = "empty-string",
-    ONLY = "only",
-    CONVERTER = "converter",
-    MIN_VALUE = "min-value",
-    MAX_VALUE = "max-value",
-    MIN_LENGTH = "min-length",
-    MAX_LENGTH = "max-length",
-    PATTERN = "pattern",
-    CHECKSUM = "checksum"
-}
+export const CAUSE = {
+    TYPE: "type",
+    UNDEFINED: "undefined",
+    NULL: "null",
+    EMPTY_STRING: "empty-string",
+    ONLY: "only",
+    CONVERTER: "converter",
+    MIN_VALUE: "min-value",
+    MAX_VALUE: "max-value",
+    MIN_LENGTH: "min-length",
+    MAX_LENGTH: "max-length",
+    PATTERN: "pattern",
+    CHECKSUM: "checksum"
+} as const;
+type CAUSE = typeof CAUSE[keyof typeof CAUSE];
 /**
  * Value-Schema Error
  */
@@ -25,7 +26,7 @@ export class ValueSchemaError extends Error {
      * @param cause cause of error
      * @param values input/output values
      * @param keyStack path to key that caused error
-     * @throws {ValueSchemaError}
+     * @throws error object
      */
     static raise(cause: CAUSE, values: Values, keyStack: Key[]): never {
         throw new ValueSchemaError(cause, values.input, keyStack);

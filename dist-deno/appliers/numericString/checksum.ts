@@ -1,19 +1,20 @@
 import { Key, Values, isString } from "../../libs/types.ts";
 import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
-export enum CHECKSUM_ALGORITHM {
+export const CHECKSUM_ALGORITHM = {
     /** Luhn algorithm; used in credit card and IMEI (also known as MOD-10 algorithm) */
-    LUHN = "luhn",
+    LUHN: 0,
     /** checksum as credit card; equivalent to LUHN */
-    CREDIT_CARD = LUHN,
+    CREDIT_CARD: 0,
     /** modulus10/weight3:1 algorithm; used in ISBN13, EAN and JAN */
-    MODULUS10_WEIGHT3_1 = "modulus10/weight3:1",
+    MODULUS10_WEIGHT3_1: 1,
     /** ISBN-13; equivalent to MODULUS10_WEIGHT3_1 */
-    ISBN13 = MODULUS10_WEIGHT3_1,
+    ISBN13: 1,
     /** EAN code; equivalent to MODULUS10_WEIGHT3_1 */
-    EAN = MODULUS10_WEIGHT3_1,
+    EAN: 1,
     /** JAN code; equivalent to MODULUS10_WEIGHT3_1 */
-    JAN = MODULUS10_WEIGHT3_1
-}
+    JAN: 1
+} as const;
+type CHECKSUM_ALGORITHM = typeof CHECKSUM_ALGORITHM[keyof typeof CHECKSUM_ALGORITHM];
 export interface Options {
     /** uses checksum */
     checksum?: CHECKSUM_ALGORITHM;
@@ -23,7 +24,7 @@ export interface Options {
  * @param values input/output values
  * @param options options
  * @param keyStack key stack for error handling
- * @returns applied value
+ * @returns escapes from applyTo chain or not
  */
 export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<string> {
     if (options.checksum === undefined) {

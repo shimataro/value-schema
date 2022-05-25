@@ -4,13 +4,6 @@ import {CAUSE, ValueSchemaError} from "../libs/ValueSchemaError";
 export interface Options<T>
 {
 	/** accepts only specified values */
-	only?: T[];
-}
-
-/** read-only array */
-export interface OptionsReadonly<T>
-{
-	/** accepts only specified values */
 	only?: readonly T[];
 }
 
@@ -19,7 +12,7 @@ export interface OptionsReadonly<T>
  * @param values input/output values
  * @param options options
  * @param keyStack key stack for error handling
- * @returns applied value
+ * @returns escapes from applyTo chain or not
  */
 export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[]): values is Values<T>
 {

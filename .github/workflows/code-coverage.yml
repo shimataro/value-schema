@@ -1,7 +1,7 @@
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions
-
-on: pull_request
 name: Code Coverage
+on: pull_request
+
 jobs:
   code-coverage:
     name: Report Code Coverage

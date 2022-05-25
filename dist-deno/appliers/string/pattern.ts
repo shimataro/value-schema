@@ -17,7 +17,7 @@ export const PATTERN = {
     URI: REGEXP_URI,
     /** UUID format */
     UUID: /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/i
-};
+} as const;
 export interface Options {
     /** acceptable pattern (regular expression) */
     pattern?: RegExp;
@@ -27,7 +27,7 @@ export interface Options {
  * @param values input/output values
  * @param options options
  * @param keyStack key stack for error handling
- * @returns applied value
+ * @returns escapes from applyTo chain or not
  */
 export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<string> {
     if (options.pattern === undefined) {
