@@ -2,16 +2,14 @@
 # requires following packages:
 # - git; I believe you have already installed.
 # - sed; GNU sed is preferred. POSIX sed may not work.
-# - perl; Already installed on most of unix system.
 set -eu
-
-BASE_BRANCH="develop"
 
 PACKAGE_NAME="value-schema"
 URL_PRODUCT="https://github.com/shimataro/${PACKAGE_NAME}"
 URL_REPOSITORY="${URL_PRODUCT}.git"
 URL_COMPARE="${URL_PRODUCT}/compare"
 URL_RELEASE="${URL_PRODUCT}/releases/new"
+UPSTREAM="origin"
 
 COLOR_ERROR="\e[1;41m"
 COLOR_SECTION="\e[1;34m"
@@ -32,18 +30,19 @@ function main() {
 	fi
 
 	local VERSION=$1
-	local BRANCH="release/v${VERSION}"
 	local TAG="v${VERSION}"
+	local BRANCH="release/v${VERSION}"
+	local BASE_BRANCH="${TAG%%.*}"
 
 	check_version_format ${VERSION}
-	check_current_branch
+	check_current_branch ${BASE_BRANCH}
 
-	create_branch ${BRANCH}
+	create_branch ${BRANCH} ${BASE_BRANCH}
 	update_package_version ${VERSION}
 	update_changelog ${VERSION}
 	verify_package
 	commit_changes ${VERSION}
-	finish ${VERSION} ${BRANCH} ${TAG}
+	finish ${VERSION} ${BRANCH} ${BASE_BRANCH} ${TAG}
 }
 
 function usage() {
@@ -80,6 +79,7 @@ function check_version_format() {
 }
 
 function check_current_branch() {
+	local BASE_BRANCH=$1
 	local CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`
 	if [ ${CURRENT_BRANCH} = ${BASE_BRANCH} ]; then
 		return
@@ -93,6 +93,7 @@ function check_current_branch() {
 
 function create_branch() {
 	local BRANCH=$1
+	local BASE_BRANCH=$2
 
 	git checkout -b ${BRANCH} ${BASE_BRANCH}
 }
@@ -128,10 +129,8 @@ function commit_changes() {
 function finish() {
 	local VERSION=$1
 	local BRANCH=$2
-	local TAG=$3
-	local TARGET_BRANCH="v${VERSION%%[!0-9]*}"
-	local UPSTREAM="origin"
-	local CHANGELOG=$(git diff ${UPSTREAM}/${TARGET_BRANCH} ${BRANCH} CHANGELOG.md | sed -e "/^[^+]/d" -e "s/^\+\(.*\)$/\1/" -e "/^## /d" -e "/^\+/d" -e "/^\[/d" -e "s/\s/%20/g" -e "s/#/%23/g" -e 's/\n//g' | perl -pe "s/\n/%0A/g" | perl -pe "s/^(%0A)+//" | perl -pe "s/(%0A)+$//")
+	local BASE_BRANCH=$3
+	local TAG=$4
 
 	echo -e "
 Branch ${COLOR_BRANCH}${BRANCH}${COLOR_RESET} has been created.
@@ -142,18 +141,15 @@ Remaining processes are...
 2. Push to remote ${UPSTREAM}
 	${COLOR_COMMAND}git push --set-upstream ${UPSTREAM} ${BRANCH}${COLOR_RESET}
 3. Create a pull-request: ${COLOR_BRANCH}${BRANCH}${COLOR_RESET} to ${COLOR_BRANCH}${BASE_BRANCH}${COLOR_RESET}
-	${URL_COMPARE}/${BASE_BRANCH}...${BRANCH}?expand=1
+	${URL_COMPARE}/${BASE_BRANCH}...${BRANCH}?expand=1&title=version%20${VERSION}
 	select ${COLOR_SELECT}Squash and merge${COLOR_RESET}
-4. Create a pull-request: ${COLOR_BRANCH}${BASE_BRANCH}${COLOR_RESET} to ${COLOR_BRANCH}${TARGET_BRANCH}${COLOR_RESET}
-	${URL_COMPARE}/${TARGET_BRANCH}...${BASE_BRANCH}?expand=1&title=version%20${VERSION}&body=${CHANGELOG}
-	select ${COLOR_SELECT}Create a merge commit${COLOR_RESET}
-5. Create a new release
-	${URL_RELEASE}?tag=${TAG}&target=${TARGET_BRANCH}&title=${PACKAGE_NAME}%20${VERSION}%20released&body=${CHANGELOG}
+4. Create a new release
+	${URL_RELEASE}?tag=${TAG}&target=${BASE_BRANCH}&title=${PACKAGE_NAME}%20${VERSION}%20released
 	Tag version: ${COLOR_INPUT}${TAG}${COLOR_RESET}
-	Target: ${COLOR_INPUT}${TARGET_BRANCH}${COLOR_RESET}
+	Target: ${COLOR_INPUT}${BASE_BRANCH}${COLOR_RESET}
 	Release title: ${COLOR_INPUT}${PACKAGE_NAME} ${VERSION} released${COLOR_RESET}
 	Description this release: (copy and paste CHANGELOG.md)
-6. Post processing
+5. Post processing
 	${COLOR_COMMAND}git checkout ${BASE_BRANCH}${COLOR_RESET}
 	${COLOR_COMMAND}git pull${COLOR_RESET}
 	${COLOR_COMMAND}git fetch -p${COLOR_RESET}
