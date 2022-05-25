@@ -1,7 +1,11 @@
-import {NullableOptions} from "../libs/publicTypes";
+import {NullableOptions, UndefinableOptions} from "../libs/publicTypes";
 import {SchemaObject} from "../libs/types";
 import {ObjectSchema, OptionsForObject} from "../schemaClasses/ObjectSchema";
 
+/** schema for object or null or undefined */
+export function object<S extends SchemaObject>(options: OptionsForObject<S> & NullableOptions & UndefinableOptions): ObjectSchema<S, null | undefined>;
+/** schema for object or undefined */
+export function object<S extends SchemaObject>(options: OptionsForObject<S> & UndefinableOptions): ObjectSchema<S, undefined>;
 /** schema for object or null */
 export function object<S extends SchemaObject>(options: OptionsForObject<S> & NullableOptions): ObjectSchema<S, null>;
 /** schema for object */

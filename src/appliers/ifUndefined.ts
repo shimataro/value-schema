@@ -4,7 +4,7 @@ import {CAUSE, ValueSchemaError} from "../libs/ValueSchemaError";
 export interface Options<T>
 {
 	/** value if undefined (defaults: error) */
-	ifUndefined?: T | null;
+	ifUndefined?: T | null | undefined;
 }
 
 /**
@@ -21,11 +21,11 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
 		return false;
 	}
 
-	if(options.ifUndefined !== undefined)
+	if(!options.hasOwnProperty("ifUndefined"))
 	{
-		values.output = options.ifUndefined;
-		return true;
+		return ValueSchemaError.raise(CAUSE.UNDEFINED, values, keyStack);
 	}
 
-	return ValueSchemaError.raise(CAUSE.UNDEFINED, values, keyStack);
+	values.output = options.ifUndefined;
+	return true;
 }

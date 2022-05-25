@@ -1,5 +1,9 @@
-import { NullableOptions } from "../libs/publicTypes.ts";
+import { NullableOptions, UndefinableOptions } from "../libs/publicTypes.ts";
 import { BooleanSchema, OptionsForBoolean } from "../schemaClasses/BooleanSchema.ts";
+/** schema for boolean or null or undefined */
+export function boolean(options: OptionsForBoolean & NullableOptions & UndefinableOptions): BooleanSchema<null | undefined>;
+/** schema for boolean or undefined */
+export function boolean(options: OptionsForBoolean & UndefinableOptions): BooleanSchema<undefined>;
 /** schema for boolean or null */
 export function boolean(options: OptionsForBoolean & NullableOptions): BooleanSchema<null>;
 /** schema for boolean */
