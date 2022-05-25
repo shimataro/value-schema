@@ -11,12 +11,12 @@ export type ObjectTypeOf<S extends SchemaObject> = {
 		S[K] extends ObjectSchema<infer S2, null> ? ObjectTypeOf<S2> | null :
 		S[K] extends BaseSchema<infer T> ? T :
 		never
-}
+};
 
 type Scalar = boolean | number | string;
 
 export type AnyObject = Record<string, unknown>;
-export type SchemaObject = Record<string, BaseSchema>
+export type SchemaObject = Record<string, BaseSchema>;
 
 export type Key = string | number;
 

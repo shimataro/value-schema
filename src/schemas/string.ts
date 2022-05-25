@@ -4,11 +4,11 @@ import {RulesForString, StringSchema} from "../schemaClasses/StringSchema";
 export {STRING} from "../schemaClasses/StringSchema";
 
 /** schema for string or null */
-export function string(rules: RulesForString & NullableRules): StringSchema<null>
+export function string(rules: RulesForString & NullableRules): StringSchema<null>;
 /** schema for string */
-export function string(rules: RulesForString): StringSchema
+export function string(rules: RulesForString): StringSchema;
 /** schema for string */
-export function string(): StringSchema
+export function string(): StringSchema;
 
 /**
  * create schema

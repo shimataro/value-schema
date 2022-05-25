@@ -2,11 +2,11 @@ import {NullableRules} from "../libs/publicTypes";
 import {ArraySchema, RulesForArray} from "../schemaClasses/ArraySchema";
 
 /** schema for array or null */
-export function array<T>(rules: RulesForArray<T> & NullableRules): ArraySchema<T, null>
+export function array<T>(rules: RulesForArray<T> & NullableRules): ArraySchema<T, null>;
 /** schema for array */
-export function array<T>(rules: RulesForArray<T>): ArraySchema<T>
+export function array<T>(rules: RulesForArray<T>): ArraySchema<T>;
 /** schema for array */
-export function array<T>(): ArraySchema<T>
+export function array<T>(): ArraySchema<T>;
 
 /**
  * create schema

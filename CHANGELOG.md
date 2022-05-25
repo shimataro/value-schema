@@ -12,14 +12,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * rename `ValueSchemaError.cause` to `ValueSchemaError.rule`
     * ...because `Error.cause` is stage 4
     * <https://github.com/tc39/proposal-error-cause>
+* support Deno 1.20 - 1.22
+
+## [3.1.1] - 2022-05-25
 
 ### Others
 
 * support Node.js 16
-* support TypeScript 4.5 - 4.6
-* support Windows Server 2022, macOS Big Sur 11, macOS Monterey 12, and Ubuntu 22.04
+* support TypeScript 4.5 - 4.7
 * support Deno 1.15 - 1.19
-* support Deno 1.20 - 1.22
+* support Windows Server 2022, macOS Big Sur 11, macOS Monterey 12, and Ubuntu 22.04
 
 ## [3.1.0] - 2021-09-27
 
@@ -575,7 +577,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.1.0...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/b8f30c4682e384e0e812a2c333fb447e8ba9f601...HEAD
+[3.1.1]: https://github.com/shimataro/value-schema/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/shimataro/value-schema/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.15...v3.0.0
 [3.0.0-rc.15]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.14...v3.0.0-rc.15

@@ -4,11 +4,11 @@ import {NumericStringSchema, RulesForNumericString} from "../schemaClasses/Numer
 export {NUMERIC_STRING} from "../schemaClasses/NumericStringSchema";
 
 /** schema for numeric string or null */
-export function numericString(rules: RulesForNumericString & NullableRules): NumericStringSchema<null>
+export function numericString(rules: RulesForNumericString & NullableRules): NumericStringSchema<null>;
 /** schema for numeric string */
-export function numericString(rules: RulesForNumericString): NumericStringSchema
+export function numericString(rules: RulesForNumericString): NumericStringSchema;
 /** schema for numeric string */
-export function numericString(): NumericStringSchema
+export function numericString(): NumericStringSchema;
 
 /**
  * create schema

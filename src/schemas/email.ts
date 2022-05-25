@@ -2,11 +2,11 @@ import {NullableRules} from "../libs/publicTypes";
 import {EmailSchema, RulesForEmail} from "../schemaClasses/EmailSchema";
 
 /** schema for email or null */
-export function email(rules: RulesForEmail & NullableRules): EmailSchema<null>
+export function email(rules: RulesForEmail & NullableRules): EmailSchema<null>;
 /** schema for email */
-export function email(rules: RulesForEmail): EmailSchema
+export function email(rules: RulesForEmail): EmailSchema;
 /** schema for email */
-export function email(): EmailSchema
+export function email(): EmailSchema;
 
 /**
  * create schema

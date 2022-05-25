@@ -4,11 +4,11 @@ import {NumberSchema, RulesForNumber} from "../schemaClasses/NumberSchema";
 export {NUMBER} from "../schemaClasses/NumberSchema";
 
 /** schema for number or null */
-export function number(rules: RulesForNumber & NullableRules): NumberSchema<null>
+export function number(rules: RulesForNumber & NullableRules): NumberSchema<null>;
 /** schema for number */
-export function number(rules: RulesForNumber): NumberSchema
+export function number(rules: RulesForNumber): NumberSchema;
 /** schema for number */
-export function number(): NumberSchema
+export function number(): NumberSchema;
 
 /**
  * create schema
