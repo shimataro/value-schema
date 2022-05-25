@@ -202,9 +202,8 @@ $ node --experimental-modules foo.mjs
 Deno has been supported as of v3.
 
 ```typescript
-import vs from "https://deno.land/x/value_schema/mod.ts";       // latest version
-import vs from "https://deno.land/x/value_schema@3/mod.ts";     // latest version of v3
-import vs from "https://deno.land/x/value_schema@3.0.0/mod.ts"; // v3.0.0
+import vs from "https://deno.land/x/value_schema/mod.ts";        // latest version
+import vs from "https://deno.land/x/value_schema@v4.0.0/mod.ts"; // v4.0.0
 ```
 
 **CAUTION**: specify `value_schema` (underscore) NOT `value-schema` (hyphen) because [deno.land](https://deno.land/) module database does not support name with hyphen!
@@ -2393,15 +2392,15 @@ assert.throws(
 
 See [CHANGELOG.md](CHANGELOG.md).
 
-[image-build-windows]: https://github.com/shimataro/value-schema/workflows/Windows/badge.svg?event=push&branch=v3
+[image-build-windows]: https://github.com/shimataro/value-schema/workflows/Windows/badge.svg?event=push&branch=v4
 [link-build-windows]: https://github.com/shimataro/value-schema/actions?query=workflow%3AWindows
-[image-build-macos]: https://github.com/shimataro/value-schema/workflows/macOS/badge.svg?event=push&branch=v3
+[image-build-macos]: https://github.com/shimataro/value-schema/workflows/macOS/badge.svg?event=push&branch=v4
 [link-build-macos]: https://github.com/shimataro/value-schema/actions?query=workflow%3AmacOS
-[image-build-linux]: https://github.com/shimataro/value-schema/workflows/Linux/badge.svg?event=push&branch=v3
+[image-build-linux]: https://github.com/shimataro/value-schema/workflows/Linux/badge.svg?event=push&branch=v4
 [link-build-linux]: https://github.com/shimataro/value-schema/actions?query=workflow%3ALinux
-[image-examples]: https://github.com/shimataro/value-schema/workflows/Examples/badge.svg?event=push&branch=v3
+[image-examples]: https://github.com/shimataro/value-schema/workflows/Examples/badge.svg?event=push&branch=v4
 [link-examples]: https://github.com/shimataro/value-schema/actions?query=workflow%3AExamples
-[image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/value-schema/v3.svg
+[image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/value-schema/v4.svg
 [link-code-coverage]: https://codecov.io/gh/shimataro/value-schema
 [image-release]: https://img.shields.io/github/release/shimataro/value-schema.svg
 [link-release]: https://github.com/shimataro/value-schema/releases
