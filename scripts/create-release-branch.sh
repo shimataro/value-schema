@@ -41,8 +41,6 @@ function main() {
 	create_branch ${BRANCH}
 	update_package_version ${VERSION}
 	update_changelog ${VERSION}
-	update_dependencies_version
-	regenerate_npm_shrinkwrap
 	verify_package
 	commit_changes ${VERSION}
 	finish ${VERSION} ${BRANCH} ${TAG}
@@ -114,17 +112,6 @@ function update_changelog() {
 		-e "s/^((##\s+)\[${KEYWORD}\])$/\1\n\n\2[${VERSION}] - ${DATE}/" \
 		-e "s/^(\[${KEYWORD}\](.*))(v.*)\.\.\.HEAD$/\1v${VERSION}...HEAD\n[${VERSION}]\2\3...v${VERSION}/" \
 		CHANGELOG.md
-}
-
-function update_dependencies_version() {
-	npm run check-updates -- -u
-}
-
-function regenerate_npm_shrinkwrap() {
-	rm -rf npm-shrinkwrap.json node_modules
-	npm install
-	npm shrinkwrap
-	npm dedupe
 }
 
 function verify_package() {
