@@ -7,7 +7,7 @@ type MinValue = {
 
 	/** true to adjust if input is less than "value" / false to error */
 	adjusts: boolean;
-}
+};
 type MinValueLike = number | MinValue;
 
 export interface Options

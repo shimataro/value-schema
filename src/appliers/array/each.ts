@@ -7,7 +7,7 @@ type Each<T> = {
 	schema: BaseSchema<T>;
 	/** ignores even if some elements cause error */
 	ignoresErrors: boolean;
-}
+};
 type EachLike<T> = BaseSchema<T> | Each<T>;
 
 export interface Options<T>

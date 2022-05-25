@@ -7,7 +7,7 @@ type MaxValue = {
 
 	/** true to adjust if input is greater than "value" / false to error */
 	adjusts: boolean;
-}
+};
 type MaxValueLike = number | MaxValue;
 
 export interface Options
