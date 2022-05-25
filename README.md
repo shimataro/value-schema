@@ -15,8 +15,6 @@ simple, easy-to-use, and declarative input validator
 
 supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang.org/), and [Deno](https://deno.land/)
 
-**WARNING:** Deno>=1.20 is NOT supported in v3, and is going to be supported in v4!
-
 ## Table of Contents
 
 * [Introduction](#introduction)
@@ -2409,7 +2407,7 @@ See [CHANGELOG.md](CHANGELOG.md).
 [link-engine]: https://nodejs.org/
 [image-typescript]: https://img.shields.io/badge/TypeScript-%3E%3D3.4.1-brightgreen.svg
 [link-typescript]: https://www.typescriptlang.org/
-[image-deno]: https://img.shields.io/badge/%F0%9F%A6%95%20Deno-%3E%3D1.0.0%20%3C1.20.0-brightgreen
+[image-deno]: https://img.shields.io/badge/%F0%9F%A6%95%20Deno-%3E%3D1.0.0-brightgreen
 [link-deno]: https://deno.land/
 [image-license]: https://img.shields.io/github/license/shimataro/value-schema.svg
 [link-license]: ./LICENSE
