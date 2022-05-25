@@ -4,15 +4,15 @@ import {OptionsForString, StringSchema} from "../schemaClasses/StringSchema";
 export {STRING} from "../schemaClasses/StringSchema";
 
 /** schema for string or null or undefined */
-export function string(options: OptionsForString & NullableOptions & UndefinableOptions): StringSchema<null | undefined>
+export function string(options: OptionsForString & NullableOptions & UndefinableOptions): StringSchema<null | undefined>;
 /** schema for string or undefined */
-export function string(options: OptionsForString & UndefinableOptions): StringSchema<undefined>
+export function string(options: OptionsForString & UndefinableOptions): StringSchema<undefined>;
 /** schema for string or null */
-export function string(options: OptionsForString & NullableOptions): StringSchema<null>
+export function string(options: OptionsForString & NullableOptions): StringSchema<null>;
 /** schema for string */
-export function string(options: OptionsForString): StringSchema
+export function string(options: OptionsForString): StringSchema;
 /** schema for string */
-export function string(): StringSchema
+export function string(): StringSchema;
 
 /**
  * create schema

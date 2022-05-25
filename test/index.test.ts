@@ -1,4 +1,5 @@
 import vs from "value-schema";
+import {describe, expect, it} from "@jest/globals";
 
 {
 	describe("applySchemaObject", testApplySchemaObject);

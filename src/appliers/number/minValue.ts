@@ -7,7 +7,7 @@ type MinValue = {
 
 	/** true to adjust if input is less than "value" / false to error */
 	adjusts: boolean;
-}
+};
 type MinValueLike = number | MinValue;
 
 export interface Options
@@ -21,7 +21,7 @@ export interface Options
  * @param values input/output values
  * @param options options
  * @param keyStack key stack for error handling
- * @returns applied value
+ * @returns escapes from applyTo chain or not
  */
 export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<number>
 {

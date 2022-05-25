@@ -15,9 +15,13 @@ jobs:
       matrix:
         os:
         - windows-2019
+        - windows-2022
         - macos-10.15
+        - macos-11
+        - macos-12
         - ubuntu-18.04
         - ubuntu-20.04
+        - ubuntu-22.04
         nodejs:
         - "4.0.0"
         - "6.0.0"
@@ -25,6 +29,7 @@ jobs:
         - "10.0.0"
         - "12.0.0"
         - "14.0.0"
+        - "16.0.0"
       fail-fast: false
     steps:
     - name: Checkout source codes
@@ -74,17 +79,25 @@ jobs:
       matrix:
         os:
         - windows-2019
+        - windows-2022
         - macos-10.15
+        - macos-11
+        - macos-12
         - ubuntu-18.04
         - ubuntu-20.04
+        - ubuntu-22.04
         nodejs:
         - "8.5.0"
         - "8.6.0"
         - "10.0.0"
         - "12.0.0" # loads CommonJS
         - "14.0.0" # loads CommonJS
+        - "16.0.0" # loads CommonJS
         exclude:
-        - os: windows-2019 # On Windows, v8.5.0 causes ERR_INVALID_PROTOCOL; https://github.com/nodejs/node/issues/15374
+        # On Windows, v8.5.0 causes ERR_INVALID_PROTOCOL; https://github.com/nodejs/node/issues/15374
+        - os: windows-2019
+          nodejs: "8.5.0"
+        - os: windows-2022
           nodejs: "8.5.0"
       fail-fast: false
     steps:
@@ -133,9 +146,13 @@ jobs:
       matrix:
         os:
         - windows-2019
+        - windows-2022
         - macos-10.15
+        - macos-11
+        - macos-12
         - ubuntu-18.04
         - ubuntu-20.04
+        - ubuntu-22.04
         nodejs:
         - "13.2.0"
       fail-fast: false
@@ -185,9 +202,13 @@ jobs:
       matrix:
         os:
         - windows-2019
+        - windows-2022
         - macos-10.15
+        - macos-11
+        - macos-12
         - ubuntu-18.04
         - ubuntu-20.04
+        - ubuntu-22.04
         deno:
         - "1.0.0"
         - "1.1.0"
@@ -204,12 +225,17 @@ jobs:
         - "1.12.0"
         - "1.13.0"
         - "1.14.0"
+        - "1.15.0"
+        - "1.16.0"
+        - "1.17.0"
+        - "1.18.0"
+        - "1.19.0"
       fail-fast: false
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v2
     - name: Install Deno
-      uses: denolib/setup-deno@v2
+      uses: denoland/setup-deno@v1
       with:
         deno-version: ${{ matrix.deno }}
     - name: Output versions

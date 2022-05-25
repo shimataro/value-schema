@@ -15,6 +15,8 @@ simple, easy-to-use, and declarative input validator
 
 supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang.org/), and [Deno](https://deno.land/)
 
+**WARNING:** Deno>=1.20 is NOT supported in v3, and is going to be supported in v4!
+
 ## Table of Contents
 
 * [Introduction](#introduction)
@@ -33,7 +35,7 @@ supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang
     * [object](#object)
 * [Changelog](#changelog)
 
-- - -
+***
 
 ## Introduction
 
@@ -200,9 +202,8 @@ $ node --experimental-modules foo.mjs
 Deno has been supported as of v3.
 
 ```typescript
-import vs from "https://deno.land/x/value_schema/mod.ts";       // latest version
-import vs from "https://deno.land/x/value_schema@3/mod.ts";     // latest version of v3
-import vs from "https://deno.land/x/value_schema@3.0.0/mod.ts"; // v3.0.0
+import vs from "https://deno.land/x/value_schema/mod.ts";        // latest version
+import vs from "https://deno.land/x/value_schema@v4.0.0/mod.ts"; // v4.0.0
 ```
 
 **CAUTION**: specify `value_schema` (underscore) NOT `value-schema` (hyphen) because [deno.land](https://deno.land/) module database does not support name with hyphen!
@@ -2447,15 +2448,15 @@ assert.throws(
 
 See [CHANGELOG.md](CHANGELOG.md).
 
-[image-build-windows]: https://github.com/shimataro/value-schema/workflows/Windows/badge.svg?event=push&branch=v3
+[image-build-windows]: https://github.com/shimataro/value-schema/workflows/Windows/badge.svg?event=push&branch=v4
 [link-build-windows]: https://github.com/shimataro/value-schema/actions?query=workflow%3AWindows
-[image-build-macos]: https://github.com/shimataro/value-schema/workflows/macOS/badge.svg?event=push&branch=v3
+[image-build-macos]: https://github.com/shimataro/value-schema/workflows/macOS/badge.svg?event=push&branch=v4
 [link-build-macos]: https://github.com/shimataro/value-schema/actions?query=workflow%3AmacOS
-[image-build-linux]: https://github.com/shimataro/value-schema/workflows/Linux/badge.svg?event=push&branch=v3
+[image-build-linux]: https://github.com/shimataro/value-schema/workflows/Linux/badge.svg?event=push&branch=v4
 [link-build-linux]: https://github.com/shimataro/value-schema/actions?query=workflow%3ALinux
-[image-examples]: https://github.com/shimataro/value-schema/workflows/Examples/badge.svg?event=push&branch=v3
+[image-examples]: https://github.com/shimataro/value-schema/workflows/Examples/badge.svg?event=push&branch=v4
 [link-examples]: https://github.com/shimataro/value-schema/actions?query=workflow%3AExamples
-[image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/value-schema/master.svg
+[image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/value-schema/v4.svg
 [link-code-coverage]: https://codecov.io/gh/shimataro/value-schema
 [image-release]: https://img.shields.io/github/release/shimataro/value-schema.svg
 [link-release]: https://github.com/shimataro/value-schema/releases
@@ -2463,7 +2464,7 @@ See [CHANGELOG.md](CHANGELOG.md).
 [link-engine]: https://nodejs.org/
 [image-typescript]: https://img.shields.io/badge/TypeScript-%3E%3D3.4.1-brightgreen.svg
 [link-typescript]: https://www.typescriptlang.org/
-[image-deno]: https://img.shields.io/badge/%F0%9F%A6%95%20Deno-%3E%3D1.0.0-brightgreen.svg
+[image-deno]: https://img.shields.io/badge/%F0%9F%A6%95%20Deno-%3E%3D1.0.0%20%3C1.20.0-brightgreen
 [link-deno]: https://deno.land/
 [image-license]: https://img.shields.io/github/license/shimataro/value-schema.svg
 [link-license]: ./LICENSE

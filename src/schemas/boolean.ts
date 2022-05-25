@@ -2,15 +2,15 @@ import {NullableOptions, UndefinableOptions} from "../libs/publicTypes";
 import {BooleanSchema, OptionsForBoolean} from "../schemaClasses/BooleanSchema";
 
 /** schema for boolean or null or undefined */
-export function boolean(options: OptionsForBoolean & NullableOptions & UndefinableOptions): BooleanSchema<null | undefined>
+export function boolean(options: OptionsForBoolean & NullableOptions & UndefinableOptions): BooleanSchema<null | undefined>;
 /** schema for boolean or undefined */
-export function boolean(options: OptionsForBoolean & UndefinableOptions): BooleanSchema<undefined>
+export function boolean(options: OptionsForBoolean & UndefinableOptions): BooleanSchema<undefined>;
 /** schema for boolean or null */
-export function boolean(options: OptionsForBoolean & NullableOptions): BooleanSchema<null>
+export function boolean(options: OptionsForBoolean & NullableOptions): BooleanSchema<null>;
 /** schema for boolean */
-export function boolean(options: OptionsForBoolean): BooleanSchema
+export function boolean(options: OptionsForBoolean): BooleanSchema;
 /** schema for boolean */
-export function boolean(): BooleanSchema
+export function boolean(): BooleanSchema;
 
 /**
  * create schema
