@@ -9,9 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
+* `{ifUndefined: undefined}` accepts `undefined` input value, and keep it as-is.
 * rename `ValueSchemaError.cause` to `ValueSchemaError.rule`
     * ...because `Error.cause` is stage 4
     * <https://github.com/tc39/proposal-error-cause>
+
+### Others
+
 * support Deno 1.20 - 1.22
 
 ## [3.1.1] - 2022-05-25

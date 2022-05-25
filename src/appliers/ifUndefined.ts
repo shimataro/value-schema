@@ -4,7 +4,7 @@ import {RULE, ValueSchemaError} from "../libs/ValueSchemaError";
 export interface Rules<T>
 {
 	/** value if undefined (defaults: error) */
-	ifUndefined?: T | null;
+	ifUndefined?: T | null | undefined;
 }
 
 /**
@@ -21,11 +21,11 @@ export function applyTo<T>(values: Values, rules: Rules<T>, keyStack: Key[]): va
 		return false;
 	}
 
-	if(rules.ifUndefined !== undefined)
+	if(!rules.hasOwnProperty("ifUndefined"))
 	{
-		values.output = rules.ifUndefined;
-		return true;
+		return ValueSchemaError.raise(RULE.UNDEFINED, values, keyStack);
 	}
 
-	return ValueSchemaError.raise(RULE.UNDEFINED, values, keyStack);
+	values.output = rules.ifUndefined;
+	return true;
 }

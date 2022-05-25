@@ -2,7 +2,7 @@ import { Key, Values } from "../libs/types.ts";
 import { RULE, ValueSchemaError } from "../libs/ValueSchemaError.ts";
 export interface Rules<T> {
     /** value if undefined (defaults: error) */
-    ifUndefined?: T | null;
+    ifUndefined?: T | null | undefined;
 }
 /**
  * apply schema
@@ -15,9 +15,9 @@ export function applyTo<T>(values: Values, rules: Rules<T>, keyStack: Key[]): va
     if (values.output !== undefined) {
         return false;
     }
-    if (rules.ifUndefined !== undefined) {
-        values.output = rules.ifUndefined;
-        return true;
+    if (!rules.hasOwnProperty("ifUndefined")) {
+        return ValueSchemaError.raise(RULE.UNDEFINED, values, keyStack);
     }
-    return ValueSchemaError.raise(RULE.UNDEFINED, values, keyStack);
+    values.output = rules.ifUndefined;
+    return true;
 }

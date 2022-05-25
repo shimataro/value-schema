@@ -1,6 +1,10 @@
-import { NullableRules } from "../libs/publicTypes.ts";
+import { NullableRules, UndefinableRules } from "../libs/publicTypes.ts";
 import { SchemaObject } from "../libs/types.ts";
 import { ObjectSchema, RulesForObject } from "../schemaClasses/ObjectSchema.ts";
+/** schema for object or null or undefined */
+export function object<S extends SchemaObject>(options: RulesForObject<S> & NullableRules & UndefinableRules): ObjectSchema<S, null | undefined>;
+/** schema for object or undefined */
+export function object<S extends SchemaObject>(options: RulesForObject<S> & UndefinableRules): ObjectSchema<S, undefined>;
 /** schema for object or null */
 export function object<S extends SchemaObject>(rules: RulesForObject<S> & NullableRules): ObjectSchema<S, null>;
 /** schema for object */

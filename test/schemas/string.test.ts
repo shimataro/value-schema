@@ -90,6 +90,14 @@ function testIfUndefined(): void
 			}).applyTo(undefined)
 		).toEqual("xyz");
 	});
+	it("should be undefined", () =>
+	{
+		expect(
+			vs.string({
+				ifUndefined: undefined,
+			}).applyTo(undefined)
+		).toBeUndefined();
+	});
 	it("should cause error(s)", () =>
 	{
 		expect(() =>
