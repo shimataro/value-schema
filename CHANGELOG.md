@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.0.0-rc.1] - 2022-05-27
+
 ### Changed
 
 * `{ifUndefined: undefined}` accepts `undefined` input value, and keep it as-is.
@@ -581,7 +583,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/b8f30c4682e384e0e812a2c333fb447e8ba9f601...HEAD
+[Unreleased]: https://github.com/shimataro/v4.0.0-rc.1...HEAD
+[4.0.0-rc.1]: https://github.com/shimataro/value-schema/compare/b8f30c4682e384e0e812a2c333fb447e8ba9f601...v4.0.0-rc.1
 [3.1.1]: https://github.com/shimataro/value-schema/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/shimataro/value-schema/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.15...v3.0.0
