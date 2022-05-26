@@ -1,5 +1,5 @@
 import { Key, Values, isInteger, isNumber, isScalar, isString } from "../../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 const REGEXP_NUMBER = /^\s*[+-]?(\d+(\.\d*)?|\.\d+)\s*$/;
 const REGEXP_INTEGER = /^\s*[+-]?\d+\s*$/;
 export const INTEGER = {
@@ -26,7 +26,7 @@ export const INTEGER = {
 } as const;
 type INTEGER = typeof INTEGER[keyof typeof INTEGER];
 type IntegerLike = boolean | INTEGER;
-export interface Options {
+export interface Rules {
     /** does not convert type; causes error if type does not match */
     strictType?: boolean;
     /** accepts string with special format; e.g., "1e+2", "0x100" */
@@ -37,37 +37,37 @@ export interface Options {
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<number> {
-    const normalizedOptions: Required<Options> = {
+export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<number> {
+    const normalizedRules: Required<Rules> = {
         strictType: false,
         acceptsSpecialFormats: false,
         integer: false,
-        ...options
+        ...rules
     };
     if (isString(values.output)) {
-        if (!checkNumberFormat(normalizedOptions, values.output)) {
-            ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+        if (!checkNumberFormat(normalizedRules, values.output)) {
+            ValueSchemaError.raise(RULE.TYPE, values, keyStack);
         }
     }
-    const adjustedValue = toNumber(normalizedOptions, values.output);
+    const adjustedValue = toNumber(normalizedRules, values.output);
     if (adjustedValue === false) {
-        ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+        ValueSchemaError.raise(RULE.TYPE, values, keyStack);
     }
     values.output = adjustedValue;
     return false;
 }
 /**
  * check the format of value
- * @param options parameters
+ * @param rules rules
  * @param value value to check
  * @returns OK/NG
  */
-function checkNumberFormat(options: Required<Options>, value: string): boolean {
-    const re = getRegExpForNumber(options);
+function checkNumberFormat(rules: Required<Rules>, value: string): boolean {
+    const re = getRegExpForNumber(rules);
     if (re === null) {
         return true;
     }
@@ -75,14 +75,14 @@ function checkNumberFormat(options: Required<Options>, value: string): boolean {
 }
 /**
  * get RegExp pattern for number
- * @param options parameters
+ * @param rules rules
  * @returns regular expression pattern
  */
-function getRegExpForNumber(options: Required<Options>): RegExp | null {
-    if (options.acceptsSpecialFormats) {
+function getRegExpForNumber(rules: Required<Rules>): RegExp | null {
+    if (rules.acceptsSpecialFormats) {
         return null;
     }
-    if (options.integer === true || options.integer === INTEGER.YES) {
+    if (rules.integer === true || rules.integer === INTEGER.YES) {
         // integer
         return REGEXP_INTEGER;
     }
@@ -91,13 +91,13 @@ function getRegExpForNumber(options: Required<Options>): RegExp | null {
 }
 /**
  * convert to number
- * @param options parameters
+ * @param rules rules
  * @param value value to convert
  * @returns converted value or false(if failed)
  */
-function toNumber(options: Required<Options>, value: unknown): number | false {
+function toNumber(rules: Required<Rules>, value: unknown): number | false {
     // strict type check
-    if (!isNumber(value) && options.strictType) {
+    if (!isNumber(value) && rules.strictType) {
         return false;
     }
     if (!isScalar(value)) {
@@ -109,18 +109,18 @@ function toNumber(options: Required<Options>, value: unknown): number | false {
         // failed to cast
         return false;
     }
-    if (options.integer === false || options.integer === INTEGER.NO) {
+    if (rules.integer === false || rules.integer === INTEGER.NO) {
         return convertedValue;
     }
     // already integer
     if (isInteger(convertedValue)) {
         return convertedValue;
     }
-    if (options.integer === true || options.integer === INTEGER.YES) {
+    if (rules.integer === true || rules.integer === INTEGER.YES) {
         // not an integer and no round-off
         return false;
     }
-    return round(convertedValue, options.integer);
+    return round(convertedValue, rules.integer);
 }
 /**
  * round a value

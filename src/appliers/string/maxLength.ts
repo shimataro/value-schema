@@ -1,5 +1,5 @@
 import {Key, Values, isNumber, isString} from "../../libs/types";
-import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
+import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 type MaxLength = {
 	/** maximum length of string */
@@ -9,7 +9,7 @@ type MaxLength = {
 };
 type MaxLengthLike = number | MaxLength;
 
-export interface Options
+export interface Rules
 {
 	/** maximum length of string */
 	maxLength?: MaxLengthLike;
@@ -18,13 +18,13 @@ export interface Options
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<string>
+export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<string>
 {
-	const maxLength = normalizeOptions(options.maxLength);
+	const maxLength = normalizeRules(rules.maxLength);
 
 	// istanbul ignore next
 	if(!isString(values.output))
@@ -42,34 +42,34 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	return ValueSchemaError.raise(CAUSE.MAX_LENGTH, values, keyStack);
+	return ValueSchemaError.raise(RULE.MAX_LENGTH, values, keyStack);
 }
 
 /**
- * normalize options
- * @param maxLength options
- * @returns normalized options
+ * normalize rules
+ * @param maxLength maximum length
+ * @returns normalized rules
  */
-function normalizeOptions(maxLength?: MaxLengthLike): MaxLength
+function normalizeRules(maxLength?: MaxLengthLike): MaxLength
 {
-	const defaultOptions: MaxLength = {
+	const defaultRules: MaxLength = {
 		length: Number.MAX_SAFE_INTEGER,
 		trims: false,
 	};
 
 	if(maxLength === undefined)
 	{
-		return defaultOptions;
+		return defaultRules;
 	}
 	if(isNumber(maxLength))
 	{
 		return {
-			...defaultOptions,
+			...defaultRules,
 			length: maxLength,
 		};
 	}
 	return {
-		...defaultOptions,
+		...defaultRules,
 		...maxLength,
 	};
 }

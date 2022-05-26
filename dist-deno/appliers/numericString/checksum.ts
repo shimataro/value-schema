@@ -1,5 +1,5 @@
 import { Key, Values, isString } from "../../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
+import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 export const CHECKSUM_ALGORITHM = {
     /** Luhn algorithm; used in credit card and IMEI (also known as MOD-10 algorithm) */
     LUHN: 0,
@@ -15,29 +15,29 @@ export const CHECKSUM_ALGORITHM = {
     JAN: 1
 } as const;
 type CHECKSUM_ALGORITHM = typeof CHECKSUM_ALGORITHM[keyof typeof CHECKSUM_ALGORITHM];
-export interface Options {
+export interface Rules {
     /** uses checksum */
     checksum?: CHECKSUM_ALGORITHM;
 }
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<string> {
-    if (options.checksum === undefined) {
+export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<string> {
+    if (rules.checksum === undefined) {
         return false;
     }
     // istanbul ignore next
     if (!isString(values.output)) {
         return false;
     }
-    if (check(values.output, options.checksum)) {
+    if (check(values.output, rules.checksum)) {
         return false;
     }
-    return ValueSchemaError.raise(CAUSE.CHECKSUM, values, keyStack);
+    return ValueSchemaError.raise(RULE.CHECKSUM, values, keyStack);
 }
 /**
  * check string

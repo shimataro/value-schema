@@ -8,19 +8,19 @@ type Each<T> = {
     ignoresErrors: boolean;
 };
 type EachLike<T> = BaseSchema<T> | Each<T>;
-export interface Options<T> {
+export interface Rules<T> {
     /** specifies schema of each elements */
     each?: EachLike<T>;
 }
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[]): values is Values<T[]> {
-    const each = normalizeOptions(options.each);
+export function applyTo<T>(values: Values, rules: Rules<T>, keyStack: Key[]): values is Values<T[]> {
+    const each = normalizeRules(rules.each);
     if (each === undefined) {
         return false;
     }
@@ -37,7 +37,7 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
                 if (each.ignoresErrors) {
                     throw Error("!IGNORE!");
                 }
-                return ValueSchemaError.raise(err.cause, values, err.keyStack);
+                return ValueSchemaError.raise(err.rule, values, err.keyStack);
             }, [...keyStack, idx]);
             adjustedValues.push(adjustedValue);
         }
@@ -54,11 +54,11 @@ export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[])
     return false;
 }
 /**
- * normalize options
+ * normalize rules
  * @param each each
- * @returns normalized options
+ * @returns normalized rules
  */
-function normalizeOptions<T>(each?: EachLike<T>): Each<T> | void {
+function normalizeRules<T>(each?: EachLike<T>): Each<T> | void {
     if (each === undefined) {
         return;
     }

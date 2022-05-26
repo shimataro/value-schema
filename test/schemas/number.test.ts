@@ -103,68 +103,68 @@ function testType(): void
 		expect(() =>
 		{
 			vs.number().applyTo("true");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.number().applyTo("false");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.number({
 				acceptsSpecialFormats: true,
 			}).applyTo("true");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.number().applyTo("1e+2");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.number().applyTo("0x100");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.number().applyTo("0o100");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.number().applyTo("0b100");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.number().applyTo("１２３４．５");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.number().applyTo([]);
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.number().applyTo({});
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.number({
 				strictType: true,
 			}).applyTo("1");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.number({
 				strictType: true,
 			}).applyTo(true);
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 	});
 }
 
@@ -387,28 +387,28 @@ function testInteger(): void
 			vs.number({
 				integer: true,
 			}).applyTo(3.14);
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.number({
 				integer: true,
 			}).applyTo("3.14");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.number({
 				integer: true,
 			}).applyTo("3.");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.number({
 				integer: -1 as any, // eslint-disable-line @typescript-eslint/no-explicit-any
 			}).applyTo(0.1);
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 	});
 }
 
@@ -446,7 +446,7 @@ function testIfUndefined(): void
 		expect(() =>
 		{
 			vs.number().applyTo(undefined);
-		}).toThrow(vs.CAUSE.UNDEFINED);
+		}).toThrow(vs.RULE.UNDEFINED);
 	});
 }
 
@@ -468,7 +468,7 @@ function testIfNull(): void
 		expect(() =>
 		{
 			vs.number().applyTo(null);
-		}).toThrow(vs.CAUSE.NULL);
+		}).toThrow(vs.RULE.NULL);
 	});
 }
 
@@ -496,7 +496,7 @@ function testIfEmptyString(): void
 		expect(() =>
 		{
 			vs.number().applyTo("");
-		}).toThrow(vs.CAUSE.EMPTY_STRING);
+		}).toThrow(vs.RULE.EMPTY_STRING);
 	});
 }
 
@@ -532,7 +532,7 @@ function testOnly(): void
 			vs.number({
 				only: [1, 3, 5],
 			}).applyTo(2);
-		}).toThrow(vs.CAUSE.ONLY);
+		}).toThrow(vs.RULE.ONLY);
 	});
 }
 
@@ -568,13 +568,13 @@ function testMinValue(): void
 		expect(() =>
 		{
 			vs.number().applyTo(Number.MIN_SAFE_INTEGER - 1);
-		}).toThrow(vs.CAUSE.MIN_VALUE);
+		}).toThrow(vs.RULE.MIN_VALUE);
 		expect(() =>
 		{
 			vs.number({
 				minValue: 10,
 			}).applyTo(9);
-		}).toThrow(vs.CAUSE.MIN_VALUE);
+		}).toThrow(vs.RULE.MIN_VALUE);
 	});
 }
 
@@ -610,13 +610,13 @@ function testMaxValue(): void
 		expect(() =>
 		{
 			vs.number().applyTo(Number.MAX_SAFE_INTEGER + 1);
-		}).toThrow(vs.CAUSE.MAX_VALUE);
+		}).toThrow(vs.RULE.MAX_VALUE);
 		expect(() =>
 		{
 			vs.number({
 				maxValue: 100,
 			}).applyTo(101);
-		}).toThrow(vs.CAUSE.MAX_VALUE);
+		}).toThrow(vs.RULE.MAX_VALUE);
 	});
 }
 

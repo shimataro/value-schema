@@ -1,29 +1,29 @@
 import { Key, Values } from "../libs/types.ts";
-import { CAUSE, ValueSchemaError } from "../libs/ValueSchemaError.ts";
-export interface Options<T> {
+import { RULE, ValueSchemaError } from "../libs/ValueSchemaError.ts";
+export interface Rules<T> {
     /** accepts only specified values */
     only?: readonly T[];
 }
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo<T>(values: Values, options: Options<T>, keyStack: Key[]): values is Values<T> {
-    const normalizedOptions: Required<Options<T>> = {
+export function applyTo<T>(values: Values, rules: Rules<T>, keyStack: Key[]): values is Values<T> {
+    const normalizedRules: Required<Rules<T>> = {
         only: [],
-        ...options
+        ...rules
     };
-    if (normalizedOptions.only.length === 0) {
+    if (normalizedRules.only.length === 0) {
         return false;
     }
     // Array.prototype.include() might not exist in old version
-    for (const value of normalizedOptions.only) {
+    for (const value of normalizedRules.only) {
         if (values.output === value) {
             return true;
         }
     }
-    return ValueSchemaError.raise(CAUSE.ONLY, values, keyStack);
+    return ValueSchemaError.raise(RULE.ONLY, values, keyStack);
 }

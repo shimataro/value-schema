@@ -54,26 +54,26 @@ function testType(): void
 		expect(() =>
 		{
 			vs.string().applyTo([]);
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.string().applyTo({});
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.string({
 				strictType: true,
 			}).applyTo(0);
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.string({
 				strictType: true,
 			}).applyTo(true);
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 	});
 }
 
@@ -103,7 +103,7 @@ function testIfUndefined(): void
 		expect(() =>
 		{
 			vs.string().applyTo(undefined);
-		}).toThrow(vs.CAUSE.UNDEFINED);
+		}).toThrow(vs.RULE.UNDEFINED);
 	});
 }
 
@@ -131,7 +131,7 @@ function testIfNull(): void
 		expect(() =>
 		{
 			vs.string().applyTo(null);
-		}).toThrow(vs.CAUSE.NULL);
+		}).toThrow(vs.RULE.NULL);
 	});
 }
 
@@ -159,7 +159,7 @@ function testIfEmptyString(): void
 		expect(() =>
 		{
 			vs.string().applyTo("");
-		}).toThrow(vs.CAUSE.EMPTY_STRING);
+		}).toThrow(vs.RULE.EMPTY_STRING);
 	});
 }
 
@@ -183,7 +183,7 @@ function testTrims(): void
 			vs.string({
 				trims: true,
 			}).applyTo(" \t\r\n ");
-		}).toThrow(vs.CAUSE.EMPTY_STRING);
+		}).toThrow(vs.RULE.EMPTY_STRING);
 	});
 }
 
@@ -225,13 +225,13 @@ function testOnly(): void
 			vs.string({
 				only: ["", "eat", "sleep", "play"],
 			}).applyTo("study");
-		}).toThrow(vs.CAUSE.ONLY);
+		}).toThrow(vs.RULE.ONLY);
 		expect(() =>
 		{
 			vs.string({
 				only: ["", "eat", "sleep", "play"],
 			}).applyTo("EAT");
-		}).toThrow(vs.CAUSE.ONLY);
+		}).toThrow(vs.RULE.ONLY);
 	});
 }
 
@@ -255,7 +255,7 @@ function testMinLength(): void
 			vs.string({
 				minLength: 4,
 			}).applyTo("abc");
-		}).toThrow(vs.CAUSE.MIN_LENGTH);
+		}).toThrow(vs.RULE.MIN_LENGTH);
 	});
 }
 
@@ -290,7 +290,7 @@ function testMaxLength(): void
 			vs.string({
 				maxLength: 8,
 			}).applyTo("123456789");
-		}).toThrow(vs.CAUSE.MAX_LENGTH);
+		}).toThrow(vs.RULE.MAX_LENGTH);
 	});
 }
 
@@ -400,35 +400,35 @@ function testpatternHttp(): void
 			vs.string({
 				pattern: vs.STRING.PATTERN.HTTP,
 			}).applyTo("https://例.com/");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 
 		expect(() =>
 		{
 			vs.string({
 				pattern: vs.STRING.PATTERN.HTTP,
 			}).applyTo("http:/example.com/");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 
 		expect(() =>
 		{
 			vs.string({
 				pattern: vs.STRING.PATTERN.HTTP,
 			}).applyTo("http://example.com::80/");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 
 		expect(() =>
 		{
 			vs.string({
 				pattern: vs.STRING.PATTERN.HTTP,
 			}).applyTo("http://example.com:abc/");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 
 		expect(() =>
 		{
 			vs.string({
 				pattern: vs.STRING.PATTERN.HTTP,
 			}).applyTo("https://1[fe80::a1b3:125d:c1f8:4781]/");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 	});
 }
 
@@ -464,28 +464,28 @@ function testPatternIpv4(): void
 			vs.string({
 				pattern: vs.STRING.PATTERN.IPV4,
 			}).applyTo("0.0.0.");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 
 		expect(() =>
 		{
 			vs.string({
 				pattern: vs.STRING.PATTERN.IPV4,
 			}).applyTo("0.0.0.0.");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 
 		expect(() =>
 		{
 			vs.string({
 				pattern: vs.STRING.PATTERN.IPV4,
 			}).applyTo("255.255.255.256");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 
 		expect(() =>
 		{
 			vs.string({
 				pattern: vs.STRING.PATTERN.IPV4,
 			}).applyTo("999.255.255.255");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 	});
 }
 
@@ -534,21 +534,21 @@ function testPatternIpv6(): void
 			vs.string({
 				pattern: vs.STRING.PATTERN.IPV6,
 			}).applyTo("0000");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 
 		expect(() =>
 		{
 			vs.string({
 				pattern: vs.STRING.PATTERN.IPV6,
 			}).applyTo("ffff:");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 
 		expect(() =>
 		{
 			vs.string({
 				pattern: vs.STRING.PATTERN.IPV6,
 			}).applyTo("0000:0000:0000:0000:0000:0000:0000:0000:");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 	});
 }
 
@@ -628,7 +628,7 @@ function testPatternUri(): void
 			vs.string({
 				pattern: vs.STRING.PATTERN.URI,
 			}).applyTo("https://例.com/");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 	});
 }
 
@@ -658,21 +658,21 @@ function testPatternUuid(): void
 			vs.string({
 				pattern: vs.STRING.PATTERN.UUID,
 			}).applyTo("X966a073b-b26e-4f88-888d-1f3a4ccfcd31X");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 
 		expect(() =>
 		{
 			vs.string({
 				pattern: vs.STRING.PATTERN.UUID,
 			}).applyTo("966a073bb26e4f88888d1f3a4ccfcd31");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 
 		expect(() =>
 		{
 			vs.string({
 				pattern: vs.STRING.PATTERN.UUID,
 			}).applyTo("this-is-not-a-UUID-pattern");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 	});
 }
 
@@ -714,21 +714,21 @@ function testPatternOthers(): void
 			vs.string({
 				pattern: /^Go+gle$/,
 			}).applyTo("Ggle");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 
 		expect(() =>
 		{
 			vs.string({
 				pattern: /^Go+gle$/,
 			}).applyTo("google");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 
 		expect(() =>
 		{
 			vs.string({
 				pattern: vs.STRING.PATTERN.EMAIL,
 			}).applyTo("john..doe@example.com");
-		}).toThrow(vs.CAUSE.PATTERN);
+		}).toThrow(vs.RULE.PATTERN);
 	});
 }
 
@@ -775,6 +775,6 @@ function testConverter(): void
 					return value.padStart(8, " ");
 				},
 			}).applyTo("123ABCxyz");
-		}).toThrow(vs.CAUSE.CONVERTER);
+		}).toThrow(vs.RULE.CONVERTER);
 	});
 }

@@ -6,10 +6,10 @@ import * as pattern from "../appliers/email/pattern.ts";
 import * as trims from "../appliers/string/trims.ts";
 import * as type from "../appliers/string/type.ts";
 import { BaseSchema } from "./BaseSchema.ts";
-export type OptionsForEmail = ifEmptyString.Options<string> & ifNull.Options<string> & ifUndefined.Options<string> & pattern.Options & maxLength.Options & trims.Options & type.Options;
+export type RulesForEmail = ifEmptyString.Rules<string> & ifNull.Rules<string> & ifUndefined.Rules<string> & pattern.Rules & maxLength.Rules & trims.Rules & type.Rules;
 export class EmailSchema<Tx = never> extends BaseSchema<string | Tx> {
-    constructor(options: OptionsForEmail) {
-        super(options, [
+    constructor(rules: RulesForEmail) {
+        super(rules, [
             ifUndefined.applyTo,
             ifNull.applyTo,
             type.applyTo,

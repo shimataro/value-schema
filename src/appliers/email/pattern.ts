@@ -2,7 +2,7 @@ import {REGEXP_EMAIL} from "../../libs/regexp/email";
 import {Key, Values} from "../../libs/types";
 import * as pattern from "../string/pattern";
 
-export interface Options
+export interface Rules
 {
 	/** overwrites email pattern */
 	pattern?: RegExp;
@@ -11,16 +11,16 @@ export interface Options
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<string>
+export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<string>
 {
-	const normalizedOptions: Required<Options> = {
+	const normalizedRules: Required<Rules> = {
 		pattern: REGEXP_EMAIL,
-		...options,
+		...rules,
 	};
 
-	return pattern.applyTo(values, normalizedOptions, keyStack);
+	return pattern.applyTo(values, normalizedRules, keyStack);
 }

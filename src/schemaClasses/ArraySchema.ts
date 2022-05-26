@@ -9,21 +9,21 @@ import * as type from "../appliers/array/type";
 
 import {BaseSchema} from "./BaseSchema";
 
-export type OptionsForArray<T> =
-	converter.Options<T[]> &
-	ifUndefined.Options<T[]> &
-	ifEmptyString.Options<T[]> &
-	ifNull.Options<T[]> &
-	each.Options<T> &
-	minLength.Options &
-	maxLength.Options &
-	type.Options;
+export type RulesForArray<T> =
+	converter.Rules<T[]> &
+	ifUndefined.Rules<T[]> &
+	ifEmptyString.Rules<T[]> &
+	ifNull.Rules<T[]> &
+	each.Rules<T> &
+	minLength.Rules &
+	maxLength.Rules &
+	type.Rules;
 
 export class ArraySchema<T, Tx = never> extends BaseSchema<T[] | Tx>
 {
-	constructor(options: OptionsForArray<T>)
+	constructor(rules: RulesForArray<T>)
 	{
-		super(options, [
+		super(rules, [
 			ifUndefined.applyTo,
 			ifNull.applyTo,
 			ifEmptyString.applyTo,

@@ -1,10 +1,10 @@
 import {Key, Values, isBoolean, isNumber, isString} from "../../libs/types";
-import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
+import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 const REGEXP_TRUE = /^\s*(true|yes|on)\s*$/i;
 const REGEXP_FALSE = /^\s*(false|no|off)\s*$/i;
 
-export interface Options
+export interface Rules
 {
 	/** does not convert type; causes error if type does not match */
 	strictType?: boolean;
@@ -15,16 +15,16 @@ export interface Options
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<boolean>
+export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<boolean>
 {
-	const normalizedOptions: Required<Options> = {
+	const normalizedRules: Required<Rules> = {
 		strictType: false,
 		acceptsAllNumbers: false,
-		...options,
+		...rules,
 	};
 
 	if(isBoolean(values.output))
@@ -34,10 +34,10 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 	}
 
 	// not boolean
-	if(normalizedOptions.strictType)
+	if(normalizedRules.strictType)
 	{
 		// strict type check
-		ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+		ValueSchemaError.raise(RULE.TYPE, values, keyStack);
 	}
 
 	if(isString(values.output))
@@ -60,12 +60,12 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 
 	if(isNumber(values.output))
 	{
-		if(values.output === 0 || values.output === 1 || normalizedOptions.acceptsAllNumbers)
+		if(values.output === 0 || values.output === 1 || normalizedRules.acceptsAllNumbers)
 		{
 			values.output = Boolean(values.output);
 			return true;
 		}
 	}
 
-	return ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+	return ValueSchemaError.raise(RULE.TYPE, values, keyStack);
 }

@@ -1,18 +1,18 @@
 import {Key, Values, isObject} from "../../libs/types";
-import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
+import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
-export interface Options
+export interface Rules
 {
 }
 
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo<T>(values: Values, options: Options, keyStack: Key[]): values is Values<T> // eslint-disable-line @typescript-eslint/no-unused-vars
+export function applyTo<T>(values: Values, rules: Rules, keyStack: Key[]): values is Values<T> // eslint-disable-line @typescript-eslint/no-unused-vars
 {
 	if(isObject(values.output))
 	{
@@ -20,5 +20,5 @@ export function applyTo<T>(values: Values, options: Options, keyStack: Key[]): v
 		return false;
 	}
 
-	return ValueSchemaError.raise(CAUSE.TYPE, values, keyStack);
+	return ValueSchemaError.raise(RULE.TYPE, values, keyStack);
 }

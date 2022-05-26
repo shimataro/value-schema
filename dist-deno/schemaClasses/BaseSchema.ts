@@ -1,22 +1,22 @@
 import { Key, Values, makeValues } from "../libs/types.ts";
 import { ErrorHandler } from "../libs/publicTypes.ts";
 import { ValueSchemaError } from "../libs/ValueSchemaError.ts";
-interface Options {
+interface Rules {
 }
-type ApplyTo<T> = (values: Values, options: Options, keyStack: Key[]) => values is Values<T>;
+type ApplyTo<T> = (values: Values, rules: Rules, keyStack: Key[]) => values is Values<T>;
 /**
  * Base Schema Class
  */
 export class BaseSchema<T = unknown> {
-    private readonly options: Options;
+    private readonly rules: Rules;
     private readonly applyToList: ApplyTo<T>[];
     /**
      * constructor
-     * @param options options
+     * @param rules rules
      * @param applyToList list of applyTo
      */
-    constructor(options: Options, applyToList: ApplyTo<T>[]) {
-        this.options = options;
+    constructor(rules: Rules, applyToList: ApplyTo<T>[]) {
+        this.rules = rules;
         this.applyToList = applyToList;
     }
     /**
@@ -32,7 +32,7 @@ export class BaseSchema<T = unknown> {
         try {
             const values = makeValues(value);
             for (const applyTo of this.applyToList) {
-                if (applyTo(values, this.options, keyStack)) {
+                if (applyTo(values, this.rules, keyStack)) {
                     return values.output;
                 }
             }

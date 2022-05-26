@@ -1,5 +1,5 @@
 import {Key, Values, isString} from "../../libs/types";
-import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
+import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 export const CHECKSUM_ALGORITHM =
 {
@@ -19,7 +19,7 @@ export const CHECKSUM_ALGORITHM =
 } as const;
 type CHECKSUM_ALGORITHM = typeof CHECKSUM_ALGORITHM[keyof typeof CHECKSUM_ALGORITHM];
 
-export interface Options
+export interface Rules
 {
 	/** uses checksum */
 	checksum?: CHECKSUM_ALGORITHM;
@@ -28,13 +28,13 @@ export interface Options
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<string>
+export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<string>
 {
-	if(options.checksum === undefined)
+	if(rules.checksum === undefined)
 	{
 		return false;
 	}
@@ -45,12 +45,12 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	if(check(values.output, options.checksum))
+	if(check(values.output, rules.checksum))
 	{
 		return false;
 	}
 
-	return ValueSchemaError.raise(CAUSE.CHECKSUM, values, keyStack);
+	return ValueSchemaError.raise(RULE.CHECKSUM, values, keyStack);
 }
 
 /**

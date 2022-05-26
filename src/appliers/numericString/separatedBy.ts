@@ -1,6 +1,6 @@
 import {Key, Values, isString} from "../../libs/types";
 
-export interface Options
+export interface Rules
 {
 	/** assumes input value is separated by pattern and ignores it */
 	separatedBy?: string | RegExp;
@@ -9,13 +9,13 @@ export interface Options
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<string> // eslint-disable-line @typescript-eslint/no-unused-vars
+export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<string> // eslint-disable-line @typescript-eslint/no-unused-vars
 {
-	if(options.separatedBy === undefined)
+	if(rules.separatedBy === undefined)
 	{
 		return false;
 	}
@@ -26,6 +26,6 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	values.output = values.output.split(options.separatedBy).join("");
+	values.output = values.output.split(rules.separatedBy).join("");
 	return false;
 }

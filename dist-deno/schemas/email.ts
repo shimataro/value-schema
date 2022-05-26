@@ -1,20 +1,20 @@
-import { NullableOptions, UndefinableOptions } from "../libs/publicTypes.ts";
-import { EmailSchema, OptionsForEmail } from "../schemaClasses/EmailSchema.ts";
+import { NullableRules, UndefinableRules } from "../libs/publicTypes.ts";
+import { EmailSchema, RulesForEmail } from "../schemaClasses/EmailSchema.ts";
 /** schema for email or null or undefined */
-export function email(options: OptionsForEmail & NullableOptions & UndefinableOptions): EmailSchema<null | undefined>;
+export function email(options: RulesForEmail & NullableRules & UndefinableRules): EmailSchema<null | undefined>;
 /** schema for email or undefined */
-export function email(options: OptionsForEmail & UndefinableOptions): EmailSchema<undefined>;
+export function email(options: RulesForEmail & UndefinableRules): EmailSchema<undefined>;
 /** schema for email or null */
-export function email(options: OptionsForEmail & NullableOptions): EmailSchema<null>;
+export function email(rules: RulesForEmail & NullableRules): EmailSchema<null>;
 /** schema for email */
-export function email(options: OptionsForEmail): EmailSchema;
+export function email(rules: RulesForEmail): EmailSchema;
 /** schema for email */
 export function email(): EmailSchema;
 /**
  * create schema
- * @param options Options
+ * @param rules rules
  * @returns schema
  */
-export function email(options: OptionsForEmail = {}): EmailSchema {
-    return new EmailSchema(options);
+export function email(rules: RulesForEmail = {}): EmailSchema {
+    return new EmailSchema(rules);
 }

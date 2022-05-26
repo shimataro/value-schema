@@ -2,7 +2,7 @@ import {Key, ObjectTypeOf, SchemaObject, Values} from "../../libs/types";
 import {applySchemaObjectCore} from "../../libs/applySchemaObjectCore";
 import {onErrorDefault, onFinishedDefault} from "../../schemaClasses/BaseSchema";
 
-export interface Options<S>
+export interface Rules<S>
 {
 	/** schema object */
 	schemaObject?: S;
@@ -11,18 +11,18 @@ export interface Options<S>
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack path to key that caused error
  * @returns ends applying
  * @throws {ValueSchemaError}
  */
-export function applyTo<S extends SchemaObject>(values: Values, options: Options<S>, keyStack: Key[]): values is Values<ObjectTypeOf<S>>
+export function applyTo<S extends SchemaObject>(values: Values, rules: Rules<S>, keyStack: Key[]): values is Values<ObjectTypeOf<S>>
 {
-	if(options.schemaObject === undefined)
+	if(rules.schemaObject === undefined)
 	{
 		return false;
 	}
 
-	values.output = applySchemaObjectCore(options.schemaObject, values.output, onErrorDefault, onFinishedDefault, keyStack);
+	values.output = applySchemaObjectCore(rules.schemaObject, values.output, onErrorDefault, onFinishedDefault, keyStack);
 	return false;
 }

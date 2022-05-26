@@ -1,23 +1,23 @@
-import {NullableOptions, UndefinableOptions} from "../libs/publicTypes";
-import {BooleanSchema, OptionsForBoolean} from "../schemaClasses/BooleanSchema";
+import {NullableRules, UndefinableRules} from "../libs/publicTypes";
+import {BooleanSchema, RulesForBoolean} from "../schemaClasses/BooleanSchema";
 
 /** schema for boolean or null or undefined */
-export function boolean(options: OptionsForBoolean & NullableOptions & UndefinableOptions): BooleanSchema<null | undefined>;
+export function boolean(options: RulesForBoolean & NullableRules & UndefinableRules): BooleanSchema<null | undefined>;
 /** schema for boolean or undefined */
-export function boolean(options: OptionsForBoolean & UndefinableOptions): BooleanSchema<undefined>;
+export function boolean(options: RulesForBoolean & UndefinableRules): BooleanSchema<undefined>;
 /** schema for boolean or null */
-export function boolean(options: OptionsForBoolean & NullableOptions): BooleanSchema<null>;
+export function boolean(rules: RulesForBoolean & NullableRules): BooleanSchema<null>;
 /** schema for boolean */
-export function boolean(options: OptionsForBoolean): BooleanSchema;
+export function boolean(rules: RulesForBoolean): BooleanSchema;
 /** schema for boolean */
 export function boolean(): BooleanSchema;
 
 /**
  * create schema
- * @param options Options
+ * @param rules rules
  * @returns schema
  */
-export function boolean(options: OptionsForBoolean = {}): BooleanSchema
+export function boolean(rules: RulesForBoolean = {}): BooleanSchema
 {
-	return new BooleanSchema(options);
+	return new BooleanSchema(rules);
 }

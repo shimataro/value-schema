@@ -1,24 +1,24 @@
-import {NullableOptions, UndefinableOptions} from "../libs/publicTypes";
+import {NullableRules, UndefinableRules} from "../libs/publicTypes";
 import {SchemaObject} from "../libs/types";
-import {ObjectSchema, OptionsForObject} from "../schemaClasses/ObjectSchema";
+import {ObjectSchema, RulesForObject} from "../schemaClasses/ObjectSchema";
 
 /** schema for object or null or undefined */
-export function object<S extends SchemaObject>(options: OptionsForObject<S> & NullableOptions & UndefinableOptions): ObjectSchema<S, null | undefined>;
+export function object<S extends SchemaObject>(options: RulesForObject<S> & NullableRules & UndefinableRules): ObjectSchema<S, null | undefined>;
 /** schema for object or undefined */
-export function object<S extends SchemaObject>(options: OptionsForObject<S> & UndefinableOptions): ObjectSchema<S, undefined>;
+export function object<S extends SchemaObject>(options: RulesForObject<S> & UndefinableRules): ObjectSchema<S, undefined>;
 /** schema for object or null */
-export function object<S extends SchemaObject>(options: OptionsForObject<S> & NullableOptions): ObjectSchema<S, null>;
+export function object<S extends SchemaObject>(rules: RulesForObject<S> & NullableRules): ObjectSchema<S, null>;
 /** schema for object */
-export function object<S extends SchemaObject>(options: OptionsForObject<S>): ObjectSchema<S>;
+export function object<S extends SchemaObject>(rules: RulesForObject<S>): ObjectSchema<S>;
 /** schema for object */
 export function object(): ObjectSchema<SchemaObject>;
 
 /**
  * create schema
- * @param options Options
+ * @param rules rules
  * @returns schema
  */
-export function object<S extends SchemaObject>(options: OptionsForObject<S> = {}): ObjectSchema<S>
+export function object<S extends SchemaObject>(rules: RulesForObject<S> = {}): ObjectSchema<S>
 {
-	return new ObjectSchema(options);
+	return new ObjectSchema(rules);
 }

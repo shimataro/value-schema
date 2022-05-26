@@ -14,22 +14,22 @@ export const NUMBER = {
 	INTEGER: type.INTEGER,
 } as const;
 
-export type OptionsForNumber =
-	converter.Options<number> &
-	ifUndefined.Options<number> &
-	ifEmptyString.Options<number> &
-	ifNull.Options<number> &
-	only.Options<number> &
-	acceptsFullWidth.Options &
-	type.Options &
-	minValue.Options &
-	maxValue.Options;
+export type RulesForNumber =
+	converter.Rules<number> &
+	ifUndefined.Rules<number> &
+	ifEmptyString.Rules<number> &
+	ifNull.Rules<number> &
+	only.Rules<number> &
+	acceptsFullWidth.Rules &
+	type.Rules &
+	minValue.Rules &
+	maxValue.Rules;
 
 export class NumberSchema<Tx = never> extends BaseSchema<number | Tx>
 {
-	constructor(options: OptionsForNumber)
+	constructor(rules: RulesForNumber)
 	{
-		super(options, [
+		super(rules, [
 			ifUndefined.applyTo,
 			ifEmptyString.applyTo,
 			ifNull.applyTo,

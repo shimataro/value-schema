@@ -133,48 +133,48 @@ function testType(): void
 		expect(() =>
 		{
 			vs.boolean().applyTo(-1);
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.boolean().applyTo("-1");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.boolean().applyTo("abc");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.boolean().applyTo({});
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.boolean().applyTo([]);
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.boolean({
 				strictType: true,
 			}).applyTo(0);
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.boolean({
 				strictType: true,
 			}).applyTo("0");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 
 		expect(() =>
 		{
 			vs.boolean({
 				strictType: true,
 			}).applyTo("true");
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 	});
 }
 
@@ -211,7 +211,7 @@ function testIfUndefined(): void
 		expect(() =>
 		{
 			vs.boolean().applyTo(undefined);
-		}).toThrow(vs.CAUSE.UNDEFINED);
+		}).toThrow(vs.RULE.UNDEFINED);
 	});
 }
 
@@ -240,7 +240,7 @@ function testIfNull(): void
 		expect(() =>
 		{
 			vs.boolean().applyTo(null);
-		}).toThrow(vs.CAUSE.NULL);
+		}).toThrow(vs.RULE.NULL);
 	});
 }
 
@@ -269,6 +269,6 @@ function testIfEmptyString(): void
 		expect(() =>
 		{
 			vs.boolean().applyTo("");
-		}).toThrow(vs.CAUSE.EMPTY_STRING);
+		}).toThrow(vs.RULE.EMPTY_STRING);
 	});
 }

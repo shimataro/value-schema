@@ -1,25 +1,25 @@
-import {NullableOptions, UndefinableOptions} from "../libs/publicTypes";
-import {OptionsForString, StringSchema} from "../schemaClasses/StringSchema";
+import {NullableRules, UndefinableRules} from "../libs/publicTypes";
+import {RulesForString, StringSchema} from "../schemaClasses/StringSchema";
 
 export {STRING} from "../schemaClasses/StringSchema";
 
 /** schema for string or null or undefined */
-export function string(options: OptionsForString & NullableOptions & UndefinableOptions): StringSchema<null | undefined>;
+export function string(options: RulesForString & NullableRules & UndefinableRules): StringSchema<null | undefined>;
 /** schema for string or undefined */
-export function string(options: OptionsForString & UndefinableOptions): StringSchema<undefined>;
+export function string(options: RulesForString & UndefinableRules): StringSchema<undefined>;
 /** schema for string or null */
-export function string(options: OptionsForString & NullableOptions): StringSchema<null>;
+export function string(rules: RulesForString & NullableRules): StringSchema<null>;
 /** schema for string */
-export function string(options: OptionsForString): StringSchema;
+export function string(rules: RulesForString): StringSchema;
 /** schema for string */
 export function string(): StringSchema;
 
 /**
  * create schema
- * @param options Options
+ * @param rules rules
  * @returns schema
  */
-export function string(options: OptionsForString = {}): StringSchema
+export function string(rules: RulesForString = {}): StringSchema
 {
-	return new StringSchema(options);
+	return new StringSchema(rules);
 }

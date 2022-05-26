@@ -1,12 +1,12 @@
 import { ValueSchemaError } from "./ValueSchemaError.ts";
-export type NullableOptions = {
+export type NullableRules = {
     ifNull: null;
 } | {
     ifUndefined: null;
 } | {
     ifEmptyString: null;
 };
-export type UndefinableOptions = {
+export type UndefinableRules = {
     ifUndefined: undefined;
 };
 export type ErrorHandler<T = unknown> = (err: ValueSchemaError) => T | never;

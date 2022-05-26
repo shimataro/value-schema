@@ -15,23 +15,23 @@ export const STRING = {
 	PATTERN: pattern.PATTERN,
 } as const;
 
-export type OptionsForString =
-	converter.Options<string> &
-	ifEmptyString.Options<string> &
-	ifNull.Options<string> &
-	ifUndefined.Options<string> &
-	only.Options<string> &
-	type.Options &
-	trims.Options &
-	minLength.Options &
-	maxLength.Options &
-	pattern.Options;
+export type RulesForString =
+	converter.Rules<string> &
+	ifEmptyString.Rules<string> &
+	ifNull.Rules<string> &
+	ifUndefined.Rules<string> &
+	only.Rules<string> &
+	type.Rules &
+	trims.Rules &
+	minLength.Rules &
+	maxLength.Rules &
+	pattern.Rules;
 
 export class StringSchema<Tx = never> extends BaseSchema<string | Tx>
 {
-	constructor(options: OptionsForString)
+	constructor(rules: RulesForString)
 	{
-		super(options, [
+		super(rules, [
 			ifUndefined.applyTo,
 			ifNull.applyTo,
 			type.applyTo,

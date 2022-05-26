@@ -1,5 +1,5 @@
 import {Key, Values, isString} from "../../libs/types";
-import {CAUSE, ValueSchemaError} from "../../libs/ValueSchemaError";
+import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 import {REGEXP_EMAIL} from "../../libs/regexp/email";
 import {REGEXP_IPV4} from "../../libs/regexp/ipv4";
@@ -21,7 +21,7 @@ export const PATTERN = {
 	UUID: /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/i,
 } as const;
 
-export interface Options
+export interface Rules
 {
 	/** acceptable pattern (regular expression) */
 	pattern?: RegExp;
@@ -30,13 +30,13 @@ export interface Options
 /**
  * apply schema
  * @param values input/output values
- * @param options options
+ * @param rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo(values: Values, options: Options, keyStack: Key[]): values is Values<string>
+export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<string>
 {
-	if(options.pattern === undefined)
+	if(rules.pattern === undefined)
 	{
 		return false;
 	}
@@ -47,10 +47,10 @@ export function applyTo(values: Values, options: Options, keyStack: Key[]): valu
 		return false;
 	}
 
-	if(options.pattern.test(values.output))
+	if(rules.pattern.test(values.output))
 	{
 		return false;
 	}
 
-	return ValueSchemaError.raise(CAUSE.PATTERN, values, keyStack);
+	return ValueSchemaError.raise(RULE.PATTERN, values, keyStack);
 }

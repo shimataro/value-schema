@@ -37,7 +37,7 @@ function testType(): void
 		expect(() =>
 		{
 			vs.object().applyTo(123);
-		}).toThrow(vs.CAUSE.TYPE);
+		}).toThrow(vs.RULE.TYPE);
 	});
 }
 
@@ -67,7 +67,7 @@ function testIfUndefined(): void
 		expect(() =>
 		{
 			vs.object().applyTo(undefined);
-		}).toThrow(vs.CAUSE.UNDEFINED);
+		}).toThrow(vs.RULE.UNDEFINED);
 	});
 }
 
@@ -95,7 +95,7 @@ function testIfNull(): void
 		expect(() =>
 		{
 			vs.object().applyTo(null);
-		}).toThrow(vs.CAUSE.NULL);
+		}).toThrow(vs.RULE.NULL);
 	});
 }
 
@@ -123,7 +123,7 @@ function testIfEmptyString(): void
 		expect(() =>
 		{
 			vs.object().applyTo("");
-		}).toThrow(vs.CAUSE.EMPTY_STRING);
+		}).toThrow(vs.RULE.EMPTY_STRING);
 	});
 }
 
