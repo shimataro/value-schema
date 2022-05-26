@@ -3,7 +3,8 @@
 set -eu
 
 DATE=$(date +"%Y%m%d")
-BRANCH=feature/update-dependencies-${DATE}
+BASE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+TARGET_BRANCH=feature/update-dependencies-${DATE}
 COLOR_SUCCESS="\e[1;32m"
 COLOR_ERROR="\e[1;41m"
 COLOR_RESET="\e[m"
@@ -15,13 +16,16 @@ NPM_VERSION=$(npm -v)
 NPM_VERSION_MAJOR=${NPM_VERSION%%.*}
 if [[ ${NPM_VERSION_MAJOR} -ge 7 ]]; then
 	# needs lockfileVersion=1
-	echo -e "${COLOR_ERROR}Failed to update dependencies:${COLOR_RESET} Please use NPM<7 (Node.js<=14); current version is ${NPM_VERSION}."
+	echo -e "${COLOR_ERROR}Error:${COLOR_RESET} Failed to update dependencies. Please use NPM<7 (Node.js<=14); current version is ${NPM_VERSION}."
 	exit 1
 fi
 
-# create branch
-git checkout develop
-git checkout -b ${BRANCH}
+# create target branch
+if [[ ! ${BASE_BRANCH} =~ ^v[0-9]+$ ]]; then
+	echo -e "${COLOR_ERROR}Error:${COLOR_RESET} Base branch must match 'v*'; got ${BASE_BRANCH}."
+	exit 1
+fi
+git checkout -b ${TARGET_BRANCH}
 
 # check updates
 npm run check-updates -- -u
@@ -44,7 +48,7 @@ git commit -m "update dependencies"
 echo -e "
 ${COLOR_SUCCESS}🎉All dependencies are updated successfully.🎉${COLOR_RESET}
 
-Push changes and merge into 'develop' branch.
+Push changes and merge into '${BASE_BRANCH}' branch.
 
-    git push --set-upstream origin ${BRANCH}
+    git push --set-upstream origin ${TARGET_BRANCH}
 "
