@@ -22,7 +22,7 @@ fi
 
 # create target branch
 if [[ ! ${BASE_BRANCH} =~ ^v[0-9]+$ ]]; then
-	echo -e "${COLOR_ERROR}Error:${COLOR_RESET} Base branch must match 'v*'; got ${BASE_BRANCH}."
+	echo -e "${COLOR_ERROR}Error:${COLOR_RESET} Base branch must match 'v*'; got '${BASE_BRANCH}'."
 	exit 1
 fi
 git checkout -b ${TARGET_BRANCH}
