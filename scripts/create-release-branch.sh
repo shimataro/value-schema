@@ -80,7 +80,7 @@ function check_version_format() {
 
 function check_current_branch() {
 	local BASE_BRANCH=$1
-	local CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+	local CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 	if [ ${CURRENT_BRANCH} = ${BASE_BRANCH} ]; then
 		return
 	fi
