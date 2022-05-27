@@ -7,7 +7,7 @@ This document describes breaking changes due to version up.
 ### behavior of `{ifUndefined: undefined}`
 
 In v3, `{ifUndefined: undefined}` is equivalent to `{}`.
-Both versions cause error if input value is `undefined`.
+Both of them cause error if input value is `undefined`.
 
 In v4, the former accepts `undefined` (and keeps it as-is), the latter doesn't.
 
@@ -16,7 +16,7 @@ import vs from "value-schema";
 
 const input = {};
 
-// The below code throws error in v3, outputs `{foo: undefined}` in v4.
+// The below code throws an error in v3, but outputs `{foo: undefined}` in v4.
 {
     const output = vs.applySchemaObject({
         foo: vs.number({
@@ -26,7 +26,7 @@ const input = {};
     console.log(output);
 }
 
-// The below code throws error in both versions.
+// The below code throws an error in both versions.
 {
     const output = vs.applySchemaObject({
         foo: vs.number({}),
@@ -37,7 +37,7 @@ const input = {};
 
 #### for migration
 
-Replace `{ifUndefined: undefined}` with `{}`.
+* Replace `{ifUndefined: undefined}` with `{}`.
 
 ### rename `ValueSchemaError.prototype.cause` to `ValueSchemaError.prototype.rule`
 
