@@ -23,6 +23,7 @@ function testApplySchemaObject(): void
 		{
 			id: number;
 			name: string;
+			birthday: Date;
 			age: number;
 			email: string | null;
 			state: State;
@@ -39,6 +40,7 @@ function testApplySchemaObject(): void
 		const input = {
 			id: "1",
 			name: "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Ciprin Cipriano de la Santísima Trinidad Ruiz y Picasso",
+			birthday: "2000-12-09T00:00:00.000Z",
 			age: 20.5,
 			email: "picasso@example.com",
 			state: "active",
@@ -52,6 +54,7 @@ function testApplySchemaObject(): void
 		const expected: SchemaType = {
 			id: 1,
 			name: "Pablo Diego José",
+			birthday: new Date("2000-12-09T00:00:00.000Z"),
 			age: 20,
 			email: "picasso@example.com",
 			state: State.ACTIVE,
@@ -85,6 +88,7 @@ function testApplySchemaObject(): void
 						trims: true,
 					},
 				}),
+				birthday: vs.date(),
 				age: vs.number({
 					integer: vs.NUMBER.INTEGER.FLOOR_RZ,
 					minValue: 0,
