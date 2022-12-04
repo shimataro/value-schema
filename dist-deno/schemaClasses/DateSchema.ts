@@ -16,8 +16,8 @@ export class DateSchema<Tx = never> extends BaseSchema<Date | Tx> {
             ifUndefined.applyTo,
             ifNull.applyTo,
             ifEmptyString.applyTo,
-            iso8601.applyTo,
             unixtime.applyTo,
+            iso8601.applyTo,
             type.applyTo,
         ]);
     }

@@ -1,4 +1,4 @@
-import { Key, Values, isNumber } from "../../libs/types.ts";
+import { Key, Values, isNumber, isNumericString } from "../../libs/types.ts";
 export const UNIXTIME_PRECISION = {
     MILLISECONDS: 0,
     SECONDS: 1
@@ -6,6 +6,7 @@ export const UNIXTIME_PRECISION = {
 type UNIXTIME_PRECISION = typeof UNIXTIME_PRECISION[keyof typeof UNIXTIME_PRECISION];
 export interface Rules {
     unixtime?: {
+        strictType?: boolean;
         precision: UNIXTIME_PRECISION;
     };
 }
@@ -22,7 +23,15 @@ export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values i
     if (rules.unixtime === undefined) {
         return false;
     }
+    if (rules.unixtime.strictType !== true && isNumericString(values.output)) {
+        // convert to number
+        values.output = Number(values.output);
+    }
     if (!isNumber(values.output)) {
+        return false;
+    }
+    if (Number.isInteger(values.output) && !Number.isSafeInteger(values.output)) {
+        // integer but not safe
         return false;
     }
     switch (rules.unixtime.precision) {

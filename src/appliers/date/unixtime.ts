@@ -1,4 +1,4 @@
-import {Key, Values, isNumber} from "../../libs/types";
+import {Key, Values, isNumber, isNumericString} from "../../libs/types";
 
 export const UNIXTIME_PRECISION =
 {
@@ -10,6 +10,7 @@ type UNIXTIME_PRECISION = typeof UNIXTIME_PRECISION[keyof typeof UNIXTIME_PRECIS
 export interface Rules
 {
 	unixtime?: {
+		strictType?: boolean,
 		precision: UNIXTIME_PRECISION,
 	},
 }
@@ -29,8 +30,18 @@ export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values i
 		return false;
 	}
 
+	if(rules.unixtime.strictType !== true && isNumericString(values.output))
+	{
+		// convert to number
+		values.output = Number(values.output);
+	}
 	if(!isNumber(values.output))
 	{
+		return false;
+	}
+	if(Number.isInteger(values.output) && !Number.isSafeInteger(values.output))
+	{
+		// integer but not safe
 		return false;
 	}
 
