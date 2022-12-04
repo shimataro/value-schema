@@ -7,6 +7,8 @@ import {describe, expect, it} from "@jest/globals";
 	describe("ifUndefined", testIfUndefined);
 	describe("ifNull", testIfNull);
 	describe("ifEmptyString", testIfEmptyString);
+	describe("maxValue", testMaxValue);
+	describe("minValue", testMinValue);
 }
 
 /**
@@ -272,5 +274,143 @@ function testIfEmptyString(): void
 		{
 			vs.date().applyTo("");
 		}).toThrow(vs.RULE.EMPTY_STRING);
+	});
+}
+
+/**
+ * maxValue
+ */
+function testMaxValue(): void
+{
+	it("should be OK", () =>
+	{
+		expect(
+			vs.date({
+				maxValue: new Date("2020-01-01T00:00:00.000Z"),
+			}).applyTo("2020-01-01T00:00:00.000Z")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+
+		expect(
+			vs.date({
+				maxValue: {
+					value: new Date("2020-01-01T00:00:00.000Z"),
+					adjusts: true,
+				},
+			}).applyTo("2020-01-01T00:00:00.000Z")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+		expect(
+			vs.date({
+				maxValue: {
+					value: new Date("2020-01-01T00:00:00.000Z"),
+					adjusts: false,
+				},
+			}).applyTo("2020-01-01T00:00:00.000Z")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+	});
+	it("should be adjusted", () =>
+	{
+		expect(
+			vs.date({
+				maxValue: {
+					value: new Date("2020-01-01T00:00:00.000Z"),
+					adjusts: true,
+				},
+			}).applyTo("2020-01-01T00:00:00.001Z")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			vs.date({
+				maxValue: new Date("2020-01-01T00:00:00.000Z"),
+			}).applyTo("2020-01-01T00:00:00.001Z");
+		}).toThrow(vs.RULE.MAX_VALUE);
+
+		expect(() =>
+		{
+			vs.date({
+				maxValue: {
+					value: new Date("2020-01-01T00:00:00.000Z"),
+					adjusts: false,
+				},
+			}).applyTo("2020-01-01T00:00:00.001Z");
+		}).toThrow(vs.RULE.MAX_VALUE);
+
+		expect(() =>
+		{
+			vs.date({
+				maxValue: new Date("2020-01-01T00:00:00.000Z"),
+			}).applyTo(true);
+		}).toThrow(vs.RULE.TYPE);
+	});
+}
+
+/**
+ * minValue
+ */
+function testMinValue(): void
+{
+	it("should be OK", () =>
+	{
+		expect(
+			vs.date({
+				minValue: new Date("2020-01-01T00:00:00.000Z"),
+			}).applyTo("2020-01-01T00:00:00.000Z")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+
+		expect(
+			vs.date({
+				minValue: {
+					value: new Date("2020-01-01T00:00:00.000Z"),
+					adjusts: true,
+				},
+			}).applyTo("2020-01-01T00:00:00.000Z")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+		expect(
+			vs.date({
+				minValue: {
+					value: new Date("2020-01-01T00:00:00.000Z"),
+					adjusts: false,
+				},
+			}).applyTo("2020-01-01T00:00:00.000Z")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+	});
+	it("should be adjusted", () =>
+	{
+		expect(
+			vs.date({
+				minValue: {
+					value: new Date("2020-01-01T00:00:00.000Z"),
+					adjusts: true,
+				},
+			}).applyTo("2019-12-31T23:59:59:999Z")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			vs.date({
+				minValue: new Date("2020-01-01T00:00:00.000Z"),
+			}).applyTo("2019-12-31T23:59:59:999Z");
+		}).toThrow(vs.RULE.MIN_VALUE);
+
+		expect(() =>
+		{
+			vs.date({
+				minValue: {
+					value: new Date("2020-01-01T00:00:00.000Z"),
+					adjusts: false,
+				},
+			}).applyTo("2019-12-31T23:59:59:999Z");
+		}).toThrow(vs.RULE.MIN_VALUE);
+
+		expect(() =>
+		{
+			vs.date({
+				minValue: new Date("2020-01-01T00:00:00.000Z"),
+			}).applyTo(true);
+		}).toThrow(vs.RULE.TYPE);
 	});
 }
