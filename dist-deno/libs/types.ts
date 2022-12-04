@@ -92,3 +92,19 @@ export function isObject(value: unknown): value is AnyObject {
     }
     return typeof value === "object";
 }
+/**
+ * check whether given value is an instance of Date or not
+ * @param value value to check
+ * @returns Yes/No
+ */
+export function isDate(value: unknown): value is Date {
+    return value instanceof Date;
+}
+/**
+ * check whether given value is a valid Date or not
+ * @param value value to check
+ * @returns Yes/No
+ */
+export function isValidDate(value: Date): boolean {
+    return !Number.isNaN(value.getTime());
+}

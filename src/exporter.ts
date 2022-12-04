@@ -3,6 +3,7 @@ export * from "./libs/publicTypes";
 export * from "./libs/ValueSchemaError";
 export * from "./schemas/array";
 export * from "./schemas/boolean";
+export * from "./schemas/date";
 export * from "./schemas/email";
 export * from "./schemas/enumeration";
 export * from "./schemas/number";
