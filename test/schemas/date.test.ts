@@ -1,0 +1,276 @@
+import vs from "value-schema";
+import {describe, expect, it} from "@jest/globals";
+
+{
+	describe("type", testType);
+	describe("unixtime", testUnixtime);
+	describe("ifUndefined", testIfUndefined);
+	describe("ifNull", testIfNull);
+	describe("ifEmptyString", testIfEmptyString);
+}
+
+/**
+ * type
+ */
+function testType(): void
+{
+	it("should be OK", () =>
+	{
+		expect(
+			vs.date().applyTo("2020-01-01T00:00:00.000Z")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+		expect(
+			vs.date().applyTo("2020-01-01T00:00:00Z")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+
+		expect(
+			vs.date().applyTo("2020-01-01T00:00:00.000+09:00")
+		).toEqual(new Date("2019-12-31T15:00:00.000Z"));
+		expect(
+			vs.date().applyTo("2020-01-01T00:00:00+09:00")
+		).toEqual(new Date("2019-12-31T15:00:00.000Z"));
+
+		// default timezone
+		expect(
+			vs.date({
+				iso8601: {
+					defaultTimezone: "+09:00",
+				},
+			}).applyTo("2020-01-01T00:00:00.000Z")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+		expect(
+			vs.date({
+				iso8601: {
+					defaultTimezone: "+01:00",
+				},
+			}).applyTo("2020-01-01T00:00:00.000")
+		).toEqual(new Date("2019-12-31T23:00:00.000Z"));
+	});
+	it("should cause error(s)", () =>
+	{
+		// timezone not specified
+		expect(() =>
+		{
+			vs.date().applyTo("2020-01-01T00:00:00.000");
+		}).toThrow(vs.RULE.PATTERN);
+		expect(() =>
+		{
+			vs.date({
+				iso8601: {
+					defaultTimezone: "", // empty timezone is equivalent to be omitted
+				},
+			}).applyTo("2020-01-01T00:00:00.000");
+		}).toThrow(vs.RULE.PATTERN);
+
+		// wrong pattern
+		expect(() =>
+		{
+			vs.date().applyTo("abc");
+		}).toThrow(vs.RULE.PATTERN);
+
+		// invalid date
+		expect(() =>
+		{
+			vs.date().applyTo("9999-99-99T99:99:99.999Z");
+		}).toThrow(vs.RULE.PATTERN);
+
+		// invalid type
+		expect(() =>
+		{
+			vs.date().applyTo(false);
+		}).toThrow(vs.RULE.TYPE);
+		expect(() =>
+		{
+			vs.date().applyTo([]);
+		}).toThrow(vs.RULE.TYPE);
+		expect(() =>
+		{
+			vs.date().applyTo({});
+		}).toThrow(vs.RULE.TYPE);
+	});
+}
+
+/**
+ * unixtime
+ */
+function testUnixtime(): void
+{
+	it("should be OK", () =>
+	{
+		expect(
+			vs.date({
+				unixtime: {
+					precision: vs.DATE.UNIXTIME_PRECISION.MILLISECONDS,
+				},
+			}).applyTo(1577836800000)
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+
+		expect(
+			vs.date({
+				unixtime: {
+					precision: vs.DATE.UNIXTIME_PRECISION.SECONDS,
+				},
+			}).applyTo(1577836800)
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+	});
+	it("should be adjusted", () =>
+	{
+		// numeric string
+		expect(
+			vs.date({
+				unixtime: {
+					precision: vs.DATE.UNIXTIME_PRECISION.MILLISECONDS,
+				},
+			}).applyTo("1577836800000")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+
+		expect(
+			vs.date({
+				unixtime: {
+					precision: vs.DATE.UNIXTIME_PRECISION.SECONDS,
+				},
+			}).applyTo("1577836800")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			vs.date().applyTo(1577836800000);
+		}).toThrow(vs.RULE.TYPE);
+
+		expect(() =>
+		{
+			vs.date({
+				unixtime: {
+					precision: vs.DATE.UNIXTIME_PRECISION.MILLISECONDS,
+				},
+			}).applyTo(true);
+		}).toThrow(vs.RULE.TYPE);
+
+		expect(() =>
+		{
+			vs.date({
+				unixtime: {
+					precision: vs.DATE.UNIXTIME_PRECISION.MILLISECONDS,
+				},
+			}).applyTo("abcde");
+		}).toThrow(vs.RULE.PATTERN);
+
+		expect(() =>
+		{
+			vs.date({
+				unixtime: {
+					strictType: true,
+					precision: vs.DATE.UNIXTIME_PRECISION.MILLISECONDS,
+				},
+			}).applyTo("1577836800000");
+		}).toThrow(vs.RULE.PATTERN);
+
+		expect(() =>
+		{
+			vs.date({
+				unixtime: {
+					precision: vs.DATE.UNIXTIME_PRECISION.MILLISECONDS,
+				},
+			}).applyTo("99999999999999999999999999999999999999999999999999999");
+		}).toThrow(vs.RULE.TYPE);
+
+		expect(() =>
+		{
+			vs.date({
+				unixtime: {
+					precision: -1 as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+				},
+			}).applyTo(1577836800000);
+		}).toThrow(vs.RULE.TYPE);
+	});
+}
+
+/**
+ * if undefined
+ */
+function testIfUndefined(): void
+{
+	it("should be OK", () =>
+	{
+		expect(
+			vs.date({
+				ifUndefined: new Date("2020-01-01T00:00:00.000Z"),
+			}).applyTo("2020-12-09T00:00:00.000Z")
+		).toEqual(new Date("2020-12-09T00:00:00.000Z"));
+	});
+	it("should be adjusted", () =>
+	{
+		expect(
+			vs.date({
+				ifUndefined: new Date("2020-01-01T00:00:00.000Z"),
+			}).applyTo(undefined)
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+	});
+	it("should be undefined", () =>
+	{
+		expect(
+			vs.date({
+				ifUndefined: undefined,
+			}).applyTo(undefined)
+		).toBeUndefined();
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			vs.date().applyTo(undefined);
+		}).toThrow(vs.RULE.UNDEFINED);
+	});
+}
+
+/**
+ * if null
+ */
+function testIfNull(): void
+{
+	it("should be adjusted", () =>
+	{
+		expect(
+			vs.date({
+				ifNull: new Date("2020-01-01T00:00:00.000Z"),
+			}).applyTo(null)
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			vs.date().applyTo(null);
+		}).toThrow(vs.RULE.NULL);
+	});
+}
+
+/**
+ * if empty string
+ */
+function testIfEmptyString(): void
+{
+	it("should be adjusted", () =>
+	{
+		expect(
+			vs.date({
+				ifEmptyString: new Date("2020-01-01T00:00:00.000Z"),
+			}).applyTo("")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+
+		expect(
+			vs.date({
+				ifEmptyString: null,
+			}).applyTo("")
+		).toEqual(null);
+	});
+	it("should cause error(s)", () =>
+	{
+		expect(() =>
+		{
+			vs.date().applyTo("");
+		}).toThrow(vs.RULE.EMPTY_STRING);
+	});
+}
