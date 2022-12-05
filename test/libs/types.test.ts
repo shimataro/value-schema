@@ -31,5 +31,8 @@ function testIsNumericString(): void
 		expect(isNumericString(".")).toBeFalsy();
 		expect(isNumericString("+")).toBeFalsy();
 		expect(isNumericString("-.")).toBeFalsy();
+
+		expect(isNumericString("1e+10")).toBeFalsy();
+		expect(isNumericString("1e-10")).toBeFalsy();
 	});
 }
