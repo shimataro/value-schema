@@ -147,9 +147,18 @@ function testUnixtime(): void
 				},
 			}).applyTo("1577836800")
 		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+
+		expect(
+			vs.date({
+				unixtime: {
+					precision: vs.DATE.UNIXTIME_PRECISION.MINUTES,
+				},
+			}).applyTo("26297280")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
 	});
 	it("should cause error(s)", () =>
 	{
+		// requires "unixtime.precision"
 		expect(() =>
 		{
 			vs.date().applyTo(1577836800000);
@@ -183,6 +192,7 @@ function testUnixtime(): void
 			}).applyTo("1577836800000");
 		}).toThrow(vs.RULE.PATTERN);
 
+		// unsafe integer
 		expect(() =>
 		{
 			vs.date({
@@ -192,6 +202,7 @@ function testUnixtime(): void
 			}).applyTo("99999999999999999999999999999999999999999999999999999");
 		}).toThrow(vs.RULE.TYPE);
 
+		// unknown precision
 		expect(() =>
 		{
 			vs.date({
