@@ -1,7 +1,8 @@
 import { Key, Values, isNumber, isNumericString } from "../../libs/types.ts";
 export const UNIXTIME_PRECISION = {
     MILLISECONDS: 0,
-    SECONDS: 1
+    SECONDS: 1,
+    MINUTES: 2
 } as const;
 type UNIXTIME_PRECISION = typeof UNIXTIME_PRECISION[keyof typeof UNIXTIME_PRECISION];
 export interface Rules {
@@ -40,6 +41,9 @@ export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values i
             return false;
         case UNIXTIME_PRECISION.SECONDS:
             values.output = new Date(values.output * 1000);
+            return false;
+        case UNIXTIME_PRECISION.MINUTES:
+            values.output = new Date(values.output * 1000 * 60);
             return false;
     }
     return false;

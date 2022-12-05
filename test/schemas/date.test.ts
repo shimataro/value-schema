@@ -120,6 +120,14 @@ function testUnixtime(): void
 				},
 			}).applyTo(1577836800)
 		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+
+		expect(
+			vs.date({
+				unixtime: {
+					precision: vs.DATE.UNIXTIME_PRECISION.MINUTES,
+				},
+			}).applyTo(26297280)
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
 	});
 	it("should be adjusted", () =>
 	{

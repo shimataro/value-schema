@@ -4,6 +4,7 @@ export const UNIXTIME_PRECISION =
 {
 	MILLISECONDS: 0,
 	SECONDS: 1,
+	MINUTES: 2,
 } as const;
 type UNIXTIME_PRECISION = typeof UNIXTIME_PRECISION[keyof typeof UNIXTIME_PRECISION];
 
@@ -53,6 +54,10 @@ export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values i
 
 	case UNIXTIME_PRECISION.SECONDS:
 		values.output = new Date(values.output * 1000);
+		return false;
+
+	case UNIXTIME_PRECISION.MINUTES:
+		values.output = new Date(values.output * 1000 * 60);
 		return false;
 	}
 
