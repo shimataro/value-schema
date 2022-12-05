@@ -76,7 +76,7 @@ export function isString(value: unknown): value is string {
  * @returns Yes/No
  */
 export function isNumericString(value: unknown): value is string {
-    const pattern = /^\d+$/;
+    const pattern = /^[+-]?(\d+(\.\d*)?|(\.\d+))$/;
     if (!isString(value)) {
         return false;
     }
