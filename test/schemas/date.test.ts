@@ -24,12 +24,18 @@ function testType(): void
 		expect(
 			vs.date().applyTo("2020-01-01T00:00:00Z")
 		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+		expect(
+			vs.date().applyTo("2020-01-01T00:00Z")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
 
 		expect(
 			vs.date().applyTo("2020-01-01T00:00:00.000+09:00")
 		).toEqual(new Date("2019-12-31T15:00:00.000Z"));
 		expect(
 			vs.date().applyTo("2020-01-01T00:00:00+09:00")
+		).toEqual(new Date("2019-12-31T15:00:00.000Z"));
+		expect(
+			vs.date().applyTo("2020-01-01T00:00+09:00")
 		).toEqual(new Date("2019-12-31T15:00:00.000Z"));
 
 		// default timezone
