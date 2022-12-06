@@ -9,7 +9,7 @@ import * as unixtime from "../appliers/date/unixtime.ts";
 import * as type from "../appliers/date/type.ts";
 import { BaseSchema } from "./BaseSchema.ts";
 export const DATE = {
-    UNIXTIME_PRECISION: unixtime.UNIXTIME_PRECISION
+    UNIXTIME: unixtime.UNIXTIME
 } as const;
 export type RulesForDate = converter.Rules<Date> & ifUndefined.Rules<Date> & ifEmptyString.Rules<Date> & ifNull.Rules<Date> & iso8601.Rules & maxValue.Rules & minValue.Rules & unixtime.Rules;
 export class DateSchema<Tx = never> extends BaseSchema<Date | Tx> {

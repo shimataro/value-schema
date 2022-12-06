@@ -108,7 +108,7 @@ function testUnixtime(): void
 		expect(
 			vs.date({
 				unixtime: {
-					precision: vs.DATE.UNIXTIME_PRECISION.MILLISECONDS,
+					precision: vs.DATE.UNIXTIME.PRECISION.MILLISECONDS,
 				},
 			}).applyTo(1577836800000)
 		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
@@ -116,7 +116,7 @@ function testUnixtime(): void
 		expect(
 			vs.date({
 				unixtime: {
-					precision: vs.DATE.UNIXTIME_PRECISION.SECONDS,
+					precision: vs.DATE.UNIXTIME.PRECISION.SECONDS,
 				},
 			}).applyTo(1577836800)
 		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
@@ -124,7 +124,7 @@ function testUnixtime(): void
 		expect(
 			vs.date({
 				unixtime: {
-					precision: vs.DATE.UNIXTIME_PRECISION.MINUTES,
+					precision: vs.DATE.UNIXTIME.PRECISION.MINUTES,
 				},
 			}).applyTo(26297280)
 		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
@@ -135,7 +135,7 @@ function testUnixtime(): void
 		expect(
 			vs.date({
 				unixtime: {
-					precision: vs.DATE.UNIXTIME_PRECISION.MILLISECONDS,
+					precision: vs.DATE.UNIXTIME.PRECISION.MILLISECONDS,
 				},
 			}).applyTo("1577836800000")
 		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
@@ -143,7 +143,7 @@ function testUnixtime(): void
 		expect(
 			vs.date({
 				unixtime: {
-					precision: vs.DATE.UNIXTIME_PRECISION.SECONDS,
+					precision: vs.DATE.UNIXTIME.PRECISION.SECONDS,
 				},
 			}).applyTo("1577836800")
 		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
@@ -151,7 +151,7 @@ function testUnixtime(): void
 		expect(
 			vs.date({
 				unixtime: {
-					precision: vs.DATE.UNIXTIME_PRECISION.MINUTES,
+					precision: vs.DATE.UNIXTIME.PRECISION.MINUTES,
 				},
 			}).applyTo("26297280")
 		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
@@ -168,7 +168,7 @@ function testUnixtime(): void
 		{
 			vs.date({
 				unixtime: {
-					precision: vs.DATE.UNIXTIME_PRECISION.MILLISECONDS,
+					precision: vs.DATE.UNIXTIME.PRECISION.MILLISECONDS,
 				},
 			}).applyTo(true);
 		}).toThrow(vs.RULE.TYPE);
@@ -177,7 +177,7 @@ function testUnixtime(): void
 		{
 			vs.date({
 				unixtime: {
-					precision: vs.DATE.UNIXTIME_PRECISION.MILLISECONDS,
+					precision: vs.DATE.UNIXTIME.PRECISION.MILLISECONDS,
 				},
 			}).applyTo("abcde");
 		}).toThrow(vs.RULE.PATTERN);
@@ -187,7 +187,7 @@ function testUnixtime(): void
 			vs.date({
 				unixtime: {
 					strictType: true,
-					precision: vs.DATE.UNIXTIME_PRECISION.MILLISECONDS,
+					precision: vs.DATE.UNIXTIME.PRECISION.MILLISECONDS,
 				},
 			}).applyTo("1577836800000");
 		}).toThrow(vs.RULE.PATTERN);
@@ -197,7 +197,7 @@ function testUnixtime(): void
 		{
 			vs.date({
 				unixtime: {
-					precision: vs.DATE.UNIXTIME_PRECISION.MILLISECONDS,
+					precision: vs.DATE.UNIXTIME.PRECISION.MILLISECONDS,
 				},
 			}).applyTo("99999999999999999999999999999999999999999999999999999");
 		}).toThrow(vs.RULE.TYPE);

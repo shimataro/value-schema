@@ -11,7 +11,7 @@ import * as type from "../appliers/date/type";
 import {BaseSchema} from "./BaseSchema";
 
 export const DATE = {
-	UNIXTIME_PRECISION: unixtime.UNIXTIME_PRECISION,
+	UNIXTIME: unixtime.UNIXTIME,
 } as const;
 
 export type RulesForDate =

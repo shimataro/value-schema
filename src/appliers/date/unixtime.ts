@@ -1,20 +1,31 @@
 import {Key, Values, isNumber, isNumericString} from "../../libs/types";
 
-export const UNIXTIME_PRECISION =
+const PRECISION =
 {
 	MILLISECONDS: 0,
 	SECONDS: 1,
 	MINUTES: 2,
 } as const;
-type UNIXTIME_PRECISION = typeof UNIXTIME_PRECISION[keyof typeof UNIXTIME_PRECISION];
+type PRECISION = typeof PRECISION[keyof typeof PRECISION];
+
+export const UNIXTIME =
+{
+	PRECISION: PRECISION,
+} as const;
+type UNIXTIME = typeof UNIXTIME[keyof typeof UNIXTIME];
+
+interface Unixtime
+{
+	strictType?: boolean;
+	precision: PRECISION;
+}
+type NormalizedUnixtime = Required<Unixtime>;
 
 export interface Rules
 {
-	unixtime?: {
-		strictType?: boolean,
-		precision: UNIXTIME_PRECISION,
-	},
+	unixtime?: false | Unixtime,
 }
+type NormalizedRules = Required<Rules>;
 
 /**
  * apply schema
@@ -25,13 +36,22 @@ export interface Rules
  */
 export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<Date> // eslint-disable-line @typescript-eslint/no-unused-vars
 {
+	const normalizedRules: NormalizedRules = {
+		unixtime: false,
+		...rules,
+	};
+
 	// skip if "unixtime-mode" is disabled
-	if(rules.unixtime === undefined)
+	if(normalizedRules.unixtime === false)
 	{
 		return false;
 	}
 
-	if(rules.unixtime.strictType !== true && isNumericString(values.output))
+	const normalizedUnixtime: NormalizedUnixtime = {
+		strictType: false,
+		...normalizedRules.unixtime,
+	};
+	if(!normalizedUnixtime.strictType && isNumericString(values.output))
 	{
 		// convert to number
 		values.output = Number(values.output);
@@ -46,17 +66,17 @@ export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values i
 		return false;
 	}
 
-	switch(rules.unixtime.precision)
+	switch(normalizedUnixtime.precision)
 	{
-	case UNIXTIME_PRECISION.MILLISECONDS:
+	case UNIXTIME.PRECISION.MILLISECONDS:
 		values.output = new Date(values.output);
 		return false;
 
-	case UNIXTIME_PRECISION.SECONDS:
+	case UNIXTIME.PRECISION.SECONDS:
 		values.output = new Date(values.output * 1000);
 		return false;
 
-	case UNIXTIME_PRECISION.MINUTES:
+	case UNIXTIME.PRECISION.MINUTES:
 		values.output = new Date(values.output * 1000 * 60);
 		return false;
 	}
