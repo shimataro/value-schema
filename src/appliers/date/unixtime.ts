@@ -10,19 +10,24 @@ type PRECISION = typeof PRECISION[keyof typeof PRECISION];
 
 export const UNIXTIME =
 {
+	/** precision of unixtime */
 	PRECISION: PRECISION,
 } as const;
 type UNIXTIME = typeof UNIXTIME[keyof typeof UNIXTIME];
 
 interface Unixtime
 {
+	/** only accept number type */
 	strictType?: boolean;
+
+	/** precision of unixtime */
 	precision: PRECISION;
 }
 type NormalizedUnixtime = Required<Unixtime>;
 
 export interface Rules
 {
+	/** unixtime-mode; false means "does not accept unixtime" */
 	unixtime?: false | Unixtime,
 }
 type NormalizedRules = Required<Rules>;

@@ -3,6 +3,7 @@ import {describe, expect, it} from "@jest/globals";
 
 {
 	describe("type", testType);
+	describe("iso8601", testIso8601);
 	describe("unixtime", testUnixtime);
 	describe("ifUndefined", testIfUndefined);
 	describe("ifNull", testIfNull);
@@ -38,21 +39,10 @@ function testType(): void
 			vs.date().applyTo("2020-01-01T00:00+09:00")
 		).toEqual(new Date("2019-12-31T15:00:00.000Z"));
 
-		// default timezone
+		// empty object
 		expect(
-			vs.date({
-				iso8601: {
-					defaultTimezone: "+09:00",
-				},
-			}).applyTo("2020-01-01T00:00:00.000Z")
+			vs.date({}).applyTo("2020-01-01T00:00:00.000Z")
 		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
-		expect(
-			vs.date({
-				iso8601: {
-					defaultTimezone: "+01:00",
-				},
-			}).applyTo("2020-01-01T00:00:00.000")
-		).toEqual(new Date("2019-12-31T23:00:00.000Z"));
 	});
 	it("should cause error(s)", () =>
 	{
@@ -60,14 +50,6 @@ function testType(): void
 		expect(() =>
 		{
 			vs.date().applyTo("2020-01-01T00:00:00.000");
-		}).toThrow(vs.RULE.PATTERN);
-		expect(() =>
-		{
-			vs.date({
-				iso8601: {
-					defaultTimezone: "", // empty timezone is equivalent to be omitted
-				},
-			}).applyTo("2020-01-01T00:00:00.000");
 		}).toThrow(vs.RULE.PATTERN);
 
 		// wrong pattern
@@ -95,6 +77,105 @@ function testType(): void
 		{
 			vs.date().applyTo({});
 		}).toThrow(vs.RULE.TYPE);
+	});
+}
+
+/**
+ * ISO8601
+ */
+function testIso8601(): void
+{
+	it("should be OK", () =>
+	{
+		expect(
+			vs.date({
+				iso8601: {},
+			}).applyTo("2020-01-01T00:00:00.000Z")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+		expect(
+			vs.date({
+				iso8601: {},
+			}).applyTo("2020-01-01T00:00:00Z")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+		expect(
+			vs.date({
+				iso8601: {},
+			}).applyTo("2020-01-01T00:00Z")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+
+		// default timezone
+		expect(
+			vs.date({
+				iso8601: {
+					defaultTimezone: "+09:00",
+				},
+			}).applyTo("2020-01-01T00:00:00.000Z")
+		).toEqual(new Date("2020-01-01T00:00:00.000Z"));
+		expect(
+			vs.date({
+				iso8601: {
+					defaultTimezone: "+01:00",
+				},
+			}).applyTo("2020-01-01T00:00:00.000")
+		).toEqual(new Date("2019-12-31T23:00:00.000Z"));
+	});
+	it("should cause error(s)", () =>
+	{
+		// timezone not specified
+		expect(() =>
+		{
+			vs.date({
+				iso8601: {},
+			}).applyTo("2020-01-01T00:00:00.000");
+		}).toThrow(vs.RULE.PATTERN);
+		expect(() =>
+		{
+			vs.date({
+				iso8601: {
+					defaultTimezone: "", // empty timezone is equivalent to be omitted
+				},
+			}).applyTo("2020-01-01T00:00:00.000");
+		}).toThrow(vs.RULE.PATTERN);
+
+		// wrong pattern
+		expect(() =>
+		{
+			vs.date({
+				iso8601: {},
+			}).applyTo("abc");
+		}).toThrow(vs.RULE.PATTERN);
+		expect(() =>
+		{
+			vs.date({
+				iso8601: {
+					defaultTimezone: "",
+				},
+			}).applyTo("abc");
+		}).toThrow(vs.RULE.PATTERN);
+		expect(() =>
+		{
+			vs.date({
+				iso8601: {
+					defaultTimezone: "Z",
+				},
+			}).applyTo("abc");
+		}).toThrow(vs.RULE.PATTERN);
+
+		// invalid date
+		expect(() =>
+		{
+			vs.date({
+				iso8601: {},
+			}).applyTo("9999-99-99T99:99:99.999Z");
+		}).toThrow(vs.RULE.PATTERN);
+		expect(() =>
+		{
+			vs.date({
+				iso8601: {
+					defaultTimezone: "",
+				},
+			}).applyTo("9999-99-99T99:99:99.999Z");
+		}).toThrow(vs.RULE.PATTERN);
 	});
 }
 

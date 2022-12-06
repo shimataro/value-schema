@@ -4,11 +4,17 @@ import {Key, Values, isString} from "../../libs/types";
 const PATTERN_WITH_TZ = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/;
 const PATTERN_WITHOUT_TZ = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(.\d{1,3})?)?$/;
 
+interface Iso8601
+{
+	/** default timezone when timezone is omitted from input value */
+	defaultTimezone?: string;
+}
+type NormalizedIso8601 = Required<Iso8601>;
+
 export interface Rules
 {
-	iso8601?: {
-		defaultTimezone?: string,
-	},
+	/** ISO8601 parameters */
+	iso8601?: Iso8601;
 }
 
 type NormalizedRules = Required<Rules>;
@@ -34,7 +40,7 @@ export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values i
 		return false;
 	}
 
-	const normalizedValue = normalize(values.output, normalizedRules);
+	const normalizedValue = normalize(values.output, normalizedRules.iso8601);
 	if(normalizedValue === null)
 	{
 		// failed to normalize
@@ -48,24 +54,33 @@ export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values i
 /**
  * normalize date format
  * @param value value to normalize
- * @param rules rules
+ * @param iso8601 rules
  * @returns normalized value
  */
-function normalize(value: string, rules: NormalizedRules): string | null
+function normalize(value: string, iso8601: Iso8601): string | null
 {
 	if(PATTERN_WITH_TZ.test(value))
 	{
+		// valid format!
 		return value;
 	}
 
-	// if default timezone is specified, timezone can be omitted.
-	if(rules.iso8601.defaultTimezone !== "")
+	const normalizedIso8601: NormalizedIso8601 = {
+		defaultTimezone: "",
+		...iso8601,
+	};
+	if(normalizedIso8601.defaultTimezone === "")
 	{
-		if(PATTERN_WITHOUT_TZ.test(value))
-		{
-			return `${value}${rules.iso8601.defaultTimezone}`;
-		}
+		// fails if default timezone is NOT specified
+		return null;
 	}
 
-	return null;
+	if(!PATTERN_WITHOUT_TZ.test(value))
+	{
+		// fails if not match with "no-timezone format"
+		return null;
+	}
+
+	// append default timezone
+	return `${value}${normalizedIso8601.defaultTimezone}`;
 }
