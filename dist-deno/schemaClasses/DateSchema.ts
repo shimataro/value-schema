@@ -23,6 +23,7 @@ export class DateSchema<Tx = never> extends BaseSchema<Date | Tx> {
             maxValue.applyTo,
             minValue.applyTo,
             type.applyTo,
+            converter.applyTo,
         ]);
     }
 }
