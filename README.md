@@ -2035,7 +2035,7 @@ assert.throws(
             precision: vs.DATE.UNIXTIME.PRECISION.MILLISECONDS,
         }
     }).applyTo("946782245678"),
-    {name: "ValueSchemaError", rule: vs.RULE.TYPE});
+    {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 ```
 
 ##### `ifUndefined`
@@ -2101,7 +2101,7 @@ Limits minimum value.
 // should be adjusted
 assert.deepStrictEqual(
     vs.date({minValue: {value: new Date("2000-01-02T03:04:05.678Z"), adjusts: true}}).applyTo("2000-01-01T00:00:00.000Z"),
-    new date("2000-01-02T03:04:05.678Z"));
+    new Date("2000-01-02T03:04:05.678Z"));
 
 // should cause errors
 assert.throws(
