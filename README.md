@@ -1905,13 +1905,17 @@ Applies schema to `value`.
 
 If an error occurs, this method calls `onError` (if specified) or throw `ValueSchemaError` (otherwise).
 
-**CAUTION**
-This function accepts below values and returns [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) object.
+**CAUTION**: This function accepts below values and returns [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) object.
 
-* [ISO8601](https://en.wikipedia.org/wiki/ISO_8601)(extension)-formatted string
+* [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) extended-format
+    * string type
     * always
-    * In fact, NOT strict specification BUT subset.
-* [unixtime](https://en.wikipedia.org/wiki/Unix_time)-formatted number or number-like string
+    * in fact, NOT strict specification BUT subset like following:
+        * `2000-01-02T03:04:05.678Z`
+        * `2000-01-02T03:04:05Z`
+        * `2000-01-02T03:04Z`
+* [unixtime](https://en.wikipedia.org/wiki/Unix_time)-format
+    * number or number-like string type
     * optional
 
 ```javascript
