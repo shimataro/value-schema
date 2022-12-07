@@ -65,6 +65,12 @@ function testType(): void
 			vs.date().applyTo("9999-99-99T99:99:99.999Z");
 		}).toThrow(vs.RULE.PATTERN);
 
+		// requires "unixtime.precision"
+		expect(() =>
+		{
+			vs.date().applyTo(1577836800000);
+		}).toThrow(vs.RULE.TYPE);
+
 		// invalid type
 		expect(() =>
 		{
@@ -240,12 +246,6 @@ function testUnixtime(): void
 	});
 	it("should cause error(s)", () =>
 	{
-		// requires "unixtime.precision"
-		expect(() =>
-		{
-			vs.date().applyTo(1577836800000);
-		}).toThrow(vs.RULE.TYPE);
-
 		expect(() =>
 		{
 			vs.date({
