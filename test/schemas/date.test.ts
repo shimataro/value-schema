@@ -10,6 +10,7 @@ import {describe, expect, it} from "@jest/globals";
 	describe("ifEmptyString", testIfEmptyString);
 	describe("maxValue", testMaxValue);
 	describe("minValue", testMinValue);
+	describe("converter", testConverter);
 }
 
 /**
@@ -518,5 +519,53 @@ function testMinValue(): void
 				minValue: new Date("2020-01-01T00:00:00.000Z"),
 			}).applyTo(true);
 		}).toThrow(vs.RULE.TYPE);
+	});
+}
+
+/**
+ * converter
+ */
+function testConverter(): void
+{
+	it("should be OK", () =>
+	{
+		// convert to 1-second later
+		expect(
+			vs.date({
+				converter: (value) =>
+				{
+					return new Date(value.getTime() + 1000);
+				},
+			}).applyTo("2020-01-01T00:00:00.000Z")
+		).toEqual(new Date("2020-01-01T00:00:01.000Z"));
+
+		// converter will be fired lastly
+		expect(
+			vs.date({
+				converter: (value) =>
+				{
+					// convert to 1-second later
+					return new Date(value.getTime() + 1000);
+				},
+				minValue: {
+					value: new Date("2000-01-01T00:00:00.000Z"),
+					adjusts: true,
+				},
+			}).applyTo("1970-01-01T00:00:00.000Z")
+		).toEqual(new Date("2000-01-01T00:00:01.000Z"));
+	});
+	it("should cause error(s)", () =>
+	{
+		// conversion failed
+		expect(() =>
+		{
+			vs.date({
+				converter: (value, fail) =>
+				{
+					return fail();
+				},
+
+			}).applyTo("2000-01-01T00:00:00.000Z");
+		}).toThrow(vs.RULE.CONVERTER);
 	});
 }
