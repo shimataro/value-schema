@@ -27,10 +27,9 @@ type NormalizedUnixtime = Required<Unixtime>;
 
 export interface Rules
 {
-	/** unixtime-mode; false means "does not accept unixtime" */
-	unixtime?: false | Unixtime,
+	/** unixtime-mode; if omitted, unixtime will not be accepted */
+	unixtime?: Unixtime,
 }
-type NormalizedRules = Required<Rules>;
 
 /**
  * apply schema
@@ -41,20 +40,15 @@ type NormalizedRules = Required<Rules>;
  */
 export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<Date> // eslint-disable-line @typescript-eslint/no-unused-vars
 {
-	const normalizedRules: NormalizedRules = {
-		unixtime: false,
-		...rules,
-	};
-
 	// skip if "unixtime-mode" is disabled
-	if(normalizedRules.unixtime === false)
+	if(rules.unixtime === undefined)
 	{
 		return false;
 	}
 
 	const normalizedUnixtime: NormalizedUnixtime = {
 		strictType: false,
-		...normalizedRules.unixtime,
+		...rules.unixtime,
 	};
 	if(!normalizedUnixtime.strictType && isNumericString(values.output))
 	{
