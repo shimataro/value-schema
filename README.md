@@ -2750,7 +2750,7 @@ See [CHANGELOG.md](CHANGELOG.md).
 [link-release]: https://github.com/shimataro/value-schema/releases
 [image-engine]: https://img.shields.io/node/v/value-schema.svg
 [link-engine]: https://nodejs.org/
-[image-typescript]: https://img.shields.io/badge/TypeScript-%3E%3D3.4.1-brightgreen.svg
+[image-typescript]: https://img.shields.io/badge/TypeScript-%3E%3D3.5-brightgreen.svg
 [link-typescript]: https://www.typescriptlang.org/
 [image-deno]: https://img.shields.io/badge/%F0%9F%A6%95%20Deno-%3E%3D1.0.0-brightgreen
 [link-deno]: https://deno.land/

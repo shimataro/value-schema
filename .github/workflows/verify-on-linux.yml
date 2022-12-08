@@ -8,15 +8,14 @@ on:
     - "*"
 
 jobs:
-  verify-ts34:
-    name: Verify (TypeScript 3.4 - 4.0)
+  verify-ts35:
+    name: Verify (TypeScript 3.5 - 4.0)
     runs-on: ubuntu-latest
     strategy:
       matrix:
         nodejs:
         - 8
         typescript:
-        - "3.4.1"
         - "3.5"
         - "3.6"
         - "3.7"
