@@ -3,6 +3,7 @@ export * from "./libs/publicTypes.ts";
 export * from "./libs/ValueSchemaError.ts";
 export * from "./schemas/array.ts";
 export * from "./schemas/boolean.ts";
+export * from "./schemas/date.ts";
 export * from "./schemas/email.ts";
 export * from "./schemas/enumeration.ts";
 export * from "./schemas/number.ts";

@@ -100,6 +100,27 @@ export function isString(value: unknown): value is string
 }
 
 /**
+ * check whether given value is a numeric string or not
+ * @param value value to check
+ * @returns Yes/No
+ */
+export function isNumericString(value: unknown): value is string
+{
+	const pattern = /^[+-]?(\d+(\.\d*)?|(\.\d+))$/;
+
+	if(!isString(value))
+	{
+		return false;
+	}
+	if(!pattern.test(value))
+	{
+		return false;
+	}
+
+	return true;
+}
+
+/**
  * check whether given value is an array or not
  * @param value value to check
  * @returns yes/no
@@ -126,4 +147,24 @@ export function isObject(value: unknown): value is AnyObject
 	}
 
 	return typeof value === "object";
+}
+
+/**
+ * check whether given value is an instance of Date or not
+ * @param value value to check
+ * @returns Yes/No
+ */
+export function isDate(value: unknown): value is Date
+{
+	return value instanceof Date;
+}
+
+/**
+ * check whether given value is a valid Date or not
+ * @param value value to check
+ * @returns Yes/No
+ */
+export function isValidDate(value: Date): boolean
+{
+	return !Number.isNaN(value.getTime());
 }
