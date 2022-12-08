@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* `vs.date()`
+
+### Removed
+
+* drop support TypeScript 3.4
+
 ## [4.0.0-rc.1] - 2022-05-27
 
 ### Changed
