@@ -35,7 +35,7 @@ const input = {};
 }
 ```
 
-#### for migration
+#### how to migrate
 
 * Replace `{ifUndefined: undefined}` with `{}`.
 
