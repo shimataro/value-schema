@@ -13,7 +13,7 @@
 
 simple, easy-to-use, and declarative input validator
 
-supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang.org/), and [Deno](https://deno.land/)
+supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang.org/), [Deno](https://deno.land/), and [Bun](https://bun.sh/)
 
 Please read [migration guide](./migration.md) if you are using old version.
 
@@ -208,6 +208,16 @@ import vs from "https://deno.land/x/value_schema@v4.0.0/mod.ts"; // v4.0.0
 ```
 
 **CAUTION**: specify `value_schema` (underscore) NOT `value-schema` (hyphen) because [deno.land](https://deno.land/) module database does not support name with hyphen!
+
+### [Bun](https://bun.sh/)
+
+Bun has been supported as of v4, but might work v3 or earlier.
+
+Use just like a npm module.
+
+```typescript
+import vs from "value-schema";
+```
 
 ## Reference
 
