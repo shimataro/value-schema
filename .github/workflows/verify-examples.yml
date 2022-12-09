@@ -256,7 +256,6 @@ jobs:
         os:
         - windows-2019
         - windows-2022
-        - macos-10.15
         - macos-11
         - macos-12
         - ubuntu-18.04
@@ -269,7 +268,7 @@ jobs:
     - name: Checkout source codes
       uses: actions/checkout@v2
     - name: Install Bun
-      run: bash <(curl -fsSL https://bun.sh/install) bun-v${{ matrix.bun }}
+      run: curl -fsSL https://bun.sh/install | bash -s bun-v${{ matrix.bun }}
     - name: Output versions
       run: ~/.bun/bin/bun --version
     - name: Run example
