@@ -9,11 +9,12 @@
 [![Node.js version][image-engine]][link-engine]
 [![TypeScript version][image-typescript]][link-typescript]
 [![Deno version][image-deno]][link-deno]
+[![Bun version][image-bun]][link-bun]
 [![License][image-license]][link-license]
 
 simple, easy-to-use, and declarative input validator
 
-supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang.org/), and [Deno](https://deno.land/)
+supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang.org/), [Deno](https://deno.land/), and [Bun](https://bun.sh/)
 
 Please read [migration guide](./migration.md) if you are using old version.
 
@@ -208,6 +209,16 @@ import vs from "https://deno.land/x/value_schema@v4.0.0/mod.ts"; // v4.0.0
 ```
 
 **CAUTION**: specify `value_schema` (underscore) NOT `value-schema` (hyphen) because [deno.land](https://deno.land/) module database does not support name with hyphen!
+
+### [Bun](https://bun.sh/)
+
+Bun has been supported as of v4, but might work v3 or earlier.
+
+Use just like a npm module.
+
+```typescript
+import vs from "value-schema";
+```
 
 ## Reference
 
@@ -2754,5 +2765,7 @@ See [CHANGELOG.md](CHANGELOG.md).
 [link-typescript]: https://www.typescriptlang.org/
 [image-deno]: https://img.shields.io/badge/%F0%9F%A6%95%20Deno-%3E%3D1.0.0-brightgreen
 [link-deno]: https://deno.land/
+[image-bun]: https://img.shields.io/badge/Bun-%3E%3D0.3.0-brightgreen
+[link-bun]: https://bun.sh/
 [image-license]: https://img.shields.io/github/license/shimataro/value-schema.svg
 [link-license]: ./LICENSE

@@ -253,3 +253,30 @@ jobs:
       run: deno run ./mod.ts
     - name: Run example
       run: deno run ./examples/example-deno.ts
+
+  bun:
+    name: Bun
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+        - macos-11
+        - macos-12
+        - ubuntu-18.04
+        - ubuntu-20.04
+        - ubuntu-22.04
+        bun:
+        - "0.3.0"
+      fail-fast: false
+    steps:
+    - name: Checkout source codes
+      uses: actions/checkout@v2
+    - name: Install Bun
+      run: curl -fsSL https://bun.sh/install | bash -s bun-v${{ matrix.bun }}
+    - name: Output versions
+      run: ~/.bun/bin/bun --version
+    - name: Install dependencies (example)
+      run: ~/.bun/bin/bun i
+      working-directory: ./examples
+    - name: Run example
+      run: ~/.bun/bin/bun run ./examples/example-bun.ts
