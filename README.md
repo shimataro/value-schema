@@ -16,7 +16,7 @@ simple, easy-to-use, and declarative input validator
 
 supports [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang.org/), [Deno](https://deno.land/), and [Bun](https://bun.sh/)
 
-Please read [migration guide](./migration.md) if you are using old version.
+Please read [migration guide](./docs/migration.md) if you are using old version.
 
 ## Table of Contents
 
