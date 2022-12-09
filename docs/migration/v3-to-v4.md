@@ -1,10 +1,6 @@
-# Migration Guide
+# v3 to v4
 
-This document describes breaking changes due to version up.
-
-## v3 to v4
-
-### behavior of `{ifUndefined: undefined}`
+## behavior of `{ifUndefined: undefined}`
 
 In v3, `{ifUndefined: undefined}` is equivalent to `{}`.
 Both of them cause error if input value is `undefined`.
@@ -35,11 +31,11 @@ const input = {};
 }
 ```
 
-#### how to migrate
+### how to migrate
 
 * Replace `{ifUndefined: undefined}` with `{}`.
 
-### rename `ValueSchemaError.prototype.cause` to `ValueSchemaError.prototype.rule`
+## rename `ValueSchemaError.prototype.cause` to `ValueSchemaError.prototype.rule`
 
 [`Error.prototype.cause`](https://tc39.es/proposal-error-cause/) has come in ES2022.
 It conflicts `ValueSchemaError.prototype.cause`, therefore `ValueSchemaError.prototype.cause` has been renamed to `ValueSchemaError.prototype.rule`, that means "the rule that input value didn't satisfy".
@@ -80,7 +76,7 @@ catch (err) { // ValueSchemaError
 }
 ```
 
-#### for migration
+### how to migrate
 
 * Replace `err.cause` with `err.rule`.
 * Replace `vs.CAUSE` with `vs.RULE`.
