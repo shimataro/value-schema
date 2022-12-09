@@ -32,7 +32,8 @@
   "exports": {
     "import": "./dist/index.mjs",
     "require": "./dist/index.js",
-    "bun": "./dist-deno/index.ts"
+    "bun": "./dist-deno/index.ts",
+    "default": "./dist/index.js"
   },
   "main": "./dist/index",
   "types": "./dist/index.d.ts",
