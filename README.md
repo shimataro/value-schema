@@ -9,6 +9,7 @@
 [![Node.js version][image-engine]][link-engine]
 [![TypeScript version][image-typescript]][link-typescript]
 [![Deno version][image-deno]][link-deno]
+[![Bun version][image-bun]][link-bun]
 [![License][image-license]][link-license]
 
 simple, easy-to-use, and declarative input validator
@@ -2764,5 +2765,7 @@ See [CHANGELOG.md](CHANGELOG.md).
 [link-typescript]: https://www.typescriptlang.org/
 [image-deno]: https://img.shields.io/badge/%F0%9F%A6%95%20Deno-%3E%3D1.0.0-brightgreen
 [link-deno]: https://deno.land/
+[image-bun]: https://img.shields.io/badge/Bun-%3E%3D0.3.0-brightgreen
+[link-bun]: https://bun.sh/
 [image-license]: https://img.shields.io/github/license/shimataro/value-schema.svg
 [link-license]: ./LICENSE
