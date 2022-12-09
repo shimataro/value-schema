@@ -1,5 +1,7 @@
 # boolean
 
+Accepts boolean or number (`1`/`0`) or boolean-like string (`"true"`/`"false"`, `"yes"`/`"no"`, `"on"`/`"off"`).
+
 ## ambient declarations
 
 ```typescript

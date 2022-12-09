@@ -1,5 +1,7 @@
 # array
 
+Accepts array or character-separated string (such as comma).
+
 ## ambient declarations
 
 ```typescript
