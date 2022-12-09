@@ -8,6 +8,9 @@
     "type": "git",
     "url": "git+https://github.com/shimataro/value-schema.git"
   },
+  "exports": {
+    "bun": "./dist-deno/index.ts"
+  },
   "bugs": {
     "url": "https://github.com/shimataro/value-schema/issues"
   },
