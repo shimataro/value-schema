@@ -269,5 +269,8 @@ jobs:
       run: curl -fsSL https://bun.sh/install | bash -s bun-v${{ matrix.bun }}
     - name: Output versions
       run: ~/.bun/bin/bun --version
+    - name: Install dependencies (example)
+      run: ~/.bun/bin/bun i
+      working-directory: ./examples
     - name: Run example
       run: ~/.bun/bin/bun run ./examples/example-bun.ts
