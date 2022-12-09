@@ -263,17 +263,15 @@ jobs:
         - ubuntu-20.04
         - ubuntu-22.04
         bun:
-        - "0.1.0"
-        - "0.2.0"
         - "0.3.0"
       fail-fast: false
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v2
     - name: Install Bun
-      uses: antongolub/action-setup-bun@v1
-      with:
-        bun-version: ${{ matrix.bun }}
+      run: bash <(curl -fsSL https://bun.sh/install) bun-v${{ matrix.bun }}
+    - name: Set path
+      run: . ~/.bashrc
     - name: Output versions
       run: bun --version
     - name: Run example
