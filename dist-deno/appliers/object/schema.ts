@@ -1,6 +1,6 @@
 import { Key, ObjectTypeOf, SchemaObject, Values } from "../../libs/types.ts";
 import { applySchemaObjectCore } from "../../libs/applySchemaObjectCore.ts";
-import { onErrorDefault, onFinishedDefault } from "../../schemaClasses/BaseSchema.ts";
+import { onErrorDefault, onFinishDefault } from "../../schemaClasses/BaseSchema.ts";
 export interface Rules<S> {
     /** schema object */
     schemaObject?: S;
@@ -17,6 +17,11 @@ export function applyTo<S extends SchemaObject>(values: Values, rules: Rules<S>,
     if (rules.schemaObject === undefined) {
         return false;
     }
-    values.output = applySchemaObjectCore(rules.schemaObject, values.output, onErrorDefault, onFinishedDefault, keyStack);
+    const handlers = {
+        onError: onErrorDefault,
+        onFinishFaultily: onFinishDefault,
+        onFinishSuccessfully: onFinishDefault
+    };
+    values.output = applySchemaObjectCore(rules.schemaObject, values.output, handlers, keyStack);
     return false;
 }

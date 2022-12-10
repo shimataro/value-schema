@@ -1,18 +1,24 @@
-import {applySchemaObjectCore} from "./applySchemaObjectCore";
-import {ErrorHandler, FinishHandler} from "./publicTypes";
+import {applySchemaObjectCore, Handlers} from "./applySchemaObjectCore";
 import {ObjectTypeOf, SchemaObject} from "./types";
 
-import {onErrorDefault, onFinishedDefault} from "../schemaClasses/BaseSchema";
+import {onErrorDefault, onFinishDefault} from "../schemaClasses/BaseSchema";
+
+type PartialHandlers = Partial<Handlers>;
 
 /**
  * apply schema object to data
  * @param schemaObject schema object
  * @param data data to apply
- * @param onError error handler
- * @param onFinished finish handler
+ * @param handlers handlers
  * @returns applied data
  */
-export function applySchemaObject<S extends SchemaObject>(schemaObject: S, data: unknown, onError: ErrorHandler = onErrorDefault, onFinished: FinishHandler = onFinishedDefault): ObjectTypeOf<S>
+export function applySchemaObject<S extends SchemaObject>(schemaObject: S, data: unknown, handlers: PartialHandlers = {}): ObjectTypeOf<S>
 {
-	return applySchemaObjectCore(schemaObject, data, onError, onFinished, []);
+	const normalizedHandlers: Handlers = {
+		onError: onErrorDefault,
+		onFinishSuccessfully: onFinishDefault,
+		onFinishFaultily: onFinishDefault,
+		...handlers,
+	};
+	return applySchemaObjectCore(schemaObject, data, normalizedHandlers, []);
 }

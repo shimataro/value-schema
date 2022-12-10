@@ -310,16 +310,18 @@ function testError(): void
 			email: "john@example.com",
 		};
 
-		const actual = vs.applySchemaObject(schemaObject, input, (err) =>
-		{
-			switch(err.keyStack.shift())
+		const actual = vs.applySchemaObject(schemaObject, input, {
+			onError: (err) =>
 			{
-			case "id":
-				return 100;
+				switch(err.keyStack.shift())
+				{
+				case "id":
+					return 100;
 
-			default:
-				return "John";
-			}
+				default:
+					return "John";
+				}
+			},
 		});
 		expect(actual).toEqual(expected);
 	});
@@ -328,19 +330,23 @@ function testError(): void
 		expect(() =>
 		{
 			// input must be an object
-			vs.applySchemaObject({}, null, (err) =>
-			{
-				expect(err.rule).toEqual(vs.RULE.TYPE);
-				return null;
+			vs.applySchemaObject({}, null, {
+				onError: (err) =>
+				{
+					expect(err.rule).toEqual(vs.RULE.TYPE);
+					return null;
+				},
 			});
 		}).toThrow(vs.RULE.TYPE);
 
 		expect(
 			// input must be an object
-			vs.applySchemaObject({}, null, (err) =>
-			{
-				expect(err.rule).toEqual(vs.RULE.TYPE);
-				return {};
+			vs.applySchemaObject({}, null, {
+				onError: (err) =>
+				{
+					expect(err.rule).toEqual(vs.RULE.TYPE);
+					return {};
+				},
 			})
 		).toEqual({});
 
@@ -389,18 +395,21 @@ function testError(): void
 			};
 
 			const keys: (string | number)[] = [];
-			vs.applySchemaObject(schemaObject, input, (err) =>
-			{
-				if(err.keyStack.length === 0)
+			vs.applySchemaObject(schemaObject, input, {
+				onError: (err) =>
 				{
-					return;
-				}
-				// append key name
-				keys.push(err.keyStack[0]);
-			}, () =>
-			{
-				// finished; join key name as message
-				throw new Error(keys.join(","));
+					if(err.keyStack.length === 0)
+					{
+						return;
+					}
+					// append key name
+					keys.push(err.keyStack[0]);
+				},
+				onFinishFaultily: () =>
+				{
+					// finished; join key name as message
+					throw new Error(keys.join(","));
+				},
 			});
 		}).toThrow("id,name");
 
