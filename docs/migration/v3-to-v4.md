@@ -80,3 +80,13 @@ catch (err) { // ValueSchemaError
 
 * Replace `err.cause` with `err.rule`.
 * Replace `vs.CAUSE` with `vs.RULE`.
+
+## rename `converter()` to `transform()`
+
+Option `converter` has been renamed to `transform`.
+Just a rename, so input parameters and return values are not changed.
+
+### how to migrate
+
+* Replace `converter` with `transform`.
+* Replace `vs.RULE.CONVERTER` with `vs.RULE.TRANSFORM`.
