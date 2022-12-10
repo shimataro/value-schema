@@ -1,13 +1,15 @@
-import * as converter from "../appliers/converter";
 import * as ifEmptyString from "../appliers/ifEmptyString";
 import * as ifNull from "../appliers/ifNull";
 import * as ifUndefined from "../appliers/ifUndefined";
 import * as only from "../appliers/only";
+import * as transform from "../appliers/transform";
+
 import * as checksum from "../appliers/numericString/checksum";
 import * as fullWidthToHalf from "../appliers/numericString/fullWidthToHalf";
 import * as joinsArray from "../appliers/numericString/joinsArray";
 import * as pattern from "../appliers/numericString/pattern";
 import * as separatedBy from "../appliers/numericString/separatedBy";
+
 import * as maxLength from "../appliers/string/maxLength";
 import * as minLength from "../appliers/string/minLength";
 import * as type from "../appliers/string/type";
@@ -19,7 +21,7 @@ export const NUMERIC_STRING = {
 };
 
 export type RulesForNumericString =
-	converter.Rules<string> &
+	transform.Rules<string> &
 	ifEmptyString.Rules<string> &
 	ifNull.Rules<string> &
 	ifUndefined.Rules<string> &
@@ -49,7 +51,7 @@ export class NumericStringSchema<Tx = never> extends BaseSchema<string | Tx>
 			minLength.applyTo,
 			maxLength.applyTo,
 			checksum.applyTo,
-			converter.applyTo,
+			transform.applyTo,
 		]);
 	}
 }

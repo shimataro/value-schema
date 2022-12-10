@@ -1,5 +1,5 @@
-import { NullableRules, UndefinableRules } from "../libs/publicTypes.ts";
 import { EnumerationSchema, RulesForEnumeration } from "../schemaClasses/EnumerationSchema.ts";
+import { NullableRules, UndefinableRules } from "../libs/publicTypes.ts";
 /** schema for enum-like (enum / union) or null or undefined */
 export function enumeration<E = unknown>(options: RulesForEnumeration<E> & NullableRules & UndefinableRules): EnumerationSchema<E, null | undefined>;
 /** schema for enum-like (enum / union) or undefined */

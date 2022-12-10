@@ -1,5 +1,5 @@
-import vs from "value-schema";
 import {describe, expect, it} from "@jest/globals";
+import vs from "value-schema";
 
 {
 	describe("type", testType);
@@ -11,7 +11,7 @@ import {describe, expect, it} from "@jest/globals";
 	describe("minLength", testMinLength);
 	describe("maxLength", testMaxLength);
 	describe("pattern", testPattern);
-	describe("converter", testConverter);
+	describe("transform", testTransform);
 }
 
 /**
@@ -733,15 +733,15 @@ function testPatternOthers(): void
 }
 
 /**
- * converter
+ * transform
  */
-function testConverter(): void
+function testTransform(): void
 {
 	it("should be adjusted", () =>
 	{
 		expect(
 			vs.string({
-				converter: (value) =>
+				transform: (value) =>
 				{
 					return value.toLowerCase();
 				},
@@ -750,7 +750,7 @@ function testConverter(): void
 
 		expect(
 			vs.string({
-				converter: (value, fail) =>
+				transform: (value, fail) =>
 				{
 					if(value.length >= 9)
 					{
@@ -766,7 +766,7 @@ function testConverter(): void
 		expect(() =>
 		{
 			vs.string({
-				converter: (value, fail) =>
+				transform: (value, fail) =>
 				{
 					if(value.length >= 9)
 					{
@@ -775,6 +775,6 @@ function testConverter(): void
 					return value.padStart(8, " ");
 				},
 			}).applyTo("123ABCxyz");
-		}).toThrow(vs.RULE.CONVERTER);
+		}).toThrow(vs.RULE.TRANSFORM);
 	});
 }

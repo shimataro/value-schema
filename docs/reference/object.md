@@ -12,7 +12,7 @@ type RulesForObject = {
 
     schemaObject?: Record<string, BaseSchema>;
 
-    converter?: (values: object, fail: () => never) => object;
+    transform?: (values: object, fail: () => never) => object;
 }
 type ErrorHandler = (err: ValueSchemaError) => object | null | never;
 interface ObjectSchema {
@@ -120,9 +120,9 @@ assert.throws(
     {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
-### `converter`
+### `transform`
 
-Converts input value to another.
+Transforms input value to another.
 
 `fail()` causes `ValueSchemaError`.
 
@@ -149,11 +149,11 @@ const output = {
     creditCard: "4111111111111111",
 }
 assert.deepStrictEqual(
-    vs.object({converter: keysToCamel}).applyTo(input),
+    vs.object({transform: keysToCamel}).applyTo(input),
     output);
 
 // should cause errors
 assert.throws(
-    () => vs.object({converter: (value, fail) => fail()}).applyTo({}),
-    {name: "ValueSchemaError", rule: vs.RULE.CONVERTER});
+    () => vs.object({transform: (value, fail) => fail()}).applyTo({}),
+    {name: "ValueSchemaError", rule: vs.RULE.TRANSFORM});
 ```

@@ -34,7 +34,7 @@ type RulesForNumber = {
     minValue?: Date | {value: Date, adjusts: boolean};
     maxValue?: Date | {value: Date, adjusts: boolean};
 
-    converter?: (value: Date, fail: () => never) => Date;
+    transform?: (value: Date, fail: () => never) => Date;
 }
 type ErrorHandler = (err: ValueSchemaError) => Date | null | never;
 interface DateSchema {
@@ -261,20 +261,20 @@ assert.throws(
     {name: "ValueSchemaError", rule: vs.RULE.MAX_VALUE});
 ```
 
-### `converter`
+### `transform`
 
-Converts input value to another.
+Transforms input value to another.
 
 `fail()` causes `ValueSchemaError`.
 
 ```javascript
 // should be adjusted
 assert.deepStrictEqual(
-    vs.date({converter: value => new Date(value.getTime() + 1000)}).applyTo("2000-01-01T00:00:00.000Z"),
+    vs.date({transform: value => new Date(value.getTime() + 1000)}).applyTo("2000-01-01T00:00:00.000Z"),
     new Date("2000-01-01T00:00:01.000Z"));
 
 // should cause errors
 assert.throws(
-    () => vs.date({converter: (value, fail) => fail()}).applyTo("2000-01-01T00:00:00.000Z"),
-    {name: "ValueSchemaError", rule: vs.RULE.CONVERTER});
+    () => vs.date({transform: (value, fail) => fail()}).applyTo("2000-01-01T00:00:00.000Z"),
+    {name: "ValueSchemaError", rule: vs.RULE.TRANSFORM});
 ```

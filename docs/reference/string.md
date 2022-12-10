@@ -19,7 +19,7 @@ type RulesForString = {
     maxLength?: number | {length: number, trims: boolean};
     pattern?: RegExp;
 
-    converter?: (value: string, fail: () => never) => string;
+    transform?: (value: string, fail: () => never) => string;
 }
 type ErrorHandler = (err: ValueSchemaError) => string | null | never;
 interface StringSchema {
@@ -240,20 +240,20 @@ assert.throws(
     {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
 ```
 
-### `converter`
+### `transform`
 
-Converts input value to another.
+Transforms input value to another.
 
 `fail()` causes `ValueSchemaError`.
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    vs.string({converter: value => value.toLowerCase()}).applyTo("123ABCxyz"),
+    vs.string({transform: value => value.toLowerCase()}).applyTo("123ABCxyz"),
     "123abcxyz");
 
 // should cause errors
 assert.throws(
-    () => vs.string({converter: (value, fail) => fail()}).applyTo("foo"),
-    {name: "ValueSchemaError", rule: vs.RULE.CONVERTER});
+    () => vs.string({transform: (value, fail) => fail()}).applyTo("foo"),
+    {name: "ValueSchemaError", rule: vs.RULE.TRANSFORM});
 ```

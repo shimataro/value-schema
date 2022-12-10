@@ -19,7 +19,7 @@ type RulesForNumericString = {
     pattern?: RegExp;
     checksum?: NUMERIC_STRING.CHECKSUM_ALGORITHM;
 
-    converter?: (value: string, fail: () => never) => string;
+    transform?: (value: string, fail: () => never) => string;
 }
 type ErrorHandler = (err: ValueSchemaError) => string | null | never;
 interface NumericStringSchema {
@@ -125,7 +125,7 @@ assert.throws(
 
 ### `fullWidthToHalf`
 
-Converts full-width string to half-width; e.g., `"１２３４"`.
+Transforms full-width string to half-width; e.g., `"１２３４"`.
 **defaults: false**
 
 ```javascript
@@ -249,20 +249,20 @@ assert.throws(
     {name: "ValueSchemaError", rule: vs.RULE.CHECKSUM});
 ```
 
-### `converter`
+### `transform`
 
-Converts input value to another.
+Transforms input value to another.
 
 `fail()` causes `ValueSchemaError`.
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    vs.numericString({converter: value => value.padStart(8, "0")}).applyTo("1234"),
+    vs.numericString({transform: value => value.padStart(8, "0")}).applyTo("1234"),
     "00001234");
 
 // should cause errors
 assert.throws(
-    () => vs.numericString({converter: (value, fail) => fail()}).applyTo("1234"),
-    {name: "ValueSchemaError", rule: vs.RULE.CONVERTER});
+    () => vs.numericString({transform: (value, fail) => fail()}).applyTo("1234"),
+    {name: "ValueSchemaError", rule: vs.RULE.TRANSFORM});
 ```

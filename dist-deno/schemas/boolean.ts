@@ -1,5 +1,5 @@
-import { NullableRules, UndefinableRules } from "../libs/publicTypes.ts";
 import { BooleanSchema, RulesForBoolean } from "../schemaClasses/BooleanSchema.ts";
+import { NullableRules, UndefinableRules } from "../libs/publicTypes.ts";
 /** schema for boolean or null or undefined */
 export function boolean(options: RulesForBoolean & NullableRules & UndefinableRules): BooleanSchema<null | undefined>;
 /** schema for boolean or undefined */

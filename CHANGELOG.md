@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * supports [Bun](https://bun.sh/)
 * `vs.date()`
 
+### Changed
+
+* rename `converter` to `transform`
+
 ### Removed
 
 * drop support TypeScript 3.4

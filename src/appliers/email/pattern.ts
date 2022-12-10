@@ -1,5 +1,7 @@
-import {REGEXP_EMAIL} from "../../libs/regexp/email";
 import {Key, Values} from "../../libs/types";
+
+import {REGEXP_EMAIL} from "../../libs/regexp/email";
+
 import * as pattern from "../string/pattern";
 
 export interface Rules

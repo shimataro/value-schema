@@ -1,5 +1,5 @@
-import vs from "value-schema";
 import {describe, expect, it} from "@jest/globals";
+import vs from "value-schema";
 
 {
 	describe("type", testType);
@@ -10,7 +10,7 @@ import {describe, expect, it} from "@jest/globals";
 	describe("only", testOnly);
 	describe("minValue", testMinValue);
 	describe("maxValue", testMaxValue);
-	describe("converter", testConverter);
+	describe("transform", testTransform);
 }
 
 /**
@@ -621,15 +621,15 @@ function testMaxValue(): void
 }
 
 /**
- * converter
+ * transform
  */
-function testConverter(): void
+function testTransform(): void
 {
 	it("should be adjusted", () =>
 	{
 		expect(
 			vs.number({
-				converter: (value) =>
+				transform: (value) =>
 				{
 					return value * 2;
 				},

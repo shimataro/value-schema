@@ -18,7 +18,7 @@ type RulesForArray<T> = {
     maxLength?: number | {length: number, trims: boolean};
     each?: BaseSchema<T> | {schema: BaseSchema<T>, ignoresErrors: boolean};
 
-    converter?: (values: T[], fail: () => never) => T[];
+    transform?: (values: T[], fail: () => never) => T[];
 }
 type ErrorHandler<T> = (err: ValueSchemaError) => T[] | null | never;
 interface ArraySchema<T> {
@@ -129,7 +129,7 @@ assert.throws(
 
 ### `toArray`
 
-Converts an input value to array if not.
+Transforms an input value to array if not.
 **defaults: false**
 
 ```javascript
@@ -208,20 +208,20 @@ assert.throws(
     {name: "ValueSchemaError", rule: vs.RULE.TYPE});
 ```
 
-### `converter`
+### `transform`
 
-Converts input value to another.
+Transforms input value to another.
 
 `fail()` causes `ValueSchemaError`.
 
 ```javascript
 // should be adjusted
 assert.deepStrictEqual(
-    vs.array({each: vs.number(), separatedBy: ",", converter: values => values.sort()}).applyTo("4,1,5,2"),
+    vs.array({each: vs.number(), separatedBy: ",", transform: values => values.sort()}).applyTo("4,1,5,2"),
     [1, 2, 4, 5]);
 
 // should cause errors
 assert.throws(
-    () => vs.array({converter: (value, fail) => fail()}).applyTo([]),
-    {name: "ValueSchemaError", rule: vs.RULE.CONVERTER});
+    () => vs.array({transform: (value, fail) => fail()}).applyTo([]),
+    {name: "ValueSchemaError", rule: vs.RULE.TRANSFORM});
 ```

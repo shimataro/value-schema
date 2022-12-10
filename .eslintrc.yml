@@ -265,6 +265,7 @@ rules: # https://eslint.org/docs/rules/
   - error
   - ignoreCase: true
     ignoreDeclarationSort: true
+    allowSeparatedGroups: true
   sort-keys: 'off'
   sort-vars: error
   space-before-blocks: error

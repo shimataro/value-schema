@@ -1,5 +1,6 @@
-import {NullableRules, UndefinableRules} from "../libs/publicTypes";
 import {EmailSchema, RulesForEmail} from "../schemaClasses/EmailSchema";
+
+import {NullableRules, UndefinableRules} from "../libs/publicTypes";
 
 /** schema for email or null or undefined */
 export function email(options: RulesForEmail & NullableRules & UndefinableRules): EmailSchema<null | undefined>;
