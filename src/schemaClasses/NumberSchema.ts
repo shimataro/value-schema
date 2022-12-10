@@ -1,8 +1,9 @@
-import * as converter from "../appliers/converter";
 import * as ifEmptyString from "../appliers/ifEmptyString";
 import * as ifNull from "../appliers/ifNull";
 import * as ifUndefined from "../appliers/ifUndefined";
 import * as only from "../appliers/only";
+import * as transform from "../appliers/transform";
+
 import * as acceptsFullWidth from "../appliers/number/acceptsFullWidth";
 import * as maxValue from "../appliers/number/maxValue";
 import * as minValue from "../appliers/number/minValue";
@@ -15,7 +16,7 @@ export const NUMBER = {
 } as const;
 
 export type RulesForNumber =
-	converter.Rules<number> &
+	transform.Rules<number> &
 	ifUndefined.Rules<number> &
 	ifEmptyString.Rules<number> &
 	ifNull.Rules<number> &
@@ -38,7 +39,7 @@ export class NumberSchema<Tx = never> extends BaseSchema<number | Tx>
 			only.applyTo,
 			minValue.applyTo,
 			maxValue.applyTo,
-			converter.applyTo,
+			transform.applyTo,
 		]);
 	}
 }

@@ -1,5 +1,6 @@
-import {NullableRules, UndefinableRules} from "../libs/publicTypes";
 import {EnumerationSchema, RulesForEnumeration} from "../schemaClasses/EnumerationSchema";
+
+import {NullableRules, UndefinableRules} from "../libs/publicTypes";
 
 /** schema for enum-like (enum / union) or null or undefined */
 export function enumeration<E = unknown>(options: RulesForEnumeration<E> & NullableRules & UndefinableRules): EnumerationSchema<E, null | undefined>;

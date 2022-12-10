@@ -19,7 +19,7 @@ type RulesForNumber = {
     minValue?: number | {value: number, adjusts: boolean};
     maxValue?: number | {value: number, adjusts: boolean};
 
-    converter?: (value: number, fail: () => never) => number;
+    transform?: (value: number, fail: () => never) => number;
 }
 type ErrorHandler = (err: ValueSchemaError) => number | null | never;
 interface NumberSchema {
@@ -349,20 +349,20 @@ assert.throws(
     {name: "ValueSchemaError", rule: vs.RULE.MAX_VALUE});
 ```
 
-### `converter`
+### `transform`
 
-Converts input value to another.
+Transform input value to another.
 
 `fail()` causes `ValueSchemaError`.
 
 ```javascript
 // should be adjusted
 assert.strictEqual(
-    vs.number({converter: value => value * 2}).applyTo("1"),
+    vs.number({transform: value => value * 2}).applyTo("1"),
     2);
 
 // should cause errors
 assert.throws(
-    () => vs.number({converter: (value, fail) => fail()}).applyTo(0),
-    {name: "ValueSchemaError", rule: vs.RULE.CONVERTER});
+    () => vs.number({transform: (value, fail) => fail()}).applyTo(0),
+    {name: "ValueSchemaError", rule: vs.RULE.TRANSFORM});
 ```

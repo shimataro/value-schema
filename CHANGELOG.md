@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * rename `ValueSchemaError.cause` to `ValueSchemaError.rule`
     * ...because `Error.cause` is stage 4
     * <https://github.com/tc39/proposal-error-cause>
+* rename `converter` to `transform`
 
 ### Others
 

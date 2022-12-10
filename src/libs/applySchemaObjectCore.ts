@@ -1,5 +1,6 @@
 import {ErrorHandler, FinishHandler} from "./publicTypes";
 import {AnyObject, isObject, Key, ObjectTypeOf, SchemaObject} from "./types";
+
 import {RULE, ValueSchemaError} from "./ValueSchemaError";
 
 /**

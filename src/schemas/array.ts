@@ -1,5 +1,6 @@
-import {NullableRules, UndefinableRules} from "../libs/publicTypes";
 import {ArraySchema, RulesForArray} from "../schemaClasses/ArraySchema";
+
+import {NullableRules, UndefinableRules} from "../libs/publicTypes";
 
 /** schema for array or null or undefined */
 export function array<T>(options: RulesForArray<T> & NullableRules & UndefinableRules): ArraySchema<T, null | undefined>;

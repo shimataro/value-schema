@@ -3,8 +3,8 @@ import {RULE, ValueSchemaError} from "../libs/ValueSchemaError";
 
 export interface Rules<T>
 {
-	/** converter function */
-	converter?: (value: T, fail: () => never) => T;
+	/** transformer function */
+	transform?: (value: T, fail: () => never) => T;
 }
 
 /**
@@ -16,14 +16,14 @@ export interface Rules<T>
  */
 export function applyTo<T>(values: Values, rules: Rules<T>, keyStack: Key[]): values is Values<T>
 {
-	if(rules.converter === undefined)
+	if(rules.transform === undefined)
 	{
 		return false;
 	}
 
-	values.output = rules.converter(values.output as T, () =>
+	values.output = rules.transform(values.output as T, () =>
 	{
-		return ValueSchemaError.raise(RULE.CONVERTER, values, keyStack);
+		return ValueSchemaError.raise(RULE.TRANSFORM, values, keyStack);
 	});
 	return true;
 }

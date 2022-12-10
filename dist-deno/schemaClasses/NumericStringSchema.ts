@@ -1,8 +1,8 @@
-import * as converter from "../appliers/converter.ts";
 import * as ifEmptyString from "../appliers/ifEmptyString.ts";
 import * as ifNull from "../appliers/ifNull.ts";
 import * as ifUndefined from "../appliers/ifUndefined.ts";
 import * as only from "../appliers/only.ts";
+import * as transform from "../appliers/transform.ts";
 import * as checksum from "../appliers/numericString/checksum.ts";
 import * as fullWidthToHalf from "../appliers/numericString/fullWidthToHalf.ts";
 import * as joinsArray from "../appliers/numericString/joinsArray.ts";
@@ -15,7 +15,7 @@ import { BaseSchema } from "../schemaClasses/BaseSchema.ts";
 export const NUMERIC_STRING = {
     CHECKSUM_ALGORITHM: checksum.CHECKSUM_ALGORITHM
 };
-export type RulesForNumericString = converter.Rules<string> & ifEmptyString.Rules<string> & ifNull.Rules<string> & ifUndefined.Rules<string> & only.Rules<string> & checksum.Rules & fullWidthToHalf.Rules & joinsArray.Rules & pattern.Rules & separatedBy.Rules & type.Rules & minLength.Rules & maxLength.Rules;
+export type RulesForNumericString = transform.Rules<string> & ifEmptyString.Rules<string> & ifNull.Rules<string> & ifUndefined.Rules<string> & only.Rules<string> & checksum.Rules & fullWidthToHalf.Rules & joinsArray.Rules & pattern.Rules & separatedBy.Rules & type.Rules & minLength.Rules & maxLength.Rules;
 export class NumericStringSchema<Tx = never> extends BaseSchema<string | Tx> {
     constructor(rules: RulesForNumericString) {
         super(rules, [
@@ -30,7 +30,7 @@ export class NumericStringSchema<Tx = never> extends BaseSchema<string | Tx> {
             minLength.applyTo,
             maxLength.applyTo,
             checksum.applyTo,
-            converter.applyTo,
+            transform.applyTo,
         ]);
     }
 }

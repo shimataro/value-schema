@@ -5,7 +5,7 @@ export const RULE = {
     NULL: "null",
     EMPTY_STRING: "empty-string",
     ONLY: "only",
-    CONVERTER: "converter",
+    TRANSFORM: "transform",
     MIN_VALUE: "min-value",
     MAX_VALUE: "max-value",
     MIN_LENGTH: "min-length",

@@ -1,5 +1,5 @@
-import { NullableRules, UndefinableRules } from "../libs/publicTypes.ts";
 import { DateSchema, RulesForDate } from "../schemaClasses/DateSchema.ts";
+import { NullableRules, UndefinableRules } from "../libs/publicTypes.ts";
 export { DATE } from "../schemaClasses/DateSchema.ts";
 /** schema for number or null or undefined */
 export function date(options: RulesForDate & NullableRules & UndefinableRules): DateSchema<null | undefined>;

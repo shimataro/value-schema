@@ -1,5 +1,5 @@
-import { NullableRules, UndefinableRules } from "../libs/publicTypes.ts";
 import { ArraySchema, RulesForArray } from "../schemaClasses/ArraySchema.ts";
+import { NullableRules, UndefinableRules } from "../libs/publicTypes.ts";
 /** schema for array or null or undefined */
 export function array<T>(options: RulesForArray<T> & NullableRules & UndefinableRules): ArraySchema<T, null | undefined>;
 /** schema for array or undefined */

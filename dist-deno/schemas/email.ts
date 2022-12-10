@@ -1,5 +1,5 @@
-import { NullableRules, UndefinableRules } from "../libs/publicTypes.ts";
 import { EmailSchema, RulesForEmail } from "../schemaClasses/EmailSchema.ts";
+import { NullableRules, UndefinableRules } from "../libs/publicTypes.ts";
 /** schema for email or null or undefined */
 export function email(options: RulesForEmail & NullableRules & UndefinableRules): EmailSchema<null | undefined>;
 /** schema for email or undefined */

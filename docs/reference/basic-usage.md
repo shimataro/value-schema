@@ -121,7 +121,7 @@ const input = { // input values
     remoteAddrIpv6: "::1",
     limit: "0",
 };
-const expected = { // should be converted to this
+const expected = { // should be transformed to this
     id: 1,
     name: "Pablo Diego José",
     age: 20,

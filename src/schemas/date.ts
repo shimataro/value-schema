@@ -1,5 +1,6 @@
-import {NullableRules, UndefinableRules} from "../libs/publicTypes";
 import {DateSchema, RulesForDate} from "../schemaClasses/DateSchema";
+
+import {NullableRules, UndefinableRules} from "../libs/publicTypes";
 
 export {DATE} from "../schemaClasses/DateSchema";
 

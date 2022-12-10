@@ -1,5 +1,5 @@
-import { REGEXP_EMAIL } from "../../libs/regexp/email.ts";
 import { Key, Values } from "../../libs/types.ts";
+import { REGEXP_EMAIL } from "../../libs/regexp/email.ts";
 import * as pattern from "../string/pattern.ts";
 export interface Rules {
     /** overwrites email pattern */

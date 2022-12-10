@@ -1,5 +1,5 @@
-import vs from "value-schema";
 import {describe, expect, it} from "@jest/globals";
+import vs from "value-schema";
 
 {
 	describe("type", testType);
@@ -10,7 +10,7 @@ import {describe, expect, it} from "@jest/globals";
 	describe("ifEmptyString", testIfEmptyString);
 	describe("maxValue", testMaxValue);
 	describe("minValue", testMinValue);
-	describe("converter", testConverter);
+	describe("transform", testTransform);
 }
 
 /**
@@ -523,28 +523,28 @@ function testMinValue(): void
 }
 
 /**
- * converter
+ * transform
  */
-function testConverter(): void
+function testTransform(): void
 {
 	it("should be OK", () =>
 	{
-		// convert to 1-second later
+		// transform to 1-second later
 		expect(
 			vs.date({
-				converter: (value) =>
+				transform: (value) =>
 				{
 					return new Date(value.getTime() + 1000);
 				},
 			}).applyTo("2020-01-01T00:00:00.000Z")
 		).toEqual(new Date("2020-01-01T00:00:01.000Z"));
 
-		// converter will be fired lastly
+		// transformer will be fired lastly
 		expect(
 			vs.date({
-				converter: (value) =>
+				transform: (value) =>
 				{
-					// convert to 1-second later
+					// transform to 1-second later
 					return new Date(value.getTime() + 1000);
 				},
 				minValue: {
@@ -556,16 +556,16 @@ function testConverter(): void
 	});
 	it("should cause error(s)", () =>
 	{
-		// conversion failed
+		// transformation failed
 		expect(() =>
 		{
 			vs.date({
-				converter: (_value, fail) =>
+				transform: (_value, fail) =>
 				{
 					return fail();
 				},
 
 			}).applyTo("2000-01-01T00:00:00.000Z");
-		}).toThrow(vs.RULE.CONVERTER);
+		}).toThrow(vs.RULE.TRANSFORM);
 	});
 }

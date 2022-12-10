@@ -1,8 +1,9 @@
-import * as converter from "../appliers/converter";
 import * as ifEmptyString from "../appliers/ifEmptyString";
 import * as ifNull from "../appliers/ifNull";
 import * as ifUndefined from "../appliers/ifUndefined";
 import * as only from "../appliers/only";
+import * as transform from "../appliers/transform";
+
 import * as maxLength from "../appliers/string/maxLength";
 import * as minLength from "../appliers/string/minLength";
 import * as pattern from "../appliers/string/pattern";
@@ -16,7 +17,7 @@ export const STRING = {
 } as const;
 
 export type RulesForString =
-	converter.Rules<string> &
+	transform.Rules<string> &
 	ifEmptyString.Rules<string> &
 	ifNull.Rules<string> &
 	ifUndefined.Rules<string> &
@@ -41,7 +42,7 @@ export class StringSchema<Tx = never> extends BaseSchema<string | Tx>
 			minLength.applyTo,
 			maxLength.applyTo,
 			pattern.applyTo,
-			converter.applyTo,
+			transform.applyTo,
 		]);
 	}
 }

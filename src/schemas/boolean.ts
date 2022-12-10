@@ -1,5 +1,6 @@
-import {NullableRules, UndefinableRules} from "../libs/publicTypes";
 import {BooleanSchema, RulesForBoolean} from "../schemaClasses/BooleanSchema";
+
+import {NullableRules, UndefinableRules} from "../libs/publicTypes";
 
 /** schema for boolean or null or undefined */
 export function boolean(options: RulesForBoolean & NullableRules & UndefinableRules): BooleanSchema<null | undefined>;

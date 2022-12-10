@@ -1,6 +1,6 @@
-import vs from "value-schema";
 import {describe, expect, it} from "@jest/globals";
 import {camel} from "case";
+import vs from "value-schema";
 
 {
 	describe("type", testType);
@@ -8,7 +8,7 @@ import {camel} from "case";
 	describe("ifNull", testIfNull);
 	describe("ifEmptyString", testIfEmptyString);
 	describe("schema", testSchema);
-	describe("converter", testConverter);
+	describe("transform", testTransform);
 }
 
 /**
@@ -163,17 +163,17 @@ function testSchema(): void
 }
 
 /**
- * converter
+ * transform
  */
-function testConverter(): void
+function testTransform(): void
 {
 	it("should be adjusted", () =>
 	{
 		expect(
 			vs.object({
-				converter: (values) =>
+				transform: (values) =>
 				{
-					// converts case of keys to camelCase
+					// transforms case of keys to camelCase
 					return Object.entries(values).reduce((prev, [key, value]) =>
 					{
 						return {
