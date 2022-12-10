@@ -399,7 +399,7 @@ function testError(): void
 				keys.push(err.keyStack[0]);
 			}, () =>
 			{
-				// finished; join key name as message
+				// finish with error; join key name as message
 				throw new Error(keys.join(","));
 			});
 		}).toThrow("id,name");

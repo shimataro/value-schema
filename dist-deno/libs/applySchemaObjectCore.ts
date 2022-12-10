@@ -6,11 +6,11 @@ import { RULE, ValueSchemaError } from "./ValueSchemaError.ts";
  * @param schemaObject schema object
  * @param data data to apply
  * @param onError error handler
- * @param onFinished finish handler
+ * @param onFinishWithError finish handler
  * @param keyStack path to key that caused error
  * @returns applied data
  */
-export function applySchemaObjectCore<S extends SchemaObject>(schemaObject: S, data: unknown, onError: ErrorHandler, onFinished: FinishHandler, keyStack: Key[]): ObjectTypeOf<S> {
+export function applySchemaObjectCore<S extends SchemaObject>(schemaObject: S, data: unknown, onError: ErrorHandler, onFinishWithError: FinishHandler, keyStack: Key[]): ObjectTypeOf<S> {
     if (!isObject(data)) {
         const err = new ValueSchemaError(RULE.TYPE, data, keyStack);
         const result = onError(err);
@@ -26,7 +26,7 @@ export function applySchemaObjectCore<S extends SchemaObject>(schemaObject: S, d
         appliedObject[key] = schemaObject[key]["_applyTo"](data[key], errorHandler, [...keyStack, key]);
     }
     if (hasError) {
-        onFinished();
+        onFinishWithError();
     }
     return appliedObject as ObjectTypeOf<S>;
     /**
