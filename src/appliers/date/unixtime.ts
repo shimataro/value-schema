@@ -1,4 +1,4 @@
-import {Key, Values, isNumber, isNumericString} from "../../libs/types";
+import {isNumber, isNumericString, Key, Values} from "../../libs/types";
 
 const PRECISION =
 {

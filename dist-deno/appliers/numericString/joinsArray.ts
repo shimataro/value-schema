@@ -1,4 +1,4 @@
-import { Key, Values, isArray } from "../../libs/types.ts";
+import { isArray, Key, Values } from "../../libs/types.ts";
 export interface Rules {
     /** joins array and makes string */
     joinsArray?: boolean;

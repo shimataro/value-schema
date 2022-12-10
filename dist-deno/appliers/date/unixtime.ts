@@ -1,4 +1,4 @@
-import { Key, Values, isNumber, isNumericString } from "../../libs/types.ts";
+import { isNumber, isNumericString, Key, Values } from "../../libs/types.ts";
 const PRECISION = {
     MILLISECONDS: 0,
     SECONDS: 1,

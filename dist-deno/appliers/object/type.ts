@@ -1,4 +1,4 @@
-import { Key, Values, isObject } from "../../libs/types.ts";
+import { isObject, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 export interface Rules {
 }

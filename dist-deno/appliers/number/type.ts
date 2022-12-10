@@ -1,4 +1,4 @@
-import { Key, Values, isInteger, isNumber, isScalar, isString } from "../../libs/types.ts";
+import { isInteger, isNumber, isScalar, isString, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 const REGEXP_NUMBER = /^\s*[+-]?(\d+(\.\d*)?|\.\d+)\s*$/;
 const REGEXP_INTEGER = /^\s*[+-]?\d+\s*$/;

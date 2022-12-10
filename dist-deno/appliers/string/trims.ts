@@ -1,4 +1,4 @@
-import { Key, Values, isString } from "../../libs/types.ts";
+import { isString, Key, Values } from "../../libs/types.ts";
 export interface Rules {
     /** removes whitespace from both ends of a string */
     trims?: boolean;

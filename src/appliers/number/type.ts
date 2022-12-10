@@ -1,4 +1,4 @@
-import {Key, Values, isInteger, isNumber, isScalar, isString} from "../../libs/types";
+import {isInteger, isNumber, isScalar, isString, Key, Values} from "../../libs/types";
 import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 const REGEXP_NUMBER = /^\s*[+-]?(\d+(\.\d*)?|\.\d+)\s*$/;

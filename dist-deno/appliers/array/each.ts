@@ -1,4 +1,4 @@
-import { Key, Values, isArray } from "../../libs/types.ts";
+import { isArray, Key, Values } from "../../libs/types.ts";
 import { ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 import { BaseSchema } from "../../schemaClasses/BaseSchema.ts";
 type Each<T> = {

@@ -1,4 +1,4 @@
-import { Key, Values, isArray } from "../../libs/types.ts";
+import { isArray, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 export interface Rules {
     /** minimum size of array */

@@ -1,5 +1,5 @@
 import {ErrorHandler, FinishHandler} from "./publicTypes";
-import {AnyObject, Key, ObjectTypeOf, SchemaObject, isObject} from "./types";
+import {AnyObject, isObject, Key, ObjectTypeOf, SchemaObject} from "./types";
 import {RULE, ValueSchemaError} from "./ValueSchemaError";
 
 /**

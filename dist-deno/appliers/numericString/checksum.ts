@@ -1,4 +1,4 @@
-import { Key, Values, isString } from "../../libs/types.ts";
+import { isString, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 export const CHECKSUM_ALGORITHM = {
     /** Luhn algorithm; used in credit card and IMEI (also known as MOD-10 algorithm) */

@@ -1,4 +1,4 @@
-import {Key, Values, isNumber, isString} from "../../libs/types";
+import {isNumber, isString, Key, Values} from "../../libs/types";
 import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 type MaxLength = {

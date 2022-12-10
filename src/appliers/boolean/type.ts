@@ -1,4 +1,4 @@
-import {Key, Values, isBoolean, isNumber, isString} from "../../libs/types";
+import {isBoolean, isNumber, isString, Key, Values} from "../../libs/types";
 import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 const REGEXP_TRUE = /^\s*(true|yes|on)\s*$/i;

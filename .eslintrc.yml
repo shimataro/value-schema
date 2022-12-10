@@ -263,7 +263,7 @@ rules: # https://eslint.org/docs/rules/
   - last
   sort-imports:
   - error
-  - ignoreCase: false
+  - ignoreCase: true
     ignoreDeclarationSort: true
   sort-keys: 'off'
   sort-vars: error

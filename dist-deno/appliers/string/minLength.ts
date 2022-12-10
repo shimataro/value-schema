@@ -1,4 +1,4 @@
-import { Key, Values, isString } from "../../libs/types.ts";
+import { isString, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 export interface Rules {
     /** minimum length of string */

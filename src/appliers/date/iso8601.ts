@@ -1,5 +1,5 @@
 import {RULE, ValueSchemaError} from "../../exporter";
-import {Key, Values, isString} from "../../libs/types";
+import {isString, Key, Values} from "../../libs/types";
 
 const PATTERN_WITH_TZ = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/;
 const PATTERN_WITHOUT_TZ = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(.\d{1,3})?)?$/;

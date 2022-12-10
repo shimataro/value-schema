@@ -1,4 +1,4 @@
-import {Key, Values, isString} from "../../libs/types";
+import {isString, Key, Values} from "../../libs/types";
 
 export interface Rules
 {

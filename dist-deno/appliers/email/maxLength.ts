@@ -1,4 +1,4 @@
-import { Key, Values, isString } from "../../libs/types.ts";
+import { isString, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 const MAX_LENGTH_LOCAL = 64;
 const MAX_LENGTH_DOMAIN = 255;

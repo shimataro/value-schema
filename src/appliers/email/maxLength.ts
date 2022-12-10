@@ -1,4 +1,4 @@
-import {Key, Values, isString} from "../../libs/types";
+import {isString, Key, Values} from "../../libs/types";
 import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 const MAX_LENGTH_LOCAL = 64;

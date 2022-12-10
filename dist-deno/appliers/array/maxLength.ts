@@ -1,4 +1,4 @@
-import { Key, Values, isArray, isNumber } from "../../libs/types.ts";
+import { isArray, isNumber, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 type MaxLength = {
     /** maximum size of array */

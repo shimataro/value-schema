@@ -1,5 +1,5 @@
 import { ErrorHandler, FinishHandler } from "./publicTypes.ts";
-import { AnyObject, Key, ObjectTypeOf, SchemaObject, isObject } from "./types.ts";
+import { AnyObject, isObject, Key, ObjectTypeOf, SchemaObject } from "./types.ts";
 import { RULE, ValueSchemaError } from "./ValueSchemaError.ts";
 /**
  * apply schema object to data

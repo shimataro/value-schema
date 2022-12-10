@@ -1,5 +1,5 @@
 import * as string from "../../libs/string.ts";
-import { Key, Values, isString } from "../../libs/types.ts";
+import { isString, Key, Values } from "../../libs/types.ts";
 export interface Rules {
     /** accepts full width string; e.g., "１２３４５" */
     acceptsFullWidth?: boolean;

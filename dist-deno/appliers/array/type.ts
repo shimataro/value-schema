@@ -1,4 +1,4 @@
-import { Key, Values, isArray, isString } from "../../libs/types.ts";
+import { isArray, isString, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 export interface Rules {
     /** assumes entire values are in one string separated by pattern */
