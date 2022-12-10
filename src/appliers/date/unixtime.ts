@@ -35,10 +35,10 @@ export interface Rules
  * apply schema
  * @param values input/output values
  * @param rules rules
- * @param keyStack key stack for error handling
+ * @param _keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<Date> // eslint-disable-line @typescript-eslint/no-unused-vars
+export function applyTo(values: Values, rules: Rules, _keyStack: Key[]): values is Values<Date>
 {
 	// skip if "unixtime-mode" is disabled
 	if(rules.unixtime === undefined)

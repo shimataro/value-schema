@@ -309,6 +309,11 @@ rules: # https://eslint.org/docs/rules/
   # @typescript-eslint plugin
   "@typescript-eslint/ban-ts-ignore": 'off'
   "@typescript-eslint/no-empty-interface": 'off'
+  "@typescript-eslint/no-unused-vars":
+  - error
+  - args: all
+    argsIgnorePattern: "^_"
+    varsIgnorePattern: "^_"
   "@typescript-eslint/no-use-before-define":
   - error
   - functions: false

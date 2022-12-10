@@ -560,7 +560,7 @@ function testConverter(): void
 		expect(() =>
 		{
 			vs.date({
-				converter: (value, fail) =>
+				converter: (_value, fail) =>
 				{
 					return fail();
 				},

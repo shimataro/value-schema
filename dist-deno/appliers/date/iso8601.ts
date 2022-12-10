@@ -19,8 +19,7 @@ type NormalizedRules = Required<Rules>;
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<Date> // eslint-disable-line @typescript-eslint/no-unused-vars
- {
+export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<Date> {
     const normalizedRules: NormalizedRules = {
         iso8601: {
             defaultTimezone: ""
