@@ -1,4 +1,4 @@
-import { Key, Values, isScalar, isString } from "../../libs/types.ts";
+import { isScalar, isString, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 export interface Rules {
     /** does not convert type; causes error if type does not match */

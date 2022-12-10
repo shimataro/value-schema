@@ -1,4 +1,4 @@
-import { Key, Values, isString } from "../../libs/types.ts";
+import { isString, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 import { REGEXP_EMAIL } from "../../libs/regexp/email.ts";
 import { REGEXP_IPV4 } from "../../libs/regexp/ipv4.ts";

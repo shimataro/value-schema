@@ -1,4 +1,4 @@
-import {Key, Values, isDate} from "../../libs/types";
+import {isDate, Key, Values} from "../../libs/types";
 import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 type MinValue = {

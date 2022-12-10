@@ -1,4 +1,4 @@
-import { Key, Values, isString } from "../../libs/types.ts";
+import { isString, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 const MAX_LENGTH_LOCAL = 64;
 const MAX_LENGTH_DOMAIN = 255;
@@ -8,12 +8,11 @@ export interface Rules {
 /**
  * apply schema
  * @param values input/output values
- * @param rules rules
+ * @param _rules rules
  * @param keyStack key stack for error handling
  * @returns escapes from applyTo chain or not
  */
-export function applyTo(values: Values, rules: Rules, keyStack: Key[]): values is Values<string> // eslint-disable-line @typescript-eslint/no-unused-vars
- {
+export function applyTo(values: Values, _rules: Rules, keyStack: Key[]): values is Values<string> {
     // istanbul ignore next
     if (!isString(values.output)) {
         return false;

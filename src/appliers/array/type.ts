@@ -1,4 +1,4 @@
-import {Key, Values, isArray, isString} from "../../libs/types";
+import {isArray, isString, Key, Values} from "../../libs/types";
 import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 export interface Rules

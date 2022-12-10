@@ -1,4 +1,4 @@
-import { Key, Values, isNumber, isString } from "../../libs/types.ts";
+import { isNumber, isString, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 type MaxLength = {
     /** maximum length of string */

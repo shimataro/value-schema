@@ -1,4 +1,4 @@
-import { Key, Values, isDate } from "../../libs/types.ts";
+import { isDate, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 type MaxValue = {
     /** maximum value */

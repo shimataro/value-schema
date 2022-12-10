@@ -1,4 +1,4 @@
-import { Key, Values, isBoolean, isNumber, isString } from "../../libs/types.ts";
+import { isBoolean, isNumber, isString, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 const REGEXP_TRUE = /^\s*(true|yes|on)\s*$/i;
 const REGEXP_FALSE = /^\s*(false|no|off)\s*$/i;

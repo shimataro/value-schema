@@ -1,4 +1,4 @@
-import { Key, Values, makeValues } from "../libs/types.ts";
+import { Key, makeValues, Values } from "../libs/types.ts";
 import { ErrorHandler } from "../libs/publicTypes.ts";
 import { ValueSchemaError } from "../libs/ValueSchemaError.ts";
 interface Rules {

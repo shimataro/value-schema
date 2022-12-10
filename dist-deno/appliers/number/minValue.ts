@@ -1,4 +1,4 @@
-import { Key, Values, isNumber } from "../../libs/types.ts";
+import { isNumber, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 type MinValue = {
     /** minimum value */
