@@ -1,11 +1,5 @@
 {
   "verbose": true,
-  "preset": "ts-jest",
-  "globals": {
-    "ts-jest": {
-      "tsconfig": "tsconfig.test.json"
-    }
-  },
   "moduleDirectories": [
     "node_modules",
     "src"
@@ -17,6 +11,13 @@
   "testMatch": [
     "<rootDir>/test/**/*.test.ts"
   ],
+  "transform": {
+    "\\.ts$": [
+      "ts-jest", {
+        "tsconfig": "tsconfig.test.json"
+      }
+    ]
+  },
   "collectCoverage": true,
   "coverageDirectory": "./coverage/"
 }
