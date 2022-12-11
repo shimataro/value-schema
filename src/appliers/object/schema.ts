@@ -1,7 +1,7 @@
 import {Key, ObjectTypeOf, SchemaObject, Values} from "../../libs/types";
 import {applySchemaObjectCore} from "../../libs/applySchemaObjectCore";
 
-import {onErrorDefault, onFinishedDefault} from "../../schemaClasses/BaseSchema";
+import {onErrorDefault, onFinishDefault} from "../../schemaClasses/BaseSchema";
 
 export interface Rules<S>
 {
@@ -24,6 +24,6 @@ export function applyTo<S extends SchemaObject>(values: Values, rules: Rules<S>,
 		return false;
 	}
 
-	values.output = applySchemaObjectCore(rules.schemaObject, values.output, onErrorDefault, onFinishedDefault, keyStack);
+	values.output = applySchemaObjectCore(rules.schemaObject, values.output, onErrorDefault, onFinishDefault, keyStack);
 	return false;
 }

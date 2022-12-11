@@ -71,7 +71,7 @@ export function onErrorDefault(err: ValueSchemaError): never
 /**
  * default finish handler
  */
-export function onFinishedDefault(): void
+export function onFinishDefault(): void
 {
 	// do nothing
 }

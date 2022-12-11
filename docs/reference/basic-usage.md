@@ -1,6 +1,6 @@
 # basic usage
 
-## `applySchemaObject(schemaObject, input[, onError[, onFinished]])`
+## `applySchemaObject(schemaObject, input[, onError[, onFinishWithError]])`
 
 apply `schemaObject` to `data`.
 
@@ -33,9 +33,9 @@ If this parameter is omitted, `applySchemaObject()` throws `ValueSchemaError` on
     * an exception that will thrown from `applySchemaObject()`
     * remaining processes will be cancelled
 
-### `onFinished()`
+### `onFinishWithError()`
 
-Called after finished all error handlings.
+Will be called after finish with error.
 Will **NOT** called if no errors.
 
 ### examples
@@ -192,7 +192,7 @@ assert.deepStrictEqual(actual, expected);
 
 #### error handling 2
 
-throw exception after finished
+throw exception after finished with error
 
 ```javascript
 import vs from "value-schema";
@@ -225,7 +225,7 @@ assert.throws(() => {
             messages.push(key);
         }
     }, () => {
-        // finished; join key name as message
+        // finish with error; join key name as message
         throw Error(messages.sort().join(","));
     });
 }, {
