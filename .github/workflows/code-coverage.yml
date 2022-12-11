@@ -11,7 +11,7 @@ jobs:
         os:
         - ubuntu-latest
         nodejs:
-        - 12
+        - 14
       fail-fast: false
     steps:
     - name: Checkout source codes

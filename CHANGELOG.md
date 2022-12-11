@@ -18,7 +18,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 
-* drop support TypeScript 3.4
+* drop support TypeScript 3.4 (support 3.5 or later)
+
+### Others
+
+* support Node.js 18
 
 ## [4.0.0-rc.1] - 2022-05-27
 

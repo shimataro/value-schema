@@ -8,7 +8,7 @@ on:
     - "*"
 
 jobs:
-  verify-ts35:
+  verify-ts35-40:
     name: Verify (TypeScript 3.5 - 4.0)
     runs-on: windows-latest
     strategy:
@@ -51,7 +51,7 @@ jobs:
     strategy:
       matrix:
         nodejs:
-        - 12
+        - 14
         typescript:
         - "4.1"
         - "4.2"

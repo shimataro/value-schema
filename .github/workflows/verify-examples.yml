@@ -30,6 +30,10 @@ jobs:
         - "12.0.0"
         - "14.0.0"
         - "16.0.0"
+        - "18.0.0"
+        exclude:
+        - os: ubuntu-18.04 # glibc>=2.28 is required
+          nodejs: "18.0.0"
       fail-fast: false
     steps:
     - name: Checkout source codes
@@ -90,15 +94,18 @@ jobs:
         - "8.5.0"
         - "8.6.0"
         - "10.0.0"
-        - "12.0.0" # loads CommonJS
-        - "14.0.0" # loads CommonJS
-        - "16.0.0" # loads CommonJS
+        - "12.0.0"
+        - "14.0.0"
+        - "16.0.0"
+        - "18.0.0"
         exclude:
         # On Windows, v8.5.0 causes ERR_INVALID_PROTOCOL; https://github.com/nodejs/node/issues/15374
         - os: windows-2019
           nodejs: "8.5.0"
         - os: windows-2022
           nodejs: "8.5.0"
+        - os: ubuntu-18.04 # glibc>=2.28 is required
+          nodejs: "18.0.0"
       fail-fast: false
     steps:
     - name: Checkout source codes
@@ -154,7 +161,7 @@ jobs:
         - ubuntu-20.04
         - ubuntu-22.04
         nodejs:
-        - "13.2.0"
+        - "13.2.0" # always loads CommonJS
       fail-fast: false
     steps:
     - name: Checkout source codes
