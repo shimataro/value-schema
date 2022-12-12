@@ -1,7 +1,7 @@
 import { RULE, ValueSchemaError } from "../../exporter.ts";
 import { isString, Key, Values } from "../../libs/types.ts";
-const PATTERN_WITH_TZ = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/;
-const PATTERN_WITHOUT_TZ = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(.\d{1,3})?)?$/;
+const PATTERN_WITH_TZ = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(.\d+)?)?(Z|[+-]\d{2}:\d{2})$/;
+const PATTERN_WITHOUT_TZ = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(.\d+)?)?$/;
 interface Iso8601 {
     /** default timezone when timezone is omitted from input value */
     defaultTimezone?: string;

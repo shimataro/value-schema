@@ -40,6 +40,20 @@ function testType(): void
 			vs.date().applyTo("2020-01-01T00:00+09:00")
 		).toEqual(new Date("2019-12-31T15:00:00.000Z"));
 
+		// milliseconds
+		expect(
+			vs.date().applyTo("2000-01-02T03:04:05.6Z")
+		).toEqual(new Date("2000-01-02T03:04:05.600Z"));
+		expect(
+			vs.date().applyTo("2000-01-02T03:04:05.67Z")
+		).toEqual(new Date("2000-01-02T03:04:05.670Z"));
+		expect(
+			vs.date().applyTo("2000-01-02T03:04:05.678Z")
+		).toEqual(new Date("2000-01-02T03:04:05.678Z"));
+		expect(
+			vs.date().applyTo("2000-01-02T03:04:05.6789Z")
+		).toEqual(new Date("2000-01-02T03:04:05.678Z"));
+
 		// empty object
 		expect(
 			vs.date({}).applyTo("2020-01-01T00:00:00.000Z")
@@ -57,6 +71,10 @@ function testType(): void
 		expect(() =>
 		{
 			vs.date().applyTo("abc");
+		}).toThrow(vs.RULE.PATTERN);
+		expect(() =>
+		{
+			vs.date().applyTo("2020-01-01T00:00:00.Z");
 		}).toThrow(vs.RULE.PATTERN);
 
 		// invalid date
