@@ -1,0 +1,50 @@
+export const RULE = {
+  TYPE: "type",
+  UNDEFINED: "undefined",
+  NULL: "null",
+  EMPTY_STRING: "empty-string",
+  ONLY: "only",
+  TRANSFORM: "transform",
+  MIN_VALUE: "min-value",
+  MAX_VALUE: "max-value",
+  MIN_LENGTH: "min-length",
+  MAX_LENGTH: "max-length",
+  PATTERN: "pattern",
+  CHECKSUM: "checksum"
+};
+/**
+ * Value-Schema Error
+ */
+export class ValueSchemaError extends Error {
+  /**
+   * throw an error
+   * @param rule the rule that input value didn't satisfy
+   * @param values input/output values
+   * @param keyStack path to key that caused error
+   * @throws error object
+   */
+  static raise(rule, values, keyStack) {
+    throw new ValueSchemaError(rule, values.input, keyStack);
+  }
+  /**
+   * check whether error is instance of ValueSchemaError or not
+   * @param err error to check
+   * @returns Yes/No
+   */
+  static is(err) {
+    return err instanceof ValueSchemaError;
+  }
+  /**
+   * constructor
+   * @param rule the rule that input value didn't satisfy
+   * @param value input value
+   * @param keyStack path to key that caused error
+   */
+  constructor(rule, value, keyStack) {
+    super(`${rule}; ${value}; ${keyStack}`);
+    this.name = "ValueSchemaError";
+    this.rule = rule;
+    this.value = value;
+    this.keyStack = [...keyStack];
+  }
+}
