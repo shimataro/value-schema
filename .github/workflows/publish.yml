@@ -22,7 +22,7 @@ jobs:
         node -v
         npm -v
     - name: Cleanup
-      run: node ./scripts/cleanup.sh
+      run: node ./scripts/cleanup.js
     - name: Publish package
       run: npm publish
       env:
