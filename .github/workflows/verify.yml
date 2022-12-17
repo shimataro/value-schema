@@ -1,0 +1,35 @@
+# https://help.github.com/en/articles/workflow-syntax-for-github-actions
+name: Linux
+on:
+  push:
+    branches:
+    - "**"
+    tags-ignore:
+    - "*"
+
+jobs:
+  verify:
+    name: Verify
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        nodejs:
+        - 16
+      fail-fast: false
+    steps:
+    - name: Checkout source codes
+      uses: actions/checkout@v3
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.nodejs }}
+    - name: Output versions
+      run: |
+        node -v
+        npm -v
+    - name: Install dependencies
+      run: npm ci
+    - name: Build
+      run: npm run build
+    - name: Verify
+      run: npm run verify
