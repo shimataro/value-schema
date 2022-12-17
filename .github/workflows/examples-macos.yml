@@ -40,6 +40,9 @@ jobs:
         npm -v
     - name: Check syntax
       run: node ./dist/index.js
+    - name: Install dependencies
+      run: npm i --only=production
+      working-directory: ./examples
     - name: Run example
       run: node ./example.js
       working-directory: ./examples
@@ -109,6 +112,9 @@ jobs:
       run: node --experimental-conditional-exports ./dist/index.js
     - name: Check syntax (ESM)
       run: node --experimental-conditional-exports ./dist/index.mjs
+    - name: Install dependencies
+      run: npm i --only=production
+      working-directory: ./examples
     - name: Run example (CJS)
       run: node --experimental-conditional-exports ./example.js
       working-directory: ./examples
@@ -158,6 +164,9 @@ jobs:
         node -v
         npm -v
         tsc -v
+    - name: Install dependencies
+      run: npm i --only=production
+      working-directory: ./examples
     - name: Build example
       run: tsc example.ts
       working-directory: ./examples
@@ -211,6 +220,9 @@ jobs:
         node -v
         npm -v
         tsc -v
+    - name: Install dependencies
+      run: npm i --only=production
+      working-directory: ./examples
     - name: Build example
       run: tsc example.ts
       working-directory: ./examples
