@@ -33,10 +33,6 @@ jobs:
       run: npm run build
     - name: Verify
       run: npm run verify
-    - name: Check syntax (CJS)
-      run: node ./dist/index.js
-    - name: Check syntax (ESM)
-      run: node ./dist/index.mjs
     - name: Report code coverage
       uses: codecov/codecov-action@v3
       with:
