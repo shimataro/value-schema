@@ -44,6 +44,8 @@ jobs:
       run: |
         node -v
         npm -v
+    - name: Cleanup
+      run: node ./scripts/cleanup.sh
     - name: Check syntax
       run: node ./dist/index.js
     - name: Install dependencies
@@ -85,6 +87,8 @@ jobs:
       run: |
         node -v
         npm -v
+    - name: Cleanup
+      run: node ./scripts/cleanup.sh
     - name: Check syntax
       run: node --experimental-modules ./dist/index.mjs
     - name: Install dependencies
@@ -117,6 +121,8 @@ jobs:
       run: |
         node -v
         npm -v
+    - name: Cleanup
+      run: node ./scripts/cleanup.sh
     - name: Check syntax (CJS)
       run: node --experimental-conditional-exports ./dist/index.js
     - name: Check syntax (ESM)
@@ -173,6 +179,8 @@ jobs:
         node -v
         npm -v
         tsc -v
+    - name: Cleanup
+      run: node ./scripts/cleanup.sh
     - name: Build example
       run: tsc example.ts
       working-directory: ./examples
@@ -227,6 +235,8 @@ jobs:
         node -v
         npm -v
         tsc -v
+    - name: Cleanup
+      run: node ./scripts/cleanup.sh
     - name: Install dependencies
       run: npm i --only=production
       working-directory: ./examples
