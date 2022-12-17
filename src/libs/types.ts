@@ -22,7 +22,7 @@ export type Key = string | number;
 
 export interface Values<T = unknown>
 {
-	input: unknown;
+	readonly input: unknown;
 	output: T;
 }
 

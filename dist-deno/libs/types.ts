@@ -9,7 +9,7 @@ export type AnyObject = Record<string, unknown>;
 export type SchemaObject = Record<string, BaseSchema>;
 export type Key = string | number;
 export interface Values<T = unknown> {
-    input: unknown;
+    readonly input: unknown;
     output: T;
 }
 /**
