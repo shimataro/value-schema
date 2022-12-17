@@ -172,7 +172,9 @@ jobs:
     - name: Cleanup
       run: node ./scripts/cleanup.js
     - name: Install dependencies
-      run: npm i
+      run: |
+        npm i
+        npm i -D @types/node@~${{ matrix.nodejs }}
       working-directory: ./examples
     - name: Build example
       run: tsc example.ts
@@ -230,7 +232,9 @@ jobs:
     - name: Cleanup
       run: node ./scripts/cleanup.js
     - name: Install dependencies
-      run: npm i
+      run: |
+        npm i
+        npm i -D @types/node@~${{ matrix.nodejs }}
       working-directory: ./examples
     - name: Build example
       run: tsc example.ts

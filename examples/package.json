@@ -9,8 +9,5 @@
   },
   "dependencies": {
     "value-schema": "file:.."
-  },
-  "devDependencies": {
-    "@types/node": "18.11.17"
   }
 }
