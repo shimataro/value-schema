@@ -172,12 +172,10 @@ jobs:
     - name: Cleanup
       run: node ./scripts/cleanup.js
     - name: Install dependencies
-      run: |
-        npm i
-        npm i -D @types/node@~${{ matrix.nodejs }}
+      run: npm i
       working-directory: ./examples
     - name: Build example
-      run: tsc example.ts
+      run: tsc example.ts --target es2015
       working-directory: ./examples
     - name: Run example
       run: node ./example.js
@@ -232,12 +230,10 @@ jobs:
     - name: Cleanup
       run: node ./scripts/cleanup.js
     - name: Install dependencies
-      run: |
-        npm i
-        npm i -D @types/node@~${{ matrix.nodejs }}
+      run: npm i
       working-directory: ./examples
     - name: Build example
-      run: tsc example.ts
+      run: tsc example.ts --target es2015
       working-directory: ./examples
     - name: Run example
       run: node ./example.js
