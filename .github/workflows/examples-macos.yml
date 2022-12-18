@@ -162,6 +162,9 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.nodejs }}
+    - name: Update npm (Node.js v4.0.0)
+      run: npm install -g npm@3.8.0
+      if: matrix.nodejs == '4.0.0'
     - name: Output versions
       run: |
         node -v
@@ -219,6 +222,9 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.nodejs }}
+    - name: Update npm (Node.js v4.0.0)
+      run: npm install -g npm@3.8.0
+      if: matrix.nodejs == '4.0.0'
     - name: Output versions
       run: |
         node -v
