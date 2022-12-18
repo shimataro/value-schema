@@ -196,8 +196,6 @@ jobs:
         - macos-11
         - macos-12
         nodejs:
-        - 16
-        nodejs-example:
         - "4.0.0"
         - "6.0.0"
         - "8.0.0"
@@ -217,6 +215,9 @@ jobs:
         - "4.7"
         - "4.8"
         - "4.9"
+        exclude:
+        - nodejs: "6.0.0" # TypeScript 4.0 on Node.js 6 causes error; https://github.com/microsoft/TypeScript/issues/40166
+          typescript: "4.0"
       fail-fast: false
     steps:
     - name: Checkout source codes
