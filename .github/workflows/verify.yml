@@ -7,22 +7,20 @@ on:
     tags-ignore:
     - "*"
 
+env:
+  NODEJS_BUILD: 16
+
 jobs:
   verify:
     name: Verify
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        nodejs:
-        - 16
-      fail-fast: false
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v3
-    - name: Install Node.js
+    - name: Install Node.js for build
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.nodejs }}
+        node-version: ${{ env.NODEJS_BUILD }}
     - name: Output versions
       run: |
         node -v

@@ -7,6 +7,9 @@ on:
     tags-ignore:
     - "*"
 
+env:
+  NODEJS_BUILD: 16
+
 jobs:
   cjs:
     name: CommonJS
@@ -33,7 +36,15 @@ jobs:
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v3
-    - name: Install Node.js
+    - name: Install Node.js for build
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODEJS_BUILD }}
+    - name: Build
+      run: |
+        npm run build
+        node ./scripts/cleanup.js
+    - name: Re-install Node.js
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.nodejs }}
@@ -44,8 +55,6 @@ jobs:
       run: |
         node -v
         npm -v
-    - name: Cleanup
-      run: node ./scripts/cleanup.js
     - name: Check syntax
       run: node ./dist/index.js
     - name: Install dependencies
@@ -81,7 +90,15 @@ jobs:
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v3
-    - name: Install Node.js
+    - name: Install Node.js for build
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODEJS_BUILD }}
+    - name: Build
+      run: |
+        npm run build
+        node ./scripts/cleanup.js
+    - name: Re-install Node.js
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.nodejs }}
@@ -89,8 +106,6 @@ jobs:
       run: |
         node -v
         npm -v
-    - name: Cleanup
-      run: node ./scripts/cleanup.js
     - name: Check syntax
       run: node --experimental-modules ./dist/index.mjs
     - name: Install dependencies
@@ -115,7 +130,15 @@ jobs:
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v3
-    - name: Install Node.js
+    - name: Install Node.js for build
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODEJS_BUILD }}
+    - name: Build
+      run: |
+        npm run build
+        node ./scripts/cleanup.js
+    - name: Re-install Node.js
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.nodejs }}
@@ -123,8 +146,6 @@ jobs:
       run: |
         node -v
         npm -v
-    - name: Cleanup
-      run: node ./scripts/cleanup.js
     - name: Check syntax (CJS)
       run: node --experimental-conditional-exports ./dist/index.js
     - name: Check syntax (ESM)
@@ -167,13 +188,21 @@ jobs:
         - "3.8"
         - "3.9"
         exclude:
-        - os: ubuntu-18.04 # glibc>=2.28 is required
+        - os: ubuntu-18.04 # Node.js>=18 requires glibc>=2.28
           nodejs: "18.0.0"
       fail-fast: false
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v3
-    - name: Install Node.js
+    - name: Install Node.js for build
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODEJS_BUILD }}
+    - name: Build
+      run: |
+        npm run build
+        node ./scripts/cleanup.js
+    - name: Re-install Node.js
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.nodejs }}
@@ -184,8 +213,6 @@ jobs:
       run: |
         node -v
         npm -v
-    - name: Cleanup
-      run: node ./scripts/cleanup.js
     - name: Install dependencies
       run: |
         npm i
@@ -238,7 +265,15 @@ jobs:
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v3
-    - name: Install Node.js
+    - name: Install Node.js for build
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODEJS_BUILD }}
+    - name: Build
+      run: |
+        npm run build
+        node ./scripts/cleanup.js
+    - name: Re-install Node.js
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.nodejs }}
@@ -249,8 +284,6 @@ jobs:
       run: |
         node -v
         npm -v
-    - name: Cleanup
-      run: node ./scripts/cleanup.js
     - name: Install dependencies
       run: |
         npm i
@@ -306,12 +339,22 @@ jobs:
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v3
+    - name: Install Node.js for build
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODEJS_BUILD }}
     - name: Install Deno
       uses: denoland/setup-deno@v1
       with:
         deno-version: ${{ matrix.deno }}
     - name: Output versions
-      run: deno --version
+      run: |
+        node -v
+        deno --version
+    - name: Build
+      run: |
+        npm run build
+        node ./scripts/cleanup.js
     - name: Check syntax
       run: deno run ./mod.ts
     - name: Run example
@@ -333,10 +376,20 @@ jobs:
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v3
+    - name: Install Node.js for build
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODEJS_BUILD }}
     - name: Install Bun
       run: curl -fsSL https://bun.sh/install | bash -s bun-v${{ matrix.bun }}
     - name: Output versions
-      run: ~/.bun/bin/bun --version
+      run: |
+        node -v
+        ~/.bun/bin/bun --version
+    - name: Build
+      run: |
+        npm run build
+        node ./scripts/cleanup.js
     - name: Check syntax
       run: ~/.bun/bin/bun run ./dist-deno/index.ts
     - name: Install dependencies (example)

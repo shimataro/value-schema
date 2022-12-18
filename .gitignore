@@ -17,6 +17,7 @@ Thumbs.db
 node_modules/
 
 # auto-generated files
+/dist/
 /coverage/
 
 # IDE files

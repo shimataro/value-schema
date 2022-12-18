@@ -5,6 +5,9 @@ on:
     types:
     - published
 
+env:
+  NODEJS_BUILD: 16
+
 jobs:
   publish:
     name: publish to npmjs.com
@@ -12,15 +15,17 @@ jobs:
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v3
-    - name: Install Node.js
+    - name: Install Node.js for build
       uses: actions/setup-node@v3
       with:
-        node-version: 12
+        node-version: ${{ env.NODEJS_BUILD }}
         registry-url: https://registry.npmjs.org/
     - name: Output versions
       run: |
         node -v
         npm -v
+    - name: Build
+      run: npm run build
     - name: Cleanup
       run: node ./scripts/cleanup.js
     - name: Publish package
