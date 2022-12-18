@@ -38,7 +38,7 @@ jobs:
         node-version: ${{ env.NODEJS_BUILD }}
     - name: Build
       run: |
-        npm i
+        npm ci
         npm run build
         node ./scripts/cleanup.js
     - name: Re-install Node.js
@@ -86,7 +86,7 @@ jobs:
         node-version: ${{ env.NODEJS_BUILD }}
     - name: Build
       run: |
-        npm i
+        npm ci
         npm run build
         node ./scripts/cleanup.js
     - name: Re-install Node.js
@@ -126,7 +126,7 @@ jobs:
         node-version: ${{ env.NODEJS_BUILD }}
     - name: Build
       run: |
-        npm i
+        npm ci
         npm run build
         node ./scripts/cleanup.js
     - name: Re-install Node.js
@@ -189,7 +189,7 @@ jobs:
         node-version: ${{ env.NODEJS_BUILD }}
     - name: Build
       run: |
-        npm i
+        npm ci
         npm run build
         node ./scripts/cleanup.js
     - name: Re-install Node.js
@@ -255,7 +255,7 @@ jobs:
         node-version: ${{ env.NODEJS_BUILD }}
     - name: Build
       run: |
-        npm i
+        npm ci
         npm run build
         node ./scripts/cleanup.js
     - name: Re-install Node.js
@@ -334,7 +334,7 @@ jobs:
         deno --version
     - name: Build
       run: |
-        npm i
+        npm ci
         npm run build
         node ./scripts/cleanup.js
     - name: Check syntax
