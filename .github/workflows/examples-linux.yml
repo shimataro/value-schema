@@ -180,20 +180,19 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Install TypeScript
-      run: npm i -g typescript@${{ matrix.typescript }}
     - name: Output versions
       run: |
         node -v
         npm -v
-        tsc -v
     - name: Cleanup
       run: node ./scripts/cleanup.js
     - name: Install dependencies
-      run: npm i
+      run: |
+        npm i
+        npm i -D typescript@${{ matrix.typescript }}
       working-directory: ./examples
     - name: Build example
-      run: tsc example.ts --target es2015
+      run: npm run build-ts
       working-directory: ./examples
     - name: Run example
       run: node ./example.js
@@ -239,20 +238,19 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.nodejs }}
-    - name: Install TypeScript
-      run: npm i -g typescript@${{ matrix.typescript }}
     - name: Output versions
       run: |
         node -v
         npm -v
-        tsc -v
     - name: Cleanup
       run: node ./scripts/cleanup.js
     - name: Install dependencies
-      run: npm i
+      run: |
+        npm i
+        npm i -D typescript@${{ matrix.typescript }}
       working-directory: ./examples
     - name: Build example
-      run: tsc example.ts --target es2015
+      run: npm run build-ts
       working-directory: ./examples
     - name: Run example
       run: node ./example.js
