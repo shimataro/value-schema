@@ -84,6 +84,9 @@ jobs:
       run: node ./scripts/cleanup.js
     - name: Check syntax
       run: node --experimental-modules ./dist/index.mjs
+    - name: Install dependencies
+      run: npm i --only=production
+      working-directory: ./examples
     - name: Run example
       run: node --experimental-modules ./example.mjs
       working-directory: ./examples
