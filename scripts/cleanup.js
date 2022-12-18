@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 modifyPackageJson();
-removeLock();
+removeExtraFiles();
 
 /**
  * remove dev elements from "package.json"
@@ -15,7 +15,7 @@ function modifyPackageJson()
 
 	const str = fs.readFileSync(fileName, {
 		encoding: encoding,
-		flag: "r"
+		flag: "r",
 	});
 
 	const data = JSON.parse(str);
@@ -24,23 +24,22 @@ function modifyPackageJson()
 
 	fs.writeFileSync(fileName, JSON.stringify(data, null, 2), {
 		encoding: encoding,
-		mode: 0o644
+		mode: 0o644,
 	});
 }
 
 /**
- * remove lock files
+ * remove extra files
  */
-function removeLock()
+function removeExtraFiles()
 {
-	const lockfiles = ["npm-shrinkwrap.json", "package-lock.json"];
+	const lockfiles = ["npm-shrinkwrap.json", "package-lock.json", "node_modules"];
 	for(const lockfile of lockfiles)
 	{
 		const fileName = path.resolve(__dirname, "..", lockfile);
-		if(!fs.existsSync(fileName))
-		{
-			continue;
-		}
-		fs.unlinkSync(fileName);
+		fs.rmSync(fileName, {
+			recursive: true,
+			force: true,
+		});
 	}
 }
