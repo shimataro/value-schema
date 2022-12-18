@@ -137,8 +137,6 @@ jobs:
       run: |
         node -v
         npm -v
-    - name: Cleanup
-      run: node ./scripts/cleanup.js
     - name: Check syntax (CJS)
       run: node --experimental-conditional-exports ./dist/index.js
     - name: Check syntax (ESM)
