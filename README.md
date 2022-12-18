@@ -3,7 +3,6 @@
 [![Build Status (Windows)][image-build-windows]][link-build-windows]
 [![Build Status (macOS)][image-build-macos]][link-build-macos]
 [![Build Status (Linux)][image-build-linux]][link-build-linux]
-[![Examples][image-examples]][link-examples]
 [![Code Coverage][image-code-coverage]][link-code-coverage]
 [![Release][image-release]][link-release]
 [![Node.js version][image-engine]][link-engine]
@@ -227,8 +226,6 @@ See [CHANGELOG.md](CHANGELOG.md).
 [link-build-macos]: https://github.com/shimataro/value-schema/actions?query=workflow%3AmacOS
 [image-build-linux]: https://github.com/shimataro/value-schema/workflows/Linux/badge.svg?event=push&branch=v4
 [link-build-linux]: https://github.com/shimataro/value-schema/actions?query=workflow%3ALinux
-[image-examples]: https://github.com/shimataro/value-schema/workflows/Examples/badge.svg?event=push&branch=v4
-[link-examples]: https://github.com/shimataro/value-schema/actions?query=workflow%3AExamples
 [image-code-coverage]: https://img.shields.io/codecov/c/github/shimataro/value-schema/v4.svg
 [link-code-coverage]: https://codecov.io/gh/shimataro/value-schema
 [image-release]: https://img.shields.io/github/release/shimataro/value-schema.svg
