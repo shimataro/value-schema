@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 modifyPackageJson();
-removeExtraFiles();
+removeModuleFiles();
 
 /**
  * remove dev elements from "package.json"
@@ -29,14 +29,14 @@ function modifyPackageJson()
 }
 
 /**
- * remove extra files
+ * remove module files
  */
-function removeExtraFiles()
+function removeModuleFiles()
 {
-	const lockfiles = ["npm-shrinkwrap.json", "package-lock.json", "node_modules"];
-	for(const lockfile of lockfiles)
+	const moduleFiles = ["npm-shrinkwrap.json", "package-lock.json", "node_modules"];
+	for(const moduleFile of moduleFiles)
 	{
-		const fileName = path.resolve(__dirname, "..", lockfile);
+		const fileName = path.resolve(__dirname, "..", moduleFile);
 		fs.rmSync(fileName, {
 			recursive: true,
 			force: true,
