@@ -40,7 +40,7 @@ jobs:
     - name: Get npm cache directory
       # https://github.com/actions/cache/blob/master/examples.md#node---npm
       # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
-      run: echo "npm_cache=$(npm config get cache)" >> $GITHUB_ENV
+      run: echo "npm_cache=$(npm config get cache)" >> ${{ github.env }}
     - name: Cache node modules
       uses: actions/cache@v3
       with:
