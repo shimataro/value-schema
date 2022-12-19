@@ -43,8 +43,6 @@ jobs:
       run: npm run build
     - name: Cleanup
       run: node ./scripts/cleanup.js
-    - name: Check syntax
-      run: node --experimental-modules ./dist/index.mjs
 
     # Setup for run
     - name: Re-install Node.js

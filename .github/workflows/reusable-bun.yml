@@ -49,8 +49,6 @@ jobs:
       run: npm run build
     - name: Cleanup
       run: node ./scripts/cleanup.js
-    - name: Check syntax
-      run: ~/.bun/bin/bun run ./dist-deno/index.ts
 
     # Setup for run
     - name: Install dependencies (example)

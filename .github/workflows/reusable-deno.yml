@@ -53,8 +53,6 @@ jobs:
       run: node ./scripts/cleanup.js
 
     # Run
-    - name: Check syntax
-      run: deno run ./mod.ts
     - name: Run example
       run: deno run ./example-deno.ts
       working-directory: ./examples
