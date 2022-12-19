@@ -52,7 +52,7 @@ jobs:
     - name: Re-install Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ input.nodejs }}
+        node-version: ${{ inputs.nodejs }}
     - name: Output versions
       run: |
         node -v
