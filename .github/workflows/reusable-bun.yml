@@ -1,0 +1,55 @@
+# reusable workflow: Bun
+# https://docs.github.com/en/actions/using-workflows/reusing-workflows
+on:
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+        description: "'runs-on'"
+      bun:
+        required: true
+        type: string
+        description: "Bun version"
+
+env:
+  NODEJS_BUILD: 16
+
+jobs:
+  typescript:
+    name: Bun
+    runs-on: ${{ inputs.os }}
+    steps:
+    # Setup
+    - name: Checkout source codes
+      uses: actions/checkout@v3
+    - name: Install Node.js for build
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODEJS_BUILD }}
+    - name: Install Bun
+      run: curl -fsSL https://bun.sh/install | bash -s bun-v${{ inputs.bun }}
+    - name: Output versions
+      run: |
+        node -v
+        ~/.bun/bin/bun --version
+
+    # Build
+    - name: Install dependencies
+      run: npm ci
+    - name: Build
+      run: npm run build
+    - name: Cleanup
+      run: node ./scripts/cleanup.js
+    - name: Check syntax
+      run: ~/.bun/bin/bun run ./dist-deno/index.ts
+
+    # Setup for run
+    - name: Install dependencies (example)
+      run: ~/.bun/bin/bun i
+      working-directory: ./examples
+
+    # Run
+    - name: Run example
+      run: ~/.bun/bin/bun run ./example-bun.ts
+      working-directory: ./examples

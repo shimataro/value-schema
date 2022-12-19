@@ -13,7 +13,6 @@ env:
 jobs:
   cjs:
     name: CommonJS
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
@@ -33,44 +32,13 @@ jobs:
         - os: ubuntu-18.04 # Node.js>=18 requires glibc>=2.28
           nodejs: "18.0.0"
       fail-fast: false
-    steps:
-    - name: Checkout source codes
-      uses: actions/checkout@v3
-    - name: Install Node.js for build
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ env.NODEJS_BUILD }}
-    - name: Build
-      run: |
-        npm ci
-        npm run build
-        node ./scripts/cleanup.js
-    - name: Re-install Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.nodejs }}
-    - name: Update npm (Node.js v4.0.0)
-      run: npm install -g npm@3.8.0
-      if: matrix.nodejs == '4.0.0'
-    - name: Output versions
-      run: |
-        node -v
-        npm -v
-    - name: Check syntax
-      run: node ./dist/index.js
-    - name: Install dependencies
-      run: npm i --only=production
-      working-directory: ./examples
-    - name: Run example
-      run: node ./example.js
-      working-directory: ./examples
-    - name: Run example (TypeScript/Babel compatible)
-      run: node ./example-default.js
-      working-directory: ./examples
+    uses: "./.github/workflows/reusable-cjs.yml"
+    with:
+      os: ${{ matrix.os }}
+      nodejs: ${{ matrix.nodejs }}
 
   esm:
     name: ES Modules
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
@@ -88,38 +56,13 @@ jobs:
         - os: ubuntu-18.04 # Node.js>=18 requires glibc>=2.28
           nodejs: "18.0.0"
       fail-fast: false
-    steps:
-    - name: Checkout source codes
-      uses: actions/checkout@v3
-    - name: Install Node.js for build
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ env.NODEJS_BUILD }}
-    - name: Build
-      run: |
-        npm ci
-        npm run build
-        node ./scripts/cleanup.js
-    - name: Re-install Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.nodejs }}
-    - name: Output versions
-      run: |
-        node -v
-        npm -v
-    - name: Check syntax
-      run: node --experimental-modules ./dist/index.mjs
-    - name: Install dependencies
-      run: npm i --only=production
-      working-directory: ./examples
-    - name: Run example
-      run: node --experimental-modules ./example.mjs
-      working-directory: ./examples
+    uses: "./.github/workflows/reusable-esm.yml"
+    with:
+      os: ${{ matrix.os }}
+      nodejs: ${{ matrix.nodejs }}
 
   conditional-exports:
     name: Conditional Exports
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
@@ -129,46 +72,13 @@ jobs:
         nodejs:
         - "13.2.0" # always loads CommonJS
       fail-fast: false
-    steps:
-    - name: Checkout source codes
-      uses: actions/checkout@v3
-    - name: Install Node.js for build
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ env.NODEJS_BUILD }}
-    - name: Build
-      run: |
-        npm ci
-        npm run build
-        node ./scripts/cleanup.js
-    - name: Re-install Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.nodejs }}
-    - name: Output versions
-      run: |
-        node -v
-        npm -v
-    - name: Check syntax (CJS)
-      run: node --experimental-conditional-exports ./dist/index.js
-    - name: Check syntax (ESM)
-      run: node --experimental-conditional-exports ./dist/index.mjs
-    - name: Install dependencies
-      run: npm i --only=production
-      working-directory: ./examples
-    - name: Run example (CJS)
-      run: node --experimental-conditional-exports ./example.js
-      working-directory: ./examples
-    - name: Run example (CJS; TypeScript/Babel compatible)
-      run: node --experimental-conditional-exports ./example-default.js
-      working-directory: ./examples
-    - name: Run example (ESM)
-      run: node --experimental-conditional-exports ./example.mjs
-      working-directory: ./examples
+    uses: "./.github/workflows/reusable-conditional-exports.yml"
+    with:
+      os: ${{ matrix.os }}
+      nodejs: ${{ matrix.nodejs }}
 
   typescript-3:
     name: TypeScript 3.x
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
@@ -194,44 +104,14 @@ jobs:
         - os: ubuntu-18.04 # Node.js>=18 requires glibc>=2.28
           nodejs: "18.0.0"
       fail-fast: false
-    steps:
-    - name: Checkout source codes
-      uses: actions/checkout@v3
-    - name: Install Node.js for build
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ env.NODEJS_BUILD }}
-    - name: Build
-      run: |
-        npm ci
-        npm run build
-        node ./scripts/cleanup.js
-    - name: Re-install Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.nodejs }}
-    - name: Update npm (Node.js v4.0.0)
-      run: npm install -g npm@3.8.0
-      if: matrix.nodejs == '4.0.0'
-    - name: Output versions
-      run: |
-        node -v
-        npm -v
-    - name: Install dependencies
-      run: |
-        npm i
-        npm i -D typescript@${{ matrix.typescript }}
-      working-directory: ./examples
-    - name: Build example
-      run: npm run build-ts
-      working-directory: ./examples
-    - name: Run example
-      run: node ./example.js
-      working-directory: ./examples
+    uses: "./.github/workflows/reusable-typescript.yml"
+    with:
+      os: ${{ matrix.os }}
+      nodejs: ${{ matrix.nodejs }}
+      typescript: ${{ matrix.typescript }}
 
   typescript-4:
     name: TypeScript 4.x
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
@@ -266,44 +146,14 @@ jobs:
         - nodejs: "6.0.0"
           typescript: "4.0"
       fail-fast: false
-    steps:
-    - name: Checkout source codes
-      uses: actions/checkout@v3
-    - name: Install Node.js for build
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ env.NODEJS_BUILD }}
-    - name: Build
-      run: |
-        npm ci
-        npm run build
-        node ./scripts/cleanup.js
-    - name: Re-install Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.nodejs }}
-    - name: Update npm (Node.js v4.0.0)
-      run: npm install -g npm@3.8.0
-      if: matrix.nodejs == '4.0.0'
-    - name: Output versions
-      run: |
-        node -v
-        npm -v
-    - name: Install dependencies
-      run: |
-        npm i
-        npm i -D typescript@${{ matrix.typescript }}
-      working-directory: ./examples
-    - name: Build example
-      run: npm run build-ts
-      working-directory: ./examples
-    - name: Run example
-      run: node ./example.js
-      working-directory: ./examples
+    uses: "./.github/workflows/reusable-typescript.yml"
+    with:
+      os: ${{ matrix.os }}
+      nodejs: ${{ matrix.nodejs }}
+      typescript: ${{ matrix.typescript }}
 
   deno:
     name: Deno
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
@@ -341,35 +191,13 @@ jobs:
         - "1.27.0"
         - "1.28.0"
       fail-fast: false
-    steps:
-    - name: Checkout source codes
-      uses: actions/checkout@v3
-    - name: Install Node.js for build
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ env.NODEJS_BUILD }}
-    - name: Install Deno
-      uses: denoland/setup-deno@v1
-      with:
-        deno-version: ${{ matrix.deno }}
-    - name: Output versions
-      run: |
-        node -v
-        deno --version
-    - name: Build
-      run: |
-        npm ci
-        npm run build
-        node ./scripts/cleanup.js
-    - name: Check syntax
-      run: deno run ./mod.ts
-    - name: Run example
-      run: deno run ./example-deno.ts
-      working-directory: ./examples
+    uses: "./.github/workflows/reusable-deno.yml"
+    with:
+      os: ${{ matrix.os }}
+      deno: ${{ matrix.deno }}
 
   bun:
     name: Bun
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
@@ -379,29 +207,7 @@ jobs:
         bun:
         - "0.3.0"
       fail-fast: false
-    steps:
-    - name: Checkout source codes
-      uses: actions/checkout@v3
-    - name: Install Node.js for build
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ env.NODEJS_BUILD }}
-    - name: Install Bun
-      run: curl -fsSL https://bun.sh/install | bash -s bun-v${{ matrix.bun }}
-    - name: Output versions
-      run: |
-        node -v
-        ~/.bun/bin/bun --version
-    - name: Build
-      run: |
-        npm ci
-        npm run build
-        node ./scripts/cleanup.js
-    - name: Check syntax
-      run: ~/.bun/bin/bun run ./dist-deno/index.ts
-    - name: Install dependencies (example)
-      run: ~/.bun/bin/bun i
-      working-directory: ./examples
-    - name: Run example
-      run: ~/.bun/bin/bun run ./example-bun.ts
-      working-directory: ./examples
+    uses: "./.github/workflows/reusable-bun.yml"
+    with:
+      os: ${{ matrix.os }}
+      bun: ${{ matrix.bun }}
