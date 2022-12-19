@@ -59,7 +59,7 @@ jobs:
         node-version: ${{ inputs.nodejs }}
     - name: Update npm (Node.js v4.0.0)
       run: npm install -g npm@3.8.0
-      if: ${{ inputs.nodejs == '4.0.0' && !startsWith(inputs.os, 'windows-')}}
+      if: ${{ inputs.nodejs == '4.0.0' && runner.os != 'Windows'}}
     - name: Output versions
       run: |
         node -v
