@@ -50,7 +50,7 @@ jobs:
     - name: Build
       run: npm run build
     - name: Cleanup
-      run: node ./scripts/cleanup.js
+      run: npm run clear-modules
 
     # Build example
     - name: Re-install Node.js
