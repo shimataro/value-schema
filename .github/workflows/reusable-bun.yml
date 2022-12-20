@@ -6,11 +6,11 @@ on:
       os:
         required: true
         type: string
-        description: "'runs-on'"
+        description: host OS that CI 'runs-on'
       bun:
         required: true
         type: string
-        description: "Bun version"
+        description: Bun version
 
 env:
   NODEJS_BUILD: 16

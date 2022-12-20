@@ -6,15 +6,15 @@ on:
       os:
         required: true
         type: string
-        description: "'runs-on'"
+        description: host OS that CI 'runs-on'
       nodejs:
         required: true
         type: string
-        description: "Node.js version"
+        description: Node.js version
       typescript:
         required: true
         type: string
-        description: "TypeScript version"
+        description: TypeScript version
 
 env:
   NODEJS_BUILD: 16

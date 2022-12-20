@@ -6,11 +6,11 @@ on:
       os:
         required: true
         type: string
-        description: "'runs-on'"
+        description: host OS that CI 'runs-on'
       deno:
         required: true
         type: string
-        description: "Deno version"
+        description: Deno version
 
 env:
   NODEJS_BUILD: 16
