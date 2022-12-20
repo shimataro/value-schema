@@ -33,7 +33,7 @@ function modifyPackageJson()
  */
 function removeModuleFiles()
 {
-	const moduleFiles = ["npm-shrinkwrap.json", "package-lock.json", "node_modules"];
+	const moduleFiles = ["package-lock.json", "npm-shrinkwrap.json", "yarn.lock", "node_modules"];
 	for(const moduleFile of moduleFiles)
 	{
 		const fileName = path.resolve(__dirname, "..", moduleFile);

@@ -45,7 +45,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ${{ env.npm_cache }}
-        key: npm-${{ inputs.os }}-${{ env.NODEJS_BUILD }}-${{ hashFiles('npm-shrinkwrap.json') }}
+        key: npm-${{ inputs.os }}-${{ env.NODEJS_BUILD }}-${{ hashFiles('package-lock.json') }}
         restore-keys: |
           npm-${{ inputs.os }}-${{ env.NODEJS_BUILD }}-
           npm-${{ inputs.os }}-
