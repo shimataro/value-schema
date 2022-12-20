@@ -6,15 +6,15 @@ on:
       os:
         required: true
         type: string
-        description: "'runs-on'"
+        description: host OS that CI 'runs-on'
       nodejs:
         required: true
         type: string
-        description: "Node.js version"
+        description: Node.js version
       typescript:
         required: true
         type: string
-        description: "TypeScript version"
+        description: TypeScript version
 
 env:
   NODEJS_BUILD: 16
@@ -41,7 +41,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ${{ env.npm_cache }}
-        key: npm-${{ inputs.os }}-${{ env.NODEJS_BUILD }}-${{ hashFiles('npm-shrinkwrap.json') }}
+        key: npm-${{ inputs.os }}-${{ env.NODEJS_BUILD }}-${{ hashFiles('package-lock.json') }}
         restore-keys: |
           npm-${{ inputs.os }}-${{ env.NODEJS_BUILD }}-
           npm-${{ inputs.os }}-
@@ -50,7 +50,7 @@ jobs:
     - name: Build
       run: npm run build
     - name: Cleanup
-      run: node ./scripts/cleanup.js
+      run: npm run clear-modules
 
     # Build example
     - name: Re-install Node.js
