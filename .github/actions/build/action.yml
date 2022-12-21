@@ -6,7 +6,7 @@ inputs:
   os:
     description: host OS that CI 'runs-on'
     required: true
-  nodejs:
+  node-version:
     description: Node.js version for build
     required: false
     default: "16"
@@ -21,21 +21,21 @@ runs:
     - name: Install Node.js for build
       uses: ./.github/actions/nodejs
       with:
-        nodejs: ${{ inputs.nodejs }}
+        node-version: ${{ inputs.node-version }}
 
     # Install dependencies (using cache)
     # https://github.com/actions/cache/blob/master/examples.md#node---npm
     # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
     - name: Get npm cache directory
       run: echo "npm_cache=$(npm config get cache)" >> ${{ github.env }}
-      shell: pwsh # use PowerShell; the format of "github.env" on Windows is like "D:\a\_temp\_runner_file_commands\set_env_XXX", and bash can't write to it.
+      shell: pwsh # use PowerShell; Bash doesn't work on Windows because the value of "github.env" is like "D:\a\_temp\_runner_file_commands\set_env_XXX".
     - name: Cache node modules
       uses: actions/cache@v3
       with:
         path: ${{ env.npm_cache }}
-        key: npm-${{ inputs.os }}-${{ inputs.nodejs }}-${{ hashFiles('package-lock.json') }}
+        key: npm-${{ inputs.os }}-${{ inputs.node-version }}-${{ hashFiles('package-lock.json') }}
         restore-keys: |
-          npm-${{ inputs.os }}-${{ inputs.nodejs }}-
+          npm-${{ inputs.os }}-${{ inputs.node-version }}-
           npm-${{ inputs.os }}-
     - name: Install dependencies
       run: npm ci

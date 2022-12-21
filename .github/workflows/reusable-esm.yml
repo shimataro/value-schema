@@ -8,7 +8,7 @@ on:
         required: true
         type: string
         description: host OS that CI 'runs-on'
-      nodejs:
+      node-version:
         required: true
         type: string
         description: Node.js version
@@ -31,7 +31,7 @@ jobs:
     - name: Install Node.js for example
       uses: ./.github/actions/nodejs
       with:
-        nodejs: ${{ inputs.nodejs }}
+        node-version: ${{ inputs.node-version }}
     - name: Install dependencies
       run: npm i --only=production
       working-directory: ./examples

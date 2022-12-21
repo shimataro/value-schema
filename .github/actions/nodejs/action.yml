@@ -3,7 +3,7 @@ name: Setup Node.js
 description: Composite action (Setup Node.js)
 
 inputs:
-  nodejs:
+  node-version:
     description: Node.js version
     required: true
   registry-url:
@@ -17,12 +17,12 @@ runs:
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ inputs.nodejs }}
+        node-version: ${{ inputs.node-version }}
         registry-url: ${{ inputs.registry-url }}
     - name: Update npm (Node.js v4.0.0)
       run: npm install -g npm@3.8.0
       shell: bash
-      if: ${{ inputs.nodejs == '4.0.0' && runner.os != 'Windows'}}
+      if: ${{ inputs.node-version == '4.0.0' && runner.os != 'Windows'}}
     - name: Output versions
       run: |
         node -v

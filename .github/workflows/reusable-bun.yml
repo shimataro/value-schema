@@ -14,7 +14,7 @@ on:
         description: Bun version
 
 jobs:
-  typescript:
+  bun:
     name: Bun
     runs-on: ${{ inputs.os }}
     steps:
@@ -23,14 +23,14 @@ jobs:
 
     # Setup
     - name: Install Bun
-      run: curl -fsSL https://bun.sh/install | bash -s bun-v${{ inputs.bun }}
-    - name: Output versions
-      run: ~/.bun/bin/bun --version
+      uses: ./.github/actions/bun
+      with:
+        bun-version: ${{ inputs.bun }}
     - name: Install dependencies (example)
-      run: ~/.bun/bin/bun i
+      run: bun i
       working-directory: ./examples
 
     # Run
     - name: Run example
-      run: ~/.bun/bin/bun run ./example-bun.ts
+      run: bun run ./example-bun.ts
       working-directory: ./examples

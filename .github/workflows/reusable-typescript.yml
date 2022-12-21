@@ -8,11 +8,11 @@ on:
         required: true
         type: string
         description: host OS that CI 'runs-on'
-      nodejs:
+      node-version:
         required: true
         type: string
         description: Node.js version
-      typescript:
+      typescript-version:
         required: true
         type: string
         description: TypeScript version
@@ -35,11 +35,11 @@ jobs:
     - name: Install Node.js for example
       uses: ./.github/actions/nodejs
       with:
-        nodejs: ${{ inputs.nodejs }}
+        node-version: ${{ inputs.node-version }}
     - name: Install dependencies
       run: |
         npm i
-        npm i -D typescript@${{ inputs.typescript }}
+        npm i -D typescript@${{ inputs.typescript-version }}
       working-directory: ./examples
 
     # Run example

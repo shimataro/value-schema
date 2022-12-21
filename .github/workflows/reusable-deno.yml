@@ -8,13 +8,13 @@ on:
         required: true
         type: string
         description: host OS that CI 'runs-on'
-      deno:
+      deno-version:
         required: true
         type: string
         description: Deno version
 
 jobs:
-  typescript:
+  deno:
     name: Deno
     runs-on: ${{ inputs.os }}
     steps:
@@ -25,7 +25,7 @@ jobs:
     - name: Install Deno
       uses: denoland/setup-deno@v1
       with:
-        deno-version: ${{ inputs.deno }}
+        deno-version: ${{ inputs.deno-version }}
     - name: Output versions
       run: deno --version
 
