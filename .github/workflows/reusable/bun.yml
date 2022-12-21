@@ -19,9 +19,9 @@ jobs:
     runs-on: ${{ inputs.os }}
     steps:
     - name: Build
-      uses: ./.github/workflows/composite/build.yml
+      uses: ./.github/actions/build
       with:
-        os: ${{ input.os }}
+        os: ${{ inputs.os }}
 
     # Setup
     - name: Install Bun

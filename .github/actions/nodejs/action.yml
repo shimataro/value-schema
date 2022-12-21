@@ -1,0 +1,30 @@
+# https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+name: Setup Node.js
+description: Composite action (Setup Node.js)
+
+inputs:
+  nodejs:
+    description: Node.js version
+    required: true
+  registry-url:
+    description: Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN.
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.nodejs }}
+        registry-url: ${{ inputs.registry-url }}
+    - name: Update npm (Node.js v4.0.0)
+      run: npm install -g npm@3.8.0
+      shell: bash
+      if: ${{ inputs.nodejs == '4.0.0' && runner.os != 'Windows'}}
+    - name: Output versions
+      run: |
+        node -v
+        npm -v
+      shell: bash

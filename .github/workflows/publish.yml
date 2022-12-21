@@ -6,15 +6,18 @@ on:
     types:
     - published
 
+env:
+  os: ubuntu-latest
+
 jobs:
   publish:
     name: publish to npmjs.com
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.os }}
     steps:
     - name: Build
       uses: ./.github/actions/build
       with:
-        os: ${{ input.os }}
+        os: ${{ env.os }}
         registry-url: https://registry.npmjs.org/
 
     # Publish

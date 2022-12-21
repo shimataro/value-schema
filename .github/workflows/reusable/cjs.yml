@@ -19,23 +19,16 @@ jobs:
     runs-on: ${{ inputs.os }}
     steps:
     - name: Build
-      uses: ./.github/workflows/composite/build.yml
+      uses: ./.github/actions/build
       with:
-        os: ${{ input.os }}
-        post_build_command: npm run clear-modules
+        os: ${{ inputs.os }}
+    - name: Clear modules
+      run: npm run clear-modules
 
-    # Setup
-    - name: Re-install Node.js
-      uses: actions/setup-node@v3
+    - name: Install Node.js for example
+      uses: ./.github/actions/nodejs
       with:
-        node-version: ${{ inputs.nodejs }}
-    - name: Update npm (Node.js v4.0.0)
-      run: npm install -g npm@3.8.0
-      if: ${{ inputs.nodejs == '4.0.0' && runner.os != 'Windows'}}
-    - name: Output versions
-      run: |
-        node -v
-        npm -v
+        nodejs: ${{ inputs.nodejs }}
     - name: Install dependencies
       run: npm i --only=production
       working-directory: ./examples

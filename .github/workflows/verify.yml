@@ -8,15 +8,18 @@ on:
     tags-ignore:
     - "*"
 
+env:
+  os: ubuntu-latest
+
 jobs:
   verify:
     name: Verify
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.os }}
     steps:
     - name: Build
       uses: ./.github/actions/build
       with:
-        os: ${{ input.os }}
+        os: ${{ env.os }}
 
     # Verify
     - name: Verify

@@ -21,7 +21,7 @@ jobs:
     - name: Build
       uses: ./.github/actions/build
       with:
-        os: ${{ input.os }}
+        os: ${{ inputs.os }}
 
     # Setup
     - name: Install Deno
