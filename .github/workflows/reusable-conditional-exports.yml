@@ -18,6 +18,9 @@ jobs:
     name: Conditional Exports
     runs-on: ${{ inputs.os }}
     steps:
+    - name: Checkout source codes
+      uses: actions/checkout@v3
+
     - name: Build
       uses: ./.github/actions/build
       with:
