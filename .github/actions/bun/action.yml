@@ -10,9 +10,17 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Cache Bun
+      id: cache-bun
+      uses: actions/cache@v3
+      with:
+        path: ~/.bun
+        key: bun-${{ runner.os }}-${{ inputs.bun-version }}
     - name: Install Bun
       run: curl -fsSL https://bun.sh/install | bash -s bun-v${{ inputs.bun-version }}
       shell: bash
+      if: ${{ steps.cache-bun.outputs.cache-hit != 'true' }}
+
     - name: Add path
       run: echo "~/.bun/bin" >> ${{ github.path }}
       shell: bash
