@@ -45,6 +45,3 @@ runs:
     - name: Build
       run: npm run build
       shell: bash
-    - name: Cleanup
-      run: npm run clear-modules
-      shell: bash
