@@ -29,11 +29,11 @@ runs:
     - name: Get npm cache directory (macOS / Linux)
       run: echo "npm_cache=$(npm config get cache)" >> ${{ github.env }}
       shell: bash
-      if: ${{ runner.os != "Windows" }}
+      if: ${{ runner.os != 'Windows' }}
     - name: Get npm cache directory (Windows)
       run: echo "npm_cache=$(npm config get cache)" >> ${{ github.env }}
       shell: pwsh # use PowerShell on Windows because "github.env" path is Windows format; like "D:\a\_temp\_runner_file_commands\set_env_XXX"
-      if: ${{ runner.os == "Windows" }}
+      if: ${{ runner.os == 'Windows' }}
     - name: Cache node modules
       uses: actions/cache@v3
       with:
