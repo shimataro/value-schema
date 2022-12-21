@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * `vs.date()` accepts under milliseconds
 
+### Others
+
+* support Bun 0.1.11
+
 ## [4.0.0-rc.2] - 2022-12-11
 
 ### Added

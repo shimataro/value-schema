@@ -191,6 +191,8 @@ jobs:
         - macos-11
         - macos-12
         bun:
+        - "0.1.11"
+        - "0.2.0"
         - "0.3.0"
       fail-fast: false
     uses: "./.github/workflows/reusable-bun.yml"
