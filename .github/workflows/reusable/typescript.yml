@@ -1,5 +1,6 @@
-# reusable workflow: TypeScript
 # https://docs.github.com/en/actions/using-workflows/reusing-workflows
+name: Reusable workflow (TypeScript)
+
 on:
   workflow_call:
     inputs:

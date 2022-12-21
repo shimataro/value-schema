@@ -1,5 +1,6 @@
-# reusable workflow: Conditional Exports
 # https://docs.github.com/en/actions/using-workflows/reusing-workflows
+name: Reusable workflow (CommonJS)
+
 on:
   workflow_call:
     inputs:
@@ -16,8 +17,8 @@ env:
   NODEJS_BUILD: 16
 
 jobs:
-  conditoinal-exports:
-    name: Conditional Exports
+  cjs:
+    name: CommonJS
     runs-on: ${{ inputs.os }}
     steps:
     # Setup
@@ -53,6 +54,9 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ inputs.nodejs }}
+    - name: Update npm (Node.js v4.0.0)
+      run: npm install -g npm@3.8.0
+      if: ${{ inputs.nodejs == '4.0.0' && runner.os != 'Windows'}}
     - name: Output versions
       run: |
         node -v
@@ -62,12 +66,9 @@ jobs:
       working-directory: ./examples
 
     # Run
-    - name: Run example (CJS)
-      run: node --experimental-conditional-exports ./example.js
+    - name: Run example
+      run: node ./example.js
       working-directory: ./examples
-    - name: Run example (CJS; TypeScript/Babel compatible)
-      run: node --experimental-conditional-exports ./example-default.js
-      working-directory: ./examples
-    - name: Run example (ESM)
-      run: node --experimental-conditional-exports ./example.mjs
+    - name: Run example (TypeScript/Babel compatible)
+      run: node ./example-default.js
       working-directory: ./examples

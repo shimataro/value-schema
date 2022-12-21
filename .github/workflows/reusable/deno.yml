@@ -1,5 +1,6 @@
-# reusable workflow: CommonJS
 # https://docs.github.com/en/actions/using-workflows/reusing-workflows
+name: Reusable workflow (Deno)
+
 on:
   workflow_call:
     inputs:
@@ -7,17 +8,17 @@ on:
         required: true
         type: string
         description: host OS that CI 'runs-on'
-      nodejs:
+      deno:
         required: true
         type: string
-        description: Node.js version
+        description: Deno version
 
 env:
   NODEJS_BUILD: 16
 
 jobs:
-  cjs:
-    name: CommonJS
+  typescript:
+    name: Deno
     runs-on: ${{ inputs.os }}
     steps:
     # Setup
@@ -27,6 +28,14 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ env.NODEJS_BUILD }}
+    - name: Install Deno
+      uses: denoland/setup-deno@v1
+      with:
+        deno-version: ${{ inputs.deno }}
+    - name: Output versions
+      run: |
+        node -v
+        deno --version
 
     # Build
     - name: Get npm cache directory
@@ -48,26 +57,7 @@ jobs:
     - name: Cleanup
       run: npm run clear-modules
 
-    # Setup for run
-    - name: Re-install Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ inputs.nodejs }}
-    - name: Update npm (Node.js v4.0.0)
-      run: npm install -g npm@3.8.0
-      if: ${{ inputs.nodejs == '4.0.0' && runner.os != 'Windows'}}
-    - name: Output versions
-      run: |
-        node -v
-        npm -v
-    - name: Install dependencies
-      run: npm i --only=production
-      working-directory: ./examples
-
     # Run
     - name: Run example
-      run: node ./example.js
-      working-directory: ./examples
-    - name: Run example (TypeScript/Babel compatible)
-      run: node ./example-default.js
+      run: deno run ./example-deno.ts
       working-directory: ./examples

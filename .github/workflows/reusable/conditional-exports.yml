@@ -1,5 +1,6 @@
-# reusable workflow: ES Modules
 # https://docs.github.com/en/actions/using-workflows/reusing-workflows
+name: Reusable workflow (Conditional Exports)
+
 on:
   workflow_call:
     inputs:
@@ -16,8 +17,8 @@ env:
   NODEJS_BUILD: 16
 
 jobs:
-  esm:
-    name: ES Modules
+  conditoinal-exports:
+    name: Conditional Exports
     runs-on: ${{ inputs.os }}
     steps:
     # Setup
@@ -62,6 +63,12 @@ jobs:
       working-directory: ./examples
 
     # Run
-    - name: Run example
-      run: node --experimental-modules ./example.mjs
+    - name: Run example (CJS)
+      run: node --experimental-conditional-exports ./example.js
+      working-directory: ./examples
+    - name: Run example (CJS; TypeScript/Babel compatible)
+      run: node --experimental-conditional-exports ./example-default.js
+      working-directory: ./examples
+    - name: Run example (ESM)
+      run: node --experimental-conditional-exports ./example.mjs
       working-directory: ./examples

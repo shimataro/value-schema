@@ -1,5 +1,6 @@
-# reusable workflow: Deno
 # https://docs.github.com/en/actions/using-workflows/reusing-workflows
+name: Reusable workflow (ES Modules)
+
 on:
   workflow_call:
     inputs:
@@ -7,17 +8,17 @@ on:
         required: true
         type: string
         description: host OS that CI 'runs-on'
-      deno:
+      nodejs:
         required: true
         type: string
-        description: Deno version
+        description: Node.js version
 
 env:
   NODEJS_BUILD: 16
 
 jobs:
-  typescript:
-    name: Deno
+  esm:
+    name: ES Modules
     runs-on: ${{ inputs.os }}
     steps:
     # Setup
@@ -27,14 +28,6 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ env.NODEJS_BUILD }}
-    - name: Install Deno
-      uses: denoland/setup-deno@v1
-      with:
-        deno-version: ${{ inputs.deno }}
-    - name: Output versions
-      run: |
-        node -v
-        deno --version
 
     # Build
     - name: Get npm cache directory
@@ -56,7 +49,20 @@ jobs:
     - name: Cleanup
       run: npm run clear-modules
 
+    # Setup for run
+    - name: Re-install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.nodejs }}
+    - name: Output versions
+      run: |
+        node -v
+        npm -v
+    - name: Install dependencies
+      run: npm i --only=production
+      working-directory: ./examples
+
     # Run
     - name: Run example
-      run: deno run ./example-deno.ts
+      run: node --experimental-modules ./example.mjs
       working-directory: ./examples

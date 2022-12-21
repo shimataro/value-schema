@@ -1,5 +1,6 @@
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions
 name: Windows
+
 on:
   push:
     branches:
@@ -25,7 +26,7 @@ jobs:
         - "16.0.0"
         - "18.0.0"
       fail-fast: false
-    uses: "./.github/workflows/reusable-cjs.yml"
+    uses: "./.github/workflows/reusable/cjs.yml"
     with:
       os: ${{ matrix.os }}
       nodejs: ${{ matrix.nodejs }}
@@ -45,7 +46,7 @@ jobs:
         - "16.0.0"
         - "18.0.0"
       fail-fast: false
-    uses: "./.github/workflows/reusable-esm.yml"
+    uses: "./.github/workflows/reusable/esm.yml"
     with:
       os: ${{ matrix.os }}
       nodejs: ${{ matrix.nodejs }}
@@ -60,7 +61,7 @@ jobs:
         nodejs:
         - "13.2.0" # always loads CommonJS
       fail-fast: false
-    uses: "./.github/workflows/reusable-conditional-exports.yml"
+    uses: "./.github/workflows/reusable/conditional-exports.yml"
     with:
       os: ${{ matrix.os }}
       nodejs: ${{ matrix.nodejs }}
@@ -88,7 +89,7 @@ jobs:
         - "3.8"
         - "3.9"
       fail-fast: false
-    uses: "./.github/workflows/reusable-typescript.yml"
+    uses: "./.github/workflows/reusable/typescript.yml"
     with:
       os: ${{ matrix.os }}
       nodejs: ${{ matrix.nodejs }}
@@ -127,7 +128,7 @@ jobs:
         - nodejs: "6.0.0"
           typescript: "4.0"
       fail-fast: false
-    uses: "./.github/workflows/reusable-typescript.yml"
+    uses: "./.github/workflows/reusable/typescript.yml"
     with:
       os: ${{ matrix.os }}
       nodejs: ${{ matrix.nodejs }}
@@ -171,7 +172,7 @@ jobs:
         - "1.27.0"
         - "1.28.0"
       fail-fast: false
-    uses: "./.github/workflows/reusable-deno.yml"
+    uses: "./.github/workflows/reusable/deno.yml"
     with:
       os: ${{ matrix.os }}
       deno: ${{ matrix.deno }}
