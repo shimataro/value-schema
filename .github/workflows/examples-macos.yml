@@ -8,9 +8,6 @@ on:
     tags-ignore:
     - "*"
 
-env:
-  NODEJS_BUILD: 16
-
 jobs:
   cjs:
     name: CommonJS
