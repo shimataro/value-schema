@@ -26,9 +26,14 @@ runs:
     # Install dependencies (using cache)
     # https://github.com/actions/cache/blob/master/examples.md#node---npm
     # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
-    - name: Get npm cache directory
+    - name: Get npm cache directory (macOS / Linux)
       run: echo "npm_cache=$(npm config get cache)" >> ${{ github.env }}
       shell: bash
+      if: ${{ runner.os != "Windows" }}
+    - name: Get npm cache directory (Windows)
+      run: echo "npm_cache=$(npm config get cache)" >> ${{ github.env }}
+      shell: pwsh # use PowerShell on Windows because "github.env" path is Windows format; like "D:\a\_temp\_runner_file_commands\set_env_XXX"
+      if: ${{ runner.os == "Windows" }}
     - name: Cache node modules
       uses: actions/cache@v3
       with:
@@ -37,7 +42,6 @@ runs:
         restore-keys: |
           npm-${{ inputs.os }}-${{ inputs.nodejs }}-
           npm-${{ inputs.os }}-
-      shell: bash
     - name: Install dependencies
       run: npm ci
       shell: bash
