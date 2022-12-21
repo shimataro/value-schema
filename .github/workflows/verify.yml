@@ -9,17 +9,17 @@ on:
     - "*"
 
 env:
-  os: ubuntu-latest
+  RUNS_ON: ubuntu-latest
 
 jobs:
   verify:
     name: Verify
-    runs-on: ${{ env.os }}
+    runs-on: ${{ env.RUNS_ON }}
     steps:
     - name: Build
       uses: ./.github/actions/build
       with:
-        os: ${{ env.os }}
+        os: ${{ env.RUNS_ON }}
 
     # Verify
     - name: Verify
