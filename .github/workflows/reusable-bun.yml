@@ -1,5 +1,6 @@
-# reusable workflow: Bun
 # https://docs.github.com/en/actions/using-workflows/reusing-workflows
+name: Reusable workflow (Bun)
+
 on:
   workflow_call:
     inputs:
@@ -12,54 +13,24 @@ on:
         type: string
         description: Bun version
 
-env:
-  NODEJS_BUILD: 16
-
 jobs:
-  typescript:
+  bun:
     name: Bun
     runs-on: ${{ inputs.os }}
     steps:
-    # Setup
     - name: Checkout source codes
       uses: actions/checkout@v3
-    - name: Install Node.js for build
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ env.NODEJS_BUILD }}
+
+    # Setup
     - name: Install Bun
-      run: curl -fsSL https://bun.sh/install | bash -s bun-v${{ inputs.bun }}
-    - name: Output versions
-      run: |
-        node -v
-        ~/.bun/bin/bun --version
-
-    # Build
-    - name: Get npm cache directory
-      # https://github.com/actions/cache/blob/master/examples.md#node---npm
-      # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
-      run: echo "npm_cache=$(npm config get cache)" >> ${{ github.env }}
-    - name: Cache node modules
-      uses: actions/cache@v3
+      uses: ./.github/actions/bun
       with:
-        path: ${{ env.npm_cache }}
-        key: npm-${{ inputs.os }}-${{ env.NODEJS_BUILD }}-${{ hashFiles('package-lock.json') }}
-        restore-keys: |
-          npm-${{ inputs.os }}-${{ env.NODEJS_BUILD }}-
-          npm-${{ inputs.os }}-
-    - name: Install dependencies
-      run: npm ci
-    - name: Build
-      run: npm run build
-    - name: Cleanup
-      run: npm run clear-modules
-
-    # Setup for run
+        bun-version: ${{ inputs.bun }}
     - name: Install dependencies (example)
-      run: ~/.bun/bin/bun i
+      run: bun i
       working-directory: ./examples
 
     # Run
     - name: Run example
-      run: ~/.bun/bin/bun run ./example-bun.ts
+      run: bun run ./example-bun.ts
       working-directory: ./examples

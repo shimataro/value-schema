@@ -1,5 +1,6 @@
-# reusable workflow: Deno
 # https://docs.github.com/en/actions/using-workflows/reusing-workflows
+name: Reusable workflow (Deno)
+
 on:
   workflow_call:
     inputs:
@@ -7,54 +8,26 @@ on:
         required: true
         type: string
         description: host OS that CI 'runs-on'
-      deno:
+      deno-version:
         required: true
         type: string
         description: Deno version
 
-env:
-  NODEJS_BUILD: 16
-
 jobs:
-  typescript:
+  deno:
     name: Deno
     runs-on: ${{ inputs.os }}
     steps:
-    # Setup
     - name: Checkout source codes
       uses: actions/checkout@v3
-    - name: Install Node.js for build
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ env.NODEJS_BUILD }}
+
+    # Setup
     - name: Install Deno
       uses: denoland/setup-deno@v1
       with:
-        deno-version: ${{ inputs.deno }}
+        deno-version: ${{ inputs.deno-version }}
     - name: Output versions
-      run: |
-        node -v
-        deno --version
-
-    # Build
-    - name: Get npm cache directory
-      # https://github.com/actions/cache/blob/master/examples.md#node---npm
-      # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
-      run: echo "npm_cache=$(npm config get cache)" >> ${{ github.env }}
-    - name: Cache node modules
-      uses: actions/cache@v3
-      with:
-        path: ${{ env.npm_cache }}
-        key: npm-${{ inputs.os }}-${{ env.NODEJS_BUILD }}-${{ hashFiles('package-lock.json') }}
-        restore-keys: |
-          npm-${{ inputs.os }}-${{ env.NODEJS_BUILD }}-
-          npm-${{ inputs.os }}-
-    - name: Install dependencies
-      run: npm ci
-    - name: Build
-      run: npm run build
-    - name: Cleanup
-      run: npm run clear-modules
+      run: deno --version
 
     # Run
     - name: Run example

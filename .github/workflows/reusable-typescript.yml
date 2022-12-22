@@ -1,5 +1,6 @@
-# reusable workflow: TypeScript
 # https://docs.github.com/en/actions/using-workflows/reusing-workflows
+name: Reusable workflow (TypeScript)
+
 on:
   workflow_call:
     inputs:
@@ -7,73 +8,44 @@ on:
         required: true
         type: string
         description: host OS that CI 'runs-on'
-      nodejs:
+      node-version:
         required: true
         type: string
         description: Node.js version
-      typescript:
+      typescript-version:
         required: true
         type: string
         description: TypeScript version
-
-env:
-  NODEJS_BUILD: 16
 
 jobs:
   typescript:
     name: TypeScript
     runs-on: ${{ inputs.os }}
     steps:
-    # Setup
     - name: Checkout source codes
       uses: actions/checkout@v3
-    - name: Install Node.js for build
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ env.NODEJS_BUILD }}
 
-    # Build
-    - name: Get npm cache directory
-      # https://github.com/actions/cache/blob/master/examples.md#node---npm
-      # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
-      run: echo "npm_cache=$(npm config get cache)" >> ${{ github.env }}
-    - name: Cache node modules
-      uses: actions/cache@v3
-      with:
-        path: ${{ env.npm_cache }}
-        key: npm-${{ inputs.os }}-${{ env.NODEJS_BUILD }}-${{ hashFiles('package-lock.json') }}
-        restore-keys: |
-          npm-${{ inputs.os }}-${{ env.NODEJS_BUILD }}-
-          npm-${{ inputs.os }}-
-    - name: Install dependencies
-      run: npm ci
     - name: Build
-      run: npm run build
-    - name: Cleanup
+      uses: ./.github/actions/build
+      with:
+        os: ${{ inputs.os }}
+    - name: Clear modules
       run: npm run clear-modules
 
-    # Build example
-    - name: Re-install Node.js
-      uses: actions/setup-node@v3
+    - name: Install Node.js for example
+      uses: ./.github/actions/nodejs
       with:
-        node-version: ${{ inputs.nodejs }}
-    - name: Update npm (Node.js v4.0.0)
-      run: npm install -g npm@3.8.0
-      if: ${{ inputs.nodejs == '4.0.0' && runner.os != 'Windows'}}
-    - name: Output versions
-      run: |
-        node -v
-        npm -v
+        node-version: ${{ inputs.node-version }}
     - name: Install dependencies
       run: |
         npm i
-        npm i -D typescript@${{ inputs.typescript }}
+        npm i -D typescript@${{ inputs.typescript-version }}
       working-directory: ./examples
+
+    # Run example
     - name: Build example
       run: npm run build-ts
       working-directory: ./examples
-
-    # Run
     - name: Run example
       run: node ./example.js
       working-directory: ./examples

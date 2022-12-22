@@ -1,5 +1,6 @@
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions
 name: Windows
+
 on:
   push:
     branches:
@@ -28,7 +29,7 @@ jobs:
     uses: "./.github/workflows/reusable-cjs.yml"
     with:
       os: ${{ matrix.os }}
-      nodejs: ${{ matrix.nodejs }}
+      node-version: ${{ matrix.nodejs }}
 
   esm:
     name: ES Modules
@@ -48,7 +49,7 @@ jobs:
     uses: "./.github/workflows/reusable-esm.yml"
     with:
       os: ${{ matrix.os }}
-      nodejs: ${{ matrix.nodejs }}
+      node-version: ${{ matrix.nodejs }}
 
   conditional-exports:
     name: Conditional Exports
@@ -63,7 +64,7 @@ jobs:
     uses: "./.github/workflows/reusable-conditional-exports.yml"
     with:
       os: ${{ matrix.os }}
-      nodejs: ${{ matrix.nodejs }}
+      node-version: ${{ matrix.nodejs }}
 
   typescript-3:
     name: TypeScript 3.x
@@ -91,8 +92,8 @@ jobs:
     uses: "./.github/workflows/reusable-typescript.yml"
     with:
       os: ${{ matrix.os }}
-      nodejs: ${{ matrix.nodejs }}
-      typescript: ${{ matrix.typescript }}
+      node-version: ${{ matrix.nodejs }}
+      typescript-version: ${{ matrix.typescript }}
 
   typescript-4:
     name: TypeScript 4.x
@@ -130,8 +131,8 @@ jobs:
     uses: "./.github/workflows/reusable-typescript.yml"
     with:
       os: ${{ matrix.os }}
-      nodejs: ${{ matrix.nodejs }}
-      typescript: ${{ matrix.typescript }}
+      node-version: ${{ matrix.nodejs }}
+      typescript-version: ${{ matrix.typescript }}
 
   deno:
     name: Deno
@@ -174,4 +175,4 @@ jobs:
     uses: "./.github/workflows/reusable-deno.yml"
     with:
       os: ${{ matrix.os }}
-      deno: ${{ matrix.deno }}
+      deno-version: ${{ matrix.deno }}
