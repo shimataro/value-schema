@@ -30,7 +30,7 @@ jobs:
       with:
         os: ${{ inputs.os }}
     - name: Prune modules for build
-      run: npm ci --only=production
+      run: npm ci --omit=dev
 
     - name: Install Node.js for example
       uses: ./.github/actions/nodejs
