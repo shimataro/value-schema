@@ -19,15 +19,15 @@ runs:
   using: composite
   steps:
     - name: Install Node.js (for building package)
-      uses: ./.github/actions/nodejs
+      uses: ./.github/actions/setup-node
       with:
         node-version: ${{ inputs.node-version }}
 
     - name: Cache NPM
       uses: ./.github/actions/cache-npm
       with:
-        node-version: ${{ inputs.node-version }}
         os: ${{ inputs.os }}
+        node-version: ${{ inputs.node-version }}
 
     - id: cache-dist
       name: Cache dist
