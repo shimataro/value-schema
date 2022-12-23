@@ -11,6 +11,7 @@ on:
 jobs:
   cjs:
     name: CommonJS
+    needs: conditional-exports # in order to cache dist
     strategy:
       matrix:
         os:
@@ -34,6 +35,7 @@ jobs:
 
   esm:
     name: ES Modules
+    needs: conditional-exports # in order to cache dist
     strategy:
       matrix:
         os:
@@ -71,6 +73,7 @@ jobs:
 
   typescript-3:
     name: TypeScript 3.x
+    needs: conditional-exports # in order to cache dist
     strategy:
       matrix:
         os:
@@ -101,6 +104,7 @@ jobs:
 
   typescript-4:
     name: TypeScript 4.x
+    needs: conditional-exports # in order to cache dist
     strategy:
       matrix:
         os:
