@@ -20,7 +20,7 @@ runs:
         node-version: ${{ inputs.node-version }}
         registry-url: ${{ inputs.registry-url }}
     - name: Update npm (Node.js v4.0.0)
-      run: npm install -g npm@3.8.0
+      run: npm i -g npm@3.8.0
       shell: bash
       if: ${{ inputs.node-version == '4.0.0' && runner.os != 'Windows'}}
     - name: Output versions
