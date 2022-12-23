@@ -25,18 +25,18 @@ jobs:
     - name: Checkout source codes
       uses: actions/checkout@v3
 
-    - name: Build
+    - name: Build package
       uses: ./.github/actions/build
       with:
         os: ${{ inputs.os }}
-    - name: Prune modules for build
+    - name: Prune modules
       run: npm ci --omit=dev
 
-    - name: Install Node.js for example
+    - name: Install Node.js (for building/running example)
       uses: ./.github/actions/nodejs
       with:
         node-version: ${{ inputs.node-version }}
-    - name: Install dependencies
+    - name: Install dependencies (for building/running example)
       run: |
         npm i
         npm i -D typescript@${{ inputs.typescript-version }}

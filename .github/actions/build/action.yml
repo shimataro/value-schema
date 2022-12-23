@@ -1,13 +1,13 @@
 # https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
-name: Build
-description: Composite action (Build)
+name: Build package
+description: Composite action (build package)
 
 inputs:
   os:
     description: host OS that CI 'runs-on'
     required: true
   node-version:
-    description: Node.js version for build
+    description: Node.js version for building example
     required: false
     default: "16"
   registry-url:
@@ -18,7 +18,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Install Node.js for build
+    - name: Install Node.js (for building package)
       uses: ./.github/actions/nodejs
       with:
         node-version: ${{ inputs.node-version }}
@@ -37,11 +37,11 @@ runs:
         restore-keys: |
           npm-${{ inputs.os }}-${{ inputs.node-version }}-
           npm-${{ inputs.os }}-
-    - name: Install dependencies
+    - name: Install dependencies (for building package)
       run: npm ci
       shell: bash
 
-    # Build
-    - name: Build
+    # Build package
+    - name: Build package
       run: npm run build
       shell: bash

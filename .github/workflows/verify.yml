@@ -16,12 +16,11 @@ jobs:
     - name: Checkout source codes
       uses: actions/checkout@v3
 
-    - name: Build
+    - name: Build package
       uses: ./.github/actions/build
       with:
         os: ubuntu-latest
 
-    # Verify
     - name: Verify
       run: npm run verify
     - name: Report code coverage
