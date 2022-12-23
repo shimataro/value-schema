@@ -25,8 +25,8 @@ jobs:
       uses: ./.github/actions/build
       with:
         os: ${{ inputs.os }}
-    - name: Clear modules
-      run: npm run clear-modules
+    - name: Prune modules for build
+      run: npm ci --only=production
 
     - name: Install Node.js for example
       uses: ./.github/actions/nodejs
