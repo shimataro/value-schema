@@ -23,6 +23,13 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
 
+    - id: cache-dist
+      name: Cache dist
+      uses: actions/cache@v3
+      with:
+        path: ${{ github.workspace }}/dist
+        key: dist-${{ inputs.os }}-${{ inputs.node-version }}-${{ github.sha }}
+
     # Install dependencies (using cache)
     # https://github.com/actions/cache/blob/master/examples.md#node---npm
     # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
@@ -40,8 +47,10 @@ runs:
     - name: Install dependencies (for building package)
       run: npm ci
       shell: bash
+      if: ${{ steps.cache-dist.outputs.cache-hit != 'true' }}
 
     # Build package
     - name: Build package
       run: npm run build
       shell: bash
+      if: ${{ steps.cache-dist.outputs.cache-hit != 'true' }}

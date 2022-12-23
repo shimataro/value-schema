@@ -9,7 +9,7 @@ on:
 jobs:
   publish:
     name: publish to npmjs.com
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v3
@@ -17,7 +17,7 @@ jobs:
     - name: Build package
       uses: ./.github/actions/build
       with:
-        os: ubuntu-latest
+        os: ubuntu-22.04
         registry-url: https://registry.npmjs.org/
 
     - name: Publish package
