@@ -1,0 +1,29 @@
+# https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+name: Cache NPM
+description: Composite action (cache NPM)
+
+inputs:
+  os:
+    description: host OS that CI 'runs-on'
+    required: true
+  node-version:
+    description: Node.js version
+    required: true
+
+runs:
+  using: composite
+  steps:
+    # https://github.com/actions/cache/blob/master/examples.md#node---npm
+    # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
+    - name: Get NPM cache directory
+      run: echo "npm_cache=$(npm config get cache)" >> ${{ github.env }}
+      shell: pwsh # use PowerShell; Bash doesn't work on Windows because the value of "github.env" is like "D:\a\_temp\_runner_file_commands\set_env_XXX".
+
+    - name: Cache NPM modules
+      uses: actions/cache@v3
+      with:
+        path: ${{ env.npm_cache }}
+        key: npm-${{ inputs.os }}-${{ inputs.node-version }}-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          npm-${{ inputs.os }}-${{ inputs.node-version }}-
+          npm-${{ inputs.os }}-
