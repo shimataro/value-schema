@@ -15,7 +15,7 @@ runs:
       uses: actions/cache@v3
       with:
         path: ~/.bun
-        key: bun-${{ runner.os }}-${{ runner.arch }}-${{ inputs.bun-version }}
+        key: Bun-${{ inputs.bun-version }}-${{ runner.os }}-${{ runner.arch }}
     - name: Install Bun
       run: curl -fsSL https://bun.sh/install | bash -s bun-v${{ inputs.bun-version }}
       shell: bash
