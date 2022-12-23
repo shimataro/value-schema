@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Build package
-      uses: ./.github/actions/build
+      uses: ./.github/actions/build-package
       with:
         os: ubuntu-22.04
 
