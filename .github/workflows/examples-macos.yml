@@ -9,9 +9,25 @@ on:
     - "*"
 
 jobs:
+  conditional-exports:
+    name: Conditional Exports
+    strategy:
+      matrix:
+        os:
+        - macos-10.15
+        - macos-11
+        - macos-12
+        nodejs:
+        - "13.2.0" # always loads CommonJS
+      fail-fast: false
+    uses: "./.github/workflows/reusable-conditional-exports.yml"
+    with:
+      os: ${{ matrix.os }}
+      node-version: ${{ matrix.nodejs }}
+
   cjs:
     name: CommonJS
-    needs: conditional-exports # in order to cache dist
+    needs: conditional-exports # wait for caching dist
     strategy:
       matrix:
         os:
@@ -35,7 +51,7 @@ jobs:
 
   esm:
     name: ES Modules
-    needs: conditional-exports # in order to cache dist
+    needs: cjs # wait for caching NPM
     strategy:
       matrix:
         os:
@@ -55,25 +71,9 @@ jobs:
       os: ${{ matrix.os }}
       node-version: ${{ matrix.nodejs }}
 
-  conditional-exports:
-    name: Conditional Exports
-    strategy:
-      matrix:
-        os:
-        - macos-10.15
-        - macos-11
-        - macos-12
-        nodejs:
-        - "13.2.0" # always loads CommonJS
-      fail-fast: false
-    uses: "./.github/workflows/reusable-conditional-exports.yml"
-    with:
-      os: ${{ matrix.os }}
-      node-version: ${{ matrix.nodejs }}
-
   typescript-3:
     name: TypeScript 3.x
-    needs: conditional-exports # in order to cache dist
+    needs: cjs # wait for caching NPM
     strategy:
       matrix:
         os:
@@ -104,7 +104,7 @@ jobs:
 
   typescript-4:
     name: TypeScript 4.x
-    needs: conditional-exports # in order to cache dist
+    needs: cjs # wait for caching NPM
     strategy:
       matrix:
         os:
