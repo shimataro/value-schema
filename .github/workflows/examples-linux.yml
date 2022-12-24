@@ -211,6 +211,7 @@ jobs:
         - "0.1.11"
         - "0.2.0"
         - "0.3.0"
+        - "0.4.0"
         exclude:
         - os: ubuntu-18.04 # Bun<=0.2 requires glibc>=2.29
           bun: "0.1.11"

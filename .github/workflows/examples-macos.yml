@@ -199,6 +199,7 @@ jobs:
         - "0.1.11"
         - "0.2.0"
         - "0.3.0"
+        - "0.4.0"
       fail-fast: false
     uses: "./.github/workflows/reusable-bun.yml"
     with:

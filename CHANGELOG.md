@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Others
 
-* support Bun 0.1.11, 0.2.0
+* support Bun 0.1.11, 0.2.0, 0.4.0
 * support Deno 1.29
 
 ## [4.0.0-rc.2] - 2022-12-11
