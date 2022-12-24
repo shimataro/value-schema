@@ -9,8 +9,25 @@ on:
     - "*"
 
 jobs:
+  conditional-exports:
+    name: Conditional Exports
+    strategy:
+      matrix:
+        os:
+        - ubuntu-18.04
+        - ubuntu-20.04
+        - ubuntu-22.04
+        nodejs:
+        - "13.2.0" # always loads CommonJS
+      fail-fast: false
+    uses: "./.github/workflows/reusable-conditional-exports.yml"
+    with:
+      os: ${{ matrix.os }}
+      node-version: ${{ matrix.nodejs }}
+
   cjs:
     name: CommonJS
+    needs: conditional-exports # wait for caching dist
     strategy:
       matrix:
         os:
@@ -37,6 +54,7 @@ jobs:
 
   esm:
     name: ES Modules
+    needs: cjs # wait for caching NPM
     strategy:
       matrix:
         os:
@@ -59,24 +77,9 @@ jobs:
       os: ${{ matrix.os }}
       node-version: ${{ matrix.nodejs }}
 
-  conditional-exports:
-    name: Conditional Exports
-    strategy:
-      matrix:
-        os:
-        - ubuntu-18.04
-        - ubuntu-20.04
-        - ubuntu-22.04
-        nodejs:
-        - "13.2.0" # always loads CommonJS
-      fail-fast: false
-    uses: "./.github/workflows/reusable-conditional-exports.yml"
-    with:
-      os: ${{ matrix.os }}
-      node-version: ${{ matrix.nodejs }}
-
   typescript-3:
     name: TypeScript 3.x
+    needs: cjs # wait for caching NPM
     strategy:
       matrix:
         os:
@@ -110,6 +113,7 @@ jobs:
 
   typescript-4:
     name: TypeScript 4.x
+    needs: cjs # wait for caching NPM
     strategy:
       matrix:
         os:
@@ -188,6 +192,7 @@ jobs:
         - "1.26.0"
         - "1.27.0"
         - "1.28.0"
+        - "1.29.0"
       fail-fast: false
     uses: "./.github/workflows/reusable-deno.yml"
     with:
@@ -206,6 +211,7 @@ jobs:
         - "0.1.11"
         - "0.2.0"
         - "0.3.0"
+        - "0.4.0"
         exclude:
         - os: ubuntu-18.04 # Bun<=0.2 requires glibc>=2.29
           bun: "0.1.11"

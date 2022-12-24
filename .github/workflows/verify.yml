@@ -11,17 +11,19 @@ on:
 jobs:
   verify:
     name: Verify
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - name: Checkout source codes
       uses: actions/checkout@v3
 
-    - name: Build
-      uses: ./.github/actions/build
+    - name: Build package
+      uses: ./.github/actions/build-package
       with:
-        os: ubuntu-latest
+        os: ubuntu-22.04
 
-    # Verify
+    - name: Install dependencies (for verification)
+      run: npm ci
+
     - name: Verify
       run: npm run verify
     - name: Report code coverage

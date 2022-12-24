@@ -21,19 +21,19 @@ jobs:
     - name: Checkout source codes
       uses: actions/checkout@v3
 
-    - name: Build
-      uses: ./.github/actions/build
+    - name: Build package
+      uses: ./.github/actions/build-package
       with:
         os: ${{ inputs.os }}
-    - name: Clear modules
-      run: npm run clear-modules
+    - name: Prune modules
+      run: npm ci --omit=dev
 
-    - name: Install Node.js for example
-      uses: ./.github/actions/nodejs
+    - name: Install Node.js (for running example)
+      uses: ./.github/actions/setup-node
       with:
         node-version: ${{ inputs.node-version }}
-    - name: Install dependencies
-      run: npm i --only=production
+    - name: Install dependencies (for running example)
+      run: npm i --omit=dev
       working-directory: ./examples
 
     # Run
