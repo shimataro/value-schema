@@ -14,15 +14,16 @@ runs:
   using: composite
   steps:
     # https://github.com/actions/cache/blob/master/examples.md#node---npm
-    # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
-    - name: Get NPM cache directory
-      run: echo "npm_cache=$(npm config get cache)" >> ${{ github.env }}
+    # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
+    - id: npm-cache-directory
+      name: Get NPM cache directory
+      run: echo "npm-cache-directory=$(npm config get cache)" >> ${{ github.output }}
       shell: pwsh # use PowerShell; Bash doesn't work on Windows because the value of "github.env" is like "D:\a\_temp\_runner_file_commands\set_env_XXX".
 
     - name: Cache NPM modules
       uses: actions/cache@v3
       with:
-        path: ${{ env.npm_cache }}
+        path: ${{ steps.npm-cache-directory.outputs.npm-cache-directory }}
         key: npm-${{ inputs.os }}-${{ inputs.node-version }}-${{ hashFiles('package-lock.json') }}
         restore-keys: |
           npm-${{ inputs.os }}-${{ inputs.node-version }}-
