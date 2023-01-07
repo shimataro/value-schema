@@ -1,0 +1,47 @@
+# https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+name: Build package
+description: Composite action (build package)
+
+inputs:
+  os:
+    description: host OS that CI 'runs-on'
+    required: true
+  node-version:
+    description: Node.js version for building package
+    required: false
+    default: "16"
+  registry-url:
+    description: Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN.
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Install Node.js (for building package)
+      uses: ./.github/actions/setup-node
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Cache NPM
+      uses: ./.github/actions/cache-npm
+      with:
+        os: ${{ inputs.os }}
+        node-version: ${{ inputs.node-version }}
+
+    - id: cache-dist
+      name: Cache dist
+      uses: actions/cache@v3
+      with:
+        path: ${{ github.workspace }}/dist
+        key: dist-${{ inputs.os }}-${{ inputs.node-version }}-${{ github.sha }}
+
+    - name: Install dependencies (for building package)
+      run: npm ci
+      shell: bash
+      if: ${{ steps.cache-dist.outputs.cache-hit != 'true' }}
+
+    - name: Build package
+      run: npm run build
+      shell: bash
+      if: ${{ steps.cache-dist.outputs.cache-hit != 'true' }}

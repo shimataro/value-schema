@@ -1,0 +1,36 @@
+# https://docs.github.com/en/actions/using-workflows/reusing-workflows
+name: Reusable workflow (Bun)
+
+on:
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+        description: host OS that CI 'runs-on'
+      bun:
+        required: true
+        type: string
+        description: Bun version
+
+jobs:
+  bun:
+    name: Bun
+    runs-on: ${{ inputs.os }}
+    steps:
+    - name: Checkout source codes
+      uses: actions/checkout@v3
+
+    # Setup
+    - name: Install Bun
+      uses: ./.github/actions/setup-bun
+      with:
+        bun-version: ${{ inputs.bun }}
+    - name: Install dependencies (for running example)
+      run: bun i --omit=dev
+      working-directory: ./examples
+
+    # Run
+    - name: Run example
+      run: bun run ./example-bun.ts
+      working-directory: ./examples

@@ -1,0 +1,48 @@
+# https://docs.github.com/en/actions/using-workflows/reusing-workflows
+name: Reusable workflow (Conditional Exports)
+
+on:
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+        description: host OS that CI 'runs-on'
+      node-version:
+        required: true
+        type: string
+        description: Node.js version
+
+jobs:
+  conditoinal-exports:
+    name: Conditional Exports
+    runs-on: ${{ inputs.os }}
+    steps:
+    - name: Checkout source codes
+      uses: actions/checkout@v3
+
+    - name: Build package
+      uses: ./.github/actions/build-package
+      with:
+        os: ${{ inputs.os }}
+    - name: Prune modules
+      run: npm ci --omit=dev
+
+    - name: Install Node.js (for running example)
+      uses: ./.github/actions/setup-node
+      with:
+        node-version: ${{ inputs.node-version }}
+    - name: Install dependencies (for running example)
+      run: npm i --omit=dev
+      working-directory: ./examples
+
+    # Run
+    - name: Run example (CJS)
+      run: node --experimental-conditional-exports ./example.js
+      working-directory: ./examples
+    - name: Run example (CJS; TypeScript/Babel compatible)
+      run: node --experimental-conditional-exports ./example-default.js
+      working-directory: ./examples
+    - name: Run example (ESM)
+      run: node --experimental-conditional-exports ./example.mjs
+      working-directory: ./examples

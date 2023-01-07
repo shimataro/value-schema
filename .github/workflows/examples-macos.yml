@@ -1,0 +1,198 @@
+# https://help.github.com/en/articles/workflow-syntax-for-github-actions
+name: macOS
+
+on:
+  push:
+    branches:
+    - "**"
+    tags-ignore:
+    - "*"
+
+jobs:
+  conditional-exports:
+    name: Conditional Exports
+    strategy:
+      matrix:
+        os:
+        - macos-10.15
+        - macos-11
+        - macos-12
+        nodejs:
+        - "13.2.0" # always loads CommonJS
+      fail-fast: false
+    uses: "./.github/workflows/reusable-conditional-exports.yml"
+    with:
+      os: ${{ matrix.os }}
+      node-version: ${{ matrix.nodejs }}
+
+  cjs:
+    name: CommonJS
+    needs: conditional-exports # wait for caching dist
+    strategy:
+      matrix:
+        os:
+        - macos-10.15
+        - macos-11
+        - macos-12
+        nodejs:
+        - "4.0.0"
+        - "6.0.0"
+        - "8.0.0"
+        - "10.0.0"
+        - "12.0.0"
+        - "14.0.0"
+        - "16.0.0"
+        - "18.0.0"
+      fail-fast: false
+    uses: "./.github/workflows/reusable-cjs.yml"
+    with:
+      os: ${{ matrix.os }}
+      node-version: ${{ matrix.nodejs }}
+
+  esm:
+    name: ES Modules
+    needs: cjs # wait for caching NPM
+    strategy:
+      matrix:
+        os:
+        - macos-10.15
+        - macos-11
+        - macos-12
+        nodejs:
+        - "8.5.0"
+        - "10.0.0"
+        - "12.0.0"
+        - "14.0.0"
+        - "16.0.0"
+        - "18.0.0"
+      fail-fast: false
+    uses: "./.github/workflows/reusable-esm.yml"
+    with:
+      os: ${{ matrix.os }}
+      node-version: ${{ matrix.nodejs }}
+
+  typescript-3:
+    name: TypeScript 3.x
+    needs: cjs # wait for caching NPM
+    strategy:
+      matrix:
+        os:
+        - macos-10.15
+        - macos-11
+        - macos-12
+        nodejs:
+        - "4.0.0"
+        - "6.0.0"
+        - "8.0.0"
+        - "10.0.0"
+        - "12.0.0"
+        - "14.0.0"
+        - "16.0.0"
+        - "18.0.0"
+        typescript:
+        - "3.4.1"
+        - "3.5"
+        - "3.6"
+        - "3.7"
+        - "3.8"
+        - "3.9"
+      fail-fast: false
+    uses: "./.github/workflows/reusable-typescript.yml"
+    with:
+      os: ${{ matrix.os }}
+      node-version: ${{ matrix.nodejs }}
+      typescript-version: ${{ matrix.typescript }}
+
+  typescript-4:
+    name: TypeScript 4.x
+    needs: cjs # wait for caching NPM
+    strategy:
+      matrix:
+        os:
+        - macos-10.15
+        - macos-11
+        - macos-12
+        nodejs:
+        - "4.0.0"
+        - "6.0.0"
+        - "8.0.0"
+        - "10.0.0"
+        - "12.0.0"
+        - "14.0.0"
+        - "16.0.0"
+        - "18.0.0"
+        typescript:
+        - "4.0"
+        - "4.1"
+        - "4.2"
+        - "4.3"
+        - "4.4"
+        - "4.5"
+        - "4.6"
+        - "4.7"
+        - "4.8"
+        - "4.9"
+        exclude:
+        - nodejs: "4.0.0" # TypeScript 4.0 on Node.js <=6 causes error; https://github.com/microsoft/TypeScript/issues/40166
+          typescript: "4.0"
+        - nodejs: "6.0.0"
+          typescript: "4.0"
+      fail-fast: false
+    uses: "./.github/workflows/reusable-typescript.yml"
+    with:
+      os: ${{ matrix.os }}
+      node-version: ${{ matrix.nodejs }}
+      typescript-version: ${{ matrix.typescript }}
+
+  deno:
+    name: Deno
+    strategy:
+      matrix:
+        os:
+        - macos-10.15
+        - macos-11
+        - macos-12
+        deno:
+        - "1.0.0"
+        - "1.1.0"
+        - "1.2.0"
+        - "1.3.0"
+        - "1.4.0"
+        - "1.5.0"
+        - "1.6.0"
+        - "1.7.0"
+        - "1.8.0"
+        - "1.9.0"
+        - "1.10.1"
+        - "1.11.0"
+        - "1.12.0"
+        - "1.13.0"
+        - "1.14.0"
+        - "1.15.0"
+        - "1.16.0"
+        - "1.17.0"
+        - "1.18.0"
+        - "1.19.0"
+      fail-fast: false
+    uses: "./.github/workflows/reusable-deno.yml"
+    with:
+      os: ${{ matrix.os }}
+      deno-version: ${{ matrix.deno }}
+
+  bun:
+    name: Bun
+    strategy:
+      matrix:
+        os:
+        - macos-11
+        - macos-12
+        bun:
+        - "0.1.11"
+        - "0.2.0"
+        - "0.3.0"
+        - "0.4.0"
+      fail-fast: false
+    uses: "./.github/workflows/reusable-bun.yml"
+    with:
+      os: ${{ matrix.os }}
+      bun: ${{ matrix.bun }}

@@ -1,15 +1,13 @@
-/.github/
+# dotfiles
+.*
+
+# files for build
 /coverage/
 /examples/
 /node_modules/
 /scripts/
 /src/
 /test/
-.babelrc
-.editorconfig
-.eslintrc.yml
-.gitignore
-.markdownlint.yml
 jest.config.json
 tsconfig.*
 
@@ -29,9 +27,4 @@ Thumbs.db
 *.rej
 
 # IDE files
-/.idea/
-/*.iml
-/nbproject/
-/.project
-/.vscode/
 *.code-workspace

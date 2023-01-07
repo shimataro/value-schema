@@ -1,4 +1,4 @@
-import * as assert from "assert";
+import * as assert from "bun:assert";
 import vs from "value-schema";
 
 const schemaObject = { // schema for input
@@ -77,7 +77,7 @@ const input = { // input values
 	remoteAddrIpv6: "::1",
 	limit: "0",
 };
-const expected = { // should be converted to this
+const expected = { // should be transformed to this
 	id: 1,
 	name: "Pablo Diego José",
 	age: 20,
@@ -98,4 +98,4 @@ const actual = vs.applySchemaObject(schemaObject, input);
 // verification
 assert.deepStrictEqual(actual, expected);
 
-console.log("TS: OK!🎉");
+console.log("Bun: OK!🎉");

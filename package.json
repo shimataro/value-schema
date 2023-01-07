@@ -29,11 +29,16 @@
     "schema",
     "JSON schema"
   ],
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.js",
+    "bun": "./dist-deno/index.ts",
+    "default": "./dist/index.js"
+  },
   "main": "./dist/index",
   "types": "./dist/index.d.ts",
   "engines": {
-    "node": ">=4.0.0",
-    "npm": ">=3.8.0"
+    "node": ">=4.0.0"
   },
   "scripts": {
     "build": "run-s build:*",
@@ -44,33 +49,33 @@
     "build:2-cjs:1-tsc": "tsc -p tsconfig.cjs.json",
     "build:2-cjs:2-babel": "cross-env BABEL_ENV=cjs babel ./dist --out-dir ./dist --extensions .js",
     "build:3-deno": "deno-module-extension-resolver ./src ./dist-deno",
-    "test": "jest --config jest.config.json",
+    "test": "jest",
     "verify": "run-p test lint",
     "lint": "run-p lint:*",
     "lint:ts": "eslint ./src ./test --ext .ts",
-    "lint:md": "markdownlint . --ignore ./node_modules",
-    "lint:yaml": "yamllint .*.yml *.yml --ignore=node_modules/**/*.yml --ignore=node_modules/**/*.yaml",
+    "lint:md": "markdownlint . --ignore ./node_modules --ignore ./**/node_modules",
+    "lint:yaml": "yamllint {,.github/{,**/}}*.{yml,yaml}",
     "check-updates": "ncu"
   },
   "devDependencies": {
-    "@babel/cli": "7.17.10",
-    "@babel/core": "7.18.0",
-    "@jest/globals": "28.1.0",
-    "@types/node": "17.0.35",
-    "@typescript-eslint/eslint-plugin": "5.26.0",
-    "@typescript-eslint/parser": "5.26.0",
+    "@babel/cli": "7.20.7",
+    "@babel/core": "7.20.12",
+    "@jest/globals": "29.3.1",
+    "@types/node": "18.11.18",
+    "@typescript-eslint/eslint-plugin": "5.48.0",
+    "@typescript-eslint/parser": "5.48.0",
     "babel-plugin-add-module-exports": "1.0.4",
-    "babel-plugin-module-extension-resolver": "1.0.0-rc.2",
+    "babel-plugin-module-extension-resolver": "1.0.0",
     "case": "1.6.3",
     "cross-env": "7.0.3",
-    "deno-module-extension-resolver": "0.3.0",
-    "eslint": "8.16.0",
-    "jest": "28.1.0",
-    "markdownlint-cli": "0.31.1",
-    "npm-check-updates": "13.0.3",
+    "deno-module-extension-resolver": "1.0.0",
+    "eslint": "8.31.0",
+    "jest": "29.3.1",
+    "markdownlint-cli": "0.32.2",
+    "npm-check-updates": "16.6.2",
     "npm-run-all": "4.1.5",
-    "ts-jest": "28.0.3",
-    "typescript": "4.7.2",
+    "ts-jest": "29.0.3",
+    "typescript": "4.9.4",
     "yaml-lint": "1.7.0"
   }
 }

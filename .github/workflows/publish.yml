@@ -1,5 +1,6 @@
-# https://help.github.com/en/articles/workflow-syntax-for-github-actions
+# https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
 name: publish
+
 on:
   release:
     types:
@@ -8,23 +9,17 @@ on:
 jobs:
   publish:
     name: publish to npmjs.com
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - name: Checkout source codes
-      uses: actions/checkout@v2
-    - name: Install Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12
-        registry-url: https://registry.npmjs.org/
-    - name: Output versions
-      run: |
-        node -v
-        npm -v
-    - name: Install dependencies
-      run: npm ci
+      uses: actions/checkout@v3
+
     - name: Build package
-      run: npm run build
+      uses: ./.github/actions/build-package
+      with:
+        os: ubuntu-22.04
+        registry-url: https://registry.npmjs.org/
+
     - name: Publish package
       run: npm publish
       env:

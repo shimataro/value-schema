@@ -1,0 +1,42 @@
+# https://docs.github.com/en/actions/using-workflows/reusing-workflows
+name: Reusable workflow (ES Modules)
+
+on:
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+        description: host OS that CI 'runs-on'
+      node-version:
+        required: true
+        type: string
+        description: Node.js version
+
+jobs:
+  esm:
+    name: ES Modules
+    runs-on: ${{ inputs.os }}
+    steps:
+    - name: Checkout source codes
+      uses: actions/checkout@v3
+
+    - name: Build package
+      uses: ./.github/actions/build-package
+      with:
+        os: ${{ inputs.os }}
+    - name: Prune modules
+      run: npm ci --omit=dev
+
+    - name: Install Node.js (for running example)
+      uses: ./.github/actions/setup-node
+      with:
+        node-version: ${{ inputs.node-version }}
+    - name: Install dependencies (for running example)
+      run: npm i --omit=dev
+      working-directory: ./examples
+
+    # Run
+    - name: Run example
+      run: node --experimental-modules ./example.mjs
+      working-directory: ./examples
