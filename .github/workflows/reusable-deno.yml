@@ -1,0 +1,35 @@
+# https://docs.github.com/en/actions/using-workflows/reusing-workflows
+name: Reusable workflow (Deno)
+
+on:
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+        description: host OS that CI 'runs-on'
+      deno-version:
+        required: true
+        type: string
+        description: Deno version
+
+jobs:
+  deno:
+    name: Deno
+    runs-on: ${{ inputs.os }}
+    steps:
+    - name: Checkout source codes
+      uses: actions/checkout@v3
+
+    # Setup
+    - name: Install Deno
+      uses: denoland/setup-deno@v1
+      with:
+        deno-version: ${{ inputs.deno-version }}
+    - name: Output versions
+      run: deno --version
+
+    # Run
+    - name: Run example
+      run: deno run ./example-deno.ts
+      working-directory: ./examples

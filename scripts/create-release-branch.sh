@@ -80,7 +80,7 @@ function check_version_format() {
 
 function check_current_branch() {
 	local BASE_BRANCH=$1
-	local CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+	local CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 	if [ ${CURRENT_BRANCH} = ${BASE_BRANCH} ]; then
 		return
 	fi
@@ -122,7 +122,7 @@ function verify_package() {
 function commit_changes() {
 	local VERSION=$1
 
-	git add CHANGELOG.md package.json npm-shrinkwrap.json
+	git add CHANGELOG.md package.json package-lock.json
 	git commit -m "version ${VERSION}"
 }
 
