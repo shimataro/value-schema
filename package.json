@@ -29,11 +29,16 @@
     "schema",
     "JSON schema"
   ],
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.js",
+    "bun": "./dist-deno/index.ts",
+    "default": "./dist/index.js"
+  },
   "main": "./dist/index",
   "types": "./dist/index.d.ts",
   "engines": {
-    "node": ">=4.0.0",
-    "npm": ">=3.8.0"
+    "node": ">=4.0.0"
   },
   "scripts": {
     "build": "run-s build:*",
@@ -49,7 +54,7 @@
     "lint": "run-p lint:*",
     "lint:ts": "eslint ./src ./test --ext .ts",
     "lint:md": "markdownlint . --ignore ./node_modules --ignore ./**/node_modules",
-    "lint:yaml": "yamllint .*.yml *.yml --ignore=node_modules/**/*.yml --ignore=node_modules/**/*.yaml",
+    "lint:yaml": "yamllint {,.github/{,**/}}*.{yml,yaml}",
     "check-updates": "ncu"
   },
   "devDependencies": {
