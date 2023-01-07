@@ -11,7 +11,6 @@ const schemaObject = { // schema for input
 			trims: true,
 		},
 	}),
-	birthday: vs.date(),
 	age: vs.number({ // number, integer (trims if decimal), >=0
 		integer: vs.NUMBER.INTEGER.FLOOR_RZ,
 		minValue: 0,
@@ -68,7 +67,6 @@ const schemaObject = { // schema for input
 const input = { // input values
 	id: "1",
 	name: "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Ciprin Cipriano de la Santísima Trinidad Ruiz y Picasso",
-	birthday: "2000-01-02T03:04:05.678Z",
 	age: 20.5,
 	email: "picasso@example.com",
 	state: "active",
@@ -82,7 +80,6 @@ const input = { // input values
 const expected = { // should be transformed to this
 	id: 1,
 	name: "Pablo Diego José",
-	birthday: new Date("2000-01-02T03:04:05.678Z"),
 	age: 20,
 	email: "picasso@example.com",
 	state: "active",
