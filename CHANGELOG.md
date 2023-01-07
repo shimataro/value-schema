@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Others
+
+* support Node.js 18
+* support TypeScript 4.8 - 4.9
+* support Bun
+
 ## [3.1.1] - 2022-05-25
 
 ### Others
