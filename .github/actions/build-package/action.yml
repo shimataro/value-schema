@@ -22,6 +22,7 @@ runs:
       uses: ./.github/actions/setup-node
       with:
         node-version: ${{ inputs.node-version }}
+        registry-url: ${{ inputs.registry-url }}
 
     - name: Cache NPM
       uses: ./.github/actions/cache-npm
