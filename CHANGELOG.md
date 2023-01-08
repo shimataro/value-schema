@@ -7,11 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.1.2] - 2023-01-08
+
 ### Others
 
 * support Node.js 18
 * support TypeScript 4.8 - 4.9
-* support Bun
+* support Bun 0.1.11 - 0.4.0
 
 ## [3.1.1] - 2022-05-25
 
@@ -576,7 +578,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * First release.
 
-[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.1.1...HEAD
+[Unreleased]: https://github.com/shimataro/value-schema/compare/v3.1.2...HEAD
+[3.1.2]: https://github.com/shimataro/value-schema/compare/v3.1.1...v3.1.2
 [3.1.1]: https://github.com/shimataro/value-schema/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/shimataro/value-schema/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/shimataro/value-schema/compare/v3.0.0-rc.15...v3.0.0
