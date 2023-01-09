@@ -22,12 +22,12 @@ runs:
       uses: ./.github/actions/setup-node
       with:
         node-version: ${{ inputs.node-version }}
+        registry-url: ${{ inputs.registry-url }}
 
     - name: Cache NPM
       uses: ./.github/actions/cache-npm
       with:
         os: ${{ inputs.os }}
-        node-version: ${{ inputs.node-version }}
 
     - id: cache-dist
       name: Cache dist
