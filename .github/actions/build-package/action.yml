@@ -28,7 +28,6 @@ runs:
       uses: ./.github/actions/cache-npm
       with:
         os: ${{ inputs.os }}
-        node-version: ${{ inputs.node-version }}
 
     - id: cache-dist
       name: Cache dist

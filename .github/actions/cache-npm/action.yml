@@ -6,9 +6,6 @@ inputs:
   os:
     description: host OS that CI 'runs-on'
     required: true
-  node-version:
-    description: Node.js version
-    required: true
 
 runs:
   using: composite
@@ -19,11 +16,15 @@ runs:
       run: echo "NPM_CACHE_DIRECTORY=$(npm config get cache)" >> ${{ github.env }} # use "github.env" instead of "github.output"; if use "github.output", "Warning: Input required and not supplied: path" is displayed on post-process
       shell: pwsh # use PowerShell; Bash doesn't work on Windows because the value of "github.env" is like "D:\a\_temp\_runner_file_commands\set_env_XXX".
 
+    - name: Get Node.js version
+      run: echo "NODEJS_VERSION=$(node -v)" >> ${{ github.env }}
+      shell: pwsh
+
     - name: Cache NPM modules
       uses: actions/cache@v3
       with:
         path: ${{ env.NPM_CACHE_DIRECTORY }}
-        key: npm-${{ inputs.os }}-${{ inputs.node-version }}-${{ hashFiles('package-lock.json') }}
+        key: npm-${{ inputs.os }}-${{ env.NODEJS_VERSION }}-${{ hashFiles('package-lock.json') }}
         restore-keys: |
-          npm-${{ inputs.os }}-${{ inputs.node-version }}-
+          npm-${{ inputs.os }}-${{ env.NODEJS_VERSION }}-
           npm-${{ inputs.os }}-
