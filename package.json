@@ -33,7 +33,7 @@
     "import": "./dist/index.mjs",
     "require": "./dist/index.js",
     "bun": "./dist-deno/index.ts",
-    "default": "./dist/index.js"
+    "default": "./dist/index.mjs"
   },
   "main": "./dist/index",
   "types": "./dist/index.d.ts",
