@@ -15,7 +15,7 @@ on:
 
 jobs:
   conditoinal-exports:
-    name: Conditional Exports
+    name: Conditional Exports # with --experimental-conditional-exports
     runs-on: ${{ inputs.os }}
     steps:
     - name: Checkout source codes
