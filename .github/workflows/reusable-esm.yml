@@ -12,6 +12,11 @@ on:
         required: true
         type: string
         description: Node.js version
+      experimental:
+        required: false
+        type: boolean
+        default: false
+        description: adds "--experimental-modules"
 
 jobs:
   esm:
@@ -38,5 +43,10 @@ jobs:
 
     # Run
     - name: Run example
+      run: node ./example.mjs
+      working-directory: ./examples
+      if: ${{ !inputs.experimental }}
+    - name: Run example (with --experimental-modules)
       run: node --experimental-modules ./example.mjs
       working-directory: ./examples
+      if: ${{ inputs.experimental }}

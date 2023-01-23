@@ -10,7 +10,7 @@ on:
 
 jobs:
   conditional-exports:
-    name: Conditional Exports
+    name: Conditional Exports # with --experimental-conditional-exports
     strategy:
       matrix:
         os:
@@ -18,7 +18,7 @@ jobs:
         - ubuntu-20.04
         - ubuntu-22.04
         nodejs:
-        - "13.2.0" # always loads CommonJS
+        - "13.2.0"
       fail-fast: false
     uses: "./.github/workflows/reusable-conditional-exports.yml"
     with:
@@ -52,8 +52,8 @@ jobs:
       os: ${{ matrix.os }}
       node-version: ${{ matrix.nodejs }}
 
-  esm:
-    name: ES Modules
+  esm-experimental:
+    name: ES Modules (with --experimental-modules)
     needs: cjs # wait for caching NPM
     strategy:
       matrix:
@@ -64,7 +64,24 @@ jobs:
         nodejs:
         - "8.5.0"
         - "10.0.0"
-        - "12.0.0"
+        - "12.0.0" # loads CommonJS version
+      fail-fast: false
+    uses: "./.github/workflows/reusable-esm.yml"
+    with:
+      os: ${{ matrix.os }}
+      node-version: ${{ matrix.nodejs }}
+      experimental: true
+
+  esm:
+    name: ES Modules
+    needs: cjs # wait for caching NPM
+    strategy:
+      matrix:
+        os:
+        - ubuntu-18.04
+        - ubuntu-20.04
+        - ubuntu-22.04
+        nodejs:
         - "14.0.0"
         - "16.0.0"
         - "18.0.0"
