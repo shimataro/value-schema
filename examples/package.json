@@ -12,8 +12,5 @@
   },
   "dependencies": {
     "value-schema": "file:.."
-  },
-  "devDependencies": {
-    "@types/node": "4.0.29"
   }
 }

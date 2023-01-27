@@ -39,7 +39,7 @@ jobs:
     - name: Install dependencies (for building/running example)
       run: |
         npm i
-        npm i -D typescript@${{ inputs.typescript-version }}
+        npm i -D @types/node typescript@${{ inputs.typescript-version }}
       working-directory: ./examples
 
     # Run example
