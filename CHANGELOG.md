@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Others
 
+* support TypeScript 5
 * support Bun 0.1.11, 0.2.0, 0.4.0, 0.5.0
 * support Deno 1.29, 1.30
 
