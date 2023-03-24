@@ -160,6 +160,33 @@ jobs:
       node-version: ${{ matrix.nodejs }}
       typescript-version: ${{ matrix.typescript }}
 
+  typescript-5:
+    name: TypeScript 5.x
+    needs: cjs # wait for caching NPM
+    strategy:
+      matrix:
+        os:
+        - macos-10.15
+        - macos-11
+        - macos-12
+        nodejs:
+        - "4.0.0"
+        - "6.0.0"
+        - "8.0.0"
+        - "10.0.0"
+        - "12.0.0"
+        - "14.0.0"
+        - "16.0.0"
+        - "18.0.0"
+        typescript:
+        - "5.0"
+      fail-fast: false
+    uses: "./.github/workflows/reusable-typescript.yml"
+    with:
+      os: ${{ matrix.os }}
+      node-version: ${{ matrix.nodejs }}
+      typescript-version: ${{ matrix.typescript }}
+
   deno:
     name: Deno
     strategy:
