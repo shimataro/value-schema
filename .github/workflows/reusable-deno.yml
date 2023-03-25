@@ -31,7 +31,7 @@ jobs:
 
     # Run
     - name: Remove package.json
-      run: rm package.json package-lock.json
+      run: rm package.json
       working-directory: ./examples
     - name: Run example
       run: deno run ./example-deno.ts
