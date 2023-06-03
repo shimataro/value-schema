@@ -171,6 +171,7 @@ jobs:
         - "18.0.0"
         typescript:
         - "5.0"
+        - "5.1"
       fail-fast: false
     uses: "./.github/workflows/reusable-typescript.yml"
     with:
