@@ -171,6 +171,34 @@ jobs:
       node-version: ${{ matrix.nodejs }}
       typescript-version: ${{ matrix.typescript }}
 
+  typescript-5:
+    name: TypeScript 5.x
+    needs: cjs # wait for caching NPM
+    strategy:
+      matrix:
+        os:
+        - ubuntu-18.04
+        - ubuntu-20.04
+        - ubuntu-22.04
+        nodejs:
+        - "8.3.0" # TypeScript 5 uses "spread syntax in object literals" internally, that is supported as of Node.js v8.3.0; https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntaxhttps://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+        - "10.0.0"
+        - "12.0.0"
+        - "14.0.0"
+        - "16.0.0"
+        - "18.0.0"
+        typescript:
+        - "5.0"
+        exclude:
+        - os: ubuntu-18.04 # Node.js>=18 requires glibc>=2.28
+          nodejs: "18.0.0"
+      fail-fast: false
+    uses: "./.github/workflows/reusable-typescript.yml"
+    with:
+      os: ${{ matrix.os }}
+      node-version: ${{ matrix.nodejs }}
+      typescript-version: ${{ matrix.typescript }}
+
   deno:
     name: Deno
     strategy:
