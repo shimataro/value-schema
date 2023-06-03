@@ -14,7 +14,6 @@ jobs:
     strategy:
       matrix:
         os:
-        - ubuntu-18.04
         - ubuntu-20.04
         - ubuntu-22.04
         nodejs:
@@ -31,7 +30,6 @@ jobs:
     strategy:
       matrix:
         os:
-        - ubuntu-18.04
         - ubuntu-20.04
         - ubuntu-22.04
         nodejs:
@@ -43,9 +41,6 @@ jobs:
         - "14.0.0"
         - "16.0.0"
         - "18.0.0"
-        exclude:
-        - os: ubuntu-18.04 # Node.js>=18 requires glibc>=2.28
-          nodejs: "18.0.0"
       fail-fast: false
     uses: "./.github/workflows/reusable-cjs.yml"
     with:
@@ -58,7 +53,6 @@ jobs:
     strategy:
       matrix:
         os:
-        - ubuntu-18.04
         - ubuntu-20.04
         - ubuntu-22.04
         nodejs:
@@ -78,16 +72,12 @@ jobs:
     strategy:
       matrix:
         os:
-        - ubuntu-18.04
         - ubuntu-20.04
         - ubuntu-22.04
         nodejs:
         - "14.0.0"
         - "16.0.0"
         - "18.0.0"
-        exclude:
-        - os: ubuntu-18.04 # Node.js>=18 requires glibc>=2.28
-          nodejs: "18.0.0"
       fail-fast: false
     uses: "./.github/workflows/reusable-esm.yml"
     with:
@@ -100,7 +90,6 @@ jobs:
     strategy:
       matrix:
         os:
-        - ubuntu-18.04
         - ubuntu-20.04
         - ubuntu-22.04
         nodejs:
@@ -118,9 +107,6 @@ jobs:
         - "3.7"
         - "3.8"
         - "3.9"
-        exclude:
-        - os: ubuntu-18.04 # Node.js>=18 requires glibc>=2.28
-          nodejs: "18.0.0"
       fail-fast: false
     uses: "./.github/workflows/reusable-typescript.yml"
     with:
@@ -134,7 +120,6 @@ jobs:
     strategy:
       matrix:
         os:
-        - ubuntu-18.04
         - ubuntu-20.04
         - ubuntu-22.04
         nodejs:
@@ -158,8 +143,6 @@ jobs:
         - "4.8"
         - "4.9"
         exclude:
-        - os: ubuntu-18.04 # Node.js>=18 requires glibc>=2.28
-          nodejs: "18.0.0"
         - nodejs: "4.0.0" # TypeScript 4.0 on Node.js <=6 causes error; https://github.com/microsoft/TypeScript/issues/40166
           typescript: "4.0"
         - nodejs: "6.0.0"
@@ -177,7 +160,6 @@ jobs:
     strategy:
       matrix:
         os:
-        - ubuntu-18.04
         - ubuntu-20.04
         - ubuntu-22.04
         nodejs:
@@ -189,9 +171,6 @@ jobs:
         - "18.0.0"
         typescript:
         - "5.0"
-        exclude:
-        - os: ubuntu-18.04 # Node.js>=18 requires glibc>=2.28
-          nodejs: "18.0.0"
       fail-fast: false
     uses: "./.github/workflows/reusable-typescript.yml"
     with:
@@ -204,7 +183,6 @@ jobs:
     strategy:
       matrix:
         os:
-        - ubuntu-18.04
         - ubuntu-20.04
         - ubuntu-22.04
         deno:
@@ -252,7 +230,6 @@ jobs:
     strategy:
       matrix:
         os:
-        - ubuntu-18.04
         - ubuntu-20.04
         - ubuntu-22.04
         bun:
@@ -261,11 +238,6 @@ jobs:
         - "0.3.0"
         - "0.4.0"
         - "0.5.0"
-        exclude:
-        - os: ubuntu-18.04 # Bun<=0.2 requires glibc>=2.29
-          bun: "0.1.11"
-        - os: ubuntu-18.04
-          bun: "0.2.0"
       fail-fast: false
     uses: "./.github/workflows/reusable-bun.yml"
     with:

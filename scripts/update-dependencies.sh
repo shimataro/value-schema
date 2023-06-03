@@ -5,9 +5,10 @@ set -eu
 DATE=$(date +"%Y%m%d")
 BASE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 TARGET_BRANCH=feature/update-dependencies-${DATE}
-COLOR_SUCCESS="\e[1;32m"
-COLOR_ERROR="\e[1;41m"
-COLOR_RESET="\e[m"
+
+COLOR_SUCCESS="\033[1;32m"
+COLOR_ERROR="\033[1;41m"
+COLOR_RESET="\033[m"
 
 cd $(dirname ${0})/..
 
