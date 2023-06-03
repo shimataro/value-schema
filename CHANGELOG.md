@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Others
 
-* support TypeScript 5
+* support TypeScript 5.0-5.1
 * support Bun 0.1.11, 0.2.0, 0.4.0, 0.5.0
 * support Deno 1.29, 1.30, 1.31, 1.32
 * drop CI on macOS Catalina 10.15, and Ubuntu 18.04
