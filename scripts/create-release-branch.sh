@@ -35,7 +35,7 @@ function main() {
 
 	local NEW_VERSION=$1
 	local CURRENT_VERSION=$(
-		sed -nr -e '/^[[:space:]]*"version"/{s/^[[:space:]]*"version"[[:space:]]*:[[:space:]]*"([^"]*)"[[:space:]]*,?[[:space:]]*$/\1/g;p;q;}' package.json
+		node -e 'console.log(JSON.parse(require("fs").readFileSync("package.json")).version)'
 	)
 	local TAG="v${NEW_VERSION}"
 	local BRANCH="release/v${NEW_VERSION}"
