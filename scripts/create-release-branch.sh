@@ -108,12 +108,7 @@ function create_branch() {
 function update_package_version() {
 	local VERSION=$1
 
-	for DIR in . examples;
-	do
-		pushd ${DIR}
-		npm version --no-git-tag-version ${VERSION}
-		popd
-	done
+	npm version --no-git-tag-version ${VERSION}
 }
 
 function update_changelog() {
