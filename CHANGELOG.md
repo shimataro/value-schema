@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Others
+
+* support Bun>=1.0.0
+* **DROP** support Bun<1.0.0
+
 ## [4.0.0] - 2023-07-18
 
 ### Added
