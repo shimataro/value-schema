@@ -1,7 +1,6 @@
 import { isDate, isValidDate, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
-export interface Rules {
-}
+export type Rules = object;
 /**
  * apply schema
  * @param values input/output values

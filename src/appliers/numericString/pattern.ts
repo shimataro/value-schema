@@ -3,9 +3,7 @@ import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
 const REGEXP = /^\d+$/;
 
-export interface Rules
-{
-}
+export type Rules = object;
 
 /**
  * apply schema
