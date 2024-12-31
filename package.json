@@ -56,7 +56,7 @@
     "lint:ts": "eslint ./src ./test --ext .ts",
     "lint:md": "markdownlint . --ignore ./node_modules --ignore ./**/node_modules",
     "lint:yaml": "yamllint {,.github/{,**/}}*.{yml,yaml}",
-    "check-updates": "ncu"
+    "check-updates": "ncu -x eslint"
   },
   "devDependencies": {
     "@babel/cli": "7.26.4",
