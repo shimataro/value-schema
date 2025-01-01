@@ -1,6 +1,7 @@
 import * as ifEmptyString from "../appliers/ifEmptyString.ts";
 import * as ifNull from "../appliers/ifNull.ts";
 import * as ifUndefined from "../appliers/ifUndefined.ts";
+import * as map from "../appliers/map.ts";
 import * as only from "../appliers/only.ts";
 import * as transform from "../appliers/transform.ts";
 import * as maxLength from "../appliers/string/maxLength.ts";
@@ -12,7 +13,7 @@ import { BaseSchema } from "./BaseSchema.ts";
 export const STRING = {
     PATTERN: pattern.PATTERN
 } as const;
-export type RulesForString = transform.Rules<string> & ifEmptyString.Rules<string> & ifNull.Rules<string> & ifUndefined.Rules<string> & only.Rules<string> & type.Rules & trims.Rules & minLength.Rules & maxLength.Rules & pattern.Rules;
+export type RulesForString = transform.Rules<string> & map.Rules & ifEmptyString.Rules<string> & ifNull.Rules<string> & ifUndefined.Rules<string> & only.Rules<string> & type.Rules & trims.Rules & minLength.Rules & maxLength.Rules & pattern.Rules;
 export class StringSchema<Tx = never> extends BaseSchema<string | Tx> {
     constructor(rules: RulesForString) {
         super(rules, [

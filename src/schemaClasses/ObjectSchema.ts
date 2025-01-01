@@ -1,6 +1,7 @@
 import * as ifEmptyString from "../appliers/ifEmptyString";
 import * as ifNull from "../appliers/ifNull";
 import * as ifUndefined from "../appliers/ifUndefined";
+import * as map from "../appliers/map";
 import * as transform from "../appliers/transform";
 
 import * as schema from "../appliers/object/schema";
@@ -12,6 +13,7 @@ import {BaseSchema} from "./BaseSchema";
 
 export type RulesForObject<S> =
 	transform.Rules<AnyObject> &
+	map.Rules &
 	ifUndefined.Rules<AnyObject> &
 	ifEmptyString.Rules<AnyObject> &
 	ifNull.Rules<AnyObject> &

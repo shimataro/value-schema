@@ -243,6 +243,63 @@ function testApplySchemaObject(): void
 		expect(actual.object.arrayOfString.slice()[0].toUpperCase()).toEqual("A");
 		expect(actual.object.arrayOfArrayOfString.slice()[0].slice()[1].toLowerCase()).toEqual("b");
 	});
+	it("property-mapping test", () =>
+	{
+		const schemaObject = {
+			isDefined: vs.boolean({
+				map: "is_defined",
+			}),
+			yearOfBirth: vs.number({
+				map: "year-of-birth",
+			}),
+			userName: vs.string({
+				map: "user name",
+			}),
+			email: vs.email({
+				map: "EMail",
+			}),
+			creditCard: vs.numericString({
+				map: "creditcard",
+			}),
+
+			favoriteFoods: vs.array({
+				map: "favorite foods",
+				each: vs.string(),
+			}),
+
+			options: vs.object({
+				map: "options",
+				schemaObject: {
+					isSet: vs.boolean(),
+				},
+			}),
+		};
+		const input = {
+			"is_defined": false,
+			"year-of-birth": 2000,
+			"user name": "John Doe",
+			"EMail": "user@example.com",
+			"creditcard": "4111111111111111",
+
+			"favorite foods": ["sushi", "tempura"],
+
+			"options": {
+				isSet: true,
+			},
+		};
+
+		// property / type-inference check
+		const actual = vs.applySchemaObject(schemaObject, input);
+		expect(actual.isDefined).toEqual(false);
+		expect(actual.yearOfBirth).toEqual(2000);
+		expect(actual.userName).toEqual("John Doe");
+		expect(actual.email).toEqual("user@example.com");
+		expect(actual.creditCard).toEqual("4111111111111111");
+
+		expect(actual.favoriteFoods).toEqual(["sushi", "tempura"]);
+
+		expect(actual.options).toEqual({isSet: true});
+	});
 }
 
 /**

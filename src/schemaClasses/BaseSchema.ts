@@ -57,6 +57,22 @@ export class BaseSchema<T = unknown>
 			return onError(err as ValueSchemaError);
 		}
 	}
+
+	/**
+	 * get a "mapped" property
+	 * @param defaultProperty default property
+	 * @returns mapped property
+	 * @see Rules (appliers/map.ts)
+	 * @protected in order to repress TS6133 error
+	 */
+	protected _getProperty(defaultProperty: string): string
+	{
+		if("map" in this.rules && typeof this.rules.map === "string")
+		{
+			return this.rules.map;
+		}
+		return defaultProperty;
+	}
 }
 
 /**
