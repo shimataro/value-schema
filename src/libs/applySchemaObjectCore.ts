@@ -32,7 +32,7 @@ export function applySchemaObjectCore<S extends SchemaObject>(schemaObject: S, d
 	{
 		const schema = schemaObject[key];
 
-		// A trick in order to call private method from the outside (like "friend" in C++)
+		// A trick to call non-public properties/methods from the outside (like "friend" in C++)
 		const prop = schema["_getProperty"](key);
 		appliedObject[key] = schema["_applyTo"](data[prop], errorHandler, [...keyStack, prop]);
 	}

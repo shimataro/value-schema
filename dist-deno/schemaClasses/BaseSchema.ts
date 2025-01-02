@@ -1,3 +1,4 @@
+import { propName } from "../appliers/map.ts";
 import { Key, makeValues, Values } from "../libs/types.ts";
 import { ErrorHandler } from "../libs/publicTypes.ts";
 import { ValueSchemaError } from "../libs/ValueSchemaError.ts";
@@ -49,9 +50,9 @@ export class BaseSchema<T = unknown> {
      * @protected in order to repress TS6133 error
      */
     protected _getProperty(defaultProperty: string): string {
-        if ("map" in this.rules) {
-            if (typeof this.rules.map === "string") {
-                return this.rules.map;
+        if (propName in this.rules) {
+            if (typeof this.rules[propName] === "string") {
+                return this.rules[propName];
             }
         }
         return defaultProperty;
