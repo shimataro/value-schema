@@ -49,7 +49,7 @@ export class BaseSchema<T = unknown> {
      * @see Rules (appliers/map.ts)
      * @protected in order to repress TS6133 error
      */
-    protected _getProperty(defaultProperty: string): string {
+    protected _getPropertyName(defaultProperty: string): string {
         if (propName in this.rules) {
             if (typeof this.rules[propName] === "string") {
                 return this.rules[propName];
