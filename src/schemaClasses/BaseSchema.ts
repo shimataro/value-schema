@@ -65,9 +65,12 @@ export class BaseSchema<T = unknown>
 	 */
 	protected _getProperty(defaultProperty: string): string
 	{
-		if("map" in this.rules && typeof this.rules.map === "string")
+		if("map" in this.rules)
 		{
-			return this.rules.map;
+			if(typeof this.rules.map === "string")
+			{
+				return this.rules.map;
+			}
 		}
 		return defaultProperty;
 	}
