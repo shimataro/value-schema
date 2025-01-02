@@ -1,8 +1,7 @@
 import { Key, makeValues, Values } from "../libs/types.ts";
 import { ErrorHandler } from "../libs/publicTypes.ts";
 import { ValueSchemaError } from "../libs/ValueSchemaError.ts";
-interface Rules {
-}
+type Rules = object;
 type ApplyTo<T> = (values: Values, rules: Rules, keyStack: Key[]) => values is Values<T>;
 /**
  * Base Schema Class

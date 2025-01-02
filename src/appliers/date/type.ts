@@ -1,9 +1,7 @@
 import {isDate, isValidDate, Key, Values} from "../../libs/types";
 import {RULE, ValueSchemaError} from "../../libs/ValueSchemaError";
 
-export interface Rules
-{
-}
+export type Rules = object;
 
 /**
  * apply schema

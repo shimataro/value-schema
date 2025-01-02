@@ -3,8 +3,7 @@ import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 const MAX_LENGTH_LOCAL = 64;
 const MAX_LENGTH_DOMAIN = 255;
 const MAX_LENGTH = MAX_LENGTH_LOCAL + 1 + MAX_LENGTH_DOMAIN; // local-part + "@" + domain-part
-export interface Rules {
-}
+export type Rules = object;
 /**
  * apply schema
  * @param values input/output values
