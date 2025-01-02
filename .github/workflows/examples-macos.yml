@@ -295,6 +295,11 @@ jobs:
           deno: "1.4.0"
         - os: macos-14
           deno: "1.5.0"
+        # Deno v1.23.0 and v1.24.0 on Apple Silicon causes fatal error; "Check failed: RwxMemoryWriteScope::IsAllowed()."
+        - os: macos-14
+          deno: "1.23.0"
+        - os: macos-14
+          deno: "1.24.0"
       fail-fast: false
     uses: "./.github/workflows/reusable-deno.yml"
     with:
