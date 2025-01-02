@@ -15,7 +15,7 @@ jobs:
       matrix:
         os:
         - macos-13
-        - macos-14
+        # - macos-14 # Node.js v13.2 does not support Apple Silicon (macOS 14)
         nodejs:
         - "13.2.0"
       fail-fast: false
