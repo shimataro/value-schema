@@ -2,9 +2,7 @@ import {Key, makeValues, Values} from "../libs/types";
 import {ErrorHandler} from "../libs/publicTypes";
 import {ValueSchemaError} from "../libs/ValueSchemaError";
 
-interface Rules
-{
-}
+type Rules = object;
 type ApplyTo<T> = (values: Values, rules: Rules, keyStack: Key[]) => values is Values<T>;
 
 /**
