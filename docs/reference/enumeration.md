@@ -9,6 +9,7 @@ Return type of `applyTo()` can be limited to enum-like type; `enum` and union.
 export function enumeration<E = never>(rules: RulesForEnumeration): EnumerationSchema<E>;
 
 type RulesForEnumeration = {
+    map?: string;
     ifUndefined?: string | null;
     ifEmptyString?: string | null;
     ifNull?: string | null;
@@ -122,6 +123,27 @@ type NumberUnion = 0 | 1;
     const only = [0, 1]; // number[]
     const val: NumberUnion = vs.enumeration<NumberUnion>({only: only}).applyTo(1);
 }
+```
+
+### `map`
+
+Maps the specified value to the properties of the input object.
+
+**NOTE:** This rule is only available in [`object`](./object.md).
+
+```javascript
+const schemaObject = {
+    favoriteDrink: vs.enumeration({
+        map: "favorite_drink",
+        only: ["tea", "milk", "juice", "coffee"] as const,
+    }),
+};
+const input = { // input values
+    favorite_drink: "tea",
+};
+assert.deepStrictEqual(
+    vs.applySchemaObject(schemaObject, input),
+    {favoriteDrink: "tea"});
 ```
 
 ### `ifUndefined`

@@ -81,11 +81,13 @@ const schemaObject = { // schema for input
         separatedBy: "-",
         checksum: vs.NUMERIC_STRING.CHECKSUM_ALGORITHM.CREDIT_CARD,
     }),
-    remoteAddr: vs.string({ // IPv4
+    remoteAddr: vs.string({ // IPv4, mapped to "remote_addr" property
         pattern: vs.STRING.PATTERN.IPV4,
+        map: "remote_addr",
     }),
-    remoteAddrIpv6: vs.string({ // IPv6
+    remoteAddrIpv6: vs.string({ // IPv6, mapped to "remote-addr-ipv6" property
         pattern: vs.STRING.PATTERN.IPV6,
+        map: "remote-addr-ipv6",
     }),
     limit: vs.number({ // number, integer, omittable (sets 10 if omitted), >=1 (sets 1 if less), <=100 (sets 100 if greater)
         ifUndefined: 10,
@@ -117,8 +119,8 @@ const input = { // input values
     classes: "1,3,abc,4",
     skills: "c,c++,javascript,python,,swift,kotlin",
     creditCard: "4111-1111-1111-1111",
-    remoteAddr: "127.0.0.1",
-    remoteAddrIpv6: "::1",
+    remote_ddr: "127.0.0.1",
+    "remote-addr-ipv6": "::1",
     limit: "0",
 };
 const expected = { // should be transformed to this

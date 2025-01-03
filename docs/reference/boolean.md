@@ -11,6 +11,7 @@ type RulesForBoolean = {
     strictType?: boolean;
     acceptsAllNumbers?: boolean;
 
+    map?: string;
     ifUndefined?: boolean | null;
     ifEmptyString?: boolean | null;
     ifNull?: boolean | null;
@@ -115,6 +116,26 @@ assert.strictEqual(
 assert.strictEqual(
     vs.boolean({acceptsAllNumbers: true}).applyTo("100"),
     true);
+```
+
+### `map`
+
+Maps the specified value to the properties of the input object.
+
+**NOTE:** This rule is only available in [`object`](./object.md).
+
+```javascript
+const schemaObject = {
+    isAvailable: vs.boolean({
+        map: "is_available",
+    }),
+};
+const input = { // input values
+    is_available: true,
+};
+assert.deepStrictEqual(
+    vs.applySchemaObject(schemaObject, input),
+    {isAvailable: true});
 ```
 
 ### `ifUndefined`
