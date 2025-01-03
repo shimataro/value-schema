@@ -1,4 +1,4 @@
-import {propName} from "../appliers/map";
+import {hasMapRules} from "../appliers/map";
 
 import {Key, makeValues, Values} from "../libs/types";
 import {ErrorHandler} from "../libs/publicTypes";
@@ -67,14 +67,11 @@ export class BaseSchema<T = unknown>
 	 */
 	protected _getPropertyName(defaultProperty: string): string
 	{
-		if(propName in this.rules)
+		if(!hasMapRules(this.rules))
 		{
-			if(typeof this.rules[propName] === "string")
-			{
-				return this.rules[propName];
-			}
+			return defaultProperty;
 		}
-		return defaultProperty;
+		return this.rules.map;
 	}
 }
 
