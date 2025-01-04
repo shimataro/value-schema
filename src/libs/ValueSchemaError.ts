@@ -1,4 +1,4 @@
-import {Key, Values} from "./types";
+import {isNumber, Key, Values} from "./types";
 
 export const RULE =
 {
@@ -28,6 +28,7 @@ export class ValueSchemaError extends Error
 	/** the rule that input value didn't satisfy */
 	public readonly rule: RULE;
 	public readonly value: unknown;
+	public readonly filter: string;
 	public readonly keyStack: Key[];
 
 	/**
@@ -60,11 +61,51 @@ export class ValueSchemaError extends Error
 	 */
 	constructor(rule: RULE, value: unknown, keyStack: Key[])
 	{
-		super(`${rule}; ${value}; ${keyStack}`);
+		const filter = buildFilter(keyStack);
+		super(`rule=${rule}; value=${value}; filter=${filter}`);
 
 		this.name = "ValueSchemaError";
 		this.rule = rule;
 		this.value = value;
+		this.filter = filter;
 		this.keyStack = [...keyStack];
 	}
+}
+
+/**
+ * build ilter of `jq` command
+ * @param keyStack key stack; array of property(string) or index(number)
+ * @returns `jq` filter
+ * @see {@link https://jqlang.github.io/jq/manual/ jq manual}
+ * @example
+ * // returns '.foo[1]."bar baz"'
+ * const filter = buildJqFilter(["foo", 1, "bar baz"]);
+ */
+function buildFilter(keyStack: Key[]): string
+{
+	const REGEXP_ID = /^\w+$/;
+	let filter = "";
+	for(const key of keyStack)
+	{
+		if(isNumber(key))
+		{
+			// index
+			filter += `[${key}]`;
+			continue;
+		}
+		if(REGEXP_ID.test(key))
+		{
+			// property that doesn't need to be quoted
+			filter += `.${key}`;
+			continue;
+		}
+
+		// other property; quote by JSON.stringify()
+		filter += `.${JSON.stringify(key)}`;
+	}
+	if(!filter.startsWith("."))
+	{
+		filter = `.${filter}`;
+	}
+	return filter;
 }
