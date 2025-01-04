@@ -10,6 +10,7 @@ type RulesForNumber = {
     acceptsSpecialFormats?: boolean;
     acceptsFullWidth?: boolean;
 
+    map?: string;
     ifUndefined?: number | null;
     ifEmptyString?: number | null;
     ifNull?: number | null;
@@ -91,6 +92,26 @@ assert.throws(
 assert.throws(
     () => vs.number({strictType: true}).applyTo(true),
     {name: "ValueSchemaError", rule: vs.RULE.TYPE});
+```
+
+### `map`
+
+Maps the specified value to the properties of the input object.
+
+**NOTE:** This rule is only available in [`object`](./object.md).
+
+```javascript
+const schemaObject = {
+    userId: vs.number({
+        map: "user_id",
+    }),
+};
+const input = { // input values
+    user_id: 123,
+};
+assert.deepStrictEqual(
+    vs.applySchemaObject(schemaObject, input),
+    {userId: 123});
 ```
 
 ### `ifUndefined`

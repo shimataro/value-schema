@@ -6,6 +6,7 @@
 export function email(rules?: RulesForEmail): EmailSchema;
 
 type RulesForEmail = {
+    map?: string;
     ifUndefined?: string | null;
     ifEmptyString?: string | null;
     ifNull?: string | null;
@@ -74,6 +75,26 @@ assert.throws(
 ```
 
 ## rules
+
+### `map`
+
+Maps the specified value to the properties of the input object.
+
+**NOTE:** This rule is only available in [`object`](./object.md).
+
+```javascript
+const schemaObject = {
+    email: vs.email({
+        map: "e_mail",
+    }),
+};
+const input = { // input values
+    e_mail: "user@example.com",
+};
+assert.deepStrictEqual(
+    vs.applySchemaObject(schemaObject, input),
+    {email: "user@example.com"});
+```
 
 ### `ifUndefined`
 

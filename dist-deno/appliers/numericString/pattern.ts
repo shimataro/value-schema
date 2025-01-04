@@ -1,8 +1,7 @@
 import { isString, Key, Values } from "../../libs/types.ts";
 import { RULE, ValueSchemaError } from "../../libs/ValueSchemaError.ts";
 const REGEXP = /^\d+$/;
-export interface Rules {
-}
+export type Rules = object;
 /**
  * apply schema
  * @param values input/output values

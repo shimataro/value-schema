@@ -8,6 +8,7 @@ export function string(rules?: RulesForString): StringSchema;
 type RulesForString = {
     strictType?: boolean;
 
+    map?: string;
     ifUndefined?: string | null;
     ifEmptyString?: string | null;
     ifNull?: string | null;
@@ -73,6 +74,26 @@ assert.throws(
 assert.throws(
     () => vs.string({strictType: true}).applyTo(true),
     {name: "ValueSchemaError", rule: vs.RULE.TYPE});
+```
+
+### `map`
+
+Maps the specified value to the properties of the input object.
+
+**NOTE:** This rule is only available in [`object`](./object.md).
+
+```javascript
+const schemaObject = {
+    userName: vs.string({
+        map: "user_name",
+    }),
+};
+const input = { // input values
+    user_name: "John Doe",
+};
+assert.deepStrictEqual(
+    vs.applySchemaObject(schemaObject, input),
+    {userName: "John Doe"});
 ```
 
 ### `ifUndefined`

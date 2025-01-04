@@ -27,6 +27,7 @@ type RulesForNumber = {
         precision: UNIXTIME.PRECISION;
     },
 
+    map?: string;
     ifUndefined?: Date | null;
     ifEmptyString?: Date | null;
     ifNull?: Date | null;
@@ -166,6 +167,26 @@ assert.throws(
         }
     }).applyTo("946782245678"),
     {name: "ValueSchemaError", rule: vs.RULE.PATTERN});
+```
+
+### `map`
+
+Maps the specified value to the properties of the input object.
+
+**NOTE:** This rule is only available in [`object`](./object.md).
+
+```javascript
+const schemaObject = {
+    startsAt: vs.date({
+        map: "starts_at",
+    }),
+};
+const input = { // input values
+    starts_at: "2000-01-02T03:04:05.000Z",
+};
+assert.deepStrictEqual(
+    vs.applySchemaObject(schemaObject, input),
+    {startsAt: new Date("2000-01-02T03:04:05.000Z")});
 ```
 
 ### `ifUndefined`

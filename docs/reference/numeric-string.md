@@ -6,6 +6,7 @@
 export function numericString(rules?: RulesForNumericString): NumericStringSchema;
 
 type RulesForNumericString = {
+    map?: string;
     ifUndefined?: string | null;
     ifEmptyString?: string | null;
     ifNull?: string | null;
@@ -51,6 +52,26 @@ assert.throws(
 ```
 
 ## rules
+
+### `map`
+
+Maps the specified value to the properties of the input object.
+
+**NOTE:** This rule is only available in [`object`](./object.md).
+
+```javascript
+const schemaObject = {
+    creditCard: vs.numericString({
+        map: "credit_card",
+    }),
+};
+const input = { // input values
+    credit_card: "4111111111111111",
+};
+assert.deepStrictEqual(
+    vs.applySchemaObject(schemaObject, input),
+    {creditCard: "4111111111111111"});
+```
 
 ### `ifUndefined`
 

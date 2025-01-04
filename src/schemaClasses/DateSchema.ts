@@ -1,6 +1,7 @@
 import * as ifEmptyString from "../appliers/ifEmptyString";
 import * as ifNull from "../appliers/ifNull";
 import * as ifUndefined from "../appliers/ifUndefined";
+import * as map from "../appliers/map";
 import * as transform from "../appliers/transform";
 
 import * as iso8601 from "../appliers/date/iso8601";
@@ -17,6 +18,7 @@ export const DATE = {
 
 export type RulesForDate =
 	transform.Rules<Date> &
+	map.Rules &
 	ifUndefined.Rules<Date> &
 	ifEmptyString.Rules<Date> &
 	ifNull.Rules<Date> &

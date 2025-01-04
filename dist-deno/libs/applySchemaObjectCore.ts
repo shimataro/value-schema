@@ -22,8 +22,10 @@ export function applySchemaObjectCore<S extends SchemaObject>(schemaObject: S, d
     const appliedObject: AnyObject = {};
     let hasError = false;
     for (const key of Object.keys(schemaObject)) {
-        // A trick in order to call _applyTo() private method from the outside (like "friend")
-        appliedObject[key] = schemaObject[key]["_applyTo"](data[key], errorHandler, [...keyStack, key]);
+        const schema = schemaObject[key];
+        // A trick to call non-public properties/methods from the outside (like "friend" in C++)
+        const prop = schema["_getPropertyName"](key);
+        appliedObject[key] = schema["_applyTo"](data[prop], errorHandler, [...keyStack, prop]);
     }
     if (hasError) {
         onFinishWithError();

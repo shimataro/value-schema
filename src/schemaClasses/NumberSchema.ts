@@ -1,6 +1,7 @@
 import * as ifEmptyString from "../appliers/ifEmptyString";
 import * as ifNull from "../appliers/ifNull";
 import * as ifUndefined from "../appliers/ifUndefined";
+import * as map from "../appliers/map";
 import * as only from "../appliers/only";
 import * as transform from "../appliers/transform";
 
@@ -17,6 +18,7 @@ export const NUMBER = {
 
 export type RulesForNumber =
 	transform.Rules<number> &
+	map.Rules &
 	ifUndefined.Rules<number> &
 	ifEmptyString.Rules<number> &
 	ifNull.Rules<number> &

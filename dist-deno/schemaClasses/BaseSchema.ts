@@ -1,8 +1,8 @@
+import { hasMapRules } from "../appliers/map.ts";
 import { Key, makeValues, Values } from "../libs/types.ts";
 import { ErrorHandler } from "../libs/publicTypes.ts";
 import { ValueSchemaError } from "../libs/ValueSchemaError.ts";
-interface Rules {
-}
+type Rules = object;
 type ApplyTo<T> = (values: Values, rules: Rules, keyStack: Key[]) => values is Values<T>;
 /**
  * Base Schema Class
@@ -41,6 +41,19 @@ export class BaseSchema<T = unknown> {
         catch (err) {
             return onError(err as ValueSchemaError);
         }
+    }
+    /**
+     * get a "mapped" property
+     * @param defaultProperty default property
+     * @returns mapped property
+     * @see Rules (appliers/map.ts)
+     * @protected in order to repress TS6133 error
+     */
+    protected _getPropertyName(defaultProperty: string): string {
+        if (!hasMapRules(this.rules)) {
+            return defaultProperty;
+        }
+        return this.rules.map;
     }
 }
 /**

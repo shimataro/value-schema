@@ -1,6 +1,7 @@
 import * as ifEmptyString from "../appliers/ifEmptyString";
 import * as ifNull from "../appliers/ifNull";
 import * as ifUndefined from "../appliers/ifUndefined";
+import * as map from "../appliers/map";
 import * as only from "../appliers/only";
 import * as transform from "../appliers/transform";
 
@@ -18,6 +19,7 @@ export const STRING = {
 
 export type RulesForString =
 	transform.Rules<string> &
+	map.Rules &
 	ifEmptyString.Rules<string> &
 	ifNull.Rules<string> &
 	ifUndefined.Rules<string> &
