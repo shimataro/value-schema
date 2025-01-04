@@ -1,6 +1,7 @@
 import * as ifEmptyString from "../appliers/ifEmptyString";
 import * as ifNull from "../appliers/ifNull";
 import * as ifUndefined from "../appliers/ifUndefined";
+import * as map from "../appliers/map";
 import * as maxLength from "../appliers/email/maxLength";
 import * as pattern from "../appliers/email/pattern";
 import * as trims from "../appliers/string/trims";
@@ -9,6 +10,7 @@ import * as type from "../appliers/string/type";
 import {BaseSchema} from "./BaseSchema";
 
 export type RulesForEmail =
+	map.Rules &
 	ifEmptyString.Rules<string> &
 	ifNull.Rules<string> &
 	ifUndefined.Rules<string> &

@@ -8,6 +8,7 @@ Accepts array or character-separated string (such as comma).
 export function array<T>(rules?: RulesForArray<T>): ArraySchema;
 
 type RulesForArray<T> = {
+    map?: string;
     ifUndefined?: T[] | null;
     ifEmptyString?: T[] | null;
     ifNull?: T[] | null;
@@ -48,6 +49,30 @@ assert.throws(
 ```
 
 ## rules
+
+### `map`
+
+Maps the specified value to the properties of the input object.
+
+**NOTE:** This rule is only available in [`object`](./object.md).
+
+```javascript
+const schemaObject = {
+    languageSkills: vs.array({
+        map: "language_skills",
+        separatedBy: ",",
+        each: {
+            schema: vs.string(),
+        },
+    }),
+};
+const input = { // input values
+    language_skills: "c,c++,javascript,python,swift,kotlin",
+};
+assert.deepStrictEqual(
+    vs.applySchemaObject(schemaObject, input),
+    {languageSkills: ["c", "c++", "javascript", "python", "swift", "kotlin"]});
+```
 
 ### `ifUndefined`
 

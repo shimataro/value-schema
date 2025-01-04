@@ -6,6 +6,7 @@
 export function object(rules?: RulesForObject): ObjectSchema;
 
 type RulesForObject = {
+    map?: string;
     ifUndefined?: object | null;
     ifEmptyString?: object | null;
     ifNull?: object | null;
@@ -42,6 +43,29 @@ assert.throws(
 ```
 
 ## rules
+
+### `map`
+
+Maps the specified value to the properties of the input object.
+
+**NOTE:** This rule is only available in [`object`](./object.md).
+
+```javascript
+const schemaObject = {
+    userInfo: vs.object({
+        map: "user_info",
+    }),
+};
+const input = { // input values
+    user_info: {
+        name: "John Doe",
+        email: "john@example.com",
+    },
+};
+assert.deepStrictEqual(
+    vs.applySchemaObject(schemaObject, input),
+    {userInfo: {name: "John Doe", email: "john@example.com"}});
+```
 
 ### `ifUndefined`
 
